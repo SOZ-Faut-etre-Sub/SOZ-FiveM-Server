@@ -1,7 +1,7 @@
+import { TaxType } from '@public/shared/tax';
 import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 import { FunctionComponent, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { GarageMenuData, GarageType, GarageVehicle, getTransferPrice } from '../../../shared/vehicle/garage';

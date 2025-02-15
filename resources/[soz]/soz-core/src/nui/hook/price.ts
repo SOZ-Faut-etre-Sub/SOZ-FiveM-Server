@@ -1,6 +1,6 @@
+import { TaxType } from '@public/shared/tax';
 import { useCallback } from 'react';
 
-import { TaxType } from '../../shared/bank';
 import { RepositoryType } from '../../shared/repository';
 import { useRepository } from './repository';
 

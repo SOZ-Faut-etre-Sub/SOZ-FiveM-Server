@@ -1,9 +1,9 @@
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { TaxType } from '@public/shared/tax';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { TaxType } from '../../shared/bank';
 import { RpcServerEvent } from '../../shared/rpc';
 import { REPAIR_HEALTH_REDUCER, WEAPON_CUSTOM_PRICE, WeaponComponentType } from '../../shared/weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from '../../shared/weapons/tint';

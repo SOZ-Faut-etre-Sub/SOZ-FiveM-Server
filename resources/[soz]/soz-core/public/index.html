@@ -1,73 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Soz Core App</title>
-        <script type="text/javascript">
-            let uiIsLoaded = false;
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Soz Core App</title>
+    <script type="text/javascript">
+        let uiIsLoaded = false;
 
-            function loadNUIScript(url) {
-                if (uiIsLoaded) return;
+        function loadNUIScript(url) {
+            if (uiIsLoaded) return;
 
-                const script = document.createElement('script');
-                script.setAttribute('src', url);
+            const script = document.createElement('script');
+            script.setAttribute('src', url);
 
-                document.head.appendChild(script);
-                uiIsLoaded = true;
-            }
+            document.head.appendChild(script);
+            uiIsLoaded = true;
+        }
 
-            window.addEventListener('message', (event) => {
-                if (event.data.type === 'soz-core-nui-load') {
-                    const buildurl = 'https://cfx-nui-soz-core/build/nui.js';
-                    if (event.data.mode === 'dev') {
-                        const devdurl = 'http://localhost:9000/nui.js';
-                        const req = new XMLHttpRequest();
-                        req.open('GET', devdurl);
-                        req.onreadystatechange = () => {
-                            if (req.readyState === 4 && req.status === 200) {
-                                if (req.status === 200) {
-                                    loadNUIScript(devdurl);
-                                }
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'soz-core-nui-load') {
+                const buildurl = 'https://cfx-nui-soz-core/build/nui.js';
+                if (event.data.mode === 'dev') {
+                    const devdurl = 'http://localhost:9000/nui.js';
+                    const req = new XMLHttpRequest();
+                    req.open('GET', devdurl);
+                    req.onreadystatechange = () => {
+                        if (req.readyState === 4 && req.status === 200) {
+                            if (req.status === 200) {
+                                loadNUIScript(devdurl);
                             }
-                        };
-                        req.onerror = () => {
-                            loadNUIScript(buildurl);
-                            console.warn('Core Fall back to build nui');
-                        };
-                        req.send();
-                    }
-                    else {
+                        }
+                    };
+                    req.onerror = () => {
                         loadNUIScript(buildurl);
-                    }
+                        console.warn('Core Fall back to build nui');
+                    };
+                    req.send();
+                } else {
+                    loadNUIScript(buildurl);
                 }
-            });
-
-            setTimeout(() => {
-                const url = !!window.invokeNative ? 'https://cfx-nui-soz-core/build/nui.js' : 'http://localhost:9000/nui.js';
-                loadNUIScript(url);
-            }, 5000);
-        </script>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-            @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-            * {
-                user-select: none;
             }
+        });
 
-            body {
-                overflow: hidden;
-                padding: 0;
-                margin: 0;
-            }
+        setTimeout(() => {
+            const url = !!window.invokeNative ? 'https://cfx-nui-soz-core/build/nui.js' : 'http://localhost:9000/nui.js';
+            loadNUIScript(url);
+        }, 5000);
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
-            #app {
-                position: fixed;
-                inset: 0;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="app"></div>
-    </body>
+        * {
+            user-select: none;
+        }
+
+        body {
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        #app {
+            position: fixed;
+            inset: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modals"></div>
+</body>
 </html>

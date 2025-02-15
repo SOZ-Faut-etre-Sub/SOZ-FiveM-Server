@@ -1,10 +1,10 @@
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { uuidv4 } from '../../core/utils';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
+import { PhoneAppSocietyProvider } from '../phone/apps/phone.app.society.provider';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 
 type BellProps = {
@@ -129,6 +129,9 @@ export class JobBellProvider {
     @Inject(AnimationService)
     private readonly animationService: AnimationService;
 
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
+
     private lastCall = GetGameTimer();
 
     @Once(OnceStep.PlayerLoaded)
@@ -152,7 +155,7 @@ export class JobBellProvider {
         }
     }
 
-    private callSociety(number: string, location: string = undefined) {
+    private async callSociety(number: string, location: string = undefined) {
         this.lastCall = GetGameTimer();
         this.animationService.playAnimation({
             base: {
@@ -171,7 +174,7 @@ export class JobBellProvider {
             message += ` - ${location}`;
         }
 
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        await this.phoneSocietyProvider.sendMessage({
             anonymous: false,
             number,
             message: message,

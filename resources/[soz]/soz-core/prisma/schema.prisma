@@ -114,41 +114,41 @@ model upw_chargers {
 }
 
 model housing_apartment {
-    id                   Int                    @id @default(autoincrement())
-    property_id          Int
-    senate_party_id      String?
-    identifier           String?                @db.VarChar(50)
-    label                String?                @db.VarChar(50)
-    price                Int?
-    owner                String?                @db.VarChar(50)
-    tenant               String?                @default(dbgenerated("(`owner`)"))
-    roommate             String?                @db.VarChar(50)
-    inside_coord         String?                @db.LongText
-    exit_zone            String?                @db.LongText
-    fridge_zone          String?                @db.LongText
-    stash_zone           String?                @db.LongText
-    closet_zone          String?                @db.LongText
-    money_zone           String?                @db.LongText
-    tier                 Int?
-    cloth_tier           Int?                   @default(dbgenerated("(`tier`)"))
-    money_tier           Int?                   @default(dbgenerated("(`tier`)"))
-    park_tier            Int?                   @default(dbgenerated("(`tier`)"))
-    shell                Boolean                @default(true)
-    has_parking_place    Int?
-    housing_property     housing_property       @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
-    senate_party         SenateParty?           @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
-    apartment_fourniture apartment_fourniture[]
-    search_warrant_access DateTime?             @db.Timestamp(0)
-    housing_taxe_enabled Boolean                @default(true)
+    id                    Int                    @id @default(autoincrement())
+    property_id           Int
+    senate_party_id       String?
+    identifier            String?                @db.VarChar(50)
+    label                 String?                @db.VarChar(50)
+    price                 Int?
+    owner                 String?                @db.VarChar(50)
+    tenant                String?                @default(dbgenerated("(`owner`)"))
+    roommate              String?                @db.VarChar(50)
+    inside_coord          String?                @db.LongText
+    exit_zone             String?                @db.LongText
+    fridge_zone           String?                @db.LongText
+    stash_zone            String?                @db.LongText
+    closet_zone           String?                @db.LongText
+    money_zone            String?                @db.LongText
+    tier                  Int?
+    cloth_tier            Int?                   @default(dbgenerated("(`tier`)"))
+    money_tier            Int?                   @default(dbgenerated("(`tier`)"))
+    park_tier             Int?                   @default(dbgenerated("(`tier`)"))
+    shell                 Boolean                @default(true)
+    has_parking_place     Int?
+    housing_property      housing_property       @relation(fields: [property_id], references: [id], onDelete: Cascade, map: "housing_apartment_housing_property_id_fk")
+    senate_party          SenateParty?           @relation(fields: [senate_party_id], references: [id], onDelete: SetNull, map: "housing_apartment_senate_id_fk")
+    apartment_fourniture  apartment_fourniture[]
+    search_warrant_access DateTime?              @db.Timestamp(0)
+    housing_taxe_enabled  Boolean                @default(true)
 
     @@index([property_id], map: "housing_apartment_housing_property_id_fk")
 }
 
 model apartment_rent_taxes {
-    id             Int          @id @default(autoincrement())
-    citizenid      String       @db.VarChar(50)
-    value          Int
-    created_at     DateTime     @default(now())     @db.Timestamp(0)
+    id         Int      @id @default(autoincrement())
+    citizenid  String   @db.VarChar(50)
+    value      Int
+    created_at DateTime @default(now()) @db.Timestamp(0)
 
     @@index([created_at], map: "created_at_idx")
 }
@@ -349,7 +349,7 @@ model phone_notes {
     id         Int    @id @default(autoincrement())
     identifier String @db.VarChar(48)
     title      String @db.VarChar(128)
-    content    String @db.VarChar(1024)
+    content    String @db.LongText
 
     @@index([identifier], map: "identifier")
 }
@@ -377,6 +377,8 @@ model phone_society_messages {
 
     @@index([conversation_id], map: "conversation_id")
     @@index([source_phone], map: "source_phone")
+    @@index([createdAt], map: "createdAt")
+    @@index([updatedAt], map: "updatedAt")
 }
 
 model phone_twitch_news {

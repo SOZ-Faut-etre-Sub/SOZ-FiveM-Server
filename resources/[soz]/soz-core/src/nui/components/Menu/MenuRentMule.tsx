@@ -1,10 +1,10 @@
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '@public/nui/components/Styleguide/Menu';
 import { fetchNui } from '@public/nui/fetch';
 import { useGetPrice } from '@public/nui/hook/price';
-import { TaxType } from '@public/shared/bank';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { MuleRentDeposite, MuleRentPrice } from '@public/shared/shop/zkea_fourniture';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 
 export const MenuRentMule: FunctionComponent = () => {

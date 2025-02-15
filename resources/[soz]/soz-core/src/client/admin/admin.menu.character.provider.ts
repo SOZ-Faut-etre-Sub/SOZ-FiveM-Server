@@ -1,7 +1,7 @@
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { NuiEvent, ServerEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -48,5 +48,9 @@ export class AdminMenuCharacterProvider {
     public async switchCharacter(citizenId: string): Promise<void> {
         this.nuiMenu.closeAll();
         TriggerServerEvent(ServerEvent.ADMIN_SWITCH_CHARACTER, citizenId);
+
+        setTimeout(() => {
+            TriggerEvent(ClientEvent.ADMIN_SWITCH_CHARACTER);
+        }, 5000);
     }
 }

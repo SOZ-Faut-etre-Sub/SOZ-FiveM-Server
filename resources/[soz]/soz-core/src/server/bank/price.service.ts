@@ -1,5 +1,6 @@
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { TaxType } from '../../shared/bank';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { TaxType } from '@public/shared/tax';
+
 import { TaxRepository } from '../repository/tax.repository';
 
 @Injectable()

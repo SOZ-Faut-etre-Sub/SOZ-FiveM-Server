@@ -1,6 +1,6 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { uuidv4, wait } from '@core/utils';
+import { wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { BlipFactory } from '@public/client/blip';
@@ -38,6 +38,7 @@ import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
 import { NuiDispatch } from '../../nui/nui.dispatch';
+import { PhoneAppSocietyProvider } from '../../phone/apps/phone.app.society.provider';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
 import { VampireGameProvider } from '../../story/vampire.game.provider';
 import { VampireGameStateProvider } from '../../story/vampire.game.state.provider';
@@ -212,6 +213,9 @@ export class LSMCDeathProvider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     private IsDead = false;
     private doFeeze = false;
@@ -561,7 +565,7 @@ export class LSMCDeathProvider {
     }
 
     @OnEvent(ClientEvent.LSMC_CALL, false)
-    public call() {
+    public async call() {
         const playerPed = PlayerPedId();
         const coords = GetEntityCoords(playerPed);
         const [street, street2] = GetStreetNameAtCoord(coords[0], coords[1], coords[2]);
@@ -571,7 +575,7 @@ export class LSMCDeathProvider {
             ? `${GetStreetNameFromHashKey(street)}${street2 ? ` et ${GetStreetNameFromHashKey(street2)}` : ''}`
             : GetLabelText(zoneID);
 
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        await this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: '555-LSMC',
             message: `Besoin d'aide vers ${name}`,

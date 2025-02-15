@@ -1,9 +1,9 @@
 import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
 import { useItem } from '@public/nui/hook/data';
+import { TaxType } from '@public/shared/tax';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useMemo, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { RGBColor } from '../../../shared/color';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';

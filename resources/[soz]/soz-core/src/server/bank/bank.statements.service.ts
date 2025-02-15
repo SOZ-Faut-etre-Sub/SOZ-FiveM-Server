@@ -1,11 +1,12 @@
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Rpc } from '@core/decorators/rpc';
 import { bank_statements } from '@prisma/client';
 import { PrismaService } from '@public/server/database/prisma.service';
 import { BankHistoryFilter, BankStatement } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
+import { RpcServerEvent } from '@public/shared/rpc';
 
-import { Exportable } from '../../core/decorators/exports';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
 import { PlayerService } from '../player/player.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
 
@@ -20,7 +21,7 @@ export class BankStatementsService {
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
 
-    @Exportable('GetStatementsForPlayer')
+    @Rpc(RpcServerEvent.BANK_GET_STATEMENTS)
     public async getStatementsForPlayer(source: number) {
         const player = this.playerService.getPlayer(source);
         if (!player) return;

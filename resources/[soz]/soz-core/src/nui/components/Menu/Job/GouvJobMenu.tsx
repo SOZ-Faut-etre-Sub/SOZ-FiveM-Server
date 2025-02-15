@@ -1,8 +1,8 @@
 import { usePlayer } from '@public/nui/hook/data';
 import { GouvJobMenuPropData } from '@public/shared/job/gouv';
+import { TaxLabel, TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 
-import { TaxLabel, TaxType } from '../../../../shared/bank';
 import { NuiEvent } from '../../../../shared/event';
 import { JobPermission, JobType } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';

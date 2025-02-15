@@ -1,8 +1,9 @@
-import { BankMoneyType, TaxType } from '@public/shared/bank';
+import { BankMoneyType } from '@public/shared/bank';
 import { InventoryItemMetadata } from '@public/shared/inventory';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { ShopItem } from '@public/shared/shop/superette';
 import { TargetOption } from '@public/shared/target';
+import { TaxType } from '@public/shared/tax';
 
 import { Component, GlovesItem, OutfitItem, Prop } from './cloth';
 import { Item, ItemType } from './item';

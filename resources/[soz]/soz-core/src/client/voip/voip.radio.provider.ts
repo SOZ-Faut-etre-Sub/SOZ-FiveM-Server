@@ -1,9 +1,9 @@
+import { Command } from '@core/decorators/command';
+import { OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 
-import { Command } from '../../core/decorators/command';
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { Radio, RadioChannel, RadioChannelType, RadioType } from '../../shared/voip';
 import { AnimationService } from '../animation/animation.service';

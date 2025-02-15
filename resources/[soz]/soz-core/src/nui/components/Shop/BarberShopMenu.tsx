@@ -2,9 +2,9 @@ import { ShopScalp } from '@public/config/scalp';
 import { usePlayer } from '@public/nui/hook/data';
 import { PlayerData } from '@public/shared/player';
 import { BarberConfiguration, BarberShopCategory, BarberShopColors, BarberShopContent } from '@public/shared/shop';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';

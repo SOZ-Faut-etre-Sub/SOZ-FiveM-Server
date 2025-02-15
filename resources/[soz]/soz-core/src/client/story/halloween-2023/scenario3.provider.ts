@@ -30,8 +30,8 @@ import {
     Halloween2023Scenario3TPSubmarine,
     Halloween2023Scenario3TPWhiteBox,
 } from '@public/shared/story/halloween-2023/scenario3';
+import { TaxType } from '@public/shared/tax';
 
-import { TaxType } from '../../../shared/bank';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { StoryProvider } from '../story.provider';
 

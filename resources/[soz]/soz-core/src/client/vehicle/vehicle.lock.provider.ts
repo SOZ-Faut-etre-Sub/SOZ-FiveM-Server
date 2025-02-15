@@ -1,13 +1,15 @@
+import { Command } from '@core/decorators/command';
+import { Once, OnceStep, OnEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
+import { wait, waitUntil } from '@core/utils';
+import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { Feature } from '@public/shared/features';
 import { getRandomItem } from '@public/shared/random';
 
-import { Command } from '../../core/decorators/command';
-import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { emitRpc } from '../../core/rpc';
-import { uuidv4, wait, waitUntil } from '../../core/utils';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { DEFAULT_MAX_INVENTORY_DISTANCE, getPositionZone } from '../../shared/inventory';
 import { PlayerData } from '../../shared/player';
@@ -81,6 +83,12 @@ export class VehicleLockProvider {
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
+
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     private vehicleOpened: Set<number> = new Set();
 
@@ -415,7 +423,7 @@ export class VehicleLockProvider {
             return;
         }
 
-        if (exports['soz-phone'].isPhoneVisible()) {
+        if (this.phoneService.isPhoneVisible()) {
             return;
         }
 
@@ -520,7 +528,7 @@ export class VehicleLockProvider {
         const message = getRandomItem(messages);
         const modelName = modelInfo ? modelInfo.name : GetDisplayNameFromVehicleModel(model);
 
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: '555-POLICE',
             message: message.replace('${0}', zone).replace('${1}', modelName),
@@ -528,7 +536,7 @@ export class VehicleLockProvider {
                 .replace('${0}', `<span {class}>${zone}</span>`)
                 .replace('${1}', `<span {class}>${modelName}</span>`),
             position: true,
-            info: { type: 'auto-theft' },
+            type: 'auto-theft',
             overrideIdentifier: 'System',
         });
     }

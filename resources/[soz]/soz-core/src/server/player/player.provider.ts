@@ -205,19 +205,9 @@ export class PlayerProvider {
         return this.serverStateService.getPlayer(target).metadata.licences;
     }
 
-    @Exportable('RemovePlayerMoney')
     @OnEvent(ServerEvent.PLAYER_UPDATE_STATE)
     public removePlayerMoney(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         return this.playerMoneyService.remove(source, money, type);
-    }
-
-    @Exportable('IsOnDuty')
-    public isOnDuty(source: number): boolean {
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return false;
-        }
-        return player.job.onduty;
     }
 
     private sendSuggestions(player: PlayerData) {

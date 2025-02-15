@@ -1,9 +1,9 @@
 import { PermissionService } from '@public/server/permission.service';
+import { TaxLabel, TaxType } from '@public/shared/tax';
 
 import { OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
-import { TaxLabel, TaxType } from '../../../shared/bank';
 import { JobTaxTier } from '../../../shared/configuration';
 import { ServerEvent } from '../../../shared/event/server';
 import { JobPermission, JobType } from '../../../shared/job';

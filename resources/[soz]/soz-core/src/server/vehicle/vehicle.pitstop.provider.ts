@@ -4,12 +4,12 @@ import { Monitor } from '@public/server/monitor/monitor';
 import { ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { toVector3Object, Vector3 } from '@public/shared/polyzone/vector';
+import { TaxType } from '@public/shared/tax';
 import { VehicleCategory } from '@public/shared/vehicle/vehicle';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { TaxType } from '../../shared/bank';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';

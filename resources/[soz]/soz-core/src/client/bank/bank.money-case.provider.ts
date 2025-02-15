@@ -5,6 +5,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { StonkConfig } from '../../shared/job/stonk';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { WeaponHolsterProvider } from '../weapon/weapon.holster.provider';
@@ -16,6 +17,9 @@ const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
 export class BankMoneyCaseProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
@@ -50,10 +54,9 @@ export class BankMoneyCaseProvider {
         }
 
         const playerPed = PlayerPedId();
-        const isPhoneVisible = exports['soz-phone'].isPhoneVisible();
         const isInsideVehicle = IsPedInAnyVehicle(playerPed, true);
 
-        return !(isPhoneVisible || isInsideVehicle);
+        return !(this.phoneService.isPhoneVisible() || isInsideVehicle);
     }
 
     private hasMoneyCase(): boolean {

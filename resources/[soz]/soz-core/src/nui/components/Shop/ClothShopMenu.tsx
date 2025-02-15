@@ -2,10 +2,10 @@ import { BrandsConfig, ShopBrand } from '@public/config/shops';
 import { usePlayer } from '@public/nui/hook/data';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { ClothingCategoryID, ClothingShop, ClothingShopCategory } from '@public/shared/shop';
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';

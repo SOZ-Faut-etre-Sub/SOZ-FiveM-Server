@@ -46,20 +46,18 @@ export class HudWeatherIconProvider {
         this.nuiReady = true;
         this.update();
 
-        this.forecasts = await emitRpc<ForecastWithTemperature[]>(RpcServerEvent.WEATHER_GET_FORECASTS);
+        this.forecasts = await emitRpc<ForecastWithTemperature[]>(RpcServerEvent.GET_FORECASTS);
 
         if (this.forecasts.length > 0) {
-            this.nuiDispatch.dispatch('weather', 'forecast', this.forecasts.shift());
+            this.nuiDispatch.dispatch('weather', 'forecast', this.forecasts?.[0]);
         }
-    }
-
-    public getCurrent() {
-        return this.current;
     }
 
     @OnEvent(ClientEvent.WEATHER_UPDATE_FORECASTS)
     public onWeatherUpdateForecasts(forecast: ForecastWithTemperature[]) {
+        if (!forecast) return;
+
         this.forecasts = forecast;
-        this.nuiDispatch.dispatch('weather', 'forecast', this.forecasts?.shift());
+        this.nuiDispatch.dispatch('weather', 'forecast', this.forecasts?.[0]);
     }
 }

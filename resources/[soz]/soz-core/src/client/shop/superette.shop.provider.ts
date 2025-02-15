@@ -4,13 +4,13 @@ import { NoZoneShopBrand, ShopBrand, ShopsConfig } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
-import { TaxType } from '@public/shared/bank';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { ShopProduct } from '@public/shared/shop';
 import { ShopItem, ShopsContent } from '@public/shared/shop/superette';
+import { TaxType } from '@public/shared/tax';
 
 import { ItemService } from '../item/item.service';
 import { InputService } from '../nui/input.service';

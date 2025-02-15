@@ -14,7 +14,7 @@ Only bug fixes and **very small features** will be added to the other resources.
 
 ## Directory structure
 
-In the long term everything will be in the `soz-core` or `soz-phone` resource (except for maps, vehicles or others graphics assets), but for now we have a lot of resources that are not part of the `soz-core` resource:
+In the long term everything will be in the `soz-core` resource (except for maps, vehicles or others graphics assets), but for now we have a lot of resources that are not part of the `soz-core` resource:
 
  * `lib/` contains the code that is used to develop and compile some resources for the server, it only contains the `menuv` library and will be removed in the future
  * `resources/` contains all the resources that are used by the server

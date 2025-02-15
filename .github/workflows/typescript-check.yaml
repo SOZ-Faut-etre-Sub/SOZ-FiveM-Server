@@ -7,15 +7,11 @@ jobs:
     check-typescript:
         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                resource: ["soz-core", "soz-phone"]
-
         steps:
             - uses: actions/checkout@v3
             - uses: bahmutov/npm-install@v1
               with:
-                  working-directory: "resources/[soz]/${{ matrix.resource }}"
+                  working-directory: "resources/[soz]/soz-core"
             - name: "check-typescript"
-              working-directory: "resources/[soz]/${{ matrix.resource }}"
+              working-directory: "resources/[soz]/soz-core"
               run: yarn run tsc -p tsconfig.json --noEmit

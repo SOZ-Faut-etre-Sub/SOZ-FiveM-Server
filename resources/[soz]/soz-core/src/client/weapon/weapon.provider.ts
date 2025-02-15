@@ -3,7 +3,8 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
-import { uuidv4, wait } from '@public/core/utils';
+import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
+import { wait } from '@public/core/utils';
 import { Feature } from '@public/shared/features';
 import { FuelStationType } from '@public/shared/fuel';
 import { Control } from '@public/shared/input';
@@ -90,6 +91,9 @@ export class WeaponProvider {
 
     @Inject(ZoneRepository)
     private zoneRepository: ZoneRepository;
+
+    @Inject(PhoneAppSocietyProvider)
+    private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
@@ -330,22 +334,22 @@ export class WeaponProvider {
             const angle = getRandomInt(1, 360);
             const dist = getRandomInt(0, 165);
 
-            TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+            this.phoneSocietyProvider.sendMessage({
                 anonymous: true,
+                position: false,
                 number: '555-POLICE',
                 message: `${zone}: ${message.replace('${0}', name)}`,
                 htmlMessage: `${zone}: ${message.replace('${0}', nameHtml)}`,
-                info: { type: 'shooting' },
+                type: 'shooting',
                 overrideIdentifier: 'System',
-                pedPosition: JSON.stringify({
-                    x: coords[0] + Math.cos(angle) * dist,
-                    y: coords[1] + Math.sin(angle) * dist,
-                    z: coords[2],
+                pedPosition: {
+                    coords: [coords[0] + Math.cos(angle) * dist, coords[1] + Math.sin(angle) * dist, coords[2]],
                     radius: 165,
                     alpha: 150,
                     flash: true,
                     color: 3,
-                }),
+                    temporary: 60_000,
+                },
             });
         }
     }
@@ -390,15 +394,15 @@ export class WeaponProvider {
 
         const message = getRandomItem(ExplosionMessage);
 
-        TriggerServerEvent('phone:sendSocietyMessage', 'phone:sendSocietyMessage:' + uuidv4(), {
+        this.phoneSocietyProvider.sendMessage({
             anonymous: true,
             number: '555-POLICE',
             message: message.replace('${0}', zone),
             htmlMessage: message.replace('${0}', `<span {class}>${zone}</span>`),
             position: false,
-            info: { type: 'explosion' },
+            type: 'explosion',
             overrideIdentifier: 'System',
-            pedPosition: JSON.stringify({ x: x, y: y, z: z }),
+            pedPosition: { coords: [x, y, z] as Vector3 },
         });
     }
 

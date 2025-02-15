@@ -1,6 +1,4 @@
 export enum ServerEvent {
-    PHONE_APP_NEWS_CREATE_BROADCAST = 'phone:app:news:createNewsBroadcast',
-
     ADMIN_RESET_HALLOWEEN = 'soz-core:server:admin:reset-halloween',
     ADMIN_ADD_MONEY = 'soz-core:server:admin:add-money',
     ADMIN_ADD_LICENSE = 'soz-core:server:admin:add-license',
@@ -206,7 +204,6 @@ export enum ServerEvent {
     MONITOR_TRACE_EVENT = 'soz-core:server:monitor:trace-event',
     MONITOR_LOG = 'soz-core:server:monitor:log',
 
-    NEWS_ADD_FLASH = 'soz-core:server:news:add-flash',
     NEWS_NEWSPAPER_SOLD = 'soz-core:server:job:news:newspaper-sold',
     NEWS_NEWSPAPER_FARM = 'soz-core:server:job:news:newspaper-farm',
 
@@ -396,6 +393,9 @@ export enum ServerEvent {
     VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:server:voip:radio-vehicle-update',
     VOIP_PHONE_CALL_START = 'soz-core:server:voip:phone-call-start',
     VOIP_PHONE_CALL_END = 'soz-core:server:voip:phone-call-end',
+    VOIP_PHONE_CALL_MUTED = 'soz-core:server:voip:phone-call-muted',
+    VOIP_PHONE_CALL_SPEAKER_LISTENER_ADD = 'soz-core:server:voip:phone-call-speaker-listener-add',
+    VOIP_PHONE_CALL_SPEAKER_LISTENER_REMOVE = 'soz-core:server:voip:phone-call-speaker-listener-remove',
     VOIP_RADIO_JOIN_CHANNEL = 'soz-core:server:voip:radio-join-channel',
     VOIP_RADIO_LEAVE_CHANNEL = 'soz-core:server:voip:radio-leave-channel',
 
@@ -512,9 +512,6 @@ export enum ServerEvent {
 
     CRAFTING_TRAINING = 'soz-core:crafting:craft-training',
 
-    ALERT_POLICE = 'soz-core:alert:notification:draw-police',
-    ALERT_MESSAGE = 'phone:createSocietyMessagesBroadcast',
-
     FISHING_SUCCESS = 'soz-core:server:fishing:success',
     FISHING_ROTTEN = 'soz-core:server:fishing:rotten',
     FISHING_GARBAGE = 'soz-core:server:fishing:garbage',
@@ -591,8 +588,6 @@ export enum ServerEvent {
     LUXURY_DELETE_GUARD = 'soz-core:server:luxury:delete-guard',
     LUXURY_CREATED_GUARD = 'soz-core:server:luxury:created-guard',
 
-    BANK_INVOICE_PAY = 'soz-core:server:bank:invoice-pay',
-    BANK_INVOICE_REJECT = 'soz-core:server:bank:invoice-reject',
     BANK_REMOVE_ATM_LIQUIDITY_RATIO = 'soz-core:server:bank:remove-atm-liquidity-ratio',
     BANK_REFRESH_ACCOUNT = 'soz-core:server:bank:refresh-account',
 

@@ -16,7 +16,7 @@ export class PoliceWantedProvider {
     @Rpc(RpcServerEvent.POLICE_GET_WANTED_PLAYERS)
     public async getWantedPlayers(source: number): Promise<{ id: number; message: string }[]> {
         const player = this.playerService.getPlayer(source);
-        return await this.prismaService.phone_twitch_news.findMany({
+        return this.prismaService.phone_twitch_news.findMany({
             where: {
                 type: player.job.id,
             },
@@ -35,7 +35,7 @@ export class PoliceWantedProvider {
                 id,
             },
             data: {
-                type: `${player.job}:end`,
+                type: `${player.job.id}:end`,
             },
         });
 

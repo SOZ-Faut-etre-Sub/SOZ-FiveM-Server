@@ -1,9 +1,9 @@
 import { MenuType } from '@public/shared/nui/menu';
+import { TaxType } from '@public/shared/tax';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { TaxType } from '../../shared/bank';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { BlipFactory } from '../blip';
 import { InventoryManager } from '../inventory/inventory.manager';

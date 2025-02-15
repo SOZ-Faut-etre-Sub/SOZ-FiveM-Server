@@ -4,6 +4,7 @@ export enum ClientEvent {
     ADMIN_SHOW_GPS = 'soz-core:client:admin:show-gps',
     ADMIN_SPECTATE_PLAYER = 'soz-core:client:admin:spectate-player',
     ADMIN_KILL_PLAYER = 'soz-core:client:admin:kill-player',
+    ADMIN_SWITCH_CHARACTER = 'soz-core:client:admin:switch-character',
     ANIMATION_SURRENDER = 'soz-core:client:animation:surrender',
     ANIMATION_GIVE = 'soz-core:client:animation:give',
 
@@ -155,10 +156,6 @@ export enum ClientEvent {
     OIL_REFILL_ESSENCE_STATION = 'soz-core:client:oil:refill-essence-station',
     OIL_REFILL_KEROSENE_STATION = 'soz-core:client:oil:refill-kerosene-station',
 
-    PHONE_APP_WEATHER_UPDATE_FORECASTS = 'phone:app:weather:updateForecasts',
-    PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'phone:app:weather:updateStormAlert',
-    PHONE_APP_BANK_UPDATE_BALANCE = 'phone:client:app:bank:updateBalance',
-
     STONK_DELIVER_LOCATION = 'stonk:client:DeliverLocation',
     STONK_APPLY_OUTFIT = 'soz-core:client:stonk:ApplyDutyClothing',
 
@@ -246,6 +243,8 @@ export enum ClientEvent {
     VOIP_VOICE_START_CALL = 'soz-core:client:voip:voice:start-call',
     VOIP_VOICE_END_CALL = 'soz-core:client:voip:voice:end-call',
     VOIP_VOICE_MUTE_CALL = 'soz-core:client:voip:voice:mute-call',
+    VOIP_VOICE_SPEAKER_CALL = 'soz-core:client:voip:voice:speaker-call',
+    VOIP_VOICE_SPEAKER_LISTENING_CALL = 'soz-core:client:voip:voice:speaker-listening-call',
     VOIP_VOICE_RADIO_PLAYER_START_TRANSMITTING = 'soz-core:client:voip:voice:radio:player-start-transmitting',
     VOIP_VOICE_RADIO_PLAYER_STOP_TRANSMITTING = 'soz-core:client:voip:voice:radio:player-stop-transmitting',
 
@@ -462,4 +461,17 @@ export enum ClientEvent {
     CEREMONY_MOVE_CAMERA = 'soz-core:client:ceremony:move-camera',
 
     XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
+
+    PHONE_HIDE = 'soz-core:client:phone:hide',
+    PHONE_SIMCARD_CALLS_HISTORY = 'soz-core:client:phone:simcard:calls:history',
+    PHONE_SIMCARD_CALLS_INIT = 'phone:app:simcard:calls:init',
+    PHONE_SIMCARD_CALLS_RECEIVE = 'phone:app:simcard:calls:receive',
+    PHONE_SIMCARD_CALLS_UPDATE = 'phone:app:simcard:calls:update',
+    PHONE_SIMCARD_MESSAGES_MESSAGE_NEW = 'phone:app:simcard:messages:message:new',
+    PHONE_SIMCARD_MESSAGES_CONVERSATION_RELOAD = 'phone:app:simcard:messages:conversation:reload',
+    PHONE_APP_BANK_UPDATE_BALANCE = 'soz-core:server:phone:app:bank:updateBalance',
+    PHONE_APP_SOCIETY_RECEIVE_MESSAGE = 'phone:app:society:receive-message',
+    PHONE_APP_NEWS_BROADCAST = 'soz-core:server:phone:app:news:broadcast',
+    PHONE_APP_WEATHER_UPDATE_FORECASTS = 'soz-core:server:phone:app:weather:updateForecasts',
+    PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'soz-core:server:phone:app:weather:updateStormAlert',
 }

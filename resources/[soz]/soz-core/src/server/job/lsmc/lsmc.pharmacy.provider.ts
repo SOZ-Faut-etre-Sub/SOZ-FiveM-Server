@@ -11,8 +11,8 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 import { Vector3 } from '@public/shared/polyzone/vector';
+import { TaxType } from '@public/shared/tax';
 
-import { TaxType } from '../../../shared/bank';
 import { PriceService } from '../../bank/price.service';
 
 @Provider()

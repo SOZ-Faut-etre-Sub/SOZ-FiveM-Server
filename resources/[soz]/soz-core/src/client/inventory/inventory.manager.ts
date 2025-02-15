@@ -1,14 +1,13 @@
 import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
-import { PlayerInventoryUpdate } from '@core/decorators/player';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { PlayerInventoryLoader } from '@core/loader/player.inventory.loader';
 import { emitRpc } from '@core/rpc';
 import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
-import { BankMoneyType, TaxType } from '@public/shared/bank';
+import { BankMoneyType } from '@public/shared/bank';
 import { ClientEvent } from '@public/shared/event/client';
 import { ServerEvent } from '@public/shared/event/server';
 import {
@@ -25,6 +24,7 @@ import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { ShopItem } from '@public/shared/shop/superette';
+import { TaxType } from '@public/shared/tax';
 import { applyPatch, Operation } from 'fast-json-patch';
 
 import { PlayerService } from '../player/player.service';
@@ -310,37 +310,6 @@ export class InventoryManager {
         TriggerServerEvent(ServerEvent.INVENTORY_OPEN_TRUNK, vehicleNetworkId, vehicleClass, { min, max });
     }
 
-    @Exportable('hasPlayerPhone')
-    public hasPlayerPhone() {
-        if (IsPauseMenuActive()) {
-            return false;
-        }
-
-        const hasPhone = this.hasEnoughItem('phone', 1);
-
-        if (!hasPhone) {
-            this.notifier.error("Vous n'avez pas de téléphone");
-
-            return false;
-        }
-
-        const playerState = this.playerService.getState();
-
-        if (playerState.isInventoryBusy) {
-            this.notifier.error('Action en cours');
-            return false;
-        }
-
-        const player = this.playerService.getPlayer();
-
-        if (player.metadata.inlaststand || player.metadata.ishandcuffed) {
-            this.notifier.error('Vous ne pouvez pas accéder à votre téléphone');
-            return false;
-        }
-
-        return true;
-    }
-
     @Exportable('openInventory')
     public openInventoryExport(inventoryType: InventoryType, inventoryId: string) {
         const player = this.playerService.getPlayer();
@@ -351,13 +320,5 @@ export class InventoryManager {
 
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
         this.openInventory(inventoryType, inventoryId, position);
-    }
-
-    @PlayerInventoryUpdate()
-    public updatePlayerInventory() {
-        const hasPhone = this.hasEnoughItem('phone', 1);
-        const hasDongle = this.hasEnoughItem('cyber_darkweb_module', 1);
-
-        TriggerEvent('soz-phone:client:phone:setHasItems', hasPhone, hasDongle);
     }
 }

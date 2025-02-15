@@ -1,11 +1,8 @@
-import { OnEvent } from '../../core/decorators/event';
-import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { Invoice } from '../../shared/bank';
 import { ClientEvent } from '../../shared/event/client';
-import { ServerEvent } from '../../shared/event/server';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { InventoryFactory } from '../inventory/inventory.factory';
@@ -35,7 +32,6 @@ export class BankInvoiceProvider {
     @Inject(BankInvoiceRepository)
     private bankInvoiceRepository: BankInvoiceRepository;
 
-    @Exportable('GetAllInvoicesForPlayer')
     @Rpc(RpcServerEvent.BANK_GET_INVOICES)
     public async getInvoices(source: number): Promise<Invoice[]> {
         return this.bankInvoiceService.getInvoicesForPlayer(source);
@@ -122,14 +118,12 @@ export class BankInvoiceProvider {
         return true;
     }
 
-    @Exportable('PayInvoice')
-    @OnEvent(ServerEvent.BANK_INVOICE_PAY)
+    @Rpc(RpcServerEvent.BANK_PAY_INVOICE)
     public async onInvoicePay(source: number, invoiceId: number, useMarkedMoney = false) {
         return this.bankInvoiceService.payInvoice(source, invoiceId, useMarkedMoney);
     }
 
-    @Exportable('RejectInvoice')
-    @OnEvent(ServerEvent.BANK_INVOICE_REJECT)
+    @Rpc(RpcServerEvent.BANK_REJECT_INVOICE)
     public async onInvoiceReject(source: number, invoiceId: number) {
         return this.bankInvoiceService.rejectInvoice(source, invoiceId);
     }

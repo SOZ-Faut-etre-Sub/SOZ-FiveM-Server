@@ -1,0 +1,55 @@
+import { useAtom, useAtomValue } from 'jotai';
+import { useCallback } from 'react';
+
+import { uuidv4 } from '../../../../../../core/utils';
+import { useApps } from '../../apps/hooks/useApps';
+import { notificationsAtom } from '../notification.atom';
+import { INotification } from '../notification.types';
+
+export const useNotification = (id: INotification['id']) => {
+    return useAtomValue(notificationsAtom).find(notification => notification.id === id);
+};
+
+export const useNotifications = () => {
+    const [notifications, setNotifications] = useAtom(notificationsAtom);
+
+    const apps = useApps();
+
+    const addNotification = useCallback(
+        (notification: INotification, timeout: number = 3000) => {
+            const app = apps.find(app => app.id === notification.app);
+            const newNotification = { id: uuidv4(), ...notification, icon: app?.icon };
+
+            setNotifications(prev => [newNotification, ...prev]);
+
+            if (!timeout) return;
+
+            setTimeout(() => removeNotification(newNotification.id), timeout);
+        },
+        [apps, setNotifications]
+    );
+
+    const removeNotification = useCallback(
+        (id: INotification['id']) => setNotifications(prev => prev.filter(notification => notification.id !== id)),
+        [setNotifications]
+    );
+
+    const removeNotificationByIdAndApp = useCallback(
+        (app: INotification['app'], id: INotification['id']) =>
+            setNotifications(prev => prev.filter(notification => notification.id !== id && notification.app !== app)),
+        [setNotifications]
+    );
+
+    const removeAppNotifications = useCallback(
+        (app: string) => setNotifications(prev => prev.filter(notification => notification.app !== app)),
+        [setNotifications]
+    );
+
+    return {
+        notifications,
+        addNotification,
+        removeNotification,
+        removeAppNotifications,
+        removeNotificationByIdAndApp,
+    };
+};

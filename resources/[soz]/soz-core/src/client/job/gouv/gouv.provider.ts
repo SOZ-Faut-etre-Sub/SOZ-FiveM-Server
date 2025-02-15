@@ -2,15 +2,16 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { InputService } from '@public/client/nui/input.service';
-import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
+import { TaxType } from '@public/shared/tax';
 
-import { TaxType } from '../../../shared/bank';
+import { emitRpc } from '../../../core/rpc';
 import { JobTaxTier } from '../../../shared/configuration';
 import { JobPermission, JobType } from '../../../shared/job';
 import { Err, Ok } from '../../../shared/result';
+import { RpcServerEvent } from '../../../shared/rpc';
 import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerListStateService } from '../../player/player.list.state.service';
@@ -201,19 +202,15 @@ export class GouvProvider {
 
         const player = this.playerService.getPlayer();
 
-        if (msg) {
-            TriggerServerEvent(
-                ServerEvent.PHONE_APP_NEWS_CREATE_BROADCAST,
-                'phone:app:news:createNewsBroadcast:' + uuidv4(),
-                {
-                    type: player.job.id,
-                    message: msg,
-                    reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
-                    reporterId: player.citizenid,
-                    job: player.job.id,
-                }
-            );
-        }
+        if (!msg) return;
+
+        await emitRpc(RpcServerEvent.PHONE_APP_NEWS_CREATE, {
+            type: player.job.id,
+            message: msg,
+            reporter: player.charinfo.firstname + ' ' + player.charinfo.lastname,
+            reporterId: player.citizenid,
+            job: player.job.id,
+        });
     }
 
     @OnNuiEvent(NuiEvent.GouvSenatSalary)

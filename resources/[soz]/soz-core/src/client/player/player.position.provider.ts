@@ -1,4 +1,6 @@
+import { Provider } from '@core/decorators/provider';
 import { Tick } from '@core/decorators/tick';
+import { wait } from '@core/utils';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -6,8 +8,6 @@ import { emitRpc } from '@public/core/rpc';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { Provider } from '../../core/decorators/provider';
-import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { ItemProvider } from '../item/item.provider';
 import { LSMCPlasterProvider } from '../job/lsmc/lsmc.plaster.provider';

@@ -1,10 +1,10 @@
+import { TaxType } from '@public/shared/tax';
 import { PlayerVehicleState } from '@public/shared/vehicle/player.vehicle';
 
 import { On, Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { TaxType } from '../../shared/bank';
 import { DrivingSchoolConfig, DrivingSchoolLicenseType } from '../../shared/driving-school';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector4 } from '../../shared/polyzone/vector';

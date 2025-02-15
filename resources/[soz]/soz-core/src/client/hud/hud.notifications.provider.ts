@@ -1,9 +1,10 @@
-import { OnEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent } from '../../shared/event';
 import { NotificationType } from '../../shared/notification';
+import { SocietyMessage } from '../../shared/phone/apps/society';
 import { Notifier } from '../notifier';
 
 @Provider()
@@ -37,8 +38,8 @@ export class HudNotificationsProvider {
         });
     }
 
-    @Exportable('SendPoliceNotification')
-    public async getPoliceNotification(message) {
+    @OnNuiEvent(NuiEvent.PoliceSendNotification)
+    public async getPoliceNotification(message: SocietyMessage) {
         let messageLogo: 'bcso' | 'lspd' | 'sasp' | 'police' = 'police';
         if (message.info && message.info.serviceNumber) {
             if (message.info.serviceNumber === '555-BCSO') {
@@ -62,7 +63,7 @@ export class HudNotificationsProvider {
             logo: messageLogo,
             policeStyle: messageType,
             style: 'info',
-            hour: message.createdAt,
+            hour: message.createdAt.toString(),
             delay: duration,
             notificationId: message.info.notificationId,
         });

@@ -1,6 +1,6 @@
+import { TaxType } from '@public/shared/tax';
 import { FunctionComponent } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { ShopProduct } from '../../../shared/shop';

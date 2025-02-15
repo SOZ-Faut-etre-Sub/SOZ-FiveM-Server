@@ -1,7 +1,12 @@
 const { createConfig } = require('./webpack.config.base.js');
 
 module.exports = (env, argv) => {
-    const config = createConfig({ nui: './src/nui.tsx' }, argv.mode === 'production', {}, 9000);
+    const config = createConfig(
+        { nui: './src/nui.tsx' },
+        argv.mode === 'production',
+        { SOZ_CORE_IS_SERVER: false, SOZ_CORE_IS_CLIENT: false },
+        9000
+    );
 
     config.module.rules.push({
         test: /\.s[ac]ss$/i,

@@ -3,8 +3,8 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { EasterShopContent } from '@public/shared/shop/easter';
+import { TaxType } from '@public/shared/tax';
 
-import { TaxType } from '../../shared/bank';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { ADD_ERROR_MESSAGE } from '../../shared/inventory';
 import { PriceService } from '../bank/price.service';

@@ -55,6 +55,7 @@ import { WalletApp } from './Inventory/WalletApp';
 import { MedicalApp } from './LSMC/DiagnosticPad/MedicalApp';
 import { MenuApp } from './Menu/MenuApp';
 import { PanelApp } from './Panel/PanelApp';
+import { PhoneApp } from './Phone/PhoneApp';
 import { MapPickerApp } from './Picker/MapPickerApp';
 import { BreathAnalyzerApp } from './Police/BreathAnalyzer';
 import { DrugScreeningApp } from './Police/DrugScreeningApp';
@@ -112,6 +113,7 @@ export const App: FunctionComponent = () => {
                 </div>
                 <div className={menuClasses}>
                     <MenuApp />
+                    <PhoneApp />
                     <PlayerInventoryApp />
                     <InventoryApp />
                     <KeychainApp />

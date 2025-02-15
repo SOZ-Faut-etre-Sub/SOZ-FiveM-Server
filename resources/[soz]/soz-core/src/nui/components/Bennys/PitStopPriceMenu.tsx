@@ -1,7 +1,7 @@
+import { TaxType } from '@public/shared/tax';
 import { VehicleCategory } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import { TaxType } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';

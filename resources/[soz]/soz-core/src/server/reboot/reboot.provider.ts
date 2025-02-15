@@ -12,6 +12,7 @@ import { ApiClient } from '../api/api.client';
 import { PrismaService } from '../database/prisma.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { UpwFacilityProvider } from '../job/upw/upw.facility.provider';
+import { PhoneAppNewsProvider } from '../phone/apps/phone.app.news.provider';
 import { PlayerCleanService } from '../player/player.clean.service';
 import { QBCore } from '../qbcore';
 import { Store } from '../store/store';
@@ -51,6 +52,9 @@ export class RebootProvider {
 
     @Inject(UpwFacilityProvider)
     private upwFacilityProvider: UpwFacilityProvider;
+
+    @Inject(PhoneAppNewsProvider)
+    private readonly phoneNewsProvider: PhoneAppNewsProvider;
 
     @OnEvent(ServerEvent.FIVEM_PLAYER_CONNECTING)
     public onPlayerConnecting(source, name, setKickReason, deferrals) {
@@ -215,7 +219,7 @@ export class RebootProvider {
         await this.apiClient.removeRebootMessage();
         await this.apiClient.addRebootMessage(minutes);
 
-        exports['soz-phone'].createNewsBroadcast({
+        await this.phoneNewsProvider.createNews(null, {
             type: `reboot_${minutes}`,
             message: `Un ouragan arrive à toute allure ! Il devrait frapper le coeur de San Andreas d'ici ${minutes} minutes. Veuillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.`,
             reporter: 'San Andreas Météo',
