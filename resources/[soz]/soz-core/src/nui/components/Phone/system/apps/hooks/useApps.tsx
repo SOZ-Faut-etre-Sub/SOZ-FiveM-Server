@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { useMemo } from 'react';
 
 import { IAppConfig } from '../../../../../../shared/phone/app';
@@ -41,6 +42,7 @@ import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 import { useUnreadConversationsCount } from '../../sim-card/sim.card.atom';
 
 export const useApps = () => {
+    const player = usePlayer();
     const { societyNumber } = useSocietySimCard();
     const darkWebAppEnabled = useDarkWebEnabled();
 
@@ -120,7 +122,7 @@ export const useApps = () => {
             icon: SocietyMessagesIcon,
             component: <SocietyMessagesApp />,
             position: 6,
-            badge: societyMessagesBadge,
+            badge: player?.job?.onduty ? societyMessagesBadge : 0,
             condition: () => Boolean(societyNumber),
         },
         {
@@ -209,5 +211,5 @@ export const useApps = () => {
             if (app.condition) return app.condition();
             return true;
         });
-    }, [societyNumber, darkWebAppEnabled, societyMessagesBadge, unreadConversationsBadge]);
+    }, [player?.job?.onduty, societyNumber, darkWebAppEnabled, societyMessagesBadge, unreadConversationsBadge]);
 };
