@@ -98,7 +98,7 @@ export const Messages = () => {
             <AppContent>
                 <Virtuoso
                     style={{
-                        height: 760,
+                        height: 750,
                     }}
                     className={clsx(
                         'scrollbar scrollbar-w-[5px] scrollbar-thumb-rounded-full scrollbar-track-rounded-full',
