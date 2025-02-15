@@ -63,7 +63,7 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
     });
 
     return (
-        <animated.div onClick={handlePhoneClick} className="font-sfpro relative h-screen w-screen">
+        <animated.div onClick={handlePhoneClick} className="font-sfpro relative h-screen w-screen z-10">
             <animated.div
                 className="absolute bg-cover origin-bottom-right"
                 style={{
