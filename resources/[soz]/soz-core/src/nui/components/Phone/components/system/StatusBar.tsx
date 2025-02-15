@@ -73,6 +73,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
     });
 
     const drawerStyles = useSpring({
+        opacity: drawerOpen ? 1 : 0,
         translateY: drawerOpen ? `0vh` : `-100vh`,
     });
 

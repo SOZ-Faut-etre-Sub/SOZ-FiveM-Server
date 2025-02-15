@@ -16,7 +16,7 @@ import {
 } from './config/config.atom';
 import { isDefaultWallpaper } from './config/utils/wallpaper';
 import { useNotificationVisibility } from './notifications/hooks/useNotificationVisibility';
-import { usePhoneAvailable, usePhoneVisibility, useSetPhoneFreeCamera } from './phone.atom';
+import { usePhoneAvailable, usePhoneVisibility, useSetLastCursorPosition, useSetPhoneFreeCamera } from './phone.atom';
 import { PHONE_HEIGHT, PHONE_WIDTH } from './phone.constant';
 import { useCall } from './sim-card/hooks/useCall';
 
@@ -28,6 +28,7 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
     const visibility = usePhoneVisibility();
     const notifVisibility = useNotificationVisibility();
     const setFreeCamera = useSetPhoneFreeCamera();
+    const setLastCursorPosition = useSetLastCursorPosition();
 
     const { currentCall } = useCall();
 
@@ -77,6 +78,10 @@ export const PhoneWrapper: FunctionComponent<PropsWithChildren> = memo(({ childr
                     width: PHONE_WIDTH,
                     height: PHONE_HEIGHT,
                     zoom: `${zoom}%`,
+                }}
+                onClick={e => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    setLastCursorPosition({ x: e.pageX - rect.left + 150, y: e.pageY - rect.top });
                 }}
             >
                 <PhoneFrame />
