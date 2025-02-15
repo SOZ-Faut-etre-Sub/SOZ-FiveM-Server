@@ -3,7 +3,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 
 export const VOICE_TARGET = 1;
 
-export type AudioContextType = 'radio' | 'car' | 'proximity' | 'megaphone' | 'phone';
+export type AudioContextType = 'radio' | 'car' | 'proximity' | 'megaphone' | 'phone_speaker' | 'phone';
 
 export type AudioContextRadio = {
     position: Vector3;
@@ -35,12 +35,18 @@ export type AudioContextPhone = {
     priority: 1;
 };
 
+export type AudioContextPhoneSpeaker = {
+    type: 'phone_speaker';
+    priority: 2;
+};
+
 export type AudioContext =
     | AudioContextRadio
     | AudioContextCar
     | AudioContextProximity
     | AudioContextMegaphone
-    | AudioContextPhone;
+    | AudioContextPhone
+    | AudioContextPhoneSpeaker;
 
 export type PlayerVoice = {
     serverId: number;

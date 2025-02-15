@@ -83,15 +83,15 @@ export class VoicePhoneProvider {
         if (exists === enabled) return;
 
         if (enabled) {
-            this.voiceTargetService.addPlayer(callerId, 'phone');
-            this.voiceListeningService.addPlayerAudioContext(callerId, 'phone', {
-                type: 'phone',
-                priority: 1,
+            this.voiceTargetService.addPlayer(callerId, 'phone_speaker');
+            this.voiceListeningService.addPlayerAudioContext(callerId, 'phone_speaker', {
+                type: 'phone_speaker',
+                priority: 2,
             });
             this.currentSpeakerIds.add(callerId);
         } else {
-            this.voiceListeningService.removePlayerAudioContext(callerId, 'phone');
-            this.voiceTargetService.removePlayer(callerId, 'phone');
+            this.voiceListeningService.removePlayerAudioContext(callerId, 'phone_speaker');
+            this.voiceTargetService.removePlayer(callerId, 'phone_speaker');
             this.currentSpeakerIds.delete(callerId);
         }
     }

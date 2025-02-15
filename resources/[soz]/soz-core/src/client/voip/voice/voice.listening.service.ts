@@ -124,7 +124,7 @@ export class VoiceListeningService {
     }
 
     private handlePlayerVoice(player: PlayerVoice) {
-        if (player.contexts.phone) {
+        if (player.contexts.phone || player.contexts.phone_speaker) {
             return this.handlePlayerVoicePhone(player);
         }
 
