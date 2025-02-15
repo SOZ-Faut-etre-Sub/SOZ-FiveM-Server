@@ -19,6 +19,7 @@ import { useAppTitleActionsUpdater } from '../../../system/apps/hooks/useAppTitl
 import { useThemeConfig } from '../../../system/config/config.atom';
 import { useContact } from '../../../system/sim-card/hooks/useContact';
 import { useConversations } from '../../../system/sim-card/hooks/useConversation';
+import { replaceEmoji } from '../../../utils/emoji';
 
 export const Conversations = (): any => {
     const messageApp = useApp('messages');
@@ -118,7 +119,7 @@ const ConversationItem: FunctionComponent<VirtualizedListProps<MessageConversati
                     })}
                 >
                     <p className="truncate">{contact?.display ?? conversation.phoneNumber}</p>
-                    <p className="truncate text-gray-500">{conversation.last_message}</p>
+                    <p className="truncate text-gray-500">{replaceEmoji(conversation.last_message)}</p>
                 </div>
 
                 <div className="flex-shrink-0">

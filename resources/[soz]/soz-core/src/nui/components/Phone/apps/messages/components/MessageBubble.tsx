@@ -11,10 +11,10 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { SocietyMessagePosition } from '../../../../../../shared/phone/apps/society';
 import { useClipboard } from '../../../../../hook/clipboard';
 import { Button } from '../../../components/Button';
-import { Emoji } from '../../../components/Emoji';
 import { PictureReveal } from '../../../components/PictureReveal';
 import { useTextZoomConfig, useThemeConfig } from '../../../system/config/config.atom';
 import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
+import { replaceEmoji } from '../../../utils/emoji';
 import { isImage } from '../utils/image';
 import { getAddress, isPosition, isVec2Position, isVec3Position } from '../utils/position';
 
@@ -100,13 +100,7 @@ export const MessageBubble: FunctionComponent<MessageBubbleProps> = ({ message }
                                 'text-2xl': textZoom === 1.6,
                             })}
                         >
-                            {message.message.split(/(:[a-zA-Z0-9-_+]+:)/g).map((text, i) => {
-                                if (text.startsWith(':') && text.endsWith(':')) {
-                                    return <Emoji key={i} emoji={text} />;
-                                }
-
-                                return <React.Fragment key={i}>{text}</React.Fragment>;
-                            })}
+                            {replaceEmoji(message.message)}
                         </p>
                     </Menu.Button>
                 )}
