@@ -11,9 +11,9 @@ export const useAppTitleUpdater = (shouldBeDisplayed: boolean, title: string, su
         return () => {
             setAppTitle({ display: false, title: '', subtitle: undefined });
         };
-    }, []);
+    }, [title, subtitle]);
 
     useEffect(() => {
         setAppTitle(prev => ({ ...prev, display: shouldBeDisplayed }));
-    }, [shouldBeDisplayed]);
+    }, [shouldBeDisplayed, title, subtitle]);
 };

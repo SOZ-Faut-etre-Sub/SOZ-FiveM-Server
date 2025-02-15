@@ -16,5 +16,5 @@ export const useAppTitleGetBackUpdater = (callback: () => void, label = 'Retour'
                 onClick: () => {},
             });
         };
-    }, []);
+    }, [callback, label, className]);
 };
