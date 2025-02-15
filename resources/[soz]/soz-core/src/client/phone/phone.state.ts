@@ -5,6 +5,7 @@ import { AnimationService } from '@public/client/animation/animation.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { AttachedObjectService } from '@public/client/object/attached.object.service';
 import { PlayerService } from '@public/client/player/player.service';
+import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
 import { ActiveCall } from '@public/shared/phone/simcard';
 
@@ -14,10 +15,13 @@ export class PhoneState {
     private readonly nuiDispatch: NuiDispatch;
 
     @Inject(AnimationService)
-    private animationService: AnimationService;
+    private readonly animationService: AnimationService;
 
     @Inject(AttachedObjectService)
-    private attachedObjectService: AttachedObjectService;
+    private readonly attachedObjectService: AttachedObjectService;
+
+    @Inject(ResourceLoader)
+    private readonly resourceLoader: ResourceLoader;
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
@@ -126,38 +130,28 @@ export class PhoneState {
         if (this.phoneOnCamera) return;
 
         if (this.isInActiveCall()) {
-            if (isPlayerInVehicle) {
-                this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_call_listen_base');
-            } else {
-                this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_call_listen_base');
-            }
+            await this.triggerAnimation(
+                playerPed,
+                isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
+                'cellphone_call_listen_base'
+            );
         } else if (this.phoneOpen) {
-            if (isPlayerInVehicle) {
-                this.triggerAnimation(playerPed, 'anim@cellphone@in_car@ps', 'cellphone_text_in');
-            } else {
-                this.triggerAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
-            }
+            await this.triggerAnimation(
+                playerPed,
+                isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
+                'cellphone_text_in'
+            );
         } else if (!this.phoneOpen && this.phoneProp !== null) {
             if (isPlayerInVehicle) {
                 ['cellphone_text_in', 'cellphone_call_to_text', 'cellphone_call_listen_base'].forEach(anim => {
-                    this.animationService.stopAnimationIfRunning({
-                        base: {
-                            dictionary: 'anim@cellphone@in_car@ps',
-                            name: anim,
-                        },
-                    });
+                    this.clearAnimation(playerPed, 'anim@cellphone@in_car@ps', anim);
                 });
             } else {
-                this.animationService.stopAnimationIfRunning({
-                    base: {
-                        dictionary: 'cellphone@',
-                        name: 'cellphone_text_in',
-                    },
-                });
+                this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
 
                 this.animationService.playAnimationIfNotRunning({
                     base: {
-                        dictionary: 'cellphone@',
+                        dictionary: isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
                         name: 'cellphone_text_out',
                         duration: 200,
                         options: {
@@ -197,9 +191,16 @@ export class PhoneState {
         this.phoneProp = null;
     }
 
-    private triggerAnimation(playerPed: number, dictionary: string, name: string) {
+    private async triggerAnimation(playerPed: number, dictionary: string, name: string) {
         if (IsEntityPlayingAnim(playerPed, dictionary, name, 3)) return;
 
+        await this.resourceLoader.loadAnimationDictionary(dictionary);
         TaskPlayAnim(playerPed, dictionary, name, 8.0, -1, -1, 50, 0, false, false, false);
+    }
+
+    private clearAnimation(playerPed: number, dictionary: string, name: string) {
+        if (!IsEntityPlayingAnim(playerPed, dictionary, name, 3)) return;
+
+        StopAnimTask(playerPed, dictionary, name, 3);
     }
 }
