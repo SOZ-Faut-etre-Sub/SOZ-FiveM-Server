@@ -35,18 +35,33 @@ export class PhoneSimCardCalls {
 
         const targetPlayer = this.playerService.getPlayerByPhone(phoneNumber);
         if (!targetPlayer || this.playerAlreadyInCall(targetPlayer.source)) {
+            const identifier = uuidv4();
+
+            await this.prismaService.phone_calls.create({
+                data: {
+                    identifier: identifier,
+                    transmitter: player.charinfo.phone,
+                    receiver: phoneNumber,
+                    start: new Date(),
+                    end: new Date(),
+                    is_accepted: 0,
+                },
+            });
+
             TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_UPDATE, player.source, {
-                identifier: uuidv4(),
+                identifier: identifier,
                 transmitter: player.charinfo.phone,
                 transmitterSource: player.source,
                 receiver: phoneNumber,
-                receiverSource: player.source,
+                receiverSource: -1,
                 start: Date.now(),
                 end: Date.now(),
                 is_accepted: false,
                 isTransmitter: true,
             });
             TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_INIT, player.source);
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_CALLS_HISTORY, player.source);
+
             return Ok('unavailable');
         }
 
