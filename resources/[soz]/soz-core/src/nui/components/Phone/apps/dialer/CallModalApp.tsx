@@ -51,7 +51,7 @@ export const CallModalApp = () => {
                 {callInProgress && (
                     <>
                         <CallButton
-                            label="Audio"
+                            label="Haut-parleur"
                             icon={BsVolumeUpFill}
                             onClick={speakerCall}
                             className={clsx({
@@ -69,7 +69,7 @@ export const CallModalApp = () => {
                             />
                         )}
                         <CallButton
-                            label="Mute"
+                            label="Sourdine"
                             icon={BsFillMicMuteFill}
                             onClick={muteCall}
                             containerClassName={targetContact ? 'col-start-3' : ''}
@@ -85,7 +85,7 @@ export const CallModalApp = () => {
 
                 {callInProgress || currentCall?.isTransmitter ? (
                     <CallButton
-                        label="End"
+                        label="Raccrocher"
                         icon={EndCallIcon}
                         onClick={endCall}
                         containerClassName="col-span-3"
