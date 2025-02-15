@@ -32,8 +32,9 @@ export class PhoneAppPhotosProvider {
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppPhotosDelete)
-    async onDeletePhoto(id: string) {
+    async onDeletePhoto(id: number) {
         await emitRpc(RpcServerEvent.PHONE_APP_PHOTOS_DELETE, id);
+        this.nuiDispatch.dispatch('phone', 'AppPhotosDeleteData', id);
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppPhotosToggleCamera)

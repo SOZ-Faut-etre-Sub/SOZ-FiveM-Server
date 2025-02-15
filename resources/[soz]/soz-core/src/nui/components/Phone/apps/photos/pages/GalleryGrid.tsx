@@ -72,7 +72,7 @@ const ItemRenderer: FunctionComponent<VirtualizedGridProps<PhotoItem>> = ({ rowI
 
     const referral = query.referral ? decodeURIComponent(query.referral) : '/photos/image';
 
-    const handlePhotoOpen = photo => navigate(`${referral}?image=${photo.image}`);
+    const handlePhotoOpen = () => navigate(`${referral}?id=${photo?.id}&image=${photo?.image}`);
 
     if (!photo) {
         return null;
@@ -83,7 +83,7 @@ const ItemRenderer: FunctionComponent<VirtualizedGridProps<PhotoItem>> = ({ rowI
             <div
                 className="bg-cover bg-center aspect-square cursor-pointer"
                 style={{ width: GRID_WIDTH / GRID_COLUMN_COUNT, backgroundImage: `url(${photo.image})` }}
-                onClick={() => handlePhotoOpen(photo)}
+                onClick={handlePhotoOpen}
             />
         </div>
     );

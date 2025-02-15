@@ -16,6 +16,9 @@ export const useAppPhotosStateHandlers = () => {
 
     useNuiEvent('phone', 'AppPhotosSetData', setPhotos);
     useNuiEvent('phone', 'AppPhotosAddData', (photo: PhotoItem) => setPhotos(photos => [photo, ...photos]));
+    useNuiEvent('phone', 'AppPhotosDeleteData', (id: number) =>
+        setPhotos(photos => photos.filter(photo => photo.id !== id))
+    );
 
     useInjectDebugData(() => {
         const photos: PhotoItem[] = [];
