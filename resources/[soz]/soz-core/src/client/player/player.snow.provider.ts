@@ -14,6 +14,7 @@ import { StonkCloakroom } from '@public/shared/job/stonk';
 import { PlayerPedHash } from '@public/shared/player';
 import { getRandomItem } from '@public/shared/random';
 import { RpcServerEvent } from '@public/shared/rpc';
+import { deepCopy } from '@public/shared/utils/array';
 import { Weather } from '@public/shared/weather';
 
 import { ClothingService } from '../clothing/clothing.service';
@@ -149,7 +150,7 @@ export class PlayerSnowProvider {
     }
 
     @On('soz-character:Client:Cloth:Applied')
-    async onClothUpdate(outfit: Outfit): Promise<void> {
+    async onClothUpdate(outfitInput: Outfit): Promise<void> {
         if (this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
@@ -157,6 +158,21 @@ export class PlayerSnowProvider {
         const player = this.playerService.getPlayer();
         if (!player) {
             return;
+        }
+
+        const ped = PlayerPedId();
+        const outfit = deepCopy(outfitInput);
+        for (const comp of Object.keys(outfit.Components)) {
+            const component: Component = Number(comp);
+            if (outfit.Components[component].Collection) {
+                outfit.Components[component].Drawable = GetPedDrawableGlobalIndexFromCollection(
+                    ped,
+                    component as number,
+                    outfit.Components[component].Collection,
+                    outfit.Components[component].Drawable
+                );
+                outfit.Components[component].Collection = null;
+            }
         }
 
         const clothConfig = player.cloth_config.Config;
@@ -194,8 +210,9 @@ export class PlayerSnowProvider {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
                     item =>
                         item.Components[component] &&
-                        outfit.Components[component] &&
-                        item.Components[component].Drawable == outfit.Components[component].Drawable
+                        outfitInput.Components[component] &&
+                        item.Components[component].Drawable == outfitInput.Components[component].Drawable &&
+                        item.Components[component].Collection == outfitInput.Components[component].Collection
                 );
                 if (extra) {
                     coldScore += 2;
@@ -220,7 +237,8 @@ export class PlayerSnowProvider {
             item =>
                 item.Components[Component.Mask] &&
                 outfit.Components[Component.Mask] &&
-                item.Components[Component.Mask].Drawable == outfit.Components[Component.Mask].Drawable
+                item.Components[Component.Mask].Drawable == outfitInput.Components[Component.Mask].Drawable &&
+                item.Components[Component.Mask].Collection == outfitInput.Components[Component.Mask].Collection
         );
 
         const jewels = player.skin.Model.Hash == PlayerPedHash.Male ? MaleJewelryItems : FemaleJewelryItems;
