@@ -29,6 +29,7 @@ import {
     getResellPrice,
     hasSearchWarrantAccessInApartment,
     isApartmentExcludeFromHousing,
+    isMotel,
     isTrailer,
     Property,
 } from '@public/shared/housing/housing';
@@ -494,7 +495,7 @@ export class HousingProvider {
         }
 
         const hasPlayerAnotherApartment = await this.housingRepository.hasApartment(player.citizenid);
-        if (hasPlayerAnotherApartment && apartment.identifier.toLowerCase().startsWith('trailer_motel')) {
+        if (hasPlayerAnotherApartment && isMotel(apartment)) {
             this.notifier.error(
                 player.source,
                 "Il n'est pas possible d'acheter cette habitation en tant que résidence secondaire."
@@ -850,6 +851,11 @@ export class HousingProvider {
         const [property, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
         if (!property || !apartment) {
             this.notifier.error(player.source, "Vous ne possédez pas cette d'habitation.");
+            return;
+        }
+
+        if (isMotel(apartment)) {
+            this.notifier.error(player.source, "Vous ne pouvez pas améliorer cette d'habitation.");
             return;
         }
 

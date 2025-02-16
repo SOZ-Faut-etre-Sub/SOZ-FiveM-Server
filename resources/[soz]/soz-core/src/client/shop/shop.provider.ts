@@ -7,6 +7,7 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { isMotel } from '@public/shared/housing/housing';
 import { InventoryItem } from '@public/shared/inventory';
 import { JobPermission, JobType } from '@public/shared/job';
 import { StonkConfig } from '@public/shared/job/stonk';
@@ -215,7 +216,9 @@ export class ShopProvider {
                     const player = this.playerService.getPlayer();
                     const properties = this.housingRepository.get();
                     const ownedAnyApartment = properties.some(property =>
-                        property.apartments.some(apartment => apartment.owner === player.citizenid)
+                        property.apartments.some(
+                            apartment => apartment.owner === player.citizenid && !isMotel(apartment)
+                        )
                     );
                     return ownedAnyApartment && this.shopService.checkTarget([ShopBrand.Zkea], entity);
                 },
