@@ -18,7 +18,6 @@ import { useKeyboard } from './hooks/useKeyboard';
 import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
-import { CallButtonDynamicIsland } from './system/dynamic-island/components/CallButtonDynamicIsland';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
 import { NotificationDynamicIsland } from './system/dynamic-island/components/NotificationDynamicIsland';
 import { useEmergency, useEmergencyStateHandlers } from './system/emergency/emergency.atom';
@@ -69,7 +68,6 @@ export const PhoneApp: FunctionComponent = () => {
                         <ActionSheet />
 
                         <CallDynamicIsland />
-                        <CallButtonDynamicIsland />
                         <NotificationDynamicIsland />
 
                         {emergency ? (
