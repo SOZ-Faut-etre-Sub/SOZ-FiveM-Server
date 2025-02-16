@@ -70,6 +70,11 @@ export class BennysVehicleProvider {
     private jobService: JobService;
 
     private upgradeZone: MultiZone<BoxZone> = new MultiZone([
+        new BoxZone([-199.1, -1324.23, 31.11], 6.4, 5.2, {
+            heading: 269.06,
+            minZ: 30.11,
+            maxZ: 32.11,
+        }),
         new BoxZone([-222.49, -1323.6, 30.89], 9, 6, {
             heading: 90,
             minZ: 29.89,
