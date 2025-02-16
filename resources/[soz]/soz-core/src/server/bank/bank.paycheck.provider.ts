@@ -56,7 +56,7 @@ export class BankPaycheckProvider {
             }
 
             if (!player.job.onduty) {
-                payment = Math.ceil(payment * 0.3);
+                payment = Math.ceil(payment * 0.2);
             }
 
             const result = await this.bankService.transferBankMoney(
