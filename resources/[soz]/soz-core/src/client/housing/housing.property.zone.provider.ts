@@ -31,6 +31,7 @@ import {
     hasPropertyGarage,
     hasSearchWarrantAccessInApartment,
     isAdminHouse,
+    isMotel,
     isPlayerInsideApartment,
     Property,
 } from '../../shared/housing/housing';
@@ -832,7 +833,9 @@ export class HousingPropertyZoneProvider {
 
         const apartments: Apartment[] = [];
         for (const property of this.housingRepository.get()) {
-            for (const apartment of property.apartments.filter(apartment => apartment.owner === player.citizenid)) {
+            for (const apartment of property.apartments.filter(
+                apartment => apartment.owner === player.citizenid && !isMotel(apartment)
+            )) {
                 apartments.push(apartment);
             }
         }

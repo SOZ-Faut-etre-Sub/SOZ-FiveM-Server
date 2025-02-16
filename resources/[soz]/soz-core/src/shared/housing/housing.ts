@@ -79,6 +79,10 @@ export const isTrailer = (property: Property) => {
     return property.identifier.includes('trailer');
 };
 
+export const isMotel = (appartement: Apartment) => {
+    return appartement.identifier.toLowerCase().startsWith('trailer_motel');
+};
+
 export const hasOwnedOrAccess = (property: Property, player: PlayerData, temporaryAccess: Set<number>) => {
     return (
         (isAdminHouse(property) && isGameMaster(player)) ||
