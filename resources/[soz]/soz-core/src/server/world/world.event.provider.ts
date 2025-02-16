@@ -17,6 +17,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { EventInfo, Scene, WorldEvent } from '../../shared/scene';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { SceneRepository } from '../repository/scene.repository';
 import { WorldEventRepository } from '../repository/world.event.repository';
@@ -57,6 +58,9 @@ export class WorldEventProvider {
 
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private currentEvent: CurrentEvent = null;
     private loadedPeds = new Map<string, number>();
@@ -313,7 +317,13 @@ export class WorldEventProvider {
                     continue;
                 }
 
-                inventory.add(reward.item, amount);
+                if (inventory.add(reward.item, amount)) {
+                    this.monitor.traceEvent('world_event_item', {
+                        item_id: reward.item,
+                        amount,
+                        inventory_id: inventoryId,
+                    });
+                }
             }
         }
 
