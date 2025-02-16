@@ -18,9 +18,9 @@ export const CallTimer = () => {
     });
 
     return (
-        <div className="flex flex-col justify-center items-center text-gray-300">
+        <span>
             {interval.hours > 0 && String(interval.hours).padStart(2, '0') + ':'}
             {String(interval.minutes ?? 0).padStart(2, '0')}:{String(interval.seconds ?? 0).padStart(2, '0')}
-        </div>
+        </span>
     );
 };

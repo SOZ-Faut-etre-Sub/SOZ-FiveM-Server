@@ -37,7 +37,13 @@ export const CallModalApp = () => {
     return (
         <AppContainer className="bg-black/30 text-white" disableBackground forceControlColor="light">
             <div className="flex flex-col justify-center items-center font-semibold py-10">
-                {currentCall?.is_accepted ? <CallTimer /> : currentCall?.isTransmitter && <RingingText />}
+                {currentCall?.is_accepted ? (
+                    <div className="flex flex-col justify-center items-center text-gray-300">
+                        <CallTimer />
+                    </div>
+                ) : (
+                    currentCall?.isTransmitter && <RingingText />
+                )}
                 <div className="text-3xl text-center w-full px-10 truncate">
                     {targetContact?.display ?? targetNumber}
                 </div>
