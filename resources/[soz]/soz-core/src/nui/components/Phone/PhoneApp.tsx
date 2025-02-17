@@ -40,6 +40,7 @@ export const PhoneApp: FunctionComponent = () => {
         insideInput ? false : focus,
         focus
             ? [
+                  Control.NextCamera,
                   Control.VehicleNextRadio,
                   Control.Attack,
                   Control.Attack2,
@@ -53,6 +54,9 @@ export const PhoneApp: FunctionComponent = () => {
                   Control.MeleeAttack2,
                   Control.MeleeAttackLight,
                   Control.MeleeAttackHeavy,
+                  Control.MpTextChatAll,
+                  Control.FrontendPause,
+                  Control.FrontendPauseAlternate,
               ]
             : null
     );
