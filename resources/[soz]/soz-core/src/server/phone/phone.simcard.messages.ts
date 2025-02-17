@@ -132,6 +132,13 @@ export class PhoneSimCardMessages {
             return;
         }
 
+        const conversation = await this.prismaService.phone_messages_conversations.findFirst({
+            where: {
+                conversation_id: conversationId,
+                user_identifier: player.charinfo.phone,
+            },
+        });
+
         await this.prismaService.phone_messages_conversations.updateMany({
             where: {
                 conversation_id: conversationId,
@@ -139,6 +146,7 @@ export class PhoneSimCardMessages {
             },
             data: {
                 unread: 0,
+                updatedAt: conversation.updatedAt,
             },
         });
     }
