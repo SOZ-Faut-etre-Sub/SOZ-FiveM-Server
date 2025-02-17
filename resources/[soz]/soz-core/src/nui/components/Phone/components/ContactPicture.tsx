@@ -10,7 +10,6 @@ type Props = {
 
 export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'small' }) => {
     const theme = useThemeConfig();
-    const randomId = useId();
 
     return (
         <img
@@ -23,8 +22,8 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'smal
                 'size-28': size === 'xlarge',
             })}
             onError={e => (e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>')}
-            src={`${picture}?id=${randomId}`}
-            alt={randomId}
+            src={picture}
+            alt={picture}
             loading="lazy"
         />
     );
