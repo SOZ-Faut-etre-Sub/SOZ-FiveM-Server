@@ -4,9 +4,12 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { useNotification } from '../../notifications/hooks/useNotifications';
 import { lastNotificationAtom } from '../../notifications/notification.atom';
+import { usePhoneAvailable } from '../../phone.atom';
 import { useContact } from '../../sim-card/hooks/useContact';
 
 export const NotificationDynamicIsland = () => {
+    const available = usePhoneAvailable();
+
     const lastNotification = useAtomValue(lastNotificationAtom);
     const message = useNotification(lastNotification);
 
@@ -31,7 +34,7 @@ export const NotificationDynamicIsland = () => {
         }
 
         return () => removeCurrentMessage();
-    }, [message]);
+    }, [available, message]);
 
     const transitions = useTransition(currentMessage, {
         from: {
