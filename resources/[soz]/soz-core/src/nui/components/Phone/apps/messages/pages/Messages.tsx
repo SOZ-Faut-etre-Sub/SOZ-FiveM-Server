@@ -53,7 +53,7 @@ export const Messages = () => {
 
         fetchNui(NuiEvent.PhoneSimCardSetConversationAsRead, conversation.conversation_id);
         removeNotificationByGroup('messages', conversation.conversation_id);
-    }, []);
+    }, [messages]);
 
     useEffect(() => {
         if (!conversation) return;
