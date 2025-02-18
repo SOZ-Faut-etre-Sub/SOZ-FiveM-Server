@@ -22,14 +22,14 @@ export const useEndDialSound = (): useEndDialSoundValue => {
 
     useEffect(() => {
         if (!sound.isMounted(END_DIAL_URL)) {
-            sound.mount(END_DIAL_URL, options.volume, false);
+            sound.mount(END_DIAL_URL, options.volume / 2, false);
             return;
         }
-        sound.volume(END_DIAL_URL, options.volume);
+        sound.volume(END_DIAL_URL, options.volume / 2);
     }, [sound]);
 
     const startTone = useCallback(() => {
-        sound.play(END_DIAL_URL, options.volume, false);
+        sound.play(END_DIAL_URL, options.volume / 2, false);
     }, [sound]);
 
     return { startTone };
