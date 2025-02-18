@@ -180,6 +180,14 @@ export class VehicleCustomProvider {
             return;
         }
 
+        if (mode === LSCustomMode.LsCustom) {
+            const volatile = await this.vehicleStateService.getVehicleState(vehicleEntityId);
+            if (volatile.isCrimiImport) {
+                this.notifier.notify("Ce véhicule ne vient pas d'un concessionnaire agréé.", 'error');
+                return;
+            }
+        }
+
         const vehicleCondition = await this.vehicleStateService.getVehicleCondition(vehicleEntityId);
 
         if (this.vehicleService.isInBadCondition(vehicleEntityId, vehicleCondition)) {

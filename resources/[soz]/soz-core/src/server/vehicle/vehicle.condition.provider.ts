@@ -274,7 +274,7 @@ export class VehicleConditionProvider {
             player_source: source,
             vehicle_plate: vehicle.plate,
             reason,
-            position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
+            position: toVector3Object(GetEntityCoords(NetworkGetEntityFromNetworkId(vehicleNetworkId)) as Vector3),
         });
     }
 

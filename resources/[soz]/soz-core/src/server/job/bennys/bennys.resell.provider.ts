@@ -59,6 +59,15 @@ export class BennysResellProvider {
             return;
         }
 
+        if (playerVehicle.crimiImport) {
+            this.notifier.notify(
+                source,
+                `Désolé je reprends pas les véhicules ne venant pas de concessionnaires agréés.`,
+                'error'
+            );
+            return;
+        }
+
         const result = await this.estimationService.estimateVehicle(source, networkId, configuration);
 
         if (isErr(result)) {

@@ -286,6 +286,7 @@ export type VehicleVolatileState = {
     stolenLocator: boolean;
     exportBiz: boolean;
     nitroReloadStart: number;
+    isCrimiImport: boolean;
 };
 
 export type VehicleState = {
@@ -385,6 +386,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     stolenLocator: false,
     exportBiz: false,
     nitroReloadStart: 0,
+    isCrimiImport: false,
 });
 
 export type VehicleMenuData = {

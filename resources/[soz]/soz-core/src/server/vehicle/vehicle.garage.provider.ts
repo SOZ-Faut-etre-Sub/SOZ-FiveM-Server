@@ -864,6 +864,18 @@ export class VehicleGarageProvider {
                         pound_price: cost,
                     },
                 });
+
+                if (garage.type === GarageType.Depot && vehicleState.configuration.extraStorage) {
+                    vehicleState.configuration.extraStorage = false;
+                    await this.prismaService.playerVehicle.update({
+                        where: {
+                            id: vehicleState.volatile.id,
+                        },
+                        data: {
+                            mods: JSON.stringify(vehicleState.configuration),
+                        },
+                    });
+                }
             }
 
             if (garage.type === GarageType.Depot) {
@@ -882,7 +894,7 @@ export class VehicleGarageProvider {
                 duration: delay,
                 money: cost,
             });
-            this.notifier.notify(source, '~r~ERREUR~s~ du rangement du véhicule.', 'error');
+            this.notifier.notify(source, '~r~ERREUR~s~ du rangement du véhicule.', 'error', 40_000);
         }
     }
 
