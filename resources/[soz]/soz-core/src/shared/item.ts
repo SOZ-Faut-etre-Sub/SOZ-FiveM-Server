@@ -46,6 +46,7 @@ type BaseItem = {
     unique: boolean;
     useable: boolean;
     carrybox: string;
+    carrybox_allow_sprint: boolean;
     maxplates?: number;
     expiresIn?: number;
     durability?: number;

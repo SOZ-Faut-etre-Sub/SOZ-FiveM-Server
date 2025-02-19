@@ -12422,7 +12422,6 @@ QBShared.Items = {
         ["description"] = "Une carte magnétique qui doit surement servir à accéder à un ordinateur si on trouve la seconde...",
         ["illustrator"] = ".Sniteur",
     },
-    
     ["weapon_crate"] = {
         ["name"] = "weapon_crate",
         ["label"] = "Caisse d'armes",
@@ -12433,6 +12432,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["carrybox"] = "ch_prop_ch_crate_full_01a",
+        ["carrybox_allow_sprint"] = true,
         ["description"] = "Conteneur robuste conçu pour le transport et la protection d’armes à feu et de munitions. Fabriquée en bois renforcé elle résiste aux chocs, à l'eau et à la poussière.",
         ["illustrator"] = ".Laikker",
     },
@@ -12446,6 +12446,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["carrybox"] = "ba_prop_battle_rsply_crate_gr_02a",
+        ["carrybox_allow_sprint"] = true,
         ["description"] = "Caisse pour le stockage de munitions, conçue pour résister aux environnements difficiles",
         ["illustrator"] = ".Laikker",
     },
@@ -12459,6 +12460,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["carrybox"] = "m23_2_prop_m32_armorcrate_01a",
+        ["carrybox_allow_sprint"] = true,
         ["description"] = "Caisse contenant des gilet pare-balles empillé les un sure les autres",
         ["illustrator"] = ".Laikker",
     },
@@ -22559,7 +22561,7 @@ QBShared.Items = {
         ['sozedex_id'] = 60,
         ['price'] = 86
     },
-    
+
     ['winter_permasfrost'] = {
         ['name'] = "winter_permasfrost",
         ['label'] = "Permasfrost",
@@ -22960,7 +22962,7 @@ QBShared.Items = {
         ['sozedex_id'] = 80,
         ['price'] = 85
     },
-     
+
     -- OTHER
     ["soz_hammer"] = {
         ["name"] = "soz_hammer",
