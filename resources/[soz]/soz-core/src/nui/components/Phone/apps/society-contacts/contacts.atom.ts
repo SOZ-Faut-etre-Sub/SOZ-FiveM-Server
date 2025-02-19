@@ -21,15 +21,11 @@ export const filteredContactsAtom = atom<Array<SocietyContact | Separator>>(get 
                 contact?.number?.includes(searchQuery)
         )
         .sort((a, b) => {
-            if (a.type && !b.type) {
-                return -1;
-            } else if (!a.type && b.type) {
-                return 1;
-            } else if (a.type && b.type) {
-                return typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type);
-            } else {
-                return a.display.localeCompare(b.display);
-            }
+            return (
+                typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type) ||
+                a.order - b.order ||
+                a.display.localeCompare(b.display)
+            );
         })
         .forEach(contact => {
             let type: string;
