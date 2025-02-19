@@ -59,13 +59,13 @@ export const useKeyboard = () => {
     useEffect(() => {
         window.addEventListener('keyup', onKeyUp);
 
-        window.addEventListener('click', onClick);
+        window.addEventListener('mouseup', onClick);
         window.addEventListener('blur', onBlur);
 
         return () => {
             window.removeEventListener('keyup', onKeyUp);
 
-            window.removeEventListener('click', onClick);
+            window.removeEventListener('mouseup', onClick);
             window.removeEventListener('blur', onBlur);
         };
     }, []);

@@ -67,6 +67,7 @@ export class PhoneState {
 
     public setPhoneDisabled(value: boolean) {
         this.phoneDisabled = value;
+        this.nuiDispatch.dispatch('phone', 'SetAvailability', !value);
 
         if (value) {
             this.setPhoneOpen(false);

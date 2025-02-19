@@ -18,16 +18,16 @@ export const useDialingSound = () => {
 
     useEffect(() => {
         if (!sound.isMounted(DIAL_TONE_URL)) {
-            sound.mount(DIAL_TONE_URL, options.volume, true);
+            sound.mount(DIAL_TONE_URL, options.volume / 2, true);
             return;
         }
-        sound.volume(DIAL_TONE_URL, options.volume);
+        sound.volume(DIAL_TONE_URL, options.volume / 2);
     }, [sound]);
 
     return {
         play: () => {
             if (sound.playing(DIAL_TONE_URL)) return;
-            sound.play(DIAL_TONE_URL, options.volume, true);
+            sound.play(DIAL_TONE_URL, options.volume / 2, true);
         },
         stop: () => sound.stop(DIAL_TONE_URL),
         playing: () => sound.playing(DIAL_TONE_URL),

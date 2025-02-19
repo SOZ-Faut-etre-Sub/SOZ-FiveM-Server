@@ -53,7 +53,7 @@ export const Messages = () => {
 
         fetchNui(NuiEvent.PhoneSimCardSetConversationAsRead, conversation.conversation_id);
         removeNotificationByGroup('messages', conversation.conversation_id);
-    }, []);
+    }, [messages]);
 
     useEffect(() => {
         if (!conversation) return;
@@ -119,7 +119,10 @@ export const Messages = () => {
                     followOutput
                 />
 
-                <MessageInput messageConversationId={conversation?.conversation_id} />
+                <MessageInput
+                    messageConversationId={conversation?.conversation_id}
+                    onSubmit={() => ref.current.scrollToIndex(messages.length - 1)}
+                />
             </AppContent>
         </AppWrapper>
     );

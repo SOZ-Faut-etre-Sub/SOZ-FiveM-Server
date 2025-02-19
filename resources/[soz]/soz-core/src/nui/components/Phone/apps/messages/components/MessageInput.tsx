@@ -17,10 +17,11 @@ import { useMessageAPI } from '../hooks/useMessageAPI';
 
 interface MessageInputProps {
     messageConversationId: string | undefined;
+    onSubmit?: () => void;
     autoFocus?: boolean;
 }
 
-export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConversationId, autoFocus }) => {
+export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConversationId, onSubmit, autoFocus }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { pathname, search } = useLocation();
@@ -38,6 +39,7 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
             setEmojiKeyboard(false);
             sendMessage({ conversation_id: messageConversationId, message });
             setMessage('');
+            onSubmit?.();
         }
     };
 
@@ -64,6 +66,7 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
                         conversation_id: messageConversationId,
                         message: `vec3(${position.join(',')})`,
                     });
+                    onSubmit?.();
                 },
             },
             {
@@ -77,6 +80,7 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
                         conversation_id: messageConversationId,
                         message: `vec3(${position.join(',')})`,
                     });
+                    onSubmit?.();
                 },
             },
             {
