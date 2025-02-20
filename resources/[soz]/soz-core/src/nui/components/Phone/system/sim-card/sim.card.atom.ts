@@ -92,10 +92,10 @@ export const filteredConversationsAtom = atom<Array<MessageConversation & { last
         .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
         .filter(c => {
             const contact = contacts.find(contact => contact.number === c.phoneNumber);
-            if (!contact) return true;
+            if (!contact) return false;
             return (
                 contact?.display?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                contact?.number?.includes(searchQuery)
+                contact?.number?.includes(searchQuery.toLowerCase())
             );
         })
         .map(c => {
