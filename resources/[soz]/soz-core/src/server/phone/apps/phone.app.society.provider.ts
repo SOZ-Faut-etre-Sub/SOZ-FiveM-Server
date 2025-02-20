@@ -89,7 +89,7 @@ export class PhoneAppSocietyProvider {
                 conversation_id: message.number,
                 source_phone: identifier,
                 message: message.message,
-                position: JSON.stringify(position),
+                position: position ? JSON.stringify(position) : null,
                 type: message?.type ?? null,
             },
         });
@@ -129,7 +129,7 @@ export class PhoneAppSocietyProvider {
                         conversation_id: SocietyNumberList[society],
                         source_phone: identifier,
                         message: `[${message.number.replace('555-', '')}] ${message.message}`,
-                        position: JSON.stringify(position),
+                        position: position ? JSON.stringify(position) : null,
                         type: message?.type ?? null,
                     },
                 });
@@ -154,7 +154,7 @@ export class PhoneAppSocietyProvider {
                         conversation_id: SocietyNumberList[society],
                         source_phone: identifier,
                         message: `[${message.number.replace('555-', '')}] ${message.message}`,
-                        position: JSON.stringify(position),
+                        position: position ? JSON.stringify(position) : null,
                         type: message?.type ?? null,
                     },
                 });
