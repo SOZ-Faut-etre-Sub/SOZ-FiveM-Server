@@ -22,7 +22,7 @@ export const MenuVehicleAuction: FunctionComponent<MenuVehicleAuctionProps> = ({
     return (
         <Menu type={MenuType.Vehicle}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_shop_vehicle_car">Enchère véhicules</MenuTitle>
+                <MenuTitle title="Enchère véhicules" />
                 <MenuContent>
                     <MenuItemButton onConfirm={onConfirm} disabled={data.isAuctionDisable}>
                         Faire une enchère sur {data.auction.vehicle.name}

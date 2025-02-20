@@ -16,7 +16,7 @@ export const MenuHalloweenVampire: FunctionComponent = () => {
     return (
         <Menu type={MenuType.HalloweenVampire}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Dracula</MenuTitle>
+                <MenuTitle title="Halloween" />
                 <MenuContent>
                     <MenuItemButton
                         onConfirm={() => {

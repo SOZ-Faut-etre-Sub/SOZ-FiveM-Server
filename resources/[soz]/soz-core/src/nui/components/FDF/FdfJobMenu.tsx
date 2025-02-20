@@ -4,6 +4,7 @@ import { FDFFieldBlips, FDFFieldKind, FDFFieldMenu } from '@public/shared/job/fd
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { CraftInputs } from '../Shared/CraftInputs';
@@ -35,7 +36,6 @@ type FDFStateProps = {
 };
 
 export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_fdf';
     const [blips, setBlips] = useState(null);
     const [currentRecipe, setCurrentRecipe] = useState<CraftRecipe>();
     const items = useItems();
@@ -56,7 +56,7 @@ export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
         return (
             <Menu type={MenuType.FDFJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel.fdf} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -68,7 +68,7 @@ export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
     return (
         <Menu type={MenuType.FDFJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel.fdf} />
                 <MenuContent>
                     {Object.values(FDFFieldBlips).map(kind => (
                         <MenuItemCheckbox
@@ -97,8 +97,8 @@ export const FdfJobMenu: FunctionComponent<FDFStateProps> = ({ data }) => {
             </MainMenu>
             {Object.entries(data.recipes).map(([name, category]) => (
                 <SubMenu id={`recipe_${name}`} key={`recipe_${name}`}>
-                    <MenuTitle banner={banner}>{`Livre de recettes ${name}`}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={JobLabel.fdf} />
+                    <MenuContent subtitle={`Livre de recettes ${name}`}>
                         <MenuItemSelect title="" titleWidth={0}>
                             {Object.entries(category.recipes).map(([output, recipe]) => (
                                 <MenuItemSelectOption

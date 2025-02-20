@@ -5,6 +5,7 @@ import { MenuUpwData, UpwFacilityType } from '@public/shared/job/upw';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { JobLabel } from '../../../../shared/job';
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
 
 type MenuUpwProps = {
@@ -12,7 +13,6 @@ type MenuUpwProps = {
 };
 
 export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_upw';
     const player = usePlayer();
     const [blips, setBlips] = useState(null);
 
@@ -34,7 +34,7 @@ export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
         return (
             <Menu type={MenuType.JobUpw}>
                 <MainMenu>
-                    <MenuTitle banner={banner}>Services UPW</MenuTitle>
+                    <MenuTitle title={JobLabel.upw} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -46,7 +46,7 @@ export const MenuUpw: FunctionComponent<MenuUpwProps> = ({ data }) => {
     return (
         <Menu type={MenuType.JobUpw}>
             <MainMenu>
-                <MenuTitle banner={banner}>Services UPW</MenuTitle>
+                <MenuTitle title={JobLabel.upw} />
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={blips[UpwFacilityType.inverter]}

@@ -12,6 +12,7 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuSubTitle,
     MenuTitle,
 } from '../Styleguide/Menu';
 
@@ -29,9 +30,7 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
     return (
         <Menu type={MenuType.WatchMenu}>
             <MainMenu>
-                <MenuTitle banner="https://soz.zerator.com/static/game/images/banner/menu_watch.webp">
-                    Montre connectée
-                </MenuTitle>
+                <MenuTitle title="Montre connectée" />
                 <MenuContent>
                     <MenuItemSelect
                         title="Thème"
@@ -121,7 +120,7 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                         Stamina
                     </MenuItemCheckbox>
 
-                    <MenuTitle>Accessibilité</MenuTitle>
+                    <MenuSubTitle>Accessibilité</MenuSubTitle>
                     <MenuItemCheckbox
                         checked={data.switchPlayerStatsPosition}
                         description="Change la position des stats du joueur"
@@ -130,7 +129,7 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                         Afficher les stats du joueur à droite
                     </MenuItemCheckbox>
 
-                    <MenuTitle>Intéraction</MenuTitle>
+                    <MenuSubTitle>Intéraction</MenuSubTitle>
                     <MenuItemCheckbox
                         checked={data.showInstructionalOverlay}
                         description="Active/Désactive l'affichage des instructions d'intéraction"

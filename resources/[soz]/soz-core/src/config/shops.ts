@@ -17,7 +17,6 @@ export type BrandConfig = {
     blipSprite?: number;
     blipColor?: number;
     pedModel?: string;
-    banner?: string;
 };
 
 export type NoZoneShopConfig = {
@@ -176,145 +175,124 @@ export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
         blipSprite: 73,
         blipColor: 26,
         pedModel: 's_f_m_shop_high',
-        banner: 'https://nui-img/soz/menu_shop_clothe_luxe',
     },
     [ShopBrand.Suburban]: {
         label: 'Suburban',
         blipSprite: 73,
         blipColor: 29,
         pedModel: 's_f_y_shop_mid',
-        banner: 'https://nui-img/soz/menu_shop_clothe_normal',
     },
     [ShopBrand.Binco]: {
         label: 'Binco',
         blipSprite: 73,
         blipColor: 33,
         pedModel: 's_f_y_shop_low',
-        banner: 'https://nui-img/soz/menu_shop_clothe_normal',
     },
     [ShopBrand.Mask]: {
         label: 'Magasin de Masques',
         blipSprite: 362,
-        banner: 'https://nui-img/soz/menu_shop_accessory',
     },
     [ShopBrand.Jewelry]: {
         label: 'Bijoutier',
         blipSprite: 617,
         blipColor: 0,
         pedModel: 'u_m_m_jewelsec_01',
-        banner: 'https://nui-img/soz/menu_shop_jewelry',
     },
     [ShopBrand.Supermarket247North]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 'ig_ashley',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.Supermarket247South]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 'cs_ashley',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.Supermarket247Cayo]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 's_f_y_sweatshop_01',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.LtdGasolineNorth]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 's_m_m_autoshop_01',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.LtdGasolineSouth]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 's_m_m_autoshop_02',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.RobsliquorNorth]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 'a_m_m_genfat_02',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.RobsliquorSouth]: {
         label: 'Superette',
         blipSprite: 52,
         blipColor: 2,
         pedModel: 'a_m_m_genfat_01',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.Tattoo]: {
         label: 'Tatoueur',
         blipSprite: 75,
         blipColor: 1,
         pedModel: 'u_m_y_tattoo_01',
-        banner: 'https://nui-img/soz/menu_shop_tattoo',
     },
     [ShopBrand.Barber]: {
         label: 'Coiffeur',
         blipSprite: 71,
         blipColor: 0,
         pedModel: 's_f_m_fembarber',
-        banner: 'https://nui-img/soz/menu_shop_barber',
     },
     [ShopBrand.Ammunation]: {
         label: 'Ammu-Nation',
         blipSprite: 110,
         blipColor: 17,
         pedModel: 's_m_y_ammucity_01',
-        banner: 'https://nui-img/soz/menu_shop_ammunation',
     },
     [ShopBrand.Zkea]: {
         label: 'Zkea',
         blipSprite: 123,
         blipColor: 69,
         pedModel: 'ig_brad',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.LsCustom]: {
         label: 'LS Custom',
         blipSprite: 72,
         blipColor: 46,
         pedModel: 'S_F_M_Autoshop_01',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirOther]: {
         label: 'Boutique de souvenir - Autres',
         blipSprite: 781,
         blipColor: 13,
         pedModel: 'u_m_y_rsranger_01',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirMemory]: {
         label: 'Boutique de souvenir',
         blipSprite: 781,
         blipColor: 13,
         pedModel: 'u_m_y_mani',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirPlush]: {
         label: 'Boutique de souvenir - Peluches',
         blipSprite: 781,
         blipColor: 13,
         pedModel: 'a_m_m_farmer_01',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
     [ShopBrand.SouvenirJewel]: {
         label: 'Boutique de souvenir - Luxes',
         blipSprite: 781,
         blipColor: 13,
         pedModel: 'u_m_m_jewelthief',
-        banner: 'https://nui-img/soz/menu_shop_supermarket',
     },
 };
 

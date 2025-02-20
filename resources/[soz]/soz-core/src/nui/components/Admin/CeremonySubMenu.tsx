@@ -2,6 +2,7 @@ import { JobType } from '@public/shared/job';
 import { JobRegistry } from '@public/shared/job/config';
 import { FunctionComponent, useState } from 'react';
 
+import { SozRole } from '../../../core/permissions';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
 import {
@@ -10,24 +11,25 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export type CeremonySubMenuProps = {
-    banner: string;
+    permission: SozRole;
     state: {
         disableNpc: boolean;
     };
 };
 
-export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banner, state }) => {
+export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ permission, state }) => {
     const [volume, setVolume] = useState<number>(10);
 
     return (
         <SubMenu id="ceremony">
-            <MenuTitle banner={banner}>Cérémonie</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="Cérémonie">
                 <MenuItemCheckbox
                     checked={state.disableNpc}
                     onChange={async value => {
@@ -55,7 +57,7 @@ export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banne
                         ))}
                 </MenuItemSelect>
 
-                <MenuTitle>Cérémonie parade</MenuTitle>
+                <MenuSubTitle>Cérémonie parade</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuCeremonyParadeStart, true);
@@ -97,7 +99,7 @@ export const CeremonySubMenu: FunctionComponent<CeremonySubMenuProps> = ({ banne
                         ))}
                 </MenuItemSelect>
 
-                <MenuTitle>Cérémonie jeux de lumière</MenuTitle>
+                <MenuSubTitle>Cérémonie jeux de lumière</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuPublicCeremonyStart);

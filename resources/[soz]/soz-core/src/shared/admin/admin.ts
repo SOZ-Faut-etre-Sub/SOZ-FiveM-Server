@@ -101,7 +101,6 @@ export type HalloweenSubMenuState = {
 };
 
 export type AdminMenuData = {
-    banner: string;
     permission: SozRole;
     event: EventInfo;
     characters: Record<string, PlayerCharInfo>;

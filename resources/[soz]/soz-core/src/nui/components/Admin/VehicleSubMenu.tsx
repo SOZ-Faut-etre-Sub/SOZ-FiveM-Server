@@ -18,7 +18,6 @@ import {
 } from '../Styleguide/Menu';
 
 export type VehicleSubMenuProps = {
-    banner: string;
     permission: SozRole;
     state: VehicleSubMenuState;
 };
@@ -31,7 +30,7 @@ export const VEHICLE_OPTIONS = [
 
 type Catalog = Record<keyof VehicleCategory, Vehicle[]>;
 
-export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner, permission, state }) => {
+export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ permission, state }) => {
     const [vehicles, setVehicles] = useState<any[]>([]);
     const [catalog, setCatalog] = useState<Catalog>(null);
 
@@ -65,8 +64,8 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
     return (
         <>
             <SubMenu id="vehicle" key={'vehicle'}>
-                <MenuTitle banner={banner}>ça roule vite ?</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="ça roule vite ?">
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuVehicleSpawn);
@@ -171,8 +170,8 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
                 </MenuContent>
             </SubMenu>
             <SubMenu id={'vehicles_catalog'} key={'vehicles_catalog'}>
-                <MenuTitle banner={banner}>Catalogue des véhicules</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Catalogue des véhicules">
                     {Object.keys(catalog).map(category => (
                         <MenuItemSubMenuLink
                             id={'vehicles_catalog_' + category}
@@ -185,8 +184,8 @@ export const VehicleSubMenu: FunctionComponent<VehicleSubMenuProps> = ({ banner,
             </SubMenu>
             {Object.keys(catalog).map(category => (
                 <SubMenu id={'vehicles_catalog_' + category} key={'vehicles_catalog_' + category}>
-                    <MenuTitle banner={banner}>{VehicleCategory[category]}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={permission} />
+                    <MenuContent subtitle={VehicleCategory[category]}>
                         {catalog[category].map(vehicle => (
                             <MenuItemSelect
                                 title={vehicle.name}

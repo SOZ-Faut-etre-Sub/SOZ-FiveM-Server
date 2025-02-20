@@ -33,7 +33,7 @@ export const MenuRentBoat: FunctionComponent = () => {
     return (
         <Menu type={MenuType.RentBoat}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_rent_boat">Location de bateaux</MenuTitle>
+                <MenuTitle title="Location de bateaux" />
                 <MenuContent>
                     <MenuItemButton onConfirm={() => returnBoat()}>Rendre le bateau</MenuItemButton>
                     <MenuItemSelect

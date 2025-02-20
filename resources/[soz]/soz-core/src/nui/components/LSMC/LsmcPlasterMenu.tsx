@@ -2,6 +2,7 @@ import { NuiEvent } from '@public/shared/event';
 import { PlasterConfigs, PlasterLocation, PlasterMenuData } from '@public/shared/job/lsmc';
 import { FunctionComponent } from 'react';
 
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
@@ -11,13 +12,11 @@ type LSMCPlasterMenuProps = {
 };
 
 export const LsmcPlasterMenu: FunctionComponent<LSMCPlasterMenuProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_lsmc';
-
     return (
         <Menu type={MenuType.LsmcPlaster}>
             <MainMenu>
-                <MenuTitle banner={banner}>Plâtre</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={JobLabel.lsmc} />
+                <MenuContent subtitle="Plâtre">
                     {Object.values(PlasterLocation).map(loc => {
                         return (
                             <MenuItemButton

@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { Property } from '@public/shared/housing/housing';
 import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenateParty } from '@public/shared/senate';
@@ -12,6 +13,7 @@ export type HousingUpgradesMenuData = {
 };
 
 export type AdminMapperMenuData = {
+    permission: SozRole;
     properties: Property[];
     showInterior: boolean;
     parties: SenateParty[];

@@ -16,12 +16,12 @@ import {
     MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuItemText,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export type PlayerSubMenuProps = {
-    banner: string;
     permission: SozRole;
     parties: SenateParty[];
 };
@@ -57,7 +57,7 @@ const SCENARIO_OPTIONS = [
     { label: 'Scenario 4', value: 'scenario4' },
 ];
 
-export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, permission, parties }) => {
+export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ permission, parties }) => {
     const [players, setPlayers] = useState<AdminPlayer[]>([]);
     const [searchFilter, setSearchFilter] = useState<string>('');
 
@@ -85,8 +85,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
     return (
         <>
             <SubMenu id="players">
-                <MenuTitle banner={banner}>Michel ? C'est toi ?</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Michel ? C'est toi ?">
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuPlayerHandleSearchPlayer);
@@ -114,8 +114,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
             </SubMenu>
             {players.map((player, index) => (
                 <SubMenu id={'player_' + player.citizenId} key={`player_index_${index}`}>
-                    <MenuTitle banner={banner}>{player.name}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={permission} />
+                    <MenuContent subtitle={player.name}>
                         <MenuItemButton
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.AdminMenuPlayerSpectate, player);
@@ -123,7 +123,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                             disabled={!isAdminOrStaffOrGM}
                             description={
                                 <ul>
-                                    <MenuTitle>Contrôle du mode observateur</MenuTitle>
+                                    <MenuSubTitle>Contrôle du mode observateur</MenuSubTitle>
                                     <MenuItemText> Tab : Basculer le mode caméra</MenuItemText>
                                     <MenuItemText> Retour : Quitter le mode observateur</MenuItemText>
                                     <MenuItemText> Maj Gauche : Accélérer la caméra libre</MenuItemText>
@@ -260,9 +260,7 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ banner, p
                         >
                             Ouvrir le GunSmith
                         </MenuItemButton>
-                        <MenuItemText>
-                            <b>Hygiène de vie</b>
-                        </MenuItemText>
+                        <MenuSubTitle>Hygiène de vie</MenuSubTitle>
                         <MenuItemSelect
                             title={'Force'}
                             onConfirm={async selectedIndex => {

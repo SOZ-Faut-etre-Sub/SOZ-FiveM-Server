@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { __ } from '@headlessui/react/dist/types';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -10,16 +11,17 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export type MeteorSubMenuProps = {
-    banner: string;
+    permission: SozRole;
     state: MeteorSubMenuState;
 };
 
-export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, state }) => {
+export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permission, state }) => {
     const [waterLevel, setWaterLevel] = useState<[number, number]>([0, 0]);
 
     useEffect(() => {
@@ -34,8 +36,8 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
 
     return (
         <SubMenu id="meteor">
-            <MenuTitle banner={banner}>Juste un rond ...</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="Juste un rond ...">
                 <MenuItemSelect
                     title={`Sirène`}
                     value={state.siren}
@@ -103,9 +105,9 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 >
                     Désactiver le spawn de PNJ
                 </MenuItemCheckbox>
-                <MenuTitle>
+                <MenuSubTitle>
                     Niveau de l'eau {waterLevel[0].toFixed(3)}/{waterLevel[1]}
-                </MenuTitle>
+                </MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuOceanSetWaterLevel, false);
@@ -128,7 +130,7 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                 >
                     Grosses vagues
                 </MenuItemCheckbox>
-                <MenuTitle>Tremblement de terre</MenuTitle>
+                <MenuSubTitle>Tremblement de terre</MenuSubTitle>
                 <MenuItemCheckbox
                     checked={state.earthQuake}
                     onChange={async value => {
@@ -152,7 +154,7 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, s
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
-                <MenuTitle>Annonces</MenuTitle>
+                <MenuSubTitle>Annonces</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuEarthquakeFlash, false);

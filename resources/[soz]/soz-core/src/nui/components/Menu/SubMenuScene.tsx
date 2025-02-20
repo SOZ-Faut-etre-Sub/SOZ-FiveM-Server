@@ -1,5 +1,5 @@
 import { NuiEvent } from '@public/shared/event/nui';
-import { JobType } from '@public/shared/job';
+import { JobLabel, JobType } from '@public/shared/job';
 import { ObjectEditorContext } from '@public/shared/object';
 import { Scene } from '@public/shared/scene';
 import { FunctionComponent, useEffect } from 'react';
@@ -12,6 +12,7 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
     useIsInSubMenu,
@@ -40,19 +41,11 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
         };
     }, [inSubMenu]);
 
-    let banner = 'https://soz.zerator.com/static/game/images/banner/soz_hammer.webp';
-
-    if (context === 'admin') {
-        banner = 'https://nui-img/soz/menu_mapper';
-    } else if (context === JobType.Gouv) {
-        banner = 'https://nui-img/soz/menu_job_gouv';
-    }
-
     return (
         <>
             <SubMenu key={scene.id} id={subMenuId}>
-                <MenuTitle banner={banner}>Scène {scene.name}</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={context === JobType.Gouv ? JobLabel.gouv : context} />
+                <MenuContent subtitle={`Scène ${scene.name}`}>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.SceneSearchEntity);
@@ -150,7 +143,7 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         ❌ Supprimer
                     </MenuItemButton>
-                    <MenuTitle>Entités</MenuTitle>
+                    <MenuSubTitle>Entités</MenuSubTitle>
                     {Object.values(scene.entities).map(entity => (
                         <MenuItemSelect
                             title={entity.model}
@@ -202,7 +195,7 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                             <MenuItemSelectOption value="inventory_delete">Supprimer l'inventaire</MenuItemSelectOption>
                         </MenuItemSelect>
                     ))}
-                    <MenuTitle>PNJs</MenuTitle>
+                    <MenuSubTitle>PNJs</MenuSubTitle>
                     {Object.values(scene.peds).map(ped => (
                         <MenuItemSelect
                             title={ped.model}

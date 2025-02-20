@@ -2,6 +2,7 @@ import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../../shared/event';
+import { JobLabel } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';
 import { fetchNui } from '../../../fetch';
 import { usePlayer } from '../../../hook/data';
@@ -24,7 +25,7 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
         return (
             <Menu type={MenuType.JobBennys}>
                 <MainMenu>
-                    <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
+                    <MenuTitle title={JobLabel.bennys} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -36,7 +37,7 @@ export const MenuBennys: FunctionComponent<MenuBennysProps> = ({ data }) => {
     return (
         <Menu type={MenuType.JobBennys}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_job_bennys">Services Bennys</MenuTitle>
+                <MenuTitle title={JobLabel.bennys} />
                 <MenuContent>
                     {data.insideUpgradeZone && (
                         <MenuItemButton

@@ -3,6 +3,7 @@ import { DmcJobMenuData } from '@public/shared/job/dmc';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../../shared/event';
+import { JobLabel } from '../../../../shared/job';
 import { MenuType } from '../../../../shared/nui/menu';
 import { fetchNui } from '../../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../../Styleguide/Menu';
@@ -19,14 +20,13 @@ const labels = {
 };
 
 export const DmcJobMenu: FunctionComponent<DmcStateProps> = ({ data }) => {
-    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_job_dmc.webp';
     const player = usePlayer();
 
     if (!player.job.onduty) {
         return (
             <Menu type={MenuType.DmcJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel.dmc} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -38,7 +38,7 @@ export const DmcJobMenu: FunctionComponent<DmcStateProps> = ({ data }) => {
     return (
         <Menu type={MenuType.DmcJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel.dmc} />
                 <MenuContent>
                     {Object.entries(data.blipState).map(([key, checked]) => (
                         <MenuItemCheckbox

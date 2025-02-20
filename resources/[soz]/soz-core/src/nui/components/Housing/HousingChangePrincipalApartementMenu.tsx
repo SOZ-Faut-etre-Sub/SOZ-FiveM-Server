@@ -20,7 +20,7 @@ export const HousingChangePrincipalApartementMenu: FunctionComponent<HousingChan
     return (
         <Menu type={MenuType.HousingChangePrincipalApartementMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_habitation"></MenuTitle>
+                <MenuTitle title="Habitation" />
                 <MenuContent>
                     {data.apartments.map(apartment => {
                         return (

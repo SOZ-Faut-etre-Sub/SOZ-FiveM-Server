@@ -1,5 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { CheckIcon } from '@heroicons/react/solid';
+import { BorderBox } from '@public/nui/components/Styleguide/BorderBox';
+import { GlassMorphismContainer } from '@public/nui/components/Styleguide/GlassMorphismContainer';
 import { fetchNui } from '@public/nui/fetch';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { slugify } from '@public/nui/utils/slugify';
@@ -131,37 +132,41 @@ export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }
     ) {
         leftOffset = 'left-[94vh]';
     }
-    return <div className={`absolute ${leftOffset} top-8 w-[36vh] min-w-[36vh] select-none`}>{children}</div>;
+    return (
+        <div className={`absolute ${leftOffset} top-10 w-[36vh] min-w-[36vh] font-prompt select-none`}>{children}</div>
+    );
 };
 
 export type MenuTitleProps = {
-    banner?: string;
+    type?: 'menu' | 'boutique';
+    title: string;
 };
 
-const MenuHeader: FunctionComponent<MenuTitleProps> = ({ banner }) => {
-    return <img src={banner} className="opacity-80 w-full h-[9vh] object-cover mb-[-2px]" alt="banner" />;
-};
-
-export const MenuTitle: FunctionComponent<PropsWithChildren<MenuTitleProps>> = ({ children, banner }) => {
+export const MenuTitle: FunctionComponent<MenuTitleProps> = ({ type = 'menu', title }) => {
     return (
-        <>
-            {banner && <MenuHeader banner={banner} />}
-            <div
-                className={cn('px-3 py-1 font-semibold text-sm bg-black/80 text-white uppercase', {
-                    'rounded-t-lg text-center': !banner,
-                })}
-            >
-                {children}
+        <header className="relative w-full py-3">
+            <div className="flex flex-col uppercase text-white drop-shadow-bg">
+                <h1 className="font-light text-base leading-3">{type}</h1>
+                <h2 className="font-semibold text-2xl">{title}</h2>
             </div>
-        </>
+        </header>
+    );
+};
+
+export const MenuSubTitle: FunctionComponent<PropsWithChildren> = ({ children }) => {
+    return (
+        <header className="flex justify-center uppercase text-white relative w-full py-1">
+            <h2 className="font-semibold text-sm">{children}</h2>
+        </header>
     );
 };
 
 type MenuContentProps = PropsWithChildren & {
+    subtitle?: string;
     helpPanel?: ReactNode;
 };
 
-export const MenuContent: FunctionComponent<MenuContentProps> = ({ children, helpPanel }) => {
+export const MenuContent: FunctionComponent<MenuContentProps> = ({ children, subtitle, helpPanel }) => {
     const [descendants, setDescendants] = useDescendantsInit();
     const [activeIndex, setActiveIndex] = useState(0);
     const [description, setDescription] = useState<string | null | ReactNode>(null);
@@ -200,22 +205,47 @@ export const MenuContent: FunctionComponent<MenuContentProps> = ({ children, hel
                 }}
             >
                 <MenuControls>
-                    <ul className="bg-black/50 py-1 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                        {children}
-                    </ul>
-                    {description && (
-                        <div className="mt-2 p-2 bg-black/50 rounded-lg max-h-[20vh] text-white">{description}</div>
-                    )}
-                    {helpPanel && (
-                        <div
-                            className="mt-2 bg-black/50 rounded-lg max-h-[40vh] text-white"
-                            style={{
-                                pointerEvents: `none`,
-                            }}
-                        >
-                            <ul>{helpPanel}</ul>
-                        </div>
-                    )}
+                    <div>
+                        <GlassMorphismContainer duration="duration-0" borderClassName="rounded-lg" disableBorder>
+                            {subtitle && (
+                                <div className="flex items-center gap-2 text-sm font-semibold pt-3 px-4 text-white">
+                                    <ChevronLeftIcon className="size-4" />
+                                    <span>{subtitle}</span>
+                                </div>
+                            )}
+
+                            <ul className="p-2 max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                                {children}
+                            </ul>
+                        </GlassMorphismContainer>
+                        {description && (
+                            <div className="mt-3 w-full overflow-hidden text-white">
+                                <GlassMorphismContainer
+                                    duration="duration-0"
+                                    borderClassName="rounded-lg"
+                                    disableBorder
+                                >
+                                    <div className="px-2 py-1">{description}</div>
+                                </GlassMorphismContainer>
+                            </div>
+                        )}
+                        {helpPanel && (
+                            <div
+                                className="mt-3 max-h-[40vh] overflow-hidden"
+                                style={{
+                                    pointerEvents: 'none',
+                                }}
+                            >
+                                <GlassMorphismContainer
+                                    duration="duration-0"
+                                    borderClassName="rounded-lg"
+                                    disableBorder
+                                >
+                                    <ul>{helpPanel}</ul>
+                                </GlassMorphismContainer>
+                            </div>
+                        )}
+                    </div>
                 </MenuControls>
             </MenuContext.Provider>
         </DescendantProvider>
@@ -385,8 +415,7 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
     return (
         <li
             ref={handleRefSet}
-            className={cn(className, 'px-4 py-1 pl-2 my-0.5 hover:bg-white/10 rounded', {
-                'bg-white/10': isSelected,
+            className={cn(className, 'my-1', {
                 'text-white/50': disabled,
                 'text-white': !disabled,
                 'cursor-not-allowed': disabled,
@@ -395,7 +424,17 @@ const MenuItemContainer: FunctionComponent<MenuItemProps> = ({
             onClick={handleClick}
             onMouseEnter={onOver}
         >
-            <MenuSelectedContext.Provider value={isSelected}>{children}</MenuSelectedContext.Provider>
+            <MenuSelectedContext.Provider value={isSelected}>
+                <BorderBox
+                    duration="duration-0"
+                    borderClassName="rounded-lg"
+                    showBorder={isSelected}
+                    disableBackground={!isSelected}
+                    blur={false}
+                >
+                    <div className="px-4 py-1 pl-2">{children}</div>
+                </BorderBox>
+            </MenuSelectedContext.Provider>
         </li>
     );
 };
@@ -626,10 +665,11 @@ export const MenuItemCheckbox: FunctionComponent<MenuItemCheckboxProps> = ({
         <MenuItemContainer description={description} onSelected={onSelected} onConfirm={onConfirm} disabled={disabled}>
             <div className="flex justify-between items-center">
                 <h3>{children}</h3>
-                <div className="border border-white w-5 h-5 rounded bg-black/20">
-                    {isChecked && (
-                        <CheckIcon className="w-full h-full text-white" aria-hidden="true" focusable="false" />
-                    )}
+
+                <div className="relative">
+                    <div className="border border-white size-4 rounded-full bg-black/20">
+                        {isChecked && <div className="absolute top-0.5 left-0.5 size-3 rounded-full bg-white" />}
+                    </div>
                 </div>
             </div>
         </MenuItemContainer>
@@ -718,9 +758,7 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
             >
                 <div className="flex items-center justify-between">
                     <div>{children}</div>
-                    <div>
-                        <ChevronRightIcon className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full" />
-                    </div>
+                    <ChevronRightIcon className="size-5 p-0.5" />
                 </div>
             </MenuItemContainer>
         );
@@ -849,7 +887,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
 
                         event.stopPropagation();
                     }}
-                    className="h-5 w-5 p-0.5 mr-2 bg-black/20 rounded-full"
+                    className="size-5 p-0.5"
                 />
             )}
             <div className="overflow-hidden">{children}</div>
@@ -860,7 +898,7 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
 
                         event.stopPropagation();
                     }}
-                    className="h-5 w-5 p-0.5 ml-2 bg-black/20 rounded-full"
+                    className="size-5 p-0.5"
                 />
             )}
         </div>
@@ -1039,9 +1077,6 @@ export const MenuItemSelectHelperItem: FunctionComponent<MenuItemSelectHelperIte
     const { activeOptionIndex, setActiveOptionIndex } = useContext(MenuItemSelectContext);
     const ref = useRef(null);
     const onScreen = useOnScreen(ref);
-    const classes = cn('px-2 py-0 capitalize', {
-        'bg-white/10': index === activeOptionIndex,
-    });
 
     useEffect(() => {
         if (index === activeOptionIndex && ref && !onScreen) {
@@ -1052,16 +1087,20 @@ export const MenuItemSelectHelperItem: FunctionComponent<MenuItemSelectHelperIte
     return (
         <li
             ref={ref}
-            onMouseEnter={() => {
-                setActiveOptionIndex(index);
-            }}
-            onClick={() => {
-                setActiveOptionIndex(index);
-            }}
-            className={classes}
+            onMouseEnter={() => setActiveOptionIndex(index)}
+            onClick={() => setActiveOptionIndex(index)}
+            className="capitalize"
             key={index}
         >
-            {children}
+            <BorderBox
+                duration="duration-0"
+                borderClassName="rounded-lg"
+                showBorder={index === activeOptionIndex}
+                disableBackground={index !== activeOptionIndex}
+                blur={false}
+            >
+                <div className="px-4 py-0.5 pl-2">{children}</div>
+            </BorderBox>
         </li>
     );
 };
@@ -1084,19 +1123,21 @@ export const MenuItemSelectHelper: FunctionComponent = () => {
     }
 
     return (
-        <div className="absolute -right-3 translate-x-full top-0 w-1/5 min-w-[24rem] bg-black/50 rounded-b-lg max-h-[40vh]">
-            <ul
-                onClick={() => setClicked(true)}
-                className="bg-black/50 py-2 rounded-b-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
-            >
-                {helpers.map((helper, index) => {
-                    return (
-                        <MenuItemSelectHelperItem key={index} index={index}>
-                            {helper}
-                        </MenuItemSelectHelperItem>
-                    );
-                })}
-            </ul>
+        <div className="fixed left-12 translate-x-full top-28 w-1/5 min-w-[24rem] max-h-[40vh]">
+            <GlassMorphismContainer duration="duration-0" className="p-1" borderClassName="rounded-lg" disableBorder>
+                <ul
+                    onClick={() => setClicked(true)}
+                    className="rounded-lg max-h-[40vh] overflow-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
+                >
+                    {helpers.map((helper, index) => {
+                        return (
+                            <MenuItemSelectHelperItem key={index} index={index}>
+                                {helper}
+                            </MenuItemSelectHelperItem>
+                        );
+                    })}
+                </ul>
+            </GlassMorphismContainer>
         </div>
     );
 };

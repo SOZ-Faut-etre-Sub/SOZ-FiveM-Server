@@ -13,7 +13,6 @@ type MenuEasterShopStateProps = {
 };
 
 export const EasterShopMenu: FunctionComponent<MenuEasterShopStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_shop_easter';
     const getPrice = useGetPrice();
 
     if (!data) {
@@ -23,7 +22,7 @@ export const EasterShopMenu: FunctionComponent<MenuEasterShopStateProps> = ({ da
     return (
         <Menu type={MenuType.EasterShop}>
             <MainMenu>
-                <MenuTitle banner={banner}>Magasin société</MenuTitle>
+                <MenuTitle title="Vendeur festif" />
                 <MenuContent>
                     {data.map((product, id) => (
                         <MenuItemButton

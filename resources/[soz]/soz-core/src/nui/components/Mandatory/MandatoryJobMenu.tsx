@@ -2,6 +2,7 @@ import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import {
@@ -21,14 +22,13 @@ type MandatoryStateProps = {
 };
 
 export const MandatoryJobMenu: FunctionComponent<MandatoryStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_job_mdr';
     const player = usePlayer();
 
     if (!player.job.onduty) {
         return (
             <Menu type={MenuType.MandatoryJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel.mdr} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -40,7 +40,7 @@ export const MandatoryJobMenu: FunctionComponent<MandatoryStateProps> = ({ data 
     return (
         <Menu type={MenuType.MandatoryJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel.mdr} />
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={data.displayRadar}

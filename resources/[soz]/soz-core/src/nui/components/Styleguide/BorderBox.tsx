@@ -9,28 +9,32 @@ type BorderBoxProps = {
     borderColor?: string;
     borderClassName?: string;
     disableBorder?: boolean;
+    showBorder?: boolean;
     showBorderOnHover?: boolean;
     blur?: boolean;
     duration?: string;
     useCardColor?: boolean;
+    disableBackground?: boolean;
 };
 
 export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = ({
     borderColor,
     borderClassName,
     disableBorder,
+    showBorder,
     showBorderOnHover,
     children,
     blur = true,
     duration = 'duration-1000',
     useCardColor = false,
+    disableBackground = false,
 }) => {
     const glassmorphism = useSelector((state: RootState) => state.hud.useGlassmorphism);
 
     const { glassmorphismColors, card } = useHudColor();
     const childrenRef = useRef<HTMLDivElement>(null);
 
-    const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
+    const { height } = childrenRef.current?.getBoundingClientRect() || { height: '100%' };
 
     const currentBorderColor = useMemo(() => {
         if (borderColor) {
@@ -55,8 +59,10 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
                     duration,
                     borderClassName,
                     {
-                        'border-2': !disableBorder || showBorderOnHover,
-                        'opacity-0 group-hover:opacity-100': showBorderOnHover,
+                        'border-2': !disableBorder || showBorder || showBorderOnHover,
+                        'opacity-0': !showBorder,
+                        'opacity-100': showBorder,
+                        'opacity-0 group-hover:opacity-100': showBorderOnHover && !showBorder,
                     }
                 )}
                 style={{
@@ -68,16 +74,18 @@ export const BorderBox: FunctionComponent<PropsWithChildren<BorderBoxProps>> = (
                 }}
             />
 
-            <div ref={childrenRef} className={cn('relative z-10')}>
+            <div ref={childrenRef} className="relative z-10">
                 {children}
             </div>
 
-            <div
-                className="absolute inset-0 transition-all duration-1000"
-                style={{
-                    background: useCardColor ? card : glassmorphismColors.background,
-                }}
-            />
+            {!disableBackground && (
+                <div
+                    className="absolute inset-0 transition-all duration-1000"
+                    style={{
+                        background: useCardColor ? card : glassmorphismColors.background,
+                    }}
+                />
+            )}
         </div>
     );
 };

@@ -47,8 +47,6 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
     const [tierPrice, setTierPrice] = useState(0);
     const [parkingPrice, setParkingPrice] = useState(0);
 
-    const banner = 'https://nui-img/soz/menu_housing_upgrades';
-
     useEffect(() => {
         if (data?.currentTier !== null && data?.currentTier !== undefined) {
             setTier(data.currentTier);
@@ -95,8 +93,8 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
     return (
         <Menu type={MenuType.HousingUpgrades}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Habitation" />
+                <MenuContent subtitle="Améliorations">
                     {Object.entries(TYPE_LABEL).map(([type, label]) => {
                         if (label !== TYPE_LABEL.park_tier || !data.isApartmentTrailer) {
                             return (

@@ -2,6 +2,7 @@ import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
+import { JobLabel } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
 import { MainMenu, Menu, MenuContent, MenuItemCheckbox, MenuItemText, MenuTitle } from '../Styleguide/Menu';
@@ -19,7 +20,6 @@ type FightForStyleStateProps = {
 };
 
 export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data }) => {
-    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_job_cash-transfer.webp';
     const [blips, setBlips] = useState(null);
     const player = usePlayer();
 
@@ -42,7 +42,7 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
         return (
             <Menu type={MenuType.StonkJobMenu}>
                 <MainMenu>
-                    <MenuTitle banner={banner}></MenuTitle>
+                    <MenuTitle title={JobLabel['cash-transfer']} />
                     <MenuContent>
                         <MenuItemText>Vous n'êtes pas en service.</MenuItemText>
                     </MenuContent>
@@ -54,7 +54,7 @@ export const StonkJobMenu: FunctionComponent<FightForStyleStateProps> = ({ data 
     return (
         <Menu type={MenuType.StonkJobMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}></MenuTitle>
+                <MenuTitle title={JobLabel['cash-transfer']} />
                 <MenuContent>
                     <MenuItemCheckbox
                         checked={blips['displaySecureContainerTake']}

@@ -1,3 +1,4 @@
+import { SozRole } from '@core/permissions';
 import { PlayerCharInfo } from '@public/shared/player';
 import { FunctionComponent } from 'react';
 
@@ -14,11 +15,11 @@ import {
 } from '../Styleguide/Menu';
 
 export type CharacterSubMenuProps = {
-    banner: string;
+    permission: SozRole;
     characters: Record<string, PlayerCharInfo>;
 };
 
-export const CharacterSubMenu: FunctionComponent<CharacterSubMenuProps> = ({ characters, banner }) => {
+export const CharacterSubMenu: FunctionComponent<CharacterSubMenuProps> = ({ characters, permission }) => {
     const player = usePlayer();
 
     if (!player) {
@@ -27,8 +28,8 @@ export const CharacterSubMenu: FunctionComponent<CharacterSubMenuProps> = ({ cha
 
     return (
         <SubMenu id="character">
-            <MenuTitle banner={banner}>L'homme au mille visages</MenuTitle>
-            <MenuContent>
+            <MenuTitle title={permission} />
+            <MenuContent subtitle="L'homme au mille visages">
                 {Object.keys(characters).length > 0 && (
                     <MenuItemSelect
                         onConfirm={async (index, value) => {

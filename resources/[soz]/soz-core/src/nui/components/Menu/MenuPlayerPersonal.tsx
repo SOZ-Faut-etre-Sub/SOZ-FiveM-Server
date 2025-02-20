@@ -43,10 +43,8 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
     return (
         <Menu type={MenuType.PlayerPersonal}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_personal">
-                    {player.charinfo.firstname} {player.charinfo.lastname}
-                </MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle={`${player.charinfo.firstname} ${player.charinfo.lastname}`}>
                     {data.deguisement && (
                         <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuRemoveDeguisement)}>
                             Enlever le déguisement
@@ -80,8 +78,8 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
             <MenuClothing />
             <MenuAnimation shortcuts={data.shortcuts} combatMode={data.combatMode} />
             <SubMenu id="hud">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">HUD</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Gestion du HUD">
                     <MenuItemCheckbox
                         checked={data.isHudVisible}
                         description="Active/Désactive le HUD"
@@ -155,8 +153,8 @@ const MenuClothing: FunctionComponent = () => {
 
     return (
         <SubMenu id="clothing">
-            <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion de la tenue</MenuTitle>
-            <MenuContent>
+            <MenuTitle title="Personnel" />
+            <MenuContent subtitle="Gestion de la tenue">
                 <MenuItemCheckbox
                     onChange={createUpdateClothConfig('ShowHelmet', true)}
                     checked={player.cloth_config.Config['ShowHelmet']}
@@ -268,8 +266,8 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
     return (
         <>
             <SubMenu id="animations">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion des animations</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Gestion des animations">
                     <MenuItemSubMenuLink id="animation_list">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="walk_list">Démarches</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="mood_list">Humeurs</MenuItemSubMenuLink>
@@ -286,8 +284,8 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
                 </MenuContent>
             </SubMenu>
             <SubMenu id="mood_list">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Humeurs</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Gestion des humeurs">
                     {Moods.map((mood, i) => (
                         <MenuItemButton
                             onConfirm={() => {
@@ -301,8 +299,8 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
                 </MenuContent>
             </SubMenu>
             <SubMenu id="favorite_list">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Mes raccourcis d'animations</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Mes raccourcis d'animations">
                     {Object.keys(shortcuts).map(key => {
                         const shortcut = shortcuts[key];
 
@@ -416,8 +414,8 @@ const MenuAnimationList: FunctionComponent = () => {
     return (
         <>
             <SubMenu id="animation_list">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Liste des animations</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Liste des animations">
                     <MenuItemStringInput onChange={handleFilter} value={textFilter}>
                         Filtre:
                     </MenuItemStringInput>
@@ -454,8 +452,8 @@ const MenuWalkList: FunctionComponent = () => {
     return (
         <>
             <SubMenu id="walk_list">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Liste des démarches</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Liste des démarches">
                     {elements.map((element, index) => {
                         return <Fragment key={index}>{element}</Fragment>;
                     })}
@@ -496,8 +494,8 @@ const createRecursiveSubMenu = <T extends ItemCategory<T>>(
 
         subMenus.push(
             <SubMenu id={`${prefix}${item.name}`}>
-                <MenuTitle banner="https://nui-img/soz/menu_personal">{item.name}</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle={item.name}>
                     {elements.map((element, index) => {
                         return <Fragment key={index}>{element}</Fragment>;
                     })}
@@ -595,8 +593,8 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
     return (
         <>
             <SubMenu id="job">
-                <MenuTitle banner="https://nui-img/soz/menu_personal">Gestion du métier {data.job.label}</MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle={`Gestion du métier ${data.job.label}`}>
                     <MenuItemButton
                         onConfirm={() => {
                             fetchNui(NuiEvent.PlayerMenuJobGradeCreate, {
@@ -623,10 +621,8 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                 .map(grade => {
                     return (
                         <SubMenu id={`job_grade_${grade.id}`} key={`job_grade_${grade.id}`}>
-                            <MenuTitle banner="https://nui-img/soz/menu_personal">
-                                Gestion du grade {grade.name}
-                            </MenuTitle>
-                            <MenuContent>
+                            <MenuTitle title="Personnel" />
+                            <MenuContent subtitle={`Gestion du grade ${grade.name}`}>
                                 <MenuItemButton
                                     onConfirm={() => {
                                         fetchNui(NuiEvent.PlayerMenuJobGradeUpdateWeight, {

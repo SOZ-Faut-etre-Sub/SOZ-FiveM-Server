@@ -27,7 +27,7 @@ export const SuperetteShopMenu: FunctionComponent<MenuSuperetteShopStateProps> =
     return (
         <Menu type={MenuType.SuperetteShop}>
             <MainMenu>
-                <MenuTitle banner={config.banner}> Magasin {config.label} </MenuTitle>
+                <MenuTitle title={config.label} />
                 <MenuContent>
                     {data.products.map((product, id) => (
                         <MenuItemButton

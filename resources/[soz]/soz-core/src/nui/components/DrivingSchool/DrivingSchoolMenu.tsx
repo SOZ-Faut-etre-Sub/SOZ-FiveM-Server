@@ -37,8 +37,6 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
     const [limit, setLimit] = useState(0);
     const [price, setPrice] = useState(0);
 
-    const banner = 'https://nui-img/soz/menu_shop_drivingschool';
-
     useEffect(() => {
         if (data?.currentVehicleLimit) {
             setLimit(data.currentVehicleLimit);
@@ -69,12 +67,8 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
     return (
         <Menu type={MenuType.DrivingSchool}>
             <MainMenu>
-                <MenuTitle banner={banner}>
-                    <div className="flex">
-                        Améliorations <span className="ml-auto">Places restantes : {data.remainingSlots}</span>
-                    </div>
-                </MenuTitle>
-                <MenuContent>
+                <MenuTitle title="Carte Grise" />
+                <MenuContent subtitle={`Places restantes : ${data.remainingSlots}`}>
                     <MenuItemSelect
                         value={initialLimit}
                         title="Niveau"

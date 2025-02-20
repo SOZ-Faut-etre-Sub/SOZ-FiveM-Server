@@ -1,6 +1,7 @@
+import { SozRole } from '@core/permissions';
+import { Component, Outfit, Prop } from '@public/shared/cloth';
 import { FunctionComponent, useState } from 'react';
 
-import { Component, Outfit, Prop } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
@@ -16,7 +17,7 @@ import {
 import { ClothCollectionSubMenu } from './ClothCollectionSubMenu';
 
 export type SkinSubMenuProps = {
-    banner: string;
+    permission: SozRole;
     state: {
         clothConfig: Outfit;
         maxOptions: {
@@ -71,7 +72,7 @@ const TRANSLATED_INDEXES: Record<string, string> = {
     RightHand: 'Bras droit',
 };
 
-export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state }) => {
+export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ permission, state }) => {
     const [currentDrawable, setCurrentDrawable] = useState<number>(0);
 
     useNuiEvent(
@@ -158,8 +159,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
     return (
         <>
             <SubMenu id="skin">
-                <MenuTitle banner={banner}>Chien, Chat, Président...</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Chien, Chat, Président...">
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.AdminMenuSkinChangeAppearance);
@@ -183,8 +184,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                 </MenuContent>
             </SubMenu>
             <SubMenu id={'player_style'}>
-                <MenuTitle banner={banner}>Modifier les éléments du personnage</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Modifier les éléments du personnage">
                     <MenuItemSubMenuLink id={'player_style_components'}>
                         👕 Composants du personnage
                     </MenuItemSubMenuLink>
@@ -207,8 +208,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                 </MenuContent>
             </SubMenu>
             <SubMenu id={'player_style_components'}>
-                <MenuTitle banner={banner}>Éléments du personnage</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Éléments du personnage">
                     {Object.keys(state.clothConfig.Components).map(componentIndex => (
                         <MenuItemSubMenuLink id={`player_style_component_${componentIndex}`} key={componentIndex}>
                             {`[${componentIndex}] - ${TRANSLATED_INDEXES[Component[componentIndex]]}`}
@@ -217,8 +218,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
                 </MenuContent>
             </SubMenu>
             <SubMenu id={'player_style_props'}>
-                <MenuTitle banner={banner}>Accessoires du personnage</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Accessoires du personnage">
                     {Object.keys(state.clothConfig.Props).map(propIndex => (
                         <MenuItemSubMenuLink id={`player_style_prop_${propIndex}`} key={propIndex}>
                             {`[${propIndex}] - ${TRANSLATED_INDEXES[Prop[propIndex]]}`}
@@ -230,10 +231,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
 
             {Object.keys(state.clothConfig.Components).map(componentIndex => (
                 <SubMenu id={`player_style_component_${componentIndex}`} key={componentIndex}>
-                    <MenuTitle banner={banner}>{`[${componentIndex}] - ${
-                        TRANSLATED_INDEXES[Component[componentIndex]]
-                    }`}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={permission} />
+                    <MenuContent subtitle={`[${componentIndex}] - ${TRANSLATED_INDEXES[Component[componentIndex]]}`}>
                         <MenuItemSelect
                             title={`Drawable`}
                             value={currentDrawable || state.clothConfig.Components[componentIndex].Drawable || 0}
@@ -279,8 +278,8 @@ export const SkinSubMenu: FunctionComponent<SkinSubMenuProps> = ({ banner, state
 
             {Object.keys(state.clothConfig.Props).map(propIndex => (
                 <SubMenu id={`player_style_prop_${propIndex}`} key={propIndex}>
-                    <MenuTitle banner={banner}>{`[${propIndex}] - ${TRANSLATED_INDEXES[Prop[propIndex]]}`}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title={permission} />
+                    <MenuContent subtitle={`[${propIndex}] - ${TRANSLATED_INDEXES[Prop[propIndex]]}`}>
                         <MenuItemSelect
                             title={`Drawable`}
                             value={currentDrawable || state.clothConfig.Props[propIndex].Drawable || 0}

@@ -12,12 +12,12 @@ import {
     MenuItemSelectOption,
     MenuItemSubMenuLink,
     MenuItemText,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
 
 export type MeteorSubMenuProps = {
-    banner: string;
     permission: SozRole;
     state: HalloweenSubMenuState;
 };
@@ -29,15 +29,15 @@ const MOON_OPTIONS = [
     { label: 'Full', value: 'full' },
 ];
 
-export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner, permission, state }) => {
+export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permission, state }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
 
     return (
         <>
             <SubMenu id="halloween">
-                <MenuTitle banner={banner}>Bouh !!!</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Bouh !!!">
                     <MenuItemSelect
                         disabled={!isAdminOrStaff}
                         title="🌑 Lune de sang"
@@ -59,8 +59,8 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
             </SubMenu>
 
             <SubMenu id="halloween-vampire-game-excluded-players">
-                <MenuTitle banner={banner}>Suce un cul...</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Suce un cul...">
                     <MenuItemSubMenuLink disabled={!isAdminOrStaff} id="players">
                         Afficher la liste des joueurs
                     </MenuItemSubMenuLink>
@@ -84,8 +84,8 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
             </SubMenu>
 
             <SubMenu id="halloween-vampire-game">
-                <MenuTitle banner={banner}>Suce un cul...</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle="Suce un cul...">
                     <MenuItemButton
                         disabled={state.started}
                         onConfirm={async () => {
@@ -117,7 +117,7 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         ))}
                     </MenuItemSelect>
 
-                    <MenuTitle>Paramètres</MenuTitle>
+                    <MenuSubTitle>Paramètres</MenuSubTitle>
                     <MenuItemButton
                         description="Durée du jeu en minutes"
                         onConfirm={async () => {
@@ -134,7 +134,7 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         Exclure des joueurs
                     </MenuItemSubMenuLink>
 
-                    <MenuTitle>Rôles</MenuTitle>
+                    <MenuSubTitle>Rôles</MenuSubTitle>
                     {Object.entries(state.roleMaxNumber).map(([role, amount]) => (
                         <MenuItemButton
                             key={role}
@@ -150,7 +150,7 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         </MenuItemButton>
                     ))}
 
-                    <MenuTitle>Objectif des mortels - Part I</MenuTitle>
+                    <MenuSubTitle>Objectif des mortels - Part I</MenuSubTitle>
                     {Object.entries(state.mortalObjectivePart1).map(([collection, amount]) => (
                         <MenuItemButton
                             key={collection}
@@ -166,7 +166,7 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         </MenuItemButton>
                     ))}
 
-                    <MenuTitle>Objectif des mortels - Part II</MenuTitle>
+                    <MenuSubTitle>Objectif des mortels - Part II</MenuSubTitle>
                     {Object.entries(state.mortalObjectivePart2).map(([objective, amount]) => (
                         <MenuItemButton
                             key={objective}
@@ -182,7 +182,7 @@ export const HalloweenSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ banner
                         </MenuItemButton>
                     ))}
 
-                    <MenuTitle>Objectif des mortels - Part III</MenuTitle>
+                    <MenuSubTitle>Objectif des mortels - Part III</MenuSubTitle>
                     <MenuItemButton
                         description="Durée de la phase en minutes"
                         onConfirm={async () => {

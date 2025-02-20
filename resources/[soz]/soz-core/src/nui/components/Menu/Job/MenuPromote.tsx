@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { NuiEvent } from '../../../../shared/event/nui';
+import { JobLabel } from '../../../../shared/job';
 import { PromoteMenuData } from '../../../../shared/nui/job';
 import { MenuType } from '../../../../shared/nui/menu';
 import { fetchNui } from '../../../fetch';
@@ -15,18 +16,12 @@ export const MenuPromote: FunctionComponent<MenuPromoteProps> = ({ data }) => {
     if (!data) {
         return null;
     }
-    let banner;
-    if (banners_in_core.includes(data.job)) {
-        banner = `https://soz.zerator.com/static/game/images/banner/menu_job_${data.job}.webp`;
-    } else {
-        banner = `https://nui-img/soz/menu_job_${data.job}`;
-    }
 
     return (
         <Menu type={MenuType.Promote}>
             <MainMenu>
-                <MenuTitle banner={banner}>Promouvoir un joueur</MenuTitle>
-                <MenuContent>
+                <MenuTitle title={JobLabel[data.job]} />
+                <MenuContent subtitle="Promouvoir un joueur">
                     {data.grades.map(grade => (
                         <MenuItemButton
                             onConfirm={() => {

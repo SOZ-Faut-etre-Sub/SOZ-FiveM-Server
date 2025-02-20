@@ -15,6 +15,7 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
     useMenuNavigate,
@@ -24,14 +25,14 @@ type MenuGarageProps = {
     data?: GarageMenuData;
 };
 
-const BannerMap: Record<GarageType, string> = {
-    [GarageType.Public]: 'https://nui-img/soz/menu_garage_public',
-    [GarageType.Private]: 'https://nui-img/soz/menu_garage_private',
-    [GarageType.Job]: 'https://nui-img/soz/menu_garage_entreprise',
-    [GarageType.JobLuxury]: 'https://nui-img/soz/menu_garage_entreprise',
-    [GarageType.Depot]: 'https://nui-img/soz/menu_garage_pound',
-    [GarageType.House]: 'https://nui-img/soz/menu_garage_personal',
-    [GarageType.Gang]: 'https://soz.zerator.com/static/game/images/banner/menu_gang_garage.webp',
+const MenutitleMap: Record<GarageType, string> = {
+    [GarageType.Public]: 'Garage Public',
+    [GarageType.Private]: 'Garage Privé',
+    [GarageType.Job]: 'Garage Entreprise',
+    [GarageType.JobLuxury]: 'Garage Entreprise',
+    [GarageType.Depot]: 'Fourrière',
+    [GarageType.House]: 'Garage Personnel',
+    [GarageType.Gang]: 'Garage',
 };
 
 export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
@@ -60,7 +61,7 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
         return (
             <Menu type={MenuType.Garage}>
                 <MainMenu>
-                    <MenuTitle banner={BannerMap[data?.garage.type]}>{data?.garage.name}</MenuTitle>
+                    <MenuTitle title={MenutitleMap[data?.garage.type]} />
                     <VehicleList data={data} setCurrentVehicle={setCurrentVehicle} />
                 </MainMenu>
             </Menu>
@@ -70,11 +71,13 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
     return (
         <Menu type={MenuType.Garage}>
             <MainMenu>
-                <MenuTitle banner={BannerMap[data?.garage.type]}>
-                    {data?.garage.name}
-                    {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
-                </MenuTitle>
-                <MenuContent>
+                <MenuTitle title={MenutitleMap[data?.garage.type]} />
+                <MenuContent subtitle={data?.garage.name}>
+                    {showFreePlaces && (
+                        <MenuSubTitle>
+                            Places libres : {data?.free_places} / {data?.max_places}
+                        </MenuSubTitle>
+                    )}
                     <MenuItemSubMenuLink id="vehicles">Les véhicules</MenuItemSubMenuLink>
                     {data.garage.type === GarageType.House && data.apartments.length > 0 && (
                         <MenuItemSelect
@@ -117,17 +120,15 @@ export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {
                 </MenuContent>
             </MainMenu>
             <SubMenu id="vehicles">
-                <MenuTitle banner={BannerMap[data?.garage.type]}>
-                    {data?.garage.name}
-                    {showFreePlaces && ` | Places libres : ${data?.free_places} / ${data?.max_places}`}
-                </MenuTitle>
+                <MenuTitle title={MenutitleMap[data?.garage.type]} />
                 <VehicleList data={data} setCurrentVehicle={setCurrentVehicle} />
             </SubMenu>
             <SubMenu id="transfer">
-                <MenuTitle banner={BannerMap[data?.garage.type]}>
-                    Transférer {currentVehicle?.name} - {currentVehicle?.vehicle.plate}
-                </MenuTitle>
+                <MenuTitle title={MenutitleMap[data?.garage.type]} />
                 <MenuContent>
+                    <MenuSubTitle>
+                        Transférer {currentVehicle?.name} - {currentVehicle?.vehicle.plate}
+                    </MenuSubTitle>
                     {data.transferGarageList.map((garage, key) => {
                         const transferPrice = getTransferPrice(currentVehicle?.weight || 0);
 
@@ -168,6 +169,8 @@ export const VehicleList: FunctionComponent<VehicleListProps> = ({ data, setCurr
         return null;
     }
 
+    const showFreePlaces = [GarageType.Private, GarageType.Gang].includes(data?.garage.type);
+
     const vehicleTakeOut = (id: number, use_ticket: boolean) => {
         fetchNui(NuiEvent.VehicleGarageTakeOut, { id: data.id, garage: data.garage, vehicle: id, use_ticket });
     };
@@ -192,7 +195,12 @@ export const VehicleList: FunctionComponent<VehicleListProps> = ({ data, setCurr
         });
 
     return (
-        <MenuContent>
+        <MenuContent subtitle={data?.garage.name}>
+            {showFreePlaces && (
+                <MenuSubTitle>
+                    Places libres : {data?.free_places} / {data?.max_places}
+                </MenuSubTitle>
+            )}
             {data.vehicles.length === 0 && <MenuItemButton disabled>Aucun véhicule</MenuItemButton>}
             {(data.garage.type === GarageType.Job || data.garage.type === GarageType.House) && (
                 <>

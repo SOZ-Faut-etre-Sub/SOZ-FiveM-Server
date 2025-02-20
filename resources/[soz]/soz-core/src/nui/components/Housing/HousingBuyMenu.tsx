@@ -22,7 +22,7 @@ export const HousingBuyMenu: FunctionComponent<HousingBuyMenuProps> = ({ data })
     return (
         <Menu type={MenuType.HousingBuyMenu}>
             <MainMenu>
-                <MenuTitle banner="https://nui-img/soz/menu_habitation"></MenuTitle>
+                <MenuTitle title="Habitation" />
                 <MenuContent>
                     {data.apartments.map(apartment => {
                         return (

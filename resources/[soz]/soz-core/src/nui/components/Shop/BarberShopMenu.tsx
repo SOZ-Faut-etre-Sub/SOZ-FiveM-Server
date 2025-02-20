@@ -18,6 +18,7 @@ import {
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSelectOptionColor,
+    MenuSubTitle,
     MenuTitle,
 } from '../Styleguide/Menu';
 
@@ -29,7 +30,6 @@ type MenuBarberShopStateProps = {
 };
 
 export const BarberShopMenu: FunctionComponent<MenuBarberShopStateProps> = ({ data }) => {
-    const banner = 'https://nui-img/soz/menu_shop_barber';
     const player_data = usePlayer();
     const content = data.shop_content[player_data.skin.Model.Hash];
     const [configuration, setConfiguration] = useState<Record<string, BarberConfiguration>>({});
@@ -68,7 +68,7 @@ export const BarberShopMenu: FunctionComponent<MenuBarberShopStateProps> = ({ da
     return (
         <Menu type={MenuType.BarberShop}>
             <MainMenu>
-                <MenuTitle banner={banner}>Coiffeur</MenuTitle>
+                <MenuTitle title="Coiffeur" />
                 <MenuContent>
                     <MenuBarberHairComponent
                         cat={content.find(cat => cat.category === 'Hair')}
@@ -215,7 +215,7 @@ const MenuBarberHairComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {
@@ -314,7 +314,7 @@ const MenuBarberBeardComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {
@@ -378,7 +378,7 @@ const MenuBarberChestHairComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {
@@ -442,7 +442,7 @@ const MenuBarberMakeupComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {
@@ -530,7 +530,7 @@ const MenuBarberBlushComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {
@@ -594,7 +594,7 @@ const MenuBarberLipstickComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {
@@ -657,7 +657,7 @@ const MenuBarberEyeComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Couleur"
                 onChange={async (_, type) => {
@@ -690,7 +690,7 @@ const MenuBarberEyebrowComponent: FunctionComponent<{
     }
     return (
         <>
-            <MenuTitle>{cat.label}</MenuTitle>
+            <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
                 onChange={async (_, type) => {

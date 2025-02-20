@@ -18,7 +18,6 @@ import {
 } from '../Styleguide/Menu';
 
 export const ZkeaFournitureMenu: FunctionComponent = () => {
-    const banner = 'https://soz.zerator.com/static/game/images/banner/menu_zkea_fourniture.webp';
     const [textFilter, setTextFilter] = useState<string>();
 
     const fournituresByType: FormatedFournitureItemList = {};
@@ -67,7 +66,7 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
     return (
         <Menu type={MenuType.ZkeaFournitureMenu}>
             <MainMenu>
-                <MenuTitle banner={banner}>Zkea</MenuTitle>
+                <MenuTitle title="Zkea - Fournitures" />
                 <MenuContent>
                     <MenuItemStringInput onChange={handleFilter} value={textFilter}>
                         Filtre:
@@ -86,8 +85,8 @@ export const ZkeaFournitureMenu: FunctionComponent = () => {
             </MainMenu>
             {Object.entries(fournitures).map(([type, fournitures]) => (
                 <SubMenu id={`zkea_fourniture${type}`} key={`zkea_fourniture${type}`}>
-                    <MenuTitle banner={banner}>{`Zkea - ${type}`}</MenuTitle>
-                    <MenuContent>
+                    <MenuTitle title="Zkea - Fournitures" />
+                    <MenuContent subtitle={`Zkea - ${type}`}>
                         <MenuItemStringInput onChange={handleFilter} value={textFilter}>
                             Filtre:
                         </MenuItemStringInput>

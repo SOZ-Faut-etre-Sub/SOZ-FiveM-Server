@@ -19,7 +19,7 @@ export const GlassMorphismBox: FunctionComponent<PropsWithChildren<GlassMorphism
 
     const childrenRef = useRef<HTMLDivElement>(null);
 
-    const { height } = childrenRef.current?.getBoundingClientRect() || { height: undefined };
+    const { height } = childrenRef.current?.getBoundingClientRect() || { height: '100%' };
 
     const currentBorderColor = glassmorphismColors.border;
 
