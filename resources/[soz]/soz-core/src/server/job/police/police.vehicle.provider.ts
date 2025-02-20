@@ -32,6 +32,9 @@ export class PoliceVehicleProvider {
                     },
                 },
                 job: true,
+                crimiImport: true,
+                boughttime: true,
+                plateUpdateTime: true,
             },
         });
 
@@ -41,7 +44,15 @@ export class PoliceVehicleProvider {
                 msg = `Propriétaire: ~b~${JobRegistry[data.job as JobType].label}`;
             } else {
                 const charInfo = JSON.parse(data.player.charinfo);
-                msg = `Propriétaire: ~b~${charInfo.firstname + ' ' + charInfo.lastname}`;
+                msg = `Propriétaire: ~b~${charInfo.firstname + ' ' + charInfo.lastname}~s~`;
+
+                if (data.crimiImport) {
+                    const plateUpdate = data.plateUpdateTime || data.boughttime;
+                    const deltaInDays = Math.floor((Date.now() / 1000 - plateUpdate) / (24 * 3_600_000));
+                    if (Math.random() < deltaInDays * 0.05) {
+                        msg += '~n~Voiture importée de ~r~contrebande~s~';
+                    }
+                }
             }
         } else {
             const state = this.vehicleStateService.getVehicleState(netId);

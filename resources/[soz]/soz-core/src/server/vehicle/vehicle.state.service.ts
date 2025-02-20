@@ -139,7 +139,7 @@ export class VehicleStateService {
             previousState.volatile.plate = GetVehicleNumberPlateText(entityId).trim();
         }
 
-        const newState = {
+        const newState: VehicleState = {
             volatile: {
                 ...previousState.volatile,
                 ...state,
@@ -199,7 +199,7 @@ export class VehicleStateService {
     ): VehicleCondition {
         const previousState = this.getVehicleState(vehicleNetworkId);
 
-        const newState = {
+        const newState: VehicleState = {
             volatile: previousState.volatile,
             condition: {
                 ...previousState.condition,

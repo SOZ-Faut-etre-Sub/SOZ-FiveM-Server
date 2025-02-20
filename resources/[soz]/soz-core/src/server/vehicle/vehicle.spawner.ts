@@ -21,7 +21,6 @@ import {
     DisableNPCBike,
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
-    VehicleCategory,
     VehicleCondition,
     VehicleSpawn,
     VehicleType,
@@ -368,19 +367,18 @@ export class VehicleSpawner {
             ...JSON.parse(vehicle.condition || '{}'),
         };
 
-        const volatile = {
+        const volatile: Partial<VehicleVolatileState> = {
             isPlayerVehicle: true,
             plate: vehicle.plate,
             id: vehicle.id,
             open: false,
             owner: player.citizenid,
-            defaultOwner: vehicle.citizenid,
             job: vehicle.job as JobType,
-            class: vehicle.category as VehicleCategory,
             locatorEndJam: this.vehicleStateService.getJamLocator(vehicle.plate),
             model: vehicle.vehicle,
             label: vehicle.label,
             lastDrugTrace: this.vehicleStateService.getDrugTrace(vehicle.plate),
+            isCrimiImport: vehicle.crimiImport,
         };
 
         const hash = parseInt(vehicle.hash || '0', 10);
