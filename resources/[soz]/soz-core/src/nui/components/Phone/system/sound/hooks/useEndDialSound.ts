@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 
 import { useAssetPath } from '../../../../../hook/assets';
+import { usePhoneAvailable } from '../../phone.atom';
 import { useSoundProvider } from '../providers/SoundProvider';
 import { useSoundSettings } from './useSound';
 
@@ -9,6 +10,7 @@ interface useEndDialSoundValue {
 }
 
 export const useEndDialSound = (): useEndDialSoundValue => {
+    const isPhoneAvailable = usePhoneAvailable();
     const sound = useSoundProvider();
     const { getPath } = useAssetPath();
 
@@ -29,6 +31,9 @@ export const useEndDialSound = (): useEndDialSoundValue => {
     }, [sound]);
 
     const startTone = useCallback(() => {
+        if (!isPhoneAvailable) return;
+        if (sound.playing(END_DIAL_URL)) return;
+
         sound.play(END_DIAL_URL, options.volume / 2, false);
     }, [sound]);
 
