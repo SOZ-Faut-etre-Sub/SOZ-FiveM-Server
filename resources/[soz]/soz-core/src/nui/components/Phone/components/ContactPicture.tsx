@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { FunctionComponent, useId } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { useThemeConfig } from '../system/config/config.atom';
 
@@ -7,6 +7,8 @@ type Props = {
     picture?: string;
     size?: 'small' | 'medium' | 'large' | 'xlarge';
 };
+
+const FALLBACK_IMAGE = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>';
 
 export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'small' }) => {
     const theme = useThemeConfig();
@@ -21,8 +23,8 @@ export const ContactPicture: FunctionComponent<Props> = ({ picture, size = 'smal
                 'size-20': size === 'large',
                 'size-28': size === 'xlarge',
             })}
-            onError={e => (e.currentTarget.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>')}
-            src={picture}
+            onError={e => (e.currentTarget.src = FALLBACK_IMAGE)}
+            src={picture ?? FALLBACK_IMAGE}
             alt={picture}
             loading="lazy"
         />
