@@ -50,7 +50,7 @@ export const WeatherApp: FunctionComponent = () => {
                 {alertInProgress ? (
                     <AppContent className="flex flex-col justify-center items-center gap-7 h-full text-center text-white font-thin">
                         <WeatherIcon icon={currentForecast?.weather} size="200px" className="w-4/5" />
-                        <h1 className="text-5xl">{t('WEATHER.ALERT.TITLE')}</h1>
+                        <h1 className="text-5xl uppercase">{t('WEATHER.ALERT.TITLE')}</h1>
                         <h2 className="text-2xl">{t('WEATHER.ALERT.DESCRIPTION')}</h2>
                         <h1 className="text-4xl">
                             {formatDistanceToNow(alertEndTime, { includeSeconds: true, locale: fr })}
