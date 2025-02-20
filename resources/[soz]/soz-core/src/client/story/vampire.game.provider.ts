@@ -706,7 +706,8 @@ export class VampireGameProvider {
         await this.weaponService.clear();
 
         SetPedArmour(ped, 0);
-        this.playerService.setNbArmorPlates(0);
+
+        this.playerService.updateState({ nbArmorPlates: 0 });
 
         const pos = GetEntityCoords(ped);
         const weapon = GetHashKey(WeaponName.MUSKET);

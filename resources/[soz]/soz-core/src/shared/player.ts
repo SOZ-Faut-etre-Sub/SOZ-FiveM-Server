@@ -271,6 +271,9 @@ export type PlayerClientState = {
     carryBox: boolean;
     halloweenRole: VampireGameRole | null;
     inCyberHeist: boolean;
+    nbArmorPlates: number;
+    usedArmorPlates: number;
+    maxArmorPlates: number;
 };
 
 export enum PlayerLicenceType {

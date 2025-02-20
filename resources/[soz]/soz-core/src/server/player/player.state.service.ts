@@ -169,6 +169,9 @@ export class PlayerStateService {
             carryBox: false,
             halloweenRole: null,
             inCyberHeist: false,
+            nbArmorPlates: 0,
+            maxArmorPlates: 0,
+            usedArmorPlates: 0,
         };
     }
 

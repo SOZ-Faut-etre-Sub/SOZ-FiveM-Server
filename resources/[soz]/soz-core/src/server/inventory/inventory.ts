@@ -511,21 +511,7 @@ export class Inventory {
             return Ok(0);
         }
 
-        // Case 7: Armor plate
-        if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates && existingItem.amount === 1) {
-            if (!existingItem.metadata.plates || existingItem.metadata.plates < existingItemObject.maxplates) {
-                existingItem.metadata.plates = existingItem.metadata.plates || 0;
-                existingItem.metadata.plates += 1;
-
-                return Ok(1);
-            } else if (existingItem.metadata.plates === existingItemObject.maxplates) {
-                return Err('max_plates_reached');
-            }
-        } else if (inventoryItem.name === 'armor_plate' && existingItemObject.maxplates && existingItem.amount > 1) {
-            return Err('add_plates_on_stack');
-        }
-
-        // Case 8: Wrapping paper + items
+        // Case 7: Wrapping paper + items
         if (
             existingItem.name.startsWith('wrapping_') &&
             !inventoryItem.name.startsWith('gift_') &&
