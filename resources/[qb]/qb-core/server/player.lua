@@ -599,6 +599,9 @@ function QBCore.Player.Save(source)
     local src = source
     local ped = GetPlayerPed(src)
     local pcoords = GetEntityCoords(ped)
+    if not ped or (pcoords.x == 0 and pcoords.y == 0) then
+        pcoords = vec3(exports['soz-core']:GetLastKnownPosition(src)[1], exports['soz-core']:GetLastKnownPosition(src)[2], exports['soz-core']:GetLastKnownPosition(src)[3])
+    end
     local PlayerData = QBCore.Players[src].PlayerData
     if PlayerData then
         PlayerData.metadata["health"] = GetEntityHealth(ped)
