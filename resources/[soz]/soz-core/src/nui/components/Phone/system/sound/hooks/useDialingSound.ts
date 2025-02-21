@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 
 import { useAssetPath } from '../../../../../hook/assets';
+import { usePhoneAvailable } from '../../phone.atom';
 import { useSoundProvider } from '../providers/SoundProvider';
 import { useSoundSettings } from './useSound';
 
 export const useDialingSound = () => {
+    const isPhoneAvailable = usePhoneAvailable();
     const sound = useSoundProvider();
     const { getPath } = useAssetPath();
 
@@ -26,7 +28,9 @@ export const useDialingSound = () => {
 
     return {
         play: () => {
+            if (!isPhoneAvailable) return;
             if (sound.playing(DIAL_TONE_URL)) return;
+
             sound.play(DIAL_TONE_URL, options.volume / 2, true);
         },
         stop: () => sound.stop(DIAL_TONE_URL),

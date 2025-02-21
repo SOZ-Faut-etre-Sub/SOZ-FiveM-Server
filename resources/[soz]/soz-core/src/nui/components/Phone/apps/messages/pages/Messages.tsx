@@ -17,6 +17,7 @@ import { useAppTitleGetBackUpdater } from '../../../system/apps/hooks/useAppTitl
 import { useAppTitleUpdater } from '../../../system/apps/hooks/useAppTitleUpdater';
 import { useThemeConfig } from '../../../system/config/config.atom';
 import { useNotifications } from '../../../system/notifications/hooks/useNotifications';
+import { usePhoneVisibility } from '../../../system/phone.atom';
 import { useContact } from '../../../system/sim-card/hooks/useContact';
 import { useConversation } from '../../../system/sim-card/hooks/useConversation';
 import { useMessages } from '../../../system/sim-card/hooks/useMessage';
@@ -26,6 +27,8 @@ import { useConversationAPI } from '../hooks/useConversationAPI';
 import { useMessageAPI } from '../hooks/useMessageAPI';
 
 export const Messages = () => {
+    const visibility = usePhoneVisibility();
+
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
@@ -52,7 +55,7 @@ export const Messages = () => {
         if (!conversation) return;
 
         fetchNui(NuiEvent.PhoneSimCardSetConversationAsRead, conversation.conversation_id);
-        removeNotificationByGroup('messages', conversation.conversation_id);
+        setTimeout(() => removeNotificationByGroup('messages', conversation.conversation_id), visibility ? 0 : 3000);
     }, [messages]);
 
     useEffect(() => {

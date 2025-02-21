@@ -222,8 +222,8 @@ export const fr = {
         },
         WEATHER: {
             ALERT: {
-                TITLE: 'Alerte tempête',
-                DESCRIPTION: "Une tempête est en approche, veuillez rester à l'intérieur et vous mettre à l'abri.",
+                TITLE: 'Alerte ouragan',
+                DESCRIPTION: "Un ouragan est en approche, veuillez rester à l'intérieur et vous mettre à l'abri.",
             },
             FORECASTS: {
                 EXTRASUNNY: {
