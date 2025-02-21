@@ -4,7 +4,9 @@ import { GlassMorphismContainer } from '@public/nui/components/Styleguide/GlassM
 import { fetchNui } from '@public/nui/fetch';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { slugify } from '@public/nui/utils/slugify';
+import { RGBColor } from '@public/shared/color';
 import { NuiEvent } from '@public/shared/event';
+import { MenuType } from '@public/shared/nui/menu';
 import {
     createDescendantContext,
     Descendant,
@@ -14,6 +16,7 @@ import {
     useDescendantsInit,
 } from '@reach/descendants';
 import cn from 'classnames';
+import clsx from 'clsx';
 import {
     createContext,
     DetailedHTMLProps,
@@ -32,8 +35,6 @@ import {
 } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
-import { RGBColor } from '../../../shared/color';
-import { MenuType } from '../../../shared/nui/menu';
 import {
     useArrowDown,
     useArrowLeft,
@@ -133,7 +134,9 @@ export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }
         leftOffset = 'left-[94vh]';
     }
     return (
-        <div className={`absolute ${leftOffset} top-10 w-[36vh] min-w-[36vh] font-prompt select-none`}>{children}</div>
+        <div className={clsx('absolute top-10 w-[36vh] min-w-[36vh] font-prompt select-none', leftOffset)}>
+            {children}
+        </div>
     );
 };
 
@@ -1122,8 +1125,16 @@ export const MenuItemSelectHelper: FunctionComponent = () => {
         return null;
     }
 
+    let leftOffset = 'left-12';
+    if (
+        (window.innerWidth > 5000 && window.innerHeight < 1500) ||
+        (window.innerWidth > 3079 && window.innerHeight < 1200)
+    ) {
+        leftOffset = 'left-[105vh]';
+    }
+
     return (
-        <div className="fixed left-12 translate-x-full top-28 w-1/5 min-w-[24rem] max-h-[40vh]">
+        <div className={clsx('fixed translate-x-full top-28 w-1/5 min-w-[24rem] max-h-[40vh]', leftOffset)}>
             <GlassMorphismContainer duration="duration-0" className="p-1" borderClassName="rounded-lg" disableBorder>
                 <ul
                     onClick={() => setClicked(true)}
