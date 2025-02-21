@@ -890,6 +890,9 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
 
     // Other
     [joaat('zrtblizzard')]: { maxWeight: 40000 },
+
+    // Vehicule trailer
+    [joaat('tr4')]: { maxWeight: 1000000 },
 };
 
 /**
