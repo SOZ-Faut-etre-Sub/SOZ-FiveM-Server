@@ -1,7 +1,7 @@
 import './system/locale/i18n';
 
 import { FunctionComponent } from 'react';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import { Control } from '../../../shared/input';
 import { useNuiFocus } from '../../hook/nui';
@@ -84,6 +84,8 @@ export const PhoneApp: FunctionComponent = () => {
                                 {apps.map(app => (
                                     <Route key={app.id} path={app.path + '/*'} element={app.component} />
                                 ))}
+
+                                <Route path="*" element={<Navigate to="/" />} />
                             </Routes>
                         )}
                     </PhoneWrapper>
