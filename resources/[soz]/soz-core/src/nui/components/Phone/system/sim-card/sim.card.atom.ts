@@ -92,7 +92,7 @@ export const filteredConversationsAtom = atom<Array<MessageConversation & { last
         .filter(c => messages.some(m => m.conversation_id === c.conversation_id))
         .filter(c => {
             const contact = contacts.find(contact => contact.number === c.phoneNumber);
-            if (!contact) return false;
+            if (!contact) return c.phoneNumber?.includes(searchQuery.toLowerCase());
             return (
                 contact?.display?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 contact?.number?.includes(searchQuery.toLowerCase())
