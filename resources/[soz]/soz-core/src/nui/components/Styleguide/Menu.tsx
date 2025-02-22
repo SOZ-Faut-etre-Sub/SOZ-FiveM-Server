@@ -1126,15 +1126,25 @@ export const MenuItemSelectHelper: FunctionComponent = () => {
     }
 
     let leftOffset = 'left-12';
-    if (
-        (window.innerWidth > 5000 && window.innerHeight < 1500) ||
-        (window.innerWidth > 3079 && window.innerHeight < 1200)
-    ) {
-        leftOffset = 'left-[105vh]';
+    let width = 'w-1/5';
+
+    if (window.innerWidth > 3079 && window.innerHeight < 1200) {
+        leftOffset = 'left-[96vh]';
+        width = 'w-[10vh]';
+    }
+
+    if (window.innerWidth > 5000 && window.innerHeight < 1500) {
+        leftOffset = 'left-[104vh]';
+        width = 'w-[10vh]';
     }
 
     return (
-        <div className={clsx('fixed translate-x-full top-28 w-1/5 min-w-[24rem] max-h-[40vh]', leftOffset)}>
+        <div
+            className={clsx('fixed translate-x-full top-28 min-w-[24rem] max-h-[40vh]', {
+                [leftOffset]: true,
+                [width]: true,
+            })}
+        >
             <GlassMorphismContainer duration="duration-0" className="p-1" borderClassName="rounded-lg" disableBorder>
                 <ul
                     onClick={() => setClicked(true)}
