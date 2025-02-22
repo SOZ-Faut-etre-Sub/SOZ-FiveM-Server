@@ -8820,7 +8820,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["maxplates"] = 3,
+        ["maxplates"] = 2,
         ["description"] = "",
     },
     ["heavy_antiriot_outfit"] = {

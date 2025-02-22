@@ -6,7 +6,6 @@ import { emitRpc } from '@core/rpc';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
-import { Rpc } from '@public/core/decorators/rpc';
 import { wait } from '@public/core/utils';
 import { TargetOption } from '@public/shared/target';
 
@@ -18,7 +17,7 @@ import { Control } from '../../shared/input';
 import { PlayerData, PlayerServerState, PlayerServerStateExercise } from '../../shared/player';
 import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
-import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
+import { RpcServerEvent } from '../../shared/rpc';
 import { AnimationService } from '../animation/animation.service';
 import { BlipFactory } from '../blip';
 import { Notifier } from '../notifier';
@@ -362,10 +361,11 @@ export class PlayerHealthProvider {
     private async updateNuiHealth(): Promise<void> {
         const playerPed = PlayerPedId();
         const playerId = PlayerId();
+        const state = this.playerService.getState();
 
         const health = GetEntityHealth(playerPed);
         const armor = GetPedArmour(playerPed);
-        const armorPlates = this.playerService.getNbArmorPlates();
+        const armorPlates = state.nbArmorPlates;
         const stamina = 100 - Math.trunc(GetPlayerSprintStaminaRemaining(playerId));
 
         this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', { health, armor, stamina, armorPlates });
@@ -373,11 +373,18 @@ export class PlayerHealthProvider {
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR_PLATE)
     public setupArmorPlates(nbPlates?: number, maxPlates?: number, removePreviousPlates?: boolean) {
-        const armorPlates = this.playerService.getNbArmorPlates();
+        const state = this.playerService.getState();
+
+        const armorPlates = state.nbArmorPlates;
+        const usedArmorPlates = state.usedArmorPlates;
         if (maxPlates) {
-            this.playerService.setMaxNbArmorPlates(maxPlates);
+            this.playerService.updateState({ maxArmorPlates: maxPlates });
         }
-        this.playerService.setNbArmorPlates(removePreviousPlates ? nbPlates : armorPlates + (nbPlates || 1));
+        this.playerService.updateState({
+            nbArmorPlates: removePreviousPlates ? nbPlates : armorPlates + (nbPlates || 1),
+        });
+        this.playerService.updateState({ usedArmorPlates: removePreviousPlates ? 0 : usedArmorPlates + 1 });
+
         if (removePreviousPlates ? nbPlates : armorPlates + (nbPlates || 1) > 0) {
             SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);
             SetPlayerWeaponDefenseModifier_2(PlayerId(), 0.1);
@@ -407,18 +414,8 @@ export class PlayerHealthProvider {
     @PlayerUpdate()
     public onPlayerUpdate(playerData: PlayerData) {
         if (playerData.cloth_config.Config.HideBulletproof) {
-            this.playerService.setNbArmorPlates(0);
+            this.playerService.updateState({ nbArmorPlates: 0 });
         }
-    }
-
-    @Rpc(RpcClientEvent.GET_NB_ARMOR_PLATES)
-    public getClientNbArmorPlates() {
-        return this.playerService.getNbArmorPlates();
-    }
-
-    @Rpc(RpcClientEvent.GET_MAX_NB_ARMOR_PLATES)
-    public getClientMaxNbArmorPlates() {
-        return this.playerService.getMaxNbArmorPlates();
     }
 
     public setNutritionDisabled(value: boolean) {

@@ -140,8 +140,11 @@ export class PoliceCloakRoomProvider {
         if (!armour) {
             return;
         }
-        this.playerService.setNbArmorPlates(plates ?? 0);
-        this.playerService.setMaxNbArmorPlates(maxPlates ?? 0);
+        this.playerService.updateState({
+            nbArmorPlates: plates ?? 0,
+            maxArmorPlates: maxPlates ?? 0,
+            usedArmorPlates: plates ?? 0,
+        });
 
         if (plates > 0) {
             SetPlayerWeaponDefenseModifier(PlayerId(), 0.1);

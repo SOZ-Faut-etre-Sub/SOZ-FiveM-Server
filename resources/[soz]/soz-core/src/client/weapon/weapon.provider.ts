@@ -495,7 +495,8 @@ export class WeaponProvider {
         isFatal: boolean,
         weaponHash: number
     ) {
-        const armorPlates = this.playerService.getNbArmorPlates();
+        const state = this.playerService.getState();
+        const armorPlates = state.nbArmorPlates;
         const damageType = GetWeaponDamageType(weaponHash);
         const playerPed = PlayerPedId();
 
@@ -504,7 +505,7 @@ export class WeaponProvider {
                 SetPlayerWeaponDefenseModifier(PlayerId(), 1.0);
                 SetPlayerWeaponDefenseModifier_2(PlayerId(), 1.0);
             }
-            this.playerService.setNbArmorPlates(armorPlates - 1);
+            this.playerService.updateState({ nbArmorPlates: armorPlates - 1 });
             return;
         }
     }

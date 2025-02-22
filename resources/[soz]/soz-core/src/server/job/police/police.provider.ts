@@ -2,7 +2,6 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
-import { emitClientRpc } from '@public/core/rpc';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Notifier } from '@public/server/notifier';
@@ -11,7 +10,7 @@ import { ProgressService } from '@public/server/player/progress.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Item } from '@public/shared/item';
 import { JobLabel } from '@public/shared/job';
-import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { InventoryItem } from '../../../shared/inventory';
 import { Inventory } from '../../inventory/inventory';
@@ -107,8 +106,8 @@ export class PoliceProvider {
 
     public async useArmorPlate(source: number, unused: Item, item: InventoryItem) {
         const player = this.playerService.getPlayer(source);
-        const nbArmorPlates = await emitClientRpc<number>(RpcClientEvent.GET_NB_ARMOR_PLATES, source);
-        const maxArmorPlates = await emitClientRpc<number>(RpcClientEvent.GET_MAX_NB_ARMOR_PLATES, source);
+        const state = this.playerStateService.getClientState(source);
+
         if (!player) {
             return;
         }
@@ -118,7 +117,7 @@ export class PoliceProvider {
             return;
         }
 
-        if (nbArmorPlates >= maxArmorPlates) {
+        if (state.nbArmorPlates >= state.maxArmorPlates || state.usedArmorPlates >= state.maxArmorPlates) {
             this.notifier.notify(
                 source,
                 `Vous ne pouvez pas rajouter plus de plaque balistique sur ce gilet.`,

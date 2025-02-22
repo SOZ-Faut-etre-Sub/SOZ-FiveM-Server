@@ -20,25 +20,6 @@ export class PlayerService {
     private fakeId: FakeId = null;
     private deguisement = false;
     private pushing = false;
-    public nbArmorPlates = 0;
-    public maxArmorPlates = 0;
-
-    setNbArmorPlates(plates: number) {
-        this.nbArmorPlates = plates;
-        this.nuiDispatch.dispatch('hud', 'UpdateArmorPlates', this.nbArmorPlates);
-    }
-
-    getNbArmorPlates() {
-        return this.nbArmorPlates;
-    }
-
-    setMaxNbArmorPlates(plates: number) {
-        this.maxArmorPlates = plates;
-    }
-
-    getMaxNbArmorPlates() {
-        return this.maxArmorPlates;
-    }
 
     private state: PlayerClientState = {
         isDead: false,
@@ -60,6 +41,9 @@ export class PlayerService {
         carryBox: false,
         halloweenRole: null,
         inCyberHeist: false,
+        nbArmorPlates: 0,
+        maxArmorPlates: 0,
+        usedArmorPlates: 0,
     };
 
     @Inject(Qbcore)
@@ -102,6 +86,7 @@ export class PlayerService {
 
     public setState(state: PlayerClientState) {
         this.state = { ...state };
+        this.nuiDispatch.dispatch('hud', 'UpdateArmorPlates', this.state.nbArmorPlates);
     }
 
     public updateState(state: Partial<PlayerClientState>) {
