@@ -9,6 +9,8 @@ import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
 import { ActiveCall } from '@public/shared/phone/simcard';
 
+const KVP_PHONE_PROP_MODEL = 'soz_phone_prop_model';
+
 @Provider()
 export class PhoneState {
     @Inject(NuiDispatch)
@@ -26,6 +28,7 @@ export class PhoneState {
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
+    private phonePropModel = GetResourceKvpString(KVP_PHONE_PROP_MODEL) ?? 'soz_phone_black';
     private phoneProp: number | null = null;
     private phoneOpen = false;
     private phoneDisabled = false;
@@ -36,6 +39,11 @@ export class PhoneState {
     private phoneFrontCameraEnabled = false;
 
     private currentCall: ActiveCall | null = null;
+
+    public setPhonePropModel(model: 'soz_phone_black' | 'soz_phone_gold' | 'soz_phone_natural' | 'soz_phone_white') {
+        this.phonePropModel = model;
+        SetResourceKvp(KVP_PHONE_PROP_MODEL, model);
+    }
 
     public isPhoneDisabled() {
         return this.cityIsInBlackOut || this.phoneDrowned || this.phoneDisabled;
@@ -177,7 +185,7 @@ export class PhoneState {
         SetPedConfigFlag(PlayerPedId(), 104, false);
         this.phoneProp = await this.attachedObjectService.attachObjectToPlayer({
             bone: 28422,
-            model: 'soz_prop_phone',
+            model: this.phonePropModel,
             position: [0, 0.0, 0.0],
             rotation: [0, 0, 0],
             rotationOrder: 1,
