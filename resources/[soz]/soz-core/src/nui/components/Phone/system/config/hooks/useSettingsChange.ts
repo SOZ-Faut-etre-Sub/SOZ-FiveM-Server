@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
+import { NuiEvent } from '../../../../../../shared/event/nui';
+import { fetchNui } from '../../../../../fetch';
 import { useNotifications } from '../../notifications/hooks/useNotifications';
 import { useSetConfig } from '../config.atom';
 import { defaultConfig } from '../default.constant';
@@ -19,6 +21,10 @@ export const useSettingsChange = () => {
                 });
                 return;
             }
+        }
+
+        if (key === 'frame') {
+            fetchNui(NuiEvent.PhoneSetPropModel, { frame: value.value });
         }
 
         setConfig(prev => ({ ...prev, [key]: value }));

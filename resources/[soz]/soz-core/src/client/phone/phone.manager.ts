@@ -110,6 +110,24 @@ export class PhoneManager {
         this.isInsideInput = insideInput;
     }
 
+    @OnNuiEvent(NuiEvent.PhoneSetPropModel)
+    async onPhoneSetPropModel({ frame }: { frame: string }) {
+        switch (frame) {
+            case 'gold.webp':
+                this.phoneState.setPhonePropModel('soz_phone_gold');
+                break;
+            case 'natural.webp':
+                this.phoneState.setPhonePropModel('soz_phone_natural');
+                break;
+            case 'white.webp':
+                this.phoneState.setPhonePropModel('soz_phone_white');
+                break;
+            case 'black.webp':
+            default:
+                this.phoneState.setPhonePropModel('soz_phone_black');
+        }
+    }
+
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
     async onPlayerDeath(killData: any) {
         if (this.phoneState.isPhoneOpen()) {
