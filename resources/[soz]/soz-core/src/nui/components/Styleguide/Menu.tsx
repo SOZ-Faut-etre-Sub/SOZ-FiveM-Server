@@ -1139,12 +1139,7 @@ export const MenuItemSelectHelper: FunctionComponent = () => {
     }
 
     return (
-        <div
-            className={clsx('fixed translate-x-full top-28 min-w-[24rem] max-h-[40vh]', {
-                [leftOffset]: true,
-                [width]: true,
-            })}
-        >
+        <div className={clsx('fixed translate-x-full top-28 min-w-[24rem] max-h-[40vh]', leftOffset, width)}>
             <GlassMorphismContainer duration="duration-0" className="p-1" borderClassName="rounded-lg" disableBorder>
                 <ul
                     onClick={() => setClicked(true)}
