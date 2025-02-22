@@ -804,20 +804,6 @@ const MenuSelectControls: FunctionComponent<MenuSelectControlsProps> = ({ onChan
     });
 
     useEffect(() => {
-        for (const index in menuItems) {
-            const menuItem = menuItems[index];
-
-            if (equalityFn(menuItem.value, activeValue)) {
-                const activeIndex = parseInt(index, 10);
-
-                if (activeIndex !== activeOptionIndex) {
-                    setActiveOptionIndex(activeIndex);
-                }
-            }
-        }
-    }, [activeValue]);
-
-    useEffect(() => {
         const menuItem = menuItems[activeOptionIndex];
 
         onChange && onChange(activeOptionIndex, menuItem?.value);
