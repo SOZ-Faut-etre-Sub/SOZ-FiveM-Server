@@ -1,6 +1,7 @@
 import { Command } from '@core/decorators/command';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { PhoneState } from '@public/client/phone/phone.state';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { ClientEvent } from '@public/shared/event/client';
@@ -47,6 +48,9 @@ export class PhoneManager {
 
     @Inject(PhoneSimCardCalls)
     private readonly phoneSimCardCalls: PhoneSimCardCalls;
+
+    @Inject(PlayerTalentService)
+    private readonly playerTalentService: PlayerTalentService;
 
     private isInsideInput = false;
 
@@ -107,7 +111,7 @@ export class PhoneManager {
     }
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
-    async onPlayerDeath() {
+    async onPlayerDeath(killData: any) {
         if (this.phoneState.isPhoneOpen()) {
             await this.hidePhone();
         }
@@ -117,6 +121,14 @@ export class PhoneManager {
         }
 
         this.nuiDispatch.dispatch('phone', 'SetEmergency', true);
+
+        const player = this.playerService.getPlayer();
+        if (
+            (player.metadata.rp_death && !killData.hungerThristDeath && !killData.frozenDeath) ||
+            player.metadata.injuries_count >= this.playerTalentService.getMaxInjuries()
+        ) {
+            this.nuiDispatch.dispatch('phone', 'SetEmergencyDeath', ' ');
+        }
     }
 
     @OnEvent(ClientEvent.INJURY_DEATH)
@@ -125,7 +137,9 @@ export class PhoneManager {
     }
 
     @OnEvent(ClientEvent.LSMC_REVIVE)
-    async onRevive() {
+    async onRevive(_skipanim: boolean, _uniteHU: boolean, _uniteHUBed: number, rpDeath: boolean) {
+        if (rpDeath) return;
+
         this.nuiDispatch.dispatch('phone', 'SetEmergency', false);
         this.nuiDispatch.dispatch('phone', 'SetEmergencyDeath', null);
     }

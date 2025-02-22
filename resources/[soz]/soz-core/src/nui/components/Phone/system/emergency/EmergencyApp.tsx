@@ -27,7 +27,7 @@ export const EmergencyApp = () => {
                 src={getPath(`images/phone/apps/emergency/${isDead ? 'dead' : 'satellite'}.webp`)}
             />
 
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col justify-between h-full pb-20">
                 {isDead ? (
                     <div className="flex flex-col justify-center items-center text-white">
                         <div className="text-3xl font-light max-w-[90%] truncate">Status : MORT</div>
@@ -49,13 +49,15 @@ export const EmergencyApp = () => {
                     </div>
                 )}
 
-                <div className="text-base flex flex-col justify-center items-center text-white">
-                    Votre position sera envoyée.
-                </div>
+                <div>
+                    <div className="text-base flex flex-col justify-center items-center text-white">
+                        Votre position sera envoyée.
+                    </div>
 
-                <div className="flex flex-col justify-center items-center gap-2 mx-5">
-                    <LSMCButton />
-                    {!isDead && <UHUButton />}
+                    <div className="flex flex-col justify-center items-center gap-2 mx-5">
+                        <LSMCButton />
+                        {!isDead && <UHUButton />}
+                    </div>
                 </div>
             </div>
         </AppContainer>
