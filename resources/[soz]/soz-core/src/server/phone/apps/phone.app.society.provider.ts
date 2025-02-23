@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { Rpc } from '@core/decorators/rpc';
 import { phone_society_messages } from '@prisma/client';
+import { StateSelector } from '@public/client/store/store';
 import { SocietyNumberList } from '@public/config/phone';
 import { Provider } from '@public/core/decorators/provider';
 import { Notifier } from '@public/server/notifier';
@@ -40,6 +41,13 @@ export class PhoneAppSocietyProvider {
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
+
+    private cityInBlackout = false;
+
+    @StateSelector(state => state.global.blackoutLevel)
+    public onBlackoutChange(blackoutLevel: number) {
+        this.cityInBlackout = blackoutLevel >= 3;
+    }
 
     private policeMessageCount = 0;
 
@@ -222,7 +230,7 @@ export class PhoneAppSocietyProvider {
         const messageData = {
             ...this.messageMapper(message),
             htmlMessage,
-            muted: !player.job.onduty,
+            muted: this.cityInBlackout || !player.job.onduty,
             info: messageInfo,
         };
 
