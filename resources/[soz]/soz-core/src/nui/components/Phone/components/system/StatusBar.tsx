@@ -1,8 +1,10 @@
 import { ChevronLeftIcon, XIcon } from '@heroicons/react/solid';
 import { animated, useSpring } from '@react-spring/web';
 import clsx from 'clsx';
+import { useAtom } from 'jotai';
 import React, { FunctionComponent, memo, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IoIosFlashlight } from 'react-icons/io';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BatteryIcon } from '../../assets/battery';
@@ -18,6 +20,7 @@ import { NotificationItem } from '../../system/notifications/components/Notifica
 import { useNotificationDrawer } from '../../system/notifications/hooks/useNotificationDrawer';
 import { useNotifications } from '../../system/notifications/hooks/useNotifications';
 import { usePhoneTime } from '../../system/phone.atom';
+import { flashLightAtomWithNui } from '../../system/phone.utils.atom';
 import { useCall } from '../../system/sim-card/hooks/useCall';
 import { Button } from '../Button';
 
@@ -31,6 +34,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
 
     const { t } = useTranslation();
 
+    const [flashLight, toggleFlashLight] = useAtom(flashLightAtomWithNui);
     const { notifications, removeNotification, cleanNotifications } = useNotifications();
     const { drawerOpen, setDrawerOpen } = useNotificationDrawer();
     const { currentCall } = useCall();
@@ -197,7 +201,17 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                         )}
                     </ul>
 
-                    <div className="flex justify-end items-center gap-2 px-6 w-full">
+                    <div className="flex justify-between items-center gap-2 px-6 w-full">
+                        <button
+                            className={clsx('flex justify-center items-center size-12 rounded-full ', {
+                                'bg-ios-700/80': !flashLight,
+                                'bg-ios-200/80': flashLight,
+                            })}
+                            onClick={toggleFlashLight}
+                        >
+                            <IoIosFlashlight className="size-6" />
+                        </button>
+
                         <button
                             className="flex justify-center items-center size-12 rounded-full bg-ios-700/80"
                             onClick={() => navigate('/camera')}

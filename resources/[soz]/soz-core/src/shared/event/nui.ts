@@ -670,6 +670,7 @@ export enum NuiEvent {
     InventoryGoBackPlayerInventory = 'soz-core:nui:inventory:go-back-player-inventory',
 
     PhoneSetPropModel = 'soz-core:nui:phone:set-prop-model',
+    PhoneFlashLight = 'soz-core:nui:phone:flash-light',
     PhoneInsideInput = 'soz-core:nui:phone:inside-input',
     PhoneSimCardReset = 'soz-core:nui:phone:sim-card-reset',
     PhoneSimCardCallsInit = 'soz-core:nui:phone:sim-card-calls-init',

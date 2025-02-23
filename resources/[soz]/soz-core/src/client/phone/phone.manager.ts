@@ -128,6 +128,11 @@ export class PhoneManager {
         }
     }
 
+    @OnNuiEvent(NuiEvent.PhoneFlashLight)
+    async onPhoneFlashLight(enabled: boolean) {
+        this.phoneState.setPhoneFlashlightEnabled(enabled);
+    }
+
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
     async onPlayerDeath(killData: any) {
         if (this.phoneState.isPhoneOpen()) {

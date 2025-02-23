@@ -31,11 +31,13 @@ export class PhoneState {
 
     private phonePropModel = GetResourceKvpString(KVP_PHONE_PROP_MODEL) ?? 'soz_phone_black';
     private phoneProp: number | null = null;
+
     private phoneOpen = false;
     private phoneDisabled = false;
     private phoneDrowned = false;
     private cityIsInBlackOut = false;
 
+    private phoneFlashlightEnabled = false;
     private phoneOnCamera = false;
     private phoneFrontCameraEnabled = false;
 
@@ -82,6 +84,7 @@ export class PhoneState {
             this.setPhoneOpen(false);
             this.setPhoneOnCamera(false);
             this.setPhoneFrontCameraEnabled(false);
+            this.setPhoneFlashlightEnabled(false);
         }
     }
 
@@ -102,6 +105,10 @@ export class PhoneState {
 
         this.phoneFrontCameraEnabled = value;
         Citizen.invokeNative('0x2491A93618B7D838', value);
+    }
+
+    public setPhoneFlashlightEnabled(value: boolean) {
+        this.phoneFlashlightEnabled = value;
     }
 
     public getCurrentCall() {
@@ -145,6 +152,12 @@ export class PhoneState {
                 isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
                 'cellphone_call_listen_base'
             );
+        } else if (this.phoneOpen && this.phoneProp && this.phoneFlashlightEnabled) {
+            await this.triggerAnimation(
+                playerPed,
+                isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
+                'cellphone_text_read_base_cover_low'
+            );
         } else if (this.phoneOpen) {
             await this.triggerAnimation(
                 playerPed,
@@ -158,6 +171,7 @@ export class PhoneState {
                 });
             } else {
                 this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
+                this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_read_base_cover_low');
 
                 this.animationService.playAnimationIfNotRunning({
                     base: {
@@ -184,23 +198,46 @@ export class PhoneState {
     async onTick() {
         if (this.phoneProp === null) return;
 
-        const playerCoords = GetOffsetFromEntityInWorldCoords(this.phoneProp, 0, -1, 0) as Vector3;
         const propCoords = GetEntityCoords(this.phoneProp) as Vector3;
-        const directionVector = sub2Vector3(playerCoords, propCoords);
+
+        const frontPhoneCoords = GetOffsetFromEntityInWorldCoords(this.phoneProp, 0, -1, 0) as Vector3;
+        const frontPhoneVector = sub2Vector3(frontPhoneCoords, propCoords);
 
         DrawSpotLight(
             propCoords[0],
             propCoords[1],
             propCoords[2],
-            directionVector[0],
-            directionVector[1],
-            directionVector[2],
+            frontPhoneVector[0],
+            frontPhoneVector[1],
+            frontPhoneVector[2],
             255,
             255,
             255,
             1,
             0.2,
+            0,
+            20,
+            0
+        );
+
+        if (!this.phoneFlashlightEnabled) return;
+
+        const backPhoneCoords = GetOffsetFromEntityInWorldCoords(this.phoneProp, 0, 1, 0) as Vector3;
+        const backPhoneVector = sub2Vector3(backPhoneCoords, propCoords);
+
+        DrawSpotLight(
+            propCoords[0],
+            propCoords[1],
+            propCoords[2],
+            backPhoneVector[0],
+            backPhoneVector[1],
+            backPhoneVector[2],
+            255,
+            255,
+            255,
+            20,
             1,
+            0,
             20,
             0
         );

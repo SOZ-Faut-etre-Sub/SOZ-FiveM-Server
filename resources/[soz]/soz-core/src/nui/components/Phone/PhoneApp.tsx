@@ -19,6 +19,7 @@ import { ActionSheet } from './system/action-sheet/components/ActionSheet';
 import { Alerts } from './system/alerts/components/Alerts';
 import { useApps } from './system/apps/hooks/useApps';
 import { CallDynamicIsland } from './system/dynamic-island/components/CallDynamicIsland';
+import { FlashLightDynamicIsland } from './system/dynamic-island/components/FlashLightDynamicIsland';
 import { NotificationDynamicIsland } from './system/dynamic-island/components/NotificationDynamicIsland';
 import { useEmergency, useEmergencyStateHandlers } from './system/emergency/emergency.atom';
 import { EmergencyApp } from './system/emergency/EmergencyApp';
@@ -73,6 +74,7 @@ export const PhoneApp: FunctionComponent = () => {
 
                         <CallDynamicIsland />
                         <NotificationDynamicIsland />
+                        <FlashLightDynamicIsland />
 
                         {emergency ? (
                             <EmergencyApp />
