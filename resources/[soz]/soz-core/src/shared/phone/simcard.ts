@@ -48,6 +48,7 @@ export type Message = {
     conversation_id?: string;
     author: string;
     createdAt: number;
+    isMuted?: boolean;
 };
 
 export type NewMessage = Pick<Message, 'conversation_id' | 'message'>;

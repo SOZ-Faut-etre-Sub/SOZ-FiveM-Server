@@ -159,7 +159,7 @@ export const useSimCardStateHandlers = () => {
 
     useNuiEvent('phone', 'SetMessages', setMessages);
     useNuiEvent('phone', 'AddMessage', (message: Message) => {
-        if (number !== message.author) {
+        if (!message.isMuted && number !== message.author) {
             notificationSound.play();
             addNotification(
                 {
