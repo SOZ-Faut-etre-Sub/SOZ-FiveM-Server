@@ -69,6 +69,11 @@ const DisableSpawn: Vector2[][] = [
         [-732.49, 606.55],
         [-686.68, 665.05],
     ],
+    [
+        //Cultist
+        [-1214.53, 4859.19],
+        [-985.82, 5001.72],
+    ],
 ];
 
 const disabledPickups = [
