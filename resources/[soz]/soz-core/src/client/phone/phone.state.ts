@@ -8,6 +8,7 @@ import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
 import { ActiveCall } from '@public/shared/phone/simcard';
+import { sub2Vector3, Vector3 } from '@public/shared/polyzone/vector';
 
 const KVP_PHONE_PROP_MODEL = 'soz_phone_prop_model';
 
@@ -131,7 +132,7 @@ export class PhoneState {
     }
 
     @Tick(250)
-    async onTick() {
+    async onAnimationTick() {
         const playerPed = PlayerPedId();
         const isPlayerInVehicle = IsPedInAnyVehicle(playerPed, false);
 
@@ -177,6 +178,32 @@ export class PhoneState {
         } else if (!this.isInCall()) {
             await this.removePhoneProp();
         }
+    }
+
+    @Tick()
+    async onTick() {
+        if (this.phoneProp === null) return;
+
+        const playerCoords = GetOffsetFromEntityInWorldCoords(this.phoneProp, 0, -1, 0) as Vector3;
+        const propCoords = GetEntityCoords(this.phoneProp) as Vector3;
+        const directionVector = sub2Vector3(playerCoords, propCoords);
+
+        DrawSpotLight(
+            propCoords[0],
+            propCoords[1],
+            propCoords[2],
+            directionVector[0],
+            directionVector[1],
+            directionVector[2],
+            255,
+            255,
+            255,
+            1,
+            0.2,
+            1,
+            20,
+            0
+        );
     }
 
     private async createPhoneProp() {
