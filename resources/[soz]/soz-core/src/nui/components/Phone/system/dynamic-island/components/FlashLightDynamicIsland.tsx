@@ -6,7 +6,7 @@ import { IoIosFlashlight } from 'react-icons/io';
 import { flashLightAtomWithNui } from '../../phone.utils.atom';
 
 export const FlashLightDynamicIsland = () => {
-    const [flashLight, toggleFlashLight] = useAtom(flashLightAtomWithNui);
+    const [flashLight, setFlashLight] = useAtom(flashLightAtomWithNui);
 
     const styles = useSpring({
         from: {
@@ -27,7 +27,7 @@ export const FlashLightDynamicIsland = () => {
         <animated.div
             className="absolute top-4 flex items-end py-3 px-4 bg-black rounded-3xl cursor-pointer z-50 overflow-hidden"
             style={styles}
-            onClick={toggleFlashLight}
+            onClick={() => setFlashLight(false)}
         >
             <div className="flex flex-col justify-center items-center gap-3 grow min-w-0">
                 <div className="w-0 h-0 border-l-[50px] border-l-transparent border-t-[75px] border-t-white border-r-[50px] border-r-transparent blur-lg" />

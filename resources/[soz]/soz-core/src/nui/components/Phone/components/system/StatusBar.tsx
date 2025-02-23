@@ -34,7 +34,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
 
     const { t } = useTranslation();
 
-    const [flashLight, toggleFlashLight] = useAtom(flashLightAtomWithNui);
+    const [flashLight, setFlashLight] = useAtom(flashLightAtomWithNui);
     const { notifications, removeNotification, cleanNotifications } = useNotifications();
     const { drawerOpen, setDrawerOpen } = useNotificationDrawer();
     const { currentCall } = useCall();
@@ -207,7 +207,7 @@ export const StatusBar: FunctionComponent<StatusBarProps> = memo(({ forceControl
                                 'bg-ios-700/80': !flashLight,
                                 'bg-ios-200/80': flashLight,
                             })}
-                            onClick={toggleFlashLight}
+                            onClick={() => setFlashLight(!flashLight)}
                         >
                             <IoIosFlashlight className="size-6" />
                         </button>

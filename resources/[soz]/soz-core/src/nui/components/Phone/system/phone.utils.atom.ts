@@ -7,9 +7,8 @@ const flashLightAtom = atom(false);
 
 export const flashLightAtomWithNui = atom(
     get => get(flashLightAtom),
-    (get, set) => {
-        const newValue = !get(flashLightAtom);
-        set(flashLightAtom, newValue);
-        fetchNui(NuiEvent.PhoneFlashLight, newValue);
+    (get, set, value: boolean) => {
+        set(flashLightAtom, value);
+        fetchNui(NuiEvent.PhoneFlashLight, value);
     }
 );

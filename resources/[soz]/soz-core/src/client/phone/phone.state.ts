@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { AttachedObjectService } from '@public/client/object/attached.object.service';
@@ -8,7 +9,7 @@ import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
 import { ActiveCall } from '@public/shared/phone/simcard';
-import { sub2Vector3, Vector3 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 const KVP_PHONE_PROP_MODEL = 'soz_phone_prop_model';
 
@@ -109,6 +110,8 @@ export class PhoneState {
 
     public setPhoneFlashlightEnabled(value: boolean) {
         this.phoneFlashlightEnabled = value;
+
+        emitRpc(RpcServerEvent.PHONE_LIGHT_SET_FLASHLIGHT, ObjToNet(this.phoneProp), value);
     }
 
     public getCurrentCall() {
@@ -194,55 +197,6 @@ export class PhoneState {
         }
     }
 
-    @Tick()
-    async onTick() {
-        if (this.phoneProp === null) return;
-
-        const propCoords = GetEntityCoords(this.phoneProp) as Vector3;
-
-        const frontPhoneCoords = GetOffsetFromEntityInWorldCoords(this.phoneProp, 0, -1, 0) as Vector3;
-        const frontPhoneVector = sub2Vector3(frontPhoneCoords, propCoords);
-
-        DrawSpotLight(
-            propCoords[0],
-            propCoords[1],
-            propCoords[2],
-            frontPhoneVector[0],
-            frontPhoneVector[1],
-            frontPhoneVector[2],
-            255,
-            255,
-            255,
-            1,
-            0.2,
-            0,
-            20,
-            0
-        );
-
-        if (!this.phoneFlashlightEnabled) return;
-
-        const backPhoneCoords = GetOffsetFromEntityInWorldCoords(this.phoneProp, 0, 1, 0) as Vector3;
-        const backPhoneVector = sub2Vector3(backPhoneCoords, propCoords);
-
-        DrawSpotLight(
-            propCoords[0],
-            propCoords[1],
-            propCoords[2],
-            backPhoneVector[0],
-            backPhoneVector[1],
-            backPhoneVector[2],
-            255,
-            255,
-            255,
-            20,
-            1,
-            0,
-            20,
-            0
-        );
-    }
-
     private async createPhoneProp() {
         if (this.phoneProp !== null) return;
 
@@ -254,10 +208,14 @@ export class PhoneState {
             rotation: [0, 0, 0],
             rotationOrder: 1,
         });
+
+        emitRpc(RpcServerEvent.PHONE_LIGHT_ADD_PHONE, ObjToNet(this.phoneProp));
     }
 
     private async removePhoneProp() {
         if (this.phoneProp === null) return;
+
+        emitRpc(RpcServerEvent.PHONE_LIGHT_REMOVE_PHONE, ObjToNet(this.phoneProp));
 
         SetPedConfigFlag(PlayerPedId(), 104, true);
         this.attachedObjectService.detachObjectToPlayer(this.phoneProp);
