@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { VariableSizeList } from 'react-window';
@@ -22,12 +22,18 @@ export const LIST_ITEM_HEIGHT = 63;
 export const LIST_ITEM_SEPARATOR_HEIGHT = 35;
 
 export const ContactList: FunctionComponent = () => {
-    const { t } = useTranslation();
+    const ref = useRef<VariableSizeList>(null);
     const contactsApp = useApp('society-contacts');
+
+    const { t } = useTranslation();
 
     const theme = useThemeConfig();
 
     const { contacts, searchValue, setSearchValue } = useSocietyContacts();
+
+    useEffect(() => {
+        ref.current.resetAfterIndex(0, true);
+    }, [contacts]);
 
     return (
         <AppWrapper>
@@ -39,6 +45,7 @@ export const ContactList: FunctionComponent = () => {
 
                 {contacts && contacts.length > 0 ? (
                     <VariableSizeList
+                        ref={ref}
                         height={720}
                         width={410}
                         itemSize={(index: number) =>
