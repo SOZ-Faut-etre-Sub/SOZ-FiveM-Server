@@ -4041,7 +4041,7 @@ QBShared.Items = {
         ["unique"] = false,
         ["useable"] = true,
         ["shouldClose"] = true,
-        ["description"] = "Fauteuil muni de roues, ou alors roues munies d'un fauteuil, on saiy pas trop",
+        ["description"] = "Fauteuil muni de roues, ou alors roues munies d'un fauteuil, on sait pas trop.",
         ["illustrator"] = ".Sniteur",
     },
     ["used_bloodbag"] = {
