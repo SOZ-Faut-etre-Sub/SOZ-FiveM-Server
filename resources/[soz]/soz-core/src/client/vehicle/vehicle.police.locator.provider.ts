@@ -1,5 +1,6 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { emitRpc } from '@public/core/rpc';
+import { StateSelector } from '@public/server/store/store';
 import { JobType } from '@public/shared/job';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -31,6 +32,13 @@ export class VehiclePoliceLocator {
     private entityBlips = new Map<string, number>();
     private locationBlips = new Map<string, number>();
     private adminEnabled = false;
+
+    private cityInBlackout = false;
+
+    @StateSelector(state => state.global.blackoutLevel)
+    public onBlackoutChange(blackoutLevel: number) {
+        this.cityInBlackout = blackoutLevel >= 3;
+    }
 
     private clear() {
         this.entityBlips.forEach(blip => RemoveBlip(blip));
@@ -108,7 +116,7 @@ export class VehiclePoliceLocator {
             }
 
             const vehState = await this.vehicleStateService.getVehicleState(vehicule);
-            if (!vehState.policeLocatorEnabled) {
+            if (this.cityInBlackout || !vehState.policeLocatorEnabled) {
                 this.clear();
                 return;
             }
