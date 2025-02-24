@@ -155,7 +155,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                 <MenuTitle title="Hammer" />
                 <MenuContent subtitle={`Collection : ${collection.name}`}>
                     <MenuSubTitle>
-                        Props chargés : ${collection.loaded_size} / ${collection.size}
+                        Props chargés : {collection.loaded_size} / {collection.size}
                     </MenuSubTitle>
                     <MenuSubTitle>
                         Etat :{' '}
