@@ -46,6 +46,7 @@ export class PhoneProvider {
     @Rpc(RpcServerEvent.PHONE_LIGHT_SET_FLASHLIGHT)
     async setFlashlight(_source: number, phoneId: number, state: boolean) {
         if (phoneId === 0) return;
+        if (!this.phoneBacklight.has(phoneId)) return;
         if (state === null) state = false;
 
         this.phoneFlashlight.set(phoneId, state);
