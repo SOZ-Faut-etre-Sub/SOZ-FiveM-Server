@@ -57,12 +57,12 @@ export class WeaponGunsmithProvider {
         }
 
         let maxHealth = weapon.metadata.maxHealth;
-        if (!weapon.metadata.maxHealth) {
+        if (weapon.metadata.maxHealth == null) {
             maxHealth = GlobalWeaponConfig.MaxHealth;
         }
 
         let health = weapon.metadata.health;
-        if (!weapon.metadata.health) {
+        if (weapon.metadata.health == null) {
             health = GlobalWeaponConfig.MaxHealth;
         }
 
