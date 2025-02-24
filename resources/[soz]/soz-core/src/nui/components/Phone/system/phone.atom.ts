@@ -2,6 +2,7 @@ import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 import { useNuiEvent } from '../../../hook/nui';
 import { useInjectDebugData } from './debug/hooks/useInjectDebugData';
+import { flashLightAtomWithNui } from './phone.utils.atom';
 
 const phoneAvailableAtom = atom<boolean>(true);
 const phoneFreeCameraAtom = atom<boolean>(false);
@@ -50,6 +51,7 @@ export const usePhoneStateHandlers = () => {
     const setPhoneFreeCamera = useSetAtom(phoneFreeCameraAtom);
     const setForceDisableFocus = useSetAtom(phoneForceDisableFocusAtom);
 
+    const setPhoneFlashlight = useSetAtom(flashLightAtomWithNui);
     const setPhoneTimeHours = useSetAtom(phoneTimeHoursAtom);
     const setPhoneTimeMinutes = useSetAtom(phoneTimeMinutesAtom);
 
@@ -61,7 +63,13 @@ export const usePhoneStateHandlers = () => {
         setPhoneTimeMinutes(data.minute);
     });
 
-    useNuiEvent('phone', 'SetVisibility', setPhoneVisibility);
+    useNuiEvent('phone', 'SetVisibility', visibility => {
+        setPhoneVisibility(visibility);
+
+        if (!visibility) {
+            setPhoneFlashlight(false);
+        }
+    });
 
     useInjectDebugData(() => {
         setPhoneAvailable(true);

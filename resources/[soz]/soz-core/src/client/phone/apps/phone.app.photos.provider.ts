@@ -45,7 +45,7 @@ export class PhoneAppPhotosProvider {
     @OnNuiEvent(NuiEvent.PhoneAppPhotosEnterCamera)
     async onEnterCamera() {
         this.phoneState.setPhoneOnCamera(true);
-        CreateMobilePhone(1);
+        CreateMobilePhone(4);
         CellCamActivate(true, true);
         TriggerEvent(ClientEvent.PHONE_CAMERA_OPEN);
     }

@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick } from '@core/decorators/tick';
+import { emitRpc } from '@core/rpc';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { AttachedObjectService } from '@public/client/object/attached.object.service';
@@ -8,6 +9,7 @@ import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
 import { ActiveCall } from '@public/shared/phone/simcard';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 const KVP_PHONE_PROP_MODEL = 'soz_phone_prop_model';
 
@@ -30,11 +32,13 @@ export class PhoneState {
 
     private phonePropModel = GetResourceKvpString(KVP_PHONE_PROP_MODEL) ?? 'soz_phone_black';
     private phoneProp: number | null = null;
+
     private phoneOpen = false;
     private phoneDisabled = false;
     private phoneDrowned = false;
     private cityIsInBlackOut = false;
 
+    private phoneFlashlightEnabled = false;
     private phoneOnCamera = false;
     private phoneFrontCameraEnabled = false;
 
@@ -81,6 +85,7 @@ export class PhoneState {
             this.setPhoneOpen(false);
             this.setPhoneOnCamera(false);
             this.setPhoneFrontCameraEnabled(false);
+            this.setPhoneFlashlightEnabled(false);
         }
     }
 
@@ -101,6 +106,12 @@ export class PhoneState {
 
         this.phoneFrontCameraEnabled = value;
         Citizen.invokeNative('0x2491A93618B7D838', value);
+    }
+
+    public setPhoneFlashlightEnabled(value: boolean) {
+        this.phoneFlashlightEnabled = value;
+
+        emitRpc(RpcServerEvent.PHONE_LIGHT_SET_FLASHLIGHT, ObjToNet(this.phoneProp), value);
     }
 
     public getCurrentCall() {
@@ -131,7 +142,7 @@ export class PhoneState {
     }
 
     @Tick(250)
-    async onTick() {
+    async onAnimationTick() {
         const playerPed = PlayerPedId();
         const isPlayerInVehicle = IsPedInAnyVehicle(playerPed, false);
 
@@ -143,6 +154,12 @@ export class PhoneState {
                 playerPed,
                 isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
                 'cellphone_call_listen_base'
+            );
+        } else if (this.phoneOpen && this.phoneProp && this.phoneFlashlightEnabled) {
+            await this.triggerAnimation(
+                playerPed,
+                isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
+                'cellphone_text_read_base_cover_low'
             );
         } else if (this.phoneOpen) {
             await this.triggerAnimation(
@@ -157,6 +174,7 @@ export class PhoneState {
                 });
             } else {
                 this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
+                this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_read_base_cover_low');
 
                 this.animationService.playAnimationIfNotRunning({
                     base: {
@@ -190,10 +208,14 @@ export class PhoneState {
             rotation: [0, 0, 0],
             rotationOrder: 1,
         });
+
+        emitRpc(RpcServerEvent.PHONE_LIGHT_ADD_PHONE, ObjToNet(this.phoneProp));
     }
 
     private async removePhoneProp() {
         if (this.phoneProp === null) return;
+
+        emitRpc(RpcServerEvent.PHONE_LIGHT_REMOVE_PHONE, ObjToNet(this.phoneProp));
 
         SetPedConfigFlag(PlayerPedId(), 104, true);
         this.attachedObjectService.detachObjectToPlayer(this.phoneProp);
