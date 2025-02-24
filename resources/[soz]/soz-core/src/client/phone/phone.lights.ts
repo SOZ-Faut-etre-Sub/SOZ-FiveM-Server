@@ -71,11 +71,11 @@ export class PhoneLights {
             255,
             255,
             255,
-            1,
+            0.6,
             0.2,
             0,
             20,
-            0
+            1
         );
     }
 
@@ -102,8 +102,8 @@ export class PhoneLights {
             20,
             1,
             0,
-            20,
-            0
+            23,
+            20
         );
     }
 }
