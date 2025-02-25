@@ -29,6 +29,7 @@ export class LeaderboardTetrisRepository extends Repository<RepositoryType.Leade
                                    ON player.citizenid = try_count.identifier
                 GROUP BY player.citizenid, try_count.game_played
                 ORDER BY score DESC
+                LIMIT 100
             `
         );
 

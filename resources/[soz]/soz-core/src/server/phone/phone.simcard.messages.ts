@@ -210,38 +210,38 @@ export class PhoneSimCardMessages {
             return;
         }
 
-        const [createdMessage] = await this.prismaService.$transaction([
-            this.prismaService.phone_messages.create({
-                data: {
-                    user_identifier: player.citizenid,
-                    author: player.charinfo.phone,
-                    conversation_id: conversationId,
-                    message,
+        const createdMessage = await this.prismaService.phone_messages.create({
+            data: {
+                user_identifier: player.citizenid,
+                author: player.charinfo.phone,
+                conversation_id: conversationId,
+                message,
+            },
+        });
+
+        await this.prismaService.phone_messages_conversations.updateMany({
+            where: {
+                conversation_id: conversationId,
+                user_identifier: {
+                    not: player.charinfo.phone,
                 },
-            }),
-            this.prismaService.phone_messages_conversations.updateMany({
-                where: {
-                    conversation_id: conversationId,
-                    user_identifier: {
-                        not: player.charinfo.phone,
-                    },
+            },
+            data: {
+                unread: {
+                    increment: 1,
                 },
-                data: {
-                    unread: {
-                        increment: 1,
-                    },
-                },
-            }),
-            this.prismaService.phone_messages_conversations.updateMany({
-                where: {
-                    conversation_id: conversationId,
-                },
-                data: {
-                    masked: false,
-                    updatedAt: new Date(),
-                },
-            }),
-        ]);
+            },
+        });
+
+        await this.prismaService.phone_messages_conversations.updateMany({
+            where: {
+                conversation_id: conversationId,
+            },
+            data: {
+                masked: false,
+                updatedAt: new Date(),
+            },
+        });
 
         const createdMessageData = { ...createdMessage, createdAt: Number(createdMessage.createdAt) };
 
