@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/outline';
 import { ChatIcon, PencilAltIcon, PhoneIcon, StarIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { VariableSizeList } from 'react-window';
@@ -21,12 +21,11 @@ import { useThemeConfig } from '../../../system/config/config.atom';
 import { useContacts } from '../../../system/sim-card/hooks/useContact';
 import { useContactsAPI } from '../hooks/useContactsAPI';
 
-export const LIST_HEIGHT = 693;
-export const LIST_WIDTH = 380;
 export const LIST_ITEM_HEIGHT = 63;
 export const LIST_ITEM_SEPARATOR_HEIGHT = 35;
 
 export const ContactList: FunctionComponent<{ isEmbeded?: boolean }> = ({ isEmbeded = false }) => {
+    const ref = useRef<VariableSizeList>(null);
     const contactsApp = useApp('contacts');
 
     const { t } = useTranslation();
@@ -44,6 +43,10 @@ export const ContactList: FunctionComponent<{ isEmbeded?: boolean }> = ({ isEmbe
         },
     ]);
 
+    useEffect(() => {
+        ref.current.resetAfterIndex(0, true);
+    }, [contacts]);
+
     return (
         <AppWrapper>
             <AppContent>
@@ -54,6 +57,7 @@ export const ContactList: FunctionComponent<{ isEmbeded?: boolean }> = ({ isEmbe
 
                 {contacts && contacts.length > 0 ? (
                     <VariableSizeList
+                        ref={ref}
                         height={720 - (isEmbeded ? 50 : 0)}
                         width={410}
                         itemSize={(index: number) =>
