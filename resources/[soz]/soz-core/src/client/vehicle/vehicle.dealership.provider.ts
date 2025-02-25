@@ -1,3 +1,4 @@
+import { GangService } from '@private/client/gang/gang.service';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Monitor } from '@public/client/monitor/monitor';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
@@ -81,6 +82,9 @@ export class VehicleDealershipProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(GangService)
+    private gangService: GangService;
 
     private lastVehicleShowroom: number | null = null;
 
@@ -167,6 +171,10 @@ export class VehicleDealershipProvider {
                             category: 'citizen',
                             blackoutGlobal: true,
                             action: () => {
+                                if (dealership !== DealershipType.Boat && this.gangService.isHC()) {
+                                    this.notifier.error('Je refuse de servir des ~r~criminels~s~ comme vous.');
+                                    return;
+                                }
                                 this.openDealership(dealership as DealershipType, config);
                             },
                             canInteract: () => true,
