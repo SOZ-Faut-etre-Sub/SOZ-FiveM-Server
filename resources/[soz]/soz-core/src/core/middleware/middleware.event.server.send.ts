@@ -10,7 +10,7 @@ export class SendMiddlewareEventServer {
         SendMiddlewareEventServer.eventHistogram = new Histogram({
             name: 'soz_core_send_event',
             help: 'Send event execution histogram',
-            labelNames: ['event'],
+            labelNames: ['event', 'broadcast'],
         });
 
         if (!global.TriggerClientEventOrig) {
@@ -18,6 +18,7 @@ export class SendMiddlewareEventServer {
             global.TriggerClientEvent = function (eventName: string, target: number | string, ...args: any[]) {
                 const end = SendMiddlewareEventServer.eventHistogram.startTimer({
                     event: eventName,
+                    broadcast: target == -1 ? 1 : 0,
                 });
                 global.TriggerClientEventOrig(eventName, target, ...args);
 
@@ -39,6 +40,7 @@ export class SendMiddlewareEventServer {
                 );
                 const end = SendMiddlewareEventServer.eventHistogram.startTimer({
                     event: fixedEventName,
+                    broadcast: target == -1 ? 1 : 0,
                 });
                 global.TriggerLatentClientEventOrig(eventName, target, bps, ...args);
 
