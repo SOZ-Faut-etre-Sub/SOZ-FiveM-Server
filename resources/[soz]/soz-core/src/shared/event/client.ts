@@ -113,6 +113,7 @@ export enum ClientEvent {
     JOB_OPEN_CLOAKROOM = 'soz-core:client:job::OpenCloakroomMenu',
     JOB_OPEN_ON_DUTY_MENU = 'soz-job:client:OpenOnDutyMenu',
 
+    LSMC_DAMAGE_REFRESH = 'soz-core:client:lsmc:damage-refresh',
     LSMC_DISEASE_APPLY_CURRENT_EFFECT = 'lsmc:maladie:client:ApplyCurrentDiseaseEffect',
     LSMC_SET_DEATH = 'soz-core:client:lsmc:set-death',
     LSMC_REVIVE = 'soz-core:lsmc:client:revive',

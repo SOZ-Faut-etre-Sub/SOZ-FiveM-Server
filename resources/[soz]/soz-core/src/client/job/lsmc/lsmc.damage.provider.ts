@@ -8,12 +8,16 @@ import { DamageData } from '@public/shared/job/lsmc';
 import { PlayerData } from '@public/shared/player';
 import { ExtraWeaponName, WeaponName } from '@public/shared/weapons/weapon';
 
+import { PlayerDamageProvider } from '../../player/player.damage.provider';
 import { PlayerService } from '../../player/player.service';
 
 @Provider()
 export class LSMCDamageProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PlayerDamageProvider)
+    private playerDamageProvider: PlayerDamageProvider;
 
     private lastHealth = null;
     private lastWeaponHash = 0;
@@ -180,6 +184,7 @@ export class LSMCDamageProvider {
         };
 
         TriggerServerEvent(ServerEvent.LSMC_DAMAGE_ADD, data);
+        this.playerDamageProvider.addDamageZone(bone);
     }
 
     public overrideLastDamage(type: number, bone: number) {
