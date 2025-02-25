@@ -62,7 +62,7 @@ export class BennysResellProvider {
         if (playerVehicle.crimiImport) {
             this.notifier.notify(
                 source,
-                `Désolé je reprends pas les véhicules ne venant pas de concessionnaires agréés.`,
+                `Désolé je reprends pas les véhicules ne venant pas de ~r~concessionnaires agréés~s~.`,
                 'error'
             );
             return;

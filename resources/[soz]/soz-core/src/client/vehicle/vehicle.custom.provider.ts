@@ -183,7 +183,7 @@ export class VehicleCustomProvider {
         if (mode === LSCustomMode.LsCustom) {
             const volatile = await this.vehicleStateService.getVehicleState(vehicleEntityId);
             if (volatile.isCrimiImport) {
-                this.notifier.notify("Ce véhicule ne vient pas d'un concessionnaire agréé.", 'error');
+                this.notifier.notify("Ce véhicule ne vient pas d'un ~r~concessionnaire agréé~s~.", 'error');
                 return;
             }
         }
