@@ -1,11 +1,13 @@
-import { animated, useTransition } from '@react-spring/web';
+import { useTransition } from '@react-spring/web';
 import { useAtomValue } from 'jotai/index';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { ContactPicture } from '../../../components/ContactPicture';
 import { useNotification } from '../../notifications/hooks/useNotifications';
 import { lastNotificationAtom } from '../../notifications/notification.atom';
 import { usePhoneAvailable } from '../../phone.atom';
 import { useContact } from '../../sim-card/hooks/useContact';
+import { DynamicIslandContainer } from './DynamicIslandContainer';
 
 export const NotificationDynamicIsland = () => {
     const available = usePhoneAvailable();
@@ -48,8 +50,8 @@ export const NotificationDynamicIsland = () => {
             await next({
                 opacity: 1,
                 height: 96,
-                width: 320,
-                left: 60,
+                width: 400,
+                left: 20,
             });
         },
         leave: [
@@ -65,19 +67,22 @@ export const NotificationDynamicIsland = () => {
     });
 
     return transitions((styles, { title, icon: Icon, content, onClick }) => (
-        <animated.div
-            className="absolute top-4 flex items-end py-3 px-4 bg-black rounded-3xl cursor-pointer z-50 overflow-hidden"
-            style={styles}
-            onClick={onClick}
-        >
-            <div className="flex justify-center items-center gap-3 grow min-w-0">
-                {Icon && <Icon className="text-white size-12 p-1 rounded-xl shrink-0" />}
+        <DynamicIslandContainer style={styles} onClick={onClick}>
+            <div className="flex justify-center items-center gap-5 grow min-w-0 h-full">
+                {contact ? (
+                    <div className="relative shrink-0">
+                        <ContactPicture size="medium" picture={contact?.avatar} />
+                        {Icon && <Icon className="absolute -right-2 bottom-0 text-white size-8 rounded-md" />}
+                    </div>
+                ) : (
+                    Icon && <Icon className="text-white size-12 p-1 rounded-xl shrink-0" />
+                )}
 
-                <div className="flex flex-col grow truncate">
-                    <div className="text-white text-sm truncate">{contact?.display || title}</div>
-                    <div className="text-gray-400 text-xs">{content}</div>
+                <div className="flex flex-col justify-center grow py-1 h-16">
+                    <div className="text-white text-sm line-clamp-1">{contact?.display || title}</div>
+                    <div className="text-gray-400 text-xs line-clamp-2">{content}</div>
                 </div>
             </div>
-        </animated.div>
+        </DynamicIslandContainer>
     ));
 };
