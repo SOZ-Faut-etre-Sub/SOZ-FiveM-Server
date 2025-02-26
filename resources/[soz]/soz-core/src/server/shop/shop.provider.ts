@@ -305,7 +305,7 @@ export class ShopProvider {
                     },
                     FaceTrait: {
                         ...skin.FaceTrait,
-                        ...product.config.FaceTraits,
+                        ...product.config.FaceTrait,
                     },
                 };
             },
@@ -319,7 +319,7 @@ export class ShopProvider {
             case 'Makeup':
                 label = 'maquillage';
                 break;
-            case 'FaceTraits':
+            case 'FaceTrait':
                 label = 'lentilles';
                 break;
 
@@ -481,7 +481,9 @@ export class ShopProvider {
             const playerModel = this.playerService.getPlayer(source).skin.Model.Hash;
             const replacement = UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType];
             const baseTorsoDrawable =
-                ProperTorsos[playerModel][clothConfig.BaseClothSet.Components[Component.Tops].Drawable];
+                ProperTorsos[playerModel][clothConfig.BaseClothSet.Components[Component.Tops].Collection][
+                    clothConfig.BaseClothSet.Components[Component.Tops].Drawable
+                ];
             if (replacement && replacement[baseTorsoDrawable] != null) {
                 clothConfig.BaseClothSet.Components[Component.Torso] = {
                     Drawable: replacement[baseTorsoDrawable],

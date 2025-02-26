@@ -156,16 +156,29 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
             }
         }
 
+        console.log('AAAA');
+
         for (const shop of Object.values(repository.categories)) {
             for (const genderContent of Object.values(Object.values(shop))) {
                 for (const shopContent of Object.values(genderContent)) {
                     for (const itemModelList of Object.values(shopContent.content)) {
                         for (const item of itemModelList) {
                             if (item.components[Component.Tops] != null) {
-                                item.components[Component.Torso] = {
-                                    Drawable: ProperTorsos[item.modelHash][item.components[Component.Tops].Drawable],
-                                    Texture: 0,
-                                };
+                                try {
+                                    item.components[Component.Torso] = {
+                                        Drawable:
+                                            ProperTorsos[item.modelHash][item.components[Component.Tops].Collection][
+                                                item.components[Component.Tops].Drawable
+                                            ],
+                                        Texture: 0,
+                                    };
+                                } catch (e) {
+                                    console.log(
+                                        item.components[Component.Tops],
+                                        ProperTorsos[item.modelHash][item.components[Component.Tops].Collection]
+                                    );
+                                    throw e;
+                                }
                                 if (!item.components[Component.Undershirt]) {
                                     item.components[Component.Undershirt] = {
                                         Drawable: item.modelHash == PlayerPedHash.Female ? 14 : 15, // This is without undershirt

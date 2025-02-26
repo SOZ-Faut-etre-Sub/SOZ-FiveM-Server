@@ -51,9 +51,9 @@ export const BarberShopItems: BarberShopContent = {
         },
         {
             price: 13,
-            category: 'FaceTraits',
+            category: 'FaceTrait',
             label: 'Lentilles',
-            overlay: 'FaceTraits',
+            overlay: 'FaceTrait',
             components: { ['EyeColor']: true },
             items: undefined,
         },
@@ -115,9 +115,9 @@ export const BarberShopItems: BarberShopContent = {
         },
         {
             price: 13,
-            category: 'FaceTraits',
+            category: 'FaceTrait',
             label: 'Lentilles',
-            overlay: 'FaceTraits',
+            overlay: 'FaceTrait',
             components: { ['EyeColor']: true },
             items: undefined,
         },
