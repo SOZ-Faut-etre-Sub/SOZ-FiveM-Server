@@ -44,7 +44,7 @@ export const ContactList: FunctionComponent<{ isEmbeded?: boolean }> = ({ isEmbe
     ]);
 
     useEffect(() => {
-        ref.current.resetAfterIndex(0, true);
+        ref.current?.resetAfterIndex(0, true);
     }, [contacts]);
 
     return (
