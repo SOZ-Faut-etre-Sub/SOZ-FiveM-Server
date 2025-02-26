@@ -11,7 +11,9 @@ const filteredNotesAtom = atom<Array<NoteItem>>(get => {
     const notes = get(notesAtom);
     const searchQuery = get(searchQueryAtom);
 
-    return notes.filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase()));
+    return notes
+        .filter(note => note.title.toLowerCase().includes(searchQuery.toLowerCase()))
+        .sort((a, b) => b.id - a.id);
 });
 
 export const useNotes = () => useAtomValue(filteredNotesAtom);
