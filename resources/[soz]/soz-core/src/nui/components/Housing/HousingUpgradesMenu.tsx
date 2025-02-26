@@ -165,7 +165,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer</span>
-                            <span>${getPrice(tierPrice + parkingPrice, TaxType.HOUSING).toFixed()}</span>
+                            <span>${getPrice(tierPrice + parkingPrice, TaxType.HOUSING).toLocaleString('fr-FR')}</span>
                         </div>
                     </MenuItemButton>
                 </MenuContent>

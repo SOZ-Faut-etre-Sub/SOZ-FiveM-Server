@@ -90,7 +90,7 @@ export const DrivingSchoolMenu: FunctionComponent<DrivingSchoolMenuProps> = ({ d
                     <MenuItemButton className="border-t border-white/50" onConfirm={() => onConfirm()}>
                         <div className="flex w-full justify-between items-center">
                             <span>Confirmer</span>
-                            <span>${getPrice(price, TaxType.VEHICLE).toFixed()}</span>
+                            <span>${getPrice(price, TaxType.VEHICLE).toLocaleString('fr-FR')}</span>
                         </div>
                     </MenuItemButton>
                 </MenuContent>

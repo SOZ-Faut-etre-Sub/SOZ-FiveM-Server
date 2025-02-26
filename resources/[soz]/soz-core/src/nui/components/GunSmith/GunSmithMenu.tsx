@@ -165,7 +165,7 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                 >
                     <div className="flex w-full justify-between items-center">
                         <span>✅ Confirmer les changements</span>
-                        {!admin && <span>${getPrice(price, TaxType.WEAPON).toFixed(0)}</span>}
+                        {!admin && <span>${getPrice(price, TaxType.WEAPON).toLocaleString('fr-FR')}</span>}
                     </div>
                 </MenuItemButton>
             </MenuContent>
