@@ -32,7 +32,7 @@ export const ContactList: FunctionComponent = () => {
     const { contacts, searchValue, setSearchValue } = useSocietyContacts();
 
     useEffect(() => {
-        ref.current.resetAfterIndex(0, true);
+        ref.current?.resetAfterIndex(0, true);
     }, [contacts]);
 
     return (
