@@ -1,9 +1,10 @@
-import { animated, useSpring } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 import { useAtom } from 'jotai';
 import React from 'react';
 import { IoIosFlashlight } from 'react-icons/io';
 
 import { flashLightAtomWithNui } from '../../phone.utils.atom';
+import { DynamicIslandContainer } from './DynamicIslandContainer';
 
 export const FlashLightDynamicIsland = () => {
     const [flashLight, setFlashLight] = useAtom(flashLightAtomWithNui);
@@ -24,16 +25,12 @@ export const FlashLightDynamicIsland = () => {
     });
 
     return (
-        <animated.div
-            className="absolute top-4 flex items-end py-3 px-4 bg-black rounded-3xl cursor-pointer z-50 overflow-hidden"
-            style={styles}
-            onClick={() => setFlashLight(false)}
-        >
+        <DynamicIslandContainer rounded="rounded-3xl" style={styles} onClick={() => setFlashLight(false)}>
             <div className="flex flex-col justify-center items-center gap-3 grow min-w-0">
-                <div className="w-0 h-0 border-l-[50px] border-l-transparent border-t-[75px] border-t-white border-r-[50px] border-r-transparent blur-lg" />
+                <div className="size-0 border-l-[50px] border-l-transparent border-t-[75px] border-t-white border-r-[50px] border-r-transparent blur-lg" />
 
                 <IoIosFlashlight className="size-12 text-white" />
             </div>
-        </animated.div>
+        </DynamicIslandContainer>
     );
 };
