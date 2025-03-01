@@ -13,7 +13,7 @@ export class PhoneProvider {
 
     @On('QBCore:Server:PlayerUnload', false)
     async onPlayerUnload(source: number) {
-        for (const phone of this.playerPhone[source]) {
+        for (const phone of this.playerPhone[source] ?? []) {
             await this.removePhone(source, phone);
         }
 

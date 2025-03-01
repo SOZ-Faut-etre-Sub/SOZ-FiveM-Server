@@ -602,14 +602,18 @@ function QBCore.Player.Save(source)
 
     local PlayerData = QBCore.Players[src].PlayerData
     if PlayerData then
-        if not ped or (pcoords.x == 0 and pcoords.y == 0) then
+        if #(pcoords - vec3(0, 0, 1)) < 2 then
             local lastknownPosition = exports['soz-core']:GetLastKnownPosition(src)
-            if lastknownPosition and lastknownPosition[1] ~= 0 and lastknownPosition[2] ~= 0 then
+            if lastknownPosition then
                 pcoords = vec3(lastknownPosition[1], lastknownPosition[2], lastknownPosition[3])
-            else
-                pcoords = PlayerData.position
             end
         end
+        if #(pcoords - vec3(0, 0, 1)) < 2 then
+            pcoords = PlayerData.position
+        end
+
+        PlayerData.position = pcoords
+
         PlayerData.metadata["health"] = GetEntityHealth(ped)
         if not PlayerData.metadata["armor"].hidden then
             PlayerData.metadata["armor"].current = GetPedArmour(ped)
