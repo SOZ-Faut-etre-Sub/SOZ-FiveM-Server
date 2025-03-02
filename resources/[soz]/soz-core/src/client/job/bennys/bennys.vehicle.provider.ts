@@ -95,17 +95,17 @@ export class BennysVehicleProvider {
             minZ: 48.57,
             maxZ: 51.57,
         }),
-        new BoxZone([1913.98, 3088.9, 46.92], 8.8, 6.2, {
+        new BoxZone([1913.98, 3088.9, 46.92], 10.8, 9.1, {
             heading: 330.0,
             minZ: 45.92,
             maxZ: 48.922,
         }),
-        new BoxZone([1900.02, 3081.82, 46.91], 6.2, 10.0, {
+        new BoxZone([1900.02, 3081.82, 46.91], 8.2, 10.0, {
             heading: 330.0,
             minZ: 45.91,
             maxZ: 48.912,
         }),
-        new BoxZone([1915.46, 3107.86, 46.81], 6.6, 16.4, {
+        new BoxZone([1915.46, 3107.86, 46.81], 8.6, 16.4, {
             heading: 330.0,
             minZ: 43.81,
             maxZ: 50.812,
