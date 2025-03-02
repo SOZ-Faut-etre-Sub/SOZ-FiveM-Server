@@ -928,6 +928,7 @@ model gang {
     type     String @db.VarChar(100)
     hub      String @db.Text
     metadata String @db.MediumText
+    props    hc_props[]
 }
 
 model door {
@@ -1021,4 +1022,17 @@ model heist {
     id     String   @id @db.VarChar(128)
     update DateTime @default(now()) @db.Timestamp(0)
     data   String   @db.Text
+}
+
+model hc_props {
+    id          String   @id @db.VarChar(128)
+    gangid      Int?     @db.Int()
+    type        String   @db.VarChar(50)
+    position    String   @db.Text
+    model       String?  @db.VarChar(50)
+    matrix      String?  @db.Text
+    noCollision Boolean? @default(false)
+    metadata    String   @db.Text
+
+    gang        gang?     @relation(fields: [gangid], references: [id], onDelete: Cascade, map: "FK_gang_hc_props")
 }

@@ -111,7 +111,9 @@ export class PhoneState {
     public setPhoneFlashlightEnabled(value: boolean) {
         this.phoneFlashlightEnabled = value;
 
-        emitRpc(RpcServerEvent.PHONE_LIGHT_SET_FLASHLIGHT, ObjToNet(this.phoneProp), value);
+        if (this.phoneProp) {
+            emitRpc(RpcServerEvent.PHONE_LIGHT_SET_FLASHLIGHT, ObjToNet(this.phoneProp), value);
+        }
     }
 
     public getCurrentCall() {
