@@ -145,6 +145,7 @@ export enum RpcServerEvent {
     HEIST_JEWELRY_CHECK_ROBBERY = 'soz-core:server:heist:jewelry-check-robbery',
     HEIST_JEWELRY_START_ROBBERY = 'soz-core:server:heist:jewelry-start-robbery',
 
+    LSMC_GET_DAMAGE = 'soz-core:server:lsmc:get-damage',
     LSMC_CAN_REMOVE_ITT = 'soz-core:server:lsmc:can-remove-itt',
     LSMC_CAN_SET_ITT = 'soz-core:server:lsmc:can-set-itt',
     LSMC_PLAYER_PLASTER = 'soz-core:server:lsmc:get-plaster',

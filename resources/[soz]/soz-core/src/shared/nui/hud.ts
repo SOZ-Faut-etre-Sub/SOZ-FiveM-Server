@@ -32,6 +32,7 @@ export interface NuiHudMethodMap {
     VoipDebug: VoiceDebugInfo | null;
     SetGlassmorphism: boolean;
     SetGlassmorphismFps: number;
+    SetDamagedBones: string[];
     // Watch Settings
     SetTheme: HudTheme;
     SetAvailableTheme: HudTheme[];
@@ -45,4 +46,6 @@ export interface NuiHudMethodMap {
     SetShowStamina: boolean;
     SetShowInstructionalOverlay: boolean;
     SetSwitchPlayerStatsPosition: boolean;
+    SetShowInjuryTracker: boolean;
+    SetZoomInjuryTracker: number;
 }

@@ -7,7 +7,9 @@ import { Monitor } from '@public/server/monitor/monitor';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { DamageData, DamageServerData } from '@public/shared/job/lsmc';
+import { RpcServerEvent } from '@public/shared/rpc';
 
+import { Rpc } from '../../../core/decorators/rpc';
 import { MedicalMetadata } from '../../../shared/inventory';
 
 @Provider()
@@ -44,6 +46,24 @@ export class LSMCDamageProvider {
                 isFatal: damage.isFatal,
                 citizenid: player.citizenid,
                 date: new Date(),
+            },
+        });
+    }
+
+    @Rpc(RpcServerEvent.LSMC_GET_DAMAGE)
+    async getDamage(source: number) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        return this.prismaService.player_damage.findMany({
+            distinct: ['bone'],
+            select: {
+                bone: true,
+            },
+            where: {
+                citizenid: player.citizenid,
             },
         });
     }
@@ -102,6 +122,8 @@ export class LSMCDamageProvider {
         this.monitor.traceEvent('job_lsmc_damageremove', {
             player_source: source,
         });
+
+        TriggerClientEvent(ClientEvent.LSMC_DAMAGE_REFRESH, source);
     }
 
     @Command('damageshow', {

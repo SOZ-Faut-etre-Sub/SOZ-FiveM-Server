@@ -236,6 +236,8 @@ export enum NuiEvent {
     WatchMenuSetShowStamina = 'soz-core:nui:player:menu:hud-set-show-stamina',
     WatchMenuSetShowInstructionalOverlay = 'soz-core:nui:player:menu:hud-set-show-instructional-overlay',
     WatchMenuSetSwitchPlayerStatsPosition = 'soz-core:nui:player:menu:hud-set-switch-player-stats-position',
+    WatchMenuSetShowInjuryTracker = 'soz-core:nui:player:menu:hud-set-show-injury-tracker',
+    WatchMenuSetZoomInjuryTracker = 'soz-core:nui:player:menu:hud-set-zoom-injury-tracker',
     PlayerMenuJobGradeCreate = 'soz-core:nui:player:menu:job-grade-create',
     PlayerMenuJobGradeDelete = 'soz-core:nui:player:menu:job-grade-delete',
     PlayerMenuJobGradeSetDefault = 'soz-core:nui:player:menu:job-grade-set-default',

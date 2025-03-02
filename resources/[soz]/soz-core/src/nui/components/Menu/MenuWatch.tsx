@@ -120,6 +120,28 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                         Stamina
                     </MenuItemCheckbox>
 
+                    <MenuSubTitle>État corporel</MenuSubTitle>
+                    <MenuItemCheckbox
+                        checked={data.showInjuryTracker}
+                        description="Active/Désactive l'affichage d l'état corporel"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetShowInjuryTracker, value)}
+                    >
+                        État corporel
+                    </MenuItemCheckbox>
+                    <MenuItemSelect
+                        title="Taille de l'affichage"
+                        value={data.zoomInjuryTracker}
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.WatchMenuSetZoomInjuryTracker, value);
+                        }}
+                    >
+                        <MenuItemSelectOption value={0.5}>50%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={0.75}>75%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={1}>100%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={1.25}>125%</MenuItemSelectOption>
+                        <MenuItemSelectOption value={1.5}>150%</MenuItemSelectOption>
+                    </MenuItemSelect>
+
                     <MenuSubTitle>Accessibilité</MenuSubTitle>
                     <MenuItemCheckbox
                         checked={data.switchPlayerStatsPosition}

@@ -77,6 +77,14 @@ export const StateApp: FunctionComponent = () => {
         dispatch.hud.updateSettings({ switchPlayerStatsPosition });
     });
 
+    useNuiEvent('hud', 'SetShowInjuryTracker', showInjuryTracker => {
+        dispatch.hud.updateSettings({ showInjuryTracker });
+    });
+
+    useNuiEvent('hud', 'SetZoomInjuryTracker', zoomInjuryTracker => {
+        dispatch.hud.updateSettings({ zoomInjuryTracker });
+    });
+
     useNuiEvent('hud', 'UpdateSettings', settings => {
         dispatch.hud.update({ settings });
     });

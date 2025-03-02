@@ -43,6 +43,8 @@ export class HudWatchProvider {
     private _hideStamina = GetResourceKvpInt('soz_hud_stamina_hide') === 1;
     private _hideInstructionalOverlay = GetResourceKvpInt('soz_hud_instructional_overlay_hide') === 1;
     private _switchPlayerStatsPosition = GetResourceKvpInt('soz_hud_switch_player_stats_position') === 1;
+    private _showInjuryTracker = GetResourceKvpInt('soz_hud_injury_tracker_show') === 1;
+    private _zoomInjuryTracker = this.zoomInjuryTrackerFromKvp;
 
     private _availableTheme: AvailableTheme = {
         [HudTheme.Auto]: true,
@@ -71,6 +73,13 @@ export class HudWatchProvider {
 
     protected get inventorySizeFromKvp(): number {
         const kvpValue = Number(GetResourceKvpFloat('soz_hud_inventory_size').toPrecision(2));
+        if (kvpValue === null) return 1;
+        if (kvpValue < 0.5 || kvpValue > 1.5) return 1;
+        return kvpValue;
+    }
+
+    protected get zoomInjuryTrackerFromKvp(): number {
+        const kvpValue = Number(GetResourceKvpFloat('soz_hud_injury_tracker_zoom').toPrecision(2));
         if (kvpValue === null) return 1;
         if (kvpValue < 0.5 || kvpValue > 1.5) return 1;
         return kvpValue;
@@ -177,6 +186,8 @@ export class HudWatchProvider {
             showStamina: true,
             showInstructionalOverlay: true,
             switchPlayerStatsPosition: this._switchPlayerStatsPosition,
+            showInjuryTracker: this._showInjuryTracker,
+            zoomInjuryTracker: this._zoomInjuryTracker,
         });
         this.audioService.playAudio('audio/uwu.mp3', 0.1);
 
@@ -243,6 +254,16 @@ export class HudWatchProvider {
         this.switchPlayerStatsPosition = value;
     }
 
+    @OnNuiEvent(NuiEvent.WatchMenuSetShowInjuryTracker)
+    public async setShowInjuryTracker(value: boolean) {
+        this.showInjuryTracker = value;
+    }
+
+    @OnNuiEvent(NuiEvent.WatchMenuSetZoomInjuryTracker)
+    public async setZoomInjuryTracker(value: number) {
+        this.zoomInjuryTracker = value;
+    }
+
     public getSettings(): HudSettings {
         return {
             theme: this._theme,
@@ -257,6 +278,8 @@ export class HudWatchProvider {
             showStamina: !this._hideStamina,
             showInstructionalOverlay: !this._hideInstructionalOverlay,
             switchPlayerStatsPosition: this._switchPlayerStatsPosition,
+            showInjuryTracker: this._showInjuryTracker,
+            zoomInjuryTracker: this._zoomInjuryTracker,
         };
     }
 
@@ -325,6 +348,18 @@ export class HudWatchProvider {
         this._switchPlayerStatsPosition = value;
         SetResourceKvpInt('soz_hud_switch_player_stats_position', this._switchPlayerStatsPosition ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetSwitchPlayerStatsPosition', value);
+    }
+
+    public set showInjuryTracker(value: boolean) {
+        this._showInjuryTracker = value;
+        SetResourceKvpInt('soz_hud_injury_tracker_show', this._showInjuryTracker ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'SetShowInjuryTracker', value);
+    }
+
+    public set zoomInjuryTracker(value: number) {
+        this._zoomInjuryTracker = value;
+        SetResourceKvpFloat('soz_hud_injury_tracker_zoom', this._zoomInjuryTracker);
+        this.nuiDispatch.dispatch('hud', 'SetZoomInjuryTracker', value);
     }
 
     public get zoom(): number {
