@@ -2,6 +2,7 @@ import { Command } from '@public/core/decorators/command';
 import { PlayerService } from '@public/server/player/player.service';
 import { ApartmentRentTaxeRepository } from '@public/server/repository/apartment.rent.taxe';
 import { HousingRepository } from '@public/server/repository/housing.repository';
+import { getResellPrice } from '@public/shared/housing/housing';
 import { TaxType } from '@public/shared/tax';
 
 import { Cron } from '../../core/decorators/cron';
@@ -178,6 +179,7 @@ export class BankTaxProvider {
 
                 if (!(await this.bankService.removeAccountMoney(account, amountToPay))) {
                     const dbApartments = await this.housingRepository.getAllApartmentForCitizenId(citizenId);
+                    let amount = 0;
                     for (const dbApartment of dbApartments) {
                         const [property, apartment] = await this.housingRepository.getApartment(
                             dbApartment.propertyId,
@@ -188,6 +190,7 @@ export class BankTaxProvider {
                             continue;
                         }
 
+                        amount += getResellPrice(apartment, property);
                         this.housingProvider.clearApartment(property, apartment);
 
                         this.monitor.traceEvent('house_taxe_clean', {
@@ -195,10 +198,12 @@ export class BankTaxProvider {
                             house_id: dbApartment.identifier,
                         });
                     }
-                    await this.bankStatementsService.createStatement(
-                        '',
+
+                    await this.bankService.addAccountMoney(
                         account,
-                        0,
+                        amount,
+                        'money',
+                        false,
                         'Taxe immobilière - Fond insuffisant'
                     );
                     continue;
