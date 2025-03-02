@@ -48,4 +48,5 @@ export interface NuiHudMethodMap {
     SetSwitchPlayerStatsPosition: boolean;
     SetShowInjuryTracker: boolean;
     SetZoomInjuryTracker: number;
+    SetSwitchInjuryTrackerPosition: boolean;
 }

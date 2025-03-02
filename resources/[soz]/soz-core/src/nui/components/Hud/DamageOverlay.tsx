@@ -1,5 +1,6 @@
 import { useAssetPath } from '@public/nui/hook/assets';
 import { animated, useSpring } from '@react-spring/web';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -12,6 +13,9 @@ export function DamageOverlay() {
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const showInjuryTracker = useSelector((state: RootState) => state.hud.settings.showInjuryTracker);
     const zoomInjuryTracker = useSelector((state: RootState) => state.hud.settings.zoomInjuryTracker);
+    const switchInjuryTrackerPosition = useSelector(
+        (state: RootState) => state.hud.settings.switchInjuryTrackerPosition
+    );
     const minimap = useMinimap();
     const player = usePlayer();
     const { getPath } = useAssetPath();
@@ -29,13 +33,20 @@ export function DamageOverlay() {
             opacity: 1,
             top: shouldDisplay ? '0vh' : '-50vh',
             left: `${minimap.left * 100}vw`,
+            right: `${minimap.left * 100}vw`,
         },
     });
 
     useNuiEvent('hud', 'SetDamagedBones', setBones);
 
     return (
-        <animated.div className="absolute top-0 left-0 flex justify-center" style={styles}>
+        <animated.div
+            className={clsx('absolute top-0 inset-x-0 flex', {
+                'justify-start': switchInjuryTrackerPosition,
+                'justify-end': !switchInjuryTrackerPosition,
+            })}
+            style={styles}
+        >
             <div className="relative h-[30vh]" style={{ zoom: zoomInjuryTracker }}>
                 <img
                     alt="skel"

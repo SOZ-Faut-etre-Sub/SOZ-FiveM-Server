@@ -141,6 +141,13 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                         <MenuItemSelectOption value={1.25}>125%</MenuItemSelectOption>
                         <MenuItemSelectOption value={1.5}>150%</MenuItemSelectOption>
                     </MenuItemSelect>
+                    <MenuItemCheckbox
+                        checked={data.switchInjuryTrackerPosition}
+                        description="Change la position de l'état corporel"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetSwitchInjuryTrackerPosition, value)}
+                    >
+                        Afficher l'état corporel à gauche
+                    </MenuItemCheckbox>
 
                     <MenuSubTitle>Accessibilité</MenuSubTitle>
                     <MenuItemCheckbox
