@@ -834,8 +834,8 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('rumpo4')]: { maxWeight: 200000 },
 
     // DMC
-    [joaat('tiptruck2')]: { maxWeight: 200000, allowedItemTypes: TIP_TRUCK_ITEM_TYPES },
-    [joaat('rubble')]: { maxWeight: 200000 },
+    [joaat('tiptruck2')]: { maxWeight: 400000, allowedItemTypes: TIP_TRUCK_ITEM_TYPES },
+    [joaat('rubble')]: { maxWeight: 400000, allowedItemTypes: TIP_TRUCK_ITEM_TYPES },
 
     // Army
     [joaat('barracks')]: { maxWeight: 1000000 },
