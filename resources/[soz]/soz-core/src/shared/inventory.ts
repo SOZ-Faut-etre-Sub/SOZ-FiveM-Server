@@ -835,7 +835,20 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
 
     // DMC
     [joaat('tiptruck2')]: { maxWeight: 400000, allowedItemTypes: TIP_TRUCK_ITEM_TYPES },
-    [joaat('rubble')]: { maxWeight: 400000, allowedItemTypes: TIP_TRUCK_ITEM_TYPES },
+    [joaat('rubble')]: {
+        maxWeight: 400000,
+        allowedItemTypes: TIP_TRUCK_ITEM_TYPES,
+        allowedItems: [
+            'resell_box_coal',
+            'resell_box_iron',
+            'resell_box_aluminium',
+            'resell_box_steel',
+            'repair_part_body',
+            'repair_part_motor',
+            'repair_part_fuel_tank',
+            'ls_custom_upgrade_part',
+        ],
+    },
 
     // Army
     [joaat('barracks')]: { maxWeight: 1000000 },
