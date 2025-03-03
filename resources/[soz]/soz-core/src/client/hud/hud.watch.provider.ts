@@ -45,6 +45,7 @@ export class HudWatchProvider {
     private _switchPlayerStatsPosition = GetResourceKvpInt('soz_hud_switch_player_stats_position') === 1;
     private _showInjuryTracker = GetResourceKvpInt('soz_hud_injury_tracker_show') === 1;
     private _zoomInjuryTracker = this.zoomInjuryTrackerFromKvp;
+    private _switchInjuryTrackerPosition = GetResourceKvpInt('soz_hud_switch_injury_tracker_position') === 1;
 
     private _availableTheme: AvailableTheme = {
         [HudTheme.Auto]: true,
@@ -186,8 +187,9 @@ export class HudWatchProvider {
             showStamina: true,
             showInstructionalOverlay: true,
             switchPlayerStatsPosition: this._switchPlayerStatsPosition,
-            showInjuryTracker: this._showInjuryTracker,
+            showInjuryTracker: true,
             zoomInjuryTracker: this._zoomInjuryTracker,
+            switchInjuryTrackerPosition: this._switchInjuryTrackerPosition,
         });
         this.audioService.playAudio('audio/uwu.mp3', 0.1);
 
@@ -264,6 +266,11 @@ export class HudWatchProvider {
         this.zoomInjuryTracker = value;
     }
 
+    @OnNuiEvent(NuiEvent.WatchMenuSetSwitchInjuryTrackerPosition)
+    public async setSwitchInjuryTrackerPosition(value: boolean) {
+        this.switchInjuryTrackerPosition = value;
+    }
+
     public getSettings(): HudSettings {
         return {
             theme: this._theme,
@@ -280,6 +287,7 @@ export class HudWatchProvider {
             switchPlayerStatsPosition: this._switchPlayerStatsPosition,
             showInjuryTracker: this._showInjuryTracker,
             zoomInjuryTracker: this._zoomInjuryTracker,
+            switchInjuryTrackerPosition: this._switchInjuryTrackerPosition,
         };
     }
 
@@ -348,6 +356,12 @@ export class HudWatchProvider {
         this._switchPlayerStatsPosition = value;
         SetResourceKvpInt('soz_hud_switch_player_stats_position', this._switchPlayerStatsPosition ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetSwitchPlayerStatsPosition', value);
+    }
+
+    public set switchInjuryTrackerPosition(value: boolean) {
+        this._switchInjuryTrackerPosition = value;
+        SetResourceKvpInt('soz_hud_switch_injury_tracker_position', this._switchInjuryTrackerPosition ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'SetSwitchInjuryTrackerPosition', value);
     }
 
     public set showInjuryTracker(value: boolean) {

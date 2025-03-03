@@ -98,6 +98,7 @@ export type HudSettings = {
     switchPlayerStatsPosition: boolean;
     showInjuryTracker: boolean;
     zoomInjuryTracker: number;
+    switchInjuryTrackerPosition: boolean;
 };
 
 export type HudState = {
