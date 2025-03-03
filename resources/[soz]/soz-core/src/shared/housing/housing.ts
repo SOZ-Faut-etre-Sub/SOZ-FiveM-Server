@@ -361,16 +361,3 @@ export const canUseHousingInProperty = (
             canUseHousingInAppartmentNoStaff(player, apartment, temporaryAccess)
     );
 };
-
-export const canAccessTargetInApartment = (player: PlayerData, apartment: Apartment): boolean => {
-    if (!player) {
-        return false;
-    }
-
-    const hasWarrantAccess = hasSearchWarrantAccessInApartment(apartment, player);
-    if (!hasWarrantAccess && apartment.tenant === null && apartment.roommate === null) {
-        return false;
-    }
-
-    return (apartment.senatePartyId !== null || apartment.owner !== null) && isPlayerInsideApartment(player);
-};

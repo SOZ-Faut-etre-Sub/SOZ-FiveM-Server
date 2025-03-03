@@ -23,10 +23,10 @@ import { HousingRepository } from '@public/client/repository/housing.repository'
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { NoClipProvider } from '@public/client/utils/noclip.provider';
+import { HousingService } from '@public/server/housing/housing.service';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import {
     Apartment,
-    canAccessTargetInApartment,
     canUseHousingInAppartment,
     getMaxFourntiure,
     isApartmentExcludeFromHousing,
@@ -98,6 +98,9 @@ export class HousingFournitureProvider {
 
     @Inject(AnimationService)
     private animationService: AnimationService;
+
+    @Inject(HousingService)
+    private housingService: HousingService;
 
     @Inject(HousingPropertyZoneProvider)
     private housingPropertyZoneProvider: HousingPropertyZoneProvider;
@@ -325,7 +328,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -345,7 +348,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.bankService.openHouseSafe(apartment);
@@ -361,7 +364,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -381,7 +384,7 @@ export class HousingFournitureProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.housingApartmentZoneProvider.openApartmentCloakroom();

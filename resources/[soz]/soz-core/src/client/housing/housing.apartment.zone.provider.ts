@@ -9,11 +9,11 @@ import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerService } from '@public/client/player/player.service';
 import { HousingRepository } from '@public/client/repository/housing.repository';
 import { TargetFactory } from '@public/client/target/target.factory';
+import { HousingService } from '@public/server/housing/housing.service';
 import { PlayerCloakroomItem } from '@public/shared/cloth';
 import { ServerEvent } from '@public/shared/event/server';
 import {
     Apartment,
-    canAccessTargetInApartment,
     canUseHousingInAppartment,
     isApartmentExcludeFromHousing,
     isPlayerInsideApartment,
@@ -54,6 +54,9 @@ export class HousingApartmentZoneProvider {
 
     @Inject(HousingPropertyZoneProvider)
     private housingPropertyZoneProvider: HousingPropertyZoneProvider;
+
+    @Inject(HousingService)
+    private housingService: HousingService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public onApartmentZoneLoaded() {
@@ -161,7 +164,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -182,7 +185,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.inventoryManager.openInventory(
@@ -203,7 +206,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.bankService.openHouseSafe(apartment);
@@ -220,7 +223,7 @@ export class HousingApartmentZoneProvider {
                     category: 'citizen',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();
-                        return canAccessTargetInApartment(player, apartment);
+                        return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
                         this.openApartmentCloakroom();
