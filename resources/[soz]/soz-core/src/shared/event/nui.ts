@@ -332,6 +332,7 @@ export enum NuiEvent {
     HousingAddTenant = 'soz-core:nui:housing:add-tenant',
     HousingBell = 'soz-core:nui:housing:bell',
     HousingSearchWarrantUse = 'soz-core:nui:housing:search-warrant-use',
+    HousingSearchWarrantClose = 'soz-core:nui:housing:search-warrant-close',
     HousingOpenUpgradeMenu = 'soz-core:nui:housing:open-upgrades-menu',
     HousingBuy = 'soz-core:nui:housing:buy',
     HousingEnter = 'soz-core:nui:housing:enter',

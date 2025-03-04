@@ -418,6 +418,31 @@ export class HousingPropertyZoneProvider {
                 },
             },
             {
+                label: 'Cloturer la perquisition',
+                icon: 'pawl/craft-paper',
+                job: FDO.reduce((prev, cur) => ({ ...prev, [cur]: 0 }), {} as Record<JobType, number>),
+                category: 'society',
+                canInteract: () => {
+                    const player = this.playerService.getPlayer();
+
+                    if (!player) {
+                        return false;
+                    }
+
+                    if (isPlayerInsideApartment(player)) {
+                        return false;
+                    }
+
+                    return property.apartments.some(
+                        apartment =>
+                            (apartment.owner || apartment.senatePartyId) && apartment.search_warrant_access > Date.now()
+                    );
+                },
+                action: () => {
+                    this.closeSearchWarrant(property);
+                },
+            },
+            {
                 label: 'Entrer',
                 icon: 'housing/enter',
                 category: 'citizen',
@@ -781,6 +806,24 @@ export class HousingPropertyZoneProvider {
                     return (
                         (apartment.owner || apartment.senatePartyId) && apartment.search_warrant_access <= Date.now()
                     );
+                }),
+            },
+            {
+                position: {
+                    distance: 3,
+                    position: property.entryZone.center,
+                },
+            }
+        );
+    }
+
+    public async closeSearchWarrant(property: Property) {
+        this.nuiMenu.openMenu(
+            MenuType.HousingSearchWarrantCloseMenu,
+            {
+                property,
+                apartments: property.apartments.filter(apartment => {
+                    return (apartment.owner || apartment.senatePartyId) && apartment.search_warrant_access > Date.now();
                 }),
             },
             {

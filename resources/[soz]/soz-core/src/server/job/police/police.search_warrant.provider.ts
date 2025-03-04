@@ -38,7 +38,23 @@ export class PoliceSearchWarrantProvider {
         }
 
         await this.housingRepository.setApartmentWarrantAccess(apartmentId);
-        this.notifier.error(source, `Le ${apartment.label} a été forcé.`);
+        this.notifier.notify(source, `Le ${apartment.label} a été forcé.`, 'success');
+    }
+
+    @OnEvent(ServerEvent.FDO_CLOSE_SEARCH_WARRANT)
+    public async onCloseWarrantUse(source: number, apartmentId: number, propertyId: number) {
+        const [, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
+        if (!apartment) {
+            return;
+        }
+
+        if (apartment.search_warrant_access <= Date.now()) {
+            this.notifier.error(source, "Cette habitation n'est pas forcée.");
+            return;
+        }
+
+        await this.housingRepository.setApartmentWarrantAccess(apartmentId, 0);
+        this.notifier.notify(source, `Le ${apartment.label} a été fermé.`, 'success');
     }
 
     @Command('set-warrant-access', {
