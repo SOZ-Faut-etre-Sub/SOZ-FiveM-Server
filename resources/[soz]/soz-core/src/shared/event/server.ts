@@ -733,6 +733,20 @@ export enum ServerEvent {
     OILRIG_HEIST_CAMERA_SPOTTED = 'soz-core:server:oilrig-heist:camera-spotted',
     OILRIG_HEIST_STOP_ALARM = 'soz-core:server:oilrig-heist:alarm-stop',
 
+    YATCH_HEIST_CARGO_HARVEST = 'soz-core:server:yatch-heist:cargo-harvest',
+    YATCH_HEIST_SHELF = 'soz-core:server:yatch-heist:shelf',
+    YATCH_HEIST_BOX = 'soz-core:server:yatch-heist:printer',
+    YATCH_HEIST_INIT = 'soz-core:server:yatch-heist:init',
+    YATCH_HEIST_CAMERA_SPOTTED = 'soz-core:server:yatch-heist:camera-spotted',
+    YATCH_HEIST_STOP_ALARM_YATCH = 'soz-core:server:yatch-heist:alarm-stop-yatch',
+    YATCH_HEIST_STOP_ALARM_CARGO = 'soz-core:server:yatch-heist:alarm-stop-cargo',
+    YATCH_HEIST_CARGO_BAY = 'soz-core:server:yatch-heist:cargo-bay',
+    YATCH_HEIST_ELEC = 'soz-core:server:yatch-heist:elec',
+    YATCH_HEIST_CONTROL = 'soz-core:server:yatch-heist:control',
+    YATCH_HEIST_BATTERY = 'soz-core:server:yatch-heist:battery',
+    YATCH_HEIST_GREEN = 'soz-core:server:yatch-heist:green',
+    YATCH_HEIST_YELLOW = 'soz-core:server:yatch-heist:yellow',
+
     PLAYER_MORTAL_TP = 'soz-core:server:player:mortal-tp',
 
     GIFT_TOSS_COIN = 'soz-core:server:gift:toss-coin',

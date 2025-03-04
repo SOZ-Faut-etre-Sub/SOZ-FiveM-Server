@@ -12422,6 +12422,25 @@ QBShared.Items = {
         ["description"] = "Une carte magnétique qui doit surement servir à accéder à un ordinateur si on trouve la seconde...",
         ["illustrator"] = ".Sniteur",
     },
+    ["heist_access_card_green"] = {
+        ["name"] = "heist_access_card_green",
+        ["label"] = "Cartes d’accès verte",
+        ["useable"] = false,
+        ["weight"] = 500,
+        ["type"] = "item_illegal",
+        ["description"] = "Une carte magnétique qui doit surement servir à accéder à un ordinateur si on trouve la seconde...",
+        ["illustrator"] = ".Sniteur",
+    },
+    ["heist_access_card_yellow"] = {
+        ["name"] = "heist_access_card_yellow",
+        ["label"] = "Cartes d’accès jaune",
+        ["useable"] = false,
+        ["weight"] = 500,
+        ["type"] = "item_illegal",
+        ["description"] = "Une carte magnétique qui doit surement servir à accéder à un ordinateur si on trouve la seconde...",
+        ["illustrator"] = ".Sniteur",
+    },
+    
     ["weapon_crate"] = {
         ["name"] = "weapon_crate",
         ["label"] = "Caisse d'armes",
