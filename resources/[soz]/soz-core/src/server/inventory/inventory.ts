@@ -183,6 +183,35 @@ export class Inventory {
         amount = Math.round(amount);
         metadata = metadata || {};
 
+        if (itemObject.expiresIn && !metadata?.expiration) {
+            metadata = {
+                ...metadata,
+                expiration: startOfMinute(addMinutes(new Date(), itemObject.expiresIn)).toUTCString(),
+            };
+        }
+
+        if (itemObject.durability && !metadata?.expiration) {
+            metadata = {
+                ...metadata,
+                expiration: startOfDay(addDays(new Date(), itemObject.durability)).toUTCString(),
+            };
+        }
+
+        if (!metadata?.creation && itemObject.type === 'evidence') {
+            metadata = {
+                ...metadata,
+                creation: new Date().toUTCString(),
+            };
+        }
+
+        if (itemObject.storageItemType) {
+            metadata = {
+                id: uuidv4(),
+                storageElements: [],
+                ...metadata,
+            };
+        }
+
         if (!bypassCheck && !isItemAllowed(itemObject.type, id, metadata, this._configuration)) {
             return Err('not_allowed');
         }
@@ -210,7 +239,17 @@ export class Inventory {
             let lastSlot = null;
 
             for (let i = 0; i < amount; i++) {
-                lastSlot = this.doAddItem(itemObject, 1, metadata, i === 0 ? slot : null);
+                let uniqMetadata = { ...metadata };
+                if (itemObject.type === 'weapon') {
+                    uniqMetadata = {
+                        serial: uuidv4(),
+                        tint: 0,
+                        health: 2000,
+                        maxHealth: 2000,
+                        ...uniqMetadata,
+                    };
+                }
+                lastSlot = this.doAddItem(itemObject, 1, uniqMetadata, i === 0 ? slot : null);
             }
 
             return Ok(lastSlot);
@@ -268,47 +307,6 @@ export class Inventory {
             }
 
             slot = foundSlot ?? currentMaxSlot + 1;
-        }
-
-        metadata = metadata || {};
-
-        if (item.type === 'weapon') {
-            metadata = {
-                serial: uuidv4(),
-                tint: 0,
-                health: 2000,
-                maxHealth: 2000,
-                ...metadata,
-            };
-        }
-
-        if (item.expiresIn && !metadata?.expiration) {
-            metadata = {
-                ...metadata,
-                expiration: startOfMinute(addMinutes(new Date(), item.expiresIn)).toUTCString(),
-            };
-        }
-
-        if (item.durability && !metadata?.expiration) {
-            metadata = {
-                ...metadata,
-                expiration: startOfDay(addDays(new Date(), item.durability)).toUTCString(),
-            };
-        }
-
-        if (!metadata?.creation && item.type === 'evidence') {
-            metadata = {
-                ...metadata,
-                creation: new Date().toUTCString(),
-            };
-        }
-
-        if (item.storageItemType) {
-            metadata = {
-                id: uuidv4(),
-                storageElements: [],
-                ...metadata,
-            };
         }
 
         const inventoryItem: InventoryItem = {
