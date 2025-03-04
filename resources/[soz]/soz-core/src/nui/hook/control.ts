@@ -1,3 +1,4 @@
+import { usePhoneInsideInput } from '@public/nui/components/Phone/system/phone.atom';
 import { useEffect } from 'react';
 
 import { NuiMethodMap } from '../../shared/nui';
@@ -6,10 +7,11 @@ import { useMenuNuiEvent } from './nui';
 
 export const useKeyPress = (targetKey: string, onKeyPress?: () => void) => {
     const isInInput = useIsInInput();
+    const isInsidePhoneInput = usePhoneInsideInput();
 
     useEffect(() => {
         const downHandler = (event: KeyboardEvent) => {
-            if (event.key === targetKey && !isInInput) {
+            if (event.key === targetKey && !isInInput && !isInsidePhoneInput) {
                 onKeyPress && onKeyPress();
             }
         };
@@ -19,7 +21,7 @@ export const useKeyPress = (targetKey: string, onKeyPress?: () => void) => {
         return () => {
             window.removeEventListener('keydown', downHandler);
         };
-    }, [targetKey, onKeyPress, isInInput]);
+    }, [targetKey, onKeyPress, isInInput, isInsidePhoneInput]);
 };
 
 const useMenuControlNuiEvent = <M extends keyof NuiMethodMap['menu']>(
@@ -27,8 +29,10 @@ const useMenuControlNuiEvent = <M extends keyof NuiMethodMap['menu']>(
     handler: (r: NuiMethodMap['menu'][M]) => void
 ) => {
     const isInInput = useIsInInput();
+    const isInsidePhoneInput = usePhoneInsideInput();
+
     return useMenuNuiEvent(method, r => {
-        if (!isInInput) {
+        if (!isInInput && !isInsidePhoneInput) {
             handler(r);
         }
     });
