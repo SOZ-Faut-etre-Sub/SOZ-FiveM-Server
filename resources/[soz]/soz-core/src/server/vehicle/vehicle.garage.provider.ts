@@ -162,9 +162,6 @@ export class VehicleGarageProvider {
                         PlayerVehicleState.Missing,
                     ],
                 },
-                category: {
-                    not: 'Boats',
-                },
             },
         });
 
