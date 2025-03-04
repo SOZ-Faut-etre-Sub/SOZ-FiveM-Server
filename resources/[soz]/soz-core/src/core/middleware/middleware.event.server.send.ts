@@ -15,37 +15,37 @@ export class SendMiddlewareEventServer {
 
         if (!global.TriggerClientEventOrig) {
             global.TriggerClientEventOrig = global.TriggerClientEvent;
-            global.TriggerClientEvent = function (eventName: string, target: number | string, ...args: any[]) {
-                const end = SendMiddlewareEventServer.eventHistogram.startTimer({
-                    event: eventName,
-                    broadcast: target == -1 ? 1 : 0,
-                });
-                global.TriggerClientEventOrig(eventName, target, ...args);
-
-                end();
-            };
         }
+        global.TriggerClientEvent = function (eventName: string, target: number | string, ...args: any[]) {
+            const end = SendMiddlewareEventServer.eventHistogram.startTimer({
+                event: eventName,
+                broadcast: target == -1 ? 1 : 0,
+            });
+            global.TriggerClientEventOrig(eventName, target, ...args);
+
+            end();
+        };
 
         if (!global.TriggerLatentClientEventOrig) {
             global.TriggerLatentClientEventOrig = global.TriggerLatentClientEvent;
-            global.TriggerLatentClientEvent = function (
-                eventName: string,
-                target: number | string,
-                bps: number,
-                ...args: any[]
-            ) {
-                const fixedEventName = eventName.replace(
-                    /_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/g,
-                    ''
-                );
-                const end = SendMiddlewareEventServer.eventHistogram.startTimer({
-                    event: fixedEventName,
-                    broadcast: target == -1 ? 1 : 0,
-                });
-                global.TriggerLatentClientEventOrig(eventName, target, bps, ...args);
-
-                end();
-            };
         }
+        global.TriggerLatentClientEvent = function (
+            eventName: string,
+            target: number | string,
+            bps: number,
+            ...args: any[]
+        ) {
+            const fixedEventName = eventName.replace(
+                /_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/g,
+                ''
+            );
+            const end = SendMiddlewareEventServer.eventHistogram.startTimer({
+                event: fixedEventName,
+                broadcast: target == -1 ? 1 : 0,
+            });
+            global.TriggerLatentClientEventOrig(eventName, target, bps, ...args);
+
+            end();
+        };
     }
 }

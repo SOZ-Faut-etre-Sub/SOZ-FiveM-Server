@@ -7,6 +7,7 @@ import { setService, setServiceInstance, unloadContainer } from './core/containe
 import { ProviderServerLoader } from './core/loader/provider.server.loader';
 import { ChainMiddlewareEventServerFactory } from './core/middleware/middleware.event.server';
 import { SendMiddlewareEventServer } from './core/middleware/middleware.event.server.send';
+import { SendMiddlewareStatebagServer } from './core/middleware/middleware.statebag';
 import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.tick.server';
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
@@ -68,6 +69,7 @@ async function bootstrap() {
     setService('MiddlewareFactory', ChainMiddlewareEventServerFactory);
     setService('MiddlewareTickFactory', ChainMiddlewareTickServerFactory);
     setService('MiddlewareSendEventFactory', SendMiddlewareEventServer);
+    setService('MiddlewareStatebagFactory', SendMiddlewareStatebagServer);
 
     try {
         setMaxEventListeners(20);

@@ -29,4 +29,19 @@ export class MonitorTraceProvider {
             traceEvents: traces,
         });
     }
+
+    @Command('sampling-profiler-server', { role: 'admin' })
+    async startSamplingProfiler(source: number, time: string) {
+        const timeInMs = parseInt(time);
+        Citizen.startProfiling();
+
+        console.log(`[TRACE] Starting profiling for ${timeInMs}ms`);
+
+        await wait(timeInMs);
+        const str = Citizen.stopProfiling();
+
+        SaveResourceFile('soz-core', 'profiling', JSON.stringify(str), -1);
+
+        console.log(`[TRACE] Ending profiling`);
+    }
 }
