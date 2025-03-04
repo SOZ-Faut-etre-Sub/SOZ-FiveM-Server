@@ -40,6 +40,7 @@ import { HousingEnterMenu } from '../Housing/HousingEnterMenu';
 import { HousingRemoveRoommateMenu } from '../Housing/HousingRemoveRoommateMenu';
 import { HousingRemoveTenantMenu } from '../Housing/HousingRemoveTenantMenu';
 import { HousingSearchWarrantMenu } from '../Housing/HousingSearchWarrantMenu';
+import { HousingSearchWarrantCloseMenu } from '../Housing/HousingSearchWarrantMenuClose';
 import { HousingSellMenu } from '../Housing/HousingSellMenu';
 import { HousingStoreFounitureSelectMenu } from '../Housing/HousingStoreFounitureSelectMenu';
 import { HousingUpgradesMenu } from '../Housing/HousingUpgradesMenu';
@@ -296,6 +297,10 @@ const MenuRouter: FunctionComponent = () => {
             <Route
                 path={`/${MenuType.HousingSearchWarrantMenu}/*`}
                 element={<HousingSearchWarrantMenu data={menuData} />}
+            />
+            <Route
+                path={`/${MenuType.HousingSearchWarrantCloseMenu}/*`}
+                element={<HousingSearchWarrantCloseMenu data={menuData} />}
             />
             <Route
                 path={`/${MenuType.HousingUpgradesSelectMenu}/*`}

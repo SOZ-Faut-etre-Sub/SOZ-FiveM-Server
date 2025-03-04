@@ -1,0 +1,42 @@
+import { MenuType } from '@public/shared/nui/menu';
+import { FunctionComponent } from 'react';
+
+import { NuiEvent } from '../../../shared/event/nui';
+import { ApartmentMenuData } from '../../../shared/housing/housing';
+import { fetchNui } from '../../fetch';
+import { MainMenu, Menu, MenuContent, MenuItemButton, MenuTitle } from '../Styleguide/Menu';
+
+type HousingSearchWarrantMenuCloseProps = {
+    data?: ApartmentMenuData;
+};
+
+export const HousingSearchWarrantCloseMenu: FunctionComponent<HousingSearchWarrantMenuCloseProps> = ({ data }) => {
+    if (!data) {
+        return null;
+    }
+
+    return (
+        <Menu type={MenuType.HousingSearchWarrantCloseMenu}>
+            <MainMenu>
+                <MenuTitle title="Habitation" />
+                <MenuContent>
+                    {data.apartments.map(apartment => {
+                        return (
+                            <MenuItemButton
+                                onConfirm={() => {
+                                    fetchNui(NuiEvent.HousingSearchWarrantClose, {
+                                        apartmentId: apartment.id,
+                                        propertyId: data.property.id,
+                                    });
+                                }}
+                                key={apartment.id}
+                            >
+                                {apartment.label}
+                            </MenuItemButton>
+                        );
+                    })}
+                </MenuContent>
+            </MainMenu>
+        </Menu>
+    );
+};

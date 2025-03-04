@@ -584,6 +584,7 @@ export enum ServerEvent {
     GOUV_CRAFT_SEARCH_WARRANT = 'soz-core:server:gouv:craft-search-warrant',
 
     FDO_USE_SEARCH_WARRANT = 'soz-core:server:fdo:use-search-warrant',
+    FDO_CLOSE_SEARCH_WARRANT = 'soz-core:server:fdo:close-search-warrant',
 
     LUXURY_DELETE_GUARD = 'soz-core:server:luxury:delete-guard',
     LUXURY_CREATED_GUARD = 'soz-core:server:luxury:created-guard',

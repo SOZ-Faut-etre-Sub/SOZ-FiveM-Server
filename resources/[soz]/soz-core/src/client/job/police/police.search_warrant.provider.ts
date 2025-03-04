@@ -35,4 +35,27 @@ export class PoliceSearchWarrantProvider {
         }
         TriggerServerEvent(ServerEvent.FDO_USE_SEARCH_WARRANT, apartmentId, propertyId);
     }
+
+    @OnNuiEvent(NuiEvent.HousingSearchWarrantClose)
+    public async onCloseWarrantUse({ apartmentId, propertyId }: { apartmentId: number; propertyId: number }) {
+        this.nuiMenu.closeMenu();
+
+        const { completed } = await this.progressService.progress(
+            'force_house_with_search_warrant',
+            "Vous fermez l'accès de l'habitation...",
+            30000,
+            {
+                dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                name: 'machinic_loop_mechandplayer',
+                options: {
+                    repeat: true,
+                    onlyUpperBody: true,
+                },
+            }
+        );
+        if (!completed) {
+            return;
+        }
+        TriggerServerEvent(ServerEvent.FDO_CLOSE_SEARCH_WARRANT, apartmentId, propertyId);
+    }
 }
