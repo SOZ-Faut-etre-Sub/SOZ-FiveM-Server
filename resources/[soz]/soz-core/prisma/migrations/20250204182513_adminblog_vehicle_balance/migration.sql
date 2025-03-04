@@ -65,3 +65,12 @@ where price > 10
   and maxStock > 1
   and dealership_id = 'luxury'
   and category in ('Sports', 'Sportsclassics');
+
+--
+-- Réduction des coûts de 10% pour tous les véhicules
+--
+
+update vehicles
+set price=ceil(price * 0.9)
+where price > 10
+  and dealership_id in ('pdm', 'luxury', 'moto', 'electric', 'air', 'boat');
