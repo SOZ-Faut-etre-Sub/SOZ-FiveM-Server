@@ -9,12 +9,16 @@ import { Bunkers } from '@public/shared/utils/bunkers';
 
 import { Provider } from '../../core/decorators/provider';
 import { InputService } from '../nui/input.service';
+import { PlayerService } from '../player/player.service';
 
 const increaseRate = 0.005;
 @Provider()
 export class OceanProvider {
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     private targetLevel = 0;
     private currentLevel = 0;
@@ -63,6 +67,7 @@ export class OceanProvider {
     public waterLevelLoop() {
         const intId = GetInteriorFromEntity(PlayerPedId());
         if (
+            this.playerService.getState().inCyberHeist ||
             Bunkers.filter(b => b.interiorId == 271873)
                 .map(b => b.interiorId)
                 .includes(intId)
