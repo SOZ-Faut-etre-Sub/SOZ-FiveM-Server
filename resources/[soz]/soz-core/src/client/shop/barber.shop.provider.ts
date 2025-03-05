@@ -8,7 +8,7 @@ import { MenuType } from '@public/shared/nui/menu';
 import { PlayerPedHash, Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Ok } from '@public/shared/result';
-import { BarberConfiguration, BarberShopColors, BarberShopItem, BarberShopLabels } from '@public/shared/shop';
+import { BarberShopColors, BarberShopItem, BarberShopLabels } from '@public/shared/shop';
 
 import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
@@ -99,7 +99,7 @@ export class BarberShopProvider {
     }
 
     @OnNuiEvent(NuiEvent.BarberShopPreview)
-    public async onBarberPreview(config: BarberConfiguration) {
+    public async onBarberPreview(config: Skin) {
         const player = this.playerService.getPlayer();
         const temporarySkin: Skin = {
             ...player.skin,
@@ -113,7 +113,7 @@ export class BarberShopProvider {
             },
             FaceTrait: {
                 ...player.skin.FaceTrait,
-                ...config.FaceTraits,
+                ...config.FaceTrait,
             },
         };
         TriggerEvent('soz-character:Client:ApplyTemporarySkin', temporarySkin);

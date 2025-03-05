@@ -8,7 +8,7 @@ import { TaxType } from '@public/shared/tax';
 import { Component, GlovesItem, OutfitItem, Prop } from './cloth';
 import { Item, ItemType } from './item';
 import { JobType } from './job';
-import { PlayerLicenceType } from './player';
+import { PlayerLicenceType, Skin } from './player';
 import { Zone } from './polyzone/box.zone';
 import { Vector3 } from './polyzone/vector';
 
@@ -140,6 +140,7 @@ export type ShopJewelryContent = Record<string, ShopJewelryCategory>;
 export type BarberShopLabelEntry = {
     value: number;
     label: string;
+    Collection: string;
 };
 export type BarberShopColorEntry = {
     value: number;
@@ -162,39 +163,8 @@ export type BarberShopCategory = {
 
 export type BarberShopContent = Record<number, BarberShopCategory[]>;
 
-export type BarberConfiguration = {
-    Hair: {
-        HairType?: number;
-        HairColor?: number;
-        HairSecondaryColor?: number;
-        BeardType?: number;
-        BeardColor?: number;
-        EyebrowType?: number;
-        EyebrowColor?: number;
-        Scalp?: {
-            Collection: string;
-            Overlay: string;
-        };
-    };
-    Makeup: {
-        FullMakeupType?: number;
-        FullMakeupOpacity?: number;
-        FullMakeupPrimaryColor?: number;
-        FullMakeupSecondaryColor?: number;
-        BlushType?: number;
-        BlushOpacity?: number;
-        BlushColor?: number;
-        LipstickType?: number;
-        LipstickOpacity?: number;
-        LipstickColor?: number;
-    };
-    FaceTraits: {
-        EyeColor?: number;
-    };
-};
-
 export type BarberShopItem = {
-    config: BarberConfiguration;
+    config: Skin;
     price: number;
     overlay: string;
 };

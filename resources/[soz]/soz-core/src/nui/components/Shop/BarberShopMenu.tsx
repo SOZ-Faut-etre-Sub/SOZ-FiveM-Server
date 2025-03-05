@@ -1,7 +1,7 @@
 import { ShopScalp } from '@public/config/scalp';
 import { usePlayer } from '@public/nui/hook/data';
-import { PlayerData } from '@public/shared/player';
-import { BarberConfiguration, BarberShopCategory, BarberShopColors, BarberShopContent } from '@public/shared/shop';
+import { PlayerData, Skin } from '@public/shared/player';
+import { BarberShopCategory, BarberShopColors, BarberShopContent } from '@public/shared/shop';
 import { TaxType } from '@public/shared/tax';
 import { FunctionComponent, useState } from 'react';
 
@@ -32,19 +32,32 @@ type MenuBarberShopStateProps = {
 export const BarberShopMenu: FunctionComponent<MenuBarberShopStateProps> = ({ data }) => {
     const player_data = usePlayer();
     const content = data.shop_content[player_data.skin.Model.Hash];
-    const [configuration, setConfiguration] = useState<Record<string, BarberConfiguration>>({});
+    const [configuration, setConfiguration] = useState<Record<string, Skin>>({});
     const [currentCat, setCurrentCat] = useState<string>('Hair');
-    const [totalConfiguration, setTotalConfiguration] = useState<BarberConfiguration>({
+    const [totalConfiguration, setTotalConfiguration] = useState<Skin>({
         Hair: {},
         Makeup: {},
-        FaceTraits: {},
+        FaceTrait: {},
     });
 
-    const updateConfiguration = (category: string, overlay: string, field: string, value: number | boolean) => {
-        configuration[category] = configuration[category] || { Hair: {}, Makeup: {}, FaceTraits: {} };
+    const updateConfiguration = (
+        category: string,
+        overlay: string,
+        field: string,
+        value: number | boolean,
+        secondField: string = null,
+        secondValue: number | boolean = null
+    ) => {
+        configuration[category] ??= { Hair: {}, Makeup: {}, FaceTrait: {} };
         configuration[category][overlay][field] = value;
+        if (secondField) {
+            configuration[category][overlay][secondField] = secondValue;
+        }
         setConfiguration(configuration);
         totalConfiguration[overlay][field] = value;
+        if (secondField) {
+            totalConfiguration[overlay][secondField] = secondValue;
+        }
         setTotalConfiguration(totalConfiguration);
         fetchNui(NuiEvent.BarberShopPreview, totalConfiguration);
     };
@@ -119,14 +132,14 @@ export const BarberShopMenu: FunctionComponent<MenuBarberShopStateProps> = ({ da
                         onSelectCam={onSelectCam}
                     />
                     <MenuBarberEyeComponent
-                        cat={content.find(cat => cat.category === 'FaceTraits')}
+                        cat={content.find(cat => cat.category === 'FaceTrait')}
                         player_data={player_data}
                         updateConfiguration={updateConfiguration}
                         onSelectCam={onSelectCam}
                     />
                     <MenuBarberValidateButton
-                        cat={content.find(cat => cat.category === 'FaceTraits')}
-                        config={configuration['FaceTraits']}
+                        cat={content.find(cat => cat.category === 'FaceTrait')}
+                        config={configuration['FaceTrait']}
                         onSelectCam={onSelectCam}
                     />
                     <MenuBarberMakeupComponent
@@ -173,7 +186,7 @@ export const BarberShopMenu: FunctionComponent<MenuBarberShopStateProps> = ({ da
 
 const MenuBarberValidateButton: FunctionComponent<{
     cat: BarberShopCategory;
-    config: BarberConfiguration;
+    config: Skin;
     onSelectCam: (cat: string) => void;
 }> = ({ cat, config, onSelectCam }) => {
     const getPrice = useGetPrice();
@@ -207,27 +220,46 @@ const MenuBarberHairComponent: FunctionComponent<{
     cat: BarberShopCategory;
     player_data: PlayerData;
     shop_colors: BarberShopColors;
-    updateConfiguration: (cat: string, overlay: string, field: string, v: any) => void;
+    updateConfiguration: (
+        cat: string,
+        overlay: string,
+        field: string,
+        v: any,
+        secondaryField?: string,
+        secondaryV?: any
+    ) => void;
     onSelectCam: (cat: string) => void;
 }> = ({ cat, player_data, shop_colors, updateConfiguration, onSelectCam }) => {
     if (!cat) {
         return null;
     }
+
+    const hairIndex = cat.items.findIndex(
+        elem => player_data.skin.Hair.HairType == elem.value && player_data.skin.Hair.Collection == elem.Collection
+    );
     return (
         <>
             <MenuSubTitle>{cat.label}</MenuSubTitle>
             <MenuItemSelect
                 title="Type"
-                onChange={async (_, type) => {
-                    updateConfiguration(cat.category, cat.overlay, 'HairType', type);
+                onChange={async index => {
+                    const type = cat.items[index];
+                    updateConfiguration(
+                        cat.category,
+                        cat.overlay,
+                        'HairType',
+                        type.value,
+                        'Collection',
+                        type.Collection
+                    );
                 }}
                 onSelected={async () => {
                     onSelectCam(cat.category);
                 }}
-                value={player_data.skin.Hair.HairType}
+                value={hairIndex}
             >
-                {cat.items.map(entry => (
-                    <MenuItemSelectOption key={entry.value} value={entry.value}>
+                {cat.items.map((entry, index) => (
+                    <MenuItemSelectOption key={index} value={index}>
                         {entry.label}
                     </MenuItemSelectOption>
                 ))}

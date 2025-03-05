@@ -290,13 +290,16 @@ Labels = {
         {value = 85, label = GetLabelText("CLO_X7F_H_0_0")},
 
         -- Customs Hairs
-        {value = 86, label = "Couronne de tresses"},
-        {value = 87, label = "Tresses longues"},
-        {value = 88, label = "Triple chignon"},
-        {value = 89, label = "Coupe au carré"},
-        {value = 90, label = "Double chignon"},
-        {value = 91, label = "Queue de cheval"},
-        {value = 92, label = "Tresses doubles mi-long"},
+        {value = 0, label = "Couronne de tresses", Collection = "soz_custom"},
+        {value = 1, label = "Tresses longues", Collection = "soz_custom"},
+        {value = 2, label = "Triple chignon", Collection = "soz_custom"},
+        {value = 3, label = "Coupe au carré", Collection = "soz_custom"},
+        {value = 4, label = "Double chignon", Collection = "soz_custom"},
+        {value = 5, label = "Queue de cheval", Collection = "soz_custom"},
+        {value = 6, label = "Tresses doubles mi-long", Collection = "soz_custom"},
+        {value = 11, label = "Longue tresse", Collection = "soz_custom"},
+        {value = 22, label = "Cheveux longs", Collection = "soz_custom"},
+        {value = 35, label = "Cheveux longs 2", Collection = "soz_custom"},
     },
     BeardMale = {
         {value = -1, label = GetLabelText("BERD_P0_0_0")},

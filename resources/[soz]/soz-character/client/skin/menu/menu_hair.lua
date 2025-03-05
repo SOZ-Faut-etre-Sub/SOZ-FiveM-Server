@@ -1,6 +1,12 @@
 local function CreateMaleHairItems(hairMenu, playerId, skin)
     -- Cheveux
     hairMenu:AddTitle({label = "Cheveux"})
+    local hairlist = {};
+    for _, v in pairs(Labels.HairMale) do
+        if not v.Collection then
+            table.insert(hairlist, v)
+        end
+    end
     CreateSliderList(hairMenu, "Type", skin.Hair.HairType, Labels.HairMale, function(value)
         skin.Hair.HairType = value
         ApplyPlayerBodySkin(playerId, skin)
@@ -67,7 +73,13 @@ end
 local function CreateFemaleHairItems(hairMenu, playerId, skin)
     -- Cheveux
     hairMenu:AddTitle({label = "Cheveux"})
-    CreateSliderList(hairMenu, "Cheveux", skin.Hair.HairType, Labels.HairFemale, function(value)
+    local hairlist = {};
+    for _, v in pairs(Labels.HairFemale) do
+        if not v.Collection then
+            table.insert(hairlist, v)
+        end
+    end
+    CreateSliderList(hairMenu, "Cheveux", skin.Hair.HairType, hairlist, function(value)
         skin.Hair.HairType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)
