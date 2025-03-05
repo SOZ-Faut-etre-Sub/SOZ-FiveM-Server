@@ -30,7 +30,7 @@ export class AdminMenuPlayerProvider {
 
     private async getPlayers(): Promise<AdminPlayer[]> {
         return (await emitRpc<AdminPlayer[]>(RpcServerEvent.ADMIN_GET_PLAYERS)).sort((a, b) =>
-            a?.name?.localeCompare(b?.name)
+            a.name.localeCompare(b.name)
         );
     }
 
