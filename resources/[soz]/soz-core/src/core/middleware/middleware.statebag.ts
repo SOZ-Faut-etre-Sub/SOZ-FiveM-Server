@@ -22,7 +22,6 @@ export class SendMiddlewareStatebagServer {
                     key,
                     replicated: replicated ? 1 : 0,
                 });
-                console.log(bagName, key);
             }
         );
     }
