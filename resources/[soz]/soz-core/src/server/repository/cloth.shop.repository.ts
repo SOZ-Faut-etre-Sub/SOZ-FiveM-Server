@@ -156,8 +156,6 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
             }
         }
 
-        console.log('AAAA');
-
         for (const shop of Object.values(repository.categories)) {
             for (const genderContent of Object.values(Object.values(shop))) {
                 for (const shopContent of Object.values(genderContent)) {

@@ -299,7 +299,12 @@ Labels = {
         {value = 6, label = "Tresses doubles mi-long", Collection = "soz_custom"},
         {value = 11, label = "Longue tresse", Collection = "soz_custom"},
         {value = 22, label = "Cheveux longs", Collection = "soz_custom"},
+        {value = 26, label = "Couettes hautes", Collection = "soz_custom"},
+        {value = 27, label = "Chignon haut", Collection = "soz_custom"},
+        {value = 28, label = "Longs raides avec une raie sur le côté", Collection = "soz_custom"},
+        {value = 32, label = "Queue de cheval basse", Collection = "soz_custom"},
         {value = 35, label = "Cheveux longs 2", Collection = "soz_custom"},
+        {value = 38, label = "Carré court", Collection = "soz_custom"},
     },
     BeardMale = {
         {value = -1, label = GetLabelText("BERD_P0_0_0")},
