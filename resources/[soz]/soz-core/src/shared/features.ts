@@ -129,9 +129,9 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: false,
     },
     [Feature.Winter]: {
-        production: true,
-        development: true,
-        test: true,
+        production: false,
+        development: false,
+        test: false,
     },
     [Feature.Christmas]: {
         production: false,
