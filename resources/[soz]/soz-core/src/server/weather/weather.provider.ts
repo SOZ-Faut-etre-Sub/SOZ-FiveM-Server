@@ -29,8 +29,8 @@ import { FeatureProvider } from '../feature/feature.provider';
 import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Monitor } from '../monitor/monitor';
 import { Store } from '../store/store';
-import { Halloween, Polluted, Winter, WMOWeatherMapping } from './forecast';
-import { DayWinterTemperature, ForecastAdderTemperatures, NightWinterTemperature } from './temperature';
+import { Halloween, Polluted, SpringAutumn, Winter, WMOWeatherMapping } from './forecast';
+import { DaySpringTemperature, ForecastAdderTemperatures, NightSpringTemperature } from './temperature';
 
 const MAX_FORECASTS = 6;
 const UPDATE_TIME_INTERVAL = 5;
@@ -58,11 +58,11 @@ export class WeatherProvider {
     private timeReady = false;
     private currentTime: Time = { hour: 2, minute: 0, second: 0 };
     // See forecast.ts for the list of available forecasts
-    private forecast: Forecast = Winter;
+    private forecast: Forecast = SpringAutumn;
     // See temperature.ts for the list of available temperature ranges,
     // please ensure that the day and night temperature ranges are using the same season
-    private dayTemperatureRange: TemperatureRange = DayWinterTemperature;
-    private nightTemperatureRange: TemperatureRange = NightWinterTemperature;
+    private dayTemperatureRange: TemperatureRange = DaySpringTemperature;
+    private nightTemperatureRange: TemperatureRange = NightSpringTemperature;
 
     private defaultWeather: Weather = 'OVERCAST';
 
