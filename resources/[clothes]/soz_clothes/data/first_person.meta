@@ -1,0 +1,27 @@
+<FirstPersonAssetDataManager>
+  <peds>
+    <Item>
+      <name>mp_m_freemode_01</name>
+      <objects>
+        <Item>
+          <localIndex value="0" />
+          <eCompType>PV_COMP_MAX</eCompType>
+          <eAnchorPoint>ANCHOR_EYES</eAnchorPoint>
+          <dlcHash>soz_custom</dlcHash>
+          <timeCycleMods>
+            <Item>
+              <textureId value="0" />
+              <timeCycleMod>glasses_black</timeCycleMod>
+              <intensity value="0.4000000" />
+            </Item>
+          </timeCycleMods>
+          <audioId />
+          <flags value="0" />
+          <seWeather value="1.0" />
+          <seEnvironment value="1.0" />
+          <seDamage value="1.0" />
+        </Item>
+      </objects>
+    </Item>
+  </peds>
+</FirstPersonAssetDataManager>
