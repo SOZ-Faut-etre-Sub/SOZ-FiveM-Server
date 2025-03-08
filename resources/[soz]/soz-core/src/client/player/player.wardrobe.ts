@@ -104,7 +104,7 @@ export class PlayerWardrobe {
     }
 
     public async setClothConfig(key: keyof ClothConfig['Config'], value: boolean, skipAnimation = false) {
-        if (this.playerService.getState().isInHub) {
+        if (this.playerService.getState().isInHub || this.playerService.getState().isInGameHub) {
             return;
         }
 

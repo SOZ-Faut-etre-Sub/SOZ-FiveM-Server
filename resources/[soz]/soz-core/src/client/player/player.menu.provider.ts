@@ -1,3 +1,4 @@
+import { GamesProvider } from '@public/client/games/games.provider';
 import { wait } from '@public/core/utils';
 
 import { Command } from '../../core/decorators/command';
@@ -12,14 +13,12 @@ import { HudGlassmorphismProvider } from '../hud/hud.glassmorphism.provider';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { JobMenuProvider } from '../job/job.menu.provider';
-import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { HalloweenSpiderService } from '../object/halloween.spider.service';
 import { ProgressService } from '../progress.service';
 import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
 import { ParadeProvider } from '../story/parade.provider';
-import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { VoiceProvider } from '../voip/voice/voice.provider';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
@@ -63,11 +62,8 @@ export class PlayerMenuProvider {
     @Inject(VoiceProvider)
     private voiceProvider: VoiceProvider;
 
-    @Inject(Notifier)
-    private notifier: Notifier;
-
-    @Inject(VampireGameStateProvider)
-    private vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     @Inject(HudGlassmorphismProvider)
     private hudGlassmorphismProvider: HudGlassmorphismProvider;
@@ -124,7 +120,7 @@ export class PlayerMenuProvider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuClothConfigUpdate)
     public async clothComponentUpdate({ key, value }: { key: keyof ClothConfig['Config']; value: boolean }) {
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 

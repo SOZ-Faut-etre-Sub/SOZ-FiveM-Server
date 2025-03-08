@@ -1,6 +1,7 @@
 import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { PlayerService } from '@public/client/player/player.service';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 import { InventoryItem } from '@public/shared/inventory';
 
@@ -23,6 +24,9 @@ export class WeaponDrawingProvider {
     @Inject(WeaponService)
     private weaponService: WeaponService;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
@@ -44,7 +48,7 @@ export class WeaponDrawingProvider {
     }
 
     private async drawWeapon() {
-        if (!this.shouldDrawWeapon || !this.shouldAdminDrawWeapon) {
+        if (!this.shouldDrawWeapon || !this.shouldAdminDrawWeapon || this.playerService.getState().isInGameHub) {
             return;
         }
 

@@ -1,3 +1,4 @@
+import { GamesProvider } from '@public/client/games/games.provider';
 import { UpwPollution } from '@public/shared/job/upw';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -11,7 +12,6 @@ import { PlayerData } from '../../shared/player';
 import { AnimationService } from '../animation/animation.service';
 import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Notifier } from '../notifier';
-import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { BlurService } from '../utils/blur.service';
 import { PlayerService } from './player.service';
 
@@ -38,8 +38,8 @@ export class PlayerDiseaseProvider {
     @Inject(BlurService)
     private blurService: BlurService;
 
-    @Inject(VampireGameStateProvider)
-    private vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     private currentDisease: Disease = false;
 
@@ -47,7 +47,7 @@ export class PlayerDiseaseProvider {
 
     private async fluLoop(): Promise<void> {
         while (this.currentDisease === 'grippe') {
-            if (this.vampireGameStateProvider.isGameRunning()) {
+            if (this.gamesProvider.areAnyGameRunning()) {
                 return;
             }
 
@@ -65,7 +65,7 @@ export class PlayerDiseaseProvider {
 
     private async commonColdLoop(): Promise<void> {
         while (this.currentDisease === 'rhume') {
-            if (this.vampireGameStateProvider.isGameRunning()) {
+            if (this.gamesProvider.areAnyGameRunning()) {
                 return;
             }
 
@@ -96,7 +96,7 @@ export class PlayerDiseaseProvider {
 
     private async backPainLoop(): Promise<void> {
         while (this.currentDisease === 'backpain') {
-            if (this.vampireGameStateProvider.isGameRunning()) {
+            if (this.gamesProvider.areAnyGameRunning()) {
                 return;
             }
 
@@ -109,7 +109,7 @@ export class PlayerDiseaseProvider {
 
     private async intoxicationLoop(): Promise<void> {
         while (this.currentDisease === 'intoxication') {
-            if (this.vampireGameStateProvider.isGameRunning()) {
+            if (this.gamesProvider.areAnyGameRunning()) {
                 return;
             }
 
@@ -135,7 +135,7 @@ export class PlayerDiseaseProvider {
 
     private async dyspepsiaLoop(): Promise<void> {
         while (this.currentDisease === 'dyspepsie') {
-            if (this.vampireGameStateProvider.isGameRunning()) {
+            if (this.gamesProvider.areAnyGameRunning()) {
                 return;
             }
 
@@ -212,7 +212,7 @@ export class PlayerDiseaseProvider {
     public async diseaseLoop(): Promise<void> {
         const player = this.playerService.getPlayer();
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 

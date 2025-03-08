@@ -274,7 +274,7 @@ export class TargetProvider {
         const player = this.playerService.getState();
 
         if (IsPedAPlayer(entity)) {
-            if (player.isInHub) return [];
+            if (player.isInHub || player.isInGameHub) return [];
 
             const playerStore = this.targetStore.players.find(([, target]) => target.player === -1);
             return this.checkTargetGenericActions(playerStore, playerDistance, entity, entityCoords);

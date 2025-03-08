@@ -28,6 +28,8 @@ export class PlayerService {
         isEscorting: false,
         isHandcuffed: false,
         isInHub: false,
+        isInGameHub: false,
+        isInGame: false,
         isInSportClothes: false,
         isInHospital: false,
         isInShop: false,

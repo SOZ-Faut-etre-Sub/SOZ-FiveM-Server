@@ -355,6 +355,14 @@ export enum RpcServerEvent {
     PHONE_APP_NEWS_CREATE = 'soz-core:server:phone:app:news:create',
     PHONE_APP_TETRIS_ADD_SCORE = 'soz-core:server:phone:app:tetris:add-score',
     PHONE_APP_SNAKE_ADD_SCORE = 'soz-core:server:phone:app:snake:add-score',
+
+    LASER_GAME_GET_INFO_AS_STAFF = 'soz-core:server:phone:app:laser-game:get-info-as-staff',
+    LASER_GAME_CREATE = 'soz-core:server:phone:app:laser-game:create',
+    LASER_GAME_GET_DATA = 'soz-core:server:phone:app:laser-game:get-data',
+    LASER_GAME_GET_AS_CLIENT = 'soz-core:server:phone:app:laser-game:get-as-client',
+    LASER_GAME_ACTION_PLAYER = 'soz-core:server:phone:app:laser-game:action-player',
+    LASER_GAME_GET_PLAYER_NAME = 'soz-core:server:phone:app:laser-game:get-player-name',
+    LASER_GAME_GET_BUCKET = 'soz-core:server:phone:app:laser-game:get-bucket',
 }
 
 export enum RpcClientEvent {

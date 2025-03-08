@@ -62,6 +62,10 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
         fetchNui(NuiEvent.RaceAdminMenuOpen);
     };
 
+    const onLaserGameAdminMenuOpen = () => {
+        fetchNui(NuiEvent.LaserGameAdminMenuOpen);
+    };
+
     const jobIds = Object.keys(JobRegistry) as JobType[];
     const sortedProperties = properties.sort((a, b) => a.identifier.localeCompare(b.identifier));
 
@@ -82,6 +86,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     </MenuItemCheckbox>
                     <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
+                    <MenuItemButton onConfirm={onLaserGameAdminMenuOpen}>🔫 Laser Game</MenuItemButton>
                     <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={onHubEntryAdminMenuOpen}>[🕯] Lanterne</MenuItemButton>
                     <MenuItemButton onConfirm={onGangAdminMenuOpen}>💀 Groupe criminel</MenuItemButton>

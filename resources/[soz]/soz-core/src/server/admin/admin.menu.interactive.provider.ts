@@ -1,3 +1,5 @@
+import { PlayerData } from '@public/shared/player';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -36,20 +38,24 @@ export class AdminMenuInteractiveProvider {
 
         const players: AdminPlayer[] = [];
         for (const playerData of this.serverStateService.getPlayers()) {
-            players.push({
-                id: playerData.source,
-                citizenId: playerData.citizenid,
-                license: playerData.license,
-                name: playerData.name,
-                rpFullName: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
-                injuries: playerData.metadata.injuries_count,
-                partyMember: playerData.partyMember,
-                plate: playerData.metadata.plate,
-                specialPlate: playerData.metadata.special_plate,
-                vampireGameExcluded: this.vampireGameStateProvider.excludedPlayers.has(playerData.citizenid),
-            });
+            players.push(this.getPlayer(playerData));
         }
         return players;
+    }
+
+    public getPlayer(playerData: PlayerData): AdminPlayer {
+        return {
+            id: playerData.source,
+            citizenId: playerData.citizenid,
+            license: playerData.license,
+            name: playerData.name,
+            rpFullName: `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`,
+            injuries: playerData.metadata.injuries_count,
+            partyMember: playerData.partyMember,
+            plate: playerData.metadata.plate,
+            specialPlate: playerData.metadata.special_plate,
+            vampireGameExcluded: this.vampireGameStateProvider.excludedPlayers.has(playerData.citizenid),
+        };
     }
 
     @Rpc(RpcServerEvent.ADMIN_GET_FULL_PLAYERS)

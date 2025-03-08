@@ -1,4 +1,5 @@
 import { MiniGameMethodMap } from '@private/shared/minigame';
+import { NuiLaserGameManageMethodMap } from '@public/shared/games/laser';
 import { NuiBankAtmMethodMap, NuiBankMethodMap, NuiBankSafeMethodMap } from '@public/shared/nui/bank';
 import { NuiBlipMethodMap } from '@public/shared/nui/blip';
 import { NuiBookMethodMap } from '@public/shared/nui/book';
@@ -31,6 +32,7 @@ import { NuiFishingMethodMap } from './fishing';
 import { NuiGangMethodMap } from './gang';
 import { NuiHoodMethodMap } from './hood';
 import { NuiInputMethodMap } from './input';
+import { NuiLaserGameMethodMap } from './laser_games';
 import { NuiMedicalDiagMethodMap } from './medical_diag';
 import { NuiMenuMethodMap } from './menu';
 import { NuiMeteorMap } from './meteor';
@@ -80,6 +82,7 @@ export interface NuiMethodMap {
     sozedex: NuiSozedexMethodMap;
     drug: NuiDrugMethodMap;
     race: NuiRaceMethodMap;
+    laser_game: NuiLaserGameMethodMap;
     book: NuiBookMethodMap;
     field: NuiFieldMethodMap;
     placement_prop: NuiPlacementPropMethodMap;
@@ -103,6 +106,7 @@ export interface NuiMethodMap {
     picker: NuiPickerMethodMap;
     election: NuiElectionMap;
     phone: NuiPhoneMap;
+    laser_game_manage: NuiLaserGameManageMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

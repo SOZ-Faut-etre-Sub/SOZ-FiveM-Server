@@ -133,6 +133,8 @@ export class InventoryProvider {
         inventoryId: string;
     }) {
         this.nuiDispatch.closeEverything();
+        const playerState = this.playerService.getState();
+        if (playerState.isInGame || (playerState.isInGameHub && inventoryItem.type === 'weapon')) return;
 
         TriggerServerEvent(ServerEvent.INVENTORY_USE_ITEM, inventoryId, inventoryItem.slot);
     }

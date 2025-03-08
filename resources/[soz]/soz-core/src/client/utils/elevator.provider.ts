@@ -44,8 +44,8 @@ enum ElevatorFloorName {
     bennys1,
     fib0,
     fib1,
-    admin0,
-    adminminus1,
+    // admin0, // Removed due to laser game
+    // adminminus1, // Removed due to laser game
     mtp0,
     mtp1,
     mtp2,
@@ -164,29 +164,29 @@ const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
         downTo: [ElevatorFloorName.fib0],
         spawnPoint: [135.99, -761.77, 242.15, 161.57],
     },
-    //Admin
-    [ElevatorFloorName.admin0]: {
-        label: 'Surface',
-        button: new BoxZone([1982.81, 3026.07, 46.91], 1.4, 0.1, { minZ: 46.91, maxZ: 49.31, heading: 59 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.adminminus1],
-        spawnPoint: [1983.47, 3027.05, 47.34, 330.03],
-    },
-    [ElevatorFloorName.adminminus1]: {
-        label: 'Sous-Sol',
-        button: new BoxZone([2154.9, 2919.62, -81.28], 0.2, 0.05, { minZ: -81.28, maxZ: -80.78, heading: 91 }),
-        upTo: [ElevatorFloorName.admin0],
-        downTo: [],
-        spawnPoint: [2154.62, 2920.95, -81.08, 272.4],
-        job: {
-            [JobType.FBI]: 0,
-            [JobType.LSPD]: 0,
-            [JobType.BCSO]: 0,
-            [JobType.SASP]: 0,
-            [JobType.Gouv]: 0,
-            [JobType.LSCS]: 0,
-        },
-    },
+    //Admin - Removed due to laser game
+    // [ElevatorFloorName.admin0]: {
+    //     label: 'Surface',
+    //     button: new BoxZone([1982.81, 3026.07, 46.91], 1.4, 0.1, { minZ: 46.91, maxZ: 49.31, heading: 59 }),
+    //     upTo: [],
+    //     downTo: [ElevatorFloorName.adminminus1],
+    //     spawnPoint: [1983.47, 3027.05, 47.34, 330.03],
+    // },
+    // [ElevatorFloorName.adminminus1]: {
+    //     label: 'Sous-Sol',
+    //     button: new BoxZone([2154.9, 2919.62, -81.28], 0.2, 0.05, { minZ: -81.28, maxZ: -80.78, heading: 91 }),
+    //     upTo: [ElevatorFloorName.admin0],
+    //     downTo: [],
+    //     spawnPoint: [2154.62, 2920.95, -81.08, 272.4],
+    //     job: {
+    //         [JobType.FBI]: 0,
+    //         [JobType.LSPD]: 0,
+    //         [JobType.BCSO]: 0,
+    //         [JobType.SASP]: 0,
+    //         [JobType.Gouv]: 0,
+    //         [JobType.LSCS]: 0,
+    //     },
+    // },
     //MTP
     [ElevatorFloorName.mtp0]: {
         label: 'Rez-de-chaussée',

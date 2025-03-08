@@ -160,6 +160,8 @@ export class PlayerStateService {
             isInventoryBusy: false,
             isInShop: false,
             isInHub: false,
+            isInGame: false,
+            isInGameHub: false,
             isInSportClothes: false,
             hasPrisonerClothes: false,
             isInHospital: false,
