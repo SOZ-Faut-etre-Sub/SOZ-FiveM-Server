@@ -25,6 +25,7 @@ export const TextField = forwardRef<HTMLInputElement, any>((props, ref) => {
                     props.onBlur(e);
                 }
             }}
+            data-phone-input={true}
         />
     );
 });
@@ -51,6 +52,7 @@ export const NumberField = forwardRef<HTMLInputElement, any>((props, ref) => {
                 }
             }}
             allowEmptyFormatting
+            data-phone-input={true}
         />
     );
 });
@@ -83,6 +85,7 @@ export const TextareaField = forwardRef<HTMLInputElement, any>((props, ref) => {
                     props.onBlur(e);
                 }
             }}
+            data-phone-input={true}
         />
     );
 });
@@ -102,6 +105,7 @@ export const InputBase = forwardRef<HTMLInputElement, any>((props, ref) => {
                     props.onBlur(e);
                 }
             }}
+            data-phone-input={true}
         />
     );
 });

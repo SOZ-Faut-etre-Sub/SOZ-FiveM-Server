@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React, { ReactNode } from 'react';
 
+import { InputBase } from '../../../components/Input';
 import { ListItem } from '../../../components/List';
 import { useThemeConfig } from '../../../system/config/config.atom';
 
@@ -20,7 +21,7 @@ export const SettingItemSlider = ({ iconStart, iconEnd, value, onCommit, min = 0
     return (
         <ListItem className="px-2">
             <div className="flex justify-center items-center text-gray-300 size-6">{iconStart}</div>
-            <input
+            <InputBase
                 type="range"
                 min={min}
                 max={max}

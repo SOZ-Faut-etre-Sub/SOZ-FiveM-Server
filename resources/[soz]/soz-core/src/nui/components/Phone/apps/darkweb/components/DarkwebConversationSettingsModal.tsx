@@ -4,6 +4,7 @@ import { DarkwebConversation, DarkwebParticipant } from '@public/shared/phone/ap
 import cn from 'classnames';
 import { ChangeEvent, FunctionComponent, memo, useEffect, useState } from 'react';
 
+import { InputBase } from '../../../components/Input';
 import { useSimCard } from '../../../system/sim-card/hooks/useSimCard';
 import { useDarkWebAPI } from '../hooks/useDarkwebApi';
 import { useParticipants } from '../hooks/useParticipants';
@@ -241,7 +242,7 @@ export const DarkWebConversationSettingsModal = memo(
                             <div className="flex flex-col w-full py-3 px-4">
                                 <div className="flex flex-col h-[70%] items-center justify-center">
                                     <div className="max-h-[70%] flex flex-col justify-center">
-                                        <input
+                                        <InputBase
                                             className={`${
                                                 !editErrorMessage
                                                     ? 'border-teal-500 rounded-lg text-teal-500 focus-within:border-teal-400 placeholder:text-teal-700'
@@ -253,7 +254,7 @@ export const DarkWebConversationSettingsModal = memo(
                                             value={subjectInputValue}
                                             placeholder="Titre"
                                         />
-                                        <input
+                                        <InputBase
                                             className={`${
                                                 !editErrorMessage
                                                     ? 'border-teal-500 rounded-lg text-teal-500 focus-within:border-teal-400 placeholder:text-teal-700'
@@ -373,7 +374,7 @@ export const DarkWebConversationSettingsModal = memo(
                             <div className="flex flex-col w-full py-3 px-4">
                                 <div className="flex flex-col h-[70%] items-center justify-center">
                                     <div className="max-h-[70%]">
-                                        <input
+                                        <InputBase
                                             className={`${
                                                 !newAdminErrorMessage
                                                     ? 'border-teal-500 rounded-lg text-teal-500 focus-within:border-teal-400 placeholder:text-teal-700'
