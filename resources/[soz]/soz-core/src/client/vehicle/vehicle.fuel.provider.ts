@@ -40,7 +40,8 @@ type CurrentStationPistol = {
     filling: boolean;
 };
 
-const MAX_LENGTH_ROPE = 15.0;
+const MAX_LENGTH_ROPE_CAR = 5.5;
+const MAX_LENGTH_ROPE = 15;
 
 const VehicleClassFuelMultiplier: Partial<Record<VehicleClass, number>> = {
     [VehicleClass.Helicopters]: 6.33,
@@ -552,7 +553,7 @@ export class VehicleFuelProvider {
             ropePosition,
             entity,
             1,
-            MAX_LENGTH_ROPE,
+            station.fuel == FuelType.Kerosene ? MAX_LENGTH_ROPE : MAX_LENGTH_ROPE_CAR,
             'prop_cs_fuel_nozle'
         );
         if (!nozle) {
