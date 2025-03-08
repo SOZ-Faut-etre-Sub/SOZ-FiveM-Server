@@ -6,6 +6,7 @@ import { fetchNui } from '../../../fetch';
 import { useSetPhoneInsideInput } from '../system/phone.atom';
 
 const INPUT_TYPES = ['input', 'textarea'];
+const DATA_ATTRIBUTE_PHONE = 'data-phone-input';
 
 export const useKeyboard = () => {
     const navigate = useNavigate();
@@ -40,6 +41,10 @@ export const useKeyboard = () => {
             setInsideInput(false);
             fetchNui(NuiEvent.PhoneInsideInput, { insideInput: false });
 
+            return;
+        }
+
+        if ((event.target as HTMLElement)?.attributes?.[DATA_ATTRIBUTE_PHONE]?.nodeValue !== 'true') {
             return;
         }
 
