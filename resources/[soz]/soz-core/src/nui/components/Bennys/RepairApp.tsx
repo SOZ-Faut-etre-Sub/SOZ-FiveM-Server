@@ -54,6 +54,11 @@ const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
             <p>Etat du moteur : {analyze.condition.engineHealth.toFixed(2)} / 1000</p>
             {analyze.tabletType === 'car' && <p>Huile moteur : {analyze.condition.oilLevel.toFixed(2)} / 100</p>}
             <p>Kilométrage : {(analyze.condition.mileage / 1000).toFixed(2)} km</p>
+            <h3 className="text-3xl mt-24">Informations véhicule </h3>
+            <p className="capitalize">Modèle : {analyze.vehiculeInformations?.model ?? '---'}</p>
+            <p className="capitalize">Marque : {analyze.vehiculeInformations?.brand ?? '---'}</p>
+            <p className="capitalize">Catégorie : {analyze.vehiculeInformations?.category ?? '---'}</p>
+            <p>Immatriculation : {analyze.vehiculeInformations?.plate ?? '---'}</p>
         </>
     );
 };

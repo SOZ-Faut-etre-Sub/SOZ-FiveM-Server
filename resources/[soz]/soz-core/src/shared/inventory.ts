@@ -667,7 +667,7 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_CLASS: Record<VehicleClass, Partia
     [VehicleClass.SUVs]: { maxWeight: 80000 },
     [VehicleClass.Coupes]: { maxWeight: 40000 },
     [VehicleClass.Muscle]: { maxWeight: 30000 },
-    [VehicleClass.SportsClassics]: { maxWeight: 20000 },
+    [VehicleClass.Sportsclassics]: { maxWeight: 20000 },
     [VehicleClass.Sports]: { maxWeight: 20000 },
     [VehicleClass.Super]: { maxWeight: 20000 },
     [VehicleClass.Motorcycles]: { maxWeight: 40000 },

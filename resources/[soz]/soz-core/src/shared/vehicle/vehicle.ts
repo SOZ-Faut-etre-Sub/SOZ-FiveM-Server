@@ -250,6 +250,13 @@ export type VehicleCondition = {
     nitro: number;
 };
 
+export type VehiculeInformation = {
+    plate: string | null;
+    brand: string | null;
+    model: string | null;
+    category: string | null;
+};
+
 // state not sync to database, only in memory
 export type VehicleVolatileState = {
     id: number | null;
@@ -303,7 +310,7 @@ export enum VehicleClass {
     SUVs = 2,
     Coupes = 3,
     Muscle = 4,
-    SportsClassics = 5,
+    Sportsclassics = 5,
     Sports = 6,
     Super = 7,
     Motorcycles = 8,
@@ -535,7 +542,7 @@ export const VehicleTypeFromClass: Record<VehicleClass, VehicleType> = {
     [VehicleClass.SUVs]: VehicleType.Automobile,
     [VehicleClass.Coupes]: VehicleType.Automobile,
     [VehicleClass.Muscle]: VehicleType.Automobile,
-    [VehicleClass.SportsClassics]: VehicleType.Automobile,
+    [VehicleClass.Sportsclassics]: VehicleType.Automobile,
     [VehicleClass.Sports]: VehicleType.Automobile,
     [VehicleClass.Super]: VehicleType.Automobile,
     [VehicleClass.Motorcycles]: VehicleType.Bike,
@@ -561,7 +568,7 @@ export const PushableVehicleClass: Record<VehicleClass, boolean> = {
     [VehicleClass.SUVs]: true,
     [VehicleClass.Coupes]: true,
     [VehicleClass.Muscle]: true,
-    [VehicleClass.SportsClassics]: true,
+    [VehicleClass.Sportsclassics]: true,
     [VehicleClass.Sports]: true,
     [VehicleClass.Super]: true,
     [VehicleClass.Motorcycles]: false,

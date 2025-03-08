@@ -1,4 +1,4 @@
-import { VehicleCondition } from '../vehicle/vehicle';
+import { VehicleCondition, VehiculeInformation } from '../vehicle/vehicle';
 
 export interface NuiRepairMethodMap {
     open: RepairAnalyze;
@@ -6,6 +6,7 @@ export interface NuiRepairMethodMap {
 }
 
 export type RepairAnalyze = {
+    vehiculeInformations: VehiculeInformation;
     condition: VehicleCondition;
     doors: number[];
     windows: boolean[];

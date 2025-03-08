@@ -5,8 +5,11 @@ import {
     isVehicleModelElectric,
     isVehicleModelTrailer,
     LSCustomMode,
+    VehicleCategory,
+    VehicleClass,
     VehicleOrderMode,
     VehicleSeat,
+    VehiculeInformation,
 } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
@@ -389,6 +392,23 @@ export class BennysVehicleProvider {
         const model = GetEntityModel(vehicle);
         const doorExist = this.vehicleService.getDoorExists(vehicle, condition);
         const windowExist = this.vehicleService.getWindowExists(vehicle);
+        const vehicleClass = GetVehicleClassFromName(model) as VehicleClass;
+        const vehicleCategory = VehicleCategory[VehicleClass[vehicleClass] ?? 0] ?? '';
+        const vehicleBrandName = GetMakeNameFromVehicleModel(model)
+            ? GetLabelText(GetMakeNameFromVehicleModel(model))
+            : null;
+        const vehicleName = GetDisplayNameFromVehicleModel(model)
+            ? GetLabelText(GetDisplayNameFromVehicleModel(model))
+            : null;
+
+        const vehiculeInformations: VehiculeInformation = {
+            plate: GetVehicleNumberPlateText(vehicle) ?? '',
+            brand: vehicleBrandName,
+            model: vehicleName,
+            category: vehicleCategory,
+        };
+
+        console.log(vehiculeInformations);
 
         let tabletType: 'car' | 'electric' | 'trailer' = 'car';
 
@@ -400,6 +420,7 @@ export class BennysVehicleProvider {
         }
 
         this.nuiDispatch.dispatch('repair', 'open', {
+            vehiculeInformations: vehiculeInformations,
             condition: condition,
             doors: doorExist,
             windows: windowExist,

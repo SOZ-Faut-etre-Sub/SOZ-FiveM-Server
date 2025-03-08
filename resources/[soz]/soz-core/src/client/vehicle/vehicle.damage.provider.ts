@@ -31,7 +31,7 @@ const VEHICLE_CLASS_DAMAGE_MULTIPLIER: Record<VehicleClass, number> = {
     [VehicleClass.SUVs]: 0.8,
     [VehicleClass.Coupes]: 0.76,
     [VehicleClass.Muscle]: 0.8,
-    [VehicleClass.SportsClassics]: 0.76,
+    [VehicleClass.Sportsclassics]: 0.76,
     [VehicleClass.Sports]: 0.76,
     [VehicleClass.Super]: 0.76,
     [VehicleClass.Motorcycles]: 0.216,
