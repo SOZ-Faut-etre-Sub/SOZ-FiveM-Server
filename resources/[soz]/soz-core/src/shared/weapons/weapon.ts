@@ -791,6 +791,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.05,
         ammo: 'ammo_06',
         drawPosition: { model: 'w_ar_specialcarbinemk2', ...DrawPositions['AR'] },
+        extaDraw: [
+            {
+                bone: 'WAPBarrel',
+                model: 'w_ar_sc_barrel_1',
+            },
+        ],
         attachments: [
             {
                 label: 'Grand chargeur',
