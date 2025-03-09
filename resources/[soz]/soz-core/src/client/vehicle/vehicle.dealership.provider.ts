@@ -268,7 +268,7 @@ export class VehicleDealershipProvider {
                     icon: 'dealership/bid',
                     label: 'Voir la vente',
                     category: 'citizen',
-                    canInteract: () => true,
+                    canInteract: () => !this.gangService.isHC(),
                     action: () => {
                         this.openLuxuryDealership(name);
                     },
