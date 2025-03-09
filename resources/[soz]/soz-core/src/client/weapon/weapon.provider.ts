@@ -572,4 +572,12 @@ export class WeaponProvider {
             TriggerServerEvent(ServerEvent.WEAPON_GET_SNOW, cur);
         }
     }
+
+    @Tick(0)
+    public async holsterToAim() {
+        const player = PlayerPedId();
+        if (IsControlPressed(0, 25) && IsEntityPlayingAnim(player, 'move_m@intimidation@cop@unarmed', 'idle', 3)) {
+            ClearPedSecondaryTask(player);
+        }
+    }
 }

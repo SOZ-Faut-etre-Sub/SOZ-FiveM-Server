@@ -144,14 +144,6 @@ export class WeaponHolsterProvider {
         }
     }
 
-    @Tick(0)
-    public async holsterToAim() {
-        const player = PlayerPedId();
-        if (IsControlPressed(0, 25) && IsEntityPlayingAnim(player, 'move_m@intimidation@cop@unarmed', 'idle', 3)) {
-            ClearPedSecondaryTask(player);
-        }
-    }
-
     private isWeaponHolsterable(weap: number) {
         const weaponGroup = GetWeapontypeGroup(weap);
         return holsterableWeaponGroups.some(elem => elem == weaponGroup);
