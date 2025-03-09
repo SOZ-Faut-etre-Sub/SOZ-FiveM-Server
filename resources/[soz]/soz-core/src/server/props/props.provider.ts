@@ -151,6 +151,7 @@ export class PropsProvider {
                     creator: collection.creator_citizenID,
                     date: collection.creation_date,
                     name: newName,
+                    persistant: collection.persistant,
                 },
             });
             await this.prismaService.placed_prop.updateMany({
