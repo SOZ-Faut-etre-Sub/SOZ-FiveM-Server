@@ -166,10 +166,10 @@ export class ClothingShopProvider {
         // Adapt the torso to the undershirt if selected
         const playerModel = GetEntityModel(ped);
         const player = this.playerService.getPlayer();
-        const baseTorsoDrawable =
-            ProperTorsos[playerModel][player.cloth_config.BaseClothSet.Components[Component.Tops].Collection][
-                player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable
-            ];
+
+        const torsoCollection =
+            ProperTorsos[playerModel][player.cloth_config.BaseClothSet.Components[Component.Tops].Collection] ?? {};
+        const baseTorsoDrawable = torsoCollection[player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable];
         const nakedTorsoDrawable = player.cloth_config.NakedClothSet.Components[Component.Torso].Drawable;
         if (baseTorsoDrawable == null) {
             return;

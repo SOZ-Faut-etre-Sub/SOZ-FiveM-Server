@@ -190,9 +190,13 @@ export class ClothingProvider {
 
         for (const item of items) {
             const shopItemData: ClothingShopItemData = JSON.parse(item.data) as ClothingShopItemData;
+
             let comp: Component = 0 as Component;
             if (shopItemData.components[11]) {
                 comp = 11;
+                if (shopItemData.components[11].Collection) {
+                    continue;
+                }
             } else if (shopItemData.components[4]) {
                 comp = 4;
             } else if (shopItemData.components[6]) {
