@@ -3,6 +3,7 @@ import { ItemService } from '@public/server/item/item.service';
 import { ServerEvent } from '@public/shared/event';
 import { DrugPotItem, Item } from '@public/shared/item';
 import { Err, Ok, Result } from '@public/shared/result';
+import { deepEqual } from '@public/shared/util';
 import { addDays, addMinutes, startOfDay, startOfMinute } from 'date-fns';
 import { generate, observe, Observer, Operation } from 'fast-json-patch';
 
@@ -704,16 +705,11 @@ export class Inventory {
                 return false;
             }
 
-            if (metadata) {
-                for (const key of Object.keys(metadata)) {
-                    if (!item.metadata) {
-                        return false;
-                    }
+            const item1Metadata = metadata || {};
+            const item2Metadata = item.metadata || {};
 
-                    if (metadata[key] !== item.metadata[key]) {
-                        return false;
-                    }
-                }
+            if (!deepEqual(item1Metadata, item2Metadata)) {
+                return false;
             }
 
             return true;
