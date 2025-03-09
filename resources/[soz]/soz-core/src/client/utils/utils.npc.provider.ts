@@ -74,6 +74,11 @@ const DisableSpawn: Vector2[][] = [
         [-1214.53, 4859.19],
         [-985.82, 5001.72],
     ],
+    [
+        //New Glory Villa
+        [-1169.23, 327.09],
+        [-1092.89, 384.92],
+    ],
 ];
 
 const disabledPickups = [
