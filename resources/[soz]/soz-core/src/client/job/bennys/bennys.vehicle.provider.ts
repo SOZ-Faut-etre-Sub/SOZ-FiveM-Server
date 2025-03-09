@@ -5,7 +5,7 @@ import {
     isVehicleModelElectric,
     isVehicleModelTrailer,
     LSCustomMode,
-    VehicleCategory,
+    VehicleCategoryMap,
     VehicleClass,
     VehicleOrderMode,
     VehicleSeat,
@@ -393,7 +393,7 @@ export class BennysVehicleProvider {
         const doorExist = this.vehicleService.getDoorExists(vehicle, condition);
         const windowExist = this.vehicleService.getWindowExists(vehicle);
         const vehicleClass = GetVehicleClassFromName(model) as VehicleClass;
-        const vehicleCategory = VehicleCategory[VehicleClass[vehicleClass] ?? 0] ?? '';
+        const vehicleCategory = VehicleCategoryMap[vehicleClass] ?? '';
         const vehicleBrandName = GetMakeNameFromVehicleModel(model)
             ? GetLabelText(GetMakeNameFromVehicleModel(model))
             : null;

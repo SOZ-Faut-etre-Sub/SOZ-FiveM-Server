@@ -469,6 +469,32 @@ export enum VehicleCategory {
     Quads = 'Quads',
 }
 
+export const VehicleCategoryMap = {
+    [VehicleClass.Boats]: VehicleCategory.Boats,
+    [VehicleClass.Commercial]: VehicleCategory.Commercial,
+    [VehicleClass.Compacts]: VehicleCategory.Compacts,
+    [VehicleClass.Coupes]: VehicleCategory.Coupes,
+    [VehicleClass.Cycles]: VehicleCategory.Cycles,
+    [VehicleClass.Emergency]: VehicleCategory.Emergency,
+    [VehicleClass.Helicopters]: VehicleCategory.Helicopters,
+    [VehicleClass.Industrial]: VehicleCategory.Industrial,
+    [VehicleClass.Military]: VehicleCategory.Military,
+    [VehicleClass.Motorcycles]: VehicleCategory.Motorcycles,
+    [VehicleClass.Muscle]: VehicleCategory.Muscle,
+    [VehicleClass.OffRoad]: VehicleCategory['Off-road'],
+    [VehicleClass.OpenWheel]: VehicleCategory.Openwheel,
+    [VehicleClass.Planes]: VehicleCategory.Planes,
+    [VehicleClass.Sedans]: VehicleCategory.Sedans,
+    [VehicleClass.Service]: VehicleCategory.Service,
+    [VehicleClass.Sportsclassics]: VehicleCategory.Sportsclassics,
+    [VehicleClass.Sports]: VehicleCategory.Sports,
+    [VehicleClass.Super]: VehicleCategory.Super,
+    [VehicleClass.SUVs]: VehicleCategory.Suvs,
+    [VehicleClass.Trains]: VehicleCategory.Trains,
+    [VehicleClass.Utility]: VehicleCategory.Utility,
+    [VehicleClass.Vans]: VehicleCategory.Vans,
+};
+
 export const VehicleElectricModels: Record<number, string> = {
     [joaat('dilettante')]: 'Dilettante',
     [joaat('khamelion')]: 'Khamelion',
