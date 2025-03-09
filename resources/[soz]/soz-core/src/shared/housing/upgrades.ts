@@ -8,16 +8,16 @@ export const TYPE_LABEL = {
     park_tier: 'Garage',
 };
 
+export const FOURNITURE_PER_TIER = 20;
+
 export const TYPE_DESCRPTION = {
     tier: 'Le stockage et le frigo peuvent contenir plus de choses.',
     money_tier: "Le coffre-fort peut contenir plus d'argent.",
     cloth_tier: 'La penderie peut contenir plus de tenue.',
     park_tier: 'Le garage peut contenir plus de véhicule.',
     park_trailer: "Votre caravane peut disposer d'un garage.",
-    all: 'Toutes les améliorations augmente votre stock de meuble.',
+    all: `Toutes les améliorations augmentent votre stock de meuble (${FOURNITURE_PER_TIER}/amélioration).`,
 };
-
-export const FOURNITURE_PER_TIER = 15;
 
 export const HousingTiers = {
     tier: {
