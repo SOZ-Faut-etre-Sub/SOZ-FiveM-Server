@@ -631,6 +631,13 @@ export enum ServerEvent {
     GANG_VEHBIZ_FULL = 'soz-core:server:gang:veh:full',
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
+    GANG_SMUGGLING_GREENHOUSE_USE = 'soz-core:server:gang:smuggling:greenhouse-use',
+    GANG_SMUGGLING_GREENHOUSE_START = 'soz-core:server:gang:smuggling:greenhouse-start',
+    GANG_SMUGGLING_GREENHOUSE_STIR = 'soz-core:server:gang:smuggling:greenhouse-stir',
+    GANG_SMUGGLING_GREENHOUSE_CHECK = 'soz-core:server:gang:smuggling:greenhouse-check',
+    GANG_SMUGGLING_GREENHOUSE_HARVEST = 'soz-core:server:gang:smuggling:greenhouse-harvest',
+    GANG_SMUGGLING_GREENHOUSE_ADD_SEED = 'soz-core:server:gang:smuggling:add-seed',
+    GANG_SMUGGLING_GREENHOUSE_DESTROY = 'soz-core:server:gang:smuggling:greenhouse-destroy',
     GANG_SMUGGLING_BLACK_MARKET_PRICE_UPDATE = 'soz-core:server:gang:smuggling:black-market-price',
     GANG_SMUGGLING_BLACK_MARKET_BOX_LOCK = 'soz-core:server:gang:smuggling:black-market-lock',
     GANG_SMUGGLING_BLACK_MARKET_BOX_TAKE = 'soz-core:server:gang:smuggling:black-market-box-take',
