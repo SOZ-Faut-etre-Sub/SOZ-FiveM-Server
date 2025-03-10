@@ -18,41 +18,99 @@ The main goal of SOZ development is to **revamp various primary mechanics used b
 
 In order to make this dream come true, we had to push ourselves to **develop everything we could from scratch**, while making less use of what already exists for free, developed by dedicated developers with the goal of helping the community. **Allowing us to ignore all paid resources.**
 
-The other goal of SOZ is to **offer a "Click & Host Server"**, In all honesty, this is very challenging and our V1 will not allow this at the time. **However, we work to improve this point until we can finally offer it to you and your community.**
+The other goal of SOZ is to **offer a "Click & Host Server"**. And even if this goal is difficult to achieve, we're doing everything we can to make life easier for every user of our OSS.
 
 Also, we count on the participation of everyone. **We may not be the best, but together we can.** Providing good quality development that can improve all of our servers, this sure is the primary goal of any developer with a community. **By creating SOZ, we want to allow any developer to add what we have created to your respective servers.**
 
 ⚠️**The server is under development. This means that there are some bugs and that it is far from perfect. It is in constant evolution and many things are subject to change.**
 
 ![SOZ - Key Features_](https://user-images.githubusercontent.com/104008465/206219700-a8de93a5-8d79-4b03-aba8-fec8d237bcc4.png)
-**Exhaustive list of what SOZ offers:**
-> A unique SOZCore developed with TypeScript.
+# Main Features
+This new version of SOZ has been vastly improved over its predecessors, offering roleplay server creators even more tools than before, all free of charge.
+## SOZCore & Architecture
+- A unique SOZCore, developed in TypeScript, structured for smooth and professional development. (Some dependencies are still linked to QBCore, but they will be removed in the next update.)
+- Based on robust open source library : prisma / react / etc ...
+- Allow strong monitoring of game and technical events: know what happen in real time to your server
+- Built with automation in mind : automatic sql migration, low down time on restart, api hooks for discord bot or management via external interfaces
 
-> We use QB Base to a lesser extent, which allowed us to launch the server. We are working on removing/replacing it in favour of SOZ Core.
+## VOIP & Radio
+- A custom VOIP system based on Mumble, called Zumble, which has its own repository due to its importance.
+- It supports proximity voice chat, phone calls, speaker mode, and radio channels for group communication.
 
-> Fourteen different companies, with their own gameplay mechanics. Each of them having a dependence on another one in order to create open circuits of RôlePlay. (Example: Gas stations are emptied to force to be used, as well as banks and ATM. Asking Players to fill these. )
+# Businesses & Economy
+- 13 private businesses and 7 public businesses, each with unique gameplay mechanics. They are interconnected to create a dynamic economy and encourage roleplay interactions. *(Example: Gas stations, stores, banks, and clothing shops are all restocked by players.)*
 
-> A system of pollution and deforestation. If the company in charge of these features doesn't charge the electric stations, the city may have a general blackout. If it produces too much, San andreas become polluted and all the consequences it brings for the citizens.
+# User Interface & Experience
+- A fully custom-built smartphone, called ZPhone, designed with a new architecture and iOS-inspired ergonomics. It features speaker mode, extensive customization, and Dark Web access.
+- A unique Glassmorphism UI, named UWUI, designed as a smartwatch-style interface. It displays weather, time, GPS, player status, and more, with accessibility options for visually impaired and colorblind players. *(Much love to Pavonnie and Lady_penguin)*
+- A dynamic interaction system using a targeting mechanism, making it easier to interact with characters and objects.
+- Law enforcement alerts dynamically appear on the side of the screen for optimal intervention tracking.
 
-> BTarget improvement, allowing to add any interaction.
+# Storage & Inventory
+- An ergonomic drag-and-drop inventory, allowing multiple players to access storage simultaneously. Over 200 custom items with unique icons created by the SOZ community.
+- Parking garages allow multiple vehicles to be spawned at once.
+- Persistent vehicle trunks, providing mobile storage for players.
 
-> Use of safes simultaneously, all separate.
+# Environment & Realism
+- Pollution and deforestation system: If the energy company mismanages power plants, the city can suffer a blackout. Overproduction leads to pollution affecting citizens.
+- Seasons & temperature management: Characters can lose health if they get too cold or hot.
+- Natural disasters: Earthquakes, blizzards, floods, and meteor strikes.
+- Vehicle bogging system: Tire grip varies depending on the terrain. Unsuitable off-road vehicles can sink into the ground and get stuck, requiring manual assistance to free them.
+- Fully drivable and synchronized trains between players.
 
-> A custom VOIP Mumble, nammed [Zumble](https://github.com/SOZ-Faut-etre-Sub/ZUMBLE). Being important, it has its own repository.
+## Housing & Real Estate
+- Customizable housing system, allowing players to replace default decorations with their own.
+- Players can own multiple properties and rent out secondary homes.
 
-> Multiple vehicle exits for parking, garages and companies.
+## Activities & Gameplay
+- Custom race creation, playable with cars, motorcycles, boats, or on foot. Players compete to set the fastest time.
+- Sports & health system: Players can train to carry more items and run longer. Poor nutrition causes deficiencies, reducing max health.
+- SOZ Hammer, an in-game mapping tool that eliminates the need for external editors. Players can create events and place objects in the world without admin intervention.
 
-> Drag-and-drop inventory to improve usability. Accompanied by over two hundred objects with their own icons created by the SOZ community.
+## Combat & Equipment
+- Custom weapon recoil and durability system.
+- Bulletproof vests contain reinforced plates, absorbing the next incoming shot.
 
-> A modern handmade phone, in partnership with FailyV.
-
-> Free mappings created by our team, as well as map modifications added.
-
-> A hundred of apartments, all ready to move in.
-
-> And a ton of other features that we were able to develop in seven months, that we will make you discover!
+## Dynamic Events & Mapping
+- Various dynamic events, including zombie invasions, bloodthirsty vampire attacks, and more.
+- Exclusive mappings, featuring : Approximately 490 accessible housing units featuring 8 distinct models, including 1 exclusive to SOZ ; Bluebird Waste Management Company ; Customized Cayo Perico ; Additional electric vehicle dealership ; O’Neil Ranch (FDF) ; FFS Clothing Manufacturing Company ; Expansion and modification of northern island forests ; HammerPlace replacing the former Cube Plaza ; Customized Bahama Unicorn ; Sandy Shores Sheriff’s Office ; DMC Mining & Foundry Company ; Custom advertising banners for IRL events such as Zevent and ZLAN at Pacific & Maze Bank Arena ; PAWL Sawmill ; UPW Power Company ; MTP Gas Company ; Two vehicle repair businesses located in the South and North (NG) ; Downtown Gym ; Offshore Oil Platform ; Stonks Security Cash Transport Company ; New vineyard version ; Vinewood sign transformed into Zerawood.
+- Some available mappings are disabled : Construction sites, Halloween 2023 (crystal & giant eye), Halloween 2024 (castle & crucifix), Pumpkin hunt, July 4th event, Apartments disabled after a meteor impact, Giant NewGahray screen, , Easter egg hunt, Old vineyard, Cargo plane crash, Frozen lakes & ocean, LSMC V1, Christmas mapping, Old Zkea building disabled by a meteor strike, Empty lakes due to drought, and many more!
 
 *Note : Some mapping are actually deleted from the OpenSource because they're not as our propriety. They will be replaced ASAP. So you need to relocalise some safes and interactions, like the LSPD office.*
+
+# Features Not Available in the OSS
+While the OSS provides a rich set of tools and mechanics, several exclusive features remain unique to the SOZ platform, enhancing roleplay depth and gameplay interactions.
+
+## Forensic Investigation System
+- A dedicated forensic police system allowing players to analyze crime scenes by collecting:
+  - Drug traces,
+  - Spent bullet casings,
+  - Fingerprints on vehicles.
+- This system is complemented by an investigation board and photography tools, enabling characters to engage in detailed detective roleplay.
+
+## Helicopter Spotlight Synchronization
+- Full GTA synchronization for helicopter-mounted searchlights, allowing players to manually direct the beam during pursuits or major events.
+
+## Fishing & Sozédex
+- A seasonal fishing system, where players can:
+  - Catch and sell various season-themed fish,
+  - Complete their Sozédex, a unique collection log for different species.
+
+## Organized Crime Progression
+- Mid-Tier Criminal Activities, featuring a dedicated talent tree exclusive to the platform.
+- High-Tier Criminal Operations, including:
+  - Exclusive businesses,
+  - Unique mini-games,
+  - Advanced talent trees,
+  - Multi-layered heists.
+   - Dynamic Criminal Events
+
+## Advanced Drug Economy
+- Four distinct drug systems, each with unique mechanics for cultivation and distribution:
+  - Street-level dealing,
+  - High-speed drug runs (Go-Fast missions),
+  - Large-scale shipments,
+  - Custom farming and production methods.
 
 ![SOZ - Major credit_](https://user-images.githubusercontent.com/104008465/206219769-003fa5c9-bf78-4458-9543-fd9b415bfb9d.png)
 **We would like to thank all the creators who are offering some of their creations to the community for free. Whether it is on [5Mod](https://fr.gta5-mods.com/) or on the [FiveM](https://forum.cfx.re/c/development/releases/7/l/latest) website.** It is also due to you that all servers can exist! Thanks to you, you inspired us to make SOZ completely free.
