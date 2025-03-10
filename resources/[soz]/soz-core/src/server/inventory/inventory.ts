@@ -705,11 +705,16 @@ export class Inventory {
                 return false;
             }
 
-            const item1Metadata = metadata || {};
-            const item2Metadata = item.metadata || {};
+            if (metadata) {
+                for (const key of Object.keys(metadata)) {
+                    if (!item.metadata) {
+                        return false;
+                    }
 
-            if (!deepEqual(item1Metadata, item2Metadata)) {
-                return false;
+                    if (metadata[key] !== item.metadata[key]) {
+                        return false;
+                    }
+                }
             }
 
             return true;
