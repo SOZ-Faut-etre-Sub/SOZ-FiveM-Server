@@ -10,3 +10,6 @@ export const SmugglingBusinessExportContainerConfig = {
 };
 
 export const PlaneCostMultiplier = 0;
+
+export type MenuSmugglingPricesData = any;
+export type MenuSmugglingOwnerData = any;

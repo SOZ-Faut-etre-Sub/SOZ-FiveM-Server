@@ -587,6 +587,9 @@ export enum NuiEvent {
     BusinessSmugglingPrintStart = 'soz-core:client:business:smuggling-print-start',
     BusinessSmugglingPrintRetrieve = 'soz-core:client:business:smuggling-print-retrieve',
     BusinessSmugglingElectronicLocation = 'soz-core:client:business:electronics-position',
+    BusinessSmugglingFetchOwners = 'soz-core:client:business:blackmarckets-owners-fetch',
+    BusinessSmugglingDeleteOwners = 'soz-core:client:business:blackmarckets-owners-delete',
+    BusinessSmugglingAddOwners = 'soz-core:client:business:blackmarckets-owners-add',
 
     BusinessCyberCryptoDeposit = 'soz-core:client:business:cyber:crypto-deposit',
     BusinessCyberCryptoWithDraw = 'soz-core:client:business:cyber:crypto-withdraw',

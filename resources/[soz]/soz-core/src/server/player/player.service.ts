@@ -327,7 +327,10 @@ export class PlayerService {
     }
 
     public async getNameFromCitizenId(citizenId: string) {
-        if (!this.names[citizenId]) {
+        const player = this.getPlayerByCitizenId(citizenId);
+        if (player) {
+            this.names[citizenId] = player.charinfo.firstname + ' ' + player.charinfo.lastname;
+        } else if (!this.names[citizenId]) {
             const dbInfo = await this.prismaService.player.findFirst({
                 where: {
                     citizenid: citizenId,

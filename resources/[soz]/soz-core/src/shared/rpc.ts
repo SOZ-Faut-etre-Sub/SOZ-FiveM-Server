@@ -265,6 +265,7 @@ export enum RpcServerEvent {
     GANG_MEMBER_UPDATE = 'soz-core:server:gang:member:update',
     GANG_CAN_CRIMI = 'soz-core:server:gang:can-crimi',
     GANG_SMUGGLING_BLACK_MARKET_CONTENT = 'soz-core:server:gang:smuggling:blackmarket-content',
+    GANG_SMUGGLING_BLACK_MARKET_OWNERS = 'soz-core:server:gang:smuggling:blackmarket-owners',
     GANG_SMUGGLING_CONTAINER_ORDER_GET = 'soz-core:server:gang:smuggling:container-get',
     GANG_SMUGGLING_CONTAINER_ORDER_CANCEL = 'soz-core:server:gang:smuggling:container-cancel',
     GANG_SMUGGLING_CONTAINER_ORDER_NEW = 'soz-core:server:gang:smuggling:container-new',

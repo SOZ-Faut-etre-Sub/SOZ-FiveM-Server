@@ -1,3 +1,4 @@
+import { MenuSmugglingPricesData } from '@private/shared/business.smuggling';
 import { ApartmentMenuData, ApartmentSelectUpgradesMenuData } from '@public/shared/housing/housing';
 import { HudSettings } from '@public/shared/hud';
 import { JobType } from '@public/shared/job';
@@ -141,6 +142,7 @@ export enum MenuType {
     GangMember = 'gang_member',
     SafeStorage = 'safe_storage',
     SmugglingBlackMarketPrices = 'smuggling_blackMarket_prices',
+    SmugglingBlackMarketOwners = 'smuggling_blackMarket_owners',
     SmugglingContainerOrderMenu = 'smuggling_container_order',
     SmugglingMenu = 'smuggling',
     SmugglingZoneEditMenu = 'smuggling_zone_edit',
@@ -222,7 +224,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LsmcPlaster]: PlasterMenuData;
     [MenuType.ObjectEditor]: EditorMenuData;
     [MenuType.DoorAdmin]: string;
-    [MenuType.SmugglingBlackMarketPrices]: string[];
+    [MenuType.SmugglingBlackMarketPrices]: MenuSmugglingPricesData;
     [MenuType.WatchMenu]: HudSettings;
     [MenuType.HalloweenVampire]: never;
 }
