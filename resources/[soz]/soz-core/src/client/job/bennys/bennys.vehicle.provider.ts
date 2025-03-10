@@ -408,8 +408,6 @@ export class BennysVehicleProvider {
             category: vehicleCategory,
         };
 
-        console.log(vehiculeInformations);
-
         let tabletType: 'car' | 'electric' | 'trailer' = 'car';
 
         if (isVehicleModelElectric(model)) {

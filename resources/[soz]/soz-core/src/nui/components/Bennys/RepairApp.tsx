@@ -1,3 +1,4 @@
+import { useClipboard } from '@public/nui/hook/clipboard';
 import cn from 'classnames';
 import { FunctionComponent, useState } from 'react';
 import { Link, MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -48,6 +49,19 @@ type PageProps = {
 };
 
 const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
+    const [copied, setCopied] = useState(false);
+    const copyToClipboard = useClipboard();
+
+    const copyPlate = (plate: string) => {
+        if (plate) {
+            copyToClipboard(plate);
+            setCopied(true);
+            setTimeout(() => {
+                setCopied(false);
+            }, 2000);
+        }
+    };
+
     return (
         <>
             <h3 className="text-3xl mb-4">Moteur</h3>
@@ -58,7 +72,16 @@ const EnginePage: FunctionComponent<PageProps> = ({ analyze }) => {
             <p className="capitalize">Modèle : {analyze.vehiculeInformations?.model ?? '---'}</p>
             <p className="capitalize">Marque : {analyze.vehiculeInformations?.brand ?? '---'}</p>
             <p className="capitalize">Catégorie : {analyze.vehiculeInformations?.category ?? '---'}</p>
-            <p>Immatriculation : {analyze.vehiculeInformations?.plate ?? '---'}</p>
+            <p>
+                Immatriculation :{' '}
+                <span
+                    className={`transition-all duration-200 cursor-pointer hover:font-bold ${copied ? 'text-green-500 font-bold' : 'text-white'}`}
+                    onClick={() => copyPlate(analyze.vehiculeInformations?.plate)}
+                >
+                    {analyze.vehiculeInformations?.plate ?? '---'}
+                    {copied ? ' - Copié !' : ''}
+                </span>
+            </p>
         </>
     );
 };
