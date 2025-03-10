@@ -78,6 +78,11 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 
 *Note : Some mapping are actually deleted from the OpenSource because they're not as our propriety. They will be replaced ASAP. So you need to relocalise some safes and interactions, like the LSPD office.*
 
+## Vehicles
+- Over 70 custom vehicles. *Some vehicles sourced from free mods*
+- 32 police vehicles, including: Motorcycles, SUVs, Off-road units, Sports cars, Boats, Helicopters, Unmarked cars
+- 1 customized train model
+
 # Features Not Available in the OSS
 While the OSS provides a rich set of tools and mechanics, several exclusive features remain unique to the SOZ platform, enhancing roleplay depth and gameplay interactions.
 
