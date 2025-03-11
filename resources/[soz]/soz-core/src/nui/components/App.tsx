@@ -161,9 +161,9 @@ export const App: FunctionComponent = () => {
                     <BusinessVehicleMappingApp />
                     <CyberReportApp />
                     <PincrakerMinigameApp />
-                    <InputApp />
                 </div>
                 <div className={menuClasses}>
+                    <InputApp />
                     <PhoneApp />
                 </div>
                 <Meteor />
