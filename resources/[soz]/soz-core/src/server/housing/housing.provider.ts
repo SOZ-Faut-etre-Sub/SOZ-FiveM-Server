@@ -430,25 +430,7 @@ export class HousingProvider {
         }
 
         const player = this.playerService.getPlayer(source);
-
         if (!player) {
-            return;
-        }
-
-        this.notifier.notify(player.source, `Vous avez sonné à la porte du ${apartment.label}.`, 'info');
-
-        let target: PlayerData;
-        if (!apartment.tenant && !apartment.roommate) {
-            target = this.playerService.getPlayerByCitizenId(apartment.owner);
-        } else {
-            target = this.playerService.getPlayerByCitizenId(apartment.tenant);
-
-            if (!target && apartment.roommate !== null) {
-                target = this.playerService.getPlayerByCitizenId(apartment.roommate);
-            }
-        }
-
-        if (!target) {
             return;
         }
 
@@ -458,14 +440,42 @@ export class HousingProvider {
             return;
         }
 
-        TriggerClientEvent(
-            ClientEvent.HOUSING_REQUEST_ENTER,
-            target.source,
-            propertyId,
-            apartmentId,
-            source,
-            apartment.label
-        );
+        this.notifier.notify(player.source, `Vous avez sonné à la porte du ${apartment.label}.`, 'info');
+
+        const targets: number[] = [];
+
+        const owner = this.playerService.getPlayerByCitizenId(apartment.owner);
+        const tenant = this.playerService.getPlayerByCitizenId(apartment.tenant);
+        const roommate = this.playerService.getPlayerByCitizenId(apartment.roommate);
+
+        if (!apartment.tenant && !apartment.roommate) {
+            if (owner) {
+                targets.push(owner.source);
+            }
+        } else {
+            if (tenant) {
+                targets.push(tenant.source);
+            }
+
+            if (apartment.roommate !== null && roommate) {
+                targets.push(roommate.source);
+            }
+        }
+
+        if (targets.length === 0) {
+            return;
+        }
+
+        targets.forEach(target => {
+            TriggerClientEvent(
+                ClientEvent.HOUSING_REQUEST_ENTER,
+                target,
+                propertyId,
+                apartmentId,
+                source,
+                apartment.label
+            );
+        });
     }
 
     @OnEvent(ServerEvent.HOUSING_BUY_APARTMENT)
