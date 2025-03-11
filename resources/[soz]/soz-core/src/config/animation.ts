@@ -11483,6 +11483,32 @@ export const Animations: AnimationConfigList = [
                             ],
                         },
                     },
+                    {
+                        type: 'animation',
+                        name: 'Valise sécurisée',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'move_weapon@jerrycan@generic',
+                                name: 'idle',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                    freezeLastFrame: true,
+                                },
+                            },
+                            props: [
+                                {
+                                    bone: 28422,
+                                    model: 'w_am_case',
+                                    position: [0, 0, 0],
+                                    rotation: [-90, 0, 90],
+                                },
+                            ],
+                        },
+                    },
                 ],
             },
             {
