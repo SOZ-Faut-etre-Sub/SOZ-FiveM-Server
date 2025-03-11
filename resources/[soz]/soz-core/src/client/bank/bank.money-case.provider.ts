@@ -9,6 +9,7 @@ import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { WeaponHolsterProvider } from '../weapon/weapon.holster.provider';
+import { WeaponService } from '../weapon/weapon.service';
 
 const MONEY_CASE_TRIGGER = 5000;
 const MONEY_CASE_HASH = GetHashKey('WEAPON_BRIEFCASE');
@@ -23,6 +24,9 @@ export class BankMoneyCaseProvider {
 
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
+
+    @Inject(WeaponService)
+    private readonly weaponService: WeaponService;
 
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
@@ -60,6 +64,8 @@ export class BankMoneyCaseProvider {
     }
 
     private hasMoneyCase(): boolean {
+        if (this.weaponService.getCurrentWeapon()?.name === 'weapon_briefcase') return;
+
         return GetCurrentPedWeapon(PlayerPedId(), true)[1] == MONEY_CASE_HASH;
     }
 
