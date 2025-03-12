@@ -1,3 +1,5 @@
+import { ExtraWeaponDrawPosition } from '@public/shared/weapons/weapon';
+
 import { Vector2, Vector3, Vector4 } from './polyzone/vector';
 
 type BaseAnimationConfigItem = {
@@ -108,6 +110,7 @@ export type AnimationProps = {
     position: Vector3;
     rotation: Vector3;
     fx?: Vfx;
+    extraWeaponDraw?: ExtraWeaponDrawPosition[];
 };
 
 export type AnimationInfo = {
