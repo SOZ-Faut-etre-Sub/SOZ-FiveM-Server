@@ -98,13 +98,13 @@ While the OSS provides a rich set of tools and mechanics, several exclusive feat
 - Full GTA synchronization for helicopter-mounted searchlights, allowing players to manually direct the beam during pursuits or major events.
 
 ## Fishing & Sozédex
-- A seasonal fishing system, where players can:
+- [A seasonal fishing system](https://www.twitch.tv/videos/1882188879), where players can:
   - Catch and sell various season-themed fish,
   - Complete their Sozédex, a unique collection log for different species.
 
 ## Organized Crime Progression
-- Mid-Tier Criminal Activities, featuring a dedicated talent tree exclusive to the platform.
-- High-Tier Criminal Operations, including:
+- [Mid-Tier Criminal Activities](https://www.twitch.tv/videos/1770702177), featuring a dedicated talent tree exclusive to the platform.
+- [High-Tier Criminal Operations](https://www.twitch.tv/videos/2256746695), including:
   - Exclusive businesses,
   - Unique mini-games,
   - Advanced talent trees,
@@ -112,7 +112,7 @@ While the OSS provides a rich set of tools and mechanics, several exclusive feat
    - Dynamic Criminal Events
 
 ## Advanced Drug Economy
-- Four distinct drug systems, each with unique mechanics for cultivation and distribution:
+- [Four distinct drug systems](https://www.twitch.tv/videos/1882188879?t=0h2m18s), each with unique mechanics for cultivation and distribution:
   - Street-level dealing,
   - High-speed drug runs (Go-Fast missions),
   - Large-scale shipments,
