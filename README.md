@@ -34,7 +34,7 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 - Built with automation in mind : automatic sql migration, low down time on restart, api hooks for discord bot or management via external interfaces
 
 ## VOIP & Radio
-- A custom VOIP system based on Mumble, called Zumble, which has its own repository due to its importance.
+- A custom VOIP system based on Mumble, called [Zumble](https://github.com/SOZ-Faut-etre-Sub/ZUMBLE), which has its own repository due to its importance.
 - It supports proximity voice chat, phone calls, speaker mode, and radio channels for group communication.
 
 # Businesses & Economy
@@ -42,12 +42,12 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 
 # User Interface & Experience
 - A fully custom-built smartphone, called ZPhone, designed with a new architecture and iOS-inspired ergonomics. It features speaker mode, extensive customization, and Dark Web access.
-- A unique Glassmorphism UI, named UWUI, designed as a smartwatch-style interface. It displays weather, time, GPS, player status, and more, with accessibility options for visually impaired and colorblind players. *(Much love to Pavonnie and Lady_penguin)*
+- A unique Glassmorphism UI, named UWUI, designed as a smartwatch-style interface. It displays weather, time, GPS, player status, and more, with accessibility options for visually impaired and colorblind players. *(Much love to [Pavonnie](https://x.com/Pavonnnie) and [Lady_penguin](http://mcharreyre.fr/ ))*
 - A dynamic interaction system using a targeting mechanism, making it easier to interact with characters and objects.
 - Law enforcement alerts dynamically appear on the side of the screen for optimal intervention tracking.
 
 # Storage & Inventory
-- An ergonomic drag-and-drop inventory, allowing multiple players to access storage simultaneously. Over 200 custom items with unique icons created by the SOZ community.
+- An ergonomic drag-and-drop inventory, allowing multiple players to access storage simultaneously. *Accompagned with over 200 custom items with unique icons created by the SOZ community.*
 - Parking garages allow multiple vehicles to be spawned at once.
 - Persistent vehicle trunks, providing mobile storage for players.
 
@@ -57,6 +57,7 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 - Natural disasters: Earthquakes, blizzards, floods, and meteor strikes.
 - Vehicle bogging system: Tire grip varies depending on the terrain. Unsuitable off-road vehicles can sink into the ground and get stuck, requiring manual assistance to free them.
 - Fully drivable and synchronized trains between players.
+- Vehicles remain on the map, even when the FiveM bubble empties.
 
 ## Housing & Real Estate
 - Customizable housing system, allowing players to replace default decorations with their own.
