@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { useItems } from '@public/nui/hook/data';
 import { TaxType } from '@public/shared/tax';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
@@ -43,6 +44,8 @@ export const MenuItemSelectVehicleCustomLevel: FunctionComponent<MenuItemSelectV
     onChange,
     title,
 }) => {
+    const { getPath } = useAssetPath();
+
     if (!option || option.choice.type === 'toggle') {
         return null;
     }
@@ -54,11 +57,7 @@ export const MenuItemSelectVehicleCustomLevel: FunctionComponent<MenuItemSelectV
             onChange={(index, value) => onChange(value)}
             title={
                 <div className="flex items-center w-[9.3em]">
-                    <img
-                        alt={image}
-                        className="ml-4 w-8 h-8"
-                        src={`https://soz.zerator.com/static/game/images/vehicle/${image}.webp`}
-                    />
+                    <img alt={image} className="ml-4 w-8 h-8" src={getPath(`images/vehicle/${image}.webp`)} />
                     <h3 className="ml-2 uppercase">{title}</h3>
                 </div>
             }
@@ -81,6 +80,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const getPrice = useGetPrice();
     const items = useItems();
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom].includes(data.mode);
+    const { getPath } = useAssetPath();
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -208,7 +208,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                                     <img
                                         alt="Turbo"
                                         className="ml-4 w-8 h-8"
-                                        src="https://soz.zerator.com/static/game/images/vehicle/turbo.webp"
+                                        src={getPath('images/vehicle/turbo.webp')}
                                     />
                                     <h3 className="ml-2 uppercase">Turbo</h3>
                                 </div>
@@ -228,7 +228,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
                                     <img
                                         alt="Manual"
                                         className="ml-4 w-8 h-8"
-                                        src="https://soz.zerator.com/static/game/images/vehicle/transmission.webp"
+                                        src={getPath('images/vehicle/transmission.webp')}
                                     />
                                     <h3 className="ml-2 uppercase">Boite manuelle</h3>
                                 </div>

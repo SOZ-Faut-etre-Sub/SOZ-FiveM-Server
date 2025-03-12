@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import cn from 'classnames';
 import React, { FunctionComponent } from 'react';
 
@@ -19,6 +20,7 @@ interface HistoryRowProps {
 export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contacts, history }) => {
     const currentTheme = useHudTheme();
     const { isDaltonism } = useHudColor();
+    const { getPath } = useAssetPath();
 
     const isSource = history.source_accountid === account.id;
 
@@ -51,7 +53,7 @@ export const HistoryRow: FunctionComponent<HistoryRowProps> = ({ account, contac
                         {title}
                         <img
                             className="w-5 h-5"
-                            src={`https://soz.zerator.com/static/game/images/society/${targetImage}.webp`}
+                            src={getPath(`images/society/${targetImage}.webp`)}
                             alt={targetLabel}
                             onError={e => (e.currentTarget.style.display = 'none')}
                         ></img>

@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 
@@ -17,6 +18,7 @@ export const TargetOverlay: FunctionComponent = () => {
     const [targets, setTargets] = useState<TargetOption[]>([]);
     const closeTimeout = useRef<NodeJS.Timeout>();
 
+    const { getPath } = useAssetPath();
     const { targetColors } = useHudColor();
 
     const container = useRef<HTMLDivElement>(null);
@@ -111,7 +113,7 @@ export const TargetOverlay: FunctionComponent = () => {
                 ) : (
                     <img
                         className="absolute inset-0 size-10 opacity-50"
-                        src="https://soz.zerator.com/static/game/images/hud/target.webp"
+                        src={getPath('images/hud/target.webp')}
                         alt="target"
                     />
                 )}

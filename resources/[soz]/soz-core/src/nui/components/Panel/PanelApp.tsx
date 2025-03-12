@@ -2,12 +2,14 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
+import { useAssetPath } from '../../hook/assets';
 import { useBackspace } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useOutside } from '../../hook/outside';
 import { usePrevious } from '../../hook/previous';
 
 export const PanelApp: FunctionComponent = () => {
+    const { getPath } = useAssetPath();
     const [showPanel, setShowPanel] = useState<string>(null);
     useNuiFocus(showPanel !== null, showPanel !== null, false);
     const wasShowPanel = usePrevious(showPanel);
@@ -66,18 +68,18 @@ export const PanelApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '99px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top-left.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/top-left.webp`)})`,
                         }}
                         className="h-full z-30"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top.webp)` }}
+                        style={{ backgroundImage: `url(${getPath(`images/panel/top.webp`)})` }}
                         className="grow h-[73px] bg-center z-30"
                     ></div>
                     <div
                         style={{
                             width: '103px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top-right.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/top-right.webp`)})`,
                         }}
                         className="h-full z-30"
                     ></div>
@@ -86,7 +88,7 @@ export const PanelApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '73px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/left.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/left.webp`)})`,
                         }}
                         className="h-full bg-center z-30"
                     ></div>
@@ -118,7 +120,7 @@ export const PanelApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '77px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/right.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/right.webp`)})`,
                         }}
                         className="h-full bg-center  z-30"
                     ></div>
@@ -132,18 +134,18 @@ export const PanelApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '99px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom-left.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/bottom-left.webp`)})`,
                         }}
                         className="h-full  z-30"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom.webp)` }}
+                        style={{ backgroundImage: `url(${getPath(`images/panel/bottom.webp`)})` }}
                         className="h-[76px] grow bg-center z-30"
                     ></div>
                     <div
                         style={{
                             width: '103px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom-right.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/bottom-right.webp`)})`,
                         }}
                         className="h-full z-30"
                     ></div>

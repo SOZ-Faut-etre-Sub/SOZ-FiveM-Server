@@ -2,6 +2,7 @@ import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useAssetPath } from '../../../hook/assets';
 import { RootState } from '../../../store';
 import { useHudColor } from '../hooks/useHudColor';
 import { useZoom } from '../hooks/useZoom';
@@ -9,6 +10,7 @@ import { useZoom } from '../hooks/useZoom';
 export const SeatbeltIndicator: FunctionComponent = () => {
     const state = useSelector((state: RootState) => state.vehicle.seatbelt);
 
+    const { getPath } = useAssetPath();
     const { imagePrefix } = useHudColor();
     const { width, height } = useZoom();
 
@@ -25,7 +27,7 @@ export const SeatbeltIndicator: FunctionComponent = () => {
         <animated.img
             style={{ ...styles, width, height }}
             className="drop-shadow-bg"
-            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}seatbelt.webp`}
+            src={getPath(`images/hud/vehicle/${imagePrefix}seatbelt.webp`)}
         />
     );
 };

@@ -3,6 +3,7 @@ import { FunctionComponent, useMemo } from 'react';
 import { NuiEvent } from '../../../../shared/event/nui';
 import { TargetOption } from '../../../../shared/target';
 import { fetchNui } from '../../../fetch';
+import { useAssetPath } from '../../../hook/assets';
 import { GlassMorphismContainer } from '../../Styleguide/GlassMorphismContainer';
 
 export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void }> = ({
@@ -12,6 +13,8 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
     subLabel,
     onSelect,
 }) => {
+    const { getPath } = useAssetPath();
+
     const handleClick = async () => {
         onSelect();
         await fetchNui(NuiEvent.TargetSelect, id);
@@ -20,7 +23,7 @@ export const TargetItem: FunctionComponent<TargetOption & { onSelect: () => void
     const imageUrl = useMemo(() => {
         if (!icon) return null;
 
-        return `https://soz.zerator.com/static/game/images/target/${icon}.webp`;
+        return getPath(`images/target/${icon}.webp`);
     }, [icon]);
 
     return (

@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { RootState } from '@public/nui/store';
 import { HoradateurData, HorodateurTarif } from '@public/shared/job/cjr';
 import cn from 'classnames';
@@ -9,6 +10,7 @@ import { useNuiEvent } from '../../hook/nui';
 export const TaxiHorodateurApp: FunctionComponent = () => {
     const status = useSelector((state: RootState) => state.taxi);
     const [data, setData] = useState<HoradateurData>(null);
+    const { getPath } = useAssetPath();
 
     useNuiEvent(
         'taxi',
@@ -35,7 +37,7 @@ export const TaxiHorodateurApp: FunctionComponent = () => {
         <div
             className={`${rightOffset} absolute bottom-[8vh] right-5 font-lato`}
             style={{
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/taxi/Brouznouf_Z7_.webp)`,
+                backgroundImage: `url(${getPath(`images/taxi/Brouznouf_Z7_.webp`)})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 width: '45vh',

@@ -6,10 +6,12 @@ import {
     VehicleHighDamageThreshold,
     VehicleMidDamageThreshold,
 } from '../../../../shared/vehicle/vehicle';
+import { useAssetPath } from '../../../hook/assets';
 import { useHudColor } from '../hooks/useHudColor';
 
 export const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) => {
     const { imagePrefix } = useHudColor();
+    const { getPath } = useAssetPath();
 
     let motorStatus = 'yellow';
 
@@ -27,7 +29,7 @@ export const MotorIndicator: FunctionComponent<{ motor: number }> = ({ motor }) 
                 'opacity-5': motor >= VehicleMidDamageThreshold,
                 'opacity-100': motor < VehicleMidDamageThreshold,
             })}
-            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}motor-${motorStatus}.webp`}
+            src={getPath(`images/hud/vehicle/${imagePrefix}motor-${motorStatus}.webp`)}
             alt="motor"
         />
     );

@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { FunctionComponent, useState } from 'react';
 
 import { useNuiEvent } from '../../hook/nui';
@@ -5,6 +6,7 @@ import { useNuiEvent } from '../../hook/nui';
 export const RadarApp: FunctionComponent = () => {
     const [speed, setSpeed] = useState<string>('');
     const [open, setOpen] = useState<boolean>(false);
+    const { getPath } = useAssetPath();
 
     useNuiEvent('police', 'SetRadarOpen', setOpen);
 
@@ -27,7 +29,7 @@ export const RadarApp: FunctionComponent = () => {
     return (
         <div
             style={{
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/police/zadar.webp)`,
+                backgroundImage: `url(${getPath(`images/police/zadar.webp`)})`,
                 width: '342px',
                 height: '418px',
                 top: '50px',

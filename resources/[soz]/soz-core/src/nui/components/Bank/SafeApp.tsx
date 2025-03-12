@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import classnames from 'classnames';
 import cn from 'classnames';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
@@ -26,6 +27,7 @@ type SafeAppInputs = {
 export const SafeApp: FunctionComponent = () => {
     const player = usePlayer();
     const { isDaltonism } = useHudColor();
+    const { getPath } = useAssetPath();
 
     const [showApp, setShowApp] = useState<boolean>(false);
 
@@ -107,7 +109,7 @@ export const SafeApp: FunctionComponent = () => {
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img
                             className="h-32 w-32"
-                            src={`https://soz.zerator.com/static/game/images/society/${account.id?.replace(/safe_/, '')}.webp`}
+                            src={getPath(`images/society/${account.id?.replace(/safe_/, '')}.webp`)}
                             alt={account?.label}
                             onError={e => (e.currentTarget.style.display = 'none')}
                         ></img>

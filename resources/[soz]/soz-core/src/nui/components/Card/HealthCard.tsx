@@ -4,16 +4,19 @@ import { FunctionComponent } from 'react';
 
 import { healthLevelToLabel, stressLevelToLabel } from '../../../shared/health';
 import { PlayerData } from '../../../shared/player';
+import { useAssetPath } from '../../hook/assets';
 
 type HealthCardProps = {
     player: PlayerData;
 };
 
 export const HealthCard: FunctionComponent<HealthCardProps> = ({ player }) => {
+    const { getPath } = useAssetPath();
+
     return (
         <div
             style={{
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/identity/health_book.webp)`,
+                backgroundImage: `url(${getPath(`images/identity/health_book.webp`)})`,
             }}
             className="transition bg-cover bg-no-repeat aspect-[855/539] h-[340px]"
         >

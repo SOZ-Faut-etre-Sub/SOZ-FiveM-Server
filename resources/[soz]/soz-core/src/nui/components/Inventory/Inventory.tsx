@@ -12,6 +12,7 @@ import {
 } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
+import { useAssetPath } from '../../hook/assets';
 import { useItemResolver } from '../../hook/data';
 import WeightIcon from '../../icons/inventory/weight.svg';
 import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
@@ -282,6 +283,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
 }) => {
     const [showSort, setShowSort] = useState(false);
     const inventorySize = useInventorySize(6);
+    const { getPath } = useAssetPath();
 
     return (
         <div className="w-full">
@@ -327,7 +329,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                                 >
                                     <img
                                         className="h-6 px-4"
-                                        src="https://soz.zerator.com/static/game/images/inventory/icon/car.webp"
+                                        src={getPath('images/inventory/icon/car.webp')}
                                         alt="Vehicle keys"
                                     />
                                 </GlassMorphismContainer>
@@ -343,7 +345,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                                 >
                                     <img
                                         className="h-6 px-4"
-                                        src="https://soz.zerator.com/static/game/images/inventory/icon/key.webp"
+                                        src={getPath('images/inventory/icon/key.webp')}
                                         alt="Apartment keys"
                                     />
                                 </GlassMorphismContainer>

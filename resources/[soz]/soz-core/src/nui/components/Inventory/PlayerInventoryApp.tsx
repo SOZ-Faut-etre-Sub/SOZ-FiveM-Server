@@ -17,6 +17,7 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { InventoryItem } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
+import { useAssetPath } from '../../hook/assets';
 import { useKeyPress } from '../../hook/control';
 import { useItemResolver, usePlayer, usePlayerInventoryConfiguration, usePlayerInventoryItems } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
@@ -178,6 +179,7 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
     });
     const player = usePlayer();
     const resolver = useItemResolver();
+    const { getPath } = useAssetPath();
 
     const shortcutData = player.metadata.shortcuts[shortcut % 10] || null;
     const item = shortcutData ? resolver(shortcutData.name) : null;
@@ -203,11 +205,11 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
         },
     });
 
-    const [imageSrc, setImageSrc] = useState<string | null>(shortcutData ? getItemIcon(shortcutData) : null);
+    const [imageSrc, setImageSrc] = useState<string | null>(shortcutData ? getPath(getItemIcon(shortcutData)) : null);
 
     useEffect(() => {
         if (shortcutData) {
-            setImageSrc(getItemIcon(shortcutData));
+            setImageSrc(getPath(getItemIcon(shortcutData)));
         }
     }, [shortcutData]);
     const itemSize = useItemSize();
@@ -239,7 +241,7 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
                                     })}
                                     src={imageSrc}
                                     onError={() => {
-                                        setImageSrc('https://soz.zerator.com/static/game/images/default/cat.webp');
+                                        setImageSrc(getPath('images/default/cat.webp'));
                                     }}
                                     alt="Name"
                                 />

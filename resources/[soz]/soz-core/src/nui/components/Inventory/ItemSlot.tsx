@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 
 import { getItemWeight, InventoryConfiguration, InventoryItem, isItemAllowed } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
+import { useAssetPath } from '../../hook/assets';
 import { usePlayer } from '../../hook/data';
 import { BorderBox } from '../Styleguide/BorderBox';
 import { ActionItem, getActions } from './Actions';
@@ -63,7 +64,8 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     });
     const [contextData, setContextData] = useState({ visible: false, posX: 0, posY: 0 });
     const playerData = usePlayer();
-    const [imageSrc, setImageSrc] = useState<string | null>(inventoryItem ? getItemIcon(inventoryItem) : null);
+    const { getPath } = useAssetPath();
+    const [imageSrc, setImageSrc] = useState<string | null>(inventoryItem ? getPath(getItemIcon(inventoryItem)) : null);
     const [previousInventoryItem, setPreviousInventoryItem] = useState<
         InventoryItem | 'money' | 'wallet' | 'keychain' | null
     >(inventoryItem);
@@ -107,7 +109,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
 
     useEffect(() => {
         if (inventoryItem) {
-            setImageSrc(getItemIcon(inventoryItem));
+            setImageSrc(getPath(getItemIcon(inventoryItem)));
         }
     }, [previousInventoryItem]);
 
@@ -206,7 +208,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                                     className="w-full h-full object-contain"
                                     src={imageSrc}
                                     onError={() => {
-                                        setImageSrc('https://soz.zerator.com/static/game/images/default/cat.webp');
+                                        setImageSrc(getPath('images/default/cat.webp'));
                                     }}
                                     alt="Name"
                                 />
@@ -379,36 +381,36 @@ type ItemIconProps = {
 
 export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' | 'wallet'): string => {
     if (inventoryItem === 'money') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/money.webp`;
+        return `images/inventory/icon/money.webp`;
     }
 
     if (inventoryItem === 'keychain') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/keychain.webp`;
+        return `images/inventory/icon/keychain.webp`;
     }
 
     if (inventoryItem === 'wallet') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/wallet.webp`;
+        return `images/inventory/icon/wallet.webp`;
     }
 
     let path = inventoryItem.name;
 
     if (inventoryItem.name === 'vehicle_key') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/vehicle_key.webp`;
+        return `images/inventory/icon/vehicle_key.webp`;
     }
     if (inventoryItem.name === 'apartment_key') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/apartment_key.webp`;
+        return `images/inventory/icon/apartment_key.webp`;
     }
     if (inventoryItem.name === 'health') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/health.webp`;
+        return `images/inventory/icon/health.webp`;
     }
     if (inventoryItem.name === 'license') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/license.webp`;
+        return `images/inventory/icon/license.webp`;
     }
     if (inventoryItem.name === 'identity') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/identity.webp`;
+        return `images/inventory/icon/identity.webp`;
     }
     if (inventoryItem.name === 'bank') {
-        return `https://soz.zerator.com/static/game/images/inventory/icon/bank.webp`;
+        return `images/inventory/icon/bank.webp`;
     }
 
     // if inventoryItem is an InventoryItem
@@ -418,5 +420,5 @@ export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' 
         path += `_${inventoryItem.metadata?.tier}`;
     }
 
-    return `https://soz.zerator.com/static/game/images/items/${path}.webp`;
+    return `images/items/${path}.webp`;
 };

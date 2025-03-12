@@ -1,4 +1,5 @@
 import { fetchNui } from '@public/nui/fetch';
+import { useAssetPath } from '@public/nui/hook/assets';
 import { NuiEvent } from '@public/shared/event';
 import { ApartementTiers } from '@public/shared/housing/housing';
 import { HousingUpgradesMenuData } from '@public/shared/housing/menu';
@@ -41,6 +42,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
 
     const maxTier = data.isApartmentTrailer ? MAX_TRAILER_TIER : MAX_TIER;
 
+    const { getPath } = useAssetPath();
     const getPrice = useGetPrice();
     const [tier, setTier] = useState<ApartementTiers>(data.currentTier);
     const [parking, setParking] = useState(true);
@@ -112,8 +114,8 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                                                 className="ml-2 w-8 h-8"
                                                 src={
                                                     type === 'park_tier'
-                                                        ? `https://soz.zerator.com/static/game/images/housing/garage.webp`
-                                                        : `https://soz.zerator.com/static/game/images/housing/maison.webp`
+                                                        ? getPath(`images/housing/garage.webp`)
+                                                        : getPath(`images/housing/maison.webp`)
                                                 }
                                             />
                                             <h3 className="ml-4">{label}</h3>
@@ -146,7 +148,7 @@ export const HousingUpgradesMenu: FunctionComponent<HousingUpgradesMenuProps> = 
                                             <img
                                                 alt="engine"
                                                 className="ml-2 w-8 h-8"
-                                                src={`https://soz.zerator.com/static/game/images/housing/garage.webp`}
+                                                src={getPath(`images/housing/garage.webp`)}
                                             />
                                             <h3 className="ml-4">{TYPE_LABEL.park_tier}</h3>
                                         </div>

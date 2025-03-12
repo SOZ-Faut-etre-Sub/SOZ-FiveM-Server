@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 
 import { uuidv4 } from '../../../core/utils';
@@ -12,6 +13,8 @@ type BannerProps = {
 };
 
 const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
+    const { getPath } = useAssetPath();
+
     const [isClosing, setIsClosing] = useState(false);
 
     useEffect(() => {
@@ -54,29 +57,29 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
 
     switch (news.type) {
         case 'lspd':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/lspd.webp';
+            backgroundImage = getPath('images/twitch-news/lspd.webp');
             authorType = 'Agent:';
             break;
         case 'bcso':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/bcso.webp';
+            backgroundImage = getPath('images/twitch-news/bcso.webp');
             authorType = 'Agent:';
             break;
         case 'fbi':
         case 'fbi_annoncement':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/fbi.webp';
+            backgroundImage = getPath('images/twitch-news/fbi.webp');
             authorType = 'Agent:';
             break;
         case 'sasp':
         case 'sasp_annoncement':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/sasp.webp';
+            backgroundImage = getPath('images/twitch-news/sasp.webp');
             authorType = 'Agent:';
             break;
         case 'gouv':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/gouv.webp';
+            backgroundImage = getPath('images/twitch-news/gouv.webp');
             authorType = 'Agent:';
             break;
         case 'presidence':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/presidence.webp';
+            backgroundImage = getPath('images/twitch-news/presidence.webp');
             authorType = '';
             break;
         case 'reboot_5':
@@ -86,19 +89,19 @@ const Banner: FunctionComponent<BannerProps> = ({ index, news, onDelete }) => {
             backgroundImage = 'https://soz.zerator.com/static/images/reboot_15.png';
             break;
         case 'sandstorm':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/sandstorm.webp';
+            backgroundImage = getPath('images/twitch-news/sandstorm.webp');
             break;
         case 'earthquake':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/earthquake.webp';
+            backgroundImage = getPath('images/twitch-news/earthquake.webp');
             break;
         case 'flood':
-            backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/flood.webp';
+            backgroundImage = getPath('images/twitch-news/flood.webp');
             break;
         default:
             if (news.job === JobType.YouNews) {
-                backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/younews.webp';
+                backgroundImage = getPath('images/twitch-news/younews.webp');
             } else {
-                backgroundImage = 'https://soz.zerator.com/static/game/images/twitch-news/default.webp';
+                backgroundImage = getPath('images/twitch-news/default.webp');
             }
             break;
     }

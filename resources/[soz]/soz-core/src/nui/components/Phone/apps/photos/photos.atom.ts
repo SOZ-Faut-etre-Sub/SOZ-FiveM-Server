@@ -26,7 +26,7 @@ export const useAppPhotosStateHandlers = () => {
         for (let i = 0; i < 60; i++) {
             photos.push({
                 id: i,
-                image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
+                image: 'http://localhost/static/game/images/default/cat.webp',
             });
         }
 

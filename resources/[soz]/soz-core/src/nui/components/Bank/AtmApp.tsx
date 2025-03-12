@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { MemoryRouter } from 'react-router-dom';
@@ -22,6 +23,7 @@ type AtmAppInputs = {
 
 export const AtmApp: FunctionComponent = () => {
     const player = usePlayer();
+    const { getPath } = useAssetPath();
 
     const [showApp, setShowApp] = useState<boolean>(false);
     const [keepFocus, setKeepFocus] = useState<boolean>(false);
@@ -93,11 +95,7 @@ export const AtmApp: FunctionComponent = () => {
                     <div className="flex flex-col w-full gap-2.5">
                         <Header
                             category={
-                                <img
-                                    className="h-14 ml-6"
-                                    src="https://soz.zerator.com/static/game/images/bank/logo.webp"
-                                    alt="Fleeca Logo"
-                                />
+                                <img className="h-14 ml-6" src={getPath('images/bank/logo.webp')} alt="Fleeca Logo" />
                             }
                         />
 

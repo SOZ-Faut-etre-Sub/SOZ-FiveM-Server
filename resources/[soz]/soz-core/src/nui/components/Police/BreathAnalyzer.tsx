@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { useBackspace } from '@public/nui/hook/control';
 import { FunctionComponent, useState } from 'react';
 
@@ -6,7 +7,7 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 export const BreathAnalyzerApp: FunctionComponent = () => {
     const [level, setLevel] = useState<string>(null);
     const [open, setOpen] = useState<boolean>(false);
-
+    const { getPath } = useAssetPath();
     useNuiFocus(open, open, false);
 
     useNuiEvent('police', 'OpenBreathAnalyzer', level => {
@@ -27,7 +28,7 @@ export const BreathAnalyzerApp: FunctionComponent = () => {
         <div
             onClick={() => setOpen(false)}
             style={{
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/police/alcootest.webp)`,
+                backgroundImage: `url(${getPath(`images/police/alcootest.webp`)})`,
                 width: '342px',
                 height: '418px',
                 top: '50px',

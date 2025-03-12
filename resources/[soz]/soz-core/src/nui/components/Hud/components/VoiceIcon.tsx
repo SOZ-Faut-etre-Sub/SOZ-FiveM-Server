@@ -1,6 +1,7 @@
 import { animated, useSpring } from '@react-spring/web';
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { useAssetPath } from '../../../hook/assets';
 import { useZoom } from '../hooks/useZoom';
 
 export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: boolean }> = ({
@@ -10,6 +11,7 @@ export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: bool
     const [show, setShow] = useState(true);
     const [timeout, initTimeout] = useState<NodeJS.Timeout>(null);
 
+    const { getPath } = useAssetPath();
     const { width, height } = useZoom();
 
     useEffect(() => {
@@ -39,7 +41,7 @@ export const VoiceIcon: FunctionComponent<{ icon: string; disableAutoHide?: bool
                 ...styles,
                 width,
                 height,
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/hud/voice/${icon}.webp)`,
+                backgroundImage: `url(${getPath(`images/hud/voice/${icon}.webp`)})`,
             }}
         />
     );

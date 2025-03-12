@@ -1,10 +1,12 @@
 import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
+import { useAssetPath } from '../../../hook/assets';
 import { useHudColor } from '../hooks/useHudColor';
 
 export const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> = ({ oil, fuelType }) => {
     const { imagePrefix } = useHudColor();
+    const { getPath } = useAssetPath();
 
     let oilStatus = 'yellow';
 
@@ -22,7 +24,9 @@ export const OilIndicator: FunctionComponent<{ oil: number; fuelType: string }> 
                 'opacity-5': oil > 10,
                 'opacity-100': oil <= 10,
             })}
-            src={`https://soz.zerator.com/static/game/images/hud/vehicle/${imagePrefix}${fuelType === 'essence' ? 'oil' : 'battery'}-${oilStatus}.webp`}
+            src={getPath(
+                `images/hud/vehicle/${imagePrefix}${fuelType === 'essence' ? 'oil' : 'battery'}-${oilStatus}.webp`
+            )}
             alt="oil"
         />
     );

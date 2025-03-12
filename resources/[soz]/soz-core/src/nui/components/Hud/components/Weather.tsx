@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import cn from 'classnames';
 import { FunctionComponent, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -13,7 +14,7 @@ export const Weather: FunctionComponent = () => {
     const settings = useSelector((state: RootState) => state.hud.settings);
     const showWeather = useSelector((state: RootState) => state.hud.settings.showWeather);
     const { isDay } = useDateTime();
-
+    const { getPath } = useAssetPath();
     const { largeIconSize } = useZoom();
 
     const [forecast, setForecast] = useState<ForecastWithTemperature>();
@@ -65,10 +66,7 @@ export const Weather: FunctionComponent = () => {
                 <span className="font-semibold">{forecast?.temperature}</span>
                 <span className="font-light">°C</span>
             </div>
-            <img
-                style={{ height: largeIconSize }}
-                src={`https://soz.zerator.com/static/game/images/hud/weather/${weather}.webp`}
-            />
+            <img style={{ height: largeIconSize }} src={getPath(`images/hud/weather/${weather}.webp`)} />
         </div>
     );
 };

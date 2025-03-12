@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 
 import { JobLabel } from '../../../shared/job';
 import { PlayerData } from '../../../shared/player';
+import { useAssetPath } from '../../hook/assets';
 import { Mugshot } from '../Player/Mugshot';
 
 type IdentityCardProps = {
@@ -15,12 +16,14 @@ const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
 };
 
 export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) => {
+    const { getPath } = useAssetPath();
+
     return (
         <div
             style={{
                 backgroundImage: player.is_validated
-                    ? `url(https://soz.zerator.com/static/game/images/identity/identity.webp)`
-                    : `url(https://soz.zerator.com/static/game/images/identity/identity_temp.webp)`,
+                    ? `url(${getPath(`images/identity/identity.webp`)})`
+                    : `url(${getPath(`images/identity/identity_temp.webp`)})`,
             }}
             className="bg-contain bg-no-repeat aspect-[855/539] h-[340px]"
         >

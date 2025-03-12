@@ -15,6 +15,7 @@ import { createPortal } from 'react-dom';
 import { NuiEvent } from '../../../shared/event/nui';
 import { InventoryCard } from '../../../shared/inventory';
 import { fetchNui } from '../../fetch';
+import { useAssetPath } from '../../hook/assets';
 import { useKeyPress } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { BorderBox } from '../Styleguide/BorderBox';
@@ -133,6 +134,7 @@ const CardItem: FunctionComponent<{
     index: number;
     setCurrentCard: (card: InventoryCard) => void;
 }> = ({ card, index, setCurrentCard }) => {
+    const { getPath } = useAssetPath();
     const { setNodeRef: setDroppableNodeRef, isOver } = useDroppable({
         id: `droppable_card_${index}`,
         data: card,
@@ -153,19 +155,19 @@ const CardItem: FunctionComponent<{
     let imgSrc = null;
 
     if (card.type === 'health') {
-        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/health.webp`;
+        imgSrc = getPath(`images/inventory/icon/health.webp`);
     }
 
     if (card.type === 'license') {
-        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/license.webp`;
+        imgSrc = getPath(`images/inventory/icon/license.webp`);
     }
 
     if (card.type === 'identity') {
-        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/identity.webp`;
+        imgSrc = getPath(`images/inventory/icon/identity.webp`);
     }
 
     if (card.type === 'bank') {
-        imgSrc = `https://soz.zerator.com/static/game/images/inventory/icon/bank.webp`;
+        imgSrc = getPath(`images/inventory/icon/bank.webp`);
     }
 
     return (

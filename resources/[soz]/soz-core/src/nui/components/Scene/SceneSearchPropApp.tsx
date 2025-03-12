@@ -1,10 +1,12 @@
 import { FunctionComponent, useState } from 'react';
 
+import { useAssetPath } from '../../hook/assets';
 import { useBackspace } from '../../hook/control';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useOutside } from '../../hook/outside';
 
 export const SceneSearchPropApp: FunctionComponent = () => {
+    const { getPath } = useAssetPath();
     const [showWebApp, setShowWebApp] = useState<string>(null);
     useNuiFocus(showWebApp !== null, showWebApp !== null, false);
     const refOutside = useOutside({
@@ -56,18 +58,18 @@ export const SceneSearchPropApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '99px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top-left.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/top-left.webp`)})`,
                         }}
                         className="h-full z-30"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top.webp)` }}
+                        style={{ backgroundImage: `url(${getPath(`images/panel/top.webp`)})` }}
                         className="grow h-[73px] bg-center z-30"
                     ></div>
                     <div
                         style={{
                             width: '103px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/top-right.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/top-right.webp`)})`,
                         }}
                         className="h-full z-30"
                     ></div>
@@ -76,7 +78,7 @@ export const SceneSearchPropApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '73px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/left.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/left.webp`)})`,
                         }}
                         className="h-full bg-center z-30"
                     ></div>
@@ -109,7 +111,7 @@ export const SceneSearchPropApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '77px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/right.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/right.webp`)})`,
                         }}
                         className="h-full bg-center  z-30"
                     ></div>
@@ -123,18 +125,18 @@ export const SceneSearchPropApp: FunctionComponent = () => {
                     <div
                         style={{
                             width: '99px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom-left.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/bottom-left.webp`)})`,
                         }}
                         className="h-full  z-30"
                     ></div>
                     <div
-                        style={{ backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom.webp)` }}
+                        style={{ backgroundImage: `url(${getPath(`images/panel/bottom.webp`)})` }}
                         className="h-[76px] grow bg-center z-30"
                     ></div>
                     <div
                         style={{
                             width: '103px',
-                            backgroundImage: `url(https://soz.zerator.com/static/game/images/panel/bottom-right.webp)`,
+                            backgroundImage: `url(${getPath(`images/panel/bottom-right.webp`)})`,
                         }}
                         className="h-full z-30"
                     ></div>

@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
@@ -5,9 +6,10 @@ import { Book } from '../../../shared/book';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 
 export const BookApp = () => {
+    const { getPath } = useAssetPath();
+
     const [book, setBook] = useState<Book | null>(null);
     const [imageIndex, setImageIndex] = useState(0);
-
     useNuiFocus(book !== null, book !== null, false);
 
     useNuiEvent('book', 'Show', setBook);
@@ -31,7 +33,7 @@ export const BookApp = () => {
                                 className="flex justify-center align-center items-center"
                             >
                                 <img
-                                    src={`https://soz.zerator.com/static/game/images/book/${book.images[imageIndex]}`}
+                                    src={getPath(`images/book/${book.images[imageIndex]}`)}
                                     alt={imageIndex.toString()}
                                     style={{
                                         height: '90vh',

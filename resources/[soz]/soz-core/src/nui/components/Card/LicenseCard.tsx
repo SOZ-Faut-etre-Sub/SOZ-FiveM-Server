@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { PlayerData, PlayerLicenceType } from '../../../shared/player';
+import { useAssetPath } from '../../hook/assets';
 
 type LicenseCardProps = {
     player: PlayerData;
@@ -23,10 +24,12 @@ const licenseLabelPoints = (player: PlayerData, type: PlayerLicenceType) => {
 };
 
 export const LicenseCard: FunctionComponent<LicenseCardProps> = ({ player }) => {
+    const { getPath } = useAssetPath();
+
     return (
         <div
             style={{
-                backgroundImage: `url(https://soz.zerator.com/static/game/images/identity/licenses.webp)`,
+                backgroundImage: `url(${getPath(`images/identity/licenses.webp`)})`,
             }}
             className="bg-contain bg-no-repeat aspect-[855/539] h-[340px]"
         >

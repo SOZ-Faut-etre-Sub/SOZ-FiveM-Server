@@ -1,6 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useAssetPath } from '../../../hook/assets';
 import { usePlayer } from '../../../hook/data';
 import { useNuiEvent } from '../../../hook/nui';
 import { RootState } from '../../../store';
@@ -25,6 +26,7 @@ export const PlayerStats: FunctionComponent = () => {
     const player = usePlayer();
     const { gaugeColors } = useHudColor();
     const { iconSize } = useZoom();
+    const { getPath } = useAssetPath();
 
     const health = useSelector((state: RootState) => state.playerStats.health);
     const armor = useSelector((state: RootState) => state.playerStats.armor);
@@ -84,7 +86,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="https://soz.zerator.com/static/game/images/hud/player/health.webp"
+                    src={getPath('images/hud/player/health.webp')}
                     alt=""
                 />
             </StatusGauge>
@@ -100,7 +102,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="https://soz.zerator.com/static/game/images/hud/player/armor.webp"
+                    src={getPath('images/hud/player/armor.webp')}
                     alt="armor"
                 />
             </StatusGauge>
@@ -116,7 +118,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="https://soz.zerator.com/static/game/images/hud/player/syringe.webp"
+                        src={getPath('images/hud/player/syringe.webp')}
                         alt="syringe"
                     />
                 </StatusGauge>
@@ -133,7 +135,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="https://soz.zerator.com/static/game/images/hud/player/drug.webp"
+                        src={getPath('images/hud/player/drug.webp')}
                         alt="drug"
                     />
                 </StatusGauge>
@@ -150,7 +152,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="https://soz.zerator.com/static/game/images/hud/player/alcohol.webp"
+                        src={getPath('images/hud/player/alcohol.webp')}
                         alt="alcohol"
                     />
                 </StatusGauge>
@@ -167,7 +169,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="https://soz.zerator.com/static/game/images/hud/player/hunger.webp"
+                    src={getPath('images/hud/player/hunger.webp')}
                     alt="hunger"
                 />
             </StatusGauge>
@@ -183,7 +185,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="https://soz.zerator.com/static/game/images/hud/player/thirst.webp"
+                    src={getPath('images/hud/player/thirst.webp')}
                     alt="thirst"
                 />
             </StatusGauge>
@@ -199,7 +201,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="https://soz.zerator.com/static/game/images/hud/player/stress.webp"
+                        src={getPath('images/hud/player/stress.webp')}
                         alt="stress"
                     />
                 </StatusGauge>
@@ -217,7 +219,7 @@ export const PlayerStats: FunctionComponent = () => {
                             width: iconSize,
                             height: iconSize,
                         }}
-                        src="https://soz.zerator.com/static/game/images/hud/player/stamina.webp"
+                        src={getPath('images/hud/player/stamina.webp')}
                         alt="stamina"
                     />
                 </StatusGauge>
@@ -234,7 +236,7 @@ export const PlayerStats: FunctionComponent = () => {
                         width: iconSize,
                         height: iconSize,
                     }}
-                    src="https://soz.zerator.com/static/game/images/hud/vehicle/battery.webp"
+                    src={getPath('images/hud/vehicle/battery.webp')}
                     alt="battery"
                 />
             </StatusGauge>

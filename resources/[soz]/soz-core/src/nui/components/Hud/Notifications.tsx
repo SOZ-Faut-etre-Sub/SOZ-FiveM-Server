@@ -8,6 +8,7 @@ import colors from 'tailwindcss/colors';
 
 import { uuidv4 } from '../../../core/utils';
 import { AdvancedNotification, BasicNotification, TPoliceNotification } from '../../../shared/notification';
+import { useAssetPath } from '../../hook/assets';
 import { useNuiEvent } from '../../hook/nui';
 import { RootState } from '../../store';
 import { formatText } from '../../utils/gta-format';
@@ -127,6 +128,8 @@ const Notification: FunctionComponent<NotificationProps> = ({ notification, onDe
 };
 
 const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notification, onDelete }) => {
+    const { getPath } = useAssetPath();
+
     const [isClosing, setIsClosing] = useState(false);
     const [isOpening, setIsOpening] = useState(true);
 
@@ -256,18 +259,18 @@ const PoliceNotification: FunctionComponent<PoliceNotificationProps> = ({ notifi
     };
 
     const image = (): string => {
-        let image = 'https://soz.zerator.com/static/game/images/hud/notification/fdo.webp';
+        let image = getPath('images/hud/notification/fdo.webp');
 
         if (notification.logo === 'lspd') {
-            image = 'https://soz.zerator.com/static/game/images/hud/notification/lspd.webp';
+            image = getPath('images/hud/notification/lspd.webp');
         }
 
         if (notification.logo === 'bcso') {
-            image = 'https://soz.zerator.com/static/game/images/hud/notification/bcso.webp';
+            image = getPath('images/hud/notification/bcso.webp');
         }
 
         if (notification.logo === 'sasp') {
-            image = 'https://soz.zerator.com/static/game/images/hud/notification/sasp.webp';
+            image = getPath('images/hud/notification/sasp.webp');
         }
         return image;
     };

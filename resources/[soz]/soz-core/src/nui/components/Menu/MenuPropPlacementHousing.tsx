@@ -16,6 +16,7 @@ import {
 } from '@public/nui/components/Styleguide/Menu';
 import { MenuGizmo } from '@public/nui/components/Styleguide/SubMenuGizmo';
 import { fetchNui } from '@public/nui/fetch';
+import { useAssetPath } from '@public/nui/hook/assets';
 import { usePlayer } from '@public/nui/hook/data';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { NuiEvent } from '@public/shared/event';
@@ -34,6 +35,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
     const player = usePlayer();
     const navigate = useNavigate();
     const location = useLocation();
+    const { getPath } = useAssetPath();
 
     const [placed, setPlaced] = useState<PlacementHousingPropList>({});
     const [notPlaced, setNotPlaced] = useState<PlacementHousingPropList>({});
@@ -213,7 +215,7 @@ export const MenuPropPlacementHousing: FunctionComponent<MenuPropPlacementProps>
                                 <img
                                     alt="engine"
                                     className="ml-2 w-8 h-8"
-                                    src={`https://soz.zerator.com/static/game/images/housing/maison.webp`}
+                                    src={getPath(`images/housing/maison.webp`)}
                                 />
                                 <h3 className="ml-4">Housing</h3>
                             </div>

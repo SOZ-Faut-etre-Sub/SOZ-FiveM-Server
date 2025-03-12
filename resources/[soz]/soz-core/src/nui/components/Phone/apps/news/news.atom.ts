@@ -27,7 +27,7 @@ export const useAppNewsStateHandlers = () => {
             {
                 id: 2,
                 type: 'breaking-news',
-                image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
+                image: 'http://localhost/static/game/images/default/cat.webp',
                 message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
                 createdAt: new Date().getTime() + 1000,
                 job: 'you-news',
@@ -42,7 +42,7 @@ export const useAppNewsStateHandlers = () => {
             {
                 id: 4,
                 type: 'fait-divers',
-                image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
+                image: 'http://localhost/static/game/images/default/cat.webp',
                 message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
                 createdAt: new Date().getTime() + 3000,
                 job: 'news',
@@ -50,7 +50,7 @@ export const useAppNewsStateHandlers = () => {
             {
                 id: 5,
                 type: 'info-trafic',
-                image: 'https://soz.zerator.com/static/game/images/default/cat.webp',
+                image: 'http://localhost/static/game/images/default/cat.webp',
                 message: 'Lorem ipsum dolor sit amet, conse ctetur adip iscing elit.',
                 createdAt: new Date().getTime() + 4000,
                 job: 'news',

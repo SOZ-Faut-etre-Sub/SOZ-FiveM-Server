@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -12,6 +13,7 @@ export const FuelGauge: FunctionComponent = () => {
     const fuelLevel = useSelector((state: RootState) => state.vehicle.fuelLevel);
     const vehCategory = useSelector((state: RootState) => state.vehicle.vehCategory);
 
+    const { getPath } = useAssetPath();
     const { gaugeColors } = useHudColor();
     const { iconSize } = useZoom();
 
@@ -48,7 +50,7 @@ export const FuelGauge: FunctionComponent = () => {
                     width: iconSize,
                     height: iconSize,
                 }}
-                src={`https://soz.zerator.com/static/game/images/hud/vehicle/${fuelType === 'electric' ? 'battery' : 'motor'}.webp`}
+                src={getPath(`images/hud/vehicle/${fuelType === 'electric' ? 'battery' : 'motor'}.webp`)}
                 alt="fuel"
             />
         </StatusGauge>

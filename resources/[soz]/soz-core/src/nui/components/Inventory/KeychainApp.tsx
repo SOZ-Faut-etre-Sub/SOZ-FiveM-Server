@@ -9,6 +9,7 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
+import { useAssetPath } from '@public/nui/hook/assets';
 import { FunctionComponent, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -161,6 +162,7 @@ const KeychainItem: FunctionComponent<{
         data: inventoryKey,
     });
     const [contextData, setContextData] = useState({ visible: false, posX: 0, posY: 0 });
+    const { getPath } = useAssetPath();
 
     const {
         attributes,
@@ -174,8 +176,8 @@ const KeychainItem: FunctionComponent<{
 
     const imgSrc =
         inventoryKey.type === 'vehicle'
-            ? `https://soz.zerator.com/static/game/images/inventory/icon/vehicle_key.webp`
-            : `https://soz.zerator.com/static/game/images/inventory/icon/apartment_key.webp`;
+            ? getPath(`images/inventory/icon/vehicle_key.webp`)
+            : getPath(`images/inventory/icon/apartment_key.webp`);
 
     return (
         <>

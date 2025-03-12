@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { useBackspace } from '@public/nui/hook/control';
 import { FunctionComponent, useState } from 'react';
 
@@ -6,7 +7,7 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 export const DrugScreeningApp: FunctionComponent = () => {
     const [positive, setPositive] = useState<boolean>(null);
     const [open, setOpen] = useState<boolean>(false);
-
+    const { getPath } = useAssetPath();
     useNuiFocus(open, open, false);
 
     useNuiEvent('police', 'OpenScreeningTest', positiveTest => {
@@ -29,8 +30,8 @@ export const DrugScreeningApp: FunctionComponent = () => {
             style={{
                 backgroundImage: `${
                     positive
-                        ? 'url(https://soz.zerator.com/static/game/images/police/DrugTestPositif.webp)'
-                        : 'url(https://soz.zerator.com/static/game/images/police/DrugTestNegatif.webp)'
+                        ? `url(${getPath(`images/police/DrugTestPositif.webp`)})`
+                        : `url(${getPath(`images/police/DrugTestNegatif.webp`)})`
                 }`,
                 width: '342px',
                 height: '418px',

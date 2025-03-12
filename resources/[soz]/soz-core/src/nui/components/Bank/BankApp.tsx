@@ -5,6 +5,7 @@ import { MemoryRouter, Navigate, Route, Routes, useLocation } from 'react-router
 import { BankUiData } from '../../../shared/bank';
 import { NuiEvent } from '../../../shared/event/nui';
 import { fetchNui } from '../../fetch';
+import { useAssetPath } from '../../hook/assets';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { ApplicationContainer, ApplicationContent } from '../Styleguide/Application';
 import ArchiveIcon from './assets/archive.svg';
@@ -22,6 +23,8 @@ import { HistoryPage } from './pages/HistoryPage';
 import { OffshorePage } from './pages/OffshorePage';
 
 export const BankApp: FunctionComponent = () => {
+    const { getPath } = useAssetPath();
+
     const [showApp, setShowApp] = useState<boolean>(false);
     const [keepFocus, setKeepFocus] = useState<boolean>(false);
 
@@ -76,7 +79,7 @@ export const BankApp: FunctionComponent = () => {
                         <div className="flex justify-center items-center h-24">
                             <img
                                 className="flex-none self-center h-16 px-10"
-                                src="https://soz.zerator.com/static/game/images/bank/logo.webp"
+                                src={getPath('images/bank/logo.webp')}
                                 alt="Fleeca Logo"
                             />
                         </div>

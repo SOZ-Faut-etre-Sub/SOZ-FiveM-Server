@@ -1,3 +1,4 @@
+import { useAssetPath } from '@public/nui/hook/assets';
 import { useClipboard } from '@public/nui/hook/clipboard';
 import cn from 'classnames';
 import { FunctionComponent, useState } from 'react';
@@ -193,6 +194,7 @@ export const MenuRouter: FunctionComponent = () => {
     const [repairData, setRepairData] = useState<RepairAnalyze>(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const { getPath } = useAssetPath();
 
     useNuiFocus(repairData !== null, repairData !== null, false);
     useNuiEvent('repair', 'open', setRepairData);
@@ -279,7 +281,7 @@ export const MenuRouter: FunctionComponent = () => {
             <div
                 ref={refOutside}
                 style={{
-                    backgroundImage: `url(https://soz.zerator.com/static/game/images/vehicle/repair_app.webp)`,
+                    backgroundImage: `url(${getPath(`images/vehicle/repair_app.webp`)})`,
                     height: '720px',
                     width: '1280px',
                 }}
