@@ -472,7 +472,7 @@ export class PedFactory {
                     for (const extra of prop.extraWeaponDraw) {
                         const boneIndex = GetEntityBoneIndexByName(propId, extra.bone);
 
-                        const object = CreateObject(GetHashKey(extra.model), 0, 0, -1.0, true, true, true);
+                        const object = CreateObject(GetHashKey(extra.model), 0, 0, -1.0, false, true, true);
                         AttachEntityToEntity(
                             object,
                             propId,
