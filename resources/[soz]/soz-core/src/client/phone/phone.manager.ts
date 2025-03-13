@@ -79,16 +79,16 @@ export class PhoneManager {
         const isSwimming = IsPedSwimming(ped);
 
         if (isSwimming && !this.phoneState.isPhoneDrowned()) {
+            await this.stopPhoneCall();
             this.phoneState.setPhoneDrowned(true);
-            if (this.phoneState.isInCall()) {
-                await this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
-            }
         } else if (!isSwimming && this.phoneState.isPhoneDrowned()) {
             this.phoneState.setPhoneDrowned(false);
         }
 
         const playerState = this.playerService.getState();
         if (playerState.isInventoryBusy) {
+            await this.stopPhoneCall();
+
             if (this.phoneState.isPhoneOpen()) {
                 await this.hidePhone();
             }
