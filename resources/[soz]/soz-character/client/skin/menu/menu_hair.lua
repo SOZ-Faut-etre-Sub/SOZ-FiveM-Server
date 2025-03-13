@@ -7,7 +7,7 @@ local function CreateMaleHairItems(hairMenu, playerId, skin)
             table.insert(hairlist, v)
         end
     end
-    CreateSliderList(hairMenu, "Type", skin.Hair.HairType, Labels.HairMale, function(value)
+    CreateSliderList(hairMenu, "Type", skin.Hair.HairType, hairlist, function(value)
         skin.Hair.HairType = value
         ApplyPlayerBodySkin(playerId, skin)
     end)

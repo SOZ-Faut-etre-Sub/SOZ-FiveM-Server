@@ -8,6 +8,6 @@ export class GangRepository extends Repository<RepositoryType.Gang> {
     public type = RepositoryType.Gang;
 
     protected async load(): Promise<Record<number, Gang>> {
-        return null;
+        return {};
     }
 }

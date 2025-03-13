@@ -182,7 +182,12 @@ export class PlayerProvider {
             return this.jwtTokenCache[steam];
         }
 
-        const url = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com') + '/accounts/create-token/' + steam;
+        const sozApiEndpoint = GetConvar('soz_api_endpoint', 'https://api.soz.zerator.com');
+        if (!sozApiEndpoint) {
+            return null;
+        }
+
+        const url = sozApiEndpoint + '/accounts/create-token/' + steam;
 
         const response = await axios.get(url, {
             auth: {

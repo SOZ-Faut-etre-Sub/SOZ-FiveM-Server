@@ -33,7 +33,9 @@ export class PlayerDamageProvider {
     @OnEvent(ClientEvent.LSMC_DAMAGE_REFRESH)
     async setupPlayerDisease() {
         const damages = await emitRpc<{ bone: number }[]>(RpcServerEvent.LSMC_GET_DAMAGE);
-        this.updatePlayerDamage(damages);
+        if (damages) {
+            this.updatePlayerDamage(damages);
+        }
     }
 
     public addDamageZone(bone: number) {

@@ -51,7 +51,7 @@ export const DEFAULT_CONFIGURATION: Configuration = {
         Tier5Percentage: 16,
     },
     Water: {
-        level: 10,
+        level: 0,
     },
     VampireGame: {
         gameDuration: 90,
