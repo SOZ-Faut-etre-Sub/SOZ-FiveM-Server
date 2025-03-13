@@ -165,67 +165,54 @@ export class AdminMenuSkinProvider {
         const ret: CollectionInfo = {
             data: {},
             dlc: [],
+            current: [],
         };
         const nbCollection = GetPedCollectionsCount(ped);
-        for (let i = 0; i < nbCollection; i++) {
-            const name = GetPedCollectionName(ped, i);
+        for (let dlcIndex = 0; dlcIndex < nbCollection; dlcIndex++) {
+            const name = GetPedCollectionName(ped, dlcIndex);
             ret.dlc.push(name);
-            ret.data[i] = {};
+            ret.data[dlcIndex] = {};
 
             ClothingFields.forEach((field, index) => {
                 const max =
                     field.type == 'comp'
-                        ? GetNumberOfPedCollectionDrawableVariations(ped, field.index, name)
-                        : GetNumberOfPedCollectionPropDrawableVariations(ped, field.index, name);
-                ret.data[i][index] = {};
+                        ? GetNumberOfPedCollectionDrawableVariations(ped, field.componentId, name)
+                        : GetNumberOfPedCollectionPropDrawableVariations(ped, field.propId, name);
+                ret.data[dlcIndex][index] = {};
                 for (let u = 0; u < max; u++) {
                     const isGen9 =
                         field.type == 'comp' &&
-                        IsPedCollectionComponentVariationGen9Exclusive(ped, field.index, name, u);
+                        IsPedCollectionComponentVariationGen9Exclusive(ped, field.componentId, name, u);
                     if (isGen9) {
                         continue;
                     }
 
-                    ret.data[i][index][u] =
+                    ret.data[dlcIndex][index][u] =
                         field.type == 'comp'
-                            ? GetNumberOfPedCollectionTextureVariations(ped, field.index, name, u)
-                            : GetNumberOfPedCollectionPropTextureVariations(ped, field.index, name, u);
+                            ? GetNumberOfPedCollectionTextureVariations(ped, field.componentId, name, u)
+                            : GetNumberOfPedCollectionPropTextureVariations(ped, field.propId, name, u);
                 }
             });
         }
 
-        return ret;
-    }
-
-    @OnNuiEvent(NuiEvent.AdminMenuClothCollectionCurrent)
-    public async collectionCurrent(): Promise<ClothCollectionSubMenuState[]> {
-        const clothSet = this.clothingService.getClothSet();
-        const ret: ClothCollectionSubMenuState[] = [];
-        const collections: Record<string, number> = {};
-
-        const ped = PlayerPedId();
-        const nbCollection = GetPedCollectionsCount(ped);
-        for (let i = 0; i < nbCollection; i++) {
-            collections[GetPedCollectionName(ped, i)] = i;
-        }
-
-        ClothingFields.forEach((elem, index) => {
-            if (elem.type == 'comp') {
-                const comp = elem.index as Component;
-                ret.push({
-                    field: index,
-                    dlc: collections[clothSet.Components[comp].Collection],
-                    drawable: clothSet.Components[comp].Drawable,
-                    texture: clothSet.Components[comp].Texture,
+        ClothingFields.forEach((field, index) => {
+            if (field.type == 'comp') {
+                ret.current.push({
+                    fieldIndex: index,
+                    dlcIndex: ret.dlc.indexOf(GetPedDrawableVariationCollectionName(ped, field.componentId)),
+                    drawable: GetPedDrawableVariationCollectionLocalIndex(ped, field.componentId),
+                    texture: GetPedTextureVariation(ped, field.componentId),
                 });
             } else {
-                const prop = elem.index as Prop;
-                ret.push({
-                    field: index,
-                    dlc: collections[clothSet.Props[prop].Collection] ?? 0,
-                    drawable: clothSet.Props[prop].Drawable,
-                    texture: clothSet.Props[prop].Texture,
-                });
+                const elem = {
+                    fieldIndex: index,
+                    dlcIndex: ret.dlc.indexOf(GetPedPropCollectionName(ped, field.propId)),
+                    drawable: GetPedPropCollectionLocalIndex(ped, field.propId),
+                    texture: GetPedPropTextureIndex(ped, field.propId),
+                };
+                elem.dlcIndex = elem.dlcIndex >= 0 ? elem.dlcIndex : 0;
+                elem.drawable = elem.drawable >= 0 ? elem.drawable : 0;
+                ret.current.push(elem);
             }
         });
 
@@ -239,11 +226,11 @@ export class AdminMenuSkinProvider {
         }
 
         const ped = PlayerPedId();
-        if (ClothingFields[data.field].type == 'comp') {
+        if (ClothingFields[data.fieldIndex].type == 'comp') {
             SetPedCollectionComponentVariation(
                 ped,
-                ClothingFields[data.field].index,
-                GetPedCollectionName(PlayerPedId(), data.dlc),
+                ClothingFields[data.fieldIndex].componentId,
+                GetPedCollectionName(PlayerPedId(), data.dlcIndex),
                 data.drawable,
                 data.texture,
                 0
@@ -251,8 +238,8 @@ export class AdminMenuSkinProvider {
         } else {
             SetPedCollectionPropIndex(
                 ped,
-                ClothingFields[data.field].index,
-                GetPedCollectionName(PlayerPedId(), data.dlc),
+                ClothingFields[data.fieldIndex].propId,
+                GetPedCollectionName(PlayerPedId(), data.dlcIndex),
                 data.drawable,
                 data.texture,
                 true
