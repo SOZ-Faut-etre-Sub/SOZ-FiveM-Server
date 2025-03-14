@@ -1,7 +1,7 @@
 import { uuidv4 } from '@core/utils';
 import { ItemService } from '@public/server/item/item.service';
 import { ServerEvent } from '@public/shared/event';
-import { DrugPotItem, Item } from '@public/shared/item';
+import { DrugPotItem, Item, ItemType } from '@public/shared/item';
 import { Err, Ok, Result } from '@public/shared/result';
 import { deepEqual } from '@public/shared/util';
 import { addDays, addMinutes, startOfDay, startOfMinute } from 'date-fns';
@@ -88,6 +88,10 @@ export class Inventory {
         filter: (item: InventoryItem, index: number, list: InventoryItem[]) => boolean
     ): Readonly<InventoryItem> | undefined {
         return Object.values(this._items).find(filter);
+    }
+
+    findItemsByType(type: ItemType): Readonly<InventoryItem[]> | undefined {
+        return Object.values(this._items).filter(item => item.type === type);
     }
 
     getItem(id: string): Readonly<InventoryItem> | null {
