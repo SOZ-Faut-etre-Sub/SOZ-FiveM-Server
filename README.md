@@ -67,6 +67,7 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 - Custom race creation, playable with cars, motorcycles, boats, or on foot. Players compete to set the fastest time.
 - Sports & health system: Players can train to carry more items and run longer. Poor nutrition causes deficiencies, reducing max health.
 - SOZ Hammer, an in-game mapping tool that eliminates the need for external editors. Players can create events and place objects in the world without admin intervention.
+- A Door locking system that can be added and customized directly in-game.
 
 ## Combat & Equipment
 - Custom weapon recoil and durability system.
