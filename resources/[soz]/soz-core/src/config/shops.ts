@@ -937,7 +937,7 @@ export const UndershirtCategoryNeedingReplacementTorso: Record<
             [15]: 0,
             [112]: 2,
             [114]: 2,
-            [184]: 198,
+            [184]: 8,
         },
         [UType.TshirtDroit]: {
             [14]: 12,
@@ -1640,6 +1640,10 @@ export const ProperTorsos: Record<PlayerPedHash, Record<string, Record<number, n
             [536]: 14,
             [537]: 0,
             [538]: 4,
+        },
+        soz_custom: {
+            4: 184,
+            5: 14,
         },
     },
     [PlayerPedHash.Female]: {
