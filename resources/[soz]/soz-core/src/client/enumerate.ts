@@ -40,3 +40,25 @@ export const GetVehicleList = () => {
 export const GetPickupList = () => {
     return enumerate<number>(FindFirstPickup, FindNextPickup, EndFindPickup);
 };
+
+export const GetKvpList = (prefix: string, maxRetry = 3): Record<string, any> => {
+    const kvp: Record<string, any> = {};
+
+    const kvpHandle = StartFindKvp(prefix);
+    if (!kvpHandle) {
+        if (maxRetry <= 0) {
+            return kvp;
+        }
+
+        return GetKvpList(prefix, maxRetry - 1);
+    }
+
+    let kvpKey = FindKvp(kvpHandle);
+    while (kvpKey) {
+        kvp[kvpKey] = GetResourceKvpString(kvpKey);
+        kvpKey = FindKvp(kvpHandle);
+    }
+
+    EndFindKvp(kvpHandle);
+    return kvp;
+};

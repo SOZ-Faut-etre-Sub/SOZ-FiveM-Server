@@ -24,6 +24,7 @@ import {
     MenuItemSelectOption,
     MenuItemStringInput,
     MenuItemSubMenuLink,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -76,7 +77,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                 </MenuContent>
             </MainMenu>
             <MenuClothing />
-            <MenuAnimation shortcuts={data.shortcuts} combatMode={data.combatMode} />
+            <MenuAnimation shortcuts={data.shortcuts} favorites={data.favorites} combatMode={data.combatMode} />
             <SubMenu id="hud">
                 <MenuTitle title="Personnel" />
                 <MenuContent subtitle="Gestion du HUD">
@@ -246,17 +247,25 @@ const MenuClothing: FunctionComponent = () => {
 
 type MenuAnimationProps = {
     shortcuts: Record<string, Shortcut>;
+    favorites: Record<string, Shortcut>;
     combatMode: boolean;
 };
 
 const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
     shortcuts: intialShortcuts,
+    favorites: intialFavorites,
     combatMode: initialCombatMode,
 }) => {
     const [shortcuts, setShortcuts] = useState(intialShortcuts);
+    const [favorites, setFavorites] = useState(intialFavorites);
     const [removeCombatMode, setRemoveCombatMode] = useState(initialCombatMode);
+
     useNuiEvent('player', 'UpdateAnimationShortcuts', shortcuts => {
         setShortcuts(shortcuts);
+    });
+
+    useNuiEvent('player', 'UpdateAnimationFavorites', shortcuts => {
+        setFavorites(shortcuts);
     });
 
     useNuiEvent('player', 'UpdateCombatMode', combatMode => {
@@ -268,10 +277,14 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
             <SubMenu id="animations">
                 <MenuTitle title="Personnel" />
                 <MenuContent subtitle="Gestion des animations">
+                    <MenuSubTitle>Animations</MenuSubTitle>
                     <MenuItemSubMenuLink id="animation_list">Animations</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="shortcut_list">Mes raccourcis</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="favorite_list">Mes favoris</MenuItemSubMenuLink>
+
+                    <MenuSubTitle>Postures</MenuSubTitle>
                     <MenuItemSubMenuLink id="walk_list">Démarches</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="mood_list">Humeurs</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id="favorite_list">Mes animations</MenuItemSubMenuLink>
                     <MenuItemCheckbox
                         onChange={value => {
                             fetchNui(NuiEvent.PlayerAnimationUpdateCombatMode, value);
@@ -300,10 +313,8 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
             </SubMenu>
             <SubMenu id="favorite_list">
                 <MenuTitle title="Personnel" />
-                <MenuContent subtitle="Mes raccourcis d'animations">
-                    {Object.keys(shortcuts).map(key => {
-                        const shortcut = shortcuts[key];
-
+                <MenuContent subtitle="Mes favoris">
+                    {Object.entries(favorites).map(([key, shortcut]) => {
                         if (!shortcut.animation) {
                             return <MenuItemButton key={key}>{shortcut.name}</MenuItemButton>;
                         }
@@ -314,6 +325,42 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
                                 onConfirm={(i, value) => {
                                     if (value === 'delete') {
                                         fetchNui(NuiEvent.PlayerMenuAnimationFavoriteDelete, { key });
+                                    }
+                                    if (value === 'shortcut') {
+                                        fetchNui(NuiEvent.PlayerMenuAnimationShortcut, {
+                                            animationItem: shortcut.animation,
+                                        });
+                                    }
+                                    if (value === 'play') {
+                                        fetchNui(NuiEvent.PlayerMenuAnimationPlay, {
+                                            animationItem: shortcut.animation,
+                                        });
+                                    }
+                                }}
+                                key={key}
+                            >
+                                <MenuItemSelectOption value="play">Jouer</MenuItemSelectOption>
+                                <MenuItemSelectOption value="shortcut">Raccourci</MenuItemSelectOption>
+                                <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                            </MenuItemSelect>
+                        );
+                    })}
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id="shortcut_list">
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Mes raccourcis">
+                    {Object.entries(shortcuts).map(([key, shortcut]) => {
+                        if (!shortcut.animation) {
+                            return <MenuItemButton key={key}>{shortcut.name}</MenuItemButton>;
+                        }
+
+                        return (
+                            <MenuItemSelect
+                                title={shortcut.name}
+                                onConfirm={(i, value) => {
+                                    if (value === 'delete') {
+                                        fetchNui(NuiEvent.PlayerMenuAnimationShortcutDelete, { key });
                                     }
                                     if (value === 'play') {
                                         fetchNui(NuiEvent.PlayerMenuAnimationPlay, {
@@ -519,6 +566,10 @@ const createAnimationLeafItem = (item: AnimationConfigItem): ReactElement => {
             onConfirm={(i, value) => {
                 if (value === 'play') {
                     fetchNui(NuiEvent.PlayerMenuAnimationPlay, { animationItem: item });
+                } else if (value === 'shortcut') {
+                    fetchNui(NuiEvent.PlayerMenuAnimationShortcut, {
+                        animationItem: item,
+                    });
                 } else if (value === 'favorite') {
                     fetchNui(NuiEvent.PlayerMenuAnimationFavorite, {
                         animationItem: item,
@@ -534,7 +585,8 @@ const createAnimationLeafItem = (item: AnimationConfigItem): ReactElement => {
             titleWidth={60}
         >
             <MenuItemSelectOption value="play">Jouer</MenuItemSelectOption>
-            <MenuItemSelectOption value="favorite">Raccourci</MenuItemSelectOption>
+            <MenuItemSelectOption value="shortcut">Raccourci</MenuItemSelectOption>
+            <MenuItemSelectOption value="favorite">Favori</MenuItemSelectOption>
         </MenuItemSelect>
     );
 };
@@ -553,6 +605,10 @@ const createWalkLeafItem = (item: WalkConfigItem): ReactElement => {
             onConfirm={(i, value) => {
                 if (value === 'play') {
                     fetchNui(NuiEvent.PlayerMenuAnimationSetWalk, { walkItem: item });
+                } else if (value === 'shortcut') {
+                    fetchNui(NuiEvent.PlayerMenuAnimationShortcut, {
+                        animationItem: item,
+                    });
                 } else if (value === 'favorite') {
                     fetchNui(NuiEvent.PlayerMenuAnimationFavorite, {
                         animationItem: item,
@@ -568,7 +624,8 @@ const createWalkLeafItem = (item: WalkConfigItem): ReactElement => {
             titleWidth={60}
         >
             <MenuItemSelectOption value="play">Jouer</MenuItemSelectOption>
-            <MenuItemSelectOption value="favorite">Raccourci</MenuItemSelectOption>
+            <MenuItemSelectOption value="shortcut">Raccourci</MenuItemSelectOption>
+            <MenuItemSelectOption value="favorite">Favori</MenuItemSelectOption>
         </MenuItemSelect>
     );
 };
