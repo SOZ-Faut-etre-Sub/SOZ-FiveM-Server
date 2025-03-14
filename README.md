@@ -13,7 +13,7 @@ You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if yo
 
 *P.S. : Of course like any community server, in order to register, you have to be subscribed to Zerator's Twitch channel.*
 
-![SOZ - Main Obj_](https://user-images.githubusercontent.com/104008465/206219720-ee131373-9da1-4ae6-90cd-9972f97a54f8.png)
+![SOZ - Main Obj_](https://user-images.githubusercontent.com/104008465/206219720-ee131373-9da1-4ae6-90cd-9972f97a54f8.png) 
 The main goal of SOZ development is to **revamp various primary mechanics used by players.** This desire to improve the landscape has pushed us to review **the ergonomics of several interactions with a focus on accessibility**, even going so far as to review the primary interactions such as the exchange between players, the use of chests, parking lots, and many other features to improve further more the experience lived by the players.
 
 In order to make this dream come true, we had to push ourselves to **develop everything we could from scratch**, while making less use of what already exists for free, developed by dedicated developers with the goal of helping the community. **Allowing us to ignore all paid resources.**
@@ -25,7 +25,7 @@ Also, we count on the participation of everyone. **We may not be the best, but t
 ⚠️**The server is under development. This means that there are some bugs and that it is far from perfect. It is in constant evolution and many things are subject to change.**
 
 ![SOZ - Key Features_](https://user-images.githubusercontent.com/104008465/206219700-a8de93a5-8d79-4b03-aba8-fec8d237bcc4.png)
-# Main Features
+# ✔️ Main Features
 This new version of SOZ has been vastly improved over its predecessors, offering roleplay server creators even more tools than before, all free of charge.
 ## SOZCore & Architecture
 - A unique SOZCore, developed in TypeScript, structured for smooth and professional development. (Some dependencies are still linked to QBCore, but they will be removed in the next update.)
@@ -85,8 +85,8 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 - 32 police vehicles, including: Motorcycles, SUVs, Off-road units, Sports cars, Boats, Helicopters, Unmarked cars
 - 1 customized train model
 
-# Features Not Available in the OSS
-While the OSS provides a rich set of tools and mechanics, several exclusive features remain unique to the SOZ platform, enhancing roleplay depth and gameplay interactions.
+# ❌ Features Not Available in the OSS
+*While the OSS provides a rich set of tools and mechanics, several exclusive features remain unique to the SOZ platform, enhancing roleplay depth and gameplay interactions.*
 
 ## Forensic Investigation System
 - A dedicated forensic police system allowing players to analyze crime scenes by collecting:
