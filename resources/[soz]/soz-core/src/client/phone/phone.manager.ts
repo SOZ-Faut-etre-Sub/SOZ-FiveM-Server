@@ -87,8 +87,6 @@ export class PhoneManager {
 
         const playerState = this.playerService.getState();
         if (playerState.isInventoryBusy) {
-            await this.stopPhoneCall();
-
             if (this.phoneState.isPhoneOpen()) {
                 await this.hidePhone();
             }
