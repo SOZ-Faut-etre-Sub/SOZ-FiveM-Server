@@ -516,6 +516,7 @@ export enum ServerEvent {
     FISHING_ROTTEN = 'soz-core:server:fishing:rotten',
     FISHING_GARBAGE = 'soz-core:server:fishing:garbage',
     FISHING_RESELL = 'soz-core:server:fishing:resell',
+    FISHING_RESELL_BATCH = 'soz-core:server:fishing:resell-batch',
     FISHING_RENT_BOAT = 'soz-core:server:fishing:rent-boat',
     FISHING_REMOVE_BAIT = 'soz-core:server:fishing:remove-bait',
     FISHING_RETURN_BOAT = 'soz-core:server:fishing:return-boat',
