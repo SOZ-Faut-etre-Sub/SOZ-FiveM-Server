@@ -1,27 +1,28 @@
-import { SozRole } from '@core/permissions';
 import { ClothCollectionSubMenuState, ClothingFields, CollectionInfo } from '@public/shared/cloth';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
-import { MenuContent, MenuItemSelect, MenuItemSelectOption, MenuTitle, SubMenu } from '../Styleguide/Menu';
+import {
+    MenuContent,
+    MenuItemButton,
+    MenuItemSelect,
+    MenuItemSelectOption,
+    MenuTitle,
+    SubMenu,
+} from '../Styleguide/Menu';
 
-export type ClothCollectionSubMenuProps = {
-    permission: SozRole;
-};
-
-export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuProps> = ({ permission }) => {
+export const ClothCollectionSubMenu: FunctionComponent = () => {
     const [data, setData] = useState<CollectionInfo>(null);
     const [state, setState] = useState<ClothCollectionSubMenuState>();
-    const [defaults, setDefault] = useState<ClothCollectionSubMenuState[]>([]);
+    const [selected, setSelected] = useState<number>();
 
-    useEffect(() => {
-        fetchNui<any, CollectionInfo>(NuiEvent.AdminMenuClothCollectionFetch).then(data => setData(data));
-        fetchNui<any, ClothCollectionSubMenuState[]>(NuiEvent.AdminMenuClothCollectionCurrent).then(data => {
-            setDefault(data);
-            setState({ field: 0, dlc: data[0].dlc, drawable: data[0].drawable, texture: data[0].texture });
+    const load = () => {
+        fetchNui<any, CollectionInfo>(NuiEvent.AdminMenuClothCollectionFetch).then(data => {
+            setData(data);
+            setState({ ...data.current[0] });
         });
-    }, []);
+    };
 
     const update = (subState: Partial<ClothCollectionSubMenuState>, skipRedraw: boolean) => {
         if (!subState) {
@@ -32,83 +33,109 @@ export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuPro
             ...subState,
         };
 
-        if (
-            newState.field != state.field ||
-            newState.dlc != state.dlc ||
-            newState.drawable != state.drawable ||
-            newState.texture != state.texture
-        ) {
-            setState(newState);
+        setState(newState);
 
-            if (!skipRedraw) {
-                fetchNui(NuiEvent.AdminMenuClothCollectionPreview, newState);
-            }
+        if (!skipRedraw) {
+            data.current[state.fieldIndex] = { ...state };
+            fetchNui(NuiEvent.AdminMenuClothCollectionPreview, newState);
         }
     };
 
-    if (!data || !state || !defaults) {
-        return null;
+    if (!data || !state) {
+        return (
+            <SubMenu id="player_style2">
+                <MenuTitle title="Vetements par DLC" />
+                <MenuContent>
+                    <MenuItemButton disabled={true} onSelected={load}>
+                        Chargement...
+                    </MenuItemButton>
+                </MenuContent>
+            </SubMenu>
+        );
     }
 
     return (
         <SubMenu id="player_style2">
-            <MenuTitle title={permission} />
+            <MenuTitle title="Vetements par DLC" />
             <MenuContent>
                 <MenuItemSelect
                     title="Type"
                     titleWidth={20}
+                    value={state.fieldIndex}
+                    onSelected={() => {
+                        setSelected(0);
+                    }}
+                    syncValue
                     onChange={index => {
-                        if (index != null) {
+                        if (index != null && selected == 0) {
                             update(
                                 {
-                                    field: index,
-                                    dlc: defaults[index].dlc,
-                                    drawable: defaults[index].drawable,
-                                    texture: defaults[index].texture,
+                                    ...data.current[index],
                                 },
                                 true
                             );
                         }
                     }}
                 >
-                    {ClothingFields.map(elem => (
-                        <MenuItemSelectOption key={'field_' + elem.label}>{elem.label}</MenuItemSelectOption>
+                    {ClothingFields.map((elem, index) => (
+                        <MenuItemSelectOption value={index} key={'field_' + elem.label} helper={elem.label}>
+                            {elem.label}
+                        </MenuItemSelectOption>
                     ))}
                 </MenuItemSelect>
                 <MenuItemSelect
+                    key={state.fieldIndex + 'dlc'}
                     title="DLC"
                     titleWidth={20}
-                    value={state.dlc}
+                    value={state.dlcIndex}
+                    onSelected={() => {
+                        setSelected(1);
+                    }}
+                    syncValue
                     onChange={(index, value) => {
-                        if (value != null) {
+                        if (value != null && value != state.dlcIndex && selected == 1) {
                             update(
                                 {
-                                    dlc: value,
-                                    drawable: parseInt(Object.keys(data.data[value][state.field])[0]),
+                                    dlcIndex: parseInt(value),
+                                    drawable: 0,
                                     texture: 0,
                                 },
-                                true
+                                Object.values(data.data[parseInt(value)][state.fieldIndex]).length <= 0
                             );
                         }
                     }}
+                    description={
+                        Object.keys(data.data[state.dlcIndex][state.fieldIndex]).length +
+                        ' ' +
+                        (ClothingFields[state.fieldIndex].type == 'comp' ? `Drawable(s)` : 'Prop(s)')
+                    }
                 >
                     {data.dlc
                         .map((name, index) => ({ name, index }))
-                        .filter(elem => {
-                            return Object.values(data.data[elem.index][state.field]).length > 0;
-                        })
                         .map(elem => (
-                            <MenuItemSelectOption value={elem.index} key={'dlc_' + elem.index}>
+                            <MenuItemSelectOption
+                                value={elem.index}
+                                key={'dlc_' + elem.index}
+                                helper={elem.name || 'base'}
+                            >
                                 {elem.name || 'base'}
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
                 <MenuItemSelect
-                    title={ClothingFields[state.field].type == 'comp' ? `Drawable` : 'Prop'}
+                    key={state.fieldIndex + 'dlc' + state.dlcIndex + 'drawable'}
+                    title={ClothingFields[state.fieldIndex].type == 'comp' ? `Drawable` : 'Prop'}
                     titleWidth={30}
+                    disabled={Object.values(data.data[state.dlcIndex][state.fieldIndex]).length <= 0}
                     value={state.drawable}
-                    onChange={(index, value) => {
-                        if (value != null) {
+                    onSelected={() => {
+                        setSelected(2);
+                    }}
+                    syncValue
+                    onChange={index => {
+                        const valueStr = Object.keys(data.data[state.dlcIndex][state.fieldIndex])[index];
+                        const value = parseInt(valueStr);
+                        if (value != null && value != state.drawable && selected == 2) {
                             update(
                                 {
                                     drawable: value,
@@ -118,28 +145,29 @@ export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuPro
                             );
                         }
                     }}
-                    onSelected={() =>
-                        fetchNui(NuiEvent.AdminMenuClothCollectionPreview, {
-                            type: ClothingFields[state.field].type,
-                            index: ClothingFields[state.field].index,
-                            dlc: data.dlc[state.dlc],
-                            drawable: state.drawable,
-                            texture: state.texture,
-                        })
-                    }
+                    description={data.data[state.dlcIndex][state.fieldIndex][state.drawable] + ' Textures'}
                 >
-                    {Object.keys(data.data[state.dlc][state.field]).map(value => (
-                        <MenuItemSelectOption value={value} key={'drawable_' + value}>
+                    {Object.keys(data.data[state.dlcIndex][state.fieldIndex]).map((value, index) => (
+                        <MenuItemSelectOption value={index} key={'drawable_' + value}>
                             {value}
                         </MenuItemSelectOption>
                     ))}
                 </MenuItemSelect>
                 <MenuItemSelect
+                    key={state.fieldIndex + 'dlc' + state.dlcIndex + 'drawable' + state.drawable}
                     title={'Texture'}
                     titleWidth={30}
+                    disabled={
+                        Object.values(data.data[state.dlcIndex][state.fieldIndex]).length <= 0 ||
+                        !data.data[state.dlcIndex][state.fieldIndex][state.drawable]
+                    }
+                    onSelected={() => {
+                        setSelected(3);
+                    }}
+                    syncValue
                     value={state.texture}
                     onChange={index => {
-                        if (index != null) {
+                        if (index != state.texture && selected == 3) {
                             update(
                                 {
                                     texture: index,
@@ -149,11 +177,14 @@ export const ClothCollectionSubMenu: FunctionComponent<ClothCollectionSubMenuPro
                         }
                     }}
                 >
-                    {Array(data.data[state.dlc][state.field][state.drawable])
-                        .fill(0)
-                        .map((_, index) => (
-                            <MenuItemSelectOption key={'texture' + index}>{index}</MenuItemSelectOption>
-                        ))}
+                    {data.data[state.dlcIndex][state.fieldIndex][state.drawable] &&
+                        Array(data.data[state.dlcIndex][state.fieldIndex][state.drawable])
+                            .fill(0)
+                            .map((_, index) => (
+                                <MenuItemSelectOption value={index} key={'texture' + index}>
+                                    {index}
+                                </MenuItemSelectOption>
+                            ))}
                 </MenuItemSelect>
             </MenuContent>
         </SubMenu>

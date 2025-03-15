@@ -290,84 +290,84 @@ export const ScubaOutfit: Record<PlayerPedHash, Outfit> = {
     },
 };
 
-export const ClothingFields: { label: string; index: number; type: 'comp' | 'prop' }[] = [
+export const ClothingFields: { label: string; componentId?: number; propId?: number; type: 'comp' | 'prop' }[] = [
     {
-        index: 1,
+        componentId: 1,
         label: 'Masque',
         type: 'comp',
     },
     {
-        index: 2,
+        componentId: 2,
         label: 'Coupe de cheveux',
         type: 'comp',
     },
     {
-        index: 3,
+        componentId: 3,
         label: 'Torse',
         type: 'comp',
     },
     {
-        index: 4,
+        componentId: 4,
         label: 'Jambes',
         type: 'comp',
     },
     {
-        index: 5,
+        componentId: 5,
         label: 'Sac',
         type: 'comp',
     },
     {
-        index: 6,
+        componentId: 6,
         label: 'Chaussures',
         type: 'comp',
     },
     {
-        index: 7,
+        componentId: 7,
         label: 'Accessoires',
         type: 'comp',
     },
     {
-        index: 8,
+        componentId: 8,
         label: 'Undershirt',
         type: 'comp',
     },
     {
-        index: 9,
+        componentId: 9,
         label: 'Armure',
         type: 'comp',
     },
     {
-        index: 10,
+        componentId: 10,
         label: 'Décalques',
         type: 'comp',
     },
     {
-        index: 11,
+        componentId: 11,
         label: 'Hauts',
         type: 'comp',
     },
     {
-        index: 0,
+        propId: 0,
         label: 'Chapeau',
         type: 'prop',
     },
     {
-        index: 1,
+        propId: 1,
         label: 'Lunettes',
         type: 'prop',
     },
     {
-        index: 2,
+        propId: 2,
         label: 'oreilles',
         type: 'prop',
     },
     {
-        index: 6,
+        propId: 6,
         label: 'Bras gauche',
         type: 'prop',
     },
     {
-        index: 7,
+        propId: 7,
         label: 'Bras droit',
         type: 'prop',
     },
@@ -375,12 +375,13 @@ export const ClothingFields: { label: string; index: number; type: 'comp' | 'pro
 
 export type CollectionInfo = {
     dlc: string[];
-    data: Record<string, Record<number, Record<number, number>>>;
+    data: Record<number, Record<number, Record<number, number>>>;
+    current: ClothCollectionSubMenuState[];
 };
 
 export type ClothCollectionSubMenuState = {
-    field: number;
-    dlc: number;
+    fieldIndex: number;
+    dlcIndex: number;
     drawable: number;
     texture: number;
 };
