@@ -111,6 +111,7 @@ export class PlayerMenuProvider {
             ...this.hudStateProvider.getState(),
             scaledNui: this.hudMinimapProvider.scaledNui,
             shortcuts: this.playerAnimationProvider.getShortcuts(),
+            favorites: this.playerAnimationProvider.getFavorites(),
             combatMode: this.playerAnimationProvider.getCombatMode(),
             job: this.jobMenuProvider.getJobMenuData(),
             deguisement: this.playerService.hasDeguisement(),

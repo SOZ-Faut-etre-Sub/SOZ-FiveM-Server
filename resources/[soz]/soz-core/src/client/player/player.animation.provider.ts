@@ -5,17 +5,21 @@ import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
+import { uuidv4 } from '../../core/utils';
 import { AnimationConfigItem, MoodConfigItem, WalkConfigBase, WalkConfigItem, Walking } from '../../shared/animation';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
 import { getRandomItem } from '../../shared/random';
 import { Err, Ok } from '../../shared/result';
 import { AnimationService } from '../animation/animation.service';
+import { GetKvpList } from '../enumerate';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
+
+const ANIMATION_FAVORITE_PREFIX = 'animation:favorite:';
 
 @Provider()
 export class PlayerAnimationProvider {
@@ -245,7 +249,13 @@ export class PlayerAnimationProvider {
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationFavorite)
-    public async favoriteAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
+    async favoriteAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
+        SetResourceKvp(ANIMATION_FAVORITE_PREFIX + uuidv4(), JSON.stringify(animationItem));
+        this.dispatchFavorites();
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationShortcut)
+    public async shortcutAnimation({ animationItem }: { animationItem: AnimationConfigItem }) {
         const number = await this.inputService.askInput<number>(
             {
                 title: 'Entrer le numéro du raccourci voulu (entre 1 et 10), laissez vide pour annuler',
@@ -280,7 +290,17 @@ export class PlayerAnimationProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuAnimationFavoriteDelete)
     public async deleteFavoriteAnimation({ key }: { key: string }) {
         DeleteResourceKvp(key);
+        this.dispatchFavorites();
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuAnimationShortcutDelete)
+    public async deleteShortcutAnimation({ key }: { key: string }) {
+        DeleteResourceKvp(key);
         this.dispatchShortcuts();
+    }
+
+    private dispatchFavorites() {
+        this.nuiDispatch.dispatch('player', 'UpdateAnimationFavorites', this.getFavorites());
     }
 
     private dispatchShortcuts() {
@@ -324,6 +344,26 @@ export class PlayerAnimationProvider {
                 })} - ${animation?.name || 'Aucune'}`,
                 animation,
             };
+        }
+
+        return shortcuts;
+    }
+
+    public getFavorites(): Record<string, Shortcut> {
+        const kvp = GetKvpList(ANIMATION_FAVORITE_PREFIX);
+        const shortcuts = {};
+
+        for (const [k, v] of Object.entries(kvp)) {
+            try {
+                const animation = JSON.parse(v) as AnimationConfigItem;
+
+                shortcuts[k] = {
+                    name: animation?.name || 'Inconnu',
+                    animation,
+                };
+            } catch (e) {
+                this.logger.error(`Error while parsing animation ${k}`, e);
+            }
         }
 
         return shortcuts;
