@@ -1,14 +1,14 @@
 import { Command } from '@core/decorators/command';
 import { Inject } from '@core/decorators/injectable';
+import { PlayerInventoryUpdate } from '@core/decorators/player';
 import { Provider } from '@core/decorators/provider';
+import { Tick, TickInterval } from '@core/decorators/tick';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { PhoneState } from '@public/client/phone/phone.state';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { ClientEvent } from '@public/shared/event/client';
 import { NuiEvent } from '@public/shared/event/nui';
 
-import { PlayerInventoryUpdate } from '../../core/decorators/player';
-import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Control } from '../../shared/input';
 import { HousingFournitureProvider } from '../housing/housing.fourniture.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -57,11 +57,9 @@ export class PhoneManager {
     @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
     async onBlackout(blackout: boolean, blackoutLevel: number) {
         if (blackout || blackoutLevel >= 3) {
+            await this.stopPhoneCall();
             if (this.phoneState.isPhoneOpen()) {
                 await this.hidePhone();
-            }
-            if (this.phoneState.isInCall()) {
-                await this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall().transmitter);
             }
         }
     }
@@ -104,6 +102,7 @@ export class PhoneManager {
     }
 
     @OnNuiEvent(NuiEvent.PhoneInsideInput)
+    @OnEvent(ClientEvent.PHONE_IS_INSIDE_INPUT)
     async onPhoneInsideInput({ insideInput }: { insideInput: boolean }) {
         this.isInsideInput = insideInput;
     }
@@ -202,7 +201,6 @@ export class PhoneManager {
         this.phoneState.setPhoneOpen(true);
     }
 
-    @OnEvent(ClientEvent.PHONE_HIDE)
     public async hidePhone() {
         this.phoneState.setPhoneFrontCameraEnabled(false);
         this.phoneState.setPhoneFlashlightEnabled(false);

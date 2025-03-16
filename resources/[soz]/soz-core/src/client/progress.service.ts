@@ -4,9 +4,9 @@ import { AnimationRunner } from '@public/client/animation/animation.factory';
 import { InstructionalService } from '@public/client/instructional.service';
 import { AudioService } from '@public/client/nui/audio.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { PhoneService } from '@public/client/phone/phone.service';
 import { PlayerService } from '@public/client/player/player.service';
 import { animationFlagsToOptions, AnimationProps, AnimationStopReason } from '@public/shared/animation';
-import { ClientEvent } from '@public/shared/event/client';
 import { Control } from '@public/shared/input';
 import { fromVector3Object } from '@public/shared/polyzone/vector';
 import PCancelable from 'p-cancelable';
@@ -32,6 +32,9 @@ export class ProgressService {
 
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
+
+    @Inject(PhoneService)
+    private readonly phoneService: PhoneService;
 
     @Inject(InstructionalService)
     private readonly instructionalService: InstructionalService;
@@ -81,7 +84,7 @@ export class ProgressService {
             this.playerService.updateState({
                 isInventoryBusy: true,
             });
-            TriggerEvent(ClientEvent.PHONE_HIDE);
+            await this.phoneService.hidePhone();
         }
 
         if (options.headingEntity) {

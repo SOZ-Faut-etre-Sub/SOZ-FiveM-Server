@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { wait } from '@core/utils';
 import { PhoneSimCardCalls } from '@public/client/phone/phone.simcard.calls';
 import { PhoneState } from '@public/client/phone/phone.state';
 import { VoicePhoneProvider } from '@public/client/voip/voice/voice.phone.provider';
+import { ClientEvent } from '@public/shared/event/client';
 
 @Injectable()
 export class PhoneService {
@@ -47,5 +49,13 @@ export class PhoneService {
                 this.phoneState.setPhoneDisabled(value);
             }
         }
+    }
+
+    public async hidePhone() {
+        this.phoneState.setPhoneFrontCameraEnabled(false);
+        this.phoneState.setPhoneFlashlightEnabled(false);
+        this.phoneState.setPhoneOpen(false);
+        TriggerEvent(ClientEvent.PHONE_IS_INSIDE_INPUT, { insideInput: false });
+        await wait(200);
     }
 }
