@@ -340,7 +340,7 @@ export class WorldEventProvider {
         this.sceneProvider.loadScene(scene.id);
 
         if (firstEntityPosition && event.startSound) {
-            this.soundService.playAtPosition(event.startSound, firstEntityPosition, 2000, 1.0);
+            this.soundService.playAtPosition(event.startSound, firstEntityPosition, 2000, 1.0, true);
         }
 
         for (const [pedId, ped] of Object.entries(scene.peds)) {

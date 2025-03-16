@@ -60,3 +60,5 @@ export const ScenePedBehaviorRelationship: Record<ScenePedBehavior, number> = {
     [ScenePedBehavior.passive]: 4,
     [ScenePedBehavior.agressive]: 5,
 };
+
+export const SceneBlipDelay = 60 * 60_000;

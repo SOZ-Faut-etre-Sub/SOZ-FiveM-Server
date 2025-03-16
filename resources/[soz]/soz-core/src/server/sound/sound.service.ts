@@ -69,15 +69,23 @@ export class SoundService {
         TriggerEvent('InteractSound_SV:PlayWithinDistance', distance, name, volume);
     }
 
-    public playAtPosition(name: string, position: Vector3 | Vector4, distance: number, volume: number) {
+    public playAtPosition(
+        name: string,
+        position: Vector3 | Vector4,
+        distance: number,
+        volume: number,
+        scaling = false
+    ) {
         const players = this.serverStateService.getPlayers();
 
         for (const player of players) {
             const ped = GetPlayerPed(player.source);
             const playerPosition = GetEntityCoords(ped) as Vector3;
+            const playerDistance = getDistance(position, playerPosition);
 
-            if (getDistance(position, playerPosition) < distance) {
-                TriggerClientEvent('InteractSound_CL:PlayOnOne', player.source, name, volume);
+            if (playerDistance < distance) {
+                const playerVolume = scaling ? (volume * playerDistance) / distance : volume;
+                TriggerClientEvent('InteractSound_CL:PlayOnOne', player.source, name, playerVolume);
             }
         }
     }

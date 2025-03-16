@@ -9,7 +9,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { FDO } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { EventInfo, Scene, ScenePedBehavior, ScenePedBehaviorRelationship } from '../../shared/scene';
+import { EventInfo, Scene, SceneBlipDelay, ScenePedBehavior, ScenePedBehaviorRelationship } from '../../shared/scene';
 import { BlipFactory } from '../blip';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
@@ -99,10 +99,15 @@ export class WorldEventProvider {
             }
 
             const now = Date.now();
-            const blipSpawnTime = this.currentEvent.startTimestamp + 120 * 1000;
+            const id = this.currentEvent.currentEventId;
+            const blipSpawnTime = this.currentEvent.startTimestamp + SceneBlipDelay;
 
             if (now < blipSpawnTime) {
                 await wait(blipSpawnTime - now);
+            }
+
+            if (!this.currentEvent || id !== this.currentEvent.currentEventId) {
+                return;
             }
 
             if (this.areAllInvSignaled(scene, eventInfo.signaledInvs)) {
@@ -155,10 +160,10 @@ export class WorldEventProvider {
 
         const gang = this.gangRepository.find(player.gang.id);
         if (position && (gang || FDO.includes(player.job.id))) {
-            // show blip after 2 minutes
-            await wait(120 * 1000);
+            // show blip after deplay
+            await wait(SceneBlipDelay);
 
-            if (!this.currentEvent) {
+            if (!this.currentEvent || eventId !== this.currentEvent.currentEventId) {
                 return;
             }
 
