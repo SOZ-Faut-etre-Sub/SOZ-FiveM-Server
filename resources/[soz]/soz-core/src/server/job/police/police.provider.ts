@@ -89,16 +89,16 @@ export class PoliceProvider {
 
         if (inventory.removeAtSlot(item.slot, 1)) {
             const itemDef = this.itemService.getItem(item.name);
+            let maxPlates = itemDef.maxplates ?? 0;
+
+            // Multi skin armor plate definition
+            if (armorType === 'sasp1' || armorType === 'sasp2') {
+                maxPlates = 2;
+            }
 
             this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
 
-            TriggerClientEvent(
-                ClientEvent.POLICE_SETUP_ARMOR,
-                source,
-                armorType,
-                item.metadata?.plates,
-                itemDef.maxplates
-            );
+            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType, item.metadata?.plates, maxPlates);
         }
 
         return;
