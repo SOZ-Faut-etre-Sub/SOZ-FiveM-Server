@@ -4,6 +4,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { uuidv4 } from '@core/utils';
+import { DUIRenderer } from '@public/client/dui.service';
 import { InteractionDistanceProvider } from '@public/client/quick-interaction/interaction.distance.provider';
 import { InteractionOffsetProvider } from '@public/client/quick-interaction/interaction.offset.provider';
 
@@ -34,26 +35,28 @@ export class InteractionProvider {
     private nearbyInteractions = new Map<string, Interaction>();
     private nearbyInteraction: Interaction = null;
 
-    private readonly interactionSprite = {
-        onoff: {
-            size: 0.25,
-            width: 0.25 / 16,
-            height: 0.25 / 9,
-        },
-        start: {
-            x: 0.015 / 16,
-            width: 0.03 / 16,
-            height: 0.25 / 9,
-        },
-        content: {
-            height: 0.25 / 9,
-        },
-        end: {
-            x: 0.015 / 16,
-            width: 0.035 / 16,
-            height: 0.25 / 9,
-        },
-    };
+    private duiEmptyRenderer = new DUIRenderer('nui://soz-core/public/dui_quick_interaction.html', 40, 40);
+    private duiInteractionRenderer = new DUIRenderer('nui://soz-core/public/dui_quick_interaction.html', 400, 40);
+
+    @Once(OnceStep.Start)
+    async onStart() {
+        await this.resourceLoader.loadStreamedTextureDict('soz_minimap');
+
+        this.duiEmptyRenderer.initialize();
+        this.duiInteractionRenderer.initialize();
+    }
+
+    @Once(OnceStep.Stop)
+    async onStop() {
+        this.interactions.clear();
+        this.nearbyInteractions.clear();
+        this.duiEmptyRenderer.destroy();
+        this.duiInteractionRenderer.destroy();
+
+        this.nearbyInteraction = null;
+        this.duiEmptyRenderer = null;
+        this.duiInteractionRenderer = null;
+    }
 
     public createInteractionForCoords(
         coords: Vector3 | Vector4,
@@ -98,7 +101,10 @@ export class InteractionProvider {
     public deleteInteraction(id: string): void {
         this.interactions.delete(id);
         this.nearbyInteractions.delete(id);
-        if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
+        if (this.nearbyInteraction?.id === id) {
+            this.duiInteractionRenderer.sendMessage('');
+            this.nearbyInteraction = null;
+        }
     }
 
     @Tick(10 * TickInterval.EVERY_SECOND)
@@ -157,7 +163,10 @@ export class InteractionProvider {
             const distance = getDistance(this.playerPosition, coords);
             if (distance > this.interactionDistanceProvider.getDrawDistance(id)) {
                 this.nearbyInteractions.delete(id);
-                if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
+                if (this.nearbyInteraction?.id === id) {
+                    this.duiInteractionRenderer.sendMessage('');
+                    this.nearbyInteraction = null;
+                }
                 continue;
             }
 
@@ -169,22 +178,14 @@ export class InteractionProvider {
                 nearbyInteractionAlreadyExists ||
                 distance > this.interactionDistanceProvider.getInteractionDistance(id)
             ) {
-                DrawSprite(
-                    'soz_minimap',
-                    'interaction_off',
-                    0,
-                    0,
-                    this.interactionSprite.onoff.width,
-                    this.interactionSprite.onoff.height,
-                    0,
-                    255,
-                    255,
-                    255,
-                    255
-                );
+                this.duiEmptyRenderer.render(0, 0, 40, 40, 'left');
                 ClearDrawOrigin();
 
-                if (this.nearbyInteraction?.id === id) this.nearbyInteraction = null;
+                if (this.nearbyInteraction?.id === id) {
+                    this.duiInteractionRenderer.sendMessage('');
+                    this.nearbyInteraction = null;
+                }
+
                 continue;
             }
 
@@ -192,68 +193,8 @@ export class InteractionProvider {
                 continue;
             }
 
-            const labelSize = interaction.label.length * 0.004;
-            const contentX = (labelSize + this.interactionSprite.onoff.size / 2) / 16 + labelSize / 2;
-
-            DrawSprite(
-                'soz_minimap',
-                'interaction_on',
-                0,
-                0,
-                this.interactionSprite.onoff.width,
-                this.interactionSprite.onoff.height,
-                0,
-                255,
-                255,
-                255,
-                255
-            );
-
-            DrawSprite(
-                'soz_minimap',
-                'interaction_start',
-                contentX - labelSize / 2 - this.interactionSprite.start.x,
-                0,
-                this.interactionSprite.start.width,
-                this.interactionSprite.start.height,
-                0,
-                255,
-                255,
-                255,
-                255
-            );
-            DrawSprite(
-                'soz_minimap',
-                'interaction_content',
-                contentX,
-                0,
-                labelSize,
-                this.interactionSprite.content.height,
-                0,
-                255,
-                255,
-                255,
-                255
-            );
-            DrawSprite(
-                'soz_minimap',
-                'interaction_end',
-                contentX + labelSize / 2 + this.interactionSprite.start.x,
-                0,
-                this.interactionSprite.end.width,
-                this.interactionSprite.end.height,
-                0,
-                255,
-                255,
-                255,
-                255
-            );
-
-            SetTextScale(0.0, this.interactionSprite.onoff.size);
-            SetTextEntry('STRING');
-            AddTextComponentString(interaction.label);
-            DrawText(0.011, -0.0105);
-
+            this.duiInteractionRenderer.render(0, 0, 400, 40, 'left');
+            this.duiInteractionRenderer.sendMessage(interaction.label);
             ClearDrawOrigin();
 
             this.nearbyInteraction = interaction;
@@ -316,17 +257,5 @@ export class InteractionProvider {
 
     protected get playerPosition(): Vector3 {
         return GetEntityCoords(PlayerPedId(), false) as Vector3;
-    }
-
-    @Once(OnceStep.Start)
-    public async onServerStart() {
-        await this.resourceLoader.loadStreamedTextureDict('soz_minimap');
-    }
-
-    @Once(OnceStep.Stop)
-    public async onServerStop() {
-        this.interactions.clear();
-        this.nearbyInteractions.clear();
-        this.nearbyInteraction = null;
     }
 }
