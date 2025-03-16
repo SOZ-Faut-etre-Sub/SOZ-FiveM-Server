@@ -1,3 +1,4 @@
+import { SlotMachine } from '@private/shared/casino.slots';
 import { Gang } from '@private/shared/gang';
 import { BankAccount, Invoice } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
@@ -31,6 +32,7 @@ export enum RepositoryType {
     BankFarmAccount = 'bankFarmAccount',
     BankInvoice = 'bankInvoice',
     Billboard = 'billboard',
+    CasinoSlotMachine = 'casinoSlotMachine',
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
     Door = 'door',
@@ -70,6 +72,7 @@ export type RepositoryMapping = {
     [RepositoryType.BankFarmAccount]: Partial<BankAccount>;
     [RepositoryType.BankInvoice]: Invoice;
     [RepositoryType.Billboard]: Billboard;
+    [RepositoryType.CasinoSlotMachine]: SlotMachine;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Configuration]: any;
     [RepositoryType.Elevator]: DynamicElevatorState;
@@ -110,6 +113,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.BankAccount]: Record<string, BankAccount>;
     [RepositoryType.BankFarmAccount]: Record<string, Partial<BankAccount>>;
     [RepositoryType.BankInvoice]: Record<number, Invoice>;
+    [RepositoryType.CasinoSlotMachine]: Record<number, SlotMachine>;
     [RepositoryType.Configuration]: Configuration;
     [RepositoryType.Field]: Record<string, Field>;
     [RepositoryType.Elevator]: Record<DynamicElevator, DynamicElevatorState>;

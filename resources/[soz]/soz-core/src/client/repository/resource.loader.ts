@@ -89,6 +89,13 @@ export class ResourceLoader {
         return scaleform;
     }
 
+    async unloadScaleformMovie(scaleform: number) {
+        if (!HasScaleformMovieLoaded(scaleform)) {
+            return;
+        }
+        SetScaleformMovieAsNoLongerNeeded(scaleform);
+    }
+
     public scaleformPushString(scaleform: number, method: string, val: string) {
         PushScaleformMovieFunction(scaleform, method);
         PushScaleformMovieFunctionParameterString(val);

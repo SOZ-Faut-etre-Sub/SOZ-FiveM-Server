@@ -47,6 +47,10 @@ export class InteractionOffsetProvider {
 
         this.setModelOffset(GetHashKey('prop_ld_greenscreen_01'), [0, 0, -1]);
         this.setModelOffset(GetHashKey('v_ilev_fos_mic'), [0, 0, 1]);
+
+        for (let i = 1; i <= 8; i++) {
+            this.setModelOffset(GetHashKey(`vw_prop_casino_slot_0${i}a`), [0, -1, 1]);
+        }
     }
 
     @Once(OnceStep.Stop)

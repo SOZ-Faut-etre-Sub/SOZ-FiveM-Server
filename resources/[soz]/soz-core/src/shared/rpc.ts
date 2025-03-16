@@ -357,6 +357,9 @@ export enum RpcServerEvent {
     LASER_GAME_ACTION_PLAYER = 'soz-core:server:phone:app:laser-game:action-player',
     LASER_GAME_GET_PLAYER_NAME = 'soz-core:server:phone:app:laser-game:get-player-name',
     LASER_GAME_GET_BUCKET = 'soz-core:server:phone:app:laser-game:get-bucket',
+
+    CASINO_SLOT_MACHINE_USE = 'soz-core:server:casino:slot-machine-use',
+    CASINO_SLOT_MACHINE_LEAVE = 'soz-core:server:casino:slot-machine-leave',
 }
 
 export enum RpcClientEvent {

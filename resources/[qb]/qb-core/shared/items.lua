@@ -24418,5 +24418,16 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["description"] = "ACCÉLÈRE, ACCÉLÈRE, OUI, LA VICTOIRE, IL L'A FAIT !",
         ["illustrator"] = ".Sniteur"
+    },
+    -- Casino
+    ["casino_chip"] = {
+        ["name"] = "casino_chip",
+        ["label"] = "Jetons de casino",
+        ["weight"] = 0,
+        ["useable"] = false,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Des jetons de casino, utilisés pour jouer à divers jeux de hasard.",
     }
 }
