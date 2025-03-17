@@ -466,7 +466,7 @@ export enum ClientEvent {
 
     XMAS_UPDATE_SCENE_STATE = 'soz-core:client:xmas:update-scene-state',
 
-    PHONE_HIDE = 'soz-core:client:phone:hide',
+    PHONE_IS_INSIDE_INPUT = 'soz-core:client:phone:is-inside-input',
     PHONE_LIGHT_ADD_PHONE = 'soz-core:client:phone:light-add-phone',
     PHONE_LIGHT_SET_FLASHLIGHT = 'soz-core:client:phone:light-set-flashlight',
     PHONE_LIGHT_REMOVE_PHONE = 'soz-core:client:phone:light-remove-phone',
