@@ -53,13 +53,13 @@ export class PlayerDiseaseProvider {
 
             const [playerPed, distance] = this.playerService.getClosestPlayer();
             const playerServerId = GetPlayerServerId(playerPed);
-            const propagation = Math.round(Math.random() * 4);
+            const propagation = Math.random() < 0.33333;
 
-            if (playerServerId != -1 && distance < 4.5 && propagation == 0) {
+            if (playerServerId != -1 && distance < 4.5 && propagation) {
                 TriggerServerEvent(ServerEvent.PLAYER_SET_CURRENT_DISEASE, 'grippe', playerServerId);
             }
 
-            await wait(1000 * 60);
+            await wait(1000 * 10);
         }
     }
 
