@@ -46,6 +46,7 @@ export const PUBLIC_SERVICES = [
     JobType.Gouv,
 ];
 export const FDO_NO_FBI = [JobType.LSPD, JobType.BCSO, JobType.SASP];
+export const FDO_LSMC = [JobType.FBI, JobType.LSPD, JobType.BCSO, JobType.SASP, JobType.LSCS, JobType.LSMC];
 
 export enum JobPermission {
     Enrollment = 'enrollment',
