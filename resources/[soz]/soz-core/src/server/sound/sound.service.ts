@@ -84,7 +84,9 @@ export class SoundService {
             const playerDistance = getDistance(position, playerPosition);
 
             if (playerDistance < distance) {
-                const playerVolume = scaling ? (volume * playerDistance) / distance : volume;
+                const playerVolume = scaling
+                    ? Math.max((volume * (distance - playerDistance)) / distance, 0.2)
+                    : volume;
                 TriggerClientEvent('InteractSound_CL:PlayOnOne', player.source, name, playerVolume);
             }
         }
