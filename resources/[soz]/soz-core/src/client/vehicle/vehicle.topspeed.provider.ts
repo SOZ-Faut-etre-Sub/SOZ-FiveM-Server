@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
+import { Once } from '@public/core/decorators/event';
 
 import { VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { VehicleService } from './vehicle.service';
@@ -9,6 +10,11 @@ import { VehicleService } from './vehicle.service';
 export class VehicleTopSpeedProvider {
     @Inject(VehicleService)
     vehicleService: VehicleService;
+
+    @Once()
+    init() {
+        SetEnableVehicleSlipstreaming(true);
+    }
 
     @Tick(TickInterval.EVERY_SECOND)
     updateTopSpeed() {
