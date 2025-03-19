@@ -3,6 +3,7 @@ import { DrugSkill } from '@private/shared/drugs';
 import { PlayerLoader } from '@public/core/loader/player.loader';
 import { PatientClothes } from '@public/shared/job/lsmc';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
+import { Ear } from '@public/shared/voip';
 
 import { Outfit } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
@@ -44,6 +45,19 @@ export class PlayerService {
         nbArmorPlates: 0,
         maxArmorPlates: 0,
         usedArmorPlates: 0,
+        radioShortRange: {
+            enabled: false,
+            primary: {
+                ear: Ear.Both,
+                frequency: 0,
+                volume: 50,
+            },
+            secondary: {
+                ear: Ear.Both,
+                frequency: 0,
+                volume: 50,
+            },
+        },
     };
 
     @Inject(Qbcore)

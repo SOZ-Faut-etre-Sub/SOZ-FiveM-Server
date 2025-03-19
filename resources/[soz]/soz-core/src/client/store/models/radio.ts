@@ -18,6 +18,9 @@ export const radioShortRange = createModel<RootModel>()({
         },
     } as Radio,
     reducers: {
+        set(state, radio: Radio) {
+            return { ...state, ...radio };
+        },
         enable(state, enabled: boolean) {
             return { ...state, enabled };
         },

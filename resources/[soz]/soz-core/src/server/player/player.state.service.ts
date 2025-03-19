@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { PlayerListStateService } from '@public/server/player/player.list.state.service';
 import { ClientEvent } from '@public/shared/event';
+import { Ear, Radio } from '@public/shared/voip';
 
 import { PlayerClientState, PlayerServerState } from '../../shared/player';
 import { PlayerService } from './player.service';
@@ -172,6 +173,23 @@ export class PlayerStateService {
             nbArmorPlates: 0,
             maxArmorPlates: 0,
             usedArmorPlates: 0,
+            radioShortRange: this.getDefaultPlayerRadioState(),
+        };
+    }
+
+    private getDefaultPlayerRadioState(): Radio {
+        return {
+            enabled: false,
+            primary: {
+                ear: Ear.Both,
+                frequency: 0,
+                volume: 50,
+            },
+            secondary: {
+                ear: Ear.Both,
+                frequency: 0,
+                volume: 50,
+            },
         };
     }
 
