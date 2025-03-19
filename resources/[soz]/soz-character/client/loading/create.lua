@@ -96,5 +96,6 @@ function CharacterCreate(SpawnId, charInfo, character)
         ApplyPlayerClothConfig(PlayerId(), character.ClothConfig)
     end
 
+    TriggerEvent("soz-core:client:admin:switch-character")
     DoScreenFadeIn(500)
 end
