@@ -26,8 +26,7 @@ Also, we count on the participation of everyone. **We may not be the best, but t
 
 
 ![Banniere_Key](https://github.com/user-attachments/assets/6eeb23bc-e2fb-41a1-858d-7ba5a648f7c7)
-
-This new version of SOZ has been vastly improved over its predecessors, offering roleplay server creators even more tools than before, all free of charge.
+*This new version of SOZ has been vastly improved over its predecessors, offering roleplay server creators even more tools than before, all free of charge.*
 
 ## SOZCore & Architecture
 - A unique SOZCore, developed in TypeScript, structured for smooth and professional development. (Some dependencies are still linked to QBCore, but they will be removed in the next update.)
@@ -87,18 +86,9 @@ This new version of SOZ has been vastly improved over its predecessors, offering
 - 32 police vehicles, including: Motorcycles, SUVs, Off-road units, Sports cars, Boats, Helicopters, Unmarked cars
 - 1 customized train model
 
-# ❌ Features Not Available in the OSS
+
+![Banniere_Not](https://github.com/user-attachments/assets/3be612ce-90d5-4a33-94fe-5b32ee56b51b)
 *While the OSS provides a rich set of tools and mechanics, several exclusive features remain unique to the SOZ platform, enhancing roleplay depth and gameplay interactions.*
-
-## Forensic Investigation System
-- A dedicated forensic police system allowing players to analyze crime scenes by collecting:
-  - Drug traces,
-  - Spent bullet casings,
-  - Fingerprints on vehicles.
-- This system is complemented by an investigation board and photography tools, enabling characters to engage in detailed detective roleplay.
-
-## Helicopter Spotlight Synchronization
-- Full GTA synchronization for helicopter-mounted searchlights, allowing players to manually direct the beam during pursuits or major events.
 
 ## Fishing & Sozédex
 - [A seasonal fishing system](https://www.twitch.tv/videos/1882188879), where players can:
@@ -121,17 +111,25 @@ This new version of SOZ has been vastly improved over its predecessors, offering
   - Large-scale shipments,
   - Custom farming and production methods.
 
+## Forensic Investigation System
+- A dedicated forensic police system allowing players to analyze crime scenes by collecting:
+  - Drug traces,
+  - Spent bullet casings,
+  - Fingerprints on vehicles.
+- This system is complemented by an investigation board and photography tools, enabling characters to engage in detailed detective roleplay.
+
+## Helicopter Spotlight Synchronization
+- Full GTA synchronization for helicopter-mounted searchlights, allowing players to manually direct the beam during pursuits or major events.
 
 ![Banniere_Credits](https://github.com/user-attachments/assets/6bf222a5-141f-4bdf-aa29-1dda69907241)
-
 **We would like to thank all the creators who are offering some of their creations to the community for free. Whether it is on [5Mod](https://fr.gta5-mods.com/) or on the [FiveM](https://forum.cfx.re/c/development/releases/7/l/latest) website.** It is also due to you that all servers can exist! Thanks to you, you inspired us to make SOZ completely free.
 
 Some of these free components are used on SOZ, such as clothes and female haircuts. Even though this represents only 10% of the development, it is important to note that no, the server is not yet fully independent and homegrown. We strive to replace anything we use that does not come from our own hands as soon as possible, and we thank all those creators from the bottom of our hearts.
 
 All contributors to the project will be notified on a list.
 
-![Banniere_Server](https://github.com/user-attachments/assets/f8d5a21d-0d91-41b3-9066-57a272eafa48)
 
+![Banniere_Server](https://github.com/user-attachments/assets/f8d5a21d-0d91-41b3-9066-57a272eafa48)
 ### Requirements
  * NodeJS: to compile the code and migrate the database
  * MariaDB: to store the data
@@ -169,6 +167,7 @@ On Linux:
 ```
 bash ~/FXServer/server/run.sh +exec server.cfg
 ```
+
 
 ![Banniere_PR](https://github.com/user-attachments/assets/939d24bf-7e8c-4d6f-8467-f6329a31e8bb)
 Contribution are welcomed, but you must follow the rules below:
