@@ -1,4 +1,4 @@
-![Banniere_SOZ_OSS](https://github.com/user-attachments/assets/6508f6fb-fbaf-43eb-9f87-fb2f5740cf5d)
+![Banniere_SOZ_OSS](./docs/images/banner-soz-oss.png)
 
 <p align="center">
 Developed especially for the Zerator community.
@@ -13,7 +13,7 @@ You can also visit the [Official Discord](https://discord.gg/soz-pas-soz), if yo
 *P.S. : Of course like any community server, in order to register, you have to be subscribed to Zerator's Twitch channel.*
 
 
-![Banniere_Main](https://github.com/user-attachments/assets/6f2b9909-f4a7-4854-b6f9-e23a070e36c8)
+![Banniere_Main](./docs/images/banner-main.png)
 The main goal of SOZ development is to **revamp various primary mechanics used by players.** This desire to improve the landscape has pushed us to review **the ergonomics of several interactions with a focus on accessibility**, even going so far as to review the primary interactions such as the exchange between players, the use of chests, parking lots, and many other features to improve further more the experience lived by the players.
 
 In order to make this dream come true, we had to push ourselves to **develop everything we could from scratch**, while making less use of what already exists for free, developed by dedicated developers with the goal of helping the community. **Allowing us to ignore all paid resources.**
@@ -25,7 +25,7 @@ Also, we count on the participation of everyone. **We may not be the best, but t
 ⚠️**The server is under development. This means that there are some bugs and that it is far from perfect. It is in constant evolution and many things are subject to change.**
 
 
-![Banniere_Key](https://github.com/user-attachments/assets/6eeb23bc-e2fb-41a1-858d-7ba5a648f7c7)
+![Banniere_Key](./docs/images/banner-key.png)
 *This new version of SOZ has been vastly improved over its predecessors, offering roleplay server creators even more tools than before, all free of charge.*
 
 ## SOZCore & Architecture
@@ -87,7 +87,7 @@ Also, we count on the participation of everyone. **We may not be the best, but t
 - 1 customized train model
 
 
-![Banniere_Not](https://github.com/user-attachments/assets/3be612ce-90d5-4a33-94fe-5b32ee56b51b)
+![Banniere_Not](./docs/images/banner-features-not-available.png)
 *While the OSS provides a rich set of tools and mechanics, several exclusive features remain unique to the SOZ platform, enhancing roleplay depth and gameplay interactions.*
 
 ## Fishing & Sozédex
@@ -121,7 +121,7 @@ Also, we count on the participation of everyone. **We may not be the best, but t
 ## Helicopter Spotlight Synchronization
 - Full GTA synchronization for helicopter-mounted searchlights, allowing players to manually direct the beam during pursuits or major events.
 
-![Banniere_Credits](https://github.com/user-attachments/assets/6bf222a5-141f-4bdf-aa29-1dda69907241)
+![Banniere_Credits](./docs/images/banner-credits.png)
 **We would like to thank all the creators who are offering some of their creations to the community for free. Whether it is on [5Mod](https://fr.gta5-mods.com/) or on the [FiveM](https://forum.cfx.re/c/development/releases/7/l/latest) website.** It is also due to you that all servers can exist! Thanks to you, you inspired us to make SOZ completely free.
 
 Some of these free components are used on SOZ, such as clothes and female haircuts. Even though this represents only 10% of the development, it is important to note that no, the server is not yet fully independent and homegrown. We strive to replace anything we use that does not come from our own hands as soon as possible, and we thank all those creators from the bottom of our hearts.
@@ -129,7 +129,7 @@ Some of these free components are used on SOZ, such as clothes and female haircu
 All contributors to the project will be notified on a list.
 
 
-![Banniere_Server](https://github.com/user-attachments/assets/f8d5a21d-0d91-41b3-9066-57a272eafa48)
+![Banniere_Server](./docs/images/banner-server.png)
 ### Requirements
  * NodeJS: to compile the code and migrate the database
  * MariaDB: to store the data
@@ -169,7 +169,7 @@ bash ~/FXServer/server/run.sh +exec server.cfg
 ```
 
 
-![Banniere_PR](https://github.com/user-attachments/assets/939d24bf-7e8c-4d6f-8467-f6329a31e8bb)
+![Banniere_PR](./docs/images/banner-pr.png)
 Contribution are welcomed, but you must follow the rules below:
 
 * __You must complete one of the available templates.__
