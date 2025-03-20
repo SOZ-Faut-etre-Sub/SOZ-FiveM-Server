@@ -11234,6 +11234,18 @@ QBShared.Items = {
         ["description"] = "Une feuille... il doit surement y avoir un moyen de la fumer.",
         ["illustrator"] = ".Sniteur",
     },
+    ["smuggling_greenhouse"] = {
+        ["name"] = "smuggling_greenhouse",
+        ["label"] = "Serre de Zabac",
+        ["weight"] = 40000,
+        ["useable"] = true,
+        ["type"] = "item_illegal",
+        ["shouldClose"] = false,
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Boîte de nuit pour plantes : la chaleur, la lumière, et tout le monde se pousse pour être sous les projecteurs.",
+        ["illustrator"] = ".Laikker",
+    },
     ["smuggling_seed_zabac"] = {
         ["name"] = "smuggling_seed_zabac",
         ["label"] = "Graine de zabac",
