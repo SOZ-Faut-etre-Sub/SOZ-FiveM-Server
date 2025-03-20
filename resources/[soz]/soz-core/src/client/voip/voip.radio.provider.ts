@@ -1,5 +1,5 @@
 import { Command } from '@core/decorators/command';
-import { OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
@@ -39,6 +39,14 @@ export class VoipRadioProvider {
 
     private radioInUse = false;
 
+    @Once(OnceStep.PlayerLoaded)
+    public async onPlayerLoaded() {
+        const { radioShortRange } = this.playerService.getState();
+        if (!radioShortRange) return;
+
+        this.store.dispatch.radioShortRange.set(radioShortRange);
+    }
+
     @PlayerInventoryUpdate()
     async onPlayerUpdate(): Promise<void> {
         const hasRadio = this.inventoryManager.hasEnoughItem('radio', 1, true);
@@ -49,6 +57,7 @@ export class VoipRadioProvider {
 
         if (!hasRadio) {
             this.store.dispatch.radioShortRange.enable(false);
+            this.playerService.updateState({ radioShortRange: this.store.getState().radioShortRange });
         }
     }
 
@@ -124,6 +133,7 @@ export class VoipRadioProvider {
     @OnNuiEvent(NuiEvent.VoipEnableRadio)
     public async onEnableRadio({ enable }: { enable: boolean }) {
         this.store.dispatch.radioShortRange.enable(enable);
+        this.playerService.updateState({ radioShortRange: this.store.getState().radioShortRange });
     }
 
     @OnNuiEvent(NuiEvent.VoipCloseRadio)
@@ -135,8 +145,10 @@ export class VoipRadioProvider {
     public async onUpdateRadioChannel({ channel, type }: { channel: Partial<RadioChannel>; type: RadioChannelType }) {
         if (type === RadioChannelType.Primary) {
             this.store.dispatch.radioShortRange.updatePrimary(channel);
+            this.playerService.updateState({ radioShortRange: this.store.getState().radioShortRange });
         } else {
             this.store.dispatch.radioShortRange.updateSecondary(channel);
+            this.playerService.updateState({ radioShortRange: this.store.getState().radioShortRange });
         }
     }
 

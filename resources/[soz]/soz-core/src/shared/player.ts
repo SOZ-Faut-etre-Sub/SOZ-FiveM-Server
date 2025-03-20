@@ -5,6 +5,7 @@ import { BankMoneyType } from '@public/shared/bank';
 import { VampireGameRole } from '@public/shared/halloween';
 import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
+import { Radio } from '@public/shared/voip';
 
 import { ClothConfig } from './cloth';
 import { Disease, Organ } from './disease';
@@ -274,6 +275,7 @@ export type PlayerClientState = {
     nbArmorPlates: number;
     usedArmorPlates: number;
     maxArmorPlates: number;
+    radioShortRange: Radio;
 };
 
 export enum PlayerLicenceType {
