@@ -7,3 +7,4 @@ import './migration.update_gang';
 import './migration.update_heist';
 import './migration.create_vampire_game_trace';
 import './migration.add_item_slot';
+import './migration.license';
