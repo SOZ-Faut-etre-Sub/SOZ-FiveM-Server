@@ -258,7 +258,10 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
         recipes: {
             beef_symfony_truffle: {
                 inputs: {
-                    viande: { count: 4 },
+                    abat: { count: 1 },
+                    langue: { count: 1 },
+                    rognon: { count: 1 },
+                    tripe: { count: 1 },
                     mushroom: { count: 3 },
                     wine1: { count: 1 },
                 },
@@ -267,7 +270,10 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             crunchy_lamp_chop: {
                 inputs: {
                     viande: { count: 2 },
-                    vegetable_palette: { count: 1 },
+                    potato: { count: 5 },
+                    tomato: { count: 5 },
+                    corn: { count: 5 },
+                    cabage: { count: 2 },
                     milk: { count: 1 },
                 },
                 amount: 10,
@@ -316,8 +322,10 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             herbarium_cod: {
                 inputs: {
                     fish_preparation: { count: 4 },
-                    potato: { count: 1 },
-                    vegetable_palette: { count: 1 },
+                    potato: { count: 5 },
+                    tomato: { count: 5 },
+                    corn: { count: 5 },
+                    cabage: { count: 2 },
                     wine3: { count: 1 },
                 },
                 amount: 10,
@@ -351,7 +359,10 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
                 inputs: {
                     viande: { count: 2 },
                     milk: { count: 1 },
-                    vegetable_palette: { count: 1 },
+                    potato: { count: 5 },
+                    tomato: { count: 5 },
+                    corn: { count: 5 },
+                    cabage: { count: 2 },
                     lemon: { count: 1 },
                 },
                 amount: 10,
@@ -359,7 +370,10 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
             sand_tagine: {
                 inputs: {
                     viande: { count: 2 },
-                    vegetable_palette: { count: 1 },
+                    potato: { count: 5 },
+                    tomato: { count: 5 },
+                    corn: { count: 5 },
+                    cabage: { count: 2 },
                     lemon: { count: 1 },
                     orange: { count: 1 },
                 },
