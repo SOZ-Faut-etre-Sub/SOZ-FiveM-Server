@@ -670,33 +670,33 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
         event: 'job_fdf_craft',
         recipes: {
             popcorn: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     corn: { count: 8 },
                 },
             },
             fruit_salad: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     apple: { count: 2 },
                     orange: { count: 2 },
                 },
             },
             lemon_cheesecake: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     lemon: { count: 2 },
                     milk: { count: 2 },
                 },
             },
             creamed_corn: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     corn: { count: 2 },
                 },
             },
             vegetable_festival: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     potato: { count: 2 },
                     tomato: { count: 2 },
@@ -706,19 +706,19 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             cabbage_salad: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     cabage: { count: 1 },
                 },
             },
             stuffed_tomatoes: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     tomato: { count: 2 },
                 },
             },
             veggie_gathering: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     potato: { count: 2 },
                     cabage: { count: 1 },
@@ -726,7 +726,7 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             country_feast: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     pumpkin_fresh: { count: 1 },
                     cabage: { count: 1 },
@@ -735,20 +735,20 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             fried_potatoes: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     potato: { count: 2 },
                 },
             },
             vegetable_dance: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     potato: { count: 2 },
                     corn: { count: 2 },
                 },
             },
             autumn_symphony: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     potato: { count: 2 },
                     corn: { count: 1 },
@@ -763,38 +763,38 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
         event: 'job_fdf_craft',
         recipes: {
             pumpkin_potage: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     pumpkin_fresh: { count: 1 },
                 },
             },
             smoothie_fruity: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     apple: { count: 2 },
                     orange: { count: 2 },
                 },
             },
             apple_juice_drink: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     apple: { count: 2 },
                 },
             },
             tomato_juice: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     tomato: { count: 2 },
                 },
             },
             orange_juice_drink: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     orange: { count: 2 },
                 },
             },
             multifruit: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     orange: { count: 2 },
                     apple: { count: 2 },
@@ -803,33 +803,33 @@ export const FDFCraftsLists: Record<string, CraftCategory> = {
                 },
             },
             pumpkin_lemonade: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     orange: { count: 2 },
                     pumpkin_fresh: { count: 1 },
                 },
             },
             lemonade_bottle: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     lemon: { count: 2 },
                 },
             },
             tomato_tonic: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     apple: { count: 2 },
                     tomato: { count: 1 },
                 },
             },
             cabbage_chaos: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     cabage: { count: 1 },
                 },
             },
             fresh_tomachou: {
-                amount: 8,
+                amount: 10,
                 inputs: {
                     cabage: { count: 1 },
                     tomato: { count: 2 },
