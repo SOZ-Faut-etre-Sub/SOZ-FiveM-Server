@@ -62,9 +62,13 @@ export class InteractionProvider {
         coords: Vector3 | Vector4,
         option: InteractionOption,
         interactionDistance?: number,
-        drawDistance?: number
+        drawDistance?: number,
+        id?: string
     ): string {
-        const id = uuidv4();
+        if (!id) {
+            id = uuidv4();
+        }
+
         this.interactions.set(id, { id, coords, ...option });
         this.interactionDistanceProvider.updateDrawDistance(id, drawDistance);
         this.interactionDistanceProvider.updateInteractionDistance(id, interactionDistance);

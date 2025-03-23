@@ -360,6 +360,9 @@ export enum RpcServerEvent {
 
     CASINO_SLOT_MACHINE_USE = 'soz-core:server:casino:slot-machine-use',
     CASINO_SLOT_MACHINE_LEAVE = 'soz-core:server:casino:slot-machine-leave',
+    CASINO_POKER_JOIN_TABLE = 'soz-core:server:casino:poker-join-table',
+    CASINO_POKER_PLACE_BET = 'soz-core:server:casino:poker-place-bet',
+    CASINO_POKER_LEAVE_TABLE = 'soz-core:server:casino:poker-leave-table',
 }
 
 export enum RpcClientEvent {
