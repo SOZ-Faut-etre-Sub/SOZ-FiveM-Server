@@ -41,6 +41,7 @@ export enum RepositoryType {
     LeaderboardSnake = 'leaderboardSnake',
     LeaderboardTetris = 'leaderboardTetris',
     Object = 'object',
+    PhoneLight = 'phoneLight',
     Race = 'race',
     Radar = 'radar',
     Scene = 'scene',
@@ -72,6 +73,7 @@ export type RepositoryMapping = {
     [RepositoryType.ApartmentRentTaxe]: RentTaxe;
     [RepositoryType.JobGrade]: JobGrade;
     [RepositoryType.Object]: WorldObject;
+    [RepositoryType.PhoneLight]: [boolean, boolean];
     [RepositoryType.Race]: Race;
     [RepositoryType.Radar]: Radar;
     [RepositoryType.SenateParty]: SenateParty;
@@ -114,6 +116,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.Door]: Record<string, Door>;
     [RepositoryType.Scene]: Record<string, Scene>;
     [RepositoryType.WorldEvent]: Record<string, WorldEvent>;
+    [RepositoryType.PhoneLight]: Record<number, [boolean, boolean]>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;
