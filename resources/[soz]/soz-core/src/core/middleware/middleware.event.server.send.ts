@@ -1,10 +1,11 @@
-import { Histogram } from 'prom-client';
+import { Gauge, Histogram } from 'prom-client';
 
 import { Injectable } from '../decorators/injectable';
 
 @Injectable()
 export class SendMiddlewareEventServer {
     private static eventHistogram: Histogram<string>;
+    private static eventSizeGauge: Gauge<string>;
 
     public constructor() {
         SendMiddlewareEventServer.eventHistogram = new Histogram({
@@ -13,14 +14,28 @@ export class SendMiddlewareEventServer {
             labelNames: ['event', 'broadcast'],
         });
 
+        SendMiddlewareEventServer.eventSizeGauge = new Gauge({
+            name: 'soz_core_send_event_size',
+            help: 'Send event size',
+            labelNames: ['event', 'broadcast'],
+        });
+
         if (!global.TriggerClientEventOrig) {
             global.TriggerClientEventOrig = global.TriggerClientEvent;
         }
         global.TriggerClientEvent = function (eventName: string, target: number | string, ...args: any[]) {
+            const broadcast = target == -1 ? 1 : 0;
             const end = SendMiddlewareEventServer.eventHistogram.startTimer({
                 event: eventName,
-                broadcast: target == -1 ? 1 : 0,
+                broadcast,
             });
+
+            const playerCount = target == -1 ? GetNumPlayerIndices() : 1;
+            // this is not the real size, but it's good enough to compare
+            const size = Buffer.byteLength(JSON.stringify(args)) * playerCount;
+
+            SendMiddlewareEventServer.eventSizeGauge.inc({ event: eventName, broadcast }, size);
+
             global.TriggerClientEventOrig(eventName, target, ...args);
 
             end();
@@ -39,10 +54,17 @@ export class SendMiddlewareEventServer {
                 /_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/g,
                 ''
             );
+            const broadcast = target == -1 ? 1 : 0;
             const end = SendMiddlewareEventServer.eventHistogram.startTimer({
                 event: fixedEventName,
-                broadcast: target == -1 ? 1 : 0,
+                broadcast,
             });
+            const playerCount = target == -1 ? GetNumPlayerIndices() : 1;
+            // this is not the real size, but it's good enough to compare
+            const size = Buffer.byteLength(JSON.stringify(args)) * playerCount;
+
+            SendMiddlewareEventServer.eventSizeGauge.inc({ event: eventName, broadcast }, size);
+
             global.TriggerLatentClientEventOrig(eventName, target, bps, ...args);
 
             end();
