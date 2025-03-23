@@ -16,6 +16,7 @@ export type GlobalState = {
     streamUrls: {
         bennys: string;
         cinema: string;
+        lspd: string;
     };
     features: FeaturesConfig;
 };
