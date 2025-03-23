@@ -95,3 +95,19 @@ export type VoiceDebugInfo = {
     listeners: PlayerVoice[];
     submixes: [number, number][];
 };
+
+export function getDefaultRadioState(): Radio {
+    return {
+        enabled: false,
+        primary: {
+            ear: Ear.Both,
+            frequency: 0,
+            volume: 50,
+        },
+        secondary: {
+            ear: Ear.Both,
+            frequency: 0,
+            volume: 50,
+        },
+    };
+}

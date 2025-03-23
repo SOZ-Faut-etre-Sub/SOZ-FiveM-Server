@@ -678,28 +678,17 @@ export class VehicleSpawner {
     }
 
     private getSpawnVolatileState(vehicle: VehicleSpawn, state: Partial<VehicleVolatileState>): VehicleVolatileState {
-        const radio = VEHICLE_HAS_RADIO.includes(vehicle.model);
+        const hasRadio = VEHICLE_HAS_RADIO.includes(vehicle.model);
+        const radio = this.vehicleStateService.getVehicleRadio(state.plate);
 
         return {
             ...getDefaultVehicleVolatileState(),
             ...state,
             spawned: true,
-            hasRadio: radio,
-            radioEnabled: false,
-            primaryRadio: radio
-                ? {
-                      frequency: 0.0,
-                      volume: 50,
-                      ear: Ear.Both,
-                  }
-                : null,
-            secondaryRadio: radio
-                ? {
-                      frequency: 0.0,
-                      volume: 50,
-                      ear: Ear.Both,
-                  }
-                : null,
+            hasRadio: hasRadio,
+            radioEnabled: radio.enabled,
+            primaryRadio: hasRadio ? radio.primary : null,
+            secondaryRadio: hasRadio ? radio.secondary : null,
         };
     }
 

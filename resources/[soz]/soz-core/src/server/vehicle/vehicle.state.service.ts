@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '@public/shared/vehicle/modification';
+import { getDefaultRadioState, Radio } from '@public/shared/voip';
 
 import {
     getDefaultVehicleCondition,
@@ -55,6 +56,8 @@ export class VehicleStateService {
 
     private vehicleDrugTrace: Map<string, string[]> = new Map<string, string[]>();
 
+    private vehicleRadio: Map<string, Radio> = new Map<string, Radio>();
+
     public getVehicleState(vehicleNetworkId: number): Readonly<VehicleState> {
         if (this.state.has(vehicleNetworkId)) {
             return this.state.get(vehicleNetworkId);
@@ -88,6 +91,10 @@ export class VehicleStateService {
         if (vehicleSeats.size === 0) {
             this.vehicleSeats.delete(vehicleNetworkId);
         }
+    }
+
+    public getVehicleRadio(plate: string): Radio {
+        return this.vehicleRadio.get(plate) || getDefaultRadioState();
     }
 
     public getStates(): Readonly<Map<number, VehicleState>> {
@@ -158,6 +165,14 @@ export class VehicleStateService {
 
         if (newState.volatile.lastDrugTrace) {
             this.vehicleDrugTrace.set(newState.volatile.plate, newState.volatile.lastDrugTrace);
+        }
+
+        if (newState.volatile.primaryRadio || newState.volatile.secondaryRadio) {
+            this.vehicleRadio.set(newState.volatile.plate, {
+                enabled: newState.volatile.radioEnabled,
+                primary: newState.volatile.primaryRadio,
+                secondary: newState.volatile.secondaryRadio,
+            });
         }
 
         const owner = NetworkGetEntityOwner(entityId);
