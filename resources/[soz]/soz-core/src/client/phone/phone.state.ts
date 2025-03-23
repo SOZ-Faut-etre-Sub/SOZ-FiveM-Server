@@ -8,7 +8,9 @@ import { AttachedObjectService } from '@public/client/object/attached.object.ser
 import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
+import { PlayerUpdate } from '@public/core/decorators/player';
 import { ActiveCall } from '@public/shared/phone/simcard';
+import { PlayerData } from '@public/shared/player';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 const KVP_PHONE_PROP_MODEL = 'soz_phone_prop_model';
@@ -43,6 +45,11 @@ export class PhoneState {
     private phoneFrontCameraEnabled = false;
 
     private currentCall: ActiveCall | null = null;
+
+    @PlayerUpdate()
+    public onPlayerUpdate(player: PlayerData) {
+        this.nuiDispatch.dispatch('phone', 'SetAvailability', !this.phoneDisabled || player.metadata.isdead);
+    }
 
     public setPhonePropModel(model: 'soz_phone_black' | 'soz_phone_gold' | 'soz_phone_natural' | 'soz_phone_white') {
         this.phonePropModel = model;
@@ -79,7 +86,8 @@ export class PhoneState {
 
     public setPhoneDisabled(value: boolean) {
         this.phoneDisabled = value;
-        this.nuiDispatch.dispatch('phone', 'SetAvailability', !value);
+        const player = this.playerService.getPlayer();
+        this.nuiDispatch.dispatch('phone', 'SetAvailability', !this.phoneDisabled || player.metadata.isdead);
 
         if (value) {
             this.setPhoneOpen(false);
