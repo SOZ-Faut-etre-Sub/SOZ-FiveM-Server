@@ -181,11 +181,31 @@ export class ItemNutritionProvider {
     }
 
     private async useLunchbox(source: number, item: Item, itemInv: InventoryItem, inventory: Inventory) {
+        const canSwap = inventory.canSwapItems(
+            [
+                {
+                    name: item.name,
+                    amount: 1,
+                    metadata: itemInv.metadata,
+                },
+            ],
+            itemInv.metadata.crateElements.map(meal => ({
+                name: meal.name,
+                amount: meal.amount,
+                metadata: meal.metadata,
+            }))
+        );
+
+        if (!canSwap) {
+            this.notifier.error(source, "L'inventaire n'a plus de place !");
+            return;
+        }
+
         if (!inventory.removeAtSlot(itemInv.slot, 1)) {
             return;
         }
 
-        itemInv.metadata.crateElements.map(meal => {
+        itemInv.metadata.crateElements.forEach(meal => {
             inventory.add(meal.name, meal.amount, { ...meal.metadata });
         });
 
