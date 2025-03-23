@@ -176,13 +176,24 @@ export class ClothingShopProvider {
         }
         if (product.undershirtType) {
             // show the current top of the player to avoid a naked torso
-            SetPedComponentVariation(
-                ped,
-                Component.Tops,
-                player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable,
-                player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
-                0
-            );
+            if (player.cloth_config.BaseClothSet.Components[Component.Tops].Collection) {
+                SetPedCollectionComponentVariation(
+                    ped,
+                    Component.Tops,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Collection,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
+                    0
+                );
+            } else {
+                SetPedComponentVariation(
+                    ped,
+                    Component.Tops,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Drawable,
+                    player.cloth_config.BaseClothSet.Components[Component.Tops].Texture,
+                    0
+                );
+            }
             const replacement = UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType];
             if (replacement != null && replacement[baseTorsoDrawable] != null) {
                 SetPedComponentVariation(ped, Component.Torso, replacement[baseTorsoDrawable], 0, 0);

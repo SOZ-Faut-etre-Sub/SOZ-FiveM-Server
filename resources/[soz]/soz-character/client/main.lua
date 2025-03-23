@@ -240,12 +240,10 @@ Labels = {
         {value = 81, label = GetLabelText("CLO_X7M_H_0_0")},
 
         -- Customs Hairs
-        {value = 1, label = "Dreadlocks attachés", Collection = "soz_custom"},
         {value = 2, label = "Chignon haut", Collection = "soz_custom"},
         {value = 4, label = "Crinière libérée", Collection = "soz_custom"},
         {value = 5, label = "Cheveux ondulés", Collection = "soz_custom"},
         {value = 6, label = "Cheveux duveteux", Collection = "soz_custom"},
-        {value = 7, label = "Dreadlocks tombants", Collection = "soz_custom"},
         {value = 8, label = "Dreadlocks de coté", Collection = "soz_custom"},
         {value = 9, label = "Dreadlocks coloré", Collection = "soz_custom"},
     },
