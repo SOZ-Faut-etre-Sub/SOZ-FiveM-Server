@@ -10,8 +10,8 @@ export class StreamProvider {
     private store: Store;
 
     @Command('stream-url', { role: ['staff', 'admin'] })
-    setStreamUrlCommand(source: number, stream: 'bennys' | 'cinema', url = ''): void {
-        if (stream !== 'bennys' && stream !== 'cinema') {
+    setStreamUrlCommand(source: number, stream: 'bennys' | 'cinema' | 'lspd', url = ''): void {
+        if (!['bennys', 'cinema', 'lspd'].includes(stream)) {
             console.log(`Stream inconnu: ${stream}`);
             return;
         }
@@ -20,8 +20,8 @@ export class StreamProvider {
     }
 
     @Command('stream-stop', { role: ['staff', 'admin'] })
-    stopStreamCommand(source: number, stream: 'bennys' | 'cinema'): void {
-        if (stream !== 'bennys' && stream !== 'cinema') {
+    stopStreamCommand(source: number, stream: 'bennys' | 'cinema' | 'lspd'): void {
+        if (!['bennys', 'cinema', 'lspd'].includes(stream)) {
             console.log(`Stream inconnu: ${stream}`);
             return;
         }

@@ -13,8 +13,8 @@ export class StreamProvider {
     private store: Store;
 
     private cinemaScreen: StreamScreen;
-
     private bennysScreen: StreamScreen;
+    private lspdScreen: StreamScreen;
 
     @Once()
     async onStart(): Promise<void> {
@@ -34,7 +34,19 @@ export class StreamProvider {
                 maxZ: 31.02 + 20,
                 minZ: 31.02 - 1,
             }),
+
             'bennys',
+            'soz_big_screenbenny',
+            'big_disp'
+        );
+
+        this.lspdScreen = new StreamScreen(
+            new BoxZone([1158.56, -469.22, 63.39], 98.4, 94.0, {
+                heading: 164.99,
+                minZ: 62.39,
+                maxZ: 83.19,
+            }),
+            'lspd',
             'soz_big_screenbenny',
             'big_disp'
         );
@@ -47,11 +59,13 @@ export class StreamProvider {
 
         this.cinemaScreen.update(position, streamUrls.cinema);
         this.bennysScreen.update(position, streamUrls.bennys);
+        this.lspdScreen.update(position, streamUrls.lspd);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
     async onTick(): Promise<void> {
         this.cinemaScreen.stream();
         this.bennysScreen.stream();
+        this.lspdScreen.stream();
     }
 }
