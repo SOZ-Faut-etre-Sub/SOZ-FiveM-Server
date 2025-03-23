@@ -139,6 +139,7 @@ export const MessageInput: FunctionComponent<MessageInputProps> = ({ messageConv
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder={t('MESSAGES.NEW_MESSAGE')}
+                maxLength={512}
                 autoFocus={autoFocus}
             />
             <button
