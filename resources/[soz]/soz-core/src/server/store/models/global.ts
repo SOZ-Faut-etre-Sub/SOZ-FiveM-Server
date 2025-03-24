@@ -44,6 +44,7 @@ export const global = createModel<RootModel>()({
         streamUrls: {
             bennys: BLACK_SCREEN_URL,
             cinema: BLACK_SCREEN_URL,
+            lspd: BLACK_SCREEN_URL,
         },
         features: DefaultFeatureConfig,
     } as GlobalState,
