@@ -63,7 +63,7 @@ export class SendMiddlewareEventServer {
             // this is not the real size, but it's good enough to compare
             const size = Buffer.byteLength(JSON.stringify(args)) * playerCount;
 
-            SendMiddlewareEventServer.eventSizeGauge.inc({ event: eventName, broadcast }, size);
+            SendMiddlewareEventServer.eventSizeGauge.inc({ event: fixedEventName, broadcast }, size);
 
             global.TriggerLatentClientEventOrig(eventName, target, bps, ...args);
 
