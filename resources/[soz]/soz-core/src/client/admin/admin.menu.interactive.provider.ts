@@ -2,7 +2,7 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
-import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
+import { AdminPlayer, LightAdminPlayer } from '../../shared/admin/admin';
 import { NuiEvent } from '../../shared/event';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -166,7 +166,7 @@ export class AdminMenuInteractiveProvider {
         }
 
         this.intervalHandlers.displayPlayersOnMap = setInterval(async () => {
-            const players = await emitRpc<FullAdminPlayer[]>(RpcServerEvent.ADMIN_GET_FULL_PLAYERS);
+            const players = await emitRpc<LightAdminPlayer[]>(RpcServerEvent.ADMIN_GET_LIGHT_PLAYERS);
 
             this.playerBlips.forEach((BlipValue, BlipKey) => {
                 if (!players.some(player => player.citizenId === BlipKey)) {

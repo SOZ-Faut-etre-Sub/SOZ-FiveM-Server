@@ -141,3 +141,12 @@ export type FullAdminPlayer = AdminPlayer & {
     cid: string;
     ped: number;
 };
+
+export type LightAdminPlayer = {
+    id: number; // That's the server id of the player.
+    citizenId: string;
+    name: string;
+    rpFullName: string;
+    coords: number[];
+    heading: number;
+};

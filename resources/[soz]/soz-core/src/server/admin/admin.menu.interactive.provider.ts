@@ -1,7 +1,7 @@
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { AdminPlayer, FullAdminPlayer } from '../../shared/admin/admin';
+import { AdminPlayer, FullAdminPlayer, LightAdminPlayer } from '../../shared/admin/admin';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
 import { PlayerService } from '../player/player.service';
@@ -76,6 +76,28 @@ export class AdminMenuInteractiveProvider {
                 partyMember: playerData.partyMember,
                 plate: playerData.metadata.plate,
                 specialPlate: playerData.metadata.special_plate,
+            });
+        }
+        return players;
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_GET_LIGHT_PLAYERS)
+    public getLightPlayers(source: number): LightAdminPlayer[] {
+        if (!this.permissionService.isHelper(source)) {
+            return [];
+        }
+
+        const players: LightAdminPlayer[] = [];
+        for (const playerData of this.serverStateService.getPlayers()) {
+            const ped = GetPlayerPed(playerData.source);
+            const name = `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`;
+            players.push({
+                id: playerData.source,
+                citizenId: playerData.citizenid,
+                name: playerData.name,
+                rpFullName: name,
+                coords: GetEntityCoords(ped),
+                heading: GetEntityHeading(ped),
             });
         }
         return players;

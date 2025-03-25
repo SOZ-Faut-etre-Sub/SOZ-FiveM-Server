@@ -6,6 +6,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event';
 import { VehicleSeat, VehicleVolatileState } from '../../shared/vehicle/vehicle';
 import { NuiMenu } from '../nui/nui.menu';
+import { PhoneService } from '../phone/phone.service';
 import { VehicleStateService } from './vehicle.state.service';
 
 export const createVehicleChangeCallback = (
@@ -36,6 +37,9 @@ export class VehicleStateProvider {
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
+
+    @Inject(PhoneService)
+    private phoneService: PhoneService;
 
     @Once(OnceStep.Start)
     public initStateSelector() {
@@ -160,6 +164,10 @@ export class VehicleStateProvider {
         }
 
         if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== ped) {
+            return;
+        }
+
+        if (this.phoneService.isPhoneVisible()) {
             return;
         }
 
