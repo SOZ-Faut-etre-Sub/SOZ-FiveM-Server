@@ -1,7 +1,8 @@
 import { PlayerPedHash } from '@public/shared/player';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { Component, KeepHairWithMask, Outfit, OutfitItem, Prop } from '../../shared/cloth';
+import { BlacklistCrash, Component, KeepHairWithMask, Outfit, OutfitItem, Prop } from '../../shared/cloth';
+import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 
 @Injectable()
@@ -9,7 +10,32 @@ export class ClothingService {
     @Inject(PlayerService)
     public playerService: PlayerService;
 
+    @Inject(Notifier)
+    public notifier: Notifier;
+
+    private isBlacklisted(ped: number, component: Component, outfitItem: OutfitItem) {
+        const model = GetEntityModel(ped);
+        const listPermodel = BlacklistCrash[model];
+        if (!listPermodel) {
+            return false;
+        }
+
+        const list = listPermodel[Number(component)];
+        if (!list) {
+            return false;
+        }
+
+        return list.some(item => outfitItem.Collection == item.Collection && outfitItem.Drawable == item.Drawable);
+    }
+
     public applyPedComponent(ped: number, component: Component, outfitItem: OutfitItem) {
+        if (this.isBlacklisted(ped, component, outfitItem)) {
+            this.notifier.error(
+                `Blacklisted cloth as it causes crashes ${component} ${outfitItem.Collection} ${outfitItem.Drawable}`
+            );
+            return;
+        }
+
         if (outfitItem.Collection) {
             SetPedCollectionComponentVariation(
                 ped,
