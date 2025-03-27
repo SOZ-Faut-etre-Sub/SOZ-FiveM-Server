@@ -19,7 +19,7 @@ MercenariesLab = {
 
     LoadDefault = function()
         MercenariesLab.Details.Enable(MercenariesLab.Details.levers, true, false)
-        MercenariesLab.Details.Enable(MercenariesLab.Details.crates, false, false)
+        MercenariesLab.Details.Enable(MercenariesLab.Details.crates, true, false)
         MercenariesLab.Details.Enable(MercenariesLab.Details.weapons, true, false)
         MercenariesLab.Details.Enable(MercenariesLab.Details.lights, true, false)
 
