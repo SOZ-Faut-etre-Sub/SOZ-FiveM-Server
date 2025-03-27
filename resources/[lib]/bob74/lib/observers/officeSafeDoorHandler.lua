@@ -1,7 +1,7 @@
 -- Delay between each attempt to open/close the doors corresponding to their state
 local _scanDelay = 500
 
-CreateThread(function()
+Citizen.CreateThread(function()
     while true do
         local office = 0
 
@@ -42,6 +42,6 @@ CreateThread(function()
             end
         end
 
-        Wait(_scanDelay)
+        Citizen.Wait(_scanDelay)
     end
 end)

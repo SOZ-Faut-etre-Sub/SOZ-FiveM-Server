@@ -1,4 +1,3 @@
--- Recording studio: -1010.22, -52.21, -100.0
 exports('GetMpSecurityStudioObject', function()
     return MpSecurityStudio
 end)

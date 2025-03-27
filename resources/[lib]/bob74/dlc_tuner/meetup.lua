@@ -1,4 +1,3 @@
--- Los Santos Car Meet: -2000.0, 1113.211, -25.36243
 exports('GetTunerMeetupObject', function()
     return TunerMeetup
 end)
@@ -7,7 +6,7 @@ TunerMeetup = {
     InteriorId = 285697,
 
     Ipl = {
-        Exterior = {
+        Interior = {
             ipl = {
                 'tr_tuner_meetup',
                 'tr_tuner_race_line'
@@ -15,20 +14,20 @@ TunerMeetup = {
         },
 
         Load = function()
-            EnableIpl(TunerMeetup.Ipl.Exterior.ipl, true)
+            EnableIpl(TunerMeetup.Ipl.Interior.ipl, true)
         end,
         Remove = function()
-            EnableIpl(TunerMeetup.Ipl.Exterior.ipl, false)
+            EnableIpl(TunerMeetup.Ipl.Interior.ipl, false)
         end
     },
     Entities = {
         entity_set_meet_crew = true,
         entity_set_meet_lights = true,
-        entity_set_meet_lights_cheap = false,
+        entity_set_meet_lights_cheap = true,
         entity_set_player = true,
         entity_set_test_crew = false,
         entity_set_test_lights = true,
-        entity_set_test_lights_cheap = false,
+        entity_set_test_lights_cheap = true,
         entity_set_time_trial = true,
 
         Set = function(name, state)
@@ -60,6 +59,6 @@ TunerMeetup = {
         TunerMeetup.Ipl.Load()
         TunerMeetup.Entities.Load()
 
-        RefreshInterior(TunerMeetup.InteriorId)
+        RefreshInterior(TunerMeetup.interiorId)
     end
 }

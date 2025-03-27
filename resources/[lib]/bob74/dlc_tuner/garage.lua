@@ -6,7 +6,7 @@ TunerGarage = {
     InteriorId = 285953,
 
     Ipl = {
-        Exterior = {
+        Interior = {
             ipl = {
                 'tr_tuner_shop_burton',
                 'tr_tuner_shop_mesa',
@@ -17,10 +17,10 @@ TunerGarage = {
         },
 
         Load = function()
-            EnableIpl(TunerGarage.Ipl.Exterior.ipl, true)
+            EnableIpl(TunerGarage.Ipl.Interior.ipl, true)
         end,
         Remove = function()
-            EnableIpl(TunerGarage.Ipl.Exterior.ipl, false)
+            EnableIpl(TunerGarage.Ipl.Interior.ipl, false)
         end,
     },
     Entities = {
@@ -89,6 +89,6 @@ TunerGarage = {
         TunerGarage.Ipl.Load()
         TunerGarage.Entities.Load()
 
-        RefreshInterior(TunerGarage.InteriorId)
+        RefreshInterior(TunerGarage.interiorId)
     end
 }

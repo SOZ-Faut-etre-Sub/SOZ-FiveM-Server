@@ -238,7 +238,6 @@ Labels = {
         {value = 79, label = GetLabelText("CLO_SCM_H_0_0")},
         {value = 80, label = GetLabelText("CLO_SCM_H_1_0")},
         {value = 81, label = GetLabelText("CLO_X7M_H_0_0")},
-        {value = 82, label = GetLabelText("CLO_X8M_H_0_0")},
 
         -- Customs Hairs
         {value = 2, label = "Chignon haut", Collection = "soz_custom"},
@@ -297,7 +296,6 @@ Labels = {
         {value = 83, label = GetLabelText("CLO_X6F_H_0_0")},
         {value = 84, label = GetLabelText("CLO_SCF_H_0_0")},
         {value = 85, label = GetLabelText("CLO_X7F_H_0_0")},
-        {value = 86, label = GetLabelText("CLO_X8F_H_0_0")},
 
         -- Customs Hairs
         {value = 0, label = "Couronne de tresses", Collection = "soz_custom"},

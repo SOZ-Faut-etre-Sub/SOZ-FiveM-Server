@@ -1,4 +1,4 @@
-# Fix holes and customize the map (Updated to Agents of Sabotage DLC)
+# Fix holes and customize the map (Updated to Bottom Dollar Bounties DLC)
 
 The purpose of this script is to fix the holes in the map by loading zones that aren’t loaded by default. I’ve added quite a lot of places to load, based on [Mikeeh’s script](https://forum.fivem.net/t/release-load-unloaded-ipls/5911). If you just want to fix the holes in the map, then use this resource as provided.
 
@@ -30,22 +30,6 @@ This resource has been completely rewritten from scratch since v2.0. You can cus
 (DD/MM/YYYY)
 
 ---
-27/12/2024 - 2.4.0
-- Added "Agents of Sabotage" support
-- Fixed Eclipse Boulevard Garage tint colors (@DevSekai)
-
-28/08/2024 - 2.3.3
-- Fixed door on cargo ship (@NeenGame)
-- Fixed Franklin interior (@NeenGame)
-
-24/08/2024 - 2.3.2
-- Added Kosatka and "The Music Locker" interiors
-- Removed `Citizen` prefix from code
-
-10/08/2024 - 2.3.1
-- Fix world not rendering when inside security offices
-- Fix typos in "Los Santos Tuners" files
-
 02/07/2024 - 2.3.0
 - Added "Bottom Dollar Bounties" support
 
@@ -69,7 +53,7 @@ This resource has been completely rewritten from scratch since v2.0. You can cus
 - Added missing train track near Davis Quartz (https://github.com/Bob74/bob74_ipl/pull/129 @TheIndra55)
 
 10/01/2023 - 2.1.2
-- Fix native and update native names (@NeenGame)
+- Fix native and update native names (@NeenGame )
 
 24/10/2022 - 2.1.1
 - Fix vespucci beach wall hole
@@ -201,9 +185,3 @@ This resource has been completely rewritten from scratch since v2.0. You can cus
 14/06/2017
 - Original release
 </details>
-
-## Contributors
-
-<a href="https://github.com/Bob74/bob74_ipl/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=Bob74/bob74_ipl" />
-</a>
