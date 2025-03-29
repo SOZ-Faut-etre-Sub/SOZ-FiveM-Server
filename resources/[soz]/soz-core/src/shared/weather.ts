@@ -8,6 +8,8 @@ export type Weather =
     | 'EXTRASUNNY'
     | 'FOGGY'
     | 'HALLOWEEN'
+    | 'RAIN_HALLOWEEN'
+    | 'SNOW_HALLOWEEN'
     | 'NEUTRAL'
     | 'OVERCAST'
     | 'RAIN'

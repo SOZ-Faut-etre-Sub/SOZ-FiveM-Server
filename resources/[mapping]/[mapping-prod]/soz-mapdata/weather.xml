@@ -85,94 +85,94 @@
       <emitterSettingsName>common:/data/levels/gta5/weather/thunder_emitter_ground</emitterSettingsName>
       <renderSettingsName>common:/data/levels/gta5/weather/thunder_render_ground</renderSettingsName>
     </Item>
-	<Item>
-	  <Name>VFX_SNOW_LIGHT_DROP</Name>
-	  <SystemType>SYSTEM_TYPE_DROP</SystemType>
-	  <diffuseName>snow</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="1.000000"/>
-	  <gravity value="-0.7000000"/>
-	  <emitterSettingsName>resources:/soz-mapdata/snowlight_emitter_drop</emitterSettingsName>
-	  <renderSettingsName>resources:/soz-mapdata/snowlight_render_drop</renderSettingsName>
-	</Item>
-	<Item>
-	  <Name>VFX_SNOW_HEAVY_DROP</Name>
-	  <SystemType>SYSTEM_TYPE_DROP</SystemType>
-	  <diffuseName>snow</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="1.000000"/>
-	  <gravity value="-0.800000"/>
-	  <emitterSettingsName>common:/data/levels/gta5/weather/snowheavy_emitter_drop</emitterSettingsName>
-	  <renderSettingsName>common:/data/levels/gta5/weather/snowheavy_render_drop</renderSettingsName>
-	</Item>
-	<Item>
-	  <Name>VFX_SNOW_HEAVY_MIST</Name>
-	  <SystemType>SYSTEM_TYPE_MIST</SystemType>
-	  <diffuseName>mist</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="0.200000"/>
-	  <gravity value="0.000000"/>
-	  <emitterSettingsName>common:/data/levels/gta5/weather/snowheavy_emitter_mist</emitterSettingsName>
-	  <renderSettingsName>resources:/soz-mapdata/snowheavy_render_mist</renderSettingsName>
-	</Item>
-	<Item>
-	  <Name>VFX_SNOW_HEAVY_GROUND</Name>
-	  <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-	  <diffuseName>mist</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="1.000000"/>
-	  <gravity value="-1.000000"/>
-	  <emitterSettingsName>resources:/soz-mapdata/snowheavy_emitter_ground</emitterSettingsName>
-	  <renderSettingsName>resources:/soz-mapdata/snowheavy_render_ground</renderSettingsName>
-	</Item>
-  	<Item>
-	  <Name>VFX_SNOW_LIGHT_GROUND</Name>
-	  <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-	  <diffuseName>mist</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="1.000000"/>
-	  <gravity value="-0.700000"/>
-	  <emitterSettingsName>common:/data/levels/gta5/weather/snowheavy_emitter_ground</emitterSettingsName>
-	  <renderSettingsName>common:/data/levels/gta5/weather/snowheavy_render_ground</renderSettingsName>
-	</Item>
-	<Item>
-	  <Name>BLIZZARD_DROP</Name>
-	  <SystemType>SYSTEM_TYPE_DROP</SystemType>
-	  <diffuseName>snow</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="0.500000"/>
-	  <gravity value="-1.500000"/>
-	  <emitterSettingsName>common:/data/levels/gta5/weather/blizzard_emitter_drop</emitterSettingsName>
-	  <renderSettingsName>common:/data/levels/gta5/weather/blizzard_render_drop</renderSettingsName>
-	</Item>
-	<Item>
-	  <Name>BLIZZARD_MIST</Name>
-	  <SystemType>SYSTEM_TYPE_MIST</SystemType>
-	  <diffuseName>mist</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="1.000000"/>
-	  <gravity value="-1.000000"/>
-	  <emitterSettingsName>common:/data/levels/gta5/weather/blizzard_emitter_mist</emitterSettingsName>
-	  <renderSettingsName>common:/data/levels/gta5/weather/blizzard_render_mist</renderSettingsName>
-	</Item>
-	<Item>
-	  <Name>BLIZZARD_GROUND</Name>
-	  <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-	  <diffuseName>mist</diffuseName>
-	  <diffuseSplashName>mist</diffuseSplashName>
-	  <driveType>DRIVE_TYPE_SNOW</driveType>
-	  <windInfluence value="1.000000"/>
-	  <gravity value="-1.000000"/>
-	  <emitterSettingsName>common:/data/levels/gta5/weather/blizzard_emitter_ground</emitterSettingsName>
-	  <renderSettingsName>common:/data/levels/gta5/weather/blizzard_render_ground</renderSettingsName>
-	</Item>
+    <Item>
+      <Name>VFX_SNOW_LIGHT_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>snow</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="1.000000"/>
+      <gravity value="-0.7000000"/>
+      <emitterSettingsName>resources:/soz-mapdata/snowlight_emitter_drop</emitterSettingsName>
+      <renderSettingsName>resources:/soz-mapdata/snowlight_render_drop</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>VFX_SNOW_HEAVY_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>snow</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="1.000000"/>
+      <gravity value="-0.800000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/snowheavy_emitter_drop</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/snowheavy_render_drop</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>VFX_SNOW_HEAVY_MIST</Name>
+      <SystemType>SYSTEM_TYPE_MIST</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="0.200000"/>
+      <gravity value="0.000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/snowheavy_emitter_mist</emitterSettingsName>
+      <renderSettingsName>resources:/soz-mapdata/snowheavy_render_mist</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>VFX_SNOW_HEAVY_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="1.000000"/>
+      <gravity value="-1.000000"/>
+      <emitterSettingsName>resources:/soz-mapdata/snowheavy_emitter_ground</emitterSettingsName>
+      <renderSettingsName>resources:/soz-mapdata/snowheavy_render_ground</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>VFX_SNOW_LIGHT_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="1.000000"/>
+      <gravity value="-0.700000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/snowheavy_emitter_ground</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/snowheavy_render_ground</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>BLIZZARD_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>snow</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="0.500000"/>
+      <gravity value="-1.500000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/blizzard_emitter_drop</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/blizzard_render_drop</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>BLIZZARD_MIST</Name>
+      <SystemType>SYSTEM_TYPE_MIST</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="1.000000"/>
+      <gravity value="-1.000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/blizzard_emitter_mist</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/blizzard_render_mist</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>BLIZZARD_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_SNOW</driveType>
+      <windInfluence value="1.000000"/>
+      <gravity value="-1.000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/blizzard_emitter_ground</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/blizzard_render_ground</renderSettingsName>
+    </Item>
     <Item>
       <Name>UNDERWATER_DROP</Name>
       <SystemType>SYSTEM_TYPE_DROP</SystemType>
@@ -195,105 +195,105 @@
       <emitterSettingsName>common:/data/levels/gta5/weather/underwater_emitter_mist</emitterSettingsName>
       <renderSettingsName>common:/data/levels/gta5/weather/underwater_render_mist</renderSettingsName>
     </Item>
-  <Item>
-    <Name>COUNTRYSIDE_GROUND</Name>
-    <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-    <diffuseName>mist</diffuseName>
-    <diffuseSplashName>mist</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.0500000"/>
-    <gravity value="-0.3000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/countryside_emitter_ground</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/countryside_render_ground</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>DESERT_GROUND</Name>
-    <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-    <diffuseName>mist</diffuseName>
-    <diffuseSplashName>mist</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.02500000"/>
-    <gravity value="-0.1000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/desert_emitter_ground</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/desert_render_ground</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>DESERT_GROUND_HEAVY</Name>
-    <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-    <diffuseName>mist</diffuseName>
-    <diffuseSplashName>mist</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.025000000"/>
-    <gravity value="-0.1000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/desert_emitter_ground_heavy</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/desert_render_ground_heavy</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>LAKE_FOG_GROUND</Name>
-    <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-    <diffuseName>mist</diffuseName>
-    <diffuseSplashName>mist</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.000000"/>
-    <gravity value="-0.0000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/lake_fog_emitter_ground</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/lake_fog_render_ground</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>LAKE_FOG_DROP</Name>
-    <SystemType>SYSTEM_TYPE_DROP</SystemType>
-    <diffuseName>mist</diffuseName>
-    <diffuseSplashName>mist</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.0100000"/>
-    <gravity value="-0.0000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/lake_fog_emitter_drop</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/lake_fog_render_drop</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>WOODLAND_POLLEN_DROP</Name>
-    <SystemType>SYSTEM_TYPE_DROP</SystemType>
-    <diffuseName>plankton</diffuseName>
-    <diffuseSplashName>plankton</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.020000"/>
-    <gravity value="0.02000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/pollen_emitter_drop</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/pollen_render_drop</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>WOODLAND_FIREFLY_DROP</Name>
-    <SystemType>SYSTEM_TYPE_DROP</SystemType>
-    <diffuseName>fire_fly_anim</diffuseName>
-    <diffuseSplashName>fire_fly_anim</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.010000"/>
-    <gravity value="0.02000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/firefly_emitter_drop</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/firefly_render_drop</renderSettingsName>
-  </Item>
-  <Item>
-    <Name>WOODLAND_MIST_GROUND</Name>
-    <SystemType>SYSTEM_TYPE_GROUND</SystemType>
-    <diffuseName>mist</diffuseName>
-    <diffuseSplashName>mist</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.000000"/>
-    <gravity value="-0.00000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/woodland_mist_emitter_ground</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/woodland_mist_render_ground</renderSettingsName>
-  </Item>
     <Item>
-    <Name>WETLAND_FLIES_DROP</Name>
-    <SystemType>SYSTEM_TYPE_DROP</SystemType>
-    <diffuseName>fire_fly_anim</diffuseName>
-    <diffuseSplashName>fire_fly_anim</diffuseSplashName>
-    <driveType>DRIVE_TYPE_REGION</driveType>
-    <windInfluence value="0.010000"/>
-    <gravity value="0.02000000"/>
-    <emitterSettingsName>common:/data/levels/gta5/weather/fly_emitter_drop</emitterSettingsName>
-    <renderSettingsName>common:/data/levels/gta5/weather/fly_render_drop</renderSettingsName>
-  </Item>
+      <Name>COUNTRYSIDE_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.0500000"/>
+      <gravity value="-0.3000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/countryside_emitter_ground</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/countryside_render_ground</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>DESERT_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.02500000"/>
+      <gravity value="-0.1000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/desert_emitter_ground</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/desert_render_ground</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>DESERT_GROUND_HEAVY</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.025000000"/>
+      <gravity value="-0.1000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/desert_emitter_ground_heavy</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/desert_render_ground_heavy</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>LAKE_FOG_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.000000"/>
+      <gravity value="-0.0000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/lake_fog_emitter_ground</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/lake_fog_render_ground</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>LAKE_FOG_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.0100000"/>
+      <gravity value="-0.0000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/lake_fog_emitter_drop</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/lake_fog_render_drop</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>WOODLAND_POLLEN_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>plankton</diffuseName>
+      <diffuseSplashName>plankton</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.020000"/>
+      <gravity value="0.02000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/pollen_emitter_drop</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/pollen_render_drop</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>WOODLAND_FIREFLY_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>fire_fly_anim</diffuseName>
+      <diffuseSplashName>fire_fly_anim</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.010000"/>
+      <gravity value="0.02000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/firefly_emitter_drop</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/firefly_render_drop</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>WOODLAND_MIST_GROUND</Name>
+      <SystemType>SYSTEM_TYPE_GROUND</SystemType>
+      <diffuseName>mist</diffuseName>
+      <diffuseSplashName>mist</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.000000"/>
+      <gravity value="-0.00000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/woodland_mist_emitter_ground</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/woodland_mist_render_ground</renderSettingsName>
+    </Item>
+    <Item>
+      <Name>WETLAND_FLIES_DROP</Name>
+      <SystemType>SYSTEM_TYPE_DROP</SystemType>
+      <diffuseName>fire_fly_anim</diffuseName>
+      <diffuseSplashName>fire_fly_anim</diffuseSplashName>
+      <driveType>DRIVE_TYPE_REGION</driveType>
+      <windInfluence value="0.010000"/>
+      <gravity value="0.02000000"/>
+      <emitterSettingsName>common:/data/levels/gta5/weather/fly_emitter_drop</emitterSettingsName>
+      <renderSettingsName>common:/data/levels/gta5/weather/fly_render_drop</renderSettingsName>
+    </Item>
   </WeatherGpuFx>
   <WeatherTypes>
     <Item>
@@ -304,38 +304,38 @@
       <WindMax value="1.0"/>
       <Rain value="0.000000"/>
       <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
+      <SnowMist value="0.000000"/>
       <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
       <Sandstorm value="false"/>
       <OldSettingName>-</OldSettingName>
       <DropSettingName>-</DropSettingName>
       <MistSettingName>-</MistSettingName>
       <GroundSettingName>-</GroundSettingName>
-<!--  <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_EXTRASUNNY_PC.XML</TimeCycleFilename>
+      <!--  <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_EXTRASUNNY_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_EXTRASUNNY.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_EXTRASUNNY.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_EXTRASUNNY.XML</TimeCycleFilename>
       <CloudSettingsName>LIGHTclouds</CloudSettingsName>
     </Item>
     <Item>
@@ -346,36 +346,36 @@
       <WindMax value="0.8"/>
       <Rain value="0.000000"/>
       <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
+      <SnowMist value="0.000000"/>
       <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
       <Sandstorm value="false"/>
       <OldSettingName>-</OldSettingName>
       <DropSettingName>-</DropSettingName>
       <MistSettingName>-</MistSettingName>
       <GroundSettingName>-</GroundSettingName>
-<!--   <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_CLEAR_PC.XML</TimeCycleFilename>
+      <!--   <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_CLEAR_PC.XML</TimeCycleFilename>
       <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_CLEAR.XML</TimeCycleFilename>-->
       <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_CLEAR.XML</TimeCycleFilename>
       <CloudSettingsName>LIGHTclouds</CloudSettingsName>
@@ -388,38 +388,38 @@
       <WindMax value="0.7"/>
       <Rain value="0.000000"/>
       <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
+      <SnowMist value="0.000000"/>
       <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
       <Sandstorm value="false"/>
       <OldSettingName>-</OldSettingName>
       <DropSettingName>-</DropSettingName>
       <MistSettingName>-</MistSettingName>
       <GroundSettingName>-</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_CLOUDS_PC.XML</TimeCycleFilename>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_CLOUDS_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_CLOUDS.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_CLOUDS.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_CLOUDS.XML</TimeCycleFilename>
       <CloudSettingsName>MEDIUMclouds</CloudSettingsName>
     </Item>
     <Item>
@@ -430,533 +430,615 @@
       <WindMax value="0.8"/>
       <Rain value="0.000000"/>
       <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
+      <SnowMist value="0.000000"/>
       <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
       <Sandstorm value="false"/>
       <OldSettingName>-</OldSettingName>
       <DropSettingName>-</DropSettingName>
       <MistSettingName>-</MistSettingName>
       <GroundSettingName>-</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_SMOG_PC.XML</TimeCycleFilename>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_SMOG_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_SMOG.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_SMOG.XML</TimeCycleFilename>
-    <CloudSettingsName>MEDIUMclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>FOGGY</Name>
-    <Sun value="0.4"/>
-    <Cloud value="0.000000"/>
-    <WindMin value="0.2"/>
-    <WindMax value="0.7"/>
-    <Rain value="0.000000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="1.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-    <OldSettingName>-</OldSettingName>
-    <DropSettingName>-</DropSettingName>
-    <MistSettingName>-</MistSettingName>
-    <GroundSettingName>-</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_FOGGY_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_SMOG.XML</TimeCycleFilename>
+      <CloudSettingsName>MEDIUMclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>FOGGY</Name>
+      <Sun value="0.4"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.2"/>
+      <WindMax value="0.7"/>
+      <Rain value="0.000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="1.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>-</DropSettingName>
+      <MistSettingName>-</MistSettingName>
+      <GroundSettingName>-</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_FOGGY_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_FOGGY.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_FOGGY.XML</TimeCycleFilename>
-    <CloudSettingsName>MEDIUMclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>OVERCAST</Name>
-    <Sun value="0.3"/>
-    <Cloud value="0.000000"/>
-    <WindMin value="0.2"/>
-    <WindMax value="0.7"/>
-    <Rain value="0.000000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="3.62000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-    <OldSettingName>-</OldSettingName>
-    <DropSettingName>-</DropSettingName>
-    <MistSettingName>-</MistSettingName>
-    <GroundSettingName>-</GroundSettingName>
-<!--   <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_OVERCAST_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_FOGGY.XML</TimeCycleFilename>
+      <CloudSettingsName>MEDIUMclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>OVERCAST</Name>
+      <Sun value="0.3"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.2"/>
+      <WindMax value="0.7"/>
+      <Rain value="0.000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="3.62000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>-</DropSettingName>
+      <MistSettingName>-</MistSettingName>
+      <GroundSettingName>-</GroundSettingName>
+      <!--   <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_OVERCAST_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_OVERCAST.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_OVERCAST.XML</TimeCycleFilename>
-    <CloudSettingsName>HEAVYclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>RAIN</Name>
-    <Sun value="0.1"/>
-    <Cloud value="0.000000"/>
-    <WindMin value="0.4"/>
-    <WindMax value="1.0"/>
-    <Rain value="1.000000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="4.46000" />
-    <OceanNoiseMinAmplitude value="20.55000" />
-    <OceanWaveAmplitude value="2.030000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.760000" />
-    <ShoreWaveMinAmplitude value="2.000000" />
-    <OceanWaveMaxAmplitude value="14.500000" />
-    <ShoreWaveMaxAmplitude value="1.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-    <DropSettingName>RAINSTORM_DROP</DropSettingName>
-    <MistSettingName>RAINSTORM_MIST</MistSettingName>
-    <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_RAIN_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_OVERCAST.XML</TimeCycleFilename>
+      <CloudSettingsName>HEAVYclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>RAIN</Name>
+      <Sun value="0.1"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.4"/>
+      <WindMax value="1.0"/>
+      <Rain value="1.000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="4.46000" />
+      <OceanNoiseMinAmplitude value="20.55000" />
+      <OceanWaveAmplitude value="2.030000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.760000" />
+      <ShoreWaveMinAmplitude value="2.000000" />
+      <OceanWaveMaxAmplitude value="14.500000" />
+      <ShoreWaveMaxAmplitude value="1.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <DropSettingName>RAINSTORM_DROP</DropSettingName>
+      <MistSettingName>RAINSTORM_MIST</MistSettingName>
+      <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_RAIN_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_RAIN.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_RAIN.XML</TimeCycleFilename>
-    <CloudSettingsName>HEAVYclouds</CloudSettingsName>
-  </Item>    
-  <Item>
-    <Name>THUNDER</Name>
-    <Sun value="0.0"/>
-    <Cloud value="0.000000"/>
-    <WindMin value="0.7"/>
-    <WindMax value="1.0"/>
-    <Rain value="1.000000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="4.46000" />
-    <OceanNoiseMinAmplitude value="20.55000" />
-    <OceanWaveAmplitude value="2.030000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.760000" />
-    <ShoreWaveMinAmplitude value="2.000000" />
-    <OceanWaveMaxAmplitude value="14.500000" />
-    <ShoreWaveMaxAmplitude value="1.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="true"/>
-    <Sandstorm value="false"/>
-    <DropSettingName>THUNDER_DROP</DropSettingName>
-    <MistSettingName>THUNDER_MIST</MistSettingName>
-    <GroundSettingName>THUNDER_GROUND</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_THUNDER_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_RAIN.XML</TimeCycleFilename>
+      <CloudSettingsName>HEAVYclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>THUNDER</Name>
+      <Sun value="0.0"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.7"/>
+      <WindMax value="1.0"/>
+      <Rain value="1.000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="4.46000" />
+      <OceanNoiseMinAmplitude value="20.55000" />
+      <OceanWaveAmplitude value="2.030000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.760000" />
+      <ShoreWaveMinAmplitude value="2.000000" />
+      <OceanWaveMaxAmplitude value="14.500000" />
+      <ShoreWaveMaxAmplitude value="1.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="true"/>
+      <Sandstorm value="false"/>
+      <DropSettingName>THUNDER_DROP</DropSettingName>
+      <MistSettingName>THUNDER_MIST</MistSettingName>
+      <GroundSettingName>THUNDER_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_THUNDER_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_THUNDER.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_THUNDER.XML</TimeCycleFilename>
-    <CloudSettingsName>STORMclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>CLEARING</Name>
-    <Sun value="0.2"/>
-    <Cloud value="0.500000"/>
-    <WindMin value="0.8"/>
-    <WindMax value="1.0"/>
-    <Rain value="0.2000000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-    <DropSettingName>RAINSTORM_DROP</DropSettingName>
-    <MistSettingName>RAINSTORM_MIST</MistSettingName>
-    <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_CLEARING_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_THUNDER.XML</TimeCycleFilename>
+      <CloudSettingsName>STORMclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>CLEARING</Name>
+      <Sun value="0.2"/>
+      <Cloud value="0.500000"/>
+      <WindMin value="0.8"/>
+      <WindMax value="1.0"/>
+      <Rain value="0.2000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <DropSettingName>RAINSTORM_DROP</DropSettingName>
+      <MistSettingName>RAINSTORM_MIST</MistSettingName>
+      <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_CLEARING_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_CLEARING.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_CLEARING.XML</TimeCycleFilename>
-    <CloudSettingsName>POSTRAINclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>NEUTRAL</Name>
-    <Sun value="0.5"/>
-    <Cloud value="0.000000"/>
-    <WindMin value="0.0"/>
-    <WindMax value="0.0"/>
-    <Rain value="0.200000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="2.72000" />
-    <OceanNoiseMinAmplitude value="17.10000" />
-    <OceanWaveAmplitude value="3.560000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.000000" />
-    <ShoreWaveMinAmplitude value="0.200000" />
-    <OceanWaveMaxAmplitude value="18.00000" />
-    <ShoreWaveMaxAmplitude value="1.5000000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-    <OldSettingName>-</OldSettingName>
-    <DropSettingName>RAINSTORM_DROP</DropSettingName>
-    <MistSettingName>RAINSTORM_MIST</MistSettingName>
-    <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_neutral_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_CLEARING.XML</TimeCycleFilename>
+      <CloudSettingsName>POSTRAINclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>NEUTRAL</Name>
+      <Sun value="0.5"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.0"/>
+      <WindMax value="0.0"/>
+      <Rain value="0.200000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="2.72000" />
+      <OceanNoiseMinAmplitude value="17.10000" />
+      <OceanWaveAmplitude value="3.560000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.000000" />
+      <ShoreWaveMinAmplitude value="0.200000" />
+      <OceanWaveMaxAmplitude value="18.00000" />
+      <ShoreWaveMaxAmplitude value="1.5000000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>RAINSTORM_DROP</DropSettingName>
+      <MistSettingName>RAINSTORM_MIST</MistSettingName>
+      <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_neutral_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_neutral.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_neutral.XML</TimeCycleFilename>
-    <CloudSettingsName>STORMclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>SNOW</Name>
-    <Sun value="0"/>
-    <Cloud value="1.000000"/>
-    <WindMin value="0.0"/>
-    <WindMax value="0.0"/>
- 	<Rain value="0.000000"/>
-    <Snow value="1.000000"/>
-    <SnowMist value="1.000000"/>
-    <Fog value="0.100000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.150000" />
-    <RippleMaxBumpiness value="0.600000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.030000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.400000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="1.00000" />
-    <OceanNoiseMinAmplitude value="5.00000" />
-    <OceanWaveAmplitude value="1.500000" />
-    <ShoreWaveAmplitude value="2.000000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="0.000000" />
-    <ShoreWaveMinAmplitude value="0.000000" />
-    <OceanWaveMaxAmplitude value="0.500000" />
-    <ShoreWaveMaxAmplitude value="4.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.035000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-	<OldSettingName>-</OldSettingName>
-    <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
-    <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
-    <GroundSettingName>-</GroundSettingName>
-    <TimeCycleFilename>resources:/soz-mapdata/W_SNOW.XML</TimeCycleFilename>
-    <CloudSettingsName>SUNNYclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>BLIZZARD</Name>
-    <Sun value="0"/>
-    <Cloud value="1.000000"/>
-    <WindMin value="1.0"/>
-    <WindMax value="1.0"/>
- 	<Rain value="0.000000"/>
-    <Snow value="1.000000"/>
-    <SnowMist value="1.000000"/>
-    <Fog value="1.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.150000" />
-    <RippleMaxBumpiness value="0.600000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.030000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.400000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="1.00000" />
-    <OceanNoiseMinAmplitude value="13.00000" />
-    <OceanWaveAmplitude value="1.500000" />
-    <ShoreWaveAmplitude value="2.000000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="0.000000" />
-    <ShoreWaveMinAmplitude value="0.000000" />
-    <OceanWaveMaxAmplitude value="0.500000" />
-    <ShoreWaveMaxAmplitude value="4.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.035000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-	<OldSettingName>-</OldSettingName>
-    <DropSettingName>BLIZZARD_DROP</DropSettingName>
-    <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
-    <GroundSettingName>BLIZZARD_GROUND</GroundSettingName>
-	<TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
-    <CloudSettingsName>SUNNYclouds</CloudSettingsName>
-  </Item>
-  <!--
-  SANDSTORM
-  <Item>
-    <Name>BLIZZARD</Name>
-    <Sun value="0.89"/>
-    <Cloud value="1.000000"/>
-    <WindMin value="1.0"/>
-    <WindMax value="1.0"/>
- 	  <Rain value="0.000000"/>
-	  <Wetness value="0.100000"/>
-    <Snow value="1.000000"/>
-    <SnowMist value="1.000000"/>
-    <Fog value="1.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.150000" />
-    <RippleMaxBumpiness value="0.600000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.030000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.400000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="1.00000" />
-    <OceanNoiseMinAmplitude value="13.00000" />
-    <OceanWaveAmplitude value="1.500000" />
-    <ShoreWaveAmplitude value="2.000000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="0.000000" />
-    <ShoreWaveMinAmplitude value="0.000000" />
-    <OceanWaveMaxAmplitude value="0.500000" />
-    <ShoreWaveMaxAmplitude value="4.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.035000" />
-    <Lightning value="false"/>
-    <Sandstorm value="true"/>
-    <DropSettingName>SANDSTORM_DROP</DropSettingName>
-    <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
-    <GroundSettingName>DESERT_GROUND_HEAVY</GroundSettingName>
-	  <TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
-    <CloudSettingsName>HEAVYclouds</CloudSettingsName>
-  </Item>
-  -->
-  <Item>
-    <Name>SNOWLIGHT</Name>
-    <Sun value="0"/>
-    <Cloud value="0.300000"/>
-    <WindMin value="0.0"/>
-    <WindMax value="0.0"/>
-    <Rain value="0.000000"/>
-    <Snow value="1.000000"/>
-    <SnowMist value="1.000000"/>
-    <Fog value="0.100000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.150000" />
-    <RippleMaxBumpiness value="0.600000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.030000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.400000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="1.00000" />
-    <OceanNoiseMinAmplitude value="6.00000" />
-    <OceanWaveAmplitude value="1.500000" />
-    <ShoreWaveAmplitude value="2.000000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="0.000000" />
-    <ShoreWaveMinAmplitude value="0.000000" />
-    <OceanWaveMaxAmplitude value="0.500000" />
-    <ShoreWaveMaxAmplitude value="4.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.035000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-	<OldSettingName>-</OldSettingName>
-    <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
-    <MistSettingName>-</MistSettingName>
-    <GroundSettingName>-</GroundSettingName>
-    <TimeCycleFilename>resources:/soz-mapdata/W_snowlight.XML</TimeCycleFilename>
-    <CloudSettingsName>SUNNYclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>XMAS</Name>
-    <Sun value="0"/>
-    <Cloud value="1.000000"/>
-    <WindMin value="0.0"/>
-    <WindMax value="0.0"/>
- 	<Rain value="0.000000"/>
-    <Snow value="1.000000"/>
-    <SnowMist value="1.000000"/>
-    <Fog value="1.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.150000" />
-    <RippleMaxBumpiness value="0.600000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.030000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.400000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="1.00000" />
-    <OceanNoiseMinAmplitude value="5.00000" />
-    <OceanWaveAmplitude value="1.500000" />
-    <ShoreWaveAmplitude value="2.000000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="0.000000" />
-    <ShoreWaveMinAmplitude value="0.000000" />
-    <OceanWaveMaxAmplitude value="0.500000" />
-    <ShoreWaveMaxAmplitude value="4.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.035000" />
-    <Lightning value="false"/>
-    <Sandstorm value="false"/>
-	<OldSettingName>-</OldSettingName>
-    <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
-    <MistSettingName>-</MistSettingName>
-    <GroundSettingName>-</GroundSettingName>
-    <TimeCycleFilename>resources:/soz-mapdata/W_XMAS.XML</TimeCycleFilename>
-    <CloudSettingsName>SUNNYclouds</CloudSettingsName>
-  </Item>
-  <Item>
-    <Name>HALLOWEEN</Name>
-    <Sun value="0.1"/>
-    <Cloud value="0.000000"/>
-    <WindMin value="0.4"/>
-    <WindMax value="1.0"/>
-    <Rain value="1.000000"/>
-    <Snow value="0.000000"/>
-    <SnowMist value="0.000000"/>
-    <Fog value="0.000000"/>
-    <RippleBumpiness value="0.420000" />
-    <RippleMinBumpiness value="0.250000" />
-    <RippleMaxBumpiness value="0.500000" />
-    <RippleBumpinessWindScale value="0.500000" />
-    <RippleScale value="0.040000" />
-    <RippleSpeed value="20.000000" />
-    <RippleVelocityTransfer value="0.450000" />
-    <OceanBumpiness value="0.250000" />
-    <DeepOceanScale value="4.46000" />
-    <OceanNoiseMinAmplitude value="20.55000" />
-    <OceanWaveAmplitude value="2.030000" />
-    <ShoreWaveAmplitude value="1.800000" />
-    <OceanWaveWindScale value="0.700000" />
-    <ShoreWaveWindScale value="0.700000" />
-    <OceanWaveMinAmplitude value="3.760000" />
-    <ShoreWaveMinAmplitude value="2.000000" />
-    <OceanWaveMaxAmplitude value="14.500000" />
-    <ShoreWaveMaxAmplitude value="1.500000" />
-    <OceanFoamIntensity value="0.140000" />
-    <OceanFoamScale value="0.050000" />
-    <RippleDisturb value="0.050000" />
-    <Lightning value="true"/>
-    <Sandstorm value="false"/>
-    <DropSettingName>RAINSTORM_DROP</DropSettingName>
-    <MistSettingName>RAINSTORM_MIST</MistSettingName>
-    <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
-<!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_RAIN_PC.XML</TimeCycleFilename>
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_neutral.XML</TimeCycleFilename>
+      <CloudSettingsName>STORMclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>SNOW</Name>
+      <Sun value="0"/>
+      <Cloud value="1.000000"/>
+      <WindMin value="0.0"/>
+      <WindMax value="0.0"/>
+      <Rain value="0.000000"/>
+      <Snow value="1.000000"/>
+      <SnowMist value="1.000000"/>
+      <Fog value="0.100000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.150000" />
+      <RippleMaxBumpiness value="0.600000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.030000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.400000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="1.00000" />
+      <OceanNoiseMinAmplitude value="5.00000" />
+      <OceanWaveAmplitude value="1.500000" />
+      <ShoreWaveAmplitude value="2.000000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="0.000000" />
+      <ShoreWaveMinAmplitude value="0.000000" />
+      <OceanWaveMaxAmplitude value="0.500000" />
+      <ShoreWaveMaxAmplitude value="4.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.035000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
+      <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
+      <GroundSettingName>-</GroundSettingName>
+      <TimeCycleFilename>resources:/soz-mapdata/W_SNOW.XML</TimeCycleFilename>
+      <CloudSettingsName>SUNNYclouds</CloudSettingsName>
+    </Item>
+    <!--
+    <Item>
+      <Name>BLIZZARD</Name>
+      <Sun value="0"/>
+      <Cloud value="1.000000"/>
+      <WindMin value="1.0"/>
+      <WindMax value="1.0"/>
+      <Rain value="0.000000"/>
+      <Snow value="1.000000"/>
+      <SnowMist value="1.000000"/>
+      <Fog value="1.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.150000" />
+      <RippleMaxBumpiness value="0.600000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.030000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.400000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="1.00000" />
+      <OceanNoiseMinAmplitude value="13.00000" />
+      <OceanWaveAmplitude value="1.500000" />
+      <ShoreWaveAmplitude value="2.000000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="0.000000" />
+      <ShoreWaveMinAmplitude value="0.000000" />
+      <OceanWaveMaxAmplitude value="0.500000" />
+      <ShoreWaveMaxAmplitude value="4.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.035000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>BLIZZARD_DROP</DropSettingName>
+      <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
+      <GroundSettingName>BLIZZARD_GROUND</GroundSettingName>
+      <TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
+      <CloudSettingsName>SUNNYclouds</CloudSettingsName>
+    </Item>
+    SANDSTORM
+    -->
+    <Item>
+      <Name>BLIZZARD</Name>
+      <Sun value="0.89"/>
+      <Cloud value="1.000000"/>
+      <WindMin value="1.0"/>
+      <WindMax value="1.0"/>
+      <Rain value="0.000000"/>
+      <Wetness value="0.100000"/>
+      <Snow value="1.000000"/>
+      <SnowMist value="1.000000"/>
+      <Fog value="1.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.150000" />
+      <RippleMaxBumpiness value="0.600000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.030000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.400000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="1.00000" />
+      <OceanNoiseMinAmplitude value="13.00000" />
+      <OceanWaveAmplitude value="1.500000" />
+      <ShoreWaveAmplitude value="2.000000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="0.000000" />
+      <ShoreWaveMinAmplitude value="0.000000" />
+      <OceanWaveMaxAmplitude value="0.500000" />
+      <ShoreWaveMaxAmplitude value="4.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.035000" />
+      <Lightning value="false"/>
+      <Sandstorm value="true"/>
+      <DropSettingName>SANDSTORM_DROP</DropSettingName>
+      <MistSettingName>VFX_SNOW_HEAVY_MIST</MistSettingName>
+      <GroundSettingName>DESERT_GROUND_HEAVY</GroundSettingName>
+      <TimeCycleFilename>resources:/soz-mapdata/W_BLIZZARD.XML</TimeCycleFilename>
+      <CloudSettingsName>HEAVYclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>SNOWLIGHT</Name>
+      <Sun value="0"/>
+      <Cloud value="0.300000"/>
+      <WindMin value="0.0"/>
+      <WindMax value="0.0"/>
+      <Rain value="0.000000"/>
+      <Snow value="1.000000"/>
+      <SnowMist value="1.000000"/>
+      <Fog value="0.100000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.150000" />
+      <RippleMaxBumpiness value="0.600000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.030000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.400000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="1.00000" />
+      <OceanNoiseMinAmplitude value="6.00000" />
+      <OceanWaveAmplitude value="1.500000" />
+      <ShoreWaveAmplitude value="2.000000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="0.000000" />
+      <ShoreWaveMinAmplitude value="0.000000" />
+      <OceanWaveMaxAmplitude value="0.500000" />
+      <ShoreWaveMaxAmplitude value="4.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.035000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
+      <MistSettingName>-</MistSettingName>
+      <GroundSettingName>-</GroundSettingName>
+      <TimeCycleFilename>resources:/soz-mapdata/W_snowlight.XML</TimeCycleFilename>
+      <CloudSettingsName>SUNNYclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>XMAS</Name>
+      <Sun value="0"/>
+      <Cloud value="1.000000"/>
+      <WindMin value="0.0"/>
+      <WindMax value="0.0"/>
+      <Rain value="0.000000"/>
+      <Snow value="1.000000"/>
+      <SnowMist value="1.000000"/>
+      <Fog value="1.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.150000" />
+      <RippleMaxBumpiness value="0.600000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.030000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.400000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="1.00000" />
+      <OceanNoiseMinAmplitude value="5.00000" />
+      <OceanWaveAmplitude value="1.500000" />
+      <ShoreWaveAmplitude value="2.000000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="0.000000" />
+      <ShoreWaveMinAmplitude value="0.000000" />
+      <OceanWaveMaxAmplitude value="0.500000" />
+      <ShoreWaveMaxAmplitude value="4.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.035000" />
+      <Lightning value="false"/>
+      <Sandstorm value="false"/>
+      <OldSettingName>-</OldSettingName>
+      <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
+      <MistSettingName>-</MistSettingName>
+      <GroundSettingName>-</GroundSettingName>
+      <TimeCycleFilename>resources:/soz-mapdata/W_XMAS.XML</TimeCycleFilename>
+      <CloudSettingsName>SUNNYclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>HALLOWEEN</Name>
+      <Sun value="0.1"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.4"/>
+      <WindMax value="1.0"/>
+      <Rain value="1.000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="4.46000" />
+      <OceanNoiseMinAmplitude value="20.55000" />
+      <OceanWaveAmplitude value="2.030000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.760000" />
+      <ShoreWaveMinAmplitude value="2.000000" />
+      <OceanWaveMaxAmplitude value="14.500000" />
+      <ShoreWaveMaxAmplitude value="1.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="true"/>
+      <Sandstorm value="false"/>
+      <DropSettingName>RAINSTORM_DROP</DropSettingName>
+      <MistSettingName>RAINSTORM_MIST</MistSettingName>
+      <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_RAIN_PC.XML</TimeCycleFilename>
     <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_RAIN.XML</TimeCycleFilename>-->
-    <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_HALLOWEEN.XML</TimeCycleFilename>
-    <CloudSettingsName>HALLOWEENclouds</CloudSettingsName>
-  </Item> 
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/W_HALLOWEEN.XML</TimeCycleFilename>
+      <CloudSettingsName>HALLOWEENclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>RAIN_HALLOWEEN</Name>
+      <Sun value="0.1"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.4"/>
+      <WindMax value="1.0"/>
+      <Rain value="1.000000"/>
+      <Snow value="0.000000"/>
+      <SnowMist value="0.000000"/>
+      <Fog value="0.000000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="4.46000" />
+      <OceanNoiseMinAmplitude value="20.55000" />
+      <OceanWaveAmplitude value="2.030000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="3.760000" />
+      <ShoreWaveMinAmplitude value="2.000000" />
+      <OceanWaveMaxAmplitude value="14.500000" />
+      <ShoreWaveMaxAmplitude value="1.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="true"/>
+      <Sandstorm value="false"/>
+      <DropSettingName>RAINSTORM_DROP</DropSettingName>
+      <MistSettingName>RAINSTORM_MIST</MistSettingName>
+      <GroundSettingName>RAINSTORM_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_RAIN_PC.XML</TimeCycleFilename>
+    <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_RAIN.XML</TimeCycleFilename>-->
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/w_rainHalloween.XML</TimeCycleFilename>
+      <CloudSettingsName>HALLOWEENclouds</CloudSettingsName>
+    </Item>
+    <Item>
+      <Name>SNOW_HALLOWEEN</Name>
+      <Sun value="1.000000"/>
+      <Cloud value="0.000000"/>
+      <WindMin value="0.2"/>
+      <WindMax value="0.4"/>
+      <Rain value="0.000000"/>
+      <Snow value="0.300000"/>
+      <SnowMist value="0.20000"/>
+      <Fog value="0.500000"/>
+      <RippleBumpiness value="0.420000" />
+      <RippleMinBumpiness value="0.250000" />
+      <RippleMaxBumpiness value="0.500000" />
+      <RippleBumpinessWindScale value="0.500000" />
+      <RippleScale value="0.040000" />
+      <RippleSpeed value="20.000000" />
+      <RippleVelocityTransfer value="0.450000" />
+      <OceanBumpiness value="0.250000" />
+      <DeepOceanScale value="1.00000" />
+      <OceanNoiseMinAmplitude value="5.00000" />
+      <OceanWaveAmplitude value="0.500000" />
+      <ShoreWaveAmplitude value="1.800000" />
+      <OceanWaveWindScale value="0.700000" />
+      <ShoreWaveWindScale value="0.700000" />
+      <OceanWaveMinAmplitude value="0.000000" />
+      <ShoreWaveMinAmplitude value="0.000000" />
+      <OceanWaveMaxAmplitude value="0.500000" />
+      <ShoreWaveMaxAmplitude value="1.500000" />
+      <OceanFoamIntensity value="0.140000" />
+      <OceanFoamScale value="0.050000" />
+      <RippleDisturb value="0.050000" />
+      <Lightning value="true"/>
+      <Sandstorm value="false"/>
+      <DropSettingName>VFX_SNOW_LIGHT_DROP</DropSettingName>
+      <MistSettingName>-</MistSettingName>
+      <GroundSettingName>VFX_SNOW_HEAVY_GROUND</GroundSettingName>
+      <!--    <TimeCycleFilename platform="pc">COMMON:/DATA/TIMECYCLE/W_snow_PC.XML</TimeCycleFilename>
+    <TimeCycleFilename platform="!pc">COMMON:/DATA/TIMECYCLE/W_snow.XML</TimeCycleFilename>-->
+      <TimeCycleFilename>COMMON:/DATA/TIMECYCLE/w_snowHalloween.XML</TimeCycleFilename>
+      <CloudSettingsName>HALLOWEENclouds</CloudSettingsName>
+    </Item>
   </WeatherTypes>
   <WeatherCycles>
     <Item>
@@ -971,7 +1053,7 @@
       <CycleName>SMOG</CycleName>
       <TimeMult value="4"/>
     </Item>
-     <Item>
+    <Item>
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="1"/>
     </Item>
@@ -995,7 +1077,7 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="2"/>
     </Item>
-       <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="3"/>
     </Item>
@@ -1063,7 +1145,7 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="1"/>
     </Item>
-       <Item>
+    <Item>
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1075,11 +1157,11 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="2"/>
     </Item>
-       <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="3"/>
     </Item>
-       <Item>
+    <Item>
       <CycleName>FOGGY</CycleName>
       <TimeMult value="1"/>
     </Item>
@@ -1087,7 +1169,7 @@
       <CycleName>SMOG</CycleName>
       <TimeMult value="2"/>
     </Item>
-      <Item>
+    <Item>
       <CycleName>CLOUDS</CycleName>
       <TimeMult value="4"/>
     </Item>
@@ -1119,7 +1201,7 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="1"/>
     </Item>
-       <Item>
+    <Item>
       <CycleName>FOGGY</CycleName>
       <TimeMult value="1"/>
     </Item>
@@ -1131,7 +1213,7 @@
       <CycleName>CLEAR</CycleName>
       <TimeMult value="4"/>
     </Item>
-        <Item>
+    <Item>
       <CycleName>CLEAR</CycleName>
       <TimeMult value="5"/>
     </Item>
@@ -1183,7 +1265,7 @@
       <CycleName>CLEAR</CycleName>
       <TimeMult value="4"/>
     </Item>
-      <Item>
+    <Item>
       <CycleName>CLOUDS</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1219,7 +1301,7 @@
       <CycleName>SMOG</CycleName>
       <TimeMult value="5"/>
     </Item>
-        <Item>
+    <Item>
       <CycleName>CLOUDS</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1267,7 +1349,7 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="3"/>
     </Item>
-     <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1315,7 +1397,7 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="2"/>
     </Item>
-       <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="1"/>
     </Item>
@@ -1343,7 +1425,7 @@
       <CycleName>SMOG</CycleName>
       <TimeMult value="1"/>
     </Item>
-      <Item>
+    <Item>
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1395,7 +1477,7 @@
       <CycleName>EXTRASUNNY</CycleName>
       <TimeMult value="1"/>
     </Item>
-        <Item>
+    <Item>
       <CycleName>CLEAR</CycleName>
       <TimeMult value="3"/>
     </Item>
@@ -1447,7 +1529,7 @@
       <CycleName>SMOG</CycleName>
       <TimeMult value="3"/>
     </Item>
-     <Item>
+    <Item>
       <CycleName>OVERCAST</CycleName>
       <TimeMult value="1"/>
     </Item>
@@ -1503,7 +1585,7 @@
       <CycleName>OVERCAST</CycleName>
       <TimeMult value="2"/>
     </Item>
-   <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1531,7 +1613,7 @@
       <CycleName>SMOG</CycleName>
       <TimeMult value="1"/>
     </Item>
-        <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="4"/>
     </Item>
@@ -1599,7 +1681,7 @@
       <CycleName>OVERCAST</CycleName>
       <TimeMult value="2"/>
     </Item>
-   <Item>
+    <Item>
       <CycleName>SMOG</CycleName>
       <TimeMult value="2"/>
     </Item>
@@ -1631,7 +1713,7 @@
       <CycleName>THUNDER</CycleName>
       <TimeMult value="3"/>
     </Item>
-  <Item>
+    <Item>
       <CycleName>RAIN</CycleName>
       <TimeMult value="1"/>
     </Item>
