@@ -4459,7 +4459,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "Gilet d'assault composé de multiple couches de kevlar et d'emplacements pour plaques balistiques.",
+        ["description"] = "Gilet d'assault composé de multiples couches de kevlar et d'emplacements pour plaques balistiques.",
         ["illustrator"] = ".Aurukh",
         ["maxplates"] = 3,
     },

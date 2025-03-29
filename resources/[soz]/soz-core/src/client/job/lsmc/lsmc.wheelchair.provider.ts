@@ -56,7 +56,7 @@ export class LSMCWheelChairProvider {
                 action: async entity => {
                     const { completed } = await this.progressService.progress(
                         'wheelchair_retrieve',
-                        'Vous repliez la chaisse roulante...',
+                        'Vous repliez la chaise roulante...',
                         3000,
                         {
                             dictionary: 'mp_common',

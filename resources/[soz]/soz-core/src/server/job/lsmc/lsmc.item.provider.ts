@@ -272,7 +272,7 @@ export class LSMCItemProvider {
         DeleteEntity(entity);
         inventory.add('wheelchair', 1);
 
-        this.notifier.notify(source, 'Tu as ramassé une chaisse roulante');
+        this.notifier.notify(source, 'Tu as ramasé une chaisse roulante');
     }
 
     public async useNaloxone(
