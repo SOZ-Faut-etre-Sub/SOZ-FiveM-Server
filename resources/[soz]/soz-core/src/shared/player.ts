@@ -410,6 +410,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     special_plate?: boolean;
     reputation_token_date?: number;
     main_residence_last_change?: number;
+    noclip: boolean;
 };
 
 export const isAdmin = (player: PlayerData) => {

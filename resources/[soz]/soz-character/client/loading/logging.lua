@@ -71,8 +71,10 @@ function LogExistingPlayer(player, shutdownLoadingScreen)
 
     -- Make player visible
     SetFocusEntity(PlayerPedId())
-    FreezeEntityPosition(PlayerPedId(), false)
-    SetEntityVisible(PlayerPedId(), true)
+    if not playerObject.PlayerData.metadata["noclip"] then
+        FreezeEntityPosition(PlayerPedId(), false)
+        SetEntityVisible(PlayerPedId(), true)
+    end
 
     -- Shutdown loading screen
     if shutdownLoadingScreen then

@@ -7,8 +7,9 @@ import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { AdminPlayer } from '@public/shared/admin/admin';
-import { ClientEvent } from '@public/shared/event';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
+import { PlayerData } from '@public/shared/player';
 import { add2Vector3, multVector3, Vector3 } from '@public/shared/polyzone/vector';
 
 import { Notifier } from '../notifier';
@@ -46,6 +47,11 @@ export class NoClipProvider {
     private noClippingEntity = 0;
     private speed = NO_CLIP_NORMAL_SPEED;
     private bonusSpeed = 0;
+
+    @Once(OnceStep.PlayerLoaded)
+    public init(player: PlayerData) {
+        this.SetNoClip(!!player.metadata.noclip);
+    }
 
     private IsControlAlwaysPressed(inputGroup: number, control: Control) {
         return IsControlPressed(inputGroup, control) || IsDisabledControlPressed(inputGroup, control);
@@ -95,6 +101,7 @@ export class NoClipProvider {
         if (this.isNoClipping == val) {
             return;
         }
+        TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'noclip', val);
         const playerPed = PlayerPedId();
         const playerId = PlayerId();
         this.noClippingEntity = playerPed;
