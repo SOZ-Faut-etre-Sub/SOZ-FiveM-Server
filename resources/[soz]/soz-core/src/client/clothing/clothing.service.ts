@@ -80,7 +80,15 @@ export class ClothingService {
     }
 
     public displayHairWithMask(maskDrawable: number, collection: string): boolean {
-        return KeepHairWithMask[(collection ?? 'base').replace('Female', 'Male').replace('_f_', '_m_')][maskDrawable];
+        if (!collection) {
+            collection = 'base';
+        } else {
+            collection = collection.replace('Female', 'Male').replace('_f_', '_m_');
+        }
+        if (!KeepHairWithMask[collection]) {
+            return false;
+        }
+        return KeepHairWithMask[collection][maskDrawable];
     }
 
     public applyPedProp(ped: number, prop: Prop, outfitItem: OutfitItem) {
