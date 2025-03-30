@@ -1131,7 +1131,7 @@ export const INVENTORY_ITEM_CREATORS: Partial<Record<InventoryType, Record<strin
 
 export type InventoryPosition = InventoryPositionFixed | InventoryPositionDynamic;
 
-export const DEFAULT_MAX_INVENTORY_DISTANCE = 3;
+export const DEFAULT_MAX_INVENTORY_DISTANCE = 4;
 
 export type InventoryPositionFixed = {
     type: 'fixed';

@@ -98,11 +98,11 @@ export class InventoryPositionChecker {
     }
 
     public openInventory(source: number, inventoryId: string, position: InventoryPosition): void {
-        if (!this.inventoriesPositions[inventoryId]) {
-            this.inventoriesPositions[inventoryId] = new Map();
+        if (!this.inventoriesPositions.has(inventoryId)) {
+            this.inventoriesPositions.set(inventoryId, new Map());
         }
 
-        this.inventoriesPositions[inventoryId].set(source, position);
+        this.inventoriesPositions.get(inventoryId).set(source, position);
     }
 
     public closeInventory(playerId: number, inventoryId: string): void {
@@ -116,8 +116,8 @@ export class InventoryPositionChecker {
             return;
         }
 
-        if (this.inventoriesPositions[inventoryId]) {
-            this.inventoriesPositions[inventoryId].delete(playerId);
+        if (this.inventoriesPositions.has(inventoryId)) {
+            this.inventoriesPositions.get(inventoryId).delete(playerId);
         }
 
         const entityId = NetworkGetEntityFromNetworkId(this.trunkOpened[inventoryId].networkId);
@@ -179,17 +179,17 @@ export class InventoryPositionChecker {
     }
 
     public checkDistance(source: number, position: Vector3, inventoryId: string): boolean {
-        if (!this.inventoriesPositions[inventoryId]) {
+        if (!this.inventoriesPositions.has(inventoryId)) {
             // Some inventories don't have a position, like the player inventory
             return true;
         }
 
-        if (!this.inventoriesPositions[inventoryId].has(source)) {
+        if (!this.inventoriesPositions.get(inventoryId).has(source)) {
             // Some inventories don't have a position, like the player inventory
             return true;
         }
 
-        const inventoryPosition = this.inventoriesPositions[inventoryId].get(source);
+        const inventoryPosition = this.inventoriesPositions.get(inventoryId).get(source);
         const maxDistance = inventoryPosition.maxDistance || DEFAULT_MAX_INVENTORY_DISTANCE;
 
         if (inventoryPosition.type === 'fixed' && getDistance(position, inventoryPosition.position) <= maxDistance) {
