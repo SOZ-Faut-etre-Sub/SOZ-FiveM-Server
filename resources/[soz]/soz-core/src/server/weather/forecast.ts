@@ -16,6 +16,8 @@ export const SpringAutumn: Forecast = {
     SNOWLIGHT: {},
     XMAS: {},
     HALLOWEEN: {},
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
 };
 
 export const Winter: Forecast = {
@@ -34,6 +36,8 @@ export const Winter: Forecast = {
     SNOWLIGHT: { CLEAR: 20, CLOUDS: 20, FOGGY: 10, SNOW: 5 },
     XMAS: { FOGGY: 10, SNOWLIGHT: 2, SNOW: 2 },
     HALLOWEEN: {},
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
 };
 
 export const CHRISTMAS: Forecast = {
@@ -52,6 +56,8 @@ export const CHRISTMAS: Forecast = {
     SNOWLIGHT: { XMAS: 100 },
     XMAS: { XMAS: 100 },
     HALLOWEEN: { XMAS: 100 },
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
 };
 
 export const Summer: Forecast = {
@@ -70,6 +76,8 @@ export const Summer: Forecast = {
     SNOWLIGHT: { OVERCAST: 100 },
     XMAS: { OVERCAST: 100 },
     HALLOWEEN: { OVERCAST: 100 },
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
 };
 
 export const Polluted: Forecast = {
@@ -88,6 +96,8 @@ export const Polluted: Forecast = {
     SNOWLIGHT: { SMOG: 80, FOGGY: 20 },
     XMAS: { SMOG: 80, FOGGY: 20 },
     HALLOWEEN: { SMOG: 80, FOGGY: 20 },
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
 };
 
 export const Halloween: Forecast = {
@@ -106,6 +116,8 @@ export const Halloween: Forecast = {
     SNOWLIGHT: {},
     XMAS: {},
     HALLOWEEN: {},
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
 };
 
 export const WMOWeatherMapping = {

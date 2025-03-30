@@ -58,4 +58,6 @@ export const ForecastAdderTemperatures: Record<Weather, TemperatureRange> = {
     SNOWLIGHT: { min: -5, max: 0 },
     XMAS: { min: -5, max: -5 },
     HALLOWEEN: { min: 3, max: 2 },
+    RAIN_HALLOWEEN: { min: 3, max: -2 },
+    SNOW_HALLOWEEN: { min: -5, max: 0 },
 };
