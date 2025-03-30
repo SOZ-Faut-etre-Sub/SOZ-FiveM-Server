@@ -386,6 +386,10 @@ export class PropPlacementProvider {
                 title: 'Modèle du prop',
             });
 
+            if (!propModel) {
+                return;
+            }
+
             if (ForbiddenPropModels.includes(joaat(propModel))) {
                 this.notifier.notify(`Ce modèle est interdit`, 'error');
                 return;
