@@ -293,7 +293,7 @@ export class UtilsNPCProvider {
             !DoesScenarioBlockingAreaExist(
                 helipadMin[0],
                 helipadMin[1],
-                helipadMin[1],
+                helipadMin[2],
                 helipadMax[0],
                 helipadMax[1],
                 helipadMax[2]
@@ -302,7 +302,7 @@ export class UtilsNPCProvider {
             AddScenarioBlockingArea(
                 helipadMin[0],
                 helipadMin[1],
-                helipadMin[1],
+                helipadMin[2],
                 helipadMax[0],
                 helipadMax[1],
                 helipadMax[2],
@@ -312,6 +312,9 @@ export class UtilsNPCProvider {
                 true
             );
         }
+
+        //Mirror park LSPD
+        AddScenarioBlockingArea(1106.65, -505.32, 63.56, 1204.11, -413.35, 67.79, false, true, true, true);
 
         SetPedPopulationBudget(3.0);
         SetVehiclePopulationBudget(3.0);
