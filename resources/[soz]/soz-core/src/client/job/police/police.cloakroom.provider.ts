@@ -24,6 +24,16 @@ const prisonerCloakroomInfos = [
         minZ: 75.63,
         maxZ: 78.63,
     },
+    // MISSION ROW
+    {
+        job: JobType.LSPD,
+        position: [474.65, -992.71, 24.74] as Vector3,
+        length: 1.0,
+        width: 5.0,
+        heading: -0.03,
+        minZ: 24.54,
+        maxZ: 26.74,
+    },
     {
         job: JobType.BCSO,
         position: [1864.93, 3681.1, 30.27] as Vector3,

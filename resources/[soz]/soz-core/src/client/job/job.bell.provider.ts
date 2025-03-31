@@ -15,6 +15,14 @@ type BellProps = {
 };
 
 const BELL_ZONES: BellProps[] = [
+    // MISSION ROW
+    {
+        coords: [439.15, -980.38, 30.9],
+        job: JobType.LSPD,
+        number: '555-LSPD',
+    },
+
+    // VINEWOOD
     {
         coords: [633.66, 7.62, 82.85],
         job: JobType.LSPD,
