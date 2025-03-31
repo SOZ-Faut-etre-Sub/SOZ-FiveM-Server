@@ -399,6 +399,66 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
                 permission: JobPermission.SocietyGeneralStorage,
             },
         },
+        {
+            center: [-1371.78, -630.18, 42.84],
+            length: 1.2,
+            width: 0.9,
+            heading: 38.58,
+            minZ: 42.24,
+            maxZ: 43.44,
+            data: {
+                storage: 'baun_rooftop_ice_machine',
+                type: InventoryType.IceMachine,
+            },
+        },
+        {
+            center: [-1366.44, -626.76, 42.64],
+            length: 0.6,
+            width: 2.05,
+            heading: 34.2,
+            minZ: 42.24,
+            maxZ: 43.24,
+            data: {
+                storage: 'baun_rooftop_snack_storage',
+                type: InventoryType.SnackStorage,
+            },
+        },
+        {
+            center: [-1370.55, -629.43, 42.84],
+            length: 0.8,
+            width: 1.6,
+            heading: 31.43,
+            minZ: 42.24,
+            maxZ: 43.44,
+            data: {
+                storage: 'baun_rooftop_flavor_storage',
+                type: InventoryType.FlavorStorage,
+            },
+        },
+        {
+            center: [-1374.66, -632.17, 42.64],
+            length: 0.7,
+            width: 4.4,
+            heading: 33.38,
+            minZ: 42.24,
+            maxZ: 43.24,
+            data: {
+                storage: 'baun_rooftop_fridge_storage',
+                type: InventoryType.LiquorStorage,
+            },
+        },
+        {
+            center: [-1373.4, -628.47, 43.24],
+            length: 0.3,
+            width: 0.25,
+            heading: 183.69,
+            minZ: 43.04,
+            maxZ: 43.64,
+            data: {
+                storage: 'baun_rooftop_furniture_storage',
+                type: InventoryType.FurnitureStorage,
+            },
+        },
     ],
     [JobType.BCSO]: [
         {
