@@ -102,10 +102,10 @@ export class PoliceProvider {
         await this.pedFactory.createPedOnGrid({
             model: 's_f_y_cop_01',
             coords: {
-                x: 458.66,
-                y: -979.87,
+                x: 459.35,
+                y: -979.92,
                 z: 30.69 - 1,
-                w: 269.77,
+                w: 88.41,
             },
             freeze: true,
             invincible: true,
