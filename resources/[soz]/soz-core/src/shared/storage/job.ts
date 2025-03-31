@@ -1248,6 +1248,169 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
         },
     ],
     [JobType.LSPD]: [
+        // MISSION ROW
+        {
+            center: [470.85, -978.73, 35.94],
+            length: 1.0,
+            width: 2.6,
+            minZ: 34.94,
+            maxZ: 36.94,
+            heading: 90.64,
+            data: {
+                storage: 'lspd_boss_storage_mr',
+                type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
+            },
+        },
+        {
+            center: [469.1, -990.29, 35.93],
+            length: 4.4,
+            width: 3.2,
+            minZ: 34.93,
+            maxZ: 36.93,
+            heading: 90.14,
+            data: {
+                storage: 'lspd_storage_mr',
+                type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+
+        {
+            center: [451.28, -978.64, 30.69],
+            length: 0.6,
+            width: 3.4,
+            heading: 180.72,
+            minZ: 29.69,
+            maxZ: 32.29,
+            data: {
+                storage: 'lspd_ammo_mr',
+                type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+
+        {
+            center: [458.66, -979.87, 30.69],
+            length: 2.2,
+            heading: 269.77,
+            minZ: 29.69,
+            maxZ: 31.69,
+            data: {
+                storage: 'lspd_armory_mr',
+                type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+
+        {
+            center: [440.22, -988.18, 35.93],
+            length: 1.0,
+            width: 9.0,
+            heading: 0.61,
+            minZ: 34.93,
+            maxZ: 36.93,
+            data: {
+                storage: 'lspd_evidence_storage_mr',
+                type: InventoryType.EvidenceStorage,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+
+        {
+            center: [472.65, -1000.46, 35.93],
+            length: 1.0,
+            width: 3.2,
+            heading: -0.06,
+            minZ: 34.93,
+            maxZ: 37.33,
+            data: {
+                storage: 'lspd_fridge_mr',
+                type: InventoryType.Fridge,
+            },
+        },
+
+        {
+            center: [480.61, -991.3, 24.94],
+            length: 1.0,
+            width: 1.8,
+            heading: 0.74,
+            minZ: 23.94,
+            maxZ: 25.94,
+            data: {
+                storage: 'lspd_seizure1_mr',
+                type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [482.43, -991.5, 25.94],
+            length: 1.0,
+            width: 1.8,
+            heading: 0.5,
+            minZ: 23.94,
+            maxZ: 26.94,
+            data: {
+                storage: 'lspd_seizure2_mr',
+                type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [484.45, -991.85, 24.94],
+            length: 2.2,
+            width: 1.8,
+            heading: 269.89,
+            minZ: 23.94,
+            maxZ: 26.74,
+            data: {
+                storage: 'lspd_seizure3_mr',
+                type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+
+        {
+            center: [454.81, -993.68, 30.69],
+            length: 1.0,
+            width: 11.6,
+            minZ: 29.69,
+            maxZ: 32.29,
+            heading: 0.18,
+            data: {
+                storage: 'lspd_male_cloakroom_mr',
+                type: InventoryType.Cloakroom,
+            },
+        },
+
+        {
+            center: [457.61, -987.82, 30.69],
+            length: 1.0,
+            width: 5.8,
+            heading: 180.54,
+            minZ: 29.69,
+            maxZ: 32.29,
+            data: {
+                storage: 'lspd_female_cloakroom_mr',
+                type: InventoryType.Cloakroom,
+            },
+        },
+
+        {
+            center: [449.16, -991.8, 30.69],
+            length: 1.0,
+            width: 5.0,
+            heading: 270.71,
+            minZ: 29.69,
+            maxZ: 32.29,
+            data: {
+                storage: 'lspd_cloakroom_mr',
+                type: InventoryType.Cloakroom,
+            },
+        },
+
+        // VINEWOOD
+
         {
             center: [625.466919, -31.86854, 90.308548],
             length: 2.5,
@@ -1287,6 +1450,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
                 permission: JobPermission.SocietyGeneralStorage,
             },
         },
+
         {
             center: [616.24, -15.47, 91.11],
             length: 7.2,
@@ -1364,8 +1528,9 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
                 permission: JobPermission.SocietyGeneralStorage,
             },
         },
+
         {
-            center: [626.93, 2.18, 76.63],
+            center: [454.81, -993.68, 30.69],
             length: 7.0,
             width: 8.4,
             minZ: 75.62,

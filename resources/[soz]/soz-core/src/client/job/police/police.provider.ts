@@ -99,6 +99,19 @@ export class PoliceProvider {
             blockevents: true,
         });
 
+        await this.pedFactory.createPedOnGrid({
+            model: 's_f_y_cop_01',
+            coords: {
+                x: 459.35,
+                y: -979.92,
+                z: 30.69 - 1,
+                w: 88.41,
+            },
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+        });
+
         this.blipFactory.create('fbi', {
             name: 'FBI',
             position: [112.25, -749.32, 46.05],

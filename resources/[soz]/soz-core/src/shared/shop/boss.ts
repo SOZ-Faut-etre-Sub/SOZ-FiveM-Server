@@ -233,6 +233,78 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             ],
         },
     },
+
+    // MISSION ROW
+    {
+        name: 'lspd_mr',
+        job: JobType.LSPD,
+        zone: {
+            center: [470.9, -973.17, 35.94],
+            length: 1.0,
+            width: 2.2,
+            heading: 92.06,
+            minZ: 34.94,
+            maxZ: 36.94,
+        },
+        targets: [],
+        products: [
+            { id: 'outfit', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 100 },
+            { id: 'armor', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 150 },
+            { id: 'light_intervention_outfit', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 300 },
+            { id: 'heavy_antiriot_outfit', type: 'item', metadata: { label: 'LSPD', type: 'lspd' }, price: 300 },
+            { id: 'radio', type: 'item', price: 80 },
+            { id: 'fingerprint_collector', type: 'item', price: 50 },
+            { id: 'scientist_camera', type: 'item', price: 50 },
+            { id: 'detective_board', metadata: { originalDetectiveBoard: true }, type: 'item', price: 20 },
+            { id: 'breathanalyzer', type: 'item', price: 5 },
+            { id: 'screening_test', type: 'item', price: 5 },
+            { id: 'weapon_uvflashlight', type: 'item', price: 50 },
+            { id: 'weapon_smokegrenade', type: 'weapon', metadata: { ammo: 1 }, price: 50 },
+            { id: 'weapon_stungun', type: 'weapon', price: 45 },
+            { id: 'mobile_radar', type: 'item', price: 40 },
+            {
+                id: 'utilitary_certificate',
+                type: 'item',
+                price: 10,
+            },
+            {
+                id: 'ammo_certificate',
+                type: 'item',
+                price: 100,
+            },
+            {
+                id: 'weapon_certificate',
+                type: 'item',
+                metadata: { craftCertificate: 'weapon_flashlight', label: 'Lampe de poche' },
+                price: 500,
+            },
+            {
+                id: 'weapon_certificate',
+                type: 'item',
+                metadata: { craftCertificate: 'weapon_nightstick', label: 'Matraque' },
+                price: 500,
+            },
+            {
+                id: 'weapon_certificate',
+                type: 'item',
+                metadata: { craftCertificate: 'weapon_pistol_mk2', label: 'Pistolet Mk II' },
+                price: 2000,
+            },
+            {
+                id: 'weapon_certificate',
+                type: 'item',
+                metadata: { craftCertificate: 'weapon_smg', label: 'Mitraillette' },
+                price: 3000,
+            },
+            {
+                id: 'weapon_certificate',
+                type: 'item',
+                metadata: { craftCertificate: 'weapon_pumpshotgun', label: 'Remington 870 Non lethal' },
+                price: 2000,
+            },
+        ],
+    },
+    // VINEWOOD
     {
         name: 'lspd',
         job: JobType.LSPD,

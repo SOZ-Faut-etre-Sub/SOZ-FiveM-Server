@@ -2660,16 +2660,81 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
-    lscs: {
-        name: 'LSCS Parking',
+
+    // lscs: {
+    //     name: 'LSCS Parking',
+    //     type: GarageType.Job,
+    //     job: JobType.LSCS,
+    //     category: GarageCategory.Car,
+    //     // Position of the garage
+    //     zone: new BoxZone([458.45, -1010.67, 27.26], 1.0, 1.0, {
+    //         heading: 272.48,
+    //         minZ: 27.26,
+    //         maxZ: 29.26,
+    //     }),
+
+    //     parkingPlaces: [
+    //         new BoxZone([446.16, -1026.39, 28.52], 3.4, 2.2, {
+    //             heading: 5.21,
+    //             minZ: 27.52,
+    //             maxZ: 29.52,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([438.46, -1027.08, 28.79], 3.7, 2.4, {
+    //             heading: 7.04,
+    //             minZ: 27.79,
+    //             maxZ: 29.79,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([438.1, -1019.48, 28.84], 8.0, 5.0, {
+    //             heading: 91.67,
+    //             minZ: 27.84,
+    //             maxZ: 29.84,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //     ],
+    // },
+
+    // MISSION ROW
+
+    lspdmr_air: {
+        name: 'LSPD Air Parking',
         type: GarageType.Job,
-        job: JobType.LSCS,
+        job: JobType.LSPD,
+        category: GarageCategory.Air,
+        zone: new BoxZone([463.58, -982.44, 42.69], 1.0, 1.0, {
+            heading: 269.51,
+            minZ: 42.69,
+            maxZ: 44.69,
+        }),
+        parkingPlaces: [
+            new BoxZone([449.71, -981.3, 43.89], 10.6, 10.6, {
+                heading: 270.16,
+                minZ: 42.89,
+                maxZ: 45.49,
+                data: {
+                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+                },
+            }),
+        ],
+    },
+
+    lspdmr: {
+        name: 'LSPD Parking',
+        type: GarageType.Job,
+        job: JobType.LSPD,
         category: GarageCategory.Car,
         // Position of the garage
-        zone: new BoxZone([458.45, -1010.67, 27.26], 1.0, 1.0, {
-            heading: 272.48,
-            minZ: 27.26,
-            maxZ: 29.26,
+        zone: new BoxZone([458.69, -1017.13, 27.14], 1.0, 1.0, {
+            heading: -90.39,
+            minZ: 27.34,
+            maxZ: 29.34,
         }),
 
         parkingPlaces: [
