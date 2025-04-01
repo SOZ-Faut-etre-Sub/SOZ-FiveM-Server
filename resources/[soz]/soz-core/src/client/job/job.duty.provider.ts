@@ -198,6 +198,7 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 35.68,
         heading: 0.0,
     },
+    // Vinewood
     {
         data: JobType.LSPD,
         center: [615.900574, 15.299749, 82.797417],
@@ -206,6 +207,16 @@ const DutyZoneConfig: Zone<JobType>[] = [
         minZ: 82.697417,
         maxZ: 82.897417,
         heading: 58,
+    },
+    // Mission Row
+    {
+        data: JobType.LSPD,
+        center: [441.9, -979.64, 31.34],
+        length: 0.8,
+        width: 1.4,
+        minZ: 30.34,
+        maxZ: 30.94,
+        heading: -0.41,
     },
     {
         data: JobType.BCSO,
