@@ -91,12 +91,12 @@ export const SocietySafeStorage: Partial<Record<JobType, Zone>> = {
         maxZ: 41.62,
     },
     [JobType.LSPD]: {
-        center: [622.21, -30.71, 90.51],
-        length: 1.0,
-        width: 2.5,
-        heading: 160.0,
-        minZ: 89.51,
-        maxZ: 91.51,
+        center: [468.97, -981.2, 35.94],
+        length: 0.8,
+        width: 2.8,
+        heading: 0.11,
+        minZ: 34.94,
+        maxZ: 37.14,
     },
     [JobType.BCSO]: {
         center: [1855.94, 3690.49, 37.75],
