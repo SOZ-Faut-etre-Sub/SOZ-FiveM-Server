@@ -14,6 +14,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 const moneycheckerInfos = [
+    // Vinewood
     {
         job: JobType.LSPD,
         position: [586.82, 13.41, 76.63] as Vector3,
@@ -23,6 +24,18 @@ const moneycheckerInfos = [
         minZ: 76.63,
         maxZ: 77.63,
     },
+
+    // Mission Row
+    {
+        job: JobType.LSPD,
+        position: [460.49, -989.34, 24.95] as Vector3,
+        length: 2.4,
+        width: 3.4,
+        heading: 269.7,
+        minZ: 23.95,
+        maxZ: 25.95,
+    },
+
     {
         job: JobType.BCSO,
         position: [1857.69, 3687.39, 30.27] as Vector3,
