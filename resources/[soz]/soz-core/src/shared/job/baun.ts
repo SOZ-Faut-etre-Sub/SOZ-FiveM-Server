@@ -40,6 +40,15 @@ export const baunCraftZones: NamedZone[] = [
         minZ: 47.12,
         maxZ: 47.72,
     },
+    {
+        name: 'baun:rooftop:craft:1',
+        center: [-1374.88, -628.81, 43.44],
+        length: 0.2,
+        width: 0.2,
+        heading: 226.08,
+        minZ: 43.24,
+        maxZ: 43.64,
+    },
 ];
 
 export const BaunCraftsLists: Record<string, CraftCategory> = {
