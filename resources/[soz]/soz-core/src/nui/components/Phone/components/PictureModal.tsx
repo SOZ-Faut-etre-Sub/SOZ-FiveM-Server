@@ -1,13 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import clsx from 'clsx';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useThemeConfig } from '../system/config/config.atom';
+import { usePhoneAvailable } from '../system/phone.atom';
 
 export function PictureModal({ open, setOpen, children }) {
     const theme = useThemeConfig();
+    const available = usePhoneAvailable();
+
+    useEffect(() => {
+        if (open && !available) {
+            setOpen(false);
+        }
+    }, [open, setOpen, available]);
 
     return createPortal(
         <Transition.Root show={open} as={Fragment}>

@@ -56,11 +56,14 @@ export class PhoneManager {
 
     @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
     async onBlackout(blackout: boolean, blackoutLevel: number) {
-        if (blackout || blackoutLevel >= 3) {
-            await this.stopPhoneCall();
-            if (this.phoneState.isPhoneOpen()) {
-                await this.hidePhone();
-            }
+        const inBlackout = blackout || blackoutLevel >= 3;
+
+        this.phoneService.setPhoneDisabled('blackout', inBlackout);
+        if (!inBlackout) return;
+
+        await this.stopPhoneCall();
+        if (this.phoneState.isPhoneOpen()) {
+            await this.hidePhone();
         }
     }
 
