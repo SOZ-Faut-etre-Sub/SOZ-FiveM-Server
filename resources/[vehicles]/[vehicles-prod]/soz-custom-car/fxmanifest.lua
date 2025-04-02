@@ -8,6 +8,7 @@ files {
 }
 
 data_file "AUDIO_GAMEDATA"          "audio/sozcustomsounds_game.dat"
+data_file "AUDIO_GAMEDATA"          "audio/sasp_game.dat"
 data_file "AUDIO_GAMEDATA"          "audio/asteropers_game.dat"
 data_file "AUDIO_SOUNDDATA"         "audio/asteropers_sounds.dat"
 data_file "AUDIO_GAMEDATA"          "audio/elegyr_game.dat"
