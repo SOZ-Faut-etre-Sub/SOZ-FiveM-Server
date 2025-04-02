@@ -26,9 +26,7 @@ files {
     'snowheavy_render_ground.xml',
 	'trains.xml',
 
-    'soz_game.dat151.rel',
-    'soz_mix.dat15.rel'
+    'soz_game.dat151.rel'
 }
 
 data_file 'AUDIO_GAMEDATA' 'soz_game.dat'
-data_file 'AUDIO_DYNAMIXDATA' 'soz_mix.dat'
