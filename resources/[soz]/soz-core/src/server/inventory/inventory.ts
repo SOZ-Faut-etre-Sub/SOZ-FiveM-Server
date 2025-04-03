@@ -74,8 +74,13 @@ export class Inventory {
         return this.doGetItemAtSlot(slot);
     }
 
-    getItemCount(id: string, allowExpired = true, metadata: InventoryItemMetadata = null): number {
-        return this.filterItems(id, allowExpired, metadata).reduce((acc, item) => {
+    getItemCount(
+        id: string,
+        allowExpired = true,
+        metadata: InventoryItemMetadata = null,
+        weakMetadataCompare = false
+    ): number {
+        return this.filterItems(id, allowExpired, metadata, weakMetadataCompare).reduce((acc, item) => {
             return acc + item.amount;
         }, 0);
     }
@@ -157,9 +162,10 @@ export class Inventory {
         itemId: string,
         amount: number = 1,
         skipExpiredItem: boolean = false,
-        metadata: InventoryItemMetadata = null
+        metadata: InventoryItemMetadata = null,
+        weakMetadataCompare = false
     ) {
-        const count = this.getItemCount(itemId, !skipExpiredItem, metadata);
+        const count = this.getItemCount(itemId, !skipExpiredItem, metadata, weakMetadataCompare);
 
         return count >= amount;
     }
@@ -548,10 +554,16 @@ export class Inventory {
         return Err('cannot_merge');
     }
 
-    remove(id: string, amount: number = 1, allowExpired = true, metadata: InventoryItemMetadata = null): boolean {
+    remove(
+        id: string,
+        amount: number = 1,
+        allowExpired = true,
+        metadata: InventoryItemMetadata = null,
+        weakMetadataCompare = false
+    ): boolean {
         const toRemove: { slot: number; amount: number }[] = [];
 
-        for (const item of this.filterItems(id, allowExpired, metadata)) {
+        for (const item of this.filterItems(id, allowExpired, metadata, weakMetadataCompare)) {
             const findAmount = toRemove.reduce((acc, { amount }) => acc + amount, 0);
             if (amount - findAmount >= item.amount) {
                 toRemove.push({ slot: item.slot, amount: item.amount });
@@ -699,7 +711,12 @@ export class Inventory {
         await Promise.all(promises);
     }
 
-    private filterItems(id: string, allowExpired: boolean, metadata: InventoryItemMetadata | null): InventoryItem[] {
+    private filterItems(
+        id: string,
+        allowExpired: boolean,
+        metadata: InventoryItemMetadata | null,
+        weakMetadataCompare = false
+    ): InventoryItem[] {
         return Object.values(this._items).filter(item => {
             if (item.name !== id) {
                 return false;
@@ -709,8 +726,22 @@ export class Inventory {
                 return false;
             }
 
-            if (metadata && !deepEqual(metadata, item.metadata || {})) {
-                return false;
+            if (metadata) {
+                if (weakMetadataCompare) {
+                    for (const key of Object.keys(metadata)) {
+                        if (!item.metadata) {
+                            return false;
+                        }
+
+                        if (metadata[key] !== item.metadata[key]) {
+                            return false;
+                        }
+                    }
+                } else {
+                    if (!deepEqual(metadata, item.metadata || {})) {
+                        return false;
+                    }
+                }
             }
 
             return true;
