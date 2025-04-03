@@ -771,6 +771,11 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
     [joaat('bcso60')]: { maxWeight: 500000 },
     [joaat('maverick2')]: { maxWeight: 200000 },
 
+    // SASP
+    [joaat('sasp20')]: { maxWeight: 100000 },
+    [joaat('sasp70')]: { maxWeight: 200000 },
+    [joaat('sasp71')]: { maxWeight: 200000 },
+
     // LSMC
     [joaat('ambulance')]: { maxWeight: 100000 },
     [joaat('ambulance2')]: { maxWeight: 100000 },

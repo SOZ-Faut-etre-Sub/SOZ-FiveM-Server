@@ -12,7 +12,6 @@ import { JobType } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
-import { Ear } from '@public/shared/voip';
 
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
@@ -109,6 +108,9 @@ const VEHICLE_HAS_RADIO = [
     'rumpo4',
     'predator',
     'sasp1',
+    'sasp20',
+    'sasp70',
+    'sasp71',
     'xls2',
     'schafter6',
     'tractor2',
