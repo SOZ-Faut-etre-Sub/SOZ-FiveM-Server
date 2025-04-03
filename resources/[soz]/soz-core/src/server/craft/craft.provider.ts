@@ -76,8 +76,8 @@ export class CraftProvider {
                 recipe.canCraft = true;
 
                 for (const [inputItem, input] of Object.entries(recipe.inputs)) {
-                    input.check = inventory.hasEnoughItem(inputItem, input.count, true, input.metadata);
-                    input.checkAmount = inventory.getItemCount(inputItem, false, input.metadata);
+                    input.checkAmount = inventory.getItemCount(inputItem, false, input.metadata, true);
+                    input.check = input.checkAmount >= input.count;
                     recipe.canCraft = recipe.canCraft && input.check;
                 }
             }
@@ -116,7 +116,7 @@ export class CraftProvider {
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
 
-            if (!inventory.hasEnoughItem(requiredItemId, input.count, true, input.metadata)) {
+            if (!inventory.hasEnoughItem(requiredItemId, input.count, true, input.metadata, true)) {
                 const requiredItem = this.itemService.getItem(requiredItemId);
                 const item = this.itemService.getItem(itemId);
 
@@ -179,7 +179,7 @@ export class CraftProvider {
 
         for (const requiredItemId of Object.keys(recipe.inputs)) {
             const input = recipe.inputs[requiredItemId];
-            inventory.remove(requiredItemId, input.count, false, input.metadata);
+            inventory.remove(requiredItemId, input.count, false, input.metadata, true);
         }
 
         const metadata: InventoryItemMetadata = {};
