@@ -5454,5 +5454,44 @@
             <lightSettings value="0" />
             <sirenSettings value="71" />
         </Item>
+        <Item>
+            <modelName>sasp20</modelName>
+            <colors>
+                <Item>
+                    <indices content="char_array">
+                        0
+                        111
+                        0
+                        0
+                        2
+                        0
+                    </indices>
+                    <liveries>
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                    </liveries>
+                </Item>
+            </colors>
+            <kits>
+                <Item>1024_sasp20_modkit</Item>
+            </kits>
+            <windowsWithExposedEdges />
+            <plateProbabilities>
+                <Probabilities>
+                    <Item>
+                        <Name>Police guv plate</Name>
+                        <Value value="100" />
+                    </Item>
+                </Probabilities>
+            </plateProbabilities>
+            <lightSettings value="202" />
+            <sirenSettings value="16" />
+        </Item>
     </variationData>
 </CVehicleModelInfoVariation>

@@ -18692,6 +18692,2271 @@
             </slotNames>
             <liveryNames />
         </Item>
+        <Item>
+            <kitName>1024_sasp20_modkit</kitName>
+            <id value="1024" />
+            <kitType>MKT_SPECIAL</kitType>
+            <visibleMods>
+                <Item>
+                    <modelName>sasp20_bumfa</modelName>
+                    <modShopLabel>POL_PBARA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_f</Item>
+                        <Item>misc_m</Item>
+                        <Item>misc_j</Item>
+                        <Item>misc_h</Item>
+                        <Item>extralight_1</Item>
+                        <Item>extralight_2</Item>
+                    </turnOffBones>
+                    <type>VMT_CHASSIS2</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_6</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_bumfb</modelName>
+                    <modShopLabel>POL_PBARB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_f</Item>
+                        <Item>misc_m</Item>
+                        <Item>misc_j</Item>
+                        <Item>misc_h</Item>
+                        <Item>extralight_1</Item>
+                        <Item>extralight_2</Item>
+                    </turnOffBones>
+                    <type>VMT_CHASSIS2</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_7</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_bumfc</modelName>
+                    <modShopLabel>POL_PBARC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_f</Item>
+                        <Item>misc_m</Item>
+                        <Item>misc_j</Item>
+                        <Item>misc_h</Item>
+                        <Item>extralight_1</Item>
+                        <Item>extralight_2</Item>
+                    </turnOffBones>
+                    <type>VMT_CHASSIS2</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_9</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_bumfc</modelName>
+                    <modShopLabel>POL_PBARD</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_bumfd</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>bumper_f</Item>
+                        <Item>misc_m</Item>
+                        <Item>misc_j</Item>
+                        <Item>misc_h</Item>
+                        <Item>extralight_1</Item>
+                        <Item>extralight_2</Item>
+                    </turnOffBones>
+                    <type>VMT_CHASSIS2</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_9</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_bumfe</modelName>
+                    <modShopLabel>POL_PBARZ</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_f</Item>
+                        <Item>misc_m</Item>
+                        <Item>misc_j</Item>
+                        <Item>misc_h</Item>
+                        <Item>extralight_1</Item>
+                        <Item>extralight_2</Item>
+                    </turnOffBones>
+                    <type>VMT_CHASSIS2</type>
+                    <bone>chassis</bone>
+                    <collisionBone>mod_col_11</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_livery01</modelName>
+                    <modShopLabel>SASP_LIV1</modShopLabel>
+                    <linkedModels/>
+                    <turnOffBones/>
+                    <type>VMT_LIVERY_MOD</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000"/>
+                    <weight value="20"/>
+                    <turnOffExtra value="false"/>
+                    <disableBonnetCamera value="false"/>
+                    <allowBonnetSlide value="true"/>
+                </Item>
+                <Item>
+                    <modelName>sasp20_slighta</modelName>
+                    <modShopLabel>POL_SLIGHTA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS4</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_slightb</modelName>
+                    <modShopLabel>POL_SLIGHTB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS4</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_slightc</modelName>
+                    <modShopLabel>POL_SLIGHTC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS4</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_slightd</modelName>
+                    <modShopLabel>POL_SLIGHTD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS4</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_slighte</modelName>
+                    <modShopLabel>POL_SLIGHTE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS4</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_slightf</modelName>
+                    <modShopLabel>POL_SLIGHTF</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS4</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_anta</modelName>
+                    <modShopLabel>POL_ANTA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_antb</modelName>
+                    <modShopLabel>POL_ANTB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_antc</modelName>
+                    <modShopLabel>POL_ANTC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_antd</modelName>
+                    <modShopLabel>POL_ANTD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_ante</modelName>
+                    <modShopLabel>POL_ANTE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_antf</modelName>
+                    <modShopLabel>POL_ANTF</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_antg</modelName>
+                    <modShopLabel>POL_ANTG</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_CHASSIS3</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_nomod</modelName>
+                    <modShopLabel>TERMINUS_ROOFA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>extra_5</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_roofa</modelName>
+                    <modShopLabel>TERMINUS_ROOFB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>extra_5</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_roofb</modelName>
+                    <modShopLabel>TERMINUS_ROOFC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>extra_5</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_roofc</modelName>
+                    <modShopLabel>TERMINUS_ROOFD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>extra_5</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_roofd</modelName>
+                    <modShopLabel>TERMINUS_ROOFE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>extra_5</Item>
+                    </turnOffBones>
+                    <type>VMT_ROOF</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr2a</modelName>
+                    <modShopLabel>TERMINUS_ARMR</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_armr2b</Item>
+                        <Item>sasp20_armr2c</Item>
+                        <Item>sasp20_armr2d</Item>
+                    </linkedModels>
+                    <turnOffBones/>
+                    <type>VMT_CHASSIS</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr1a</modelName>
+                    <modShopLabel>TERMINUS_DOOR1</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_armr1b</Item>
+                        <Item>sasp20_armr1c</Item>
+                        <Item>sasp20_armr1d</Item>
+                    </linkedModels>
+                    <turnOffBones/>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door1a</modelName>
+                    <modShopLabel>TERMINUS_DOOR2</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door1b</Item>
+                        <Item>terminus_door1c</Item>
+                        <Item>terminus_door1d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door2a</modelName>
+                    <modShopLabel>TERMINUS_DOOR3</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door2b</Item>
+                        <Item>terminus_door2c</Item>
+                        <Item>terminus_door2d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door3a</modelName>
+                    <modShopLabel>TERMINUS_DOOR4</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door3b</Item>
+                        <Item>terminus_door3c</Item>
+                        <Item>terminus_door3d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door4a</modelName>
+                    <modShopLabel>TERMINUS_DOOR5</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door4b</Item>
+                        <Item>terminus_door4c</Item>
+                        <Item>terminus_door4d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door5a</modelName>
+                    <modShopLabel>TERMINUS_DOOR6</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door5b</Item>
+                        <Item>terminus_door5c</Item>
+                        <Item>terminus_door5d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door6a</modelName>
+                    <modShopLabel>TERMINUS_DOOR7</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door6b</Item>
+                        <Item>terminus_door6c</Item>
+                        <Item>terminus_door6d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door7a</modelName>
+                    <modShopLabel>TERMINUS_DOOR8</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door7b</Item>
+                        <Item>terminus_door7c</Item>
+                        <Item>terminus_door7d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door8a</modelName>
+                    <modShopLabel>TERMINUS_DOOR9</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door8b</Item>
+                        <Item>terminus_door8c</Item>
+                        <Item>terminus_door8d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door9a</modelName>
+                    <modShopLabel>TERMINUS_DOOR10</modShopLabel>
+                    <linkedModels>
+                        <Item>terminus_door9b</Item>
+                        <Item>terminus_door9c</Item>
+                        <Item>terminus_door9d</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>door_dside_f</Item>
+                        <Item>door_dside_r</Item>
+                        <Item>door_pside_f</Item>
+                        <Item>door_pside_r</Item>
+                    </turnOffBones>
+                    <type>VMT_DOOR_L</type>
+                    <bone>door_dside_f</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_grilla</modelName>
+                    <modShopLabel>TERMINUS_GRILLA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grillb</modelName>
+                    <modShopLabel>TERMINUS_GRILLB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grillc</modelName>
+                    <modShopLabel>TERMINUS_GRILLC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grilld</modelName>
+                    <modShopLabel>TERMINUS_GRILLD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grille</modelName>
+                    <modShopLabel>TERMINUS_GRILLE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_grillf</modelName>
+                    <modShopLabel>TERMINUS_GRILLF</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grillg</modelName>
+                    <modShopLabel>TERMINUS_GRILLG</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grillh</modelName>
+                    <modShopLabel>TERMINUS_GRILLH</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_grilli</modelName>
+                    <modShopLabel>TERMINUS_GRILLI</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grillj</modelName>
+                    <modShopLabel>TERMINUS_GRILLJ</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_grillk</modelName>
+                    <modShopLabel>TERMINUS_GRILLK</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_g</Item>
+                    </turnOffBones>
+                    <type>VMT_GRILL</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodcarbon</modelName>
+                    <modShopLabel>TERMINUS_HOODA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodskulls</modelName>
+                    <modShopLabel>TERMINUS_HOODB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodcamo</modelName>
+                    <modShopLabel>TERMINUS_HOODC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_hoodacc</modelName>
+                    <modShopLabel>TERMINUS_HOODD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hooda</modelName>
+                    <modShopLabel>TERMINUS_HOODE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hooda</modelName>
+                    <modShopLabel>TERMINUS_HOODF</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_hoodcarbon</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hooda</modelName>
+                    <modShopLabel>TERMINUS_HOODG</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_hoodskulls</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hooda</modelName>
+                    <modShopLabel>TERMINUS_HOODH</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_hoodcamo</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodb</modelName>
+                    <modShopLabel>TERMINUS_HOODI</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodc</modelName>
+                    <modShopLabel>TERMINUS_HOODJ</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bonnet</Item>
+                    </turnOffBones>
+                    <type>VMT_BONNET</type>
+                    <bone>bonnet</bone>
+                    <collisionBone>bonnet</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_fend3a</modelName>
+                    <modShopLabel>TERMINUS_ARCHA</modShopLabel>
+                    <linkedModels>
+                        <Item>sasp20_fend1a</Item>
+                        <Item>sasp20_fend2a</Item>
+                    </linkedModels>
+                    <turnOffBones>
+                        <Item>misc_a</Item>
+                        <Item>wing_lf</Item>
+                        <Item>wing_rf</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_L</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_fendb</modelName>
+                    <modShopLabel>TERMINUS_ARCHB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_a</Item>
+                        <Item>wing_lf</Item>
+                        <Item>wing_rf</Item>
+                        <Item>misc_k</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_L</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_fendc</modelName>
+                    <modShopLabel>TERMINUS_ARCHC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_a</Item>
+                        <Item>wing_lf</Item>
+                        <Item>wing_rf</Item>
+                        <Item>misc_k</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_L</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_fendd</modelName>
+                    <modShopLabel>TERMINUS_ARCHD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_a</Item>
+                        <Item>wing_lf</Item>
+                        <Item>wing_rf</Item>
+                        <Item>misc_k</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_L</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_fende</modelName>
+                    <modShopLabel>TERMINUS_ARCHE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_a</Item>
+                        <Item>wing_lf</Item>
+                        <Item>wing_rf</Item>
+                        <Item>misc_k</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_L</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_fendf</modelName>
+                    <modShopLabel>TERMINUS_ARCHF</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_a</Item>
+                        <Item>wing_lf</Item>
+                        <Item>wing_rf</Item>
+                        <Item>misc_k</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_L</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_chassa</modelName>
+                    <modShopLabel>TERMINUS_CHASSA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_chassb</modelName>
+                    <modShopLabel>TERMINUS_CHASSB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_chassc</modelName>
+                    <modShopLabel>TERMINUS_CHASSC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_chassd</modelName>
+                    <modShopLabel>TERMINUS_CHASSD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_i</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_chasse</modelName>
+                    <modShopLabel>TERMINUS_CHASSE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_i</Item>
+                    </turnOffBones>
+                    <type>VMT_WING_R</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_skirta</modelName>
+                    <modShopLabel>TERMINUS_SKIRTA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_f</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_skirtb</modelName>
+                    <modShopLabel>TERMINUS_SKIRTB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_f</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_skirtc</modelName>
+                    <modShopLabel>TERMINUS_SKIRTC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_f</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_skirtd</modelName>
+                    <modShopLabel>TERMINUS_SKIRTD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_f</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_skirte</modelName>
+                    <modShopLabel>TERMINUS_SKIRTE</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_f</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_skirtf</modelName>
+                    <modShopLabel>TERMINUS_SKIRTF</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_f</Item>
+                    </turnOffBones>
+                    <type>VMT_SKIRT</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_bumra</modelName>
+                    <modShopLabel>TERMINUS_BUMRA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_r</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>bumper_r</bone>
+                    <collisionBone>bumper_r</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_bumrb</modelName>
+                    <modShopLabel>TERMINUS_BUMRB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_r</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>bumper_r</bone>
+                    <collisionBone>bumper_r</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_bumrc</modelName>
+                    <modShopLabel>TERMINUS_BUMRC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_r</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>bumper_r</bone>
+                    <collisionBone>bumper_r</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_bumrd</modelName>
+                    <modShopLabel>TERMINUS_BUMRD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>bumper_r</Item>
+                    </turnOffBones>
+                    <type>VMT_BUMPER_R</type>
+                    <bone>bumper_r</bone>
+                    <collisionBone>bumper_r</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_spoila</modelName>
+                    <modShopLabel>TERMINUS_WINGA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_SPOILER</type>
+                    <bone>misc_l</bone>
+                    <collisionBone>misc_l</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_spoilb</modelName>
+                    <modShopLabel>TERMINUS_WINGB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_SPOILER</type>
+                    <bone>misc_l</bone>
+                    <collisionBone>misc_l</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_spoilc</modelName>
+                    <modShopLabel>TERMINUS_WINGC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_SPOILER</type>
+                    <bone>misc_l</bone>
+                    <collisionBone>misc_l</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_exha</modelName>
+                    <modShopLabel>TERMINUS_EXHA</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_b</Item>
+                        <Item>exhaust</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>engineblock</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_exhb</modelName>
+                    <modShopLabel>TERMINUS_EXHB</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_b</Item>
+                        <Item>exhaust</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>engineblock</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_exhc</modelName>
+                    <modShopLabel>TERMINUS_EXHC</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_b</Item>
+                        <Item>exhaust</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>engineblock</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+                <Item>
+                    <modelName>terminus_exhd</modelName>
+                    <modShopLabel>TERMINUS_EXHD</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones>
+                        <Item>misc_b</Item>
+                        <Item>exhaust</Item>
+                    </turnOffBones>
+                    <type>VMT_EXHAUST</type>
+                    <bone>engineblock</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+            </visibleMods>
+            <linkMods>
+                <Item>
+                    <modelName>sasp20_bumfd</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodacc</modelName>
+                    <bone>bonnet</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodskulls</modelName>
+                    <bone>bonnet</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodcamo</modelName>
+                    <bone>bonnet</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_hoodcarbon</modelName>
+                    <bone>bonnet</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_fend1a</modelName>
+                    <bone>wing_lf</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_fend2a</modelName>
+                    <bone>wing_rf</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door9b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door9c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door9d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door8b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door8c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door8d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door7b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door7c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door7d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door6b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door6c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door6d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door5b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door5c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door5d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door4b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door4c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door4d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door3b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door3c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door3d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door2b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door2c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door2d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door1b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door1c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>terminus_door1d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr1b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr1c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr1d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr2b</modelName>
+                    <bone>door_dside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr2c</modelName>
+                    <bone>door_pside_f</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
+                    <modelName>sasp20_armr2d</modelName>
+                    <bone>door_pside_r</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+            </linkMods>
+            <statMods>
+                <Item>
+                    <identifier />
+                    <modifier value="60" />
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="120" />
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="180" />
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="260" />
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <type>VMT_ENGINE</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="40" />
+                    <audioApply value="1.000000" />
+                    <weight value="5" />
+                    <type>VMT_BRAKES</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="90" />
+                    <audioApply value="1.000000" />
+                    <weight value="5" />
+                    <type>VMT_BRAKES</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="140" />
+                    <audioApply value="1.000000" />
+                    <weight value="5" />
+                    <type>VMT_BRAKES</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="50" />
+                    <audioApply value="1.000000" />
+                    <weight value="5" />
+                    <type>VMT_GEARBOX</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="100" />
+                    <audioApply value="1.000000" />
+                    <weight value="5" />
+                    <type>VMT_GEARBOX</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="200" />
+                    <audioApply value="1.000000" />
+                    <weight value="5" />
+                    <type>VMT_GEARBOX</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="20" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="40" />
+                    <audioApply value="1.000000" />
+                    <weight value="10" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="60" />
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="80" />
+                    <audioApply value="1.000000" />
+                    <weight value="30" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier />
+                    <modifier value="100" />
+                    <audioApply value="1.000000" />
+                    <weight value="40" />
+                    <type>VMT_ARMOUR</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_TRUCK</identifier>
+                    <modifier value="1766676233" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_COP</identifier>
+                    <modifier value="2904189469" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_CLOWN</identifier>
+                    <modifier value="2543206147" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_MUSICAL_1</identifier>
+                    <modifier value="1732399718" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_MUSICAL_2</identifier>
+                    <modifier value="2046162893" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_MUSICAL_3</identifier>
+                    <modifier value="2194999691" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_MUSICAL_4</identifier>
+                    <modifier value="2508304100" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_MUSICAL_5</identifier>
+                    <modifier value="3707223535" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HORN_SAD_TROMBONE</identifier>
+                    <modifier value="632950117" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_1</identifier>
+                    <modifier value="3628534289" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_2</identifier>
+                    <modifier value="3892554122" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_3</identifier>
+                    <modifier value="4112892878" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_4</identifier>
+                    <modifier value="116877169" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_5</identifier>
+                    <modifier value="2684983719" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_6</identifier>
+                    <modifier value="2982690084" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>MUSICAL_HORN_BUSINESS_7</identifier>
+                    <modifier value="3203290992" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_C0</identifier>
+                    <modifier value="771284519" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_D0</identifier>
+                    <modifier value="2586621229" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_E0</identifier>
+                    <modifier value="283386134" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_F0</identifier>
+                    <modifier value="3884502400" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_G0</identifier>
+                    <modifier value="265723083" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_A0</identifier>
+                    <modifier value="1746883687" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_B0</identifier>
+                    <modifier value="1919870950" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_BUSI2_C_MAJOR_NOTES_C1</identifier>
+                    <modifier value="1085277077" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HIPSTER_HORN_1</identifier>
+                    <modifier value="444549672" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HIPSTER_HORN_2</identifier>
+                    <modifier value="1603064898" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HIPSTER_HORN_3</identifier>
+                    <modifier value="240366033" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>HIPSTER_HORN_4</identifier>
+                    <modifier value="960137118" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>INDEP_HORN_1</identifier>
+                    <modifier value="3572144790" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>INDEP_HORN_2</identifier>
+                    <modifier value="3801396714" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>INDEP_HORN_3</identifier>
+                    <modifier value="2843657151" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>INDEP_HORN_4</identifier>
+                    <modifier value="3341811489" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>LUXE_HORN_1</identifier>
+                    <modifier value="3199657341" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>LUXE_HORN_2</identifier>
+                    <modifier value="2900378064" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>LUXE_HORN_3</identifier>
+                    <modifier value="3956195248" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>LUXORY_HORN_1</identifier>
+                    <modifier value="676333254" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>LUXURY_HORN_2</identifier>
+                    <modifier value="2099578296" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>LUXURY_HORN_3</identifier>
+                    <modifier value="1373384483" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>ORGAN_HORN_LOOP_01</identifier>
+                    <modifier value="2916775806" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>ORGAN_HORN_LOOP_01_PREVIEW</identifier>
+                    <modifier value="3714706952" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>ORGAN_HORN_LOOP_02</identifier>
+                    <modifier value="2611860261" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>ORGAN_HORN_LOOP_02_PREVIEW</identifier>
+                    <modifier value="3206770359" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>LOWRIDER_HORN_1</identifier>
+                    <modifier value="310529291" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>LOWRIDER_HORN_1_PREVIEW</identifier>
+                    <modifier value="2965568987" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>LOWRIDER_HORN_2</identifier>
+                    <modifier value="55291550" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>LOWRIDER_HORN_2_PREVIEW</identifier>
+                    <modifier value="965054819" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>XM15_HORN_01</identifier>
+                    <modifier value="55862314" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>XM15_HORN_01_PREVIEW</identifier>
+                    <modifier value="2156743178" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>XM15_HORN_02</identifier>
+                    <modifier value="400002352" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>XM15_HORN_02_PREVIEW</identifier>
+                    <modifier value="897484282" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>XM15_HORN_03</identifier>
+                    <modifier value="560832604" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>XM15_HORN_03_PREVIEW</identifier>
+                    <modifier value="314232747" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_AW_Airhorn_01</identifier>
+                    <modifier value="3851180092" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>DLC_AW_Airhorn_01_Preview</identifier>
+                    <modifier value="246182814" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_AW_Airhorn_02</identifier>
+                    <modifier value="3412861948" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>DLC_AW_Airhorn_02_Preview</identifier>
+                    <modifier value="1804608241" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <Item>
+                    <identifier>DLC_AW_Airhorn_03</identifier>
+                    <modifier value="3374260066" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+                <!-- PREVIEW HORN - FOR MOD SHOP USE ONLY -->
+                <Item>
+                    <identifier>DLC_AW_Airhorn_03_Preview</identifier>
+                    <modifier value="2798044638" />
+                    <audioApply value="1.000000" />
+                    <weight value="0" />
+                    <type>VMT_HORN</type>
+                </Item>
+            </statMods>
+            <slotNames>
+                <Item>
+                    <slot>VMT_SPOILER</slot>
+                    <name>TOP_SPARE</name>
+                </Item>
+                <Item>
+                    <slot>VMT_CHASSIS</slot>
+                    <name>TOP_ARM_PLAT</name>
+                </Item>
+                <Item>
+                    <slot>VMT_CHASSIS2</slot>
+                    <name>TOP_PUSH</name>
+                </Item>
+                <Item>
+                    <slot>VMT_CHASSIS4</slot>
+                    <name>TOP_SEARCHLIGHT</name>
+                </Item>
+                <Item>
+                    <slot>VMT_WING_L</slot>
+                    <name>TOP_ARCHCOVER</name>
+                </Item>
+                <Item>
+                    <slot>VMT_WING_R</slot>
+                    <name>TOP_BODY</name>
+                </Item>
+
+            </slotNames>
+            <liveryNames />
+        </Item>
     </Kits>
     <Lights>
         <Item>
