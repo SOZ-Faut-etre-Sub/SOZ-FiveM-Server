@@ -103,12 +103,12 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         },
         bossZones: [
             {
-                center: [626.23, -24.0, 90.51],
-                length: 16.2,
-                width: 16.4,
-                heading: 340,
-                minZ: 89.51,
-                maxZ: 92.51,
+                center: [466.47, -975.26, 35.94],
+                length: 8.8,
+                width: 11.0,
+                heading: 87.9,
+                minZ: 34.94,
+                maxZ: 36.94,
             },
         ],
         phone: '555-LSPD',

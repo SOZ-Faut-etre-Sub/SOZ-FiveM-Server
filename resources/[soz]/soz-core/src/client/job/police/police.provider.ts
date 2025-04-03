@@ -22,7 +22,7 @@ import { AnimationService } from '../../animation/animation.service';
 export const WEAPON_DIGISCANNER = -38085395;
 const RadarRange = 40;
 const stations = {
-    LSPD: { label: 'Los Santos Police Department', blip: { sprite: 60 }, coords: [632.76, 7.31, 82.63] },
+    LSPD: { label: 'Los Santos Police Department', blip: { sprite: 60 }, coords: [439.39, -981.39, 30.69] },
     BCSO: {
         label: "Blaine County Sheriff's Office",
         blip: { sprite: 137 },
