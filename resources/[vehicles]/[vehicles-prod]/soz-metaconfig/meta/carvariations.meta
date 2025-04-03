@@ -5398,5 +5398,61 @@
             <lightSettings value="0" />
             <sirenSettings value="5" />
         </Item>
+        <Item>
+            <modelName>sasp70</modelName>
+            <colors>
+                <Item>
+                    <indices content="char_array">
+                        22
+                        13
+                        4
+                        13
+                    </indices>
+                    <liveries/>
+                </Item>
+            </colors>
+            <kits>
+                <Item>0_suv_modkit</Item>
+            </kits>
+            <windowsWithExposedEdges />
+            <plateProbabilities>
+                <Probabilities>
+                    <Item>
+                        <Name>Police guv plate</Name>
+                        <Value value="100" />
+                    </Item>
+                </Probabilities>
+            </plateProbabilities>
+            <lightSettings value="0" />
+            <sirenSettings value="71" />
+        </Item>
+        <Item>
+            <modelName>sasp71</modelName>
+            <colors>
+                <Item>
+                    <indices content="char_array">
+                        22
+                        13
+                        4
+                        13
+                    </indices>
+                    <liveries/>
+                </Item>
+            </colors>
+            <kits>
+                <Item>0_suv_modkit</Item>
+            </kits>
+            <windowsWithExposedEdges />
+            <plateProbabilities>
+                <Probabilities>
+                    <Item>
+                        <Name>Police guv plate</Name>
+                        <Value value="100" />
+                    </Item>
+                </Probabilities>
+            </plateProbabilities>
+            <lightSettings value="0" />
+            <sirenSettings value="71" />
+        </Item>
     </variationData>
 </CVehicleModelInfoVariation>
