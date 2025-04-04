@@ -6,7 +6,11 @@ import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Control } from '../../../shared/input';
 import { useNuiFocus } from '../../hook/nui';
 import { useAppBankStateHandlers } from './apps/bank/bank.atom';
-import { useAppDarkWebStateHandlers } from './apps/darkweb/darkweb.atom';
+import {
+    useAppDarkWebDebugHandlers,
+    useAppDarkWebPreloader,
+    useAppDarkWebStateHandlers,
+} from './apps/darkweb/darkweb.atom';
 import { CallModalApp } from './apps/dialer/CallModalApp';
 import { HomeApp } from './apps/home/HomeApp';
 import { useAppNewsStateHandlers } from './apps/news/news.atom';
@@ -69,6 +73,8 @@ export const PhoneApp: FunctionComponent = () => {
                     <PhoneAppHooks />
 
                     <PhoneWrapper>
+                        <PhoneAppPreloader />
+
                         <Alerts />
                         <ActionSheet />
 
@@ -114,6 +120,15 @@ const PhoneAppHooks: FunctionComponent = () => {
     useAppNotesStateHandlers();
     useAppWeatherStateHandlers();
     useSocietyMessagesStateHandlers();
+
+    return null;
+};
+
+const PhoneAppPreloader: FunctionComponent = () => {
+    useAppDarkWebPreloader();
+
+    // Debug
+    useAppDarkWebDebugHandlers();
 
     return null;
 };

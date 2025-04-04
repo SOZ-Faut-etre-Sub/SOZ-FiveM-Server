@@ -18,7 +18,9 @@ type UseDarkwebAPIProps = {
     fetchConversations: () => Promise<void>;
     createConversation: (label: string, password: string) => Promise<void>;
     updateConversation: (conversationId: number, conversation: Partial<DarkwebConversation>) => Promise<void>;
+
     setConversationAsRead: (conversationId: number) => void;
+    setConversationNotification: (conversationId: number, enabled: boolean) => void;
 
     fetchMessages: (conversationId: number) => Promise<void>;
     sendMessage: ({ conversationId, message }: PreDBDarkwebMessage) => void;
@@ -101,6 +103,20 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
         }
     }, []);
 
+    const setConversationNotification = useCallback(async (conversationId: number, enabled: boolean) => {
+        if (!conversationId) return;
+
+        try {
+            await fetchNui(NuiEvent.PhoneAppDarkWebUpdateParticipantNotification, { conversationId, enabled });
+            await fetchParticipants();
+        } catch (e) {
+            addNotification({
+                app: 'darkweb',
+                title: t('DARKWEB.FEEDBACK.UPDATE ERROR'),
+            });
+        }
+    }, []);
+
     const fetchMessages = useCallback(async (conversationId: number) => {
         try {
             const messages = await fetchNui<number, DarkwebMessage[]>(
@@ -172,6 +188,7 @@ export const useDarkWebAPI = (): UseDarkwebAPIProps => {
         createConversation,
         updateConversation,
         setConversationAsRead,
+        setConversationNotification,
 
         fetchMessages,
         sendMessage,

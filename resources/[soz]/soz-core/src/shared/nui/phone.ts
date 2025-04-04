@@ -1,5 +1,6 @@
 import { BankContact, BankStatement, Invoice } from '@public/shared/bank';
 import { BankData } from '@public/shared/phone/apps/bank';
+import { DarkwebMessage } from '@public/shared/phone/apps/darkweb';
 import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { NewsMessage } from '@public/shared/phone/apps/news';
 import { NoteItem } from '@public/shared/phone/apps/notes';
@@ -42,6 +43,7 @@ export interface NuiPhoneMap {
 
     // Apps
     AppDarkWebHasDongle: boolean;
+    AppDarkWebNewMessage: DarkwebMessage;
     AppBankSetData: BankData;
     AppBankSetStatements: BankStatement[];
     AppBankAddStatement: BankStatement;
