@@ -42,7 +42,7 @@ export class PhoneAppDarkWebProvider {
             where: {
                 masked: false,
                 updatedAt: {
-                    gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14),
+                    gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
                 },
             },
             orderBy: {
