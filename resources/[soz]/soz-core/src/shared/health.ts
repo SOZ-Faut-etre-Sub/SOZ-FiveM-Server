@@ -160,3 +160,5 @@ export const IntervalByStressLooseType: Record<StressLooseType, number> = {
     [StressLooseType.DrinkAlcohol]: 30,
     [StressLooseType.Smoke]: 30,
 };
+
+export const CRITICAL_HEALTH = 120;

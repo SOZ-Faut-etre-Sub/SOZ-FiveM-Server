@@ -44,7 +44,7 @@ export class LSMCDamageProvider {
         weaponHash: number
     ) {
         const playerPed = PlayerPedId();
-        if (playerPed != victim) {
+        if (playerPed != victim || this.playerService.getState()?.isInGame) {
             return;
         }
 
@@ -54,7 +54,7 @@ export class LSMCDamageProvider {
 
     @Tick(100)
     private weaponInjuriesLoop() {
-        if (this.lastHealth === null) {
+        if (this.lastHealth === null || this.playerService.getState()?.isInGame) {
             return;
         }
 

@@ -6,6 +6,7 @@ import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
 import { AnimationService } from '@public/client/animation/animation.service';
+import { GamesProvider } from '@public/client/games/games.provider';
 import { LSMCDeathProvider } from '@public/client/job/lsmc/lsmc.death.provider';
 import { ProgressService } from '@public/client/progress.service';
 import { ZoneRepository } from '@public/client/repository/zone.repository';
@@ -22,7 +23,6 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleMidDamageThreshold } from '@public/shared/vehicle/vehicle';
 
 import { FeatureProvider } from '../feature/feature.provider';
-import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
@@ -50,8 +50,8 @@ export class PlayerStressProvider {
     @Inject(PlayerZombieProvider)
     private playerZombieProvider: PlayerZombieProvider;
 
-    @Inject(VampireGameStateProvider)
-    private vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     @Inject(BlurService)
     private blurService: BlurService;
@@ -163,7 +163,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 
@@ -288,7 +288,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 
@@ -335,7 +335,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 

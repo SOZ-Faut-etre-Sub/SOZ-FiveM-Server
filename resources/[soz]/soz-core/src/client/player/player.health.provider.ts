@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
-import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
+import { GamesProvider } from '@public/client/games/games.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { wait } from '@public/core/utils';
 import { TargetOption } from '@public/shared/target';
@@ -346,8 +346,8 @@ export class PlayerHealthProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
-    @Inject(VampireGameStateProvider)
-    private readonly vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     private lastRunPosition = null;
 
@@ -418,6 +418,7 @@ export class PlayerHealthProvider {
         }
     }
 
+    @OnEvent(ClientEvent.PLAYER_HEALTH_SET_NUTRITION_DISABLED)
     public setNutritionDisabled(value: boolean) {
         this.disableNutrition = value;
     }
@@ -657,7 +658,7 @@ export class PlayerHealthProvider {
             return;
         }
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 

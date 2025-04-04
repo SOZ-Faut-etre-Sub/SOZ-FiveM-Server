@@ -264,6 +264,8 @@ export type PlayerClientState = {
     isInShop: boolean;
     isInHospital: boolean;
     isInHub: boolean;
+    isInGame: boolean;
+    isInGameHub: boolean;
     isInSportClothes: boolean;
     disableMoneyCase: boolean;
     hasPrisonerClothes: boolean;

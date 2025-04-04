@@ -726,4 +726,14 @@ export enum NuiEvent {
     GetWaypoint = 'soz-core:nui:get-waypoint',
     SetWaypoint = 'soz-core:nui:set-waypoint',
     DeleteWaypoint = 'soz-core:nui:delete-waypoint',
+
+    LaserGameAdminMenuOpen = 'soz-core:nui:laser-game:open-admin-menu',
+    LaserGameCreate = 'soz-core:nui:laser-game:create',
+    LaserGameActionPlayer = 'soz-core:nui:laser-game:action-player',
+    LaserGameStartGame = 'soz-core:nui:laser-game:start',
+    LaserGameCancelGame = 'soz-core:nui:laser-game:cancel',
+    LaserGameSetPlayerColor = 'soz-core:nui:laser-game:set-player-color',
+    LaserGameSetTeamColor = 'soz-core:nui:laser-game:set-team-color',
+    LaserGameSetScoreGoal = 'soz-core:nui:laser-game:set-score-goal',
+    LaserGameSetGameDuration = 'soz-core:nui:laser-game:set-game-duration',
 }

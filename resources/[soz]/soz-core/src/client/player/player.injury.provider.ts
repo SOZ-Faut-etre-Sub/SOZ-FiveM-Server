@@ -1,15 +1,14 @@
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
+import { GamesProvider } from '@public/client/games/games.provider';
 import { wait } from '@public/core/utils';
+import { CRITICAL_HEALTH } from '@public/shared/health';
 
 import { Notifier } from '../notifier';
-import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { PlayerService } from './player.service';
 import { PlayerWalkstyleProvider } from './player.walkstyle.provider';
 import { PlayerZombieProvider } from './player.zombie.provider';
-
-const CRITICAL_HEALTH = 120;
 
 function setStealthKills(enabled: boolean) {
     const stealthKills = [
@@ -59,8 +58,8 @@ export class PlayerInjuryProvider {
     @Inject(PlayerZombieProvider)
     private playerZombieProvider: PlayerZombieProvider;
 
-    @Inject(VampireGameStateProvider)
-    private vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
@@ -80,7 +79,7 @@ export class PlayerInjuryProvider {
             return;
         }
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 

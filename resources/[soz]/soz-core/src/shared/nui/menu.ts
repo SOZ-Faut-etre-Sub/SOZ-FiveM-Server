@@ -1,4 +1,5 @@
 import { MenuSmugglingPricesData } from '@private/shared/business.smuggling';
+import { LaserGameAdminInfo, LaserGameData } from '@public/shared/games/laser';
 import { ApartmentMenuData, ApartmentSelectUpgradesMenuData } from '@public/shared/housing/housing';
 import { HudSettings } from '@public/shared/hud';
 import { JobType } from '@public/shared/job';
@@ -150,6 +151,9 @@ export enum MenuType {
     GangVehiculeMenu = 'gang_vehicule_menu',
     WatchMenu = 'watch_menu',
     HalloweenVampire = 'halloween_vampire',
+    LaserGameCreate = 'laser_game_create',
+    LaserGameManage = 'laser_game_manage',
+    LaserGameAdmin = 'laser_game_admin',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {
@@ -227,6 +231,9 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.SmugglingBlackMarketPrices]: MenuSmugglingPricesData;
     [MenuType.WatchMenu]: HudSettings;
     [MenuType.HalloweenVampire]: never;
+    [MenuType.LaserGameCreate]: null;
+    [MenuType.LaserGameManage]: LaserGameData;
+    [MenuType.LaserGameAdmin]: Record<string, LaserGameAdminInfo>;
 }
 
 export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];

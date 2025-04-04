@@ -1,3 +1,4 @@
+import { GamesProvider } from '@public/client/games/games.provider';
 import { Control } from '@public/shared/input';
 
 import { Inject } from '../../core/decorators/injectable';
@@ -7,7 +8,6 @@ import { StonkConfig } from '../../shared/job/stonk';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
-import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 import { WeaponHolsterProvider } from '../weapon/weapon.holster.provider';
 import { WeaponService } from '../weapon/weapon.service';
 
@@ -31,15 +31,15 @@ export class BankMoneyCaseProvider {
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
 
-    @Inject(VampireGameStateProvider)
-    private readonly vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     private disableAttack = false;
 
     private shouldDisplayMoneyCase(): boolean {
         const player = this.playerService.getPlayer();
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning() || this.playerService.getState().isInGameHub) {
             this.disableAttack = false;
             return false;
         }

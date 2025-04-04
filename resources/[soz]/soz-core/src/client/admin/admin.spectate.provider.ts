@@ -9,6 +9,7 @@ import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { VoipService } from '@public/client/voip/voip.service';
+import { WeaponService } from '@public/client/weapon/weapon.service';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { AdminPlayer } from '@public/shared/admin/admin';
@@ -35,12 +36,17 @@ export class AdminSpectateProvider {
     @Inject(OrbitalCameraProvider)
     private orbitalCameraProvider: OrbitalCameraProvider;
 
+    @Inject(WeaponService)
+    private readonly weaponService: WeaponService;
+
     public ped: number = null;
     private flyingCamera: number;
     private orbitalCamera: number;
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerSpectate)
     public async spectate(player: AdminPlayer): Promise<void> {
+        await this.weaponService.clear();
+
         TriggerServerEvent(ServerEvent.ADMIN_SPECTATE_PLAYER, player);
     }
 
@@ -89,6 +95,9 @@ export class AdminSpectateProvider {
 
     private async terminateSpectate() {
         FreezeEntityPosition(PlayerPedId(), false);
+        await this.weaponService.clear();
+
+        TriggerServerEvent(ServerEvent.ADMIN_END_SPECTATE_PLAYER);
     }
 
     @Command('admin_swap_spectate_cam', {

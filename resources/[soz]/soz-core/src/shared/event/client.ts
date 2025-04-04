@@ -172,6 +172,7 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
     PLAYER_HEALTH_DO_YOGA = 'soz-core:client:player:health:yoga',
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
+    PLAYER_HEALTH_SET_NUTRITION_DISABLED = 'soz-core:client:player:health:set-nutrition-disabled',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
     PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
@@ -480,4 +481,15 @@ export enum ClientEvent {
     PHONE_APP_WEATHER_UPDATE_STORM_ALERT = 'soz-core:server:phone:app:weather:updateStormAlert',
     PHONE_CAMERA_OPEN = 'soz-core:client:phone:camera:open',
     PHONE_CAMERA_CLOSE = 'soz-core:client:phone:camera:close',
+
+    LASER_GAME_REQUEST_JOIN = 'soz-core:client:phone:app:laser-game:request-join',
+    LASER_GAME_REJOIN_GAME = 'soz-core:client:phone:app:laser-game:rejoin',
+    LASER_GAME_ADDED_IN_GAME = 'soz-core:client:phone:app:laser-game:added_in_game',
+    LASER_GAME_START_GAME = 'soz-core:client:phone:app:laser-game:start-state',
+    LASER_GAME_STOP_GAME = 'soz-core:client:phone:app:laser-game:stop-state',
+    LASER_GAME_SYNC_TEAM = 'soz-core:client:phone:app:laser-game:sync-team',
+    LASER_GAME_SYNC_SCORES = 'soz-core:client:phone:app:laser-game:sync-scores',
+    LASER_GAME_DEATH_IN_HUB = 'soz-core:client:phone:app:laser-game:death-in-hub',
+    LASER_GAME_SYNC_PLAYER_MENU = 'soz-core:client:phone:app:laser-game:sync-player-menu',
+    LASER_GAME_ADD_KILL = 'soz-core:client:phone:app:laser-game:add-kill',
 }

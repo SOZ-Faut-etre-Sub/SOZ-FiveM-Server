@@ -35,10 +35,15 @@ export class InventoryUsageProvider {
     }
 
     private async useItem(shortcut: number) {
+        const playerState = this.playerService.getState();
+        if (playerState.isInGame) return;
+
         const item = await emitRpc<InventoryItem | null>(RpcServerEvent.INVENTORY_GET_ITEM_BY_SHORTCUT, shortcut);
         if (!item) {
             return;
         }
+
+        if (playerState.isInGameHub && item.type === 'weapon') return;
 
         const player = this.playerService.getPlayer();
 

@@ -4,6 +4,7 @@ import { wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { BlipFactory } from '@public/client/blip';
+import { GamesProvider } from '@public/client/games/games.provider';
 import { Monitor } from '@public/client/monitor/monitor';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
@@ -40,8 +41,6 @@ import { Animation } from '../../../shared/animation';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { PhoneAppSocietyProvider } from '../../phone/apps/phone.app.society.provider';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
-import { VampireGameProvider } from '../../story/vampire.game.provider';
-import { VampireGameStateProvider } from '../../story/vampire.game.state.provider';
 import { VoipService } from '../../voip/voip.service';
 
 const deathVehcleAnim: Animation = {
@@ -205,11 +204,8 @@ export class LSMCDeathProvider {
     @Inject(BlurService)
     private blurService: BlurService;
 
-    @Inject(VampireGameProvider)
-    private vampireGameProvider: VampireGameProvider;
-
-    @Inject(VampireGameStateProvider)
-    private vampireGameStateProvider: VampireGameStateProvider;
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -263,10 +259,12 @@ export class LSMCDeathProvider {
             this.nuiDispatch.closeEverything();
             await this.voipService.mutePlayer(true);
 
-            // Skip death process during vampire game
-            if (this.vampireGameStateProvider.isGameRunning()) {
-                await this.vampireGameProvider.handleOnDeath();
-                return;
+            // Skip death process during games if needed
+            if (this.gamesProvider.areAnyGameRunning()) {
+                const shouldSkipDeath = await this.gamesProvider.handleOnDeath();
+                if (shouldSkipDeath) {
+                    return;
+                }
             }
 
             // Skip death process if player is zombie
@@ -276,6 +274,10 @@ export class LSMCDeathProvider {
                 this.IsDead = false;
 
                 return;
+            }
+
+            if (this.playerService.getState()?.isInGameHub) {
+                TriggerEvent(ClientEvent.LASER_GAME_DEATH_IN_HUB);
             }
 
             if (this.playerService.getState()?.inCyberHeist) {

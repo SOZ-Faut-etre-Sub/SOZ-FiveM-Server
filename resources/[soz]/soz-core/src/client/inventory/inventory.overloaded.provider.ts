@@ -1,3 +1,4 @@
+import { GamesProvider } from '@public/client/games/games.provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { Control } from '@public/shared/input';
@@ -8,21 +9,20 @@ import { getItemsWeight, InventoryConfiguration, InventoryItem } from '../../sha
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
-import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 
 @Provider()
 export class InventoryOverloadProvider {
     @Inject(PlayerWalkstyleProvider)
     private playerWalkstyleProvider: PlayerWalkstyleProvider;
 
-    @Inject(VampireGameStateProvider)
-    private vampireGameStateProvider: VampireGameStateProvider;
-
     @Inject(Notifier)
     private notifier: Notifier;
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(GamesProvider)
+    private readonly gamesProvider: GamesProvider;
 
     private overloaded = false;
     private interval: NodeJS.Timer;
@@ -34,7 +34,7 @@ export class InventoryOverloadProvider {
 
         this.overloaded = currentWeight > maxWeight;
 
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 
@@ -58,7 +58,7 @@ export class InventoryOverloadProvider {
 
     @Tick()
     public onOverloadedTick() {
-        if (this.vampireGameStateProvider.isGameRunning()) {
+        if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
 

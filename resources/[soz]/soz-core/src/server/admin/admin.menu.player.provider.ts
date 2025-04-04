@@ -69,7 +69,15 @@ export class AdminMenuPlayerProvider {
     public spectatePlayer(source: number, player: AdminPlayer) {
         const position = GetEntityCoords(GetPlayerPed(player.id)) as Vector3;
 
+        const bucket = GetPlayerRoutingBucket(String(player.id));
+        SetPlayerRoutingBucket(String(source), bucket);
+
         TriggerClientEvent(ClientEvent.ADMIN_SPECTATE_PLAYER, source, player, position);
+    }
+
+    @OnEvent(ServerEvent.ADMIN_END_SPECTATE_PLAYER)
+    public endSpectatePlayer(source: number) {
+        SetPlayerRoutingBucket(String(source), 0);
     }
 
     @OnEvent(ServerEvent.ADMIN_KILL_PLAYER)
