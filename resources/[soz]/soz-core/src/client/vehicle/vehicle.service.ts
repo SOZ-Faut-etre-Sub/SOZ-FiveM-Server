@@ -182,7 +182,9 @@ const VehicleConditionHelpers: Partial<VehicleConditionHelper<keyof VehicleCondi
 
             for (let i = 0; i < windowNumber; i++) {
                 if (value[i]) {
-                    SmashVehicleWindow(vehicle, i);
+                    if (IsVehicleWindowIntact(vehicle, i)) {
+                        SmashVehicleWindow(vehicle, i);
+                    }
                 } else {
                     FixVehicleWindow(vehicle, i);
                     RollUpWindow(vehicle, i);
