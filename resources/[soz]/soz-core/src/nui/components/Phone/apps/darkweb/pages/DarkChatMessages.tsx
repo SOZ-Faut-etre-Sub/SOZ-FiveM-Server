@@ -1,6 +1,7 @@
 import { DotsVerticalIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import React, { FunctionComponent, memo, useEffect, useMemo, useState } from 'react';
+import { FaBell, FaBellSlash } from 'react-icons/fa';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Virtuoso } from 'react-virtuoso';
 
@@ -32,7 +33,8 @@ export const DarkChatMessages = memo(() => {
 
     const { conversationId } = useParams<{ conversationId: string }>();
 
-    const { sendMessage, setConversationAsRead, fetchMessages, fetchParticipants } = useDarkWebAPI();
+    const { sendMessage, setConversationAsRead, fetchMessages, fetchParticipants, setConversationNotification } =
+        useDarkWebAPI();
     const { number } = useSimCard();
 
     const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
@@ -54,6 +56,16 @@ export const DarkChatMessages = memo(() => {
     useAppTitleGetBackUpdater(() => navigate(-1), undefined, 'text-teal-500');
     useAppTitleUpdater(true, conversation?.label || 'Erreur');
     useAppTitleActionsUpdater([
+        {
+            display: !participant?.notification,
+            icon: <FaBell className="text-teal-500 size-5 focus:outline-none" />,
+            onClick: () => setConversationNotification(parseInt(conversationId), true),
+        },
+        {
+            display: participant?.notification,
+            icon: <FaBellSlash className="text-teal-500 size-5 focus:outline-none" />,
+            onClick: () => setConversationNotification(parseInt(conversationId), false),
+        },
         {
             display: participant?.role === 'ADMIN',
             icon: <DotsVerticalIcon className="text-teal-500 size-5" />,

@@ -4,6 +4,7 @@ import { Notifier } from '@public/server/notifier';
 
 import { Inject } from '../../../core/decorators/injectable';
 import { Rpc } from '../../../core/decorators/rpc';
+import { ClientEvent } from '../../../shared/event/client';
 import { DarkwebConversationUpdate, THREAD_PRICE } from '../../../shared/phone/apps/darkweb';
 import { RpcServerEvent } from '../../../shared/rpc';
 import { PrismaService } from '../../database/prisma.service';
@@ -42,7 +43,7 @@ export class PhoneAppDarkWebProvider {
             where: {
                 masked: false,
                 updatedAt: {
-                    gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14),
+                    gte: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
                 },
             },
             orderBy: {
@@ -152,6 +153,38 @@ export class PhoneAppDarkWebProvider {
         });
     }
 
+    @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_UPDATE_PARTICIPANT_NOTIFICATION)
+    async updateParticipantNotification(source: number, conversationId: number, enabled: boolean) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
+            return;
+        }
+
+        await this.prismaService.darkweb_participants.upsert({
+            where: {
+                user_identifier_conversation_id: {
+                    conversation_id: conversationId,
+                    user_identifier: player.citizenid,
+                },
+            },
+            create: {
+                conversation_id: conversationId,
+                user_identifier: player.citizenid,
+                notification: enabled,
+                phoneNumber: player.charinfo.phone,
+                role: 'USER',
+            },
+            update: {
+                notification: enabled,
+            },
+        });
+    }
+
     @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_SET_CONVERSATION_AS_READ)
     async setConversationAsRead(source: number, conversationId: number) {
         const player = this.playerService.getPlayer(source);
@@ -221,13 +254,33 @@ export class PhoneAppDarkWebProvider {
             return;
         }
 
-        await this.prismaService.darkweb_messages.create({
+        const messageData = await this.prismaService.darkweb_messages.create({
             data: {
                 conversation_id: conversationId,
                 user_identifier: player.charinfo.phone,
                 phoneNumber: player.charinfo.phone,
                 message,
             },
+        });
+
+        const participants = await this.prismaService.darkweb_participants.findMany({
+            select: {
+                user_identifier: true,
+            },
+            where: {
+                conversation_id: conversationId,
+            },
+        });
+
+        participants.forEach(participant => {
+            const player = this.playerService.getPlayerByCitizenId(participant.user_identifier);
+            if (!player) return;
+
+            TriggerClientEvent(ClientEvent.PHONE_APP_DARKWEB_RECEIVE_MESSAGE, player.source, {
+                ...messageData,
+                createdAt: messageData.createdAt.getTime(),
+                updatedAt: messageData.updatedAt.getTime(),
+            });
         });
     }
 }

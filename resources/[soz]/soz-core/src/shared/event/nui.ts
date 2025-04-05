@@ -700,6 +700,7 @@ export enum NuiEvent {
     PhoneAppDarkWebFetchConversations = 'soz-core:nui:phone:app-dark-web-fetch-conversations',
     PhoneAppDarkWebAddConversation = 'soz-core:nui:phone:app-dark-web-add-conversation',
     PhoneAppDarkWebSetConversationAsRead = 'soz-core:nui:phone:app-dark-web-set-conversation-as-read',
+    PhoneAppDarkWebUpdateParticipantNotification = 'soz-core:nui:phone:app-dark-web-update-participant-notification',
     PhoneAppDarkWebUpdateConversation = 'soz-core:nui:phone:app-dark-web-update-conversation',
     PhoneAppDarkWebUpdateParticipantRole = 'soz-core:nui:phone:app-dark-web-update-participant-role',
     PhoneAppDarkWebFetchMessages = 'soz-core:nui:phone:aapp-dark-web-fetch-messages',
