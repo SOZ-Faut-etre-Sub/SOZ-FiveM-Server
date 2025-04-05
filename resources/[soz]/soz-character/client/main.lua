@@ -313,6 +313,12 @@ Labels = {
         {value = 32, label = "Queue de cheval basse", Collection = "soz_custom"},
         {value = 35, label = "Cheveux longs 2", Collection = "soz_custom"},
         {value = 38, label = "Carré court", Collection = "soz_custom"},
+        {value = 40, label = "Queue bouclée romantique", Collection = "soz_custom"},
+        {value = 43, label = "Space Buns mi-longs", Collection = "soz_custom"},
+        {value = 44, label = "Carré soufflé volume", Collection = "soz_custom"},
+        {value = 45, label = "Carré glamour ondulé", Collection = "soz_custom"},
+        {value = 46, label = "Carré droit headband", Collection = "soz_custom"},
+        {value = 47, label = "Noué rétro avec mèches", Collection = "soz_custom"},
     },
     BeardMale = {
         {value = -1, label = GetLabelText("BERD_P0_0_0")},
