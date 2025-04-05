@@ -31,6 +31,7 @@ import {
     LaserGameTeamSpawnPosition,
     LaserGameTypeEnum,
 } from '@public/shared/games/laser';
+import { CRITICAL_HEALTH } from '@public/shared/health';
 import { MenuType } from '@public/shared/nui/menu';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { getDistance, Vector2, Vector4 } from '@public/shared/polyzone/vector';
@@ -71,6 +72,7 @@ export class LaserGameProvider {
     starting: boolean = false;
     hasGameRequest: boolean = false;
     playersInSpectatedGame = {};
+    startGameHealth = null;
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -88,8 +90,23 @@ export class LaserGameProvider {
                 z: LaserGamePosition[2],
                 w: LaserGamePosition[3],
             },
+            skin: {
+                Hair: {
+                    HairType: 123,
+                    HairColor: 29,
+                    HairSecondaryColor: 29,
+                    BeardOpacity: 1,
+                    EyebrowOpacity: 1,
+                    BeardType: -1,
+                    ChestHairType: -1,
+                    BeardColor: 0,
+                    EyebrowColor: 8,
+                    ChestHairColor: 0,
+                    EyebrowType: 1,
+                    ChestHairOpacity: 1,
+                },
+            },
             components: {
-                2: [123, 0, 0],
                 3: [18, 0, 0],
                 4: [79, 3, 0],
                 6: [58, 3, 0],
@@ -472,6 +489,7 @@ export class LaserGameProvider {
 
         TriggerEvent(ClientEvent.PLAYER_HEALTH_SET_NUTRITION_DISABLED, true);
         const ped = PlayerPedId();
+        this.startGameHealth = GetEntityHealth(PlayerPedId());
 
         await waitUntil(async () => !IsEntityPositionFrozen(ped));
         FreezeEntityPosition(ped, true);
@@ -534,6 +552,10 @@ export class LaserGameProvider {
             this.voipService.mutePlayer(false);
         }
         this.game.state = LaserGameStateEnum.ENDED;
+        if (this.startGameHealth) {
+            SetEntityHealth(ped, this.startGameHealth);
+        }
+        this.startGameHealth = null;
 
         FreezeEntityPosition(ped, true);
 
@@ -636,6 +658,19 @@ export class LaserGameProvider {
 
         player = this.playerService.getPlayer();
         if (confirmed && !player.metadata.isdead) {
+            if (player.metadata.plaster?.length) {
+                this.notifier.notify('Regarde ton état, tu devrais attendre de ne plus avoir de platres.', 'error');
+
+                return;
+            }
+            if (GetEntityHealth(PlayerPedId()) <= CRITICAL_HEALTH) {
+                this.notifier.notify(
+                    'Regarde ton état, tu devrais plutôt te faire soigner avant de participer.',
+                    'error'
+                );
+
+                return;
+            }
             this.playerService.updateState({ isInGameHub: true });
             await wait(500);
             await this.weaponService.clear();

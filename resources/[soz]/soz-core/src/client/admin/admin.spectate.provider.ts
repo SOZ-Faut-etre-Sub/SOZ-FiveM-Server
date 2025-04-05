@@ -58,7 +58,14 @@ export class AdminSpectateProvider {
         SetEntityCoords(PlayerPedId(), position[0], position[1], position[2] - 5, false, false, false, false);
         await wait(10);
 
-        const target = GetPlayerPed(GetPlayerFromServerId(player.id));
+        let retry = 0;
+        let target = GetPlayerPed(GetPlayerFromServerId(player.id));
+        while (!target || retry < 5) {
+            await wait(150);
+            target = GetPlayerPed(GetPlayerFromServerId(player.id));
+            retry++;
+        }
+
         if (!target || target === PlayerPedId()) {
             return;
         }

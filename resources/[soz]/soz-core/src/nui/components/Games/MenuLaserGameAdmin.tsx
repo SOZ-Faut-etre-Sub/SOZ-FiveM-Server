@@ -51,13 +51,13 @@ export const LaserGameSubMenu: FunctionComponent<MenuLaserGameSubProps> = ({ dat
             <SubMenu id={`game_${data.creator}`}>
                 <MenuTitle title={`Partie de ${data.players[data.creator].rpFullName}`} />
                 <MenuContent>
-                    <MenuItemSubMenuLink key="players" id="players">
+                    <MenuItemSubMenuLink key={`players_${data.creator}`} id={`players_${data.creator}`}>
                         Liste des joueurs
                     </MenuItemSubMenuLink>
                     <MenuItemText>{`Mode de partie: ${LaserGameType[data.type].name}`}</MenuItemText>
                 </MenuContent>
             </SubMenu>
-            <SubMenu id="players">
+            <SubMenu id={`players_${data.creator}`}>
                 <MenuTitle title="Joueurs" />
                 <MenuContent>
                     {Object.values(data.players).map(player => (
