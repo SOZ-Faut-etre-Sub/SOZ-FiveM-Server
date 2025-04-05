@@ -314,7 +314,16 @@ export class LaserGameProvider {
             return;
         }
 
-        if (target.metadata.plaster?.length || GetEntityHealth(GetPlayerPed(target.source)) <= CRITICAL_HEALTH) {
+        if (target.metadata.plaster?.length) {
+            this.notifier.notify(
+                player.source,
+                'Regarde son état, il devrait plutôt attendre de ne plus avoir de platre.',
+                'error'
+            );
+
+            return;
+        }
+        if (GetEntityHealth(GetPlayerPed(target.source)) <= CRITICAL_HEALTH) {
             this.notifier.notify(
                 player.source,
                 'Regarde son état, il devrait plutôt se faire soigner avant de participer.',
