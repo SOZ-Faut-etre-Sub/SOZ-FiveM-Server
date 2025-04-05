@@ -1033,6 +1033,10 @@ export class HousingProvider {
             return this.playerTemporaryAccess.get(player.citizenid).has(apartment.id);
         }
 
+        if (hasSearchWarrantAccessInApartment(apartment, player)) {
+            return true;
+        }
+
         return false;
     }
 
