@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { ClickhouseService } from '@public/server/clickhouse/clickhouse.service';
+import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { ClickhouseLoggerHandler } from '@public/server/monitor/clickhouse.logger.handler';
+import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 import { MonitorEvent, MonitorTraceEvent } from '../../shared/monitor';
@@ -16,6 +18,9 @@ export class Monitor {
 
     @Inject(ClickhouseLoggerHandler)
     private clickhouseLoggerHandler: ClickhouseLoggerHandler;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private eventBuffer: MonitorTraceEvent[] = [];
 
@@ -46,6 +51,11 @@ export class Monitor {
     }
 
     public traceEvent(type: string, event: MonitorEvent): void {
+        // @TODO Create a list of allowed events
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         const filteredEvent = this.createTraceEvent(type, event);
 
         if (!filteredEvent) {
