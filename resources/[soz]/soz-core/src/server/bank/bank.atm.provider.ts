@@ -6,9 +6,11 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { AtmType, AtmUiData, BankAccount } from '../../shared/bank';
 import { ServerEvent } from '../../shared/event/server';
+import { Feature } from '../../shared/features';
 import { getLocationHash } from '../../shared/locationhash';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerService } from '../player/player.service';
 import { BankAccountRepository } from '../repository/bank.account.repository';
 
@@ -19,8 +21,15 @@ export class BankAtmProvider {
     @Inject(BankAccountRepository)
     private bankAccountRepository: BankAccountRepository;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Rpc(RpcServerEvent.BANK_ATM_REMOVE_LIQUIDITY)
     public async removeAtmLiquidity(source: number, accountId: string, amount: number): Promise<boolean> {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return true;
+        }
+
         return this.bankAccountRepository.removeMoney(accountId, amount);
     }
 

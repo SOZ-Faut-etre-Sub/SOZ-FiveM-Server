@@ -1,3 +1,6 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { Feature } from '@public/shared/features';
+
 import { AtmConfig } from '../../config/bank';
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { emitRpc } from '../../core/rpc';
@@ -17,7 +20,14 @@ export class BankWithdrawManager {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     public async withdraw(identifier: string, bankAccount: string, atmType: AtmType, amount: number): Promise<boolean> {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return true;
+        }
+
         const atmAccount = await emitRpc<BankAccount>(RpcServerEvent.BANK_GET_ACCOUNT, bankAccount, 'bank_atm');
         if (!atmAccount) return false;
 
