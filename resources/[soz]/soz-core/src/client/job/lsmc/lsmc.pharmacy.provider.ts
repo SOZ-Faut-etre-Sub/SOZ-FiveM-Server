@@ -40,8 +40,14 @@ export class LSMCPharmacyProvider {
             { name: 'antiacide', price: PHARMACY_PRICES.antiacide },
             { name: 'health_book', price: PHARMACY_PRICES.health_book },
         ];
+
         if (this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
             products.push({ name: 'horrific_lollipop', price: 15 });
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            products.push({ name: 'firstaid', price: 50 });
+            products.push({ name: 'defibrillator', price: 50 });
         }
 
         const getLsmcShopProduct = products => {
