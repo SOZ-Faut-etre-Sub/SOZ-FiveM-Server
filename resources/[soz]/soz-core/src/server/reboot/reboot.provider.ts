@@ -140,11 +140,13 @@ export class RebootProvider {
 
         this.upwFacilityProvider.saveLoop();
 
-        const ids = await this.playerCleanService.getPlayerToCleans();
-        const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            const ids = await this.playerCleanService.getPlayerToCleans();
+            const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);
 
-        this.logger.info(`[reboot] Houses owner cleaned: ${houseOwnerCount}`);
-        this.logger.info(`[reboot] Houses roommate cleaned: ${houseRoommateCount}`);
+            this.logger.info(`[reboot] Houses owner cleaned: ${houseOwnerCount}`);
+            this.logger.info(`[reboot] Houses roommate cleaned: ${houseRoommateCount}`);
+        }
     }
 
     @Command('thunder', {
