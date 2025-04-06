@@ -6,6 +6,7 @@ import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Feature } from '../../shared/features';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     getDefaultVehicleConfiguration,
@@ -14,6 +15,7 @@ import {
 } from '../../shared/vehicle/modification';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -47,6 +49,9 @@ export class VehicleCustomProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Rpc(RpcServerEvent.VEHICLE_CUSTOM_SET_MODS)
     public async setMods(
@@ -105,15 +110,17 @@ export class VehicleCustomProvider {
             // LS Custom upgrade parts
             const upgradedParts = this.getLSCustomUpgradedPart(originalConfiguration, mods);
 
-            const lsCustomInventory = await this.inventoryFactory.get('ls_custom_storage');
-            if (upgradedParts > 0 && !lsCustomInventory.remove('ls_custom_upgrade_part', upgradedParts)) {
-                this.notifier.notify(
-                    source,
-                    `Le stock du LS Custom n'est pas suffisant. Impossible d'améliorer votre véhicule !`,
-                    'error'
-                );
+            if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                const lsCustomInventory = await this.inventoryFactory.get('ls_custom_storage');
+                if (upgradedParts > 0 && !lsCustomInventory.remove('ls_custom_upgrade_part', upgradedParts)) {
+                    this.notifier.notify(
+                        source,
+                        `Le stock du LS Custom n'est pas suffisant. Impossible d'améliorer votre véhicule !`,
+                        'error'
+                    );
 
-                return originalConfiguration;
+                    return originalConfiguration;
+                }
             }
 
             if (!(await this.playerMoneyService.buy(source, price, TaxType.VEHICLE))) {
