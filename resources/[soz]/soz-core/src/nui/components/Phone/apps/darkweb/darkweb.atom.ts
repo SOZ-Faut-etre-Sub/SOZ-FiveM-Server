@@ -43,9 +43,9 @@ export const useAppDarkWebStateHandlers = () => {
 
     useNuiEvent('phone', 'AppDarkWebHasDongle', setEnabled);
     useNuiEvent('phone', 'AppDarkWebNewMessage', message => {
-        const conversation = conversations.find(c => c.id === message.conversation_id);
+        const conversation = conversations?.find(c => c.id === message.conversation_id);
 
-        const participant = participants.find(
+        const participant = participants?.find(
             p =>
                 p.conversation_id === message.conversation_id &&
                 p.phoneNumber === number &&
