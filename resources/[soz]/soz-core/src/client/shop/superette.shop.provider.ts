@@ -12,6 +12,8 @@ import { ShopProduct } from '@public/shared/shop';
 import { ShopItem, ShopsContent } from '@public/shared/shop/superette';
 import { TaxType } from '@public/shared/tax';
 
+import { Feature } from '../../shared/features';
+import { FeatureProvider } from '../feature/feature.provider';
 import { ItemService } from '../item/item.service';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
@@ -23,6 +25,58 @@ const SOUVENIR_BRAND = [
     ShopBrand.SouvenirOther,
     ShopBrand.SouvenirPlush,
     NoZoneShopBrand.SouvenirFIB,
+];
+
+const FOOD_BRAND = [
+    ShopBrand.LtdGasolineNorth,
+    ShopBrand.LtdGasolineSouth,
+    ShopBrand.RobsliquorNorth,
+    ShopBrand.RobsliquorSouth,
+    ShopBrand.Supermarket247North,
+    ShopBrand.Supermarket247South,
+    ShopBrand.Supermarket247Cayo,
+];
+
+const EXTRA_FOOD_WHATIF = [
+    'wine1',
+    'grapejuice1',
+    'cheese1',
+    'sausage1',
+    'beef_symfony_truffle',
+    'crunchy_lamp_chop',
+    'rosmarino_veal_filet',
+    'spicy_sichuan_duck_breast',
+    'scallops_goldn_corn',
+    'deep_sea_turbot',
+    'herbarium_cod',
+    'ocean_awakening',
+    'tropical_goat_curry',
+    'tikka_royal',
+    'sand_tagine',
+    'end_world_tataki',
+    'popcorn',
+    'fruit_salad',
+    'lemon_cheesecake',
+    'creamed_corn',
+    'vegetable_festival',
+    'cabbage_salad',
+    'stuffed_tomatoes',
+    'veggie_gathering',
+    'country_feast',
+    'fried_potatoes',
+    'vegetable_dance',
+    'autumn_symphony',
+    'pumpkin_potage',
+    'smoothie_fruity',
+    'apple_juice_drink',
+    'tomato_juice',
+    'orange_juice_drink',
+    'multifruit',
+    'pumpkin_lemonade',
+    'lemonade_bottle',
+    'tomato_tonic',
+    'cabbage_chaos',
+    'fresh_tomachou',
 ];
 
 @Provider()
@@ -42,6 +96,9 @@ export class SuperetteShopProvider {
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Inject(Logger)
     private logger: Logger;
 
@@ -55,6 +112,17 @@ export class SuperetteShopProvider {
                     metadata: ShopsContent[brand][i].metadata,
                 } as ShopItem;
                 superetteContent.push(sharedItem);
+            }
+
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                for (const item of EXTRA_FOOD_WHATIF) {
+                    const sharedItem = {
+                        ...this.itemService.getItem(item),
+                        price: 5,
+                        metadata: {},
+                    } as ShopItem;
+                    superetteContent.push(sharedItem);
+                }
             }
 
             let taxes = null;
