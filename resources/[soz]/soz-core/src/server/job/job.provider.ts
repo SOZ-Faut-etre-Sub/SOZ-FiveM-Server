@@ -7,8 +7,10 @@ import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Feature } from '../../shared/features';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { FeatureProvider } from '../feature/feature.provider';
 import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 
@@ -23,8 +25,15 @@ export class JobProvider {
     @Inject(JobService)
     private jobService: JobService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Rpc(RpcServerEvent.JOBS_USE_WORK_CLOTHES)
     public async useWorkClothes(source: number, storageId: string) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return true;
+        }
+
         const inventory = await this.inventoryFactory.get(storageId);
 
         if (!inventory) {
