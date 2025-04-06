@@ -3,8 +3,10 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
 import { PrismaService } from '@public/server/database/prisma.service';
+import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { Notifier } from '@public/server/notifier';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { UpwConfig, UpwPollution } from '@public/shared/job/upw';
 
 import { Provider } from '../../../core/decorators/provider';
@@ -18,6 +20,9 @@ export class UpwPollutionProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private pollutionThisTick = 0;
     private units: number[];
@@ -48,6 +53,10 @@ export class UpwPollutionProvider {
     @Tick(UpwConfig.Pollution.Tick)
     private updatePollution() {
         if (!this.units) {
+            return;
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
             return;
         }
 
@@ -105,10 +114,18 @@ export class UpwPollutionProvider {
     }
 
     public getPollutionPercent() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return 0;
+        }
+
         return this.currentPollution * 100;
     }
 
     public getPollutionLevel(): UpwPollution {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return UpwPollution.Low;
+        }
+
         const currentPollution = this.currentPollution * 100;
 
         for (const level of Object.values(UpwPollution)) {

@@ -5,6 +5,7 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { BankService } from '@public/server/bank/bank.service';
 import { PrismaService } from '@public/server/database/prisma.service';
+import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { Monitor } from '@public/server/monitor/monitor';
@@ -15,6 +16,7 @@ import { ServerStateService } from '@public/server/server.state.service';
 import { Store } from '@public/server/store/store';
 import { ClientEvent } from '@public/shared/event/client';
 import { ServerEvent } from '@public/shared/event/server';
+import { Feature } from '@public/shared/features';
 import { ADD_ERROR_MESSAGE, InventoryType, isInventoryItemExpired } from '@public/shared/inventory';
 import { joaat } from '@public/shared/joaat';
 import { JobType } from '@public/shared/job';
@@ -94,6 +96,9 @@ export class UpwFacilityProvider {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Inject('Store')
     private store: Store;
@@ -237,6 +242,10 @@ export class UpwFacilityProvider {
     }
 
     public getBlackoutLevel() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return UpwBlackout.Zero;
+        }
+
         const percent = this.getBlackoutPercent();
 
         for (const level of Object.values(UpwBlackout)) {
@@ -252,7 +261,11 @@ export class UpwFacilityProvider {
     }
 
     @Tick(UpwConfig.Consumption.Tick)
-    public enrgyConsumptionLoop() {
+    public energyConsumptionLoop() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         const connectedPlayers = this.serverStateService.getPlayers();
         const consumptionThisTick = Math.ceil(UpwConfig.Consumption.EnergyPerTick * connectedPlayers.length);
 
