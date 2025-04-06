@@ -27,7 +27,7 @@ const SOUVENIR_BRAND = [
     NoZoneShopBrand.SouvenirFIB,
 ];
 
-const FOOD_BRAND = [
+const FOOD_BRAND: (ShopBrand | NoZoneShopBrand)[] = [
     ShopBrand.LtdGasolineNorth,
     ShopBrand.LtdGasolineSouth,
     ShopBrand.RobsliquorNorth,
@@ -114,7 +114,7 @@ export class SuperetteShopProvider {
                 superetteContent.push(sharedItem);
             }
 
-            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) && FOOD_BRAND.includes(brand)) {
                 for (const item of EXTRA_FOOD_WHATIF) {
                     const sharedItem = {
                         ...this.itemService.getItem(item),
