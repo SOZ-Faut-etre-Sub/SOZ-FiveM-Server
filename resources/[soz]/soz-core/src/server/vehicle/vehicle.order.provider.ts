@@ -1,5 +1,6 @@
-import { VehicleBusinessImportConf } from '@private/shared/business.vehicle';
+import { VehicleBusinessImportConf, VehicleBusinessImportWhatIfConf } from '@private/shared/business.vehicle';
 import { Once, OnceStep } from '@public/core/decorators/event';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { UpwConfig } from '@public/shared/job/upw';
 import { PlayerData } from '@public/shared/player';
@@ -25,6 +26,7 @@ import {
 } from '../../shared/vehicle/vehicle';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -62,6 +64,9 @@ export class VehicleOrderProvider {
 
     @Inject(Monitor)
     private monitor: Monitor;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private ordersInProgress: Map<string, VehicleOrder> = new Map();
 
@@ -194,6 +199,9 @@ export class VehicleOrderProvider {
             }
 
             waitTime = VehicleBusinessImportConf.VehicleBusinessImportDuration;
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                waitTime = VehicleBusinessImportWhatIfConf.VehicleBusinessImportDuration;
+            }
 
             if (VehicleOrderMode.Crimi == mode) {
                 garage = 'garage_gang_' + player.gang.id;

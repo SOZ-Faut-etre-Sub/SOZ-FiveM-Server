@@ -1,8 +1,10 @@
-import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { VehicleBusinessCustomPrice, VehicleBusinessCustomWhatIfPrice } from '@private/shared/business.vehicle';
 import { useItem } from '@public/nui/hook/data';
+import { RootState } from '@public/nui/store';
 import { TaxType } from '@public/shared/tax';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { RGBColor } from '../../../shared/color';
 import { NuiEvent } from '../../../shared/event';
@@ -334,6 +336,7 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
     const item = useItem('veh_strip_piece_std');
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom, LSCustomMode.NewGahray].includes(data.mode);
     const menuTitle = crimi ? 'Customisations' : JobLabel.bennys;
+    const whatIf = useSelector((state: RootState) => state.features.WhatIfFirstEpisode);
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -406,7 +409,11 @@ export const MenuBennysUpgradeVehicle: FunctionComponent<MenuBennysUpgradeVehicl
                                     <span className="underline">Coût totaux : </span>
                                 </MenuItemText>
                                 <MenuItemText>
-                                    • {Math.ceil(price / VehicleBusinessCustomPrice)} {item.label}
+                                    •{' '}
+                                    {Math.ceil(
+                                        price / (whatIf ? VehicleBusinessCustomWhatIfPrice : VehicleBusinessCustomPrice)
+                                    )}{' '}
+                                    {item.label}
                                 </MenuItemText>
                             </>
                         )

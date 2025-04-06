@@ -1,12 +1,12 @@
-import { VehicleBusinessCustomPrice } from '@private/shared/business.vehicle';
+import { VehicleBusinessCustomPrice, VehicleBusinessCustomWhatIfPrice } from '@private/shared/business.vehicle';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { Feature } from '@public/shared/features';
 import { TaxType } from '@public/shared/tax';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { Feature } from '../../shared/features';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     getDefaultVehicleConfiguration,
@@ -47,11 +47,11 @@ export class VehicleCustomProvider {
     @Inject(ItemService)
     private itemService: ItemService;
 
-    @Inject(Monitor)
-    private monitor: Monitor;
-
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Rpc(RpcServerEvent.VEHICLE_CUSTOM_SET_MODS)
     public async setMods(
@@ -69,6 +69,9 @@ export class VehicleCustomProvider {
 
         const playerVehicle = state.volatile.isPlayerVehicle;
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const crimiCustomPrice = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)
+            ? VehicleBusinessCustomWhatIfPrice
+            : VehicleBusinessCustomPrice;
 
         if (mode == LSCustomMode.LsCustom && taxedPrice && this.playerMoneyService.get(source) < taxedPrice) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent", 'error');
@@ -78,7 +81,7 @@ export class VehicleCustomProvider {
         if (
             mode == LSCustomMode.CrimiCusto &&
             price &&
-            !inventory.hasEnoughItem('veh_strip_piece_std', Math.ceil(price / VehicleBusinessCustomPrice), true)
+            !inventory.hasEnoughItem('veh_strip_piece_std', Math.ceil(price / crimiCustomPrice), true)
         ) {
             const item = this.itemService.getItem('veh_strip_piece_std');
             this.notifier.notify(source, `Vous n'avez pas assez de  ~r~${item.label}.`, 'error');
@@ -128,7 +131,7 @@ export class VehicleCustomProvider {
                 return originalConfiguration;
             }
         } else if (price && mode == LSCustomMode.CrimiCusto) {
-            inventory.remove('veh_strip_piece_std', Math.ceil(price / VehicleBusinessCustomPrice), false);
+            inventory.remove('veh_strip_piece_std', Math.ceil(price / crimiCustomPrice), false);
         } else if (crimiPrice && mode == LSCustomMode.CrimiPerfo) {
             for (const itemName of Object.keys(crimiPrice)) {
                 inventory.remove(itemName, crimiPrice[itemName], false);

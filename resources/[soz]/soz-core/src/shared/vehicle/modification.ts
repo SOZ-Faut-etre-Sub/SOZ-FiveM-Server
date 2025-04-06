@@ -2162,7 +2162,8 @@ export const getVehicleCrimiCustomPrice = (
     vehiclePrice: number,
     options: VehicleUpgradeOptions,
     currentModification: VehicleConfiguration,
-    newModification: VehicleConfiguration
+    newModification: VehicleConfiguration,
+    whatIf: boolean
 ): Record<string, number> => {
     const ret: Record<string, number> = {};
 
@@ -2226,6 +2227,15 @@ export const getVehicleCrimiCustomPrice = (
 
     for (const [item, value] of Object.entries(ret)) {
         ret[item] = value * coef;
+    }
+
+    if (whatIf) {
+        console.log(JSON.stringify(ret), Object.keys(ret), Object.keys(ret).length);
+        if (Object.values(ret).length > 0) {
+            return {
+                veh_strip_piece_std: 1,
+            };
+        }
     }
 
     return ret;

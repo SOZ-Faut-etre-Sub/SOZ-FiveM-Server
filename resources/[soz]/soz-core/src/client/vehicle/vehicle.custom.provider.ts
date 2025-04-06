@@ -1,4 +1,5 @@
 import { LS_CUSTOM_ZONE } from '@public/config/ls_custom';
+import { Feature } from '@public/shared/features';
 
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -19,6 +20,7 @@ import {
     VehicleUpgradeOptions,
 } from '../../shared/vehicle/modification';
 import { isVehicleModelElectric, LSCustomMode, VehicleClass, VehicleSeat } from '../../shared/vehicle/vehicle';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { VehicleRepository } from '../repository/vehicle.repository';
@@ -45,6 +47,9 @@ export class VehicleCustomProvider {
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     public isPedInsideCustomZone(): boolean {
         const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
@@ -106,6 +111,7 @@ export class VehicleCustomProvider {
         const options = this.vehicleModificationService.createOptions(input.vehicleEntityId);
         const vehicle = this.vehicleRepository.getByModelHash(GetEntityModel(input.vehicleEntityId));
         const vehicleNetworkId = NetworkGetNetworkIdFromEntity(input.vehicleEntityId);
+        const whatIf = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode);
 
         if (input.mode != LSCustomMode.Admin && (!vehicle || !vehicle.price)) {
             this.notifier.notify(
@@ -140,7 +146,8 @@ export class VehicleCustomProvider {
                       vehicle.price,
                       options,
                       input.originalConfiguration,
-                      input.vehicleConfiguration
+                      input.vehicleConfiguration,
+                      whatIf
                   )
                 : null;
 

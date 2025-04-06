@@ -1,8 +1,10 @@
 import { useAssetPath } from '@public/nui/hook/assets';
 import { useItems } from '@public/nui/hook/data';
+import { RootState } from '@public/nui/store';
 import { TaxType } from '@public/shared/tax';
 import { LSCustomMode } from '@public/shared/vehicle/vehicle';
 import { FunctionComponent, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { NuiEvent } from '../../../shared/event';
 import { MenuType } from '../../../shared/nui/menu';
@@ -81,6 +83,7 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
     const items = useItems();
     const crimi = ![LSCustomMode.Admin, LSCustomMode.LsCustom].includes(data.mode);
     const { getPath } = useAssetPath();
+    const whatIf = useSelector((state: RootState) => state.features.WhatIfFirstEpisode);
 
     useEffect(() => {
         if (data?.currentConfiguration) {
@@ -136,7 +139,8 @@ export const MenuVehicleCustom: FunctionComponent<MenuVehicleCustomProps> = ({ d
             data.vehiclePrice,
             data.options,
             data.currentConfiguration,
-            configuration
+            configuration,
+            whatIf
         );
 
         return Object.keys(price).map(item => {
