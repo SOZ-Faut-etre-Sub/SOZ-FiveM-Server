@@ -19,7 +19,9 @@ import { MultiZone } from '@public/shared/polyzone/multi.zone';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { Feature } from '../../../shared/features';
 import { PositiveNumberValidator } from '../../../shared/nui/input';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { PlayerListStateService } from '../../player/player.list.state.service';
 import { PoliceLicenceProvider } from '../police/police.licence.provider';
 import { LSMCDeathProvider } from './lsmc.death.provider';
@@ -68,6 +70,9 @@ export class LSMCInteractionProvider {
 
     @Inject(InputService)
     private inputService: InputService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once()
     public onStart() {
@@ -178,10 +183,19 @@ export class LSMCInteractionProvider {
             {
                 label: 'Soigner',
                 icon: 'ems/heal',
-                job: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                        return !this.playerListStateService.isDead(target);
+                    }
+
+                    const player = this.playerService.getPlayer();
+
+                    if (player?.job.id !== JobType.LSMC) {
+                        return false;
+                    }
 
                     return !this.playerListStateService.isDead(target);
                 },
