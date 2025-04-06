@@ -1,7 +1,7 @@
 import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { createNamedRenderTargetForModel } from '../render.target';
+import { createNamedRenderTargetForModel, releaseNamedRenderTarget } from '../render.target';
 
 export class StreamScreen {
     private readonly duiObject: number;
@@ -106,6 +106,6 @@ export class StreamScreen {
         this.handle = null;
 
         DestroyDui(this.duiObject);
-        ReleaseNamedRendertarget(this.renderTarget);
+        releaseNamedRenderTarget(this.renderTarget);
     }
 }

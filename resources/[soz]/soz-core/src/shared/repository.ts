@@ -1,3 +1,4 @@
+import { InsideTrack } from '@private/shared/casino.inside-track';
 import { PokerTable } from '@private/shared/casino.poker';
 import { SlotMachine } from '@private/shared/casino.slot';
 import { Gang } from '@private/shared/gang';
@@ -34,6 +35,7 @@ export enum RepositoryType {
     BankInvoice = 'bankInvoice',
     Billboard = 'billboard',
     CasinoSlotMachine = 'casinoSlotMachine',
+    CasinoInsideTrack = 'casinoInsideTrack',
     CasinoPoker = 'casinoPoker',
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
@@ -75,6 +77,7 @@ export type RepositoryMapping = {
     [RepositoryType.BankInvoice]: Invoice;
     [RepositoryType.Billboard]: Billboard;
     [RepositoryType.CasinoSlotMachine]: SlotMachine;
+    [RepositoryType.CasinoInsideTrack]: InsideTrack;
     [RepositoryType.CasinoPoker]: PokerTable;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Configuration]: any;
@@ -117,6 +120,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.BankFarmAccount]: Record<string, Partial<BankAccount>>;
     [RepositoryType.BankInvoice]: Record<number, Invoice>;
     [RepositoryType.CasinoSlotMachine]: Record<number, SlotMachine>;
+    [RepositoryType.CasinoInsideTrack]: Record<string, InsideTrack>;
     [RepositoryType.CasinoPoker]: Record<string, PokerTable>;
     [RepositoryType.Configuration]: Configuration;
     [RepositoryType.Field]: Record<string, Field>;

@@ -43,6 +43,13 @@ export const getRandomEnumValue = <T>(anEnum: T): T[keyof T] => {
     return enumValues[randomIndex];
 };
 
+export const getRandomEnumValues = <T>(anEnum: T, count: number): T[] => {
+    const enumValues = Object.keys(anEnum)
+        .map(n => Number.parseInt(n))
+        .filter(n => !Number.isNaN(n)) as unknown as T[];
+    return getRandomItems(enumValues, count);
+};
+
 export const getRandomItems = <T>(values: T[], count: number): T[] => {
     const indexes = new Set<number>();
     const minCount = Math.min(count, values.length);

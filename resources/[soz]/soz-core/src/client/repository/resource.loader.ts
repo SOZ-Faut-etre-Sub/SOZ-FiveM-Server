@@ -89,6 +89,15 @@ export class ResourceLoader {
         return scaleform;
     }
 
+    async loadScaleformMovieWithIgnoreSuperWidescreen(name: string) {
+        const scaleform = RequestScaleformMovieWithIgnoreSuperWidescreen(name);
+        while (!HasScaleformMovieLoaded(scaleform)) {
+            await wait(0);
+        }
+        SetScaleformMovieToUseSuperLargeRt(scaleform, true);
+        return scaleform;
+    }
+
     async unloadScaleformMovie(scaleform: number) {
         if (!HasScaleformMovieLoaded(scaleform)) {
             return;
