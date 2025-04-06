@@ -38,6 +38,8 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
+import { Feature } from '../../../shared/features';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { PhoneAppSocietyProvider } from '../../phone/apps/phone.app.society.provider';
 import { PlayerZombieProvider } from '../../player/player.zombie.provider';
@@ -212,6 +214,9 @@ export class LSMCDeathProvider {
 
     @Inject(PhoneAppSocietyProvider)
     private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private IsDead = false;
     private doFeeze = false;
@@ -579,7 +584,7 @@ export class LSMCDeathProvider {
 
         await this.phoneSocietyProvider.sendMessage({
             anonymous: true,
-            number: '555-LSMC',
+            number: this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ? '555-SASP' : '555-LSMC',
             message: `Besoin d'aide vers ${name}`,
             position: true,
         });
