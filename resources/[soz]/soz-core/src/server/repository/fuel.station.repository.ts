@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { Logger } from '../../core/logger';
+import { Feature } from '../../shared/features';
 import { FuelStation, FuelStationType, FuelType } from '../../shared/fuel';
 import { JobType } from '../../shared/job';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { RepositoryLegacy } from './repository';
 
 /**
@@ -39,6 +41,9 @@ export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelS
 
     @Inject(Logger)
     private logger: Logger;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     protected async load(): Promise<Record<string, FuelStation>> {
         const stations = await this.prismaService.fuel_storage.findMany();
@@ -77,7 +82,7 @@ export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelS
                     type: station.type as FuelStationType,
                     position,
                     zone,
-                    stock: station.stock,
+                    stock: this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ? 10_000 : station.stock,
                     price: station.price,
                     job: station.owner ? (station.owner as JobType) : null,
                 };

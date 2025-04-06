@@ -4,7 +4,9 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Feature } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -38,6 +40,9 @@ export class VehicleFuelProvider {
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private currentFilling = new Set<number>();
 
@@ -83,16 +88,18 @@ export class VehicleFuelProvider {
                         reservedFuelTx = 0;
                     }
 
-                    await this.prismaService.fuel_storage.update({
-                        where: {
-                            id: station.id,
-                        },
-                        data: {
-                            stock: {
-                                decrement: reservedFuelTx,
+                    if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                        await this.prismaService.fuel_storage.update({
+                            where: {
+                                id: station.id,
                             },
-                        },
-                    });
+                            data: {
+                                stock: {
+                                    decrement: reservedFuelTx,
+                                },
+                            },
+                        });
+                    }
 
                     return [reservedFuel, station, maxFuelForMoney];
                 },

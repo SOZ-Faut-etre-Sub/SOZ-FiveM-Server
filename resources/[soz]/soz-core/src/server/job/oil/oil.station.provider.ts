@@ -5,6 +5,7 @@ import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { Rpc } from '../../../core/decorators/rpc';
 import { ServerEvent } from '../../../shared/event';
+import { Feature } from '../../../shared/features';
 import { FuelStation, FuelStationType, FuelType } from '../../../shared/fuel';
 import { JobPermission, JobType } from '../../../shared/job';
 import { toVector3Object, Vector3, Vector4 } from '../../../shared/polyzone/vector';
@@ -12,6 +13,7 @@ import { RpcServerEvent } from '../../../shared/rpc';
 import { VehicleClass } from '../../../shared/vehicle/vehicle';
 import { BankService } from '../../bank/bank.service';
 import { PrismaService } from '../../database/prisma.service';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { JobService } from '../../job.service';
 import { LockService } from '../../lock.service';
 import { Monitor } from '../../monitor/monitor';
@@ -56,6 +58,9 @@ export class OilStationProvider {
     @Inject(BankService)
     private bankService: BankService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Rpc(RpcServerEvent.OIL_GET_STATION)
     public async getStation(source: number, stationId: number): Promise<FuelStation | null> {
         const station = await this.prismaService.fuel_storage.findUnique({
@@ -87,7 +92,7 @@ export class OilStationProvider {
             model: station.model,
             position,
             zone,
-            stock: station.stock,
+            stock: this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ? 10_000 : station.stock,
             type: station.type as FuelStationType,
             id: station.id,
             name: station.station,
@@ -316,22 +321,24 @@ export class OilStationProvider {
             ratio = 1;
         }
 
-        await this.lockService.lock(`fuel_station_${stationId}`, async () => {
-            const station = await this.prismaService.fuel_storage.findUnique({
-                where: {
-                    id: stationId,
-                },
-            });
-            await this.prismaService.fuel_storage.update({
-                where: {
-                    id: stationId,
-                },
-                data: {
-                    stock: {
-                        decrement: Math.round(ratio * station.stock),
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            await this.lockService.lock(`fuel_station_${stationId}`, async () => {
+                const station = await this.prismaService.fuel_storage.findUnique({
+                    where: {
+                        id: stationId,
                     },
-                },
+                });
+                await this.prismaService.fuel_storage.update({
+                    where: {
+                        id: stationId,
+                    },
+                    data: {
+                        stock: {
+                            decrement: Math.round(ratio * station.stock),
+                        },
+                    },
+                });
             });
-        });
+        }
     }
 }

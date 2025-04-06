@@ -11,6 +11,7 @@ import { GarageList } from '../../config/garage';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
+import { Feature } from '../../shared/features';
 import { JobType } from '../../shared/job';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { Vector4 } from '../../shared/polyzone/vector';
@@ -27,6 +28,7 @@ import {
 } from '../../shared/vehicle/vehicle';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { LockService } from '../lock.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -70,6 +72,9 @@ export class VehicleDealershipProvider {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private auctions: Record<string, AuctionVehicle> = {};
 
@@ -602,7 +607,10 @@ export class VehicleDealershipProvider {
                     },
                 });
 
-                if (dealershipId !== DealershipType.Job) {
+                if (
+                    dealershipId !== DealershipType.Job &&
+                    !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)
+                ) {
                     await this.prismaService.vehicle.update({
                         where: {
                             model: vehicle.model,

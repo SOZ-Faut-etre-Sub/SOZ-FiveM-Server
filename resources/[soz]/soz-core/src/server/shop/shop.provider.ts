@@ -39,12 +39,14 @@ import { Logger } from '../../core/logger';
 import { BankMoneyType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Feature } from '../../shared/features';
 import { ADD_ERROR_MESSAGE, InventoryItemMetadata } from '../../shared/inventory';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { isErr, isOk } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -97,6 +99,9 @@ export class ShopProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once()
     public onStart() {
@@ -415,10 +420,13 @@ export class ShopProvider {
         const shopItem = shopCategories[product.categoryId].content[product.modelLabel].find(
             item => item.id == product.id
         );
-        const stock = shopItem.stock;
-        if (stock <= 0) {
-            this.notifier.notify(source, `Ce produit n'est plus en stock`, 'error');
-            return;
+
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            const stock = shopItem.stock;
+            if (stock <= 0) {
+                this.notifier.notify(source, `Ce produit n'est plus en stock`, 'error');
+                return;
+            }
         }
 
         if (!(await this.shopPay(source, product.price, isInCayo ? null : TaxType.SUPPLY))) {
@@ -441,8 +449,10 @@ export class ShopProvider {
         */
 
         // Update repository
-        shopItem.stock -= 1;
-        await this.clothingShopRepository.set(repo);
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            shopItem.stock -= 1;
+            await this.clothingShopRepository.set(repo);
+        }
 
         const clothSet = product.categoryId == ClothingCategoryID.UNDERWEARS ? 'NakedClothSet' : 'BaseClothSet';
 
@@ -612,13 +622,15 @@ export class ShopProvider {
         const cabinetStorageInventory = await this.inventoryFactory.get('cabinet_storage');
         const playerInventory = await this.inventoryFactory.getPlayerInventory(source);
 
-        if (cabinetStorageInventory.getItemCount('cabinet_zkea') < 1) {
-            this.notifier.error(source, "Achat de meuble impossible car Zkea n'a pas assez de stock.");
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            if (cabinetStorageInventory.getItemCount('cabinet_zkea') < 1) {
+                this.notifier.error(source, "Achat de meuble impossible car Zkea n'a pas assez de stock.");
 
-            return;
+                return;
+            }
+
+            cabinetStorageInventory.remove('cabinet_zkea', 1);
         }
-
-        cabinetStorageInventory.remove('cabinet_zkea', 1);
 
         const crate = Object.values(playerInventory.items()).find(
             inventoryItem => inventoryItem.name === 'zkea_crate' && inventoryItem.metadata.zkeaCrateElements.length < 20

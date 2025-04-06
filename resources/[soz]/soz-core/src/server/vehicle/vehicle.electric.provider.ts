@@ -4,7 +4,9 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { Feature } from '../../shared/features';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
@@ -38,6 +40,9 @@ export class VehicleElectricProvider {
 
     @Inject(VehicleRepository)
     private vehicleRepository: VehicleRepository;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private currentCharging = new Set<number>();
 
@@ -79,16 +84,18 @@ export class VehicleElectricProvider {
                     station.price > 0 ? Math.floor(player.money.money / station.price) : energyToFill;
                 const reservedEnergy = Math.min(energyToFill, station.stock, maxEnergyForMoney);
 
-                await this.prismaService.upw_stations.update({
-                    where: {
-                        id: station.id,
-                    },
-                    data: {
-                        stock: {
-                            decrement: reservedEnergy,
+                if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                    await this.prismaService.upw_stations.update({
+                        where: {
+                            id: station.id,
                         },
-                    },
-                });
+                        data: {
+                            stock: {
+                                decrement: reservedEnergy,
+                            },
+                        },
+                    });
+                }
 
                 return [reservedEnergy, station, maxEnergyForMoney];
             },
