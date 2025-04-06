@@ -35,9 +35,9 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: true,
     },
     [Feature.MyBodySummer]: {
-        production: true,
-        development: true,
-        test: true,
+        production: false,
+        development: false,
+        test: false,
     },
     [Feature.Halloween]: {
         production: false,
@@ -145,7 +145,7 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: true,
     },
     [Feature.WhatIfFirstEpisode]: {
-        production: false,
+        production: true,
         development: true,
         test: true,
     },
