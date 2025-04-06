@@ -254,6 +254,7 @@ export class WeaponProvider {
         }
 
         if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
             IsPedArmed(player, 7) &&
             GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === player &&
             GetEntitySpeed(vehicle) * 3.6 > 50
