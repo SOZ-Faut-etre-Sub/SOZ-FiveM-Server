@@ -2230,7 +2230,6 @@ export const getVehicleCrimiCustomPrice = (
     }
 
     if (whatIf) {
-        console.log(JSON.stringify(ret), Object.keys(ret), Object.keys(ret).length);
         if (Object.values(ret).length > 0) {
             return {
                 veh_strip_piece_std: 1,
