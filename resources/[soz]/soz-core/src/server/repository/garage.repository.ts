@@ -1,4 +1,7 @@
+import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { ClientEvent } from '@public/shared/event/client';
+import { Feature } from '@public/shared/features';
+import { JobType } from '@public/shared/job';
 
 import { GarageList } from '../../config/garage';
 import { Inject, Injectable } from '../../core/decorators/injectable';
@@ -21,6 +24,9 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     protected async load(): Promise<Record<string, Garage>> {
         const garageList: Record<string, Garage> = {};
 
@@ -29,6 +35,14 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
                 id,
                 ...GarageList[id],
             };
+
+            if (
+                this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+                garageList[id].type === GarageType.Job &&
+                garageList[id].job === JobType.LSPD
+            ) {
+                garageList[id].job = JobType.SASP;
+            }
         }
 
         const houseProperties = await this.prismaService.housing_property.findMany({
