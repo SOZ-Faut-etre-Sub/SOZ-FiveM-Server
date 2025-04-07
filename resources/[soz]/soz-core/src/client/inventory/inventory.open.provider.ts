@@ -1,5 +1,6 @@
 import { Exportable } from '@core/decorators/exports';
 import { Provider } from '@core/decorators/provider';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { BaunCraftProvider } from '@public/client/job/baun/baun.craft.provider';
 import { JobCloakroomProvider } from '@public/client/job/job.cloakroom.provider';
@@ -10,6 +11,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event/server';
+import { Feature } from '@public/shared/features';
 import { InventoryType, isInventoryItemExpired } from '@public/shared/inventory';
 import { JobType } from '@public/shared/job';
 import { computeBinId } from '@public/shared/job/garbage';
@@ -48,6 +50,9 @@ export class InventoryOpenProvider {
 
     @Inject(JobService)
     private jobService: JobService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     public getBinModels() {
         return [
@@ -102,7 +107,19 @@ export class InventoryOpenProvider {
 
             for (const inventory of inventories) {
                 // For cloakroom, only Pawl can open it
-                const openJob = inventory.data.type === InventoryType.Cloakroom ? JobType.Pawl : (job as JobType);
+                let openJob = inventory.data.type === InventoryType.Cloakroom ? JobType.Pawl : (job as JobType);
+                let realJob = job as JobType;
+
+                if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                    if (openJob === JobType.LSPD) {
+                        openJob = JobType.SASP;
+                    }
+
+                    if (job === JobType.LSPD) {
+                        realJob = JobType.SASP;
+                    }
+                }
+
                 const options: TargetOption[] = [
                     {
                         label: 'Ouvrir',
@@ -141,7 +158,7 @@ export class InventoryOpenProvider {
                                 return false;
                             }
 
-                            return player.job.id === job;
+                            return player.job.id === realJob;
                         },
                         action: async () => {
                             const player = this.playerService.getPlayer();
@@ -174,10 +191,13 @@ export class InventoryOpenProvider {
                                 return false;
                             }
 
-                            return player.job.id === job;
+                            return player.job.id === realJob;
                         },
                         action: async () => {
-                            await this.jobCloakroomProvider.openJobCloakroom(inventory.data.storage, job as JobType);
+                            await this.jobCloakroomProvider.openJobCloakroom(
+                                inventory.data.storage,
+                                realJob as JobType
+                            );
                         },
                     });
 
@@ -185,7 +205,7 @@ export class InventoryOpenProvider {
                         label: 'Vérifier le stock',
                         icon: 'jobs/check-stock',
                         category: 'society',
-                        job: job as JobType,
+                        job: realJob as JobType,
                         action: async () => {
                             await this.jobCloakroomProvider.checkCloakroomStorage(inventory.data.storage);
                         },
