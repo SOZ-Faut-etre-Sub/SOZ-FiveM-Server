@@ -515,6 +515,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.Investigation]: { label: 'Accès aux enquêtes' },
             [JobPermission.ManageInvestigation]: { label: 'Gérer les enquêtes' },
             [JobPermission.MdrViewCitizenData]: { label: 'Accès aux casiers judiciaires' },
+            [JobPermission.MdrEditCitizenData]: { label: 'Suppression entrée du casier judiciaire' },
             [JobPermission.InvestigationLawyer]: { label: 'Avocat dans les enquêtes' },
             [JobPermission.InvestigationProsecutor]: { label: 'Prosecutor dans les enquètes' },
             [JobPermission.MdrViewOtherJobs]: { label: 'Accès aux infos des entreprises' },
