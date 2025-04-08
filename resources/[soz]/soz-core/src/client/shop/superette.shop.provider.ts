@@ -9,7 +9,7 @@ import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { ShopProduct } from '@public/shared/shop';
-import { ShopItem, ShopsContent } from '@public/shared/shop/superette';
+import { ShopItem, ShopsContent, WhatIfSuperetteContent } from '@public/shared/shop/superette';
 import { TaxType } from '@public/shared/tax';
 
 import { Feature } from '../../shared/features';
@@ -123,6 +123,13 @@ export class SuperetteShopProvider {
                     } as ShopItem;
                     superetteContent.push(sharedItem);
                 }
+                superetteContent.push(
+                    ...WhatIfSuperetteContent.map(elem => ({
+                        ...this.itemService.getItem(elem.id),
+                        price: elem.price,
+                        metadata: elem.metadata,
+                    }))
+                );
             }
 
             let taxes = null;

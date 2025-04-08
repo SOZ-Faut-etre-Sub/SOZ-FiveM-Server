@@ -2268,3 +2268,151 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
         },
     ],
 };
+
+export const JOB_INVENTORIES_WHAT_IF: Partial<Record<JobType, Zone<JobInventory>[]>> = {
+    [JobType.SASP]: [
+        // VINEWOOD
+
+        {
+            center: [625.466919, -31.86854, 90.308548],
+            length: 2.5,
+            width: 1.0,
+            minZ: 89.308548,
+            maxZ: 91.308548,
+            heading: 255,
+            data: {
+                storage: 'sasp_wi_boss_storage',
+                type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
+            },
+        },
+        {
+            center: [608.31, -6.02, 76.63],
+            length: 0.6,
+            width: 2.8,
+            minZ: 75.63,
+            maxZ: 77.63,
+            heading: 350,
+            data: {
+                storage: 'sasp_wi_ammo',
+                type: InventoryType.Ammo,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [616.57, -7.79, 90.51],
+            length: 0.4,
+            width: 2.8,
+            minZ: 89.51,
+            maxZ: 91.51,
+            heading: 160.4,
+            data: {
+                storage: 'sasp_wi_storage',
+                type: InventoryType.Storage,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+
+        {
+            center: [616.24, -15.47, 91.11],
+            length: 7.2,
+            width: 2.8,
+            minZ: 89.11,
+            maxZ: 93.51,
+            heading: 68.92,
+            data: {
+                storage: 'sasp_wi_evidence_storage',
+                type: InventoryType.EvidenceStorage,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [618.06, -9.32, 76.63],
+            length: 7.8,
+            width: 1.0,
+            minZ: 75.63,
+            maxZ: 77.63,
+            heading: 80,
+            data: {
+                storage: 'sasp_wi_seizure1',
+                type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [618.29, -12.1, 76.63],
+            length: 1.0,
+            width: 6.2,
+            minZ: 75.63,
+            maxZ: 77.63,
+            heading: -10,
+            data: {
+                storage: 'sasp_wi_seizure2',
+                type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [617.14, -15.0, 76.63],
+            length: 7.6,
+            width: 1.75,
+            minZ: 75.63,
+            maxZ: 77.63,
+            heading: 260,
+            data: {
+                storage: 'sasp_wi_seizure3',
+                type: InventoryType.Seizure,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [599.66, -10.35, 82.73],
+            length: 1.6,
+            width: 1.2,
+            minZ: 81.53,
+            maxZ: 84.13,
+            heading: 251.05,
+            data: {
+                storage: 'sasp_wi_fridge',
+                type: InventoryType.Fridge,
+            },
+        },
+        {
+            center: [609.05, -15.12, 76.81],
+            length: 2.0,
+            width: 2.5,
+            minZ: 75.81,
+            maxZ: 77.81,
+            heading: 170.0,
+            data: {
+                storage: 'sasp_wi_armory',
+                type: InventoryType.Armory,
+                permission: JobPermission.SocietyGeneralStorage,
+            },
+        },
+        {
+            center: [626.93, 2.18, 76.63],
+            length: 7.0,
+            width: 8.4,
+            minZ: 75.62,
+            maxZ: 78.62,
+            heading: 350,
+            data: {
+                storage: 'sasp_wi_male_cloakroom',
+                type: InventoryType.Cloakroom,
+            },
+        },
+        {
+            center: [624.58, -5.48, 76.63],
+            length: 6.8,
+            width: 6.4,
+            minZ: 75.62,
+            maxZ: 78.62,
+            heading: 350,
+            data: {
+                storage: 'sasp_wi_female_cloakroom',
+                type: InventoryType.Cloakroom,
+            },
+        },
+    ],
+};

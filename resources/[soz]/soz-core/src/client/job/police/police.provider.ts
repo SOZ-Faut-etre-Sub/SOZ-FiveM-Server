@@ -1,5 +1,6 @@
 import { BlipFactory } from '@public/client/blip';
 import { PedFactory } from '@public/client/factory/ped.factory';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { NuiMenu } from '@public/client/nui/nui.menu';
@@ -11,6 +12,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { FDO } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
@@ -28,6 +30,9 @@ const stations = {
         blip: { sprite: 137 },
         coords: [1856.15, 3681.68, 34.27],
     },
+};
+const stationsWhatIf = {
+    SASP: { label: 'San Andreas State Police', blip: { sprite: 526 }, coords: [632.76, 7.31, 82.63] },
 };
 
 @Provider()
@@ -59,13 +64,21 @@ export class PoliceProvider {
     @Inject(AttachedObjectService)
     private attachedObjectService: AttachedObjectService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private radarEnabled = false;
 
     private inTakeDown = false;
 
     @Once(OnceStep.PlayerLoaded)
     public async onStart() {
-        for (const [id, station] of Object.entries(stations)) {
+        let allStations = { ...stations };
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            allStations = { ...stations, ...stationsWhatIf };
+        }
+
+        for (const [id, station] of Object.entries(allStations)) {
             if (!this.blipFactory.exist(`police_${id}`)) {
                 this.blipFactory.create(`police_${id}`, {
                     name: station.label,
@@ -74,6 +87,7 @@ export class PoliceProvider {
                 });
             }
         }
+
         await this.pedFactory.createPedOnGrid({
             model: 's_m_y_sheriff_01',
             coords: {

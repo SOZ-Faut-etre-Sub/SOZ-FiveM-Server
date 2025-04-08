@@ -17,7 +17,7 @@ import { JobType } from '@public/shared/job';
 import { computeBinId } from '@public/shared/job/garbage';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { JOB_INVENTORIES } from '@public/shared/storage/job';
+import { JOB_INVENTORIES, JOB_INVENTORIES_WHAT_IF } from '@public/shared/storage/job';
 import { TargetOption } from '@public/shared/target';
 
 import { AnimationStopReason } from '../../shared/animation';
@@ -103,22 +103,17 @@ export class InventoryOpenProvider {
         );
 
         for (const job of Object.keys(JOB_INVENTORIES)) {
-            const inventories = JOB_INVENTORIES[job as JobType];
+            let inventories = JOB_INVENTORIES[job as JobType];
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                const override = JOB_INVENTORIES_WHAT_IF[job];
+                if (override) {
+                    inventories = override;
+                }
+            }
 
             for (const inventory of inventories) {
                 // For cloakroom, only Pawl can open it
-                let openJob = inventory.data.type === InventoryType.Cloakroom ? JobType.Pawl : (job as JobType);
-                let realJob = job as JobType;
-
-                if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
-                    if (openJob === JobType.LSPD) {
-                        openJob = JobType.SASP;
-                    }
-
-                    if (job === JobType.LSPD) {
-                        realJob = JobType.SASP;
-                    }
-                }
+                const openJob = inventory.data.type === InventoryType.Cloakroom ? JobType.Pawl : (job as JobType);
 
                 const options: TargetOption[] = [
                     {
@@ -158,7 +153,7 @@ export class InventoryOpenProvider {
                                 return false;
                             }
 
-                            return player.job.id === realJob;
+                            return player.job.id === job;
                         },
                         action: async () => {
                             const player = this.playerService.getPlayer();
@@ -191,13 +186,10 @@ export class InventoryOpenProvider {
                                 return false;
                             }
 
-                            return player.job.id === realJob;
+                            return player.job.id === job;
                         },
                         action: async () => {
-                            await this.jobCloakroomProvider.openJobCloakroom(
-                                inventory.data.storage,
-                                realJob as JobType
-                            );
+                            await this.jobCloakroomProvider.openJobCloakroom(inventory.data.storage, job as JobType);
                         },
                     });
 
@@ -205,7 +197,7 @@ export class InventoryOpenProvider {
                         label: 'Vérifier le stock',
                         icon: 'jobs/check-stock',
                         category: 'society',
-                        job: realJob as JobType,
+                        job: job as JobType,
                         action: async () => {
                             await this.jobCloakroomProvider.checkCloakroomStorage(inventory.data.storage);
                         },

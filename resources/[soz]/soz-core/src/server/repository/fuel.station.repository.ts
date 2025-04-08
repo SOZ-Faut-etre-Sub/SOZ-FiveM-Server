@@ -48,6 +48,7 @@ export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelS
     protected async load(): Promise<Record<string, FuelStation>> {
         const stations = await this.prismaService.fuel_storage.findMany();
         const fuelStations: Record<string, FuelStation> = {};
+        const whatIf = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode);
 
         for (const station of stations) {
             //meteor
@@ -82,9 +83,9 @@ export class FuelStationRepository extends RepositoryLegacy<Record<string, FuelS
                     type: station.type as FuelStationType,
                     position,
                     zone,
-                    stock: this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ? 10_000 : station.stock,
+                    stock: whatIf ? 10_000 : station.stock,
                     price: station.price,
-                    job: station.owner ? (station.owner as JobType) : null,
+                    job: whatIf && station.owner === JobType.LSPD ? JobType.SASP : (station.owner as JobType) ?? null,
                 };
             } catch (e) {
                 this.logger.error(`cannot load station: ${station.station} ${e}`);

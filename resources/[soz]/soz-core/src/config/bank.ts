@@ -249,3 +249,14 @@ export const SocietySafeStorage: Partial<Record<JobType, Zone>> = {
         maxZ: 31.04,
     },
 };
+
+export const SocietySafeStorageWhatIf: Partial<Record<JobType, Zone>> = {
+    [JobType.SASP]: {
+        center: [622.21, -30.71, 90.51],
+        length: 1.0,
+        width: 2.5,
+        heading: 160.0,
+        minZ: 89.51,
+        maxZ: 91.51,
+    },
+};

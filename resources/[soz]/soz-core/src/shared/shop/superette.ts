@@ -39,6 +39,15 @@ const SuperetteContent: ShopContent = [
     { id: 'smartwatchuiwi', type: 'item', price: 150 },
 ];
 
+export const WhatIfSuperetteContent: ShopContent = [
+    { id: 'repairkit', type: 'item', price: 200 },
+    { id: 'bodyrepairkit', type: 'item', price: 175 },
+    { id: 'cleaningkit', type: 'item', price: 40 },
+    { id: 'wheel_kit', type: 'item', price: 80 },
+    { id: 'oil_jerrycan', type: 'item', price: 100 },
+    { id: 'tow_cable', type: 'item', price: 250 },
+];
+
 const AmmunationContent: ShopContent = [
     { id: 'parachute', type: 'item', price: 225 },
     { id: 'weapon_bat', type: 'weapon', price: 162 },

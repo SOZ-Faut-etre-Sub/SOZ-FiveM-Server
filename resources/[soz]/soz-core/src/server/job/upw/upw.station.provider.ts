@@ -3,6 +3,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { PrismaService } from '@public/server/database/prisma.service';
+import { FeatureProvider } from '@public/server/feature/feature.provider';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ItemService } from '@public/server/item/item.service';
 import { JobService } from '@public/server/job.service';
@@ -14,6 +15,7 @@ import { ProgressService } from '@public/server/player/progress.service';
 import { RepositoryProvider } from '@public/server/repository/repository.provider';
 import { UpwChargerRepository } from '@public/server/repository/upw.charger.repository';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { UpwCharger, UpwStation } from '@public/shared/fuel';
 import { JobPermission, JobType } from '@public/shared/job';
 import { UPW_CHARGER_REFILL_VALUES } from '@public/shared/job/upw';
@@ -64,6 +66,9 @@ export class UpwStationProvider {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once(OnceStep.Start)
     public async onStart() {
@@ -118,6 +123,7 @@ export class UpwStationProvider {
 
     @Rpc(RpcServerEvent.UPW_GET_STATION)
     public async onGetStation(source: number, name: string): Promise<UpwStation> {
+        const whatIf = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode);
         const station = await this.prismaService.upw_stations.findFirst({
             where: {
                 station: name,
@@ -126,8 +132,8 @@ export class UpwStationProvider {
         const position = JSON.parse(station.position) as { x: number; y: number; z: number; w: number };
         const result: UpwStation = {
             id: station.id,
-            stock: station.stock,
-            max_stock: station.max_stock,
+            stock: whatIf ? 10_000 : station.stock,
+            max_stock: whatIf ? 10_000 : station.max_stock,
             price: station.price,
             position: [position.x, position.y, position.z, position.w],
             station: station.station,

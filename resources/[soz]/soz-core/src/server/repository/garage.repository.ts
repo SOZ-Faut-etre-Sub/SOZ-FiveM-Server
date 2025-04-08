@@ -42,6 +42,7 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
                 garageList[id].job === JobType.LSPD
             ) {
                 garageList[id].job = JobType.SASP;
+                garageList[id].name = garageList[id].name.replace('LSPD', 'SASP');
             }
         }
 

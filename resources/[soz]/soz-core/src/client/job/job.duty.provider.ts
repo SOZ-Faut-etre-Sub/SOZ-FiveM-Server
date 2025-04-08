@@ -1,3 +1,4 @@
+import { Feature } from '@public/shared/features';
 import { Bunkers } from '@public/shared/utils/bunkers';
 
 import { Once, OnceStep } from '../../core/decorators/event';
@@ -6,6 +7,7 @@ import { Provider } from '../../core/decorators/provider';
 import { JobPermission, JobType } from '../../shared/job';
 import { Zone } from '../../shared/polyzone/box.zone';
 import { TargetOption } from '../../shared/target';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
 import { JobService } from './job.service';
@@ -247,6 +249,18 @@ const DutyZoneConfig: Zone<JobType>[] = [
     },
 ];
 
+const DutyZoneConfigWhatIf: Zone<JobType>[] = [
+    {
+        data: JobType.SASP,
+        center: [615.900574, 15.299749, 82.797417],
+        length: 0.45,
+        width: 0.35,
+        minZ: 82.697417,
+        maxZ: 82.897417,
+        heading: 58,
+    },
+];
+
 const BunkerDutyZone = ['xm_prop_base_staff_desk_01', 'v_corp_officedesk'];
 
 const DutyPedConfig: Partial<Record<JobType, number>> = {};
@@ -262,11 +276,21 @@ export class JobDutyProvider {
     @Inject(JobService)
     private jobService: JobService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async onDutyLoad() {
         let i = 0;
 
-        for (const duty of DutyZoneConfig) {
+        for (let duty of DutyZoneConfig) {
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                const override = DutyZoneConfigWhatIf.find(elem => elem.data == duty.data);
+                if (override) {
+                    duty = override;
+                }
+            }
+
             this.targetFactory.createForBoxZone(`job:duty:${duty.data}:${i}`, duty, this.getDutyZoneTarget(duty.data));
 
             i++;

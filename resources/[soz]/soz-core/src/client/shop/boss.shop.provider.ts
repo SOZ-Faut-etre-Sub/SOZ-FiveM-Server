@@ -1,12 +1,14 @@
 import { ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { JobPermission, JobType } from '../../shared/job';
 import { ShopConfig, ShopProduct } from '../../shared/shop';
-import { BossShop } from '../../shared/shop/boss';
+import { BossShop, BossShopWhatIf } from '../../shared/shop/boss';
 import { TargetOption } from '../../shared/target';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { JobService } from '../job/job.service';
@@ -25,6 +27,9 @@ export class BossShopProvider {
 
     @Inject(JobService)
     private jobService: JobService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     public getHydratedProducts(products: ShopProduct[]) {
         return products.map(product => ({
@@ -62,6 +67,13 @@ export class BossShopProvider {
     @Once(OnceStep.PlayerLoaded)
     setupBossShop() {
         BossShop.forEach(shop => {
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                const override = BossShopWhatIf.find(elem => elem.name == shop.name);
+                if (override) {
+                    shop = override;
+                }
+            }
+
             this.targetFactory.createForBoxZone(
                 `shops:boss:${shop.name}`,
                 shop.zone,

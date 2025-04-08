@@ -1,9 +1,12 @@
+import { Feature } from '@public/shared/features';
+
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { AnimationService } from '../animation/animation.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PhoneAppSocietyProvider } from '../phone/apps/phone.app.society.provider';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 
@@ -129,6 +132,14 @@ const BELL_ZONES: BellProps[] = [
     },
 ];
 
+const BELL_ZONES_WHAT_IF: BellProps[] = [
+    {
+        coords: [633.66, 7.62, 82.85],
+        job: JobType.LSPD,
+        number: '555-SASP',
+    },
+];
+
 @Provider()
 export class JobBellProvider {
     @Inject(InteractionProvider)
@@ -140,11 +151,21 @@ export class JobBellProvider {
     @Inject(PhoneAppSocietyProvider)
     private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
 
+    @Inject(FeatureProvider)
+    private readonly featureProvider: FeatureProvider;
+
     private lastCall = GetGameTimer();
 
     @Once(OnceStep.PlayerLoaded)
     public loadJobBell() {
-        for (const bell of BELL_ZONES) {
+        for (let bell of BELL_ZONES) {
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                const overide = BELL_ZONES_WHAT_IF.find(elem => elem.job === bell.job);
+                if (overide) {
+                    bell = overide;
+                }
+            }
+
             this.interactionProvider.createInteractionForCoords(
                 bell.coords,
                 {

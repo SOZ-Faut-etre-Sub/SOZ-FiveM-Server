@@ -1,4 +1,6 @@
-import { SocietySafeStorage } from '../../config/bank';
+import { Feature } from '@public/shared/features';
+
+import { SocietySafeStorage, SocietySafeStorageWhatIf } from '../../config/bank';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -9,6 +11,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
+import { FeatureProvider } from '../feature/feature.provider';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { TargetFactory } from '../target/target.factory';
 import { BankWithdrawManager } from './bank.withdraw.manager';
@@ -24,9 +27,19 @@ export class BankSafeProvider {
     @Inject(BankWithdrawManager)
     private bankWithdrawManager: BankWithdrawManager;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public async init() {
         Object.entries(SocietySafeStorage).forEach(([job, zone]) => {
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                const override = SocietySafeStorageWhatIf[job];
+                if (override) {
+                    zone = override;
+                }
+            }
+
             this.targetFactory.createForBoxZone(
                 `bank:safe:${job}`,
                 BoxZone.fromZone(zone),
