@@ -29,6 +29,11 @@ const surgery = new MultiZone([
         minZ: 33.28,
         maxZ: 35.28,
     }),
+    new BoxZone([313.42, -1406.46, 32.51], 20.0, 27.0, {
+        heading: 51.14,
+        minZ: 31.51,
+        maxZ: 33.51,
+    }),
 ]);
 
 @Provider()
