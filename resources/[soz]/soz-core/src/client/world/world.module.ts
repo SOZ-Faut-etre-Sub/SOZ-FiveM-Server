@@ -5,6 +5,7 @@ import { FireworkProvider } from './firework.provider';
 import { MeteorProvider } from './meteor.provider';
 import { OceanProvider } from './ocean.provider';
 import { SpotlightProvider } from './spotlight.provider';
+import { WhatIfProvider } from './whatif.provider';
 import { WorldEventProvider } from './world.event.provider';
 
 @Module({
@@ -16,6 +17,7 @@ import { WorldEventProvider } from './world.event.provider';
         EarthquakeProvider,
         FireworkProvider,
         SpotlightProvider,
+        WhatIfProvider,
     ],
 })
 export class WorldModule {}
