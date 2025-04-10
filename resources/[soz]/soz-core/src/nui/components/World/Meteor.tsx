@@ -14,11 +14,22 @@ export const Meteor: FunctionComponent = () => {
 
     useNuiEvent(
         'meteor',
-        'start',
+        'load',
         () => {
             setWhite(false);
             const audioElement = document.querySelector('#meteor') as HTMLMediaElement;
             audioElement.load();
+        },
+        [audioCtx]
+    );
+
+    useNuiEvent(
+        'meteor',
+        'stop',
+        () => {
+            setWhite(false);
+            const audioElement = document.querySelector('#meteor') as HTMLMediaElement;
+            audioElement.pause();
         },
         [audioCtx]
     );

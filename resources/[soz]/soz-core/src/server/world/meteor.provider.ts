@@ -5,8 +5,10 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { ItemService } from '@public/server/item/item.service';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerAppearanceService } from '../player/player.appearance.service';
@@ -48,6 +50,9 @@ export class MeteorProvider {
 
     @Inject(NpcProvider)
     private npcProvider: NpcProvider;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private siren = 0;
     private music = 0;
@@ -162,9 +167,10 @@ export class MeteorProvider {
             return;
         }
 
-        this.rebootProvider.kickAll(
-            "L'impact de la météorite vous a assommé, vous pourrez vous réveiller dans quelques minutes..."
-        );
+        const message = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)
+            ? " Suite à l'impact de la bombe nucléaire, San Andreas et ses habitants se sont évaporés, clôturant ainsi cette première édition du WHAT IF ! Merci à tous les joueurs pour leur participation. ❤️ "
+            : "L'impact de la météorite vous a assommé, vous pourrez vous réveiller dans quelques minutes...";
+        this.rebootProvider.kickAll(message);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_DISABLE_NPC)

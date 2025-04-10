@@ -1,3 +1,4 @@
+import { Command } from '@public/core/decorators/command';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -6,9 +7,11 @@ import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
 import { ClientEvent, NuiEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { Control } from '@public/shared/input';
 import {
     add2Vector3,
+    deg,
     getDistance,
     multVector3,
     sub2Vector3,
@@ -20,6 +23,7 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { Bunkers } from '@public/shared/utils/bunkers';
 import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
+import { FeatureProvider } from '../feature/feature.provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { Monitor } from '../monitor/monitor';
 import { NuiDispatch } from '../nui/nui.dispatch';
@@ -56,6 +60,9 @@ export class MeteorProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private isWearingFullScarf = false;
     private entity: number = null;
     private inEnd = false;
@@ -73,9 +80,21 @@ export class MeteorProvider {
         this.earthquakeProvider.onEarthquake(data.earthQuake);
     }
 
+    @Command('abort_meteor')
+    abort() {
+        DeleteEntity(this.entity);
+        this.entity = 0;
+        RenderScriptCams(false, true, 100, true, false);
+        this.nuiDispatch.dispatch('meteor', 'stop');
+        this.hudStateProvider.setHudVisible(true);
+        this.hudStateProvider.setCinematicMode(false);
+        ClearFocus();
+    }
+
     @OnEvent(ClientEvent.METEOR_START)
     public async meteorStart() {
         this.nuiDispatch.dispatch('meteor', 'load');
+        const whatIf = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode);
 
         const intId = GetInteriorFromEntity(PlayerPedId());
 
@@ -83,9 +102,12 @@ export class MeteorProvider {
             this.monitor.traceEvent('meteor_outside', {});
         }
 
-        const rock = GetHashKey('soz_prop_meteor');
+        const prop = whatIf ? 'whatif_missile' : 'soz_prop_meteor';
+
+        const rock = GetHashKey(prop);
         await this.resourceLoader.loadPtfxAsset('scr_ar_planes');
         await this.resourceLoader.loadPtfxAsset('core');
+        await this.resourceLoader.loadPtfxAsset('scr_xs_props');
         await this.resourceLoader.loadModel(rock);
 
         DoScreenFadeOut(2200);
@@ -99,64 +121,86 @@ export class MeteorProvider {
         SetEntityCompletelyDisableCollision(this.entity, true, true);
         ApplyForceToEntity(this.entity, 1, 0.02, 0.0, 0.0, 0.02, 0.0, 0.0, 0, false, true, true, false, true);
 
-        UseParticleFxAsset('scr_ar_planes');
-        const fx = StartParticleFxLoopedOnEntity(
-            'scr_ar_trail_smoke',
-            this.entity,
-            0.0,
-            -3.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            15.0,
-            false,
-            false,
-            false
-        );
-        SetParticleFxLoopedColour(fx, 0, 0, 0, false);
-        SetParticleFxLoopedFarClipDist(fx, 0xfff);
+        if (whatIf) {
+            await wait(0);
 
-        await wait(0);
+            UseParticleFxAsset('scr_xs_props');
+            const fx3 = StartParticleFxLoopedOnEntity(
+                'scr_xs_guided_missile_trail',
+                this.entity,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                7.0,
+                false,
+                false,
+                false
+            );
+            SetParticleFxLoopedFarClipDist(fx3, 0xfff);
+        } else {
+            UseParticleFxAsset('scr_ar_planes');
+            const fx = StartParticleFxLoopedOnEntity(
+                'scr_ar_trail_smoke',
+                this.entity,
+                0.0,
+                -3.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                15.0,
+                false,
+                false,
+                false
+            );
+            SetParticleFxLoopedColour(fx, 0, 0, 0, false);
+            SetParticleFxLoopedFarClipDist(fx, 0xfff);
 
-        UseParticleFxAsset('core');
-        const fx2 = StartParticleFxLoopedOnEntity(
-            'proj_flare_trail',
-            this.entity,
-            0.0,
-            10.0,
-            0.0,
-            90.0,
-            0.0,
-            0.0,
-            150.0,
-            false,
-            false,
-            false
-        );
-        SetParticleFxLoopedFarClipDist(fx2, 0xfff);
+            await wait(0);
 
-        await wait(0);
+            UseParticleFxAsset('core');
+            const fx2 = StartParticleFxLoopedOnEntity(
+                'proj_flare_trail',
+                this.entity,
+                0.0,
+                10.0,
+                0.0,
+                90.0,
+                0.0,
+                0.0,
+                150.0,
+                false,
+                false,
+                false
+            );
+            SetParticleFxLoopedFarClipDist(fx2, 0xfff);
 
-        UseParticleFxAsset('core');
-        const fx3 = StartParticleFxLoopedOnEntity(
-            'proj_missile_trail',
-            this.entity,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            10.0,
-            false,
-            false,
-            false
-        );
-        SetParticleFxLoopedFarClipDist(fx3, 0xfff);
+            await wait(0);
+
+            UseParticleFxAsset('core');
+            const fx3 = StartParticleFxLoopedOnEntity(
+                'proj_missile_trail',
+                this.entity,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                10.0,
+                false,
+                false,
+                false
+            );
+            SetParticleFxLoopedFarClipDist(fx3, 0xfff);
+        }
 
         this.resourceLoader.unloadPtfxAsset('core');
         this.resourceLoader.unloadPtfxAsset('scr_ar_planes');
+        this.resourceLoader.unloadPtfxAsset('scr_xs_props');
         this.resourceLoader.unloadModel(rock);
 
         this.playerHealthProvider.setNutritionDisabled(true);
@@ -180,22 +224,33 @@ export class MeteorProvider {
         );
         RenderScriptCams(true, true, 3_000, true, false);
         await wait(2_200);
+        if (!this.entity) {
+            return;
+        }
 
         DoScreenFadeIn(800);
         await wait(800);
 
         this.meteorCam = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
-        AttachCamToEntity(this.meteorCam, this.entity, 200, -200, 200, false);
-        PointCamAtEntity(this.meteorCam, this.entity, 0, 70, 30, true);
+        const camDist = whatIf ? 20 : 200;
+        const offsetCoefDist = whatIf ? 1 : 10;
+        AttachCamToEntity(this.meteorCam, this.entity, camDist, -camDist, camDist, false);
+        PointCamAtEntity(this.meteorCam, this.entity, 0, 7 * offsetCoefDist, 3 * offsetCoefDist, true);
         SetCamActiveWithInterp(this.meteorCam, this.fixedCam, 10_000, 1, 1);
         RenderScriptCams(true, true, 10_000, true, false);
 
         await wait(7_000);
+        if (!this.entity) {
+            return;
+        }
         SetFocusEntity(this.entity);
 
         await wait(20_000);
+        if (!this.entity) {
+            return;
+        }
 
-        PointCamAtEntity(this.fixedCam, this.entity, 0, 50, 0, true);
+        PointCamAtEntity(this.fixedCam, this.entity, 0, 5 * offsetCoefDist, 0, true);
         SetCamCoord(this.fixedCam, 261.35, -2507.22, 9.43);
         SetFocusPosAndVel(261.35, -2507.22, 9.43, 0, 0, 0);
         await wait(100);
@@ -211,6 +266,9 @@ export class MeteorProvider {
         SetCamActive(this.fixedCam, true);
 
         await wait(4_000);
+        if (!this.entity) {
+            return;
+        }
         SetEntityCoordsNoOffset(
             this.entity,
             355.79681396484375,
@@ -222,6 +280,9 @@ export class MeteorProvider {
         );
         SetCamActive(this.meteorCam, true);
         await wait(4_000);
+        if (!this.entity) {
+            return;
+        }
         SetEntityCoordsNoOffset(
             this.entity,
             653.9935302734375,
@@ -283,8 +344,16 @@ export class MeteorProvider {
         const coords = GetEntityCoords(this.entity) as Vector3;
 
         const diff = sub2Vector3(dest, coords);
-        const norm = multVector3(diff, 1 / toVectorNorm(diff));
+        const n = toVectorNorm(diff);
+        const norm = multVector3(diff, 1 / n);
         const speedVector = multVector3(norm, speed);
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            const long = Math.acos(norm[1] / (norm[1] * norm[1] + norm[0] * norm[0])) * (norm[0] > 0 ? 1 : -1);
+            const lat = Math.asin(diff[2] / n);
+
+            SetEntityRotation(this.entity, deg(lat), 0, -deg(long), 2, false);
+        }
 
         if (
             this.prevPos &&
