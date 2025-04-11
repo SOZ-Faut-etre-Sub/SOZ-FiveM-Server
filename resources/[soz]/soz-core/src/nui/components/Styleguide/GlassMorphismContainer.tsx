@@ -9,6 +9,7 @@ interface GlassMorphismContainerProps extends HTMLAttributes<any>, PropsWithChil
     borderClassName?: string;
     disableBorder?: boolean;
     showBorderOnHover?: boolean;
+    backgroundColor?: string;
     disableGameClone?: boolean;
     blur?: boolean;
     rounded?: number;
@@ -24,6 +25,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
     borderClassName,
     disableBorder,
     showBorderOnHover,
+    backgroundColor,
     disableGameClone,
     children,
     blur = true,
@@ -41,9 +43,15 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
         if (borderColor) {
             return borderColor;
         }
-
         return glassmorphismColors.border;
     }, [glassmorphismColors, borderColor]);
+
+    const currentBackgroundColor = useMemo(() => {
+        if (backgroundColor) {
+            return backgroundColor;
+        }
+        return glassmorphismColors.background;
+    }, [glassmorphismColors, backgroundColor]);
 
     return (
         <div
@@ -84,7 +92,7 @@ export const GlassMorphismContainer: FunctionComponent<GlassMorphismContainerPro
                 <div
                     className="absolute inset-0 transition-all duration-1000"
                     style={{
-                        background: glassmorphismColors.background,
+                        background: currentBackgroundColor,
                     }}
                 />
             </GameCanvasBox>
