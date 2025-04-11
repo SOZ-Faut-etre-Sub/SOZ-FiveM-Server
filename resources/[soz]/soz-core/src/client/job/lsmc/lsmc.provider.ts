@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { BlipFactory } from '@public/client/blip';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { Notifier } from '@public/client/notifier';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { PlayerService } from '@public/client/player/player.service';
@@ -13,6 +14,7 @@ import { TargetFactory } from '@public/client/target/target.factory';
 import { VehicleLockProvider } from '@public/client/vehicle/vehicle.lock.provider';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
@@ -113,6 +115,9 @@ export class LSMCProvider {
     @Inject(PolicePlayerProvider)
     private policePlayerProvider: PolicePlayerProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once()
     public onStart() {
         this.blipFactory.create('LSMC', {
@@ -122,12 +127,14 @@ export class LSMCProvider {
             scale: 1.01,
         });
 
-        this.blipFactory.create('LSMC2', {
-            name: 'Los Santos Medical Center',
-            coords: { x: 1828.51, y: 3673.4, z: 34.28 },
-            sprite: 61,
-            scale: 1.01,
-        });
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            this.blipFactory.create('LSMC2', {
+                name: 'Los Santos Medical Center',
+                coords: { x: 1828.51, y: 3673.4, z: 34.28 },
+                sprite: 61,
+                scale: 1.01,
+            });
+        }
 
         this.targetFactory.createForModel(
             lsmcBeds.map(bed => bed.model),

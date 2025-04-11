@@ -1,8 +1,10 @@
 import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { Tick } from '@public/core/decorators/tick';
 import { ClientEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 
 import { BlipFactory } from '../../blip';
 import { PlayerService } from '../../player/player.service';
@@ -23,8 +25,15 @@ export class TaxiProvider {
     @Inject(TaxiMissionService)
     private taxiMissionService: TaxiMissionService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.Start)
     public setupTaxiJob() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('CarlJr Services', {
             name: 'CarlJr Services',
             coords: { x: 903.59, y: -158.47, z: 75.21 },

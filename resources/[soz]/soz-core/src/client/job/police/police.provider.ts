@@ -31,9 +31,6 @@ const stations = {
         coords: [1856.15, 3681.68, 34.27],
     },
 };
-const stationsWhatIf = {
-    SASP: { label: 'San Andreas State Police', blip: { sprite: 526 }, coords: [632.76, 7.31, 82.63] },
-};
 
 @Provider()
 export class PoliceProvider {
@@ -73,12 +70,11 @@ export class PoliceProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onStart() {
-        let allStations = { ...stations };
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
-            allStations = { ...stations, ...stationsWhatIf };
+            return;
         }
 
-        for (const [id, station] of Object.entries(allStations)) {
+        for (const [id, station] of Object.entries(stations)) {
             if (!this.blipFactory.exist(`police_${id}`)) {
                 this.blipFactory.create(`police_${id}`, {
                     name: station.label,

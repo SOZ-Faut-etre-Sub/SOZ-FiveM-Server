@@ -1,3 +1,6 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { Feature } from '@public/shared/features';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -237,6 +240,9 @@ export class TemporaryProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private jobVehicle: number | null = null;
 
     private missionIndex: number | null = null;
@@ -249,6 +255,10 @@ export class TemporaryProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public temporaryLoad(): void {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         const options = [];
 
         for (const jobType of Object.keys(TemporaryJobs)) {

@@ -1,3 +1,6 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { Feature } from '@public/shared/features';
+
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -14,6 +17,9 @@ export class StonkProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
@@ -34,6 +40,10 @@ export class StonkProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupStonkSecurity() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('societyStonkSecurity', {
             name: 'STONK Security',
             coords: { x: 6.25, y: -709.11, z: 46.22 },

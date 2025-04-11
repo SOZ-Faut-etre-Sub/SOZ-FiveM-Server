@@ -1,3 +1,6 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { Feature } from '@public/shared/features';
+
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -45,10 +48,17 @@ export class NewsProvider {
     @Inject(InteractionProvider)
     private interactionProvider: InteractionProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private currentZone: Vector4 = null;
 
     @Once(OnceStep.PlayerLoaded)
     public async onTwitchNewsLoad() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('jobs:news', {
             coords: { x: -589.86, y: -930.61, z: 23.82 },
             name: 'Twitch News',

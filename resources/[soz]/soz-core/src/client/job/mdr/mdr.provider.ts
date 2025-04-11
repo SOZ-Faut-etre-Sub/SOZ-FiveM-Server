@@ -1,10 +1,12 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { Notifier } from '@public/client/notifier';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provider';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { JobPermission, JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 
@@ -43,6 +45,9 @@ export class MandatoryProvider {
 
     @Inject(PoliceAnimationProvider)
     private policeAnimationProvider: PoliceAnimationProvider;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
@@ -90,6 +95,10 @@ export class MandatoryProvider {
     }
 
     private createBlips() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('jobs:mdr', {
             name: 'Mandatory',
             coords: { x: -550.72, y: -194.66, z: 38.87 },

@@ -63,6 +63,10 @@ export class DmcProvider {
     };
 
     public createBlips() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('job:dmc:depot', {
             name: 'DeMetal Company',
             sprite: 382,

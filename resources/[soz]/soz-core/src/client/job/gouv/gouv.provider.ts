@@ -1,8 +1,10 @@
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InputService } from '@public/client/nui/input.service';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
 import { MenuType } from '@public/shared/nui/menu';
 import { TaxType } from '@public/shared/tax';
@@ -50,6 +52,9 @@ export class GouvProvider {
     @Inject(JobService)
     private jobService: JobService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.PlayerLoaded)
     public setupMdrJob() {
         this.createBlips();
@@ -89,6 +94,10 @@ export class GouvProvider {
     }
 
     private createBlips() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('jobs:gouv', {
             name: 'Gouvernement',
             coords: { x: -555.66, y: -599.36, z: 34.68 },

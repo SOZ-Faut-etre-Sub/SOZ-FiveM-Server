@@ -1,4 +1,5 @@
 import { BlipFactory } from '@public/client/blip';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
@@ -13,6 +14,7 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { Blip } from '@public/shared/blip';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { InventoryType } from '@public/shared/inventory';
 import { JobType } from '@public/shared/job';
 import { UpwConfig, UpwFacility, UpwFacilityType, UPWModels } from '@public/shared/job/upw';
@@ -51,6 +53,9 @@ export class UpwProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private currentWasteZone: string;
 
     @Once()
@@ -69,7 +74,9 @@ export class UpwProvider {
             },
         ]);
 
-        this.blipFactory.create('job_upw', UpwConfig.MainBlip);
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            this.blipFactory.create('job_upw', UpwConfig.MainBlip);
+        }
 
         this.targetFactory.createForModel(
             ['soz_prop_elec01', 'soz_prop_elec01_hs2', 'soz_prop_elec02', 'soz_prop_elec02_hs2'],

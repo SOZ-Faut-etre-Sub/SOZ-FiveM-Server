@@ -1,4 +1,6 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
+import { Feature } from '@public/shared/features';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
@@ -32,6 +34,9 @@ export class GarbageProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private displayBinBlip = false;
 
     private hasGarbageBag = false;
@@ -49,6 +54,10 @@ export class GarbageProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('jobs:garbage:truck', {
             name: 'BlueBird',
             position: [-621.98, -1640.79, 25.97],

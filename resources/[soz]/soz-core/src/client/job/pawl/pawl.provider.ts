@@ -1,6 +1,8 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { Feature } from '@public/shared/features';
 
 import { ServerEvent } from '../../../shared/event/server';
 import { toVector4Object } from '../../../shared/polyzone/vector';
@@ -14,6 +16,9 @@ export class PawlProvider {
 
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public async setupPawl() {
@@ -34,6 +39,10 @@ export class PawlProvider {
                 );
             },
         });
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
 
         this.blipFactory.create('job_pawl', {
             name: 'Pipe And Wooden Leg',

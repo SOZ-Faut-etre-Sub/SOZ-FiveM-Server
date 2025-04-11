@@ -1,3 +1,5 @@
+import { Feature } from '@public/shared/features';
+
 import { JobBlips } from '../../config/job';
 import { Once, OnceStep } from '../../core/decorators/event';
 import { OnEvent } from '../../core/decorators/event';
@@ -8,6 +10,7 @@ import { ClientEvent } from '../../shared/event';
 import { Job, JobPermission, JobType } from '../../shared/job';
 import { MenuType } from '../../shared/nui/menu';
 import { BlipFactory } from '../blip';
+import { FeatureProvider } from '../feature/feature.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { JobService } from './job.service';
 
@@ -22,8 +25,15 @@ export class JobProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once(OnceStep.Start)
     public async onStart() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         for (const [job, blips] of Object.entries(JobBlips)) {
             for (const blipIndex in blips) {
                 const blip = blips[blipIndex];

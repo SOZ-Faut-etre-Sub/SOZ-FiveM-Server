@@ -1,5 +1,7 @@
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { emitRpc } from '@public/core/rpc';
 import { CraftsList } from '@public/shared/craft/craft';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -26,6 +28,9 @@ export class BaunProvider {
 
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private state = {
         displayLiquorBlip: false,
@@ -62,6 +67,10 @@ export class BaunProvider {
     }
 
     private createBlips() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            return;
+        }
+
         this.blipFactory.create('displayLiquorBlip', {
             name: "Point de récolte d'alcools",
             coords: { x: 1410.96, y: 1147.6, z: 114.33 },
