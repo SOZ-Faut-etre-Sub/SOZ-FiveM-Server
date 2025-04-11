@@ -8,6 +8,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
 import { BankProvider } from '../bank/bank.provider';
+import { BankService } from '../bank/bank.service';
 import { BillboardService } from '../billboard/billboard.service';
 import { ItemService } from '../item/item.service';
 import { FDFFieldProvider } from '../job/fdf/fdf.field.provider';
@@ -45,6 +46,9 @@ export class ApiProvider {
 
     @Inject(BankProvider)
     private bankProvider: BankProvider;
+
+    @Inject(BankService)
+    private bankService: BankService;
 
     @Inject(VehicleStateService)
     private vehicleStateService: VehicleStateService;
@@ -274,6 +278,22 @@ export class ApiProvider {
                 JSON.stringify({
                     success,
                     msg,
+                })
+            );
+        } catch (error) {
+            return Response.internalServerError(error);
+        }
+    }
+
+    @Post('/remove-money')
+    public async removeMoney(request: Request): Promise<Response> {
+        try {
+            const data = JSON.parse(await request.body);
+            const success = await this.bankService.removeAccountMoney(data.accountId, data.amount);
+
+            return Response.ok(
+                JSON.stringify({
+                    success,
                 })
             );
         } catch (error) {

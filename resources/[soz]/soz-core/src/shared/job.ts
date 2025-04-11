@@ -104,6 +104,7 @@ export enum JobPermission {
     Order = 'order',
     MdrViewOtherJobs = 'view-other-jobs',
     MdrViewCitizenData = 'view-citizen-data',
+    MdrEditCitizenData = 'edit-citizen-data',
     MdrMarkedMoneyCleaning = 'marked-money-cleaning',
     UpwChangePrice = 'upw-change-price',
     FDOFedPound = 'fdo-fed-pound',
