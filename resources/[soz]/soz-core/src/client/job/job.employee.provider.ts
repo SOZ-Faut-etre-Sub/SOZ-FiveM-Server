@@ -1,3 +1,5 @@
+import { Feature } from '@public/shared/features';
+
 import { Once, OnceStep, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -5,11 +7,12 @@ import { emitRpc } from '../../core/rpc';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
 import { JobPermission, JobType } from '../../shared/job';
-import { JobRegistry } from '../../shared/job/config';
+import { JobBossZoneWhatIf, JobRegistry } from '../../shared/job/config';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { FeatureProvider } from '../feature/feature.provider';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { JobGradeRepository } from '../repository/job.grade.repository';
@@ -32,6 +35,9 @@ export class JobEmployeeProvider {
 
     @Inject(JobGradeRepository)
     private jobGradeRepository: JobGradeRepository;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public loadEmployeeProvider() {
@@ -132,7 +138,12 @@ export class JobEmployeeProvider {
         const playerPosition = GetEntityCoords(PlayerPedId()) as Vector3;
         let inZone = false;
 
-        for (const zone of job.bossZones) {
+        let zones = job.bossZones;
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) && JobBossZoneWhatIf[player.job.id]) {
+            zones = JobBossZoneWhatIf[player.job.id];
+        }
+
+        for (const zone of zones) {
             const boxZone = BoxZone.fromZone(zone);
 
             if (boxZone.isPointInside(playerPosition)) {
