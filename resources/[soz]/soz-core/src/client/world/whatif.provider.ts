@@ -35,7 +35,12 @@ export class WhatIfProvider {
 
         const coords = GetEntityCoords(PlayerPedId()) as Vector3;
         const inZone = WhatIfExcludeZone.isPointInside(coords);
-        if (inZone) {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        if (inZone && !player.metadata.isdead) {
             this.notifier.notify(
                 '☠️ Cette zone est ~r~irradiée~s~, tu vas mourir définitivement si tu y restes. ~b~Éloigne-toi aussi vite que tu le peux !~s~',
                 'warning'
