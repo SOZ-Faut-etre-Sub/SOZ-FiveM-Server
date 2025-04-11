@@ -15,7 +15,7 @@ import { VehicleLockProvider } from '@public/client/vehicle/vehicle.lock.provide
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
-import { JobType } from '@public/shared/job';
+import { FDO_LSMC } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { SEATS_CONFIG } from '@public/shared/vehicle/vehicle';
@@ -172,16 +172,20 @@ export class LSMCProvider {
                 {
                     label: 'Extraire le mort',
                     icon: 'ems/sortir',
-                    job: {
-                        [JobType.LSMC]: 0,
-                        [JobType.LSPD]: 0,
-                        [JobType.BCSO]: 0,
-                        [JobType.LSCS]: 0,
-                        [JobType.SASP]: 0,
-                        [JobType.FBI]: 0,
-                    },
                     category: 'society',
                     canInteract: entity => {
+                        const player = this.playerService.getPlayer();
+                        if (!player) {
+                            return false;
+                        }
+
+                        if (
+                            !FDO_LSMC.includes(player.job.id) &&
+                            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)
+                        ) {
+                            return false;
+                        }
+
                         const deadPed = this.getDeadPedInVehicle(entity);
 
                         return deadPed !== null;
