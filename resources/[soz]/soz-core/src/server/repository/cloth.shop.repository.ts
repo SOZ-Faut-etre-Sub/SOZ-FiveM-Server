@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@public/core/decorators/injectable';
+import { Feature } from '@public/shared/features';
 import { PlayerPedHash } from '@public/shared/player';
 import { getRandomInt } from '@public/shared/random';
 import {
@@ -12,12 +13,16 @@ import {
 import { ProperTorsos } from '../../config/shops';
 import { Component } from '../../shared/cloth';
 import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { RepositoryLegacy } from './repository';
 
 @Injectable()
 export class ClothingShopRepository extends RepositoryLegacy<ClothingShopRepositoryData> {
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     protected async load(): Promise<ClothingShopRepositoryData> {
         const repository: ClothingShopRepositoryData = {
@@ -139,7 +144,7 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                 underTypes: shopItemData.underTypes,
                 modelLabel: shopItemData.modelLabel,
                 colorLabel: shopItemData.colorLabel,
-                stock: getRandomInt(0, 10), //item.stock,
+                stock: this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ? 1000 : getRandomInt(0, 10), //item.stock,
             };
             if (!shopItem.modelLabel) {
                 continue;
