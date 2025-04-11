@@ -3,10 +3,14 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick } from '@core/decorators/tick';
 import { uuidv4 } from '@core/utils';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { Qbcore } from '@public/client/qbcore';
 import { ClientEvent } from '@public/shared/event/client';
 import { NuiEvent } from '@public/shared/event/nui';
+import { Feature } from '@public/shared/features';
+import { Vector3 } from '@public/shared/polyzone/vector';
+import { WhatIfExcludeZone } from '@public/shared/whatif';
 
 import { Blip, BlipType } from '../shared/blip';
 
@@ -31,6 +35,9 @@ export class BlipFactory {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(FeatureProvider)
+    public featureProvider: FeatureProvider;
 
     private blips = new Map<string, GameBlip>();
 
@@ -103,6 +110,13 @@ export class BlipFactory {
 
         if (blip.coords) {
             blip.position = [blip.coords.x, blip.coords.y, blip.coords.z];
+        }
+
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            WhatIfExcludeZone.isPointInside(blip.position as Vector3)
+        ) {
+            return -1;
         }
 
         if (actions) {
