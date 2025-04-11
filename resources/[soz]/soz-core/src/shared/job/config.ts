@@ -1,7 +1,7 @@
 import { ClientEvent } from '@public/shared/event/client';
 
 import { Job, JobPermission, JobPermissionData, JobType } from '../job';
-import { BoxZone } from '../polyzone/box.zone';
+import { BoxZone, Zone } from '../polyzone/box.zone';
 
 const BasePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
     [JobPermission.Enrollment]: { label: 'Gestion des recrutements' },
@@ -641,4 +641,17 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         },
         taxCollectAccounts: ['dmc', 'safe_dmc'],
     },
+};
+
+export const JobBossZoneWhatIf: Partial<Record<JobType, Zone[]>> = {
+    [JobType.SASP]: [
+        {
+            center: [626.23, -24.0, 90.51],
+            length: 16.2,
+            width: 16.4,
+            heading: 340,
+            minZ: 89.51,
+            maxZ: 92.51,
+        },
+    ],
 };
