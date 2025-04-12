@@ -128,11 +128,12 @@ export class InteractionProvider {
 
     @Tick(1000)
     public async listNearbyInteractions() {
+        const playerPosition = this.playerPosition;
         for (const [id, interaction] of this.interactions.entries()) {
-            const [entity, coords] = this.getInteractionCoords(interaction);
+            const [entity, coords] = this.getInteractionCoords(interaction, playerPosition);
             if (!coords) continue;
 
-            const distance = getDistance(this.playerPosition, coords);
+            const distance = getDistance(playerPosition, coords);
             if (distance > this.interactionDistanceProvider.getDrawDistance(id)) continue;
 
             const isValid = await this.targetService.validateInteraction(interaction, entity);
@@ -156,11 +157,12 @@ export class InteractionProvider {
     public async onTick() {
         if (this.nearbyInteractions.size === 0) return;
 
+        const playerPosition = this.playerPosition;
         for (const [id, interaction] of this.nearbyInteractions.entries()) {
-            const [, coords] = this.getInteractionCoords(interaction);
+            const [, coords] = this.getInteractionCoords(interaction, playerPosition);
             if (!coords) continue;
 
-            const distance = getDistance(this.playerPosition, coords);
+            const distance = getDistance(playerPosition, coords);
             if (distance > this.interactionDistanceProvider.getDrawDistance(id)) {
                 this.nearbyInteractions.delete(id);
                 if (this.nearbyInteraction?.id === id) {
@@ -208,8 +210,9 @@ export class InteractionProvider {
     public async runInteraction(): Promise<void> {
         if (!this.nearbyInteraction) return;
 
-        const [entity, coords] = this.getInteractionCoords(this.nearbyInteraction);
-        const distance = getDistance(this.playerPosition, coords);
+        const playerPosition = this.playerPosition;
+        const [entity, coords] = this.getInteractionCoords(this.nearbyInteraction, playerPosition);
+        const distance = getDistance(playerPosition, coords);
 
         if (distance > this.interactionDistanceProvider.getInteractionDistance(this.nearbyInteraction.id)) return;
 
@@ -218,7 +221,7 @@ export class InteractionProvider {
         this.nearbyInteraction = null;
     }
 
-    protected getInteractionCoords(interaction: Interaction): [number, Vector3] {
+    protected getInteractionCoords(interaction: Interaction, playerPosition: Vector3): [number, Vector3] {
         if (interaction.entity) {
             return [interaction.entity, this.interactionOffsetProvider.getEntityCoordsWithOffset(interaction.entity)];
         }
@@ -228,8 +231,6 @@ export class InteractionProvider {
         }
 
         if (interaction.model) {
-            const playerPosition = this.playerPosition;
-
             const closedEntities = this.gamePoolObjects[interaction.model]
                 ?.filter(({ originalCoords }) => {
                     if (!interaction.searchCoords) return true;

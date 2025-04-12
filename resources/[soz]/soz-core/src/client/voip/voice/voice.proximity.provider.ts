@@ -21,6 +21,13 @@ export class VoiceProximityProvider {
     private megaPhonePlayers = new Set<number>();
 
     private currentProximityPlayers = new Set<number>();
+    private knownPlayers = new Map<
+        number,
+        {
+            ped: number;
+            serverId: number;
+        }
+    >();
 
     @Once(OnceStep.PlayerLoaded)
     public async onPlayerLoaded() {
@@ -45,33 +52,44 @@ export class VoiceProximityProvider {
         }
     }
 
-    @Tick()
-    public checkProximityPlayers() {
+    @Tick(5000)
+    public listProximityPlayers() {
+        this.knownPlayers.clear();
         const players = GetActivePlayers();
-        const currentPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
-        const selfPlayerId = GetPlayerServerId(PlayerId());
-        const newProximityPlayers = new Set<number>();
+        const selfPlayerId = PlayerId();
 
         for (const player of players) {
+            if (player === selfPlayerId) {
+                continue;
+            }
             const serverId = GetPlayerServerId(player);
 
             if (!serverId) {
                 continue;
             }
 
-            if (serverId === selfPlayerId) {
-                continue;
-            }
-
             const playerPed = GetPlayerPed(player);
-            const playerPosition = GetEntityCoords(playerPed, false) as Vector3;
+            this.knownPlayers.set(player, {
+                ped: playerPed,
+                serverId,
+            });
+        }
+    }
+
+    @Tick()
+    public checkProximityPlayers() {
+        const currentPosition = GetEntityCoords(PlayerPedId(), false) as Vector3;
+        const newProximityPlayers = new Set<number>();
+
+        for (const player of this.knownPlayers.values()) {
+            const playerPosition = GetEntityCoords(player.ped, false) as Vector3;
             const distance = getDistance(currentPosition, playerPosition);
 
             if (distance > 50) {
                 continue;
             }
 
-            newProximityPlayers.add(serverId);
+            newProximityPlayers.add(player.serverId);
         }
 
         // get diff
