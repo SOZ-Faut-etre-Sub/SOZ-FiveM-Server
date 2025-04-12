@@ -1,5 +1,6 @@
 import { useAssetPath } from '@public/nui/hook/assets';
 import { animated, useTransition } from '@react-spring/web';
+import clsx from 'clsx';
 import { FunctionComponent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { uuidv4 } from '../../../core/utils';
@@ -129,6 +130,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
             case 'lspd':
             case 'bcso':
             case 'sasp':
+            case 'fbi':
                 return 'Avis de recherche';
             case 'fbi_annoncement':
             case 'sasp_annoncement':
@@ -177,6 +179,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                     <p>
                         Une épaisse tempête de sable va fouetter l'entièreté de l'île dans les prochaines minutes !{' '}
                         <strong
+                            className="font-bold"
                             style={{
                                 color: borderColor,
                             }}
@@ -195,6 +198,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                     <p>
                         Un ou plusieurs tremblements de terre de magnitude élevée vont toucher l'île !{' '}
                         <strong
+                            className="font-bold"
                             style={{
                                 color: borderColor,
                             }}
@@ -213,6 +217,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                     <p>
                         Suite à de fortes pluies, une importante montée des eaux a été détectée !{' '}
                         <strong
+                            className="font-bold"
                             style={{
                                 color: borderColor,
                             }}
@@ -225,7 +230,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
             );
         }
 
-        if (['lspd', 'bcso', 'sasp'].includes(news.type)) {
+        if (['lspd', 'bcso', 'sasp', 'fbi'].includes(news.type)) {
             return (
                 <>
                     <p>
@@ -233,7 +238,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                     </p>
                     <p>
                         Si vous avez des informations sur cette personne, veuillez les communiquer au{' '}
-                        <strong className="uppercase">555-{news.type}</strong>.
+                        <strong className="font-bold uppercase">555-{news.type}</strong>.
                     </p>
                 </>
             );
@@ -242,23 +247,36 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
         return news.message;
     };
 
+    const notificationSize = {
+        'h-[20vh]': window.innerHeight < 1200,
+        'h-[17vh]': window.innerHeight > 1200,
+    };
+    const headerSize = {
+        'text-lg': window.innerHeight < 1200,
+        'text-2xl': window.innerHeight > 1200,
+    };
+    const textSize = {
+        'text-base': window.innerHeight < 1200,
+        'text-xl': window.innerHeight > 1200,
+    };
+
     return (
-        <div className="absolute w-[60vh] top-0 overflow-hidden aspect-[600/206] text-white">
+        <div className={clsx('absolute top-0 overflow-hidden aspect-[600/206] text-white', notificationSize)}>
             <GlassMorphismContainer
                 borderClassName="rounded-xl"
                 borderColor={borderColor}
                 backgroundColor={backgroundColor}
                 className="flex gap-3 h-full w-full"
             >
-                <div className="flex flex-col gap-3 grow m-3">
-                    <div className="flex gap-3 items-center">
+                <div className={clsx('flex flex-col gap-4 grow m-4', textSize)}>
+                    <div className="flex gap-6 items-center">
                         {logo && <img className="h-10" src={logo} alt="" />}
-                        <h2 className="font-bold text-xl uppercase">{renderTitle()}</h2>
+                        <h2 className={clsx('font-bold uppercase', headerSize)}>{renderTitle()}</h2>
                     </div>
 
-                    <p className="flex flex-col gap-3 grow text-lg">{renderContent()}</p>
+                    <p className="flex flex-col gap-4 grow">{renderContent()}</p>
 
-                    {news.reporter && <p className="self-end font-semibold">{news.reporter}</p>}
+                    {news.reporter && <p className="self-end font-bold">{news.reporter}</p>}
                 </div>
             </GlassMorphismContainer>
         </div>
