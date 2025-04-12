@@ -45,6 +45,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
         persistant: false,
     });
     const [currentSearch, setCurrentSearch] = useState<string>(null);
+    const [noCollision, setNoCollision] = useState<boolean>(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -57,7 +58,8 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
     useNuiEvent('placement_prop', 'SetDatas', ({ serverData }) => {
         setServerData(serverData);
     });
-    useNuiEvent('placement_prop', 'EnterEditorMode', () => {
+    useNuiEvent('placement_prop', 'EnterEditorMode', noCollision => {
+        setNoCollision(noCollision);
         navigate(`/${MenuType.PropPlacementMenu}/editor`, { state: { ...location.state, activeIndex: 0 } });
     });
     useNuiEvent('placement_prop', 'SetCurrentSearch', (search: string) => {
@@ -400,7 +402,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = ({ d
                         onChange={value => {
                             fetchNui(NuiEvent.PropToggleCollision, { value });
                         }}
-                        checked={true}
+                        checked={!noCollision}
                         description="Active ou désactive la collision du prop. Si la collision est désactivée, le prop peut être agrandi, réduit, et tourné dans tous les sens."
                     >
                         Activer la collision

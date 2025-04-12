@@ -350,14 +350,15 @@ export class PropPlacementProvider {
             model: propToCreate.model,
             collection: this.currentCollection.name,
             position: [coords[0], coords[1], coords[2], 0],
-            matrix: null,
-            collision: true,
+            matrix: propToCreate.matrix,
+            collision: !propToCreate.nocollision,
             entity: await this.spawnDebugProp({
                 id: id,
                 model: GetHashKey(propToCreate.model),
-                position: [coords[0], coords[1], coords[2], 0],
-                noCollision: false,
-                placeOnGround: true,
+                position: [coords[0], coords[1], coords[2], propToCreate.heading ?? 0],
+                noCollision: propToCreate.nocollision,
+                placeOnGround: propToCreate.matrix ? false : true,
+                matrix: propToCreate.matrix,
             }),
             state: PropState.unplaced,
         };
@@ -417,18 +418,18 @@ export class PropPlacementProvider {
         }
 
         await this.spawnNewDebug(propToCreate);
-        await this.enterEditorMode();
+        await this.enterEditorMode(true, propToCreate.nocollision);
         return Ok(true);
     }
 
-    public async enterEditorMode(enterCursorMode = true) {
+    public async enterEditorMode(enterCursorMode = true, noCollision = false) {
         if (enterCursorMode) {
             EnterCursorMode();
         }
         const [x, y, z] = this.debugProp.position;
         this.circularCamera.createCamera([x, y, z]);
         this.isEditorModeOn = true;
-        this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode');
+        this.nuiDispatch.dispatch('placement_prop', 'EnterEditorMode', noCollision);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -724,10 +725,12 @@ export class PropPlacementProvider {
                 return;
             }
             if (this.isPipetteOn) {
-                const selectedProp = {
+                const selectedProp: PlacementProp = {
                     model: obj.model,
                     label: '',
-                    collision: true,
+                    heading: obj.position[3],
+                    matrix: obj.matrix,
+                    nocollision: !obj.collision,
                 };
                 this.isPipetteOn = false;
                 LeaveCursorMode();

@@ -12,7 +12,7 @@ export type NuiPlacementPropMethodMap = {
     SetCollectionList: PropCollectionData[];
     SetCollection: PropCollection;
     SetDatas: { serverData: PropServerData };
-    EnterEditorMode: void;
+    EnterEditorMode: boolean;
     SetCurrentSearch: string;
 };
 
@@ -35,6 +35,9 @@ export type NuiGizmoMethodMap = {
 export type PlacementProp = {
     model: string;
     label?: string;
+    heading?: number;
+    matrix?: number[];
+    nocollision?: boolean;
 };
 
 export type HousingPlacementProp = {
