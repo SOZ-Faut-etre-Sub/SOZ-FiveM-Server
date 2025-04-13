@@ -62,6 +62,10 @@ export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
             if (item.stock == 0) {
                 return;
             }
+
+            if (playerData.money.money < getPrice(item.price, isInCayo ? null : TaxType.SUPPLY)) {
+                return;
+            }
             // Visual update the stock.
             // We don't need to wait the backend to update the stock.
             // It will be updated on the next shop opening.
