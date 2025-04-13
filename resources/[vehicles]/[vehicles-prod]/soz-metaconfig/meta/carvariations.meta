@@ -213,17 +213,18 @@
             <colors>
                 <Item>
                     <indices content="char_array">
-                        4
-                        12
+                        111
                         0
                         0
-                        0
+                        93
+                        134
                     </indices>
                     <liveries/>
                 </Item>
             </colors>
             <kits>
-                <Item>1025_lspd10_modkit</Item>
+                <Item>0_default_modkit</Item>
+                <Item>999_lspd10_modkit</Item>
             </kits>
             <windowsWithExposedEdges/>
             <plateProbabilities>
@@ -338,6 +339,7 @@
             </colors>
             <kits>
                 <Item>0_default_modkit</Item>
+                <Item>999_lspd10_modkit</Item>
             </kits>
             <windowsWithExposedEdges/>
             <plateProbabilities>
