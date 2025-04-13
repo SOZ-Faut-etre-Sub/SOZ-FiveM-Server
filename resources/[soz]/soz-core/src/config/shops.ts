@@ -637,6 +637,12 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         brand: ShopBrand.SouvenirJewel,
         location: [-715.15, -248.64, 36.98, 349.29],
     },
+    ['ponsonbys_casino']: {
+        brand: ShopBrand.Ponsonbys,
+        location: [1100.58, 195.5, -49.44, 315.75],
+        positionInShop: [1096.34, 201.08, -49.44, 227.59],
+        cameraInShop: [1098.54, 199.04, -48.44, 44.91],
+    },
 };
 
 export const ShopTattooConfig: Record<string, TattooShopCategory> = {
