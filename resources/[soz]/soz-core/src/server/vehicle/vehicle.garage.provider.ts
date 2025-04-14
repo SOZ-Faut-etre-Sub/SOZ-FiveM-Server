@@ -3,7 +3,6 @@ import { GangService } from '@private/server/gang/gang.service';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
-import { Feature } from '@public/shared/features';
 import { hasPlayerTenantOrRoommateApartment } from '@public/shared/housing/housing';
 import { TaxType } from '@public/shared/tax';
 
@@ -151,6 +150,8 @@ export class VehicleGarageProvider {
             await this.prismaService.$executeRawUnsafe(query);
         }
 
+        //Disabled after what if
+        /*
         const vehicles = await this.prismaService.playerVehicle.findMany({
             where: {
                 state: {
@@ -238,6 +239,7 @@ export class VehicleGarageProvider {
                 });
             }
         }
+        */
 
         const playerVehicles = await this.prismaService.playerVehicle.findMany();
 

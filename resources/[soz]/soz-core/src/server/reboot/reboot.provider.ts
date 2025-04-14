@@ -140,6 +140,8 @@ export class RebootProvider {
 
         this.upwFacilityProvider.saveLoop();
 
+        //Disabled after what if
+        /*
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
             const ids = await this.playerCleanService.getPlayerToCleans();
             const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);
@@ -147,6 +149,7 @@ export class RebootProvider {
             this.logger.info(`[reboot] Houses owner cleaned: ${houseOwnerCount}`);
             this.logger.info(`[reboot] Houses roommate cleaned: ${houseRoommateCount}`);
         }
+        */
     }
 
     @Command('thunder', {
