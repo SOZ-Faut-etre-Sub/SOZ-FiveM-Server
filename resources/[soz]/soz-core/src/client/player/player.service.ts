@@ -7,7 +7,7 @@ import { Ear } from '@public/shared/voip';
 
 import { Outfit } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
-import { FakeId, PlayerClientState, PlayerData, PlayerLicenceType } from '../../shared/player';
+import { FakeId, PlayerClientState, PlayerData, PlayerLicenceType, PlayerPedHash } from '../../shared/player';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { Qbcore } from '../qbcore';
@@ -230,5 +230,13 @@ export class PlayerService {
 
     public isPushing() {
         return this.pushing;
+    }
+
+    public get isMale() {
+        return this.getPlayer().skin.Model.Hash === PlayerPedHash.Male;
+    }
+
+    public get isFemale() {
+        return this.getPlayer().skin.Model.Hash === PlayerPedHash.Female;
     }
 }

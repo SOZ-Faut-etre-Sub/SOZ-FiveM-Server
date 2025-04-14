@@ -358,6 +358,9 @@ export enum RpcServerEvent {
     LASER_GAME_GET_PLAYER_NAME = 'soz-core:server:phone:app:laser-game:get-player-name',
     LASER_GAME_GET_BUCKET = 'soz-core:server:phone:app:laser-game:get-bucket',
 
+    CASINO_LUCKY_WHEEL_JOIN = 'soz-core:server:casino:licky-wheel:join',
+    CASINO_LUCKY_WHEEL_USE = 'soz-core:server:casino:licky-wheel:use',
+    CASINO_LUCKY_WHEEL_LEAVE = 'soz-core:server:casino:licky-wheel:leave',
     CASINO_SLOT_MACHINE_USE = 'soz-core:server:casino:slot-machine-use',
     CASINO_SLOT_MACHINE_LEAVE = 'soz-core:server:casino:slot-machine-leave',
     CASINO_POKER_JOIN_TABLE = 'soz-core:server:casino:poker-join-table',

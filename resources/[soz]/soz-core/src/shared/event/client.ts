@@ -508,6 +508,8 @@ export enum ClientEvent {
 
     THUNDER = 'soz-core:client:thunder',
 
+    CASINO_LUCKY_WHEEL_SPIN = 'soz-core:client:casino:lucky-wheel:spin',
+    CASINO_LUCKY_WHEEL_WIN = 'soz-core:client:casino:lucky-wheel:win',
     CASINO_SLOT_MACHINE_SPIN_RESULT = 'soz-core:client:casino:slot-machine:spin-result',
     CASINO_SLOT_MACHINE_UPDATE_WIN = 'soz-core:client:casino:slot-machine:update-win',
     CASINO_POKER_UPDATE_CARDS = 'soz-core:client:casino:poker:update-cards',
