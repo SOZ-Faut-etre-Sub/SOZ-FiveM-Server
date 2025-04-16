@@ -93,6 +93,15 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 40.22,
     },
     {
+        data: JobType.MDR,
+        center: [243.42, -1091.71, 30.19],
+        length: 0.6,
+        width: 3.2,
+        minZ: 29.19,
+        maxZ: 29.74,
+        heading: 179.79,
+    },
+    {
         data: JobType.Taxi,
         center: [903.31, -157.89, 74.17],
         length: 1.0,
