@@ -417,6 +417,11 @@ export class VehicleGarageProvider {
     }
 
     public async doStoreVehicle(id: string, garage: Garage, vehicle: number, delai = 0, cost = 0) {
+        if (IsEntityDead(vehicle) && garage.type === GarageType.Depot) {
+            this.notifier.notify(`Ce véhicule est ~r~détruit~s~ ! Il doit être déposé à la casse et non en fourrière.`);
+            return;
+        }
+
         if (IsVehicleAttachedToTrailer(vehicle)) {
             DetachVehicleFromTrailer(vehicle);
 

@@ -750,6 +750,14 @@ export class VehicleGarageProvider {
         const vehicleEntityId = NetworkGetEntityFromNetworkId(vehicleNetworkId);
         const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
+        if (vehicleState.volatile.dead && garage.type === GarageType.Depot) {
+            this.notifier.notify(
+                source,
+                `Ce véhicule est ~r~détruit~s~ ! Il doit être déposé à la casse et non en fourrière.`
+            );
+            return;
+        }
+
         if (!vehicleState.volatile.id) {
             if (garage.type === GarageType.Depot) {
                 if (await this.vehicleSpawner.delete(vehicleNetworkId)) {

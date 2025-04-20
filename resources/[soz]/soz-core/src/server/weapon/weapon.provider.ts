@@ -21,6 +21,7 @@ import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { PlayerStateService } from '../player/player.state.service';
 import { Store } from '../store/store';
+import { VehicleConditionProvider } from '../vehicle/vehicle.condition.provider';
 
 @Provider()
 export class WeaponProvider {
@@ -50,6 +51,9 @@ export class WeaponProvider {
 
     @Inject(PhoneAppSocietyProvider)
     private readonly phoneSocietyProvider: PhoneAppSocietyProvider;
+
+    @Inject(VehicleConditionProvider)
+    private readonly vehicleConditionProvider: VehicleConditionProvider;
 
     @Inject('Store')
     private store: Store;
@@ -423,15 +427,28 @@ export class WeaponProvider {
             return;
         }
 
-        if (!explosionData.f208) {
-            TriggerClientEvent(
-                ClientEvent.WEAPON_EXPLOSION,
-                source,
-                explosionData.posX,
-                explosionData.posY,
-                explosionData.posZ,
-                explosionData.explosionType
-            );
+        const netId = explosionData.f208 || explosionData.f210;
+        if (netId) {
+            const entity = NetworkGetEntityFromNetworkId(netId);
+            if (entity) {
+                const coords = GetEntityCoords(entity);
+                explosionData.posX += coords[0];
+                explosionData.posY += coords[1];
+                explosionData.posZ += coords[2];
+            }
+        }
+
+        TriggerClientEvent(
+            ClientEvent.WEAPON_EXPLOSION,
+            source,
+            explosionData.posX,
+            explosionData.posY,
+            explosionData.posZ,
+            explosionData.explosionType
+        );
+
+        if (explosionData.f208) {
+            this.vehicleConditionProvider.onVehicleDead(source, explosionData.f208, 'explosion');
         }
     }
 
