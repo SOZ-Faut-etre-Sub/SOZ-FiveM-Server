@@ -95,9 +95,9 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: true,
     },
     [Feature.Easter]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Bunkers]: {
         production: false,
