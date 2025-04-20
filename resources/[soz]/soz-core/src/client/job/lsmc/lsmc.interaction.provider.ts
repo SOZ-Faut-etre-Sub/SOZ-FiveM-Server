@@ -193,7 +193,7 @@ export class LSMCInteractionProvider {
 
                     const player = this.playerService.getPlayer();
 
-                    if (player?.job.id !== JobType.LSMC) {
+                    if (player?.job.id !== JobType.LSMC || !player?.job.onduty) {
                         return false;
                     }
 
