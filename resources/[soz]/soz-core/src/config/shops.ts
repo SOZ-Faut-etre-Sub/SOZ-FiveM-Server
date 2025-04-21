@@ -7769,19 +7769,6 @@ const SansMancheCol = [
     UType.ChemiseMancheHautRetrousse,
 ];
 
-const VesteHaute = [
-    UType.fd1,
-    UType.fb1,
-    UType.fb2,
-    UType.fb3,
-    UType.fb4,
-    UType.fh2,
-    UType.fu4,
-    UType.ftd1,
-    UType.ft1,
-    UType.ft2,
-    UType.TshirtVentreMulti,
-];
 const VesteHauteLarge = [
     UType.fd1,
     UType.fd2,
@@ -8450,7 +8437,7 @@ export const UndershirtTypeForTop: Record<PlayerPedHash, Record<number, number[]
         536: BlousonFermeDecolte,
     },
     [PlayerPedHash.Female]: {
-        1: VesteHaute,
+        1: VesteHauteLarge,
         6: VesteFFermeeMancheCourte,
         7: VesteF,
         8: VesteHauteLarge,
