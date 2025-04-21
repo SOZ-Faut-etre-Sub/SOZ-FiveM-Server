@@ -2,12 +2,11 @@ import { SozRole } from '@core/permissions';
 import { fetchNui } from '@public/nui/fetch';
 import { NuiEvent } from '@public/shared/event/nui';
 import { AskInput } from '@public/shared/nui/input';
-import { Fragment, FunctionComponent, useState } from 'react';
-
 import {
     SCENE_COLORS,
     SCENE_COLORS_LABELS,
     SceneColor,
+    SenatSceneState,
     Spot,
     SPOT_COLORS,
     SPOT_COLORS_LABELS,
@@ -15,8 +14,9 @@ import {
     SPOT_GROUP_FIRST_ROW,
     SPOT_GROUP_SECOND_ROW,
     SPOT_LABELS,
-    XmasSceneState,
-} from '../../../shared/story/story';
+} from '@public/shared/story/story';
+import { Fragment, FunctionComponent, useState } from 'react';
+
 import {
     MenuContent,
     MenuItemButton,
@@ -30,7 +30,7 @@ import {
 
 export type MeteorSubMenuProps = {
     permission: SozRole;
-    state: XmasSceneState;
+    state: SenatSceneState;
 };
 
 const SPOT_GROUP_ALL = [...SPOT_GROUP_BOTTOM, ...SPOT_GROUP_FIRST_ROW, ...SPOT_GROUP_SECOND_ROW];
@@ -44,8 +44,8 @@ const copyToClipboard = text => {
     document.body.removeChild(clipElem);
 };
 
-export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permission, state }) => {
-    const [temporaryState, setTemporaryState] = useState<XmasSceneState>(state);
+export const SceneSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permission, state }) => {
+    const [temporaryState, setTemporaryState] = useState<SenatSceneState>(state);
 
     return (
         <>
@@ -222,8 +222,8 @@ export const XmasSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permission,
 };
 
 type MenuLightGroupProps = {
-    temporaryState: XmasSceneState;
-    setTemporaryState: (state: XmasSceneState) => void;
+    temporaryState: SenatSceneState;
+    setTemporaryState: (state: SenatSceneState) => void;
     suffix: string;
     spots: Spot[];
 };

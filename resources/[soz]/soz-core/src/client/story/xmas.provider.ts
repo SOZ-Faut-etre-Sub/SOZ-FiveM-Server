@@ -7,6 +7,7 @@ import { wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
+import { Feature } from '../../shared/features';
 import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, getRotationForATargetingB, Vector3 } from '../../shared/polyzone/vector';
@@ -15,12 +16,13 @@ import { LightState } from '../../shared/spotlight';
 import {
     SCENE_COLOR_TEXTURE_NAMES,
     SCENE_COLORS,
+    SenatSceneState,
     Spot,
     SPOT_COLORS,
     SPOT_GROUP_SECOND_ROW,
     SPOT_RELATIVE_POSITIONS,
-    XmasSceneState,
 } from '../../shared/story/story';
+import { FeatureProvider } from '../feature/feature.provider';
 import { PlayerFinderService } from '../player/player.finder.service';
 import { StreamScreen } from '../stream/stream.screen';
 import { LightObject } from '../world/light.object';
@@ -47,7 +49,10 @@ export class XmasProvider {
     @Inject(PlayerFinderService)
     private playerFinderService: PlayerFinderService;
 
-    public sceneState: XmasSceneState = null;
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
+    public sceneState: SenatSceneState = null;
 
     private loadedSceneObjects: LoadedScene = null;
 
@@ -56,13 +61,13 @@ export class XmasProvider {
     private isTracking = false;
 
     @OnNuiEvent(NuiEvent.AdminMenuXmasSetState)
-    public async onAdminMenuXmasSetState(state: XmasSceneState) {
+    public async onAdminMenuXmasSetState(state: SenatSceneState) {
         TriggerServerEvent(ServerEvent.ADMIN_XMAS_UPDATE_SCENE, state);
     }
 
     @Once(OnceStep.PlayerLoaded)
     public async onStartXmas() {
-        this.sceneState = await emitRpc<XmasSceneState>(RpcServerEvent.XMAS_GET_SCENE_STATE);
+        this.sceneState = await emitRpc<SenatSceneState>(RpcServerEvent.XMAS_GET_SCENE_STATE);
 
         this.sceneStream = new StreamScreen(
             new BoxZone(SCENE_POSITION, 80, 80, {
@@ -82,11 +87,32 @@ export class XmasProvider {
     }
 
     @OnEvent(ClientEvent.XMAS_UPDATE_SCENE_STATE)
-    public async onXmasSceneStateUpdate(sceneState: XmasSceneState) {
+    public async onXmasSceneStateUpdate(sceneState: SenatSceneState) {
         this.sceneState = sceneState;
 
         if (this.loadedSceneObjects) {
             await this.applySceneState();
+        }
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    public async tick() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Ceremony)) return;
+
+        if (!this.sceneState || !this.sceneStream) {
+            return;
+        }
+
+        const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        const distance = getDistance(position, SCENE_POSITION);
+
+        if (distance > TRIGGER_DISTANCE && this.loadedSceneObjects) {
+            this.loadedSceneObjects = null;
+        }
+
+        if (distance <= TRIGGER_DISTANCE && !this.loadedSceneObjects) {
+            this.loadSceneObjects();
+            this.applySceneState();
         }
     }
 
@@ -225,6 +251,8 @@ export class XmasProvider {
 
     @Tick(TickInterval.EVERY_FRAME)
     async streamXmasVideo(): Promise<void> {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Ceremony)) return;
+
         if (this.sceneStream) {
             if (!this.loadedSceneObjects) {
                 const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
@@ -252,6 +280,8 @@ export class XmasProvider {
 
     @Tick(500)
     public async trackPlayerTick() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.Ceremony)) return;
+
         if (!this.isTracking || !this.loadedSceneObjects || !this.sceneState) {
             return;
         }
