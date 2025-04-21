@@ -63,6 +63,10 @@ export class BankInvoiceService {
         const invoice = await this.bankInvoiceRepository.find(invoiceId);
         if (!invoice) return false;
 
+        if (invoice.payed || invoice.refused) {
+            return;
+        }
+
         if (!(await this.playerHasPermission(player, invoice))) return false;
 
         const emitter = this.playerService.getPlayerByCitizenId(invoice.emitter);
@@ -199,6 +203,10 @@ export class BankInvoiceService {
 
         const invoice = await this.bankInvoiceRepository.find(invoiceId);
         if (!invoice) return false;
+
+        if (invoice.payed || invoice.refused) {
+            return;
+        }
 
         if (!(await this.playerHasPermission(player, invoice))) return false;
 
