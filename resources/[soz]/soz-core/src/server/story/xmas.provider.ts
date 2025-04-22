@@ -4,11 +4,11 @@ import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import { RpcServerEvent } from '../../shared/rpc';
-import { SceneColor, SenatSceneState, Spot, SpotColor } from '../../shared/story/story';
+import { SceneColor, Spot, SpotColor, XmasSceneState } from '../../shared/story/story';
 
 @Provider()
 export class XmasProvider {
-    private sceneState: SenatSceneState = {
+    private sceneState: XmasSceneState = {
         video_url: null,
         spots: {
             [Spot.SPOT_SCENE_BOTTOM_BACK_LEFT]: { enabled: false, color: SpotColor.White },
@@ -35,7 +35,7 @@ export class XmasProvider {
     };
 
     @OnEvent(ServerEvent.ADMIN_XMAS_UPDATE_SCENE)
-    updateSceneState(source: number, state: SenatSceneState) {
+    updateSceneState(source: number, state: XmasSceneState) {
         this.sceneState = state;
 
         TriggerLatentClientEvent(ClientEvent.XMAS_UPDATE_SCENE_STATE, -1, 16 * 1024, state);
