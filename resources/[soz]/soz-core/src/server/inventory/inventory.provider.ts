@@ -14,6 +14,7 @@ import {
     InventoryItem,
     InventorySort,
     InventoryType,
+    isInventoryItemExpired,
     MERGE_ERROR_MESSAGE,
 } from '../../shared/inventory';
 import { getDistance, Vector3 } from '../../shared/polyzone/vector';
@@ -644,6 +645,12 @@ export class InventoryProvider {
         }
 
         if (inventoryItem.type === 'weapon') {
+            if (isInventoryItemExpired(inventoryItem)) {
+                const item = this.itemService.getItem(inventoryItem.name);
+                this.notifier.notify(source, `${item.label} est périmé(e).`, 'error');
+                return;
+            }
+
             TriggerClientEvent(ClientEvent.WEAPON_USE_WEAPON, source, inventoryItem);
         } else {
             await this.itemService.useItem(source, inventoryItem, inventory);
