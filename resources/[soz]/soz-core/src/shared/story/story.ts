@@ -119,7 +119,7 @@ export type SpotState = {
     enabled: boolean;
 };
 
-export type SenatSceneState = {
+export type XmasSceneState = {
     video_url: string | null;
     scene_bottom_color: SceneColor;
     scene_middle_color: SceneColor;

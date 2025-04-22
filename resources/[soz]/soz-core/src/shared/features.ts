@@ -23,7 +23,6 @@ export enum Feature {
     Christmas = 'Christmas',
     PoliceAlert = 'PoliceAlert',
     WhatIfFirstEpisode = 'WhatIfFirstEpisode',
-    Ceremony = 'Ceremony',
 }
 
 export type FeaturesConfig = Record<Feature, { [P in Environment]?: boolean }>;
@@ -149,10 +148,5 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         production: false,
         development: false,
         test: false,
-    },
-    [Feature.Ceremony]: {
-        production: true,
-        development: true,
-        test: true,
     },
 };

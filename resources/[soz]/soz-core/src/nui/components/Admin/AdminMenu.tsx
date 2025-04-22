@@ -1,4 +1,3 @@
-import { CeremonySubMenu } from '@public/nui/components/Admin/CeremonySubMenu';
 import { EventSubMenu } from '@public/nui/components/Admin/EventSubMenu';
 import { HalloweenSubMenu } from '@public/nui/components/Admin/HalloweenSubMenu';
 import { RootState } from '@public/nui/store';
@@ -24,7 +23,6 @@ export type AdminMenuStateProps = {
 
 export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
     const isHalloween = useSelector((state: RootState) => state.features.Halloween);
-    const ceremonyEnabled = useSelector((state: RootState) => state.features.Ceremony);
 
     if (!data || !data.state) {
         return null;
@@ -56,11 +54,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                     <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="meteor">
                         ☄️ Météorite
                     </MenuItemSubMenuLink>
-                    {ceremonyEnabled && (
-                        <MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="ceremony">
-                            🎉 Cérémonie
-                        </MenuItemSubMenuLink>
-                    )}
+                    {/*<MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="ceremony">*/}
+                    {/*    🎉 Cérémonie*/}
+                    {/*</MenuItemSubMenuLink>*/}
                     <MenuItemSubMenuLink disabled={!isStaffOrAdminOrGM} id="event">
                         📅 Gestion des evenements HC
                     </MenuItemSubMenuLink>
@@ -69,6 +65,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
                             🎃 Halloween
                         </MenuItemSubMenuLink>
                     )}
+                    {/*<MenuItemSubMenuLink disabled={!isStaffOrAdmin} id="christmas">*/}
+                    {/*    🎄 Noël*/}
+                    {/*</MenuItemSubMenuLink>*/}
                     <MenuItemSubMenuLink id="developer">🛠 Outils pour développeur</MenuItemSubMenuLink>
                 </MenuContent>
             </MainMenu>
@@ -82,8 +81,9 @@ export const AdminMenu: FunctionComponent<AdminMenuStateProps> = ({ data }) => {
             <EventSubMenu permission={data.permission} event={data.event} />
             <CharacterSubMenu permission={data.permission} characters={data.characters} />
             <MeteorSubMenu permission={data.permission} state={data.state.meteor} />
-            {ceremonyEnabled && <CeremonySubMenu permission={data.permission} state={data.state.ceremony} />}
+            {/*<CeremonySubMenu permission={data.permission} state={data.state.ceremony} />*/}
             {isHalloween && <HalloweenSubMenu permission={data.permission} state={data.state.halloween} />}
+            {/*<XmasSubMenu permission={data.permission} state={data.state.xmasSceneState} />*/}
         </Menu>
     );
 };
