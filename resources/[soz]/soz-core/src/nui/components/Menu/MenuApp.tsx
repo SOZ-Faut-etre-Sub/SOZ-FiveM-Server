@@ -1,3 +1,4 @@
+import { MenuInsideTrack } from '@private/nui/casino/inside-track/MenuInsideTrack';
 import { MenuDrugAdminLocation } from '@private/nui/drug/MenuDrugAdminLocation';
 import { DrugGardenMenu } from '@private/nui/drug/MenuDrugGarden';
 import { ContainerOrderMenu } from '@private/nui/gang/BusinessSmuggling/MenuContainerOrder';
@@ -346,6 +347,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.LaserGameManage}/*`} element={<MenuLaserGameManage data={menuData} />} />
             <Route path={`/${MenuType.LaserGameAdmin}/*`} element={<MenuLaserGameAdmin data={menuData} />} />
             <Route path={`/${MenuType.Traveling}/*`} element={<MenuTraveling />} />
+            <Route path={`/${MenuType.CasinoInsideTrack}/*`} element={<MenuInsideTrack />} />
         </Routes>
     );
 };

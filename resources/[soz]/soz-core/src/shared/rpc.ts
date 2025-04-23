@@ -366,6 +366,9 @@ export enum RpcServerEvent {
     CASINO_POKER_JOIN_TABLE = 'soz-core:server:casino:poker-join-table',
     CASINO_POKER_PLACE_BET = 'soz-core:server:casino:poker-place-bet',
     CASINO_POKER_LEAVE_TABLE = 'soz-core:server:casino:poker-leave-table',
+    CASINO_INSIDE_TRACK_JOIN = 'soz-core:server:casino:inside-track-join',
+    CASINO_INSIDE_TRACK_BET = 'soz-core:server:casino:inside-track-bet',
+    CASINO_INSIDE_TRACK_LEAVE = 'soz-core:server:casino:inside-track-leave',
 }
 
 export enum RpcClientEvent {

@@ -105,6 +105,11 @@ export class ResourceLoader {
         SetScaleformMovieAsNoLongerNeeded(scaleform);
     }
 
+    public scaleformGetValue(scaleform: number, method: string) {
+        BeginScaleformMovieMethod(scaleform, method);
+        return EndScaleformMovieMethodReturnValue();
+    }
+
     public scaleformPushString(scaleform: number, method: string, val: string) {
         PushScaleformMovieFunction(scaleform, method);
         PushScaleformMovieFunctionParameterString(val);
@@ -137,7 +142,7 @@ export class ResourceLoader {
             } else if (typeof val == 'boolean') {
                 PushScaleformMovieFunctionParameterBool(val);
             } else if (typeof val == 'number') {
-                if (Number.isInteger(val)) {
+                if (Number.isSafeInteger(val)) {
                     PushScaleformMovieFunctionParameterInt(val);
                 } else {
                     PushScaleformMovieFunctionParameterFloat(val);

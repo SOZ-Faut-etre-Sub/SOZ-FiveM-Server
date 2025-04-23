@@ -747,4 +747,6 @@ export enum NuiEvent {
     TravelingStartEditing = 'soz-core:nui:traveling-start-editing',
     TravelingStopEditing = 'soz-core:nui:traveling-stop-editing',
     TravelingRename = 'soz-core:nui:traveling-rename',
+
+    CasinoInsideTrackBet = 'soz-core:nui:casino:inside-track-bet',
 }
