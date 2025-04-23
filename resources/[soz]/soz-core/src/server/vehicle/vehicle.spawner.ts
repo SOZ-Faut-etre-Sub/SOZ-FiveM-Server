@@ -127,6 +127,10 @@ const VEHICLE_HAS_RADIO = [
     'polimpaler5',
     'polgreenwood',
     'poldorado',
+    'openwheel1',
+    'openwheel2',
+    'formula',
+    'formula2',
 ];
 
 const DISALLOWED_VEHICLE_MODELS = {
