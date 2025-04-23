@@ -12452,7 +12452,7 @@ QBShared.Items = {
         ["description"] = "Une carte magnétique qui doit surement servir à accéder à un ordinateur si on trouve la seconde...",
         ["illustrator"] = ".Sniteur",
     },
-    
+
     ["weapon_crate"] = {
         ["name"] = "weapon_crate",
         ["label"] = "Caisse d'armes",
@@ -24094,5 +24094,17 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["description"] = "Ce cadeau, soigneusement enveloppé dans un papier vert et noir aux logos ZT, incarne l'élégance et le raffinement. Parfaitement conçu pour marquer une occasion spéciale, il promet une expérience de déballage aussi impressionnante que le cadeau lui-même.",
         ["illustrator"] = ".???"
+    },
+    ["trophy_los_santos_gp"] = {
+        ["name"] = "trophy_los_santos_gp",
+        ["label"] = "Trophée du Grand Prix de Los Santos",
+        ["weight"] = 4000,
+        ["useable"] = false,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["shouldClose"] = false,
+        ["combinable"] = nil,
+        ["description"] = "ACCÉLÈRE, ACCÉLÈRE, OUI, LA VICTOIRE, IL L'A FAIT !",
+        ["illustrator"] = ".Sniteur"
     }
 }
