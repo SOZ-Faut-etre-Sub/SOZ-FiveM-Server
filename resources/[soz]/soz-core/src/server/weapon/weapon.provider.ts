@@ -438,14 +438,17 @@ export class WeaponProvider {
             }
         }
 
-        TriggerClientEvent(
-            ClientEvent.WEAPON_EXPLOSION,
-            source,
-            explosionData.posX,
-            explosionData.posY,
-            explosionData.posZ,
-            explosionData.explosionType
-        );
+        if (!netId) {
+            //No explosion alert for entities
+            TriggerClientEvent(
+                ClientEvent.WEAPON_EXPLOSION,
+                source,
+                explosionData.posX,
+                explosionData.posY,
+                explosionData.posZ,
+                explosionData.explosionType
+            );
+        }
 
         if (explosionData.f208) {
             this.vehicleConditionProvider.onVehicleDead(source, explosionData.f208, 'explosion');
