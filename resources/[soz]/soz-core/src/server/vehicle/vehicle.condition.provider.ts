@@ -249,7 +249,7 @@ export class VehicleConditionProvider {
     public async onVehicleDead(source: number, vehicleNetworkId: number, reason: string) {
         const state = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
-        if (state.volatile.dead || !state.volatile.isPlayerVehicle) {
+        if (state.volatile.dead) {
             return;
         }
 
@@ -257,25 +257,27 @@ export class VehicleConditionProvider {
             dead: true,
         });
 
-        if (!state.volatile.id) {
-            return;
+        if (state.volatile.isPlayerVehicle) {
+            if (!state.volatile.id) {
+                return;
+            }
+
+            const vehicle = await this.prismaService.playerVehicle.update({
+                where: {
+                    id: state.volatile.id,
+                },
+                data: {
+                    state: PlayerVehicleState.Destroyed,
+                },
+            });
+
+            this.monitor.traceEvent('vehicle_destroy', {
+                player_source: source,
+                vehicle_plate: vehicle.plate,
+                reason,
+                position: toVector3Object(GetEntityCoords(NetworkGetEntityFromNetworkId(vehicleNetworkId)) as Vector3),
+            });
         }
-
-        const vehicle = await this.prismaService.playerVehicle.update({
-            where: {
-                id: state.volatile.id,
-            },
-            data: {
-                state: PlayerVehicleState.Destroyed,
-            },
-        });
-
-        this.monitor.traceEvent('vehicle_destroy', {
-            player_source: source,
-            vehicle_plate: vehicle.plate,
-            reason,
-            position: toVector3Object(GetEntityCoords(NetworkGetEntityFromNetworkId(vehicleNetworkId)) as Vector3),
-        });
     }
 
     @OnEvent(ServerEvent.VEHICLE_WASH)

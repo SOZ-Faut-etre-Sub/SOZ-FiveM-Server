@@ -360,6 +360,10 @@ export class VehicleLockProvider {
 
         const vehicleState = await this.vehicleStateService.getServerVehicleState(vehicle);
 
+        if (vehicleState.dead) {
+            return false;
+        }
+
         if (!vehicleState.forced && !player.metadata.godmode && checkOpen && !vehicleState.open) {
             this.notifier.notify('Véhicule verrouillé.', 'error');
 
