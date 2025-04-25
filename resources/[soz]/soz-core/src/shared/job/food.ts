@@ -459,54 +459,60 @@ export const FoodCraftsLists: Record<string, CraftCategory> = {
 
 export const FoodCloakroom: WardrobeConfig = {
     [joaat('mp_m_freemode_01')]: {
-        ['Tenue de Direction']: {
+        ['Tenue Patron']: {
             Components: {
-                [3]: { Drawable: 6, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 24, Texture: 0, Palette: 0 },
+                [3]: { Drawable: 11, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 187, Texture: 0, Palette: 0 },
                 [6]: { Drawable: 10, Texture: 0, Palette: 0 },
-                [7]: { Drawable: 117, Texture: 4, Palette: 0 },
-                [8]: { Drawable: 31, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 29, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 6, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 40, Texture: 1, Palette: 0 },
             },
             Props: {},
+            GlovesID: 56002,
         },
-        ['Tenue de travail']: {
+        ['Tenue Direction']: {
+            Components: {
+                [3]: { Drawable: 11, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 146, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 6, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 40, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+            GlovesID: 56000,
+        },
+        ['Tenue Prestation']: {
+            Components: {
+                [3]: { Drawable: 1, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 24, Texture: 5, Palette: 0 },
+                [6]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 32, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 29, Texture: 4, Palette: 0 },
+            },
+            Props: {},
+            GlovesID: 56000,
+        },
+        ['Tenue été']: {
             Components: {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 90, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 51, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 32, Texture: 3, Palette: 0 },
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 1, Texture: 4, Palette: 0 },
+                [11]: { Drawable: 472, Texture: 0, Palette: 0 },
             },
             Props: {},
-        },
-        ['Tenue de prestation']: {
-            Components: {
-                [3]: { Drawable: 33, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 24, Texture: 4, Palette: 0 },
-                [5]: { Drawable: 86, Texture: 9, Palette: 0 },
-                [6]: { Drawable: 10, Texture: 0, Palette: 0 },
-                [7]: { Drawable: 31, Texture: 2, Palette: 0 },
-                [8]: { Drawable: 148, Texture: 10, Palette: 0 },
-                [11]: { Drawable: 31, Texture: 4, Palette: 0 },
-            },
-            Props: {
-                [Prop.Hat]: {
-                    Drawable: 7,
-                    Texture: 2,
-                    Palette: 0,
-                },
-            },
+            GlovesID: 56000,
         },
         ["Tenue d'hiver"]: {
             Components: {
-                [3]: { Drawable: 96, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 0, Texture: 8, Palette: 0 },
-                [6]: { Drawable: 12, Texture: 6, Palette: 0 },
-                [8]: { Drawable: 24, Texture: 1, Palette: 0 },
+                [3]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 50, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 2, Texture: 2, Palette: 0 },
                 [11]: { Drawable: 69, Texture: 3, Palette: 0 },
             },
             Props: {},
+            GlovesID: 56002,
         },
         ['Tenue de Chasse']: {
             Components: {
@@ -527,53 +533,59 @@ export const FoodCloakroom: WardrobeConfig = {
     },
 
     [joaat('mp_f_freemode_01')]: {
+        ['Tenue Patron']: {
+            Components: {
+                [3]: { Drawable: 9, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 54, Texture: 2, Palette: 0 },
+                [6]: { Drawable: 108, Texture: 3, Palette: 0 },
+                [8]: { Drawable: 185, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 334, Texture: 9, Palette: 0 },
+            },
+            Props: {},
+            GlovesID: 55011,
+        },
         ['Tenue de Direction']: {
             Components: {
-                [3]: { Drawable: 6, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 12, Texture: 7, Palette: 0 },
-                [6]: { Drawable: 11, Texture: 2, Palette: 0 },
-                [8]: { Drawable: 151, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 25, Texture: 7, Palette: 0 },
+                [3]: { Drawable: 9, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 75, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 11, Texture: 3, Palette: 0 },
+                [8]: { Drawable: 185, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 334, Texture: 8, Palette: 0 },
             },
             Props: {},
-        },
-        ['Tenue de travail']: {
-            Components: {
-                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 93, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 52, Texture: 0, Palette: 0 },
-                [8]: { Drawable: 1, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 0, Texture: 4, Palette: 0 },
-            },
-            Props: {},
+            GlovesID: 55000,
         },
         ['Tenue de prestation']: {
             Components: {
                 [3]: { Drawable: 7, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 37, Texture: 4, Palette: 0 },
-                [5]: { Drawable: 86, Texture: 9, Palette: 0 },
+                [4]: { Drawable: 133, Texture: 3, Palette: 0 },
                 [6]: { Drawable: 29, Texture: 0, Palette: 0 },
-                [7]: { Drawable: 31, Texture: 2, Palette: 0 },
-                [8]: { Drawable: 38, Texture: 2, Palette: 0 },
-                [11]: { Drawable: 57, Texture: 4, Palette: 0 },
+                [8]: { Drawable: 64, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 25, Texture: 7, Palette: 0 },
             },
-            Props: {
-                [Prop.Hat]: {
-                    Drawable: 168,
-                    Texture: 2,
-                    Palette: 0,
-                },
+            Props: {},
+            GlovesID: 55000,
+        },
+        ['Tenue été']: {
+            Components: {
+                [3]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 54, Texture: 2, Palette: 0 },
+                [6]: { Drawable: 27, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [11]: { Drawable: 507, Texture: 0, Palette: 0 },
             },
+            Props: {},
         },
         ["Tenue d'hiver"]: {
             Components: {
-                [3]: { Drawable: 44, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 1, Texture: 4, Palette: 0 },
-                [6]: { Drawable: 101, Texture: 0, Palette: 0 },
-                [8]: { Drawable: 44, Texture: 1, Palette: 0 },
+                [3]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [4]: { Drawable: 4, Texture: 9, Palette: 0 },
+                [6]: { Drawable: 51, Texture: 0, Palette: 0 },
+                [8]: { Drawable: 69, Texture: 1, Palette: 0 },
                 [11]: { Drawable: 63, Texture: 3, Palette: 0 },
             },
             Props: {},
+            GlovesID: 55002,
         },
         ['Tenue de Chasse']: {
             Components: {
