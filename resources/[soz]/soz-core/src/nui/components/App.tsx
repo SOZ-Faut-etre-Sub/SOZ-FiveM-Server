@@ -66,6 +66,7 @@ import { RaceApp } from './Race/RaceApp';
 import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { SceneSearchPropApp } from './Scene/SceneSearchPropApp';
+import { ScreenshotApp } from './Screenshot/ScreenshotApp';
 import { StateApp } from './StateApp';
 import { GlassMorphism } from './Styleguide/GlassMorphism';
 import { TargetOverlay } from './Target/TargetOverlay';
@@ -163,6 +164,7 @@ export const App: FunctionComponent = () => {
                     <BusinessVehicleMappingApp />
                     <CyberReportApp />
                     <PincrakerMinigameApp />
+                    <ScreenshotApp />
                 </div>
                 <div className={menuClasses}>
                     <InputApp />

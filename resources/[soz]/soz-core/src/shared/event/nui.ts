@@ -737,4 +737,5 @@ export enum NuiEvent {
     LaserGameSetTeamColor = 'soz-core:nui:laser-game:set-team-color',
     LaserGameSetScoreGoal = 'soz-core:nui:laser-game:set-score-goal',
     LaserGameSetGameDuration = 'soz-core:nui:laser-game:set-game-duration',
+    Screenshot = 'soz-core:nui:screenshot',
 }
