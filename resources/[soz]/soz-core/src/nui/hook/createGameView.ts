@@ -102,7 +102,7 @@ export type GameView = {
     resize: (width: number, height: number) => void;
     startRender: () => void;
     stopRender: () => void;
-    takeScreenshot: () => Promise<Blob>;
+    takeScreenshot: (watermark?: boolean) => Promise<Blob>;
 };
 
 export const createGameView = (canvas: HTMLCanvasElement): GameView => {
@@ -161,7 +161,7 @@ export const createGameView = (canvas: HTMLCanvasElement): GameView => {
         stopRender: () => {
             cancelAnimationFrame(gameView.animationFrame);
         },
-        takeScreenshot: async (): Promise<Blob> => {
+        takeScreenshot: async (watermark = true): Promise<Blob> => {
             // create a temporary canvas to generate the wartermark
             const imageCanvas = document.createElement('canvas');
             imageCanvas.width = gl.canvas.width;
@@ -171,31 +171,33 @@ export const createGameView = (canvas: HTMLCanvasElement): GameView => {
             const ctx = imageCanvas.getContext('2d');
             ctx.drawImage(canvas, 0, 0, gl.canvas.width, gl.canvas.height);
 
-            const img = new Image();
-            const loading = new Promise<void>(resolve => {
-                img.onload = () => {
-                    resolve();
-                };
-            });
-            img.src = 'https://soz.zerator.com/static/images/logo.png';
+            if (watermark) {
+                const img = new Image();
+                const loading = new Promise<void>(resolve => {
+                    img.onload = () => {
+                        resolve();
+                    };
+                });
+                img.src = 'https://soz.zerator.com/static/images/logo.png';
 
-            await loading;
+                await loading;
 
-            ctx.save();
-            ctx.translate(window.innerWidth - 36, window.innerHeight - 10);
-            ctx.rotate(-Math.PI / 2);
-            ctx.drawImage(img, 0, 0, 82, 31);
-            ctx.restore();
+                ctx.save();
+                ctx.translate(window.innerWidth - 36, window.innerHeight - 10);
+                ctx.rotate(-Math.PI / 2);
+                ctx.drawImage(img, 0, 0, 82, 31);
+                ctx.restore();
 
-            const date = new Date().toISOString();
-            ctx.font = '18px Consolas';
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#0ac213';
-            ctx.save();
-            ctx.translate(window.innerWidth - 24, window.innerHeight - 100);
-            ctx.rotate(-Math.PI / 2);
-            ctx.fillText(`${date} - ${hashString(date)}`, 0, 18 / 2);
-            ctx.restore();
+                const date = new Date().toISOString();
+                ctx.font = '18px Consolas';
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#0ac213';
+                ctx.save();
+                ctx.translate(window.innerWidth - 24, window.innerHeight - 100);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText(`${date} - ${hashString(date)}`, 0, 18 / 2);
+                ctx.restore();
+            }
 
             return new Promise<Blob>(resolve => {
                 imageCanvas.toBlob(

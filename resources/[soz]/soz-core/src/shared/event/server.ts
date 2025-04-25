@@ -781,4 +781,6 @@ export enum ServerEvent {
     LASER_GAME_SET_GAME_DURATION = 'soz-core:server:phone:app:laser-game:set-game-duration',
     LASER_GAME_INCR_SCORE = 'soz-core:server:phone:app:laser-game:incr-score',
     LASER_GAME_KICK_ON_DEATH = 'soz-core:server:phone:app:laser-game:kick-on-death',
+
+    SCREENSHOT = 'soz-core:server:screenshot',
 }

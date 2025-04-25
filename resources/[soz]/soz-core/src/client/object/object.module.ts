@@ -3,6 +3,7 @@ import { CircularCameraProvider } from './circular.camera.provider';
 import { ObjectEditorProvider } from './object.editor.provider';
 import { ObjectProvider } from './object.provider';
 import { GizmoControlProvider } from './prop.gizmo.provider';
+import { PropImageProvider } from './prop.image.provider';
 import { PropPlacementProvider } from './prop.placement.provider';
 
 @Module({
@@ -12,6 +13,7 @@ import { PropPlacementProvider } from './prop.placement.provider';
         PropPlacementProvider,
         CircularCameraProvider,
         GizmoControlProvider,
+        PropImageProvider,
     ],
 })
 export class ObjectModule {}
