@@ -1,4 +1,6 @@
 import { MenuSmugglingPricesData } from '@private/shared/business.smuggling';
+import { BlackjackMenuData } from '@private/shared/casino.blackjack';
+import { PokerMenuData } from '@private/shared/casino.poker';
 import { LaserGameAdminInfo, LaserGameData } from '@public/shared/games/laser';
 import { ApartmentMenuData, ApartmentSelectUpgradesMenuData } from '@public/shared/housing/housing';
 import { HudSettings } from '@public/shared/hud';
@@ -156,6 +158,8 @@ export enum MenuType {
     LaserGameManage = 'laser_game_manage',
     LaserGameAdmin = 'laser_game_admin',
     Traveling = 'traveling',
+    CasinoPoker = 'casino_poker',
+    CasinoBlackjack = 'casino_blackjack',
     CasinoInsideTrack = 'casino_inside_track',
 }
 
@@ -238,6 +242,8 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LaserGameCreate]: null;
     [MenuType.LaserGameManage]: LaserGameData;
     [MenuType.LaserGameAdmin]: Record<string, LaserGameAdminInfo>;
+    [MenuType.CasinoBlackjack]: BlackjackMenuData;
+    [MenuType.CasinoPoker]: PokerMenuData;
 }
 
 export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];

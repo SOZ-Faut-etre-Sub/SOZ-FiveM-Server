@@ -77,7 +77,7 @@ export class Election2024CeremonyProvider {
     @OnEvent(ClientEvent.CEREMONY_CREATE_CAMERA)
     async createCamera(isFinal: boolean) {
         if (isFinal) {
-            this.camera = this.cameraService.createCamera(this.finalStartCameraPosition, 80);
+            this.camera = this.cameraService.createCameraAtPosition(this.finalStartCameraPosition, 80);
             this.cameraService.setCameraActive(this.camera, true);
             this.cameraService.setCameraPointAt(this.camera, FINAL_LOCATION.center);
 
@@ -86,7 +86,7 @@ export class Election2024CeremonyProvider {
 
             this.moveCamera(FINAL_LOCATION.camera, [0, 0, 0], 5_000);
         } else {
-            this.camera = this.cameraService.createCamera(this.startCameraPosition, 80);
+            this.camera = this.cameraService.createCameraAtPosition(this.startCameraPosition, 80);
             this.cameraService.setCameraActive(this.camera, true);
             this.cameraService.setCameraPointAt(this.camera, this.startCameraTarget);
         }
@@ -142,7 +142,7 @@ export class Election2024CeremonyProvider {
 
             this._running = true;
 
-            this.camera = this.cameraService.createCamera(location.camera, 80);
+            this.camera = this.cameraService.createCameraAtPosition(location.camera, 80);
             this.cameraService.setCameraActive(this.camera, true);
             this.cameraService.setCameraPointAt(this.camera, location.center);
             this.cameraService.renderCamera(500);

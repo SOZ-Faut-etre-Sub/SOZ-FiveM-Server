@@ -7,6 +7,7 @@ import { Outfit, Prop } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
+import { joaat } from '@public/shared/joaat';
 import { Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -41,6 +42,7 @@ export type Ped = {
     weapon?: string;
     alpha?: number;
     collision?: boolean;
+    voiceGroup?: string;
     mixGroup?: string;
     dropItemCallback?: (inventoryId: string, inventoryItem: InventoryItem, amount: number) => void | Promise<void>;
 };
@@ -444,6 +446,10 @@ export class PedFactory {
 
         if (ped.blockevents) {
             SetBlockingOfNonTemporaryEvents(pedId, true);
+        }
+
+        if (ped.voiceGroup) {
+            SetPedVoiceGroup(pedId, joaat(ped.voiceGroup));
         }
 
         if (ped.mixGroup) {

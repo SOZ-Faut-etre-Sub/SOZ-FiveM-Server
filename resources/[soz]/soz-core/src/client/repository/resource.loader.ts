@@ -18,6 +18,10 @@ export class ResourceLoader {
         }
     }
 
+    async loadStream(streamName: string, soundSet: string): Promise<void> {
+        LoadStream(streamName, soundSet);
+    }
+
     unloadPtfxAsset(name: string): void {
         RemoveNamedPtfxAsset(name);
     }

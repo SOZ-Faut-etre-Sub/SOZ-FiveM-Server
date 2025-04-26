@@ -4,7 +4,11 @@ import { Vector3 } from '../shared/polyzone/vector';
 
 @Injectable()
 export class CameraService {
-    public createCamera(position: Vector3, fov: number = 60) {
+    public createCamera(active = false) {
+        return CreateCam('DEFAULT_SCRIPTED_CAMERA', active);
+    }
+
+    public createCameraAtPosition(position: Vector3, fov: number = 60) {
         const cam = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
             position[0],
@@ -22,7 +26,7 @@ export class CameraService {
     }
 
     public setupCamera(position: Vector3, target: Vector3) {
-        const cam = this.createCamera(position);
+        const cam = this.createCameraAtPosition(position);
         PointCamAtCoord(cam, target[0], target[1], target[2]);
         this.setCameraActive(cam, true);
         this.renderCamera();
@@ -48,6 +52,32 @@ export class CameraService {
 
     public setCameraRotation(cam: number, rotation: Vector3) {
         SetCamRot(cam, rotation[0], rotation[1], rotation[2], 2);
+    }
+
+    public setCameraParams(
+        cam: number,
+        position: Vector3,
+        rotation: Vector3 = [0, 0, 0],
+        fov: number = 60,
+        transition: number = 0,
+        acceleration: number = 1,
+        deceleration: number = 1,
+        rotationOrder: number = 2
+    ) {
+        SetCamParams(
+            cam,
+            position[0],
+            position[1],
+            position[2],
+            rotation[0],
+            rotation[1],
+            rotation[2],
+            fov,
+            transition,
+            acceleration,
+            deceleration,
+            rotationOrder
+        );
     }
 
     public setCameraPointAt(cam: number, target: Vector3) {

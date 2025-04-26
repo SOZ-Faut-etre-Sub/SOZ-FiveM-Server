@@ -1,3 +1,4 @@
+import { BlackjackTable } from '@private/shared/casino.blackjack';
 import { InsideTrack } from '@private/shared/casino.inside-track';
 import { LuckyWheel } from '@private/shared/casino.lucky-wheel';
 import { PokerTable } from '@private/shared/casino.poker';
@@ -39,6 +40,7 @@ export enum RepositoryType {
     CasinoSlotMachine = 'casinoSlotMachine',
     CasinoInsideTrack = 'casinoInsideTrack',
     CasinoPoker = 'casinoPoker',
+    CasinoBlackjack = 'casinoBlackjack',
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
     Door = 'door',
@@ -82,6 +84,7 @@ export type RepositoryMapping = {
     [RepositoryType.CasinoSlotMachine]: SlotMachine;
     [RepositoryType.CasinoInsideTrack]: InsideTrack;
     [RepositoryType.CasinoPoker]: PokerTable;
+    [RepositoryType.CasinoBlackjack]: BlackjackTable;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Configuration]: any;
     [RepositoryType.Elevator]: DynamicElevatorState;
@@ -126,6 +129,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.CasinoSlotMachine]: Record<number, SlotMachine>;
     [RepositoryType.CasinoInsideTrack]: Record<string, InsideTrack>;
     [RepositoryType.CasinoPoker]: Record<string, PokerTable>;
+    [RepositoryType.CasinoBlackjack]: Record<string, BlackjackTable>;
     [RepositoryType.Configuration]: Configuration;
     [RepositoryType.Field]: Record<string, Field>;
     [RepositoryType.Elevator]: Record<DynamicElevator, DynamicElevatorState>;
