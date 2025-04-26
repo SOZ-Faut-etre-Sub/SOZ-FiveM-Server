@@ -511,6 +511,26 @@ export const LsmcCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ['Trauma team']: {
+            Components: {
+                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Bag]: { Drawable: 1, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Shoes]: { Drawable: 110, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 3, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Undershirt]: { Drawable: 0, Texture: 25, Palette: 0, Collection: 'soz_custom' },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 11, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+            },
+            Props: {
+                [Prop.Helmet]: {
+                    Drawable: 125,
+                    Texture: 1,
+                    Palette: 0,
+                },
+            },
+            GlovesID: 56010,
+        },
     },
     [joaat('mp_f_freemode_01')]: {
         [DUTY_OUTFIT_NAME]: {
@@ -635,6 +655,26 @@ export const LsmcCloakroom: WardrobeConfig = {
                 },
             },
             Props: {},
+        },
+        ['Trauma team']: {
+            Components: {
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Bag]: { Drawable: 1, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Shoes]: { Drawable: 115, Texture: 3, Palette: 0 },
+                [Component.Accessories]: { Drawable: 3, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Undershirt]: { Drawable: 0, Texture: 25, Palette: 0, Collection: 'soz_custom' },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 11, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+            },
+            Props: {
+                [Prop.Helmet]: {
+                    Drawable: 124,
+                    Texture: 1,
+                    Palette: 0,
+                },
+            },
+            GlovesID: 55010,
         },
     },
 };
