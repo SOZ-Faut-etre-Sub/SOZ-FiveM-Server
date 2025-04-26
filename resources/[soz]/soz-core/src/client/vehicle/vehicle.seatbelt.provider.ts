@@ -4,6 +4,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick } from '@core/decorators/tick';
 import { wait } from '@core/utils';
+import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
 import { PhoneService } from '@public/client/phone/phone.service';
 import { Control } from '@public/shared/input';
 
@@ -104,6 +105,8 @@ export class VehicleSeatbeltProvider {
         if (!vehicle) {
             return;
         }
+
+        if (GetEntityModel(vehicle) === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) return;
 
         const vehicleEntering = GetVehiclePedIsEntering(ped);
 
@@ -300,6 +303,10 @@ export class VehicleSeatbeltProvider {
         SetEntityVelocity(ped, velocity[0], velocity[1], velocity[2]);
 
         this.isSeatbeltOn = false;
+    }
+
+    public forceSeatBell() {
+        this.isSeatbeltOn = true;
     }
 
     public getLastEjectTime(): number {

@@ -125,7 +125,7 @@ export class ClothingProvider {
     }
 
     @OnEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES)
-    public setJobClothes(source: number, outfit: Outfit) {
+    public setJobClothes(source: number, outfit: Outfit, merge: boolean, overrideType: boolean = true) {
         const player = this.playerService.getPlayer(source);
         if (!player) {
             return;
@@ -135,6 +135,7 @@ export class ClothingProvider {
             this.playerService.setPlayerMetaDatas(source, {
                 hazmat: false,
                 scuba: false,
+                cloth_type: '',
             });
             return;
         }
@@ -160,10 +161,11 @@ export class ClothingProvider {
             }
         }
 
-        this.playerService.setPlayerMetaDatas(source, {
-            hazmat,
-            scuba,
-        });
+        const metadata = { hazmat, scuba };
+        if (overrideType) {
+            metadata['cloth_type'] = outfit?.type || '';
+        }
+        this.playerService.setPlayerMetaDatas(source, metadata);
     }
 
     @Command('clothSQL', {

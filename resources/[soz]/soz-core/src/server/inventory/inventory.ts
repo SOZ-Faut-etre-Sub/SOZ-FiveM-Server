@@ -529,6 +529,7 @@ export class Inventory {
             existingItem.name.startsWith('wrapping_') &&
             !inventoryItem.name.startsWith('gift_') &&
             !item.notGiveable &&
+            !inventoryItem.metadata?.notStorable &&
             !item.carrybox &&
             GIFT_TYPE_ALLOWED.includes(inventoryItem.type)
         ) {

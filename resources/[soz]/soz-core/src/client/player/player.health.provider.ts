@@ -742,7 +742,7 @@ export class PlayerHealthProvider {
                     category: 'citizen',
                     canInteract: () => true,
                     action: () => {
-                        if (!this.playerService.getState().isInSportClothes) {
+                        if (!(this.playerService.getPlayer().metadata.cloth_type === 'SPORT')) {
                             this.notifier.error('Enfile une tenue de sport dans le vestiaire à côté !');
                             return;
                         }
@@ -760,7 +760,7 @@ export class PlayerHealthProvider {
                     category: 'citizen',
                     canInteract: () => true,
                     action: () => {
-                        if (!this.playerService.getState().isInSportClothes) {
+                        if (!(this.playerService.getPlayer().metadata.cloth_type === 'SPORT')) {
                             this.notifier.error('Enfile une tenue de sport dans le vestiaire à côté !');
                             return;
                         }
@@ -895,10 +895,8 @@ export class PlayerHealthProvider {
 
             if (outfitSelection.outfit) {
                 TriggerServerEvent('soz-character:server:SetPlayerJobClothes', outfitSelection.outfit);
-                this.playerService.updateState({ isInSportClothes: true });
             } else {
                 TriggerServerEvent('soz-character:server:SetPlayerJobClothes', null);
-                this.playerService.updateState({ isInSportClothes: false });
             }
         };
 

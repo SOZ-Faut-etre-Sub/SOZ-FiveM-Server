@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CWeaponAnimationsSets>
+  <WeaponAnimationsSets>
+    <Item key="Hillbilly">
+        <Fallback>Default</Fallback>
+        <WeaponAnimations>
+            <Item key="WEAPON_COMBATPISTOL">
+                <WeaponClipSetHash>weapons@pistol_1h@hillbilly</WeaponClipSetHash>
+                <WeaponClipSetStreamedHash>weapons@pistol_1h@hillbilly_str</WeaponClipSetStreamedHash>
+                <FiringVariationsStandingClipSetHash>combat_fire_variations_hillbilly_pistol_1H</FiringVariationsStandingClipSetHash>
+                <MotionFilterHash>BothArms_filter</MotionFilterHash>
+                <UseLeftHandIKAllowTags value="true" />
+                <SwapWeaponFilterHash>RightArm_NoSpine_filter</SwapWeaponFilterHash>
+                <SwapWeaponInLowCoverFilterHash>RightArm_NoSpine_filter</SwapWeaponInLowCoverFilterHash>
+            </Item>
+        </WeaponAnimations>
+	</Item>
+  </WeaponAnimationsSets>
+</CWeaponAnimationsSets>

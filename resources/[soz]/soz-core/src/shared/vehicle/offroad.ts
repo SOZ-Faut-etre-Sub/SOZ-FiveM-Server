@@ -1,3 +1,5 @@
+import { joaat } from '@public/shared/joaat';
+
 export const RefreshProcessSurfaceCalculation = 150; //ms -- RefreshProcessSurfaceCalculation must be between 100 and 500ms
 export const RefreshHandleLossVehControl = 40; //ms
 export const RefreshCalcTractionEffect = 150; //ms
@@ -106,6 +108,8 @@ export const VehicleZoneModifier = {
 
 // key are coords and radius;
 export const zoneBlaclist = [];
+
+export const vehicleBlaclist = [joaat('eodbot')];
 
 export const UnknowVehicleSurfaceData = {
     name: 'Unknow',

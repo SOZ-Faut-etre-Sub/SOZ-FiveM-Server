@@ -20,6 +20,7 @@ import {
     InventoryType,
     isInventoryItemExpired,
 } from '@public/shared/inventory';
+import { SWAT_ITEM_TYPE } from '@public/shared/job/police';
 import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -241,6 +242,10 @@ export class InventoryManager {
 
     public getItems(): InventoryItem[] {
         return Object.values(this._playerInventory);
+    }
+
+    public hasAnySwatItem(): boolean {
+        return Object.values(this._playerInventory).some(item => item.metadata?.type == SWAT_ITEM_TYPE);
     }
 
     public hasEnoughItem(itemId: string, amount?: number, skipExpiredItem?: boolean): boolean {

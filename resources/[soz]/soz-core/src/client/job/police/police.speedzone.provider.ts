@@ -7,14 +7,13 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { BlipType } from '@public/shared/blip';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { FDO, JobType } from '@public/shared/job';
+import { ALL_FDO_JOB_TARGETS, FDO } from '@public/shared/job';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { BlipFactory } from '../../blip';
 import { InteractionOffsetProvider } from '../../quick-interaction/interaction.offset.provider';
 import { InteractionProvider } from '../../quick-interaction/interaction.provider';
 
-const jobsTarget = { [JobType.BCSO]: 0, [JobType.FBI]: 0, [JobType.SASP]: 0, [JobType.LSPD]: 0, [JobType.LSCS]: 0 };
 const roadSignModel = GetHashKey('prop_trafficdiv_02');
 
 @Provider()
@@ -73,7 +72,7 @@ export class PoliceSpeedZoneProvider {
 
                     TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPEEDZONE, id);
                 },
-                job: jobsTarget,
+                job: ALL_FDO_JOB_TARGETS,
             },
             undefined,
             0.8,

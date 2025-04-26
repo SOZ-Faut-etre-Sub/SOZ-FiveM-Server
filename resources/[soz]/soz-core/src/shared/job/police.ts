@@ -94,24 +94,6 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Original',
                 rankType: WINTER,
             },
-            /*["Tenue SWAT"]:  {
-                Components:  {
-                [Component.Mask]:  {Drawable:  185, Texture:  0, Palette:  0},
-                [Component.Torso]:  {Drawable:  179, Texture:  0, Palette:  0},
-                [Component.Legs]:  {Drawable:  31, Texture:  0, Palette:  0},
-                [Component.Bag]:  {Drawable:  48, Texture:  0, Palette:  0},
-                [Component.Shoes]:  {Drawable:  25, Texture:  0, Palette:  0},
-                [Component.Accessories]:  {Drawable:  110, Texture:  0, Palette:  0},
-                [Component.Undershirt]:  {Drawable:  15, Texture:  0, Palette:  0},
-                [Component.BodyArmor]:  {Drawable:  16, Texture:  0, Palette:  0},
-                [Component.Decals]:  {Drawable:  0, Texture:  0, Palette:  0},
-                [Component.Tops]:  {Drawable:  220, Texture:  0, Palette:  0},
-                },
-                Props:  {
-                    [Prop.Helmet]:  {Drawable:  150, Texture:  0, Palette:  0},
-                    [Prop.Glasses]:  {Drawable:  21, Texture:  0, Palette:  0},
-                },
-            },*/
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
@@ -5545,6 +5527,30 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Texture: 2,
             Palette: 0,
         },
+        ['swat_1']: {
+            Drawable: 15,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
+        ['swat_2']: {
+            Drawable: 13,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
+        ['swat_3']: {
+            Drawable: 14,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
+        ['swat_4']: {
+            Drawable: 25,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
     },
     [PlayerPedHash.Female]: {
         ['unmark']: {
@@ -5625,6 +5631,30 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Drawable: 17,
             Texture: 2,
             Palette: 0,
+        },
+        ['swat_1']: {
+            Drawable: 15,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
+        ['swat_2']: {
+            Drawable: 16,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
+        ['swat_3']: {
+            Drawable: 17,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
+        },
+        ['swat_4']: {
+            Drawable: 18,
+            Texture: 0,
+            Palette: 0,
+            Collection: 'soz_bcso',
         },
     },
 };
@@ -5958,3 +5988,9 @@ export const VehicleWithSirens = {
     [joaat('polgreenwood')]: true,
     [joaat('poldorado')]: true,
 };
+
+export const SWAT_CASE_ITEM = 'swat_case';
+export const SWAT_ITEM_TYPE = 'SWAT';
+
+export const POLICE_DRONE_NAME = 'police_recon_drone';
+export const POLICE_MINESWEEPER_ROBOT_OBJECT = 'soz_eodrobot';

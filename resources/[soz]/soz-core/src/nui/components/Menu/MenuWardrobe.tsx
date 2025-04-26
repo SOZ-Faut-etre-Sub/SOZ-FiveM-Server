@@ -92,14 +92,16 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
                         const elems = Object.keys(wardrobe.wardrobe)
                             .sort()
                             .filter(item => {
-                                if (WardRobeElements[wardRobeElementId].componentId) {
-                                    return WardRobeElements[wardRobeElementId].componentId.some(
-                                        id => wardrobe.wardrobe[item].Components[id]
-                                    );
-                                } else if (WardRobeElements[wardRobeElementId].propId) {
-                                    return WardRobeElements[wardRobeElementId].propId.some(
-                                        id => wardrobe.wardrobe[item].Props[id]
-                                    );
+                                if (!wardrobe.wardrobe[item].type) {
+                                    if (WardRobeElements[wardRobeElementId].componentId) {
+                                        return WardRobeElements[wardRobeElementId].componentId.some(
+                                            id => wardrobe.wardrobe[item].Components[id]
+                                        );
+                                    } else if (WardRobeElements[wardRobeElementId].propId) {
+                                        return WardRobeElements[wardRobeElementId].propId.some(
+                                            id => wardrobe.wardrobe[item].Props[id]
+                                        );
+                                    }
                                 }
                                 return false;
                             });

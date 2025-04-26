@@ -174,7 +174,6 @@ export enum ClientEvent {
     PLAYER_HEALTH_DO_SIT_UP = 'soz-core:client:player:health:sit-up',
     PLAYER_HEALTH_SET_NUTRITION_DISABLED = 'soz-core:client:player:health:set-nutrition-disabled',
     PLAYER_HEALTH_DO_FREE_WEIGHT = 'soz-core:client:player:health:free-weight',
-    PLAYER_SET_JOB_OUTFIT = 'soz-core:client:player:set-job-outfit',
     PLAYER_SET_UNLIMITED_SPRINT = 'soz-core:client:player:set-unlimited-sprint',
     PLAYER_SHOW_IDENTITY = 'soz-core:client:player:show-identity',
     PLAYER_UPDATE_CROSSHAIR = 'soz-core:client:player:update-crosshair',
@@ -271,6 +270,7 @@ export enum ClientEvent {
     WEAPON_EXPLOSION = 'soz-core:client:weapon:explosion',
     WEAPON_CLEAR_WEAPON = 'soz-core:client:weapon:clear',
     WEAPON_PICK_SNOWBALL = 'soz-core:client:weapon:pick-snowball',
+    WEAPON_FLASH = 'soz-core:client:weapon:flash',
 
     MDR_USE_TICKET = 'soz-core:client:mdr:use-ticket',
     HEIST_GUARD = 'soz-core:client:heist:guard',
@@ -290,6 +290,7 @@ export enum ClientEvent {
     POLICE_SET_PRISONER_CLOTHES = 'soz-core:client:police:SetPrisonerClothes',
     POLICE_SETUP_ARMOR = 'soz-core:client:police:setup-armor',
     POLICE_SETUP_ARMOR_PLATE = 'soz-core:client:police:setup-armor-plate',
+    POLICE_REMOVE_ARMOR = 'soz-core:client:police:remove-armor',
     POLICE_ANIMATE_ARMOR_PLATE = 'soz-core:client:police:animate-armor-plate',
     POLICE_SETUP_MAX_ARMOR_PLATE = 'soz-core:client:police:setup-max-armor-plate',
     POLICE_MOBILE_RADAR = 'soz-core:client:police:mobile-radar',
@@ -306,6 +307,8 @@ export enum ClientEvent {
     POLICE_GATHERED_CLUE = 'soz-core:client:police:cleaned-clue',
     POLICE_DESTROYED_CLUE = 'soz-core:client:police:destroyed-clue',
     POLICE_PLACE_SPEED_ZONE = 'soz-core:client:police:place-speed-zone',
+    POLICE_USE_SHIELD = 'soz-core:client:police:use-shield',
+    POLICE_SYNC_SHIELD_ANIMATION_OVERRIDE = 'soz-core:client:police:sync-shield-animation-override',
 
     SET_ESCORTING = 'soz-core:client:police:set-escorting',
     GET_ESCORTED = 'soz-core:client:police:get-escorted',
@@ -432,6 +435,8 @@ export enum ClientEvent {
     DRONE_USE = 'soz-core:client:drone-use',
     DRONE_ADD_REMOTE = 'soz-core:client:drone-add-remote',
     DRONE_REMOVE_REMOTE = 'soz-core:client:drone-remove-remote',
+
+    MINESWEEPER_ROBOT_USE = 'soz-core:client:minesweeper:use',
 
     WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
     UPDATE_MINIMAP_POSITION = 'soz-core:client:update-minimap-position',

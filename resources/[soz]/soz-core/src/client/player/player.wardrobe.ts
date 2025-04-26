@@ -1,11 +1,11 @@
-import { OnEvent, OnNuiEvent } from '@core/decorators/event';
+import { OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Animation } from '@public/shared/animation';
 
 import { ClothConfig, Component, Outfit, Prop, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
-import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
+import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { ProgressResult } from '../../shared/progress';
@@ -96,11 +96,6 @@ export class PlayerWardrobe {
                 canCancel: canCancel,
             }
         );
-    }
-
-    @OnEvent(ClientEvent.PLAYER_SET_JOB_OUTFIT)
-    public async onSetJobOutfit(outfit: Outfit, merge: boolean) {
-        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit, merge);
     }
 
     public async setClothConfig(key: keyof ClothConfig['Config'], value: boolean, skipAnimation = false) {

@@ -1,3 +1,4 @@
+import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
 import { ProgressService } from '@public/client/progress.service';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { VehicleLockProvider } from '@public/client/vehicle/vehicle.lock.provider';
@@ -6,7 +7,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { ALL_FDO_JOB_TARGETS } from '@public/shared/job';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleType, VehicleTypeFromClass, VehicleVolatileState } from '@public/shared/vehicle/vehicle';
@@ -15,14 +16,6 @@ const PlateTypeOverride: Record<number, number> = {
     [GetHashKey('rebel')]: 1,
     [GetHashKey('streiter')]: 2,
     [GetHashKey('streiter2')]: 2,
-};
-
-const jobsAllowed = {
-    [JobType.LSPD]: 0,
-    [JobType.BCSO]: 0,
-    [JobType.SASP]: 0,
-    [JobType.FBI]: 0,
-    [JobType.LSCS]: 0,
 };
 
 @Provider()
@@ -43,7 +36,7 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Immatriculation',
                     icon: 'police/immatriculation',
-                    job: jobsAllowed,
+                    job: ALL_FDO_JOB_TARGETS,
                     blackoutJob: true,
                     blackoutGlobal: true,
                     category: 'society',
@@ -121,11 +114,12 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Fouiller',
                     icon: 'police/fouiller_vehicle',
-                    job: jobsAllowed,
+                    job: ALL_FDO_JOB_TARGETS,
                     category: 'society',
                     canInteract: vehicle => {
                         if (VehicleTypeFromClass[GetVehicleClass(vehicle)] == VehicleType.Automobile) {
                             const model = GetEntityModel(vehicle);
+                            if (model === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) return false;
                             const [modelDimMin, modelDimMax] = GetModelDimensions(model);
                             const middleBack = GetOffsetFromEntityInWorldCoords(
                                 vehicle,
@@ -169,8 +163,14 @@ export class PoliceVehicleProvider {
                 {
                     label: 'Ouvrir',
                     icon: 'police/forcer',
-                    job: jobsAllowed,
+                    job: ALL_FDO_JOB_TARGETS,
                     category: 'society',
+                    canInteract: vehicle => {
+                        const model = GetEntityModel(vehicle);
+                        if (model === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) return false;
+
+                        return true;
+                    },
                     action: async entity => {
                         const { completed } = await this.progressService.progress(
                             'police:vehicle:lockpick',
@@ -198,7 +198,7 @@ export class PoliceVehicleProvider {
                 },
                 {
                     label: 'Rechercher des empreintes',
-                    job: jobsAllowed,
+                    job: ALL_FDO_JOB_TARGETS,
                     item: 'fingerprint_collector',
                     icon: 'police/fouiller',
                     category: 'society',
@@ -244,7 +244,7 @@ export class PoliceVehicleProvider {
                 },
                 {
                     label: 'Rechercher des traces de drogue',
-                    job: jobsAllowed,
+                    job: ALL_FDO_JOB_TARGETS,
                     icon: 'police/fouiller',
                     category: 'society',
                     canInteract: async entity => {

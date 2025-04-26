@@ -2,6 +2,7 @@ import { Command } from '@core/decorators/command';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { MineSweeperRobotProvider } from '@private/client/vehicle/minesweeper.provider';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 
 import { ClientEvent, NuiEvent } from '../../shared/event';
@@ -33,6 +34,9 @@ export class VoipRadioProvider {
 
     @Inject(InventoryManager)
     private readonly inventoryManager: InventoryManager;
+
+    @Inject(MineSweeperRobotProvider)
+    private readonly mineSweeperRobotProvider: MineSweeperRobotProvider;
 
     @Inject('Store')
     private store: Store;
@@ -186,7 +190,12 @@ export class VoipRadioProvider {
             this.closeRadioInterface();
         } else {
             const playerState = this.playerService.getState();
-            if (!IsNuiFocused() && !playerState.carryBox && !playerState.isInventoryBusy) {
+            if (
+                !IsNuiFocused() &&
+                !playerState.carryBox &&
+                !playerState.isInventoryBusy &&
+                !this.mineSweeperRobotProvider.isUsingRobot()
+            ) {
                 this.openRadioInterface();
             }
         }

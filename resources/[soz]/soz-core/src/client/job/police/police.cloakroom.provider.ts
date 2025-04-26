@@ -142,17 +142,18 @@ export class PoliceCloakRoomProvider {
     }
 
     @OnEvent(ClientEvent.POLICE_SETUP_ARMOR)
-    public async setupArmor(armorType: string, plates: number, maxPlates?: number) {
+    public async setupArmor(armorType: string, plates: number, maxPlates?: number, usedArmorPlates?: number) {
         const playerPed = PlayerPedId();
         const playerPedModel = GetEntityModel(playerPed);
         const armour = Armors[playerPedModel][armorType];
         if (!armour) {
             return;
         }
+
         this.playerService.updateState({
             nbArmorPlates: plates ?? 0,
             maxArmorPlates: maxPlates ?? 0,
-            usedArmorPlates: plates ?? 0,
+            usedArmorPlates: usedArmorPlates !== undefined ? usedArmorPlates : plates ?? 0,
         });
 
         if (plates > 0) {
@@ -162,8 +163,17 @@ export class PoliceCloakRoomProvider {
 
         TriggerServerEvent(
             ServerEvent.CHARACTER_SET_JOB_CLOTHES,
-            { Components: { [Component.BodyArmor]: armour }, Props: {} },
-            true
+            {
+                Components: { [Component.BodyArmor]: armour },
+                Props: {},
+            },
+            true,
+            false
         );
+    }
+
+    @OnEvent(ClientEvent.POLICE_REMOVE_ARMOR)
+    public async removeArmor() {
+        await this.playerWardrobe.setClothConfig('HideBulletproof', true, true);
     }
 }

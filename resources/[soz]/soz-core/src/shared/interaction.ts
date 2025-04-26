@@ -22,6 +22,7 @@ export type InteractionOption = {
     event?: string;
     blackoutGlobal?: boolean;
     blackoutJob?: string;
+    attached?: string;
     job?: string | JobType | Partial<{ [key in JobType]: number }>;
     canInteract?: (entity?: number) => boolean | Promise<boolean>;
 

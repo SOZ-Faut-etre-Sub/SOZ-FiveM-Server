@@ -2,6 +2,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { wait } from '@core/utils';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
+import { PoliceSwatProvider } from '@private/client/police/police.swat.provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { BlipFactory } from '@public/client/blip';
 import { GamesProvider } from '@public/client/games/games.provider';
@@ -218,6 +219,9 @@ export class LSMCDeathProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
+    @Inject(PoliceSwatProvider)
+    private readonly policeSwatProvider: PoliceSwatProvider;
+
     private IsDead = false;
     private doFeeze = false;
     private hungerThristDeath = false;
@@ -279,6 +283,10 @@ export class LSMCDeathProvider {
                 this.IsDead = false;
 
                 return;
+            }
+
+            if (this.policeSwatProvider.isUsingShield()) {
+                await this.policeSwatProvider.disableShield();
             }
 
             if (this.playerService.getState()?.isInGameHub) {

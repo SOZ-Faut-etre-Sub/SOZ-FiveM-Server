@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CExplosionInfoManager>
+  <aExplosionTagData>
+    <Item>
+      <name>EXP_TAG_FLASHGRENADE</name>
+      <damageAtCentre value="1.000000" />
+      <damageAtEdge value="1.000000" />
+      <networkPlayerModifier value="2.000000" />
+      <networkPedModifier value="1.000000" />
+      <endRadius value="10.00000" />
+      <initSpeed value="25.000000" />
+      <decayFactor value="-1.000000" />
+      <forceFactor value="0.000000" />
+      <fRagdollForceModifier value="0.001600" />
+      <fSelfForceModifier value="1.000000" />
+      <directedWidth value="0.000000" />
+      <directedLifeTime value="0.000000" />
+      <camShakeName>GRENADE_EXPLOSION_SHAKE</camShakeName>
+      <camShake value="0.000000" />
+      <camShakeRollOffScaling value="1.000000" />
+      <shockingEventVisualRangeOverride value="0.000000" />
+      <shockingEventAudioRangeOverride value="0.000000" />
+      <minorExplosion value="true" />
+      <vfxTagHashName>EXP_VFXTAG_FLASHBANG</vfxTagHashName>
+      <fragDamage value="0.000000" />
+      <bAppliesContinuousDamage value="false" />
+      <bPostProcessCollisionsWithNoForce value="true" />
+      <bDamageVehicles value="false" />
+      <bDamageObjects value="false" />
+      <bOnlyAffectsLivePeds value="false" />
+      <bIgnoreExplodingEntity value="false" />
+      <bNoOcclusion value="false" />
+      <explodeAttachEntityWhenFinished value="false" />
+      <bCanSetPedOnFire value="false" />
+      <bSuppressCrime value="true" />
+      <bUseDistanceDamageCalc value="false" />
+      <bPreventWaterExplosionVFX value="true" />
+      <bApplyFlashGrenadeEffect value="true" />
+    </Item>
+  </aExplosionTagData>
+</CExplosionInfoManager>

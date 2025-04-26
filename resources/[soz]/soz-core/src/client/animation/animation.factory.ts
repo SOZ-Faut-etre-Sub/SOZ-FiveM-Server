@@ -6,10 +6,10 @@ import {
     Animation,
     AnimationInfo,
     animationOptionsToFlags,
-    AnimationProps,
     AnimationStopReason,
     PlayOptions,
     Scenario,
+    Vfx,
 } from '../../shared/animation';
 import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
@@ -241,7 +241,7 @@ export class AnimationFactory {
                     });
 
                     if (prop.fx) {
-                        this.fxLoop(propId, prop);
+                        this.fxLoop(propId, prop.fx);
                     }
 
                     props.push(propId);
@@ -291,43 +291,43 @@ export class AnimationFactory {
         }, options);
     }
 
-    private async fxLoop(entity: number, prop: AnimationProps) {
-        if (prop.fx.delay) {
-            await wait(prop.fx.delay);
+    public async fxLoop(entity: number, fx: Vfx) {
+        if (fx.delay) {
+            await wait(fx.delay);
         }
         let index = 0;
-        await this.resourceLoader.loadPtfxAsset(prop.fx.dictionary);
+        await this.resourceLoader.loadPtfxAsset(fx.dictionary);
         do {
-            UseParticleFxAsset(prop.fx.dictionary);
+            UseParticleFxAsset(fx.dictionary);
             StartParticleFxLoopedOnEntity(
-                prop.fx.name,
+                fx.name,
                 entity,
-                prop.fx.position[0],
-                prop.fx.position[1],
-                prop.fx.position[2],
-                prop.fx.rotation[0],
-                prop.fx.rotation[1],
-                prop.fx.rotation[2],
-                prop.fx.scale,
+                fx.position[0],
+                fx.position[1],
+                fx.position[2],
+                fx.rotation[0],
+                fx.rotation[1],
+                fx.rotation[2],
+                fx.scale,
                 false,
                 false,
                 false
             );
 
-            if (prop.fx.net) {
+            if (fx.net) {
                 const playerPedId = PlayerPedId();
                 const coords = GetEntityCoords(playerPedId) as Vector3;
                 const playersInrange = this.playerService.getPlayersAround(coords, 100.0, true);
                 if (playersInrange.length) {
-                    TriggerServerEvent(ServerEvent.ANIMATION_FX, ObjToNet(entity), prop.fx, playersInrange);
+                    TriggerServerEvent(ServerEvent.ANIMATION_FX, ObjToNet(entity), fx, playersInrange);
                 }
             }
 
-            if (prop.fx.manualLoop && prop.fx.duration) {
-                await wait(prop.fx.duration[index++ % prop.fx.duration.length]);
+            if (fx.manualLoop && fx.duration) {
+                await wait(fx.duration[index++ % fx.duration.length]);
             }
-        } while (prop.fx.manualLoop && DoesEntityExist(entity));
-        this.resourceLoader.unloadPtfxAsset(prop.fx.dictionary);
+        } while (fx.manualLoop && DoesEntityExist(entity));
+        this.resourceLoader.unloadPtfxAsset(fx.dictionary);
     }
 
     public createScenario(scenario: Scenario, options: Partial<PlayOptions> = {}): AnimationRunner {

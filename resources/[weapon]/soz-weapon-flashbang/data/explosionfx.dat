@@ -1,0 +1,14 @@
+5.00
+
+# COLN TYPE: 1-ground plane, 2-ground bound, 3-vehicle up
+
+#			    				PTFX --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->				FIRES ------------------------------------------------------------------------------------->
+#TYPE							FX_NAME						FX_2_NAME				FX_3_NAME					FX_LOD_NAME					FX_AIR_NAME					FX_AIR_2_NAME			FX_AIR_3_NAME		FX_AIR_LOD_NAME				SCALE	SCORCH		  NUMBER		   RANGE		 BURN TIME		BURN STRENGTH	 PEAK TIME			FUEL
+#			    																																																										DECALS		MIN		MAX		MIN		MAX		MIN		MAX		MIN		MAX		MIN		MAX		LEVEL	BURN
+#																																																																																						RATE
+																																																											
+EXPLOSIONFX_TABLE_START																																										   												
+																																																											
+EXP_VFXTAG_FLASHBANG			exp_arc_grd_flashbang		-						-							exp_arc_grd_flashbang_lod	exp_arc_grd_flashbang		-						-					exp_arc_grd_flashbang_lod	0.3		0			0		0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0
+
+EXPLOSIONFX_TABLE_END

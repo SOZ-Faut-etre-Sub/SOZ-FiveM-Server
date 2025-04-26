@@ -364,6 +364,7 @@ export enum NuiEvent {
     PoliceGatherMoneyMarked = 'soz-core:client:police:gather-money-marked',
     PoliceSaveDetectiveBoard = 'soz-core:client:police:save-detective-board',
     PoliceSendNotification = 'soz-core:client:police:send-notification',
+    PoliceSelectSwatCase = 'soz-core:client:police:select-swat-case',
 
     IllegalShopBuyItem = 'soz-core:client:hubshop:buy',
 

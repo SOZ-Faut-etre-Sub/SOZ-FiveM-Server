@@ -4,6 +4,8 @@ import { PlayerInventoryUpdate } from '@core/decorators/player';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { PlayerTalentService } from '@private/client/player/player.talent.service';
+import { PoliceSwatProvider } from '@private/client/police/police.swat.provider';
+import { MineSweeperRobotProvider } from '@private/client/vehicle/minesweeper.provider';
 import { PhoneState } from '@public/client/phone/phone.state';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { ClientEvent } from '@public/shared/event/client';
@@ -51,6 +53,12 @@ export class PhoneManager {
 
     @Inject(PlayerTalentService)
     private readonly playerTalentService: PlayerTalentService;
+
+    @Inject(MineSweeperRobotProvider)
+    private readonly mineSweeperRobotProvider: MineSweeperRobotProvider;
+
+    @Inject(PoliceSwatProvider)
+    private readonly policeSwatProvider: PoliceSwatProvider;
 
     private isInsideInput = false;
 
@@ -180,7 +188,9 @@ export class PhoneManager {
     async togglePhone() {
         if (
             this.propPlacementProvider.IsEditorModeActive() ||
-            this.housingFournitureProvider.isHousingEditorModeActive()
+            this.housingFournitureProvider.isHousingEditorModeActive() ||
+            this.mineSweeperRobotProvider.isUsingRobot() ||
+            this.policeSwatProvider.isUsingShield()
         ) {
             return;
         }

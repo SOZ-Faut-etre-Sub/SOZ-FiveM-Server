@@ -129,6 +129,7 @@ const shop = {
         'weapon_smokegrenade',
         'weapon_flare',
         'weapon_acidpackage',
+        'weapon_flashbang',
     ],
     Protection: [
         'armor_plate',

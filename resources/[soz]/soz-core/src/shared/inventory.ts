@@ -572,7 +572,7 @@ export type InventoryItem = {
     metadata: InventoryItemMetadata;
 };
 
-export type MealMetadata = {
+export type CrateMetadata = {
     name: string;
     metadata: InventoryItemMetadata;
     amount: number;
@@ -627,7 +627,7 @@ export type InventoryItemMetadata = {
     crafted?: boolean;
     id?: string;
     model?: string;
-    crateElements?: MealMetadata[];
+    crateElements?: CrateMetadata[];
     zkeaCrateElements?: ZkeaFournitureMetadata[];
     // Fishing
     weight?: number;
@@ -650,6 +650,7 @@ export type InventoryItemMetadata = {
     printed?: boolean;
     value?: number;
     notSearchable?: boolean;
+    notStorable?: boolean;
     cyberDBSearch?: DBSearch;
 };
 

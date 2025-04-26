@@ -77,6 +77,7 @@ import { FinesMenu } from '@public/nui/components/Police/Fines';
 import { LicencesMenu } from '@public/nui/components/Police/Licences';
 import { MoneyChecker } from '@public/nui/components/Police/MoneyChecker';
 import { PoliceJobMenu } from '@public/nui/components/Police/PoliceJobMenu';
+import { PoliceSwatPickCaseMenu } from '@public/nui/components/Police/PoliceSwatPickCase';
 import { MenuRaceAdmin } from '@public/nui/components/Race/MenuRaceAdmin';
 import { MenuRaceRank } from '@public/nui/components/Race/MenuRaceRanking';
 import { BarberShopMenu } from '@public/nui/components/Shop/BarberShopMenu';
@@ -284,6 +285,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.PoliceJobFines}/*`} element={<FinesMenu data={menuData} />} />
             <Route path={`/${MenuType.PoliceJobMenu}/*`} element={<PoliceJobMenu data={menuData} />} />
             <Route path={`/${MenuType.PoliceJobMoneychecker}/*`} element={<MoneyChecker data={menuData} />} />
+            <Route path={`/${MenuType.PoliceSwatPickCase}/*`} element={<PoliceSwatPickCaseMenu />} />
             <Route path={`/${MenuType.PitStopPriceMenu}/*`} element={<PitStopPriceMenu />} />
             <Route path={`/${MenuType.Promote}/*`} element={<MenuPromote data={menuData} />} />
             <Route path={`/${MenuType.HubEntryAdmin}/*`} element={<MenuHubEntryAdmin />} />

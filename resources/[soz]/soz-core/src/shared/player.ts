@@ -7,7 +7,7 @@ import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
 import { Radio } from '@public/shared/voip';
 
-import { ClothConfig } from './cloth';
+import { ClothConfig, OutfitType } from './cloth';
 import { Disease, Organ } from './disease';
 import { DrivingSchoolLicenseType } from './driving-school';
 import { joaat } from './joaat';
@@ -266,7 +266,6 @@ export type PlayerClientState = {
     isInHub: boolean;
     isInGame: boolean;
     isInGameHub: boolean;
-    isInSportClothes: boolean;
     disableMoneyCase: boolean;
     hasPrisonerClothes: boolean;
     isWearingPatientOutfit: boolean;
@@ -413,6 +412,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     reputation_token_date?: number;
     main_residence_last_change?: number;
     noclip: boolean;
+    cloth_type?: OutfitType;
 };
 
 export const isAdmin = (player: PlayerData) => {

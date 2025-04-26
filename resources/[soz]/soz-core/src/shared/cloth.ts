@@ -38,12 +38,14 @@ export type GlovesItem = {
     texture: number;
 };
 
+export type OutfitType = 'SPORT' | 'SWAT' | 'MINE' | '';
+
 export type Outfit = {
     Components: Partial<Record<Component, OutfitItem>>;
     Props: Partial<Record<Prop, OutfitItem>>;
     GlovesID?: number;
     TopID?: number;
-    type?: 'SPORT' | null;
+    type?: OutfitType;
     category?: string;
     rankType?: string;
 };

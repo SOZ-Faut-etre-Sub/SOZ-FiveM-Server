@@ -8,6 +8,23 @@ export type JobInventory = {
     permission?: JobPermission;
 };
 
+export const BCSO_ARMORY_POSITION: Zone = {
+    center: [1859.58, 3690.44, 34.27],
+    length: 2.5,
+    width: 1.5,
+    minZ: 33.27,
+    maxZ: 35.27,
+    heading: 245.0,
+};
+
+export const LSPD_ARMORY_POSITION: Zone = {
+    center: [458.66, -979.87, 30.69],
+    length: 2.2,
+    heading: 269.77,
+    minZ: 29.69,
+    maxZ: 31.69,
+};
+
 export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
     [JobType.Baun]: [
         {
@@ -474,12 +491,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             },
         },
         {
-            center: [1859.58, 3690.44, 34.27],
-            length: 2.5,
-            width: 1.5,
-            minZ: 33.27,
-            maxZ: 35.27,
-            heading: 245.0,
+            ...BCSO_ARMORY_POSITION,
             data: {
                 storage: 'bcso_armory',
                 type: InventoryType.Armory,
@@ -1351,11 +1363,7 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
         },
 
         {
-            center: [458.66, -979.87, 30.69],
-            length: 2.2,
-            heading: 269.77,
-            minZ: 29.69,
-            maxZ: 31.69,
+            ...LSPD_ARMORY_POSITION,
             data: {
                 storage: 'lspd_armory_mr',
                 type: InventoryType.Armory,

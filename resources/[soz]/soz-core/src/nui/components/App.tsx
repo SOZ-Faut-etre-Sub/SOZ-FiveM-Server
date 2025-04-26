@@ -45,6 +45,7 @@ import { CardApp } from './Card/CardApp';
 import { CraftApp } from './Craft/CraftApp';
 import { FieldHealthApp } from './Field/FieldHealthApp';
 import { FieldZoneHealthApp } from './Field/FieldZoneHealthApp';
+import { FlashApp } from './Flash/FlashApp';
 import { LaserGameApp } from './Games/LaserGameApp';
 import { HudApp } from './Hud/HudApp';
 import { InputApp } from './Input/InputApp';
@@ -134,7 +135,6 @@ export const App: FunctionComponent = () => {
                     <DrugScreeningApp />
                     <DetectiveBoard />
                     <ScientistPhoto />
-                    <HoodApp />
                     <TaxiHorodateurApp />
                     <TalentApp />
                     <CraftingApp />
@@ -166,6 +166,7 @@ export const App: FunctionComponent = () => {
                     <ScreenshotApp />
                 </div>
                 <HoodApp />
+                <FlashApp />
                 <ScientistCamera />
                 <div className={menuClasses}>
                     <InputApp />

@@ -14,7 +14,14 @@ import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { InventoryItem, isInventoryItemExpired } from '../../shared/inventory';
 import { RpcServerEvent } from '../../shared/rpc';
-import { excludeExplosionAlert, GlobalWeaponConfig, WeaponConfig, Weapons } from '../../shared/weapons/weapon';
+import {
+    excludeExplosionAlert,
+    ExplosionType,
+    GlobalWeaponConfig,
+    WeaponConfig,
+    WeaponName,
+    Weapons,
+} from '../../shared/weapons/weapon';
 import { FeatureProvider } from '../feature/feature.provider';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -70,6 +77,11 @@ export class WeaponProvider {
             return;
         }
         const targetData = this.playerService.getPlayer(NetworkGetEntityOwner(target));
+        if (data.weaponType === joaat(WeaponName.STICKYBOMB) && targetData.metadata.cloth_type === 'MINE') {
+            CancelEvent();
+            return;
+        }
+
         if (
             !targetData ||
             targetData.metadata.armor.current > 0 ||
@@ -415,6 +427,14 @@ export class WeaponProvider {
 
     @On('explosionEvent')
     public onExplosion(unk: any, source: number, explosionData) {
+        if (explosionData.explosionType == ExplosionType.FLASHGRENADE) {
+            TriggerClientEvent(ClientEvent.WEAPON_FLASH, -1, [
+                explosionData.posX,
+                explosionData.posY,
+                explosionData.posZ,
+            ]);
+        }
+
         if (excludeExplosionAlert.includes(explosionData.explosionType) || this.disableExplosionAlert) {
             return;
         }

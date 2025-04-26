@@ -5,13 +5,12 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { JobType } from '@public/shared/job';
+import { ALL_FDO_JOB_TARGETS } from '@public/shared/job';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { ObjectProvider } from '../../object/object.provider';
 import { InteractionProvider } from '../../quick-interaction/interaction.provider';
 
-const jobsTarget = { [JobType.BCSO]: 0, [JobType.FBI]: 0, [JobType.SASP]: 0, [JobType.LSPD]: 0, [JobType.LSCS]: 0 };
 const spikeModel = GetHashKey('p_ld_stinger_s');
 
 @Provider()
@@ -64,7 +63,7 @@ export class PoliceSpikeProvider {
 
                     TriggerServerEvent(ServerEvent.POLICE_REMOVE_SPIKE, ObjToNet(entity));
                 },
-                job: jobsTarget,
+                job: ALL_FDO_JOB_TARGETS,
             },
             undefined,
             1.1,
@@ -88,7 +87,7 @@ export class PoliceSpikeProvider {
 
                         TriggerServerEvent(ServerEvent.OBJECT_COLLECT, id);
                     },
-                    job: jobsTarget,
+                    job: ALL_FDO_JOB_TARGETS,
                 },
                 undefined,
                 0.8,

@@ -5,6 +5,7 @@ import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { wait, waitUntil } from '@core/utils';
+import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
 import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
 import { PhoneService } from '@public/client/phone/phone.service';
 import { Feature } from '@public/shared/features';
@@ -183,6 +184,11 @@ export class VehicleLockProvider {
         const vehicle = GetVehiclePedIsTryingToEnter(ped);
 
         if (!vehicle) {
+            return;
+        }
+
+        if (GetEntityModel(vehicle) === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) {
+            ClearPedTasksImmediately(ped);
             return;
         }
 
@@ -447,6 +453,8 @@ export class VehicleLockProvider {
 
             return;
         }
+
+        if (GetEntityModel(vehicle) === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) return;
 
         if (GetEntitySpeed(vehicle) * 3.6 > 75) {
             this.notifier.notify('Vous allez trop vite pour faire ça.', 'error');

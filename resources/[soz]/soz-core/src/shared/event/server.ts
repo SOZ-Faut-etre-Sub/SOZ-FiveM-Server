@@ -481,6 +481,12 @@ export enum ServerEvent {
     POLICE_DESTROY_CLUE = 'soz-core:server:police:destroy-clue',
     POLICE_DRUG_IN_TRUNK = 'soz-core:server:police:drug-in-trunk',
     POLICE_GET_VEHICLE_OWNER = 'soz-core:server:police:get-vehicule-owner',
+    POLICE_GET_SWAT_CASE = 'soz-core:server:police:get-swat-case',
+    POLICE_DESTROY_SWAT_ITEMS = 'soz-core:server:police:destroy-swat-items',
+    POLICE_RETRIEVE_DRONE = 'soz-core:server:police:retrieve-drone',
+    POLICE_SWAT_HEAL = 'soz-core:server:police:swat-heal',
+    POLICE_DELETE_STICKYBOMB = 'soz-core:server:police:delete-stickybomb',
+    POLICE_SHIELD_SET_ANIMATION_OVERRIDE = 'soz-core:server:police:shield-set-animation-override',
 
     ESCORT_PLAYER = 'soz-core:server:escort',
     REMOVE_ESCORT_PLAYER = 'soz-core:server:remove-escort',
@@ -731,6 +737,8 @@ export enum ServerEvent {
 
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',
+
+    MINESWEEPER_ROBOT_RETRIEVE = 'soz-core:server:minesweeper:retrieve',
 
     OILRIG_HEIST_THERMITE = 'soz-core:server:oilrig-heist:thermite',
     OILRIG_HEIST_PIPELINE_HARVEST = 'soz-core:server:oilrig-heist:pipeline-harvest',

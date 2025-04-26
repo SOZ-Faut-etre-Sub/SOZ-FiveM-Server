@@ -1,5 +1,6 @@
 import { GamesProvider } from '@public/client/games/games.provider';
 import { Control } from '@public/shared/input';
+import { SWAT_CASE_ITEM } from '@public/shared/job/police';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -51,6 +52,7 @@ export class BankMoneyCaseProvider {
             !this.playerService.getState().isInShop &&
             (this.inventoryManager.hasEnoughItem(StonkConfig.delivery.item) ||
                 this.inventoryManager.hasEnoughItem('crypto_destroyer') ||
+                this.inventoryManager.hasEnoughItem(SWAT_CASE_ITEM) ||
                 Object.values(player.money).reduce((a, b) => a + b) >= MONEY_CASE_TRIGGER);
 
         if (!this.disableAttack) {

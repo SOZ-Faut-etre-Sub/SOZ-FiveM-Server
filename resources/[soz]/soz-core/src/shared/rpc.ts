@@ -170,6 +170,7 @@ export enum RpcServerEvent {
     POLICE_GET_CLUES_IN_AREA = 'soz-core:server:police:get-clues-in-area',
     POLICE_GET_ALL_IDENTIFIED_CLUES = 'soz-core:server:police:get-all-identified-clues',
     POLICE_LICENSE_HAS_RECUER = 'soz-core:server:police:has-recuer-license',
+    POLICE_SYNC_SHIELD_ANIMATION_OVERRIDE = 'soz-core:server:police-sync-shield-animation-override',
 
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
     HUB_ENTRY_FETCH_ALL = 'soz-core:server:hub:fetch-all',
@@ -301,6 +302,9 @@ export enum RpcServerEvent {
     WORLD_EVENT_START = 'soz-core:server:world-event:start',
 
     DRONE_GET = 'soz-core:server:drone-get',
+    MINESWEEPER_ROBOT_NEW = 'soz-core:server:minesweeper:robot-new',
+    MINESWEEPER_ROBOT_TAKE_CONTROL = 'soz-core:server:minesweeper:robot-take-control',
+    MINESWEEPER_ROBOT_DELETE_CLONE = 'soz-core:server:minesweeper:robot-delete-clone',
 
     WEATHER_GET_FORECASTS = 'soz-core:server:weather:get-forecasts',
 

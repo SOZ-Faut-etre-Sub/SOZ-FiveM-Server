@@ -27,6 +27,7 @@ import {
     UnknowVehWheelType,
     VehBacklist,
     VehData,
+    vehicleBlaclist,
     VehicleSurfaceData,
     VehicleZoneDefinition,
     VehicleZoneModifier,
@@ -1000,7 +1001,7 @@ export class VehicleOffroadProvider {
     }
 
     public getNoSurfaceCalc() {
-        return this.noSurfaceCalc;
+        return this.noSurfaceCalc || vehicleBlaclist.includes(GetEntityModel(GetVehiclePedIsUsing(PlayerPedId())));
     }
 
     private featureDisableForAdmin() {

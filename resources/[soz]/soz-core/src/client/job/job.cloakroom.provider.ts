@@ -1,3 +1,4 @@
+import { SWAT_CLOAKROOM } from '@private/shared/police';
 import { Component, WardrobeConfig } from '@public/shared/cloth';
 import { JobType } from '@public/shared/job';
 import { BaunCloakroom } from '@public/shared/job/baun';
@@ -112,14 +113,8 @@ export class JobCloakroomProvider {
 
         if (outfitSelection.outfit) {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfitSelection.outfit);
-            if (outfitSelection.outfit.type === 'SPORT') {
-                this.playerService.updateState({ isInSportClothes: true });
-            } else {
-                this.playerService.updateState({ isInSportClothes: false });
-            }
         } else {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
-            this.playerService.updateState({ isInSportClothes: false });
         }
     }
 
@@ -142,6 +137,12 @@ export class JobCloakroomProvider {
                             Collection: 'soz_bcso',
                         };
                     }
+                }
+            }
+
+            for (const outfitName of Object.keys(SWAT_CLOAKROOM[model])) {
+                if (SWAT_CLOAKROOM[model][outfitName]) {
+                    configs[model][outfitName] = SWAT_CLOAKROOM[model][outfitName];
                 }
             }
 

@@ -118,6 +118,7 @@ export enum MenuType {
     PoliceJobLicences = 'police_job_licences',
     PoliceJobMoneychecker = 'police_job_moneychecker',
     PoliceJobFines = 'police_job_fines',
+    PoliceSwatPickCase = 'policeswat_pick_case',
     PitStopPriceMenu = 'pitstop_price',
     Promote = 'promote',
     HubEntryAdmin = 'hub_entry_admin',
@@ -206,6 +207,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.PoliceJobMoneychecker]: PoliceJobMoneycheckerMenuData;
     [MenuType.PoliceJobFines]: PoliceJobFineMenuData;
     [MenuType.PoliceJobMenu]: PoliceJobMenuData;
+    [MenuType.PoliceSwatPickCase]: null;
     [MenuType.PitStopPriceMenu]: never;
     [MenuType.Promote]: PromoteMenuData;
     [MenuType.HousingAddRoommateMenu]: ApartmentMenuData;

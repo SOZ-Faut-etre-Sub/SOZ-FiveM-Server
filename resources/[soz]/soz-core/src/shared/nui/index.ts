@@ -23,6 +23,7 @@ import { NuiPickerMethodMap } from '@public/shared/picker';
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
 import { NuiScreenshotMethodMap } from '../screenshot';
+import { NuiFlashMap } from '../weapons/weapon';
 import { NuiAudioMethodMap } from './audio';
 import { NuiClipboardMethodMap } from './clipboard';
 import { NuiClothShopMethodMap } from './cloth_shop';
@@ -109,6 +110,7 @@ export interface NuiMethodMap {
     phone: NuiPhoneMap;
     laser_game_manage: NuiLaserGameManageMethodMap;
     screenshot: NuiScreenshotMethodMap;
+    flash: NuiFlashMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

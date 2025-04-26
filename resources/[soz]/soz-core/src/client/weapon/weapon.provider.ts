@@ -10,7 +10,7 @@ import { FuelStationType } from '@public/shared/fuel';
 import { Control } from '@public/shared/input';
 import { PlasterConfigs } from '@public/shared/job/lsmc';
 import { BoxZone, ZoneType } from '@public/shared/polyzone/box.zone';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '@public/shared/random';
 
 import { ClientEvent, GameEvent, ServerEvent } from '../../shared/event';
@@ -27,6 +27,8 @@ import {
 import { ClothingService } from '../clothing/clothing.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { AudioService } from '../nui/audio.service';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
@@ -53,6 +55,7 @@ const messageExclude = [
     GetHashKey('weapon_emplauncher'),
     GetHashKey('weapon_firework'),
     GetHashKey('weapon_snowlauncher'),
+    GetHashKey('weapon_grenadelauncher_smoke'),
     GetHashKey('weapon_raycarbine'),
 ];
 const NonLethalWeapons = {
@@ -98,6 +101,12 @@ export class WeaponProvider {
 
     @Inject(FeatureProvider)
     public featureProvider: FeatureProvider;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
+    @Inject(AudioService)
+    private audioService: AudioService;
 
     private lastPoliceCall = 0;
 
@@ -581,5 +590,50 @@ export class WeaponProvider {
         if (IsControlPressed(0, 25) && IsEntityPlayingAnim(player, 'move_m@intimidation@cop@unarmed', 'idle', 3)) {
             ClearPedSecondaryTask(player);
         }
+    }
+
+    @OnEvent(ClientEvent.WEAPON_FLASH)
+    private async onFlash(coords: Vector3) {
+        const playerPed = PlayerPedId();
+        const playerCoords = GetEntityCoords(playerPed) as Vector3;
+        const dist = getDistance(playerCoords, coords);
+        if (dist > 60) {
+            return;
+        }
+
+        const handle = StartShapeTestLosProbe(
+            playerCoords[0],
+            playerCoords[1],
+            playerCoords[2] + 0.4,
+            coords[0],
+            coords[1],
+            coords[2],
+            305,
+            PlayerPedId(),
+            7
+        );
+
+        do {
+            await wait(0);
+            const [ret, hit] = GetShapeTestResult(handle);
+            if (!ret) {
+                return;
+            }
+            if (ret == 2) {
+                if (hit) {
+                    return;
+                }
+                break;
+            }
+        } while (handle);
+
+        const coef = 1 - Math.max(dist - 30, 0) / 30;
+        this.audioService.playAudio('audio/weapon/flashbang.mp3', coef / 4);
+        const [ret, screenX, screenY] = GetScreenCoordFromWorldCoord(coords[0], coords[1], coords[2]);
+        if (!ret) {
+            return;
+        }
+
+        this.nuiDispatch.dispatch('flash', 'setFlash', [screenX, screenY, coef]);
     }
 }

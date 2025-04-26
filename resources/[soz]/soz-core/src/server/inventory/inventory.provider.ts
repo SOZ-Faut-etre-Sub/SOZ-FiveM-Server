@@ -503,6 +503,16 @@ export class InventoryProvider {
 
                     return 0;
                 }
+
+                if (
+                    ((targetInventory.type() !== InventoryType.Player && sourceItem.metadata?.notStorable) ||
+                        (sourceInventory.type() !== InventoryType.Player && targetItem.metadata?.notStorable)) &&
+                    !this.permissionService.isStaff(source)
+                ) {
+                    this.notifier.error(source, 'Vous ne pouvez pas ~r~stocker~s~ de cet objet.');
+
+                    return 0;
+                }
             }
 
             sourceInventory.removeAtSlot(sourceItem.slot, amount);
@@ -857,6 +867,16 @@ export class InventoryProvider {
             !this.permissionService.isStaff(source)
         ) {
             this.notifier.error(source, 'Vous ne pouvez pas ~r~transférer~s~ de cet objet.');
+
+            return 0;
+        }
+
+        if (
+            targetInventory.type() !== InventoryType.Player &&
+            sourceItem.metadata?.notStorable &&
+            !this.permissionService.isStaff(source)
+        ) {
+            this.notifier.error(source, 'Vous ne pouvez pas ~r~stocker~s~ de cet objet.');
 
             return 0;
         }

@@ -35,6 +35,7 @@ export class TargetService {
 
     public async validateTarget(target: TargetOption, entity: number): Promise<boolean> {
         if (!this.globalCheck()) return false;
+        if (!this.attachedCheckTarget()) return false;
         if (!this.eventCheck(target.event)) return false;
 
         if (target.job && !this.jobCheck(target.job)) return false;
@@ -51,6 +52,7 @@ export class TargetService {
 
     public async validateInteraction(interaction: Interaction, entity?: number): Promise<boolean> {
         if (!this.globalCheck()) return false;
+        if (!this.attachedCheckInteraction(interaction.attached)) return false;
         if (!this.eventCheck(interaction.event)) return false;
 
         if (interaction.job && !this.jobCheck(interaction.job)) return false;
@@ -71,7 +73,22 @@ export class TargetService {
         if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) return false;
         if (this.playerProneProvider.isPlayerProne()) return false;
         if (this.phoneService.isPhoneVisible()) return false;
+
+        return true;
+    }
+
+    protected attachedCheckTarget(): boolean {
         if (IsEntityAttached(PlayerPedId())) return false;
+
+        return true;
+    }
+
+    protected attachedCheckInteraction(model: string | null): boolean {
+        const ped = PlayerPedId();
+        if (!model && IsEntityAttached(ped)) return false;
+
+        const entity = GetEntityAttachedTo(ped);
+        if (entity && GetEntityModel(entity) !== GetHashKey(model)) return false;
 
         return true;
     }

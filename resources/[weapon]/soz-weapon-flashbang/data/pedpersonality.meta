@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CPedModelInfo__PersonalityDataList>
+	<MovementModeUnholsterData>
+		<Item>
+			<Name>UNHOLSTER_UNARMED</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>unarmed_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_2H_MELEE</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>2h_melee_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_1H</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>1h_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_2H</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>2h_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_MINIGUN</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>mini_holster_2h_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_UNARMED_STEALTH</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>unarmed_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_2H_MELEE_STEALTH</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>unarmed_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_1H_STEALTH</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>1h_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+		<Item>
+			<Name>UNHOLSTER_2H_STEALTH</Name>
+			<UnholsterClips>
+				<Item>
+					<Weapons>
+						<Item>WEAPON_FLASHBANG</Item>
+					</Weapons>
+					<Clip>2h_holster_unarmed</Clip>
+				</Item>
+			</UnholsterClips>
+		</Item>
+	</MovementModeUnholsterData>
+	<MovementModes>
+		<Item>
+			<Name>DEFAULT_ACTION</Name>
+			<MovementModes>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_action@p_m_zero@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId />
+								<WeaponClipFilterId />
+								<UpperBodyShadowExpressionEnabled value="false" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="true" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>MOVE_ACTION@GENERIC@TRANS@UNARMED</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_ACTION@P_M_ZERO@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_stealth@p_m_zero@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId>weapons@melee_stealth_1h</WeaponClipSetId>
+								<WeaponClipFilterId>UpperbodyAndIk_filter</WeaponClipFilterId>
+								<UpperBodyShadowExpressionEnabled value="true" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="false" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>move_stealth@generic@trans@unarmed</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>move_stealth@p_m_zero@holster</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED_STEALTH</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+			</MovementModes>
+		</Item>
+		<Item>
+			<Name>MP_FEMALE_ACTION</Name>
+			<MovementModes>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>MOVE_ACTION@MP_FEMALE@UNARMED@CORE</MovementClipSetId>
+								<WeaponClipSetId />
+								<WeaponClipFilterId />
+								<UpperBodyShadowExpressionEnabled value="false" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="true" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>MOVE_ACTION@MP_FEMALE@UNARMED@TRANS@</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_ACTION@P_M_ZERO@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_stealth@p_m_zero@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId>weapons@melee_stealth_1h</WeaponClipSetId>
+								<WeaponClipFilterId>UpperbodyAndIk_filter</WeaponClipFilterId>
+								<UpperBodyShadowExpressionEnabled value="true" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="false" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>MOVE_STEALTH@MP_FEMALE@UNARMED@TRANS</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>move_stealth@p_m_zero@holster</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED_STEALTH</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+			</MovementModes>
+		</Item>
+		<Item>
+			<Name>MICHAEL_ACTION</Name>
+			<MovementModes>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_action@p_m_zero@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId />
+								<WeaponClipFilterId />
+								<UpperBodyShadowExpressionEnabled value="false" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="true" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>MOVE_ACTION@P_M_ZERO@UNARMED@TRANS@A</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_ACTION@P_M_ZERO@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_stealth@p_m_zero@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId>weapons@melee_stealth_1h</WeaponClipSetId>
+								<WeaponClipFilterId>UpperbodyAndIk_filter</WeaponClipFilterId>
+								<UpperBodyShadowExpressionEnabled value="true" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="false" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>move_stealth@p_m_zero@unarmed@trans@a</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>move_stealth@p_m_zero@holster</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED_STEALTH</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+			</MovementModes>
+		</Item>
+		<Item>
+			<Name>FRANKLIN_ACTION</Name>
+			<MovementModes>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_action@p_m_one@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId />
+								<WeaponClipFilterId />
+								<UpperBodyShadowExpressionEnabled value="false" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="true" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>MOVE_ACTION@P_M_ONE@UNARMED@TRANS@A</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_ACTION@P_M_ONE@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_stealth@p_m_one@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId>weapons@melee_stealth_1h@p_m_one</WeaponClipSetId>
+								<WeaponClipFilterId>UpperbodyAndIk_filter</WeaponClipFilterId>
+								<UpperBodyShadowExpressionEnabled value="true" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="false" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>move_stealth@p_m_one@unarmed@trans@a</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_STEALTH@P_M_ONE@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED_STEALTH</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+			</MovementModes>
+		</Item>
+		<Item>
+			<Name>TREVOR_ACTION</Name>
+			<MovementModes>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_action@p_m_two@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId />
+								<WeaponClipFilterId />
+								<UpperBodyShadowExpressionEnabled value="false" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="true" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>MOVE_ACTION@P_M_TWO@UNARMED@TRANS@A</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_ACTION@P_M_TWO@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+				<Item>
+					<Item>
+						<Weapons>
+							<Item>WEAPON_FLASHBANG</Item>
+						</Weapons>
+						<ClipSets>
+							<Item>
+								<MovementClipSetId>move_stealth@p_m_two@unarmed@core</MovementClipSetId>
+								<WeaponClipSetId>weapons@melee_stealth_1h@p_m_two</WeaponClipSetId>
+								<WeaponClipFilterId>UpperbodyAndIk_filter</WeaponClipFilterId>
+								<UpperBodyShadowExpressionEnabled value="true" />
+								<UpperBodyFeatheredLeanEnabled value="false" />
+								<UseWeaponAnimsForGrip value="false" />
+								<UseLeftHandIk value="false" />
+								<IdleTransitionBlendOutTime value="0.500000" />
+								<IdleTransitions>
+									<Item>move_stealth@p_m_two@unarmed@trans@a</Item>
+								</IdleTransitions>
+								<UnholsterClipSetId>MOVE_STEALTH@P_M_TWO@HOLSTER</UnholsterClipSetId>
+								<UnholsterClipData>UNHOLSTER_UNARMED_STEALTH</UnholsterClipData>
+							</Item>
+						</ClipSets>
+					</Item>
+				</Item>
+			</MovementModes>
+		</Item>
+	</MovementModes>
+</CPedModelInfo__PersonalityDataList>

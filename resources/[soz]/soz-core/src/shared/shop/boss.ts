@@ -1,4 +1,5 @@
 import { JobType } from '../job';
+import { POLICE_DRONE_NAME, POLICE_MINESWEEPER_ROBOT_OBJECT } from '../job/police';
 import { BoxZone } from '../polyzone/box.zone';
 import { ShopConfig } from '../shop';
 
@@ -302,6 +303,16 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
                 metadata: { craftCertificate: 'weapon_pumpshotgun', label: 'Remington 870 Non lethal' },
                 price: 2000,
             },
+            {
+                id: POLICE_DRONE_NAME,
+                type: 'item',
+                price: 100000,
+            },
+            {
+                id: POLICE_MINESWEEPER_ROBOT_OBJECT,
+                type: 'item',
+                price: 100000,
+            },
         ],
     },
     // VINEWOOD
@@ -372,6 +383,16 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
                 metadata: { craftCertificate: 'weapon_pumpshotgun', label: 'Remington 870 Non lethal' },
                 price: 2000,
             },
+            {
+                id: POLICE_DRONE_NAME,
+                type: 'item',
+                price: 100000,
+            },
+            {
+                id: POLICE_MINESWEEPER_ROBOT_OBJECT,
+                type: 'item',
+                price: 100000,
+            },
         ],
     },
     {
@@ -440,6 +461,16 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
                 type: 'item',
                 metadata: { craftCertificate: 'weapon_pumpshotgun', label: 'Remington 870 Non lethal' },
                 price: 2000,
+            },
+            {
+                id: POLICE_DRONE_NAME,
+                type: 'item',
+                price: 100000,
+            },
+            {
+                id: POLICE_MINESWEEPER_ROBOT_OBJECT,
+                type: 'item',
+                price: 100000,
             },
         ],
     },

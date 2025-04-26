@@ -1,3 +1,5 @@
+import { MineSweeperRobotProvider } from '@private/client/vehicle/minesweeper.provider';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -34,6 +36,9 @@ export class InventoryPlayerProvider {
     @Inject(ParadeProvider)
     private paradeProvider: ParadeProvider;
 
+    @Inject(MineSweeperRobotProvider)
+    private readonly mineSweeperRobotProvider: MineSweeperRobotProvider;
+
     private isOpen = false;
 
     @OnNuiEvent(NuiEvent.InventoryOpenPlayerInventory)
@@ -65,6 +70,10 @@ export class InventoryPlayerProvider {
 
         if (!this.isOpen) {
             if (player.metadata.isdead || player.metadata.inlaststand || player.metadata.ishandcuffed) {
+                return;
+            }
+
+            if (this.mineSweeperRobotProvider.isUsingRobot()) {
                 return;
             }
 

@@ -1,3 +1,5 @@
+import { SWAT_ITEM_TYPE } from '@public/shared/job/police';
+
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -55,7 +57,9 @@ export class WeaponGunsmithProvider {
 
     @OnEvent(ClientEvent.WEAPON_OPEN_GUNSMITH)
     async openGunsmith(admin = false) {
-        const weapons = this.inventoryManager.getItems().filter(item => item.type === 'weapon');
+        const weapons = this.inventoryManager
+            .getItems()
+            .filter(item => item.type === 'weapon' && item.metadata?.type !== SWAT_ITEM_TYPE);
         const coords = GetEntityCoords(PlayerPedId(), true);
 
         if (weapons.length === 0) {

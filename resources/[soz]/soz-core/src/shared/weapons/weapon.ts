@@ -19,11 +19,7 @@ export type WeaponConfiguration = {
 
 export const GlobalWeaponConfig = {
     MaxAmmoRefill: (weapon_name: string) => {
-        if (weapon_name === 'weapon_musket' || weapon_name === 'weapon_snowlauncher') {
-            return 1;
-        }
-
-        return 5;
+        return maxAmmoRefill[weapon_name.toUpperCase()] || 5;
     },
     MaxHealth: 2000,
     RecoilOnUsedWeapon: 1.0,
@@ -200,6 +196,7 @@ export enum WeaponName {
     SMOKEGRENADE = 'WEAPON_SMOKEGRENADE',
     FLARE = 'WEAPON_FLARE',
     ACIDPACKAGE = 'WEAPON_ACIDPACKAGE',
+    FLASHBANG = 'WEAPON_FLASHBANG',
 
     // Other
     PETROLCAN = 'WEAPON_PETROLCAN',
@@ -207,6 +204,12 @@ export enum WeaponName {
     HAZARDCAN = 'WEAPON_HAZARDCAN',
     SNOWLAUNCHER = 'WEAPON_SNOWLAUNCHER',
 }
+
+const maxAmmoRefill: Partial<Record<WeaponName, number>> = {
+    [WeaponName.MUSKET]: 1,
+    [WeaponName.SNOWLAUNCHER]: 1,
+    [WeaponName.GRENADELAUNCHER_SMOKE]: 2,
+};
 
 export const WeaponType = {
     Melee: 2685387236,
@@ -1154,6 +1157,7 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
     [WeaponName.SMOKEGRENADE]: { attachments: [] },
     [WeaponName.FLARE]: { attachments: [] },
     [WeaponName.ACIDPACKAGE]: { attachments: [] },
+    [WeaponName.FLASHBANG]: { attachments: [] },
 
     // Other
     [WeaponName.PETROLCAN]: { attachments: [] },
@@ -1187,6 +1191,8 @@ export enum ExplosionType {
     EXP_TAG_SNOWBALL = 39,
     EXP_TAG_RAYGUN = 70,
     EMPLAUNCHER_EMP = 83,
+    BZGAS = 21,
+    FLASHGRENADE = 78,
 }
 
 export const excludeExplosionAlert = [
@@ -1198,6 +1204,7 @@ export const excludeExplosionAlert = [
     ExplosionType.EXP_TAG_SNOWBALL,
     ExplosionType.EMPLAUNCHER_EMP,
     ExplosionType.FIREWORK,
+    ExplosionType.FLASHGRENADE,
 ];
 
 export const WeaponAmmo: Partial<Record<WeaponName, string>> = {
@@ -1275,3 +1282,7 @@ export const WeaponAmmo: Partial<Record<WeaponName, string>> = {
     [WeaponName.PRECISIONRIFLE]: '.50 BMG',
     [WeaponName.SNOWLAUNCHER]: 'Munition de neige',
 };
+
+export interface NuiFlashMap {
+    setFlash: Vector3;
+}
