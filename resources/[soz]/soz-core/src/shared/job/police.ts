@@ -751,7 +751,7 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Palette: 0,
             Collection: 'soz_bcso',
         },
-        ['lsmc']: { Drawable: 27, Texture: 8, Palette: 0 }, // is unmarked, need reskin
+        ['lsmc']: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
         ['stonk']: {
             Drawable: 0,
             Texture: 0,
@@ -832,7 +832,7 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Palette: 0,
             Collection: 'soz_bcso',
         },
-        ['lsmc']: { Drawable: 31, Texture: 8, Palette: 0 }, // is unmarked, need reskin
+        ['lsmc']: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
         ['stonk']: {
             Drawable: 0,
             Texture: 0,
