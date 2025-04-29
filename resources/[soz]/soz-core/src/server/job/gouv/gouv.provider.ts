@@ -1,4 +1,5 @@
 import { PermissionService } from '@public/server/permission.service';
+import { expirationVisaDuration } from '@public/shared/player';
 import { TaxLabel, TaxType } from '@public/shared/tax';
 
 import { OnEvent } from '../../../core/decorators/event';
@@ -144,6 +145,16 @@ export class GouvProvider {
         const targetPlayer = this.playerService.getPlayer(target);
 
         if (!sourcePlayer || !targetPlayer) {
+            return;
+        }
+
+        if (targetPlayer.created_at + expirationVisaDuration > Date.now()) {
+            this.notifier.error(
+                source,
+                `Impossible ~g~valider~s~ l'identité avant l'expiration du Visa temporaire (${new Date(
+                    targetPlayer.created_at + expirationVisaDuration
+                ).toLocaleString('fr-FR')}).`
+            );
             return;
         }
 

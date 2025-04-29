@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { JobLabel } from '../../../shared/job';
-import { PlayerData } from '../../../shared/player';
+import { expirationVisaDuration, PlayerData } from '../../../shared/player';
 import { useAssetPath } from '../../hook/assets';
 import { Mugshot } from '../Player/Mugshot';
 
@@ -60,9 +60,9 @@ export const IdentityCard: FunctionComponent<IdentityCardProps> = ({ player }) =
                     </div>
                     {!player.is_validated && (
                         <div>
-                            <h3 className="text-xs leading-none">Date d'éxpiration</h3>
+                            <h3 className="text-xs leading-none">Date d'expiration</h3>
                             <p className="uppercase leading-none">
-                                {new Date(player.created_at + 2 * 7 * 24 * 3600 * 1000).toLocaleDateString(
+                                {new Date(player.created_at + expirationVisaDuration).toLocaleDateString(
                                     'fr-FR',
                                     FORMAT_LOCALIZED
                                 )}
