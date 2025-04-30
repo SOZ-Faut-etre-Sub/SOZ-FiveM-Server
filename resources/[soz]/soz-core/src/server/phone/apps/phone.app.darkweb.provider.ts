@@ -34,6 +34,8 @@ export class PhoneAppDarkWebProvider {
     @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_GET_CONVERSATIONS)
     async getConversations(source: number) {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -66,6 +68,8 @@ export class PhoneAppDarkWebProvider {
         }
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -105,6 +109,8 @@ export class PhoneAppDarkWebProvider {
         }
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -130,6 +136,8 @@ export class PhoneAppDarkWebProvider {
         }
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -161,6 +169,8 @@ export class PhoneAppDarkWebProvider {
         }
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -193,6 +203,8 @@ export class PhoneAppDarkWebProvider {
         }
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -211,6 +223,8 @@ export class PhoneAppDarkWebProvider {
     @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_GET_PARTICIPANTS)
     async getParticipants(source: number) {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -221,6 +235,8 @@ export class PhoneAppDarkWebProvider {
     @Rpc(RpcServerEvent.PHONE_APP_DARKWEB_GET_MESSAGES)
     async getMessages(source: number, conversationId: number) {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
@@ -246,6 +262,8 @@ export class PhoneAppDarkWebProvider {
         }
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
         if (!inventory.hasEnoughItem(DARKWEB_ITEM, 1, true)) {
             return;
         }
