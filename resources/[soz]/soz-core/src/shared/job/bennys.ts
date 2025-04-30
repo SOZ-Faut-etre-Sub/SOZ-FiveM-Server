@@ -99,7 +99,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
-                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 71, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -111,7 +111,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
-                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 71, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -121,13 +121,25 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         },
         ['Apprenti']: {
             Components: {
-                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
-                [Component.Shoes]: { Drawable: 46, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 71, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 66, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Atelier']: {
+            Components: {
+                [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 24, Palette: 0 },
+                [Component.Shoes]: { Drawable: 71, Texture: 1, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 0, Texture: 2, Palette: 0 },
             },
             Props: {},
         },
@@ -161,7 +173,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
-                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -173,7 +185,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
-                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -185,11 +197,23 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 39, Texture: 1, Palette: 0 },
-                [Component.Shoes]: { Drawable: 47, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 60, Texture: 1, Palette: 0 },
+            },
+            Props: {},
+        },
+        ['Atelier']: {
+            Components: {
+                [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 24, Palette: 0 },
+                [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 49, Texture: 1, Palette: 0 },
             },
             Props: {},
         },
@@ -209,7 +233,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 135, Texture: 1, Palette: 0 },
-                [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
                 [Component.Bag]: { Drawable: 45, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 118, Texture: 1, Palette: 0 },
