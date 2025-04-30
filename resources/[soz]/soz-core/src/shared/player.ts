@@ -426,3 +426,5 @@ export const isStaff = (player: PlayerData) => {
 export const isGameMaster = (player: PlayerData) => {
     return player.role === 'gamemaster' || isStaff(player);
 };
+
+export const expirationVisaDuration = 2 * 7 * 24 * 3600 * 1000;
