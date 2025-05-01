@@ -358,6 +358,8 @@ export class VehicleDealershipProvider {
                     date: nowInSeconds,
                 },
             });
+
+            auction.bestBid = null;
         }
     }
 
