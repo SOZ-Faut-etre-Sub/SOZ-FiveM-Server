@@ -98,7 +98,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         ['Direction']: {
             Components: {
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 98, Texture: 17, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 23, Palette: 0 },
                 [Component.Shoes]: { Drawable: 71, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -110,12 +110,12 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         ['Mécano']: {
             Components: {
                 [Component.Torso]: { Drawable: 19, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 1, Palette: 0 },
                 [Component.Shoes]: { Drawable: 71, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Tops]: { Drawable: 0, Texture: 2, Palette: 0 },
+                [Component.Tops]: { Drawable: 146, Texture: 1, Palette: 0 },
             },
             Props: {},
         },
@@ -172,7 +172,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         ['Direction']: {
             Components: {
                 [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 101, Texture: 17, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 23, Palette: 0 },
                 [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -184,7 +184,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         ['Mécano']: {
             Components: {
                 [Component.Torso]: { Drawable: 31, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 1, Palette: 0 },
                 [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
