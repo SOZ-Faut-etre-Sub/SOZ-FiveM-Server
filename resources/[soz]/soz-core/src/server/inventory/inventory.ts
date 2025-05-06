@@ -279,6 +279,7 @@ export class Inventory {
 
             leftover -= itemObject.maxStack - existingItem.amount;
             existingItem.amount = itemObject.maxStack;
+            slot = null;
         }
 
         if (itemObject.maxStack) {
@@ -288,7 +289,8 @@ export class Inventory {
                 const currentAmount = Math.min(leftover, itemObject.maxStack);
                 leftover -= currentAmount;
 
-                lastItem = this.doAddItem(itemObject, currentAmount, metadata);
+                lastItem = this.doAddItem(itemObject, currentAmount, metadata, slot);
+                slot = null;
             }
 
             return Ok(lastItem);
