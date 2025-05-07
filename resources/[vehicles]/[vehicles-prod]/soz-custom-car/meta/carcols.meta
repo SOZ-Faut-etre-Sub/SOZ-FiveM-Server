@@ -21633,6 +21633,51 @@
                     <disableBonnetCamera value="false" />
                     <allowBonnetSlide value="true" />
                 </Item>
+				 <Item>
+                    <modelName>openwheel1_livery27</modelName>
+                    <modShopLabel>OPENW1_LIV27</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_LIVERY_MOD</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+				 <Item>
+                    <modelName>openwheel1_livery28</modelName>
+                    <modShopLabel>OPENW1_LIV28</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_LIVERY_MOD</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
+				 <Item>
+                    <modelName>openwheel1_livery29</modelName>
+                    <modShopLabel>OPENW1_LIV29</modShopLabel>
+                    <linkedModels />
+                    <turnOffBones />
+                    <type>VMT_LIVERY_MOD</type>
+                    <bone>chassis</bone>
+                    <collisionBone>chassis</collisionBone>
+                    <cameraPos>VMCP_DEFAULT</cameraPos>
+                    <audioApply value="1.000000" />
+                    <weight value="20" />
+                    <turnOffExtra value="false" />
+                    <disableBonnetCamera value="false" />
+                    <allowBonnetSlide value="true" />
+                </Item>
             </visibleMods>
             <linkMods>
             </linkMods>
