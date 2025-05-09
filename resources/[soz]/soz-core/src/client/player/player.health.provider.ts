@@ -642,6 +642,21 @@ export class PlayerHealthProvider {
         DisableControlAction(0, Control.Sprint, true); // disable sprint
     }
 
+    @Tick(TickInterval.EVERY_FRAME)
+    async consumeMoreStaminaOnJump(): Promise<void> {
+        const playerId = PlayerId();
+        const stamina = GetPlayerStamina(playerId);
+
+        if (stamina <= 25) {
+            DisableControlAction(0, Control.Jump, true); // disable jump
+        }
+
+        if (IsPedJumping(PlayerPedId())) {
+            SetPlayerStamina(playerId, stamina - 25);
+            await wait(1000);
+        }
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     async checkRunning(): Promise<void> {
         if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
