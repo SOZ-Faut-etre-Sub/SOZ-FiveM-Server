@@ -749,6 +749,7 @@ export enum NuiEvent {
     TravelingRename = 'soz-core:nui:traveling-rename',
 
     CasinoPokerBet = 'soz-core:nui:casino:poker:bet',
+    CasinoPokerFold = 'soz-core:nui:casino:poker:fold',
     CasinoBlackjackBet = 'soz-core:nui:casino:blackjack-bet',
     CasinoBlackjackSplit = 'soz-core:nui:casino:blackjack-split',
     CasinoInsideTrackBet = 'soz-core:nui:casino:inside-track-bet',
