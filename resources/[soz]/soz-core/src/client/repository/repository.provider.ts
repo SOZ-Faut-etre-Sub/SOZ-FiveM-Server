@@ -13,6 +13,7 @@ import { Logger } from '../../core/logger';
 import { ClientEvent } from '../../shared/event';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { BillboardRepository } from './billboard.repository';
+import { ElevatorRepository } from './elevator.repository';
 import { FuelStationRepository } from './fuel.station.repository';
 import { GarageRepository } from './garage.repository';
 import { RaceRepository } from './race.repository';
@@ -42,6 +43,9 @@ export class RepositoryProvider {
 
     @Inject(RaceRepository)
     private raceRepository: RaceRepository;
+
+    @Inject(ElevatorRepository)
+    private elevatorRepository: ElevatorRepository;
 
     @Inject(BillboardRepository)
     private billboardRepository: BillboardRepository;

@@ -501,10 +501,7 @@ export class DoorProvider {
             }
 
             DoorSystemSetDoorState(subdoor.hash, door.lock ? 1 : 0, false, false);
-
-            if (door.holdOpen) {
-                DoorSystemSetHoldOpen(subdoor.hash, !door.lock);
-            }
+            DoorSystemSetHoldOpen(subdoor.hash, door.holdOpen);
         }
 
         const interactionList = this.doorInteractionList[door.id];

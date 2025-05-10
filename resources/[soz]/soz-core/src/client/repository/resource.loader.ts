@@ -77,6 +77,10 @@ export class ResourceLoader {
         }
     }
 
+    unloadScriptAudioBank(name: string): void {
+        ReleaseNamedScriptAudioBank(name);
+    }
+
     async loadScaleformMovie(name: string) {
         const scaleform = RequestScaleformMovie(name);
         while (!HasScaleformMovieLoaded(scaleform)) {

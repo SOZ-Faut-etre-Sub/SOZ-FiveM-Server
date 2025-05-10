@@ -12,6 +12,7 @@ import { Tax, TaxType } from '@public/shared/tax';
 import { Billboard } from './billboard';
 import { GlovesItem } from './cloth';
 import { Door } from './door';
+import { DynamicElevator, DynamicElevatorState } from './elevators';
 import { FuelStation, UpwCharger, UpwStation } from './fuel';
 import { Property, RentTaxe } from './housing/housing';
 import { JobGrade } from './job';
@@ -32,6 +33,7 @@ export enum RepositoryType {
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
     Door = 'door',
+    Elevator = 'elevator',
     Field = 'field',
     Fine = 'fine',
     Gang = 'gang',
@@ -66,6 +68,7 @@ export type RepositoryMapping = {
     [RepositoryType.Billboard]: Billboard;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Configuration]: any;
+    [RepositoryType.Elevator]: DynamicElevatorState;
     [RepositoryType.Field]: Field;
     [RepositoryType.Fine]: Fine;
     [RepositoryType.Garage]: Garage;
@@ -102,6 +105,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.BankInvoice]: Record<number, Invoice>;
     [RepositoryType.Configuration]: Configuration;
     [RepositoryType.Field]: Record<string, Field>;
+    [RepositoryType.Elevator]: Record<DynamicElevator, DynamicElevatorState>;
     [RepositoryType.Fine]: Record<number, Fine>;
     [RepositoryType.Housing]: Record<number, Property>;
     [RepositoryType.JobGrade]: Record<number, JobGrade>;

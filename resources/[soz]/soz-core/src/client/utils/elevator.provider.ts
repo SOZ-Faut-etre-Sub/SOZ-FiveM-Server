@@ -1,260 +1,39 @@
-import { Once } from '@public/core/decorators/event';
+import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
-import { JobType } from '@public/shared/job';
+import { RepositoryUpdate } from '@public/core/decorators/repository';
+import { Tick } from '@public/core/decorators/tick';
+import { wait } from '@public/core/utils';
+import {
+    DynamicElevator,
+    DynamicElevatorConfigs,
+    DynamicElevatorParams,
+    DynamicElevatorState,
+    ElevatorDirection,
+    ElevatorDirectionDisplay,
+    ElevatorFloor,
+    Elevators,
+} from '@public/shared/elevators';
+import { ServerEvent } from '@public/shared/event';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
-import { Vector4 } from '@public/shared/polyzone/vector';
+import {
+    add2Vector3,
+    getDistance,
+    multVector3,
+    sub2Vector3,
+    toVectorNorm,
+    Vector3,
+} from '@public/shared/polyzone/vector';
+import { RepositoryType } from '@public/shared/repository';
 
 import { Provider } from '../../core/decorators/provider';
 import { TargetOption } from '../../shared/target';
+import { AnimationService } from '../animation/animation.service';
+import { ObjectService } from '../object/object.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
+import { ElevatorRepository } from '../repository/elevator.repository';
+import { ResourceLoader } from '../repository/resource.loader';
 import { TargetFactory } from '../target/target.factory';
-
-enum ElevatorDirection {
-    UP = 'upTo',
-    DOWN = 'downTo',
-}
-
-const ElevatorDirectionDisplay: Record<ElevatorDirection, { label: string; icon: string }> = {
-    [ElevatorDirection.UP]: { label: 'Monter ', icon: 'elevators/monter' },
-    [ElevatorDirection.DOWN]: { label: 'Descendre ', icon: 'elevators/descendre' },
-};
-
-type ElevatorFloor = {
-    label: string;
-    button: BoxZone;
-    upTo: ElevatorFloorName[];
-    downTo: ElevatorFloorName[];
-    spawnPoint: Vector4;
-    job?: Partial<Record<JobType, number>>;
-};
-
-enum ElevatorFloorName {
-    stonk0 = 1,
-    stonk1L,
-    stonk1R,
-    stonk2L,
-    stonk2R,
-    lsmc0,
-    lsmc1,
-    lsmc2,
-    lspd0,
-    lspd1,
-    bennys0,
-    bennys1,
-    fib0,
-    fib1,
-    // admin0, // Removed due to laser game
-    // adminminus1, // Removed due to laser game
-    mtp0,
-    mtp1,
-    mtp2,
-    younews0,
-    younews1,
-    younews2,
-    baun0,
-    baun1,
-}
-
-const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
-    //Stonk
-    [ElevatorFloorName.stonk0]: {
-        label: 'Sous-sol',
-        button: new BoxZone([11.99, -668.57, 33.48], 0.1, 0.35, { minZ: 33.48, maxZ: 34.05, heading: 6.3 }),
-        upTo: [ElevatorFloorName.stonk1L, ElevatorFloorName.stonk2L],
-        downTo: [],
-        spawnPoint: [10.53, -671.79, 32.45, 359.77],
-    },
-    [ElevatorFloorName.stonk1L]: {
-        // Level 1, Left-side (facing elevators from outside)
-        label: 'Coffre',
-        button: new BoxZone([15.79, -689.22, 40.6], 0.1, 0.35, { minZ: 40.6, maxZ: 41.1, heading: 24.38 }),
-        upTo: [ElevatorFloorName.stonk2L],
-        downTo: [ElevatorFloorName.stonk0],
-        spawnPoint: [17.27, -690.0, 39.73, 23.0],
-    },
-    [ElevatorFloorName.stonk1R]: {
-        // Level 1, Right-side (facing elevators from outside)
-        label: 'Coffre',
-        button: new BoxZone([13.05, -690.47, 40.6], 0.1, 0.35, { minZ: 40.6, maxZ: 41.1, heading: 24.38 }),
-        upTo: [ElevatorFloorName.stonk2R],
-        downTo: [ElevatorFloorName.stonk0],
-        spawnPoint: [14.59, -691.35, 39.73, 23.0],
-    },
-    [ElevatorFloorName.stonk2L]: {
-        // Level 2, Left-side (facing elevators from outside)
-        label: 'Niveau principal',
-        button: new BoxZone([15.75, -689.18, 45.9], 0.1, 0.35, { minZ: 45.9, maxZ: 46.4, heading: 24.38 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.stonk1L, ElevatorFloorName.stonk0],
-        spawnPoint: [17.3, -689.98, 45.01, 23.0],
-    },
-    [ElevatorFloorName.stonk2R]: {
-        // Level 2, Right-side (facing elevators from outside)
-        label: 'Niveau principal',
-        button: new BoxZone([13.09, -690.53, 45.9], 0.1, 0.35, { minZ: 45.9, maxZ: 46.4, heading: 24.38 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.stonk1R, ElevatorFloorName.stonk0],
-        spawnPoint: [14.58, -691.15, 45.01, 26.12],
-    },
-    //LSMC
-    [ElevatorFloorName.lsmc0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([362.97, -1427.64, 32.91], 0.5, 0.3, { minZ: 32.91, maxZ: 33.31, heading: 227.56 }),
-        upTo: [ElevatorFloorName.lsmc1, ElevatorFloorName.lsmc2],
-        downTo: [],
-        spawnPoint: [364.94, -1426.28, 32.51, 228.85],
-    },
-    [ElevatorFloorName.lsmc1]: {
-        label: '1er Etage',
-        button: new BoxZone([362.62, -1427.32, 38.44], 0.3, 0.9, { minZ: 38.44, maxZ: 38.79, heading: 318.33 }),
-        upTo: [ElevatorFloorName.lsmc2],
-        downTo: [ElevatorFloorName.lsmc0],
-        spawnPoint: [365.18, -1426.5, 37.98, 228.85],
-    },
-    [ElevatorFloorName.lsmc2]: {
-        label: 'Toit',
-        button: new BoxZone([333.35, -1430.19, 47.21], 0.3, 0.4, { heading: 138.09, minZ: 47.01, maxZ: 47.31 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.lsmc0, ElevatorFloorName.lsmc1],
-        spawnPoint: [334.41, -1432.06, 46.52, 134.22],
-    },
-    //LSPD
-    [ElevatorFloorName.lspd0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([609.72, -0.13, 69.63], 0.9, 0.1, { minZ: 69.63, maxZ: 72.08, heading: 350 }),
-        upTo: [ElevatorFloorName.lspd1],
-        downTo: [],
-        spawnPoint: [611.07, -1.55, 70.63, 86.33],
-    },
-    [ElevatorFloorName.lspd1]: {
-        label: 'Toit',
-        button: new BoxZone([565.19, 4.88, 102.23], 1.45, 0.4, { minZ: 102.23, maxZ: 104.63, heading: 0 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.lspd0],
-        spawnPoint: [565.96, 4.89, 103.23, 271.47],
-    },
-    //BENNY'S
-    [ElevatorFloorName.bennys0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([-173.83, -1272.33, 32.6], 0.2, 0.1, { minZ: 32.6, maxZ: 33.0, heading: 0 }),
-        upTo: [ElevatorFloorName.bennys1],
-        downTo: [],
-        spawnPoint: [-172.57, -1273.25, 32.6, 86.66],
-    },
-    [ElevatorFloorName.bennys1]: {
-        label: 'Toit',
-        button: new BoxZone([-171.17, -1274.1, 48.0], 0.2, 0.1, { minZ: 48.0, maxZ: 48.2, heading: 0 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.bennys0],
-        spawnPoint: [-172.49, -1273.3, 47.9, 270.31],
-    },
-    //FIB
-    [ElevatorFloorName.fib0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([138.08, -763.93, 45.45], 0.05, 3.35, { minZ: 45.45, maxZ: 46.35, heading: 340 }),
-        upTo: [ElevatorFloorName.fib1],
-        downTo: [],
-        spawnPoint: [136.14, -761.89, 45.75, 162.03],
-    },
-    [ElevatorFloorName.fib1]: {
-        label: 'Étage',
-        button: new BoxZone([136.64, -763.4, 241.9], 0.05, 0.35, { minZ: 241.9, maxZ: 242.75, heading: 340 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.fib0],
-        spawnPoint: [135.99, -761.77, 242.15, 161.57],
-    },
-    //Admin - Removed due to laser game
-    // [ElevatorFloorName.admin0]: {
-    //     label: 'Surface',
-    //     button: new BoxZone([1982.81, 3026.07, 46.91], 1.4, 0.1, { minZ: 46.91, maxZ: 49.31, heading: 59 }),
-    //     upTo: [],
-    //     downTo: [ElevatorFloorName.adminminus1],
-    //     spawnPoint: [1983.47, 3027.05, 47.34, 330.03],
-    // },
-    // [ElevatorFloorName.adminminus1]: {
-    //     label: 'Sous-Sol',
-    //     button: new BoxZone([2154.9, 2919.62, -81.28], 0.2, 0.05, { minZ: -81.28, maxZ: -80.78, heading: 91 }),
-    //     upTo: [ElevatorFloorName.admin0],
-    //     downTo: [],
-    //     spawnPoint: [2154.62, 2920.95, -81.08, 272.4],
-    //     job: {
-    //         [JobType.FBI]: 0,
-    //         [JobType.LSPD]: 0,
-    //         [JobType.BCSO]: 0,
-    //         [JobType.SASP]: 0,
-    //         [JobType.Gouv]: 0,
-    //         [JobType.LSCS]: 0,
-    //     },
-    // },
-    //MTP
-    [ElevatorFloorName.mtp0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([-247.36, 6083.0, 31.38], 0.4, 0.6, {
-            heading: 135.27,
-            minZ: 30.38,
-            maxZ: 32.98,
-        }),
-        upTo: [ElevatorFloorName.mtp1, ElevatorFloorName.mtp2],
-        downTo: [],
-        spawnPoint: [-247.59, 6081.25, 30.39, 313.56],
-    },
-    [ElevatorFloorName.mtp1]: {
-        label: 'Étage',
-        button: new BoxZone([-247.36, 6083.0, 39.57], 0.4, 0.6, {
-            heading: 135.27,
-            minZ: 39.57,
-            maxZ: 42.57,
-        }),
-        upTo: [ElevatorFloorName.mtp2],
-        downTo: [ElevatorFloorName.mtp0],
-        spawnPoint: [-247.32, 6081.62, 39.57, 328.02],
-    },
-    [ElevatorFloorName.mtp2]: {
-        label: 'Toit',
-        button: new BoxZone([-244.09, 6076.16, 50.22], 0.1, 0.4, { minZ: 50.22, maxZ: 53.22, heading: 315 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.mtp1, ElevatorFloorName.mtp0],
-        spawnPoint: [-244.1, 6074.65, 50.22, 310.85],
-    },
-    //You News
-    [ElevatorFloorName.younews0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([-1074.48, -253.17, 37.86], 0.4, 0.2, { minZ: 37.86, maxZ: 38.06, heading: 315 }),
-        upTo: [ElevatorFloorName.younews1, ElevatorFloorName.younews2],
-        downTo: [],
-        spawnPoint: [-1075.63, -252.99, 36.96, 30.87],
-    },
-    [ElevatorFloorName.younews1]: {
-        label: 'Bureau',
-        button: new BoxZone([-1074.57, -253.02, 44.12], 0.2, 0.2, { minZ: 44.12, maxZ: 44.37, heading: 27.18 }),
-        upTo: [ElevatorFloorName.younews2],
-        downTo: [ElevatorFloorName.younews0],
-        spawnPoint: [-1075.45, -252.97, 43.22, 31.92],
-    },
-    [ElevatorFloorName.younews2]: {
-        label: 'Toit',
-        button: new BoxZone([-1073.21, -246.92, 53.01], 1.0, 1.2, { minZ: 53.01, maxZ: 55.01, heading: 315 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.younews1, ElevatorFloorName.younews0],
-        spawnPoint: [-1072.38, -246.64, 53.21, 302.0],
-    },
-    //BAHAMA
-    [ElevatorFloorName.baun0]: {
-        label: 'Rez-de-chaussée',
-        button: new BoxZone([-1383.44, -589.6, 30.32], 0.2, 0.4, { heading: 215.27, minZ: 30.12, maxZ: 30.92 }),
-        upTo: [ElevatorFloorName.baun1],
-        downTo: [],
-        spawnPoint: [-1382.07, -589.92, 30.32, 30.76],
-    },
-    [ElevatorFloorName.baun1]: {
-        label: 'Roof Top',
-        button: new BoxZone([-1379.51, -600.05, 43.8], 0.2, 0.4, { heading: 307.24, minZ: 43.8, maxZ: 44.4 }),
-        upTo: [],
-        downTo: [ElevatorFloorName.baun0],
-        spawnPoint: [-1379.1, -598.67, 43.8, 109.24],
-    },
-};
 
 @Provider()
 export class ElevatorProvider {
@@ -264,8 +43,33 @@ export class ElevatorProvider {
     @Inject(TargetFactory)
     public targetFactory: TargetFactory;
 
+    @Inject(ObjectService)
+    public objectService: ObjectService;
+
     @Inject(PlayerPositionProvider)
     private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(ResourceLoader)
+    public resourceLoader: ResourceLoader;
+
+    @Inject(ElevatorRepository)
+    public elevatorRepository: ElevatorRepository;
+
+    @Inject(AnimationService)
+    public animationService: AnimationService;
+
+    private elevators = new Map<DynamicElevator, number>();
+    private doors = new Map<string, number>();
+    private doorsMovement = new Map<
+        string,
+        {
+            offset: Vector3;
+            target: Vector3;
+            norm: number;
+        }
+    >();
+    private doorInternal = new Map<DynamicElevator, number[]>();
+    private musicSound: number = -1;
 
     @Once()
     public onStart() {
@@ -298,5 +102,276 @@ export class ElevatorProvider {
         }
 
         return options;
+    }
+
+    @Once(OnceStep.RepositoriesLoaded)
+    public async repoLoaded() {
+        for (const elevator of Object.values(DynamicElevator)) {
+            const config = DynamicElevatorConfigs[elevator];
+            const state = this.elevatorRepository.find(elevator);
+
+            const obj = await this.objectService.createObject({
+                id: 'elevator' + elevator,
+                model: GetHashKey(config.model),
+                position: [config.position[0], config.position[1], config.floors[state.current].z, config.heading],
+            });
+
+            this.elevators.set(elevator, obj);
+
+            const doorInternalList = [];
+            config.doorsInternal.map(async (doorInternal, doorInternalIndex) => {
+                const id = 'elevator_doorInternal_' + elevator + '_' + doorInternalIndex;
+                const entity = await this.objectService.createObject({
+                    id,
+                    model: GetHashKey(config.doormodel),
+                    position: [
+                        doorInternal.close[0],
+                        doorInternal.close[1],
+                        config.floors[state.current].doorz,
+                        config.heading,
+                    ],
+                });
+                doorInternalList.push(entity);
+                this.doors.set(id, entity);
+            });
+            this.doorInternal.set(elevator, doorInternalList);
+
+            config.floors.map(async (floor, floorIndex) => {
+                floor.doors.map(async (door, doorIndex) => {
+                    const id = 'elevator_door_' + elevator + '_' + floorIndex + '_' + doorIndex;
+                    const entity = await this.objectService.createObject({
+                        id,
+                        model: GetHashKey(config.doormodel),
+                        position: [door.close[0], door.close[1], floor.doorz, config.heading],
+                    });
+                    this.doors.set(id, entity);
+                });
+
+                this.targetFactory.createForBoxZone('elevator_button_' + elevator + '_' + floorIndex, floor.button, [
+                    {
+                        category: 'citizen',
+                        label: "Appeler l'acenseur",
+                        icon: 'elevators/monter',
+                        action: async () => {
+                            this.animationService.playAnimation({
+                                base: {
+                                    dictionary: 'mp_doorbell',
+                                    name: 'ring_bell_b',
+                                    options: {
+                                        onlyUpperBody: true,
+                                    },
+                                },
+                            });
+                            TriggerServerEvent(ServerEvent.ELEVATOR_CALL, elevator, floorIndex);
+                        },
+                    },
+                ]);
+            });
+
+            this.targetFactory.createForEntity(
+                obj,
+                config.floors.map((elem, index) => ({
+                    category: 'citizen',
+                    label: elem.label,
+                    icon: 'elevators/monter',
+                    canInteract: entity => this.isInside(entity),
+                    action: async () => {
+                        this.animationService.playAnimation({
+                            base: {
+                                dictionary: 'mp_doorbell',
+                                name: 'ring_bell_b',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            },
+                        });
+                        await wait(3000);
+                        TriggerServerEvent(ServerEvent.ELEVATOR_CALL, elevator, index);
+                    },
+                }))
+            );
+        }
+    }
+
+    @Tick()
+    public elevatorTick() {
+        for (const elevator of Object.values(DynamicElevator)) {
+            const obj = this.elevators.get(elevator);
+            const state = this.elevatorRepository.find(elevator);
+            if (!obj || !state) {
+                continue;
+            }
+
+            if (!state.inmotion && IsEntityPositionFrozen(obj)) {
+                continue;
+            }
+
+            const config = DynamicElevatorConfigs[elevator];
+            const targetZ = config.floors[state.current].z;
+
+            SetEntityRotation(obj, 0, 0, config.heading, 0, false);
+
+            const coords = GetEntityCoords(obj) as Vector3;
+            const delta = targetZ - coords[2];
+            if (Math.abs(delta) < 0.01) {
+                FreezeEntityPosition(obj, true);
+                SetEntityCoordsNoOffset(obj, config.position[0], config.position[1], targetZ, false, false, false);
+                this.doorInternal.get(elevator).forEach((entity, index) => {
+                    DetachEntity(entity, false, false);
+                    SetEntityCoordsNoOffset(
+                        entity,
+                        config.doorsInternal[index].close[0],
+                        config.doorsInternal[index].close[1],
+                        config.floors[state.current].doorz,
+                        false,
+                        false,
+                        false
+                    );
+                    SetEntityHeading(entity, config.heading);
+                });
+                continue;
+            }
+            FreezeEntityPosition(obj, false);
+            this.doorInternal.get(elevator).forEach((entity, index) => {
+                if (!IsEntityAttached(entity)) {
+                    AttachEntityToEntity(
+                        entity,
+                        obj,
+                        0,
+                        config.doorsInternal[index].offset[0],
+                        config.doorsInternal[index].offset[1],
+                        config.doorsInternal[index].offset[2],
+                        0,
+                        0,
+                        0,
+                        false,
+                        false,
+                        false,
+                        false,
+                        0,
+                        true
+                    );
+                }
+            });
+
+            const speed = delta > 0 ? DynamicElevatorParams.speed : -DynamicElevatorParams.speed;
+            SetEntityVelocity(obj, 0, 0, speed);
+        }
+
+        for (const [id, doorMovement] of this.doorsMovement.entries()) {
+            const entity = this.doors.get(id);
+            const current = GetEntityCoords(entity) as Vector3;
+            const end = getDistance(current, doorMovement.target) < doorMovement.norm;
+
+            const coords = end ? doorMovement.target : add2Vector3(current, doorMovement.offset);
+
+            SetEntityCoordsNoOffset(entity, coords[0], coords[1], coords[2], false, false, false);
+
+            if (end) {
+                this.doorsMovement.delete(id);
+            }
+        }
+    }
+
+    private isInside(entity: number) {
+        const coords = GetEntityCoords(entity) as Vector3;
+        const dimentions = GetModelDimensions(GetEntityModel(entity));
+        const zone = new BoxZone(coords, dimentions[1][1] * 2, dimentions[1][0] * 2, {
+            minZ: coords[2] + dimentions[0][2],
+            maxZ: coords[2] + dimentions[1][2],
+            heading: GetEntityHeading(entity),
+        });
+
+        const pedCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+        return zone.isPointInside(pedCoords);
+    }
+
+    @Once(OnceStep.Stop)
+    public unloadAllObjects(): void {
+        for (const object of this.elevators.values()) {
+            if (DoesEntityExist(object)) {
+                DeleteEntity(object);
+            }
+        }
+        this.elevators.clear();
+
+        for (const object of this.doors.values()) {
+            if (DoesEntityExist(object)) {
+                DeleteEntity(object);
+            }
+        }
+        this.doors.clear();
+    }
+
+    @RepositoryUpdate(RepositoryType.Elevator)
+    public async elevatorUpdate(elevator: DynamicElevatorState, prev: DynamicElevatorState) {
+        if (elevator.doorState != prev.doorState) {
+            const config = DynamicElevatorConfigs[elevator.id];
+            const floor = config.floors[elevator.current];
+
+            floor.doors.map(async (door, doorIndex) => {
+                const dstCoords = elevator.doorState ? door.open : door.close;
+                const srcCoords = elevator.doorState ? door.close : door.open;
+                const id = 'elevator_door_' + elevator.id + '_' + elevator.current + '_' + doorIndex;
+                const vect = sub2Vector3(
+                    [dstCoords[0], dstCoords[1], floor.doorz],
+                    [srcCoords[0], srcCoords[1], floor.doorz]
+                );
+                const offset = multVector3(vect, GetFrameTime() * toVectorNorm(vect) * DynamicElevatorParams.doorSpeed);
+                this.doorsMovement.set(id, {
+                    target: [dstCoords[0], dstCoords[1], floor.doorz],
+                    offset,
+                    norm: toVectorNorm(offset),
+                });
+
+                const entity = this.doors.get(id);
+                this.playSound(entity, elevator.doorState ? 'elevator_door_opening' : 'elevator_door_closing');
+            });
+
+            this.doorInternal.get(elevator.id).forEach((entity, doorInternalIndex) => {
+                if (!floor.doorsInternalIndex.includes(doorInternalIndex)) {
+                    return;
+                }
+                const doorInternalConf = config.doorsInternal[doorInternalIndex];
+                const dstCoords = elevator.doorState ? doorInternalConf.open : doorInternalConf.close;
+                const srcCoords = elevator.doorState ? doorInternalConf.close : doorInternalConf.open;
+                const id = 'elevator_doorInternal_' + elevator.id + '_' + doorInternalIndex;
+                const vect = sub2Vector3(
+                    [dstCoords[0], dstCoords[1], floor.doorz],
+                    [srcCoords[0], srcCoords[1], floor.doorz]
+                );
+                const offset = multVector3(vect, GetFrameTime() * toVectorNorm(vect) * DynamicElevatorParams.doorSpeed);
+                this.doorsMovement.set(id, {
+                    target: [dstCoords[0], dstCoords[1], floor.doorz],
+                    offset,
+                    norm: toVectorNorm(offset),
+                });
+            });
+
+            if (elevator.doorState) {
+                const entity = this.elevators.get(elevator.id);
+                this.playSound(entity, 'elevator_ding');
+                if (this.musicSound >= 0) {
+                    StopSound(this.musicSound);
+                    ReleaseSoundId(this.musicSound);
+                    this.musicSound = -1;
+                }
+            }
+        }
+
+        if (elevator.current != prev.current && elevator.inmotion) {
+            const entity = this.elevators.get(elevator.id);
+            this.playSound(entity, 'elevator_start');
+            if (this.isInside(entity)) {
+                this.musicSound = GetSoundId();
+                this.playSound(entity, elevator.music, this.musicSound);
+            }
+        }
+    }
+
+    private async playSound(entity: number, sound: string, soundId = -1) {
+        await this.resourceLoader.requestScriptAudioBank('audiodirectory/elevator');
+        PlaySoundFromEntity(soundId, sound, entity, 'elevator_soundset', false, 0);
+        this.resourceLoader.unloadScriptAudioBank('audiodirectory/elevator');
     }
 }

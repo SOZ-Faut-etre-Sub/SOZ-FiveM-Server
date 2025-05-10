@@ -783,4 +783,6 @@ export enum ServerEvent {
     LASER_GAME_KICK_ON_DEATH = 'soz-core:server:phone:app:laser-game:kick-on-death',
 
     SCREENSHOT = 'soz-core:server:screenshot',
+
+    ELEVATOR_CALL = 'soz-core:server:elevator:call',
 }
