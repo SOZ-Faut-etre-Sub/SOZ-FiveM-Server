@@ -751,6 +751,9 @@ export enum NuiEvent {
     CasinoPokerBet = 'soz-core:nui:casino:poker:bet',
     CasinoPokerFold = 'soz-core:nui:casino:poker:fold',
     CasinoBlackjackBet = 'soz-core:nui:casino:blackjack-bet',
-    CasinoBlackjackSplit = 'soz-core:nui:casino:blackjack-split',
+    CasinoBlackjackSplitHand = 'soz-core:nui:casino:blackjack-split-hand',
+    CasinoBlackjackDoubleDown = 'soz-core:nui:casino:blackjack-double-down',
+    CasinoBlackjackHit = 'soz-core:nui:casino:blackjack-hit',
+    CasinoBlackjackStand = 'soz-core:nui:casino:blackjack-stand',
     CasinoInsideTrackBet = 'soz-core:nui:casino:inside-track-bet',
 }
