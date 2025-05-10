@@ -1071,3 +1071,22 @@ model traveling {
     job    String @db.VarChar(15)
     points String @db.Text
 }
+
+enum casino_table_kind {
+    poker
+    blackjack
+    roulette
+}
+
+enum casino_table_type {
+    base
+    highLimit
+}
+
+model casino_tables {
+    id       String            @id @db.VarChar(128)
+    kind     casino_table_kind
+    position String            @db.Text
+    model    String            @db.VarChar(50)
+    type     casino_table_type @default(base)
+}
