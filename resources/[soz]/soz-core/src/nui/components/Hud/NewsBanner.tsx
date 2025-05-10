@@ -168,7 +168,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                     </p>
                     <p>Veuillez ranger vos véhicules et vous abriter ! Votre sécurité est primordiale.</p>
 
-                    <p className="self-end font-semibold">San Andres Météo</p>
+                    <p className="self-end font-semibold">San Andreas Météo</p>
                 </>
             );
         }
