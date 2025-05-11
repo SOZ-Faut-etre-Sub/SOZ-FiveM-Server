@@ -20,5 +20,11 @@ INSERT INTO `casino_tables` VALUES
     (uuid(), 'blackjack', '{"x":1148.8368, "y":269.747, "z":-52.8409, "w":-134.69}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
     (uuid(), 'blackjack', '{"x":1151.84, "y":266.747, "z":-52.8409, "w":45.31}', 'vw_prop_casino_blckjack_01b', 'base'),
     (uuid(), 'blackjack', '{"x":1129.4065, "y":262.3578, "z":-52.041, "w":135.31}', 'vw_prop_casino_blckjack_01b', 'base'),
-    (uuid(), 'blackjack', '{"x":1144.4291, "y":247.3352, "z":-52.041, "w":135.31}', 'vw_prop_casino_blckjack_01b', 'highLimit');
+    (uuid(), 'blackjack', '{"x":1144.4291, "y":247.3352, "z":-52.041, "w":135.31}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
     -- roulette
+    (uuid(), 'roulette', '{"x":1144.8137, "y":268.2634, "z":-52.8409, "w":-135.0}', 'vw_prop_casino_roulette_01', 'base'),
+    (uuid(), 'roulette', '{"x":1150.3547, "y":262.7224, "z":-52.8409, "w":45.0}', 'vw_prop_casino_roulette_01', 'base'),
+    (uuid(), 'roulette', '{"x":1133.9583, "y":262.1071, "z":-52.0409, "w":135.0}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":1129.5952, "y":267.2637, "z":-52.0409, "w":-45.0}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":1144.6178, "y":252.2411, "z":-52.0409, "w":-45.0}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":1148.9808, "y":247.0846, "z":-52.0409, "w":135.0}', 'vw_prop_casino_roulette_01b', 'highLimit');

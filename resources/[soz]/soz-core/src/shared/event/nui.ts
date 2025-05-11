@@ -755,5 +755,7 @@ export enum NuiEvent {
     CasinoBlackjackDoubleDown = 'soz-core:nui:casino:blackjack-double-down',
     CasinoBlackjackHit = 'soz-core:nui:casino:blackjack-hit',
     CasinoBlackjackStand = 'soz-core:nui:casino:blackjack-stand',
+    CasinoRouletteBetHover = 'soz-core:nui:casino:roulette:hover',
+    CasinoRouletteBet = 'soz-core:nui:casino:roulette:bet',
     CasinoInsideTrackBet = 'soz-core:nui:casino:inside-track-bet',
 }

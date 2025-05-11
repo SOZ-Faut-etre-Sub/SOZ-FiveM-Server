@@ -173,6 +173,10 @@ export class ObjectService {
         if (object.alpha) {
             SetEntityAlpha(entity, object.alpha, false);
         }
+
+        if (object.textureVariation) {
+            SetObjectTextureVariation(entity, object.textureVariation);
+        }
     }
 
     public deleteObject(entity: number, object: WorldObject) {
