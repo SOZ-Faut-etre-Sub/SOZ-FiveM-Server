@@ -46,6 +46,7 @@ export const TAX_DESCRIPTION_ITEMS: Record<TaxType, string[]> = {
         "Achat auprès du réparateur d'urgence.",
         "Achat d'un abonnement sportif à Muscle Peach.",
     ],
+    [TaxType.CASINO]: ['Achat de jetons chez Casino & Resort.', 'Gains chez Diamond Casino & Resort.'],
 };
 
 export const GouvJobMenu: FunctionComponent<GouvJobMenuProps> = ({ data }) => {

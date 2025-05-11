@@ -1,7 +1,6 @@
 import { PlayerPedHash } from '@public/shared/player';
 
 export enum Component {
-    Head = 0,
     Mask = 1,
     Hair = 2,
     Torso = 3,
