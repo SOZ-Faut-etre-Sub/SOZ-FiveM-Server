@@ -6,7 +6,6 @@ import { VehicleCustomProvider } from './vehicle.custom.provider';
 import { VehicleDamageProvider } from './vehicle.damage.provider';
 import { VehicleDealershipProvider } from './vehicle.dealership.provider';
 import { VehicleElectricProvider } from './vehicle.electric.provider';
-import { VehicleF1Provider } from './vehicle.f1.provider';
 import { VehicleFuelProvider } from './vehicle.fuel.provider';
 import { VehicleGarageProvider } from './vehicle.garage.provider';
 import { VehicleItemProvider } from './vehicle.item.provider';
@@ -53,7 +52,6 @@ import { VehicleTyreProvider } from './vehicle.tyre.provider';
         VehiclePushProvider,
         VehicleTrainProvider,
         VehicleTyreProvider,
-        VehicleF1Provider,
     ],
 })
 export class VehicleModule {}

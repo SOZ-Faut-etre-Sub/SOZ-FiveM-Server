@@ -333,11 +333,6 @@ export class UtilsNPCProvider {
         for (const [type, value] of Object.entries(densities)) {
             this.density[type] = value;
         }
-
-        //F1 event
-        AddScenarioBlockingArea(-2241.01, -829.26, 10.0, 351.87, 100.53, 100.0, false, true, true, true);
-        SetAllVehicleGeneratorsActiveInArea(-2241.01, -829.26, 10.0, 351.87, 100.53, 100.0, false, false);
-        RemoveVehiclesFromGeneratorsInArea(-2241.01, -829.26, 10.0, 351.87, 100.53, 100.0, 0);
     }
 
     @Tick()
