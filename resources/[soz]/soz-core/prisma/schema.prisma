@@ -695,10 +695,15 @@ model easter_hunt {
 }
 
 enum report_type {
+    appeal
     investigation
     report
+    common_report
+    operation
+    certification
+    sentence
+    criminal_record
     complaint
-    appeal
     document
 }
 
@@ -923,11 +928,11 @@ model tax {
 }
 
 model gang {
-    id       Int    @id @default(autoincrement())
-    name     String @db.VarChar(100)
-    type     String @db.VarChar(100)
-    hub      String @db.Text
-    metadata String @db.MediumText
+    id       Int        @id @default(autoincrement())
+    name     String     @db.VarChar(100)
+    type     String     @db.VarChar(100)
+    hub      String     @db.Text
+    metadata String     @db.MediumText
     props    hc_props[]
 }
 
@@ -957,14 +962,14 @@ model vehicle_order {
 }
 
 model loot_item {
-    id           Int     @id @default(autoincrement())
-    type         String  @db.VarChar(100)
-    item         String  @db.VarChar(100)
-    metadata     String? @db.Text
-    min          Int     @default(1)
-    max          Int
-    chance       Int
-    cryptoPrice  Int?
+    id          Int     @id @default(autoincrement())
+    type        String  @db.VarChar(100)
+    item        String  @db.VarChar(100)
+    metadata    String? @db.Text
+    min         Int     @default(1)
+    max         Int
+    chance      Int
+    cryptoPrice Int?
 
     @@index([type])
 }
@@ -1034,5 +1039,5 @@ model hc_props {
     noCollision Boolean? @default(false)
     metadata    String   @db.Text
 
-    gang        gang?     @relation(fields: [gangid], references: [id], onDelete: Cascade, map: "FK_gang_hc_props")
+    gang gang? @relation(fields: [gangid], references: [id], onDelete: Cascade, map: "FK_gang_hc_props")
 }
