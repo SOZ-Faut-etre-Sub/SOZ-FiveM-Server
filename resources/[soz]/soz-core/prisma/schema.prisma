@@ -568,6 +568,7 @@ model investigation {
     title                  String                   @db.VarChar(128)
     type                   report_type              @default(investigation)
     isTemplate             Boolean?                 @default(false)
+    isFavorite             Boolean?                 @default(false)
     closed                 Boolean?                 @default(false)
     granted                String?                  @db.LongText
     granted_services       String?                  @db.LongText
