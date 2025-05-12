@@ -81,6 +81,10 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
         fetchNui(NuiEvent.VehiclePoliceDisplay, value);
     };
 
+    const onGyro = (value: boolean) => {
+        fetchNui(NuiEvent.VehicleGyro, value);
+    };
+
     return (
         <Menu type={MenuType.Vehicle}>
             <MainMenu>
@@ -151,6 +155,11 @@ export const MenuVehicle: FunctionComponent<MenuVehicleProps> = ({ data }) => {
                     {data.police && (
                         <MenuItemCheckbox onChange={onPoliceDisplay} checked={data.policeLocator}>
                             Affichage des patrouilles
+                        </MenuItemCheckbox>
+                    )}
+                    {data.canGyro && (
+                        <MenuItemCheckbox onChange={onGyro} checked={data.hasGyro}>
+                            Gyrophare
                         </MenuItemCheckbox>
                     )}
                 </MenuContent>

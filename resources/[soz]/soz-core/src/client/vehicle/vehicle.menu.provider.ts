@@ -1,5 +1,6 @@
 import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
 import { FDO } from '@public/shared/job';
+import { VehicleWithSirens } from '@public/shared/job/police';
 import { LSCustomMode, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
@@ -321,6 +322,7 @@ export class VehicleMenuProvider {
         }
 
         const vehicleState = await this.vehicleStateService.getVehicleState(vehicle);
+        const model = GetEntityModel(vehicle);
 
         if (isCopilot && !vehicleState.hasRadio) {
             return;
@@ -377,6 +379,8 @@ export class VehicleMenuProvider {
             hasNeon: hasNeon(),
             crimiPerformance: crimiGarage && this.vehicleBusinessProvider.canPerformance(),
             crimiCustom: crimiGarage && this.vehicleBusinessProvider.canCustom(),
+            canGyro: isDriver && FDO.includes(player.job.id) && !VehicleWithSirens[model] && IsThisModelACar(model),
+            hasGyro: !!vehicleState.gyro,
         });
     }
 }

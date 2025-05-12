@@ -294,6 +294,7 @@ export type VehicleVolatileState = {
     exportBiz: boolean;
     nitroReloadStart: number;
     isCrimiImport: boolean;
+    gyro: number;
 };
 
 export type VehicleState = {
@@ -394,6 +395,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     exportBiz: false,
     nitroReloadStart: 0,
     isCrimiImport: false,
+    gyro: null,
 });
 
 export type VehicleMenuData = {
@@ -414,6 +416,8 @@ export type VehicleMenuData = {
     hasNeon: boolean;
     crimiPerformance: boolean;
     crimiCustom: boolean;
+    canGyro: boolean;
+    hasGyro: boolean;
 };
 
 export enum LSCustomMode {

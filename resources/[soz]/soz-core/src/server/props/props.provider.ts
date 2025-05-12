@@ -598,4 +598,15 @@ export class PropsProvider {
             TriggerClientEvent(ClientEvent.ANIMATION_OBJECT_GRID, player, dict, name, id);
         }
     }
+
+    @Command('deleteEntity', {
+        role: ['admin', 'staff'],
+    })
+    public deleteEntity(source: number, netIdStr: string) {
+        const netId = parseInt(netIdStr);
+        const entity = NetworkGetEntityFromNetworkId(netId);
+        if (entity) {
+            DeleteEntity(entity);
+        }
+    }
 }

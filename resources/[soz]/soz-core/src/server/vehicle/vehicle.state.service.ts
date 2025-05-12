@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
+import { GyroModel } from '@public/shared/job/police';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '@public/shared/vehicle/modification';
 import { getDefaultRadioState, Radio } from '@public/shared/voip';
@@ -12,6 +13,7 @@ import {
     VehicleSyncStrategy,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
+import { VehicleSirenRepository } from '../repository/vehicle.siren.repository';
 import { VehicleTowProvider } from './vehicle.tow.provider';
 
 type VehicleState = {
@@ -43,6 +45,9 @@ const VehicleConditionSyncStrategy: Record<keyof VehicleCondition, VehicleSyncSt
 export class VehicleStateService {
     @Inject(VehicleTowProvider)
     private vehicleTowProvider: VehicleTowProvider;
+
+    @Inject(VehicleSirenRepository)
+    private vehicleSirenRepository: VehicleSirenRepository;
 
     private state: Map<number, VehicleState> = new Map<number, VehicleState>();
 
@@ -173,6 +178,12 @@ export class VehicleStateService {
                 primary: newState.volatile.primaryRadio,
                 secondary: newState.volatile.secondaryRadio,
             });
+        }
+
+        this.vehicleSirenRepository.set(vehicleNetworkId, !newState.volatile.isSirenMuted && !!newState.volatile.gyro);
+        if (newState.volatile.gyro) {
+            const entity = NetworkGetEntityFromNetworkId(newState.volatile.gyro);
+            SetEntityOrphanMode(entity, 2);
         }
 
         const owner = NetworkGetEntityOwner(entityId);
@@ -331,7 +342,6 @@ export class VehicleStateService {
     }
 
     public unregister(netId: number) {
-        this.state.delete(netId);
         TriggerClientEvent(ClientEvent.VEHICLE_DELETE_STATE, -1, netId);
         TriggerClientEvent(ClientEvent.VEHICLE_CONDITION_UNREGISTER, -1, netId);
 
@@ -340,7 +350,10 @@ export class VehicleStateService {
             TriggerClientEvent(ClientEvent.VEHICLE_SET_OPEN_LIST, -1, [...this.vehicleOpened]);
         }
 
+        this.deleteGyro(netId);
+
         this.vehicleTowProvider.unregister(netId);
+        this.state.delete(netId);
     }
 
     public hasVehicleKey(vehiclePlate: string, citizenId: string): boolean {
@@ -406,5 +419,23 @@ export class VehicleStateService {
 
     public getDrugTrace(plate: string) {
         return this.vehicleDrugTrace.get(plate) || [];
+    }
+
+    public deleteGyro(netId: number) {
+        this.vehicleSirenRepository.delete(netId);
+        const state = this.getVehicleState(netId);
+        if (!state) {
+            return;
+        }
+
+        const gyro = state.volatile.gyro;
+        if (gyro) {
+            const entity = NetworkGetEntityFromNetworkId(state.volatile.gyro);
+            if (GetEntityModel(entity) !== GetHashKey(GyroModel)) {
+                return;
+            }
+
+            DeleteEntity(entity);
+        }
     }
 }

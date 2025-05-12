@@ -59,6 +59,7 @@ export enum RepositoryType {
     Vehicle = 'vehicle',
     WorldEvent = 'worldEvent',
     Zone = 'zone',
+    VehicleSiren = 'vehicleSiren',
 }
 
 export type RepositoryMapping = {
@@ -96,6 +97,7 @@ export type RepositoryMapping = {
     [RepositoryType.Door]: Door;
     [RepositoryType.Scene]: Scene;
     [RepositoryType.WorldEvent]: WorldEvent;
+    [RepositoryType.VehicleSiren]: boolean;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -121,6 +123,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.Scene]: Record<string, Scene>;
     [RepositoryType.WorldEvent]: Record<string, WorldEvent>;
     [RepositoryType.PhoneLight]: Record<number, [boolean, boolean]>;
+    [RepositoryType.VehicleSiren]: Record<number, boolean>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

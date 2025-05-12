@@ -297,6 +297,7 @@ export enum NuiEvent {
     VehiclePitStop = 'soz-core:client:vehicle:pitstop',
     VehiclePitStopPrices = 'soz-core:client:vehicle:prices',
     VehiclePitStopSetPrice = 'soz-core:client:vehicle:set-price',
+    VehicleGyro = 'soz-core:client:vehicle:gyro',
 
     VehicleGarageTakeOut = 'soz-core:client:vehicle:garage:take-out',
     VehicleGarageSetName = 'soz-core:client:vehicle:garage:set-name',

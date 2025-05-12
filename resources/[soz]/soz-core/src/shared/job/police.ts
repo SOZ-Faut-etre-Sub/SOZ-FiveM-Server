@@ -1,4 +1,5 @@
 import { Component, OutfitItem, Prop, WardrobeConfig } from '../cloth';
+import { joaat } from '../joaat';
 import { JobType } from '../job';
 import { PlayerLicenceType, PlayerPedHash } from '../player';
 import { Vector4 } from '../polyzone/vector';
@@ -1156,4 +1157,72 @@ export type Fine = {
     label: string;
     category: number;
     price: { min: number; max: number };
+};
+
+export const GyroModel = 'hei_prop_wall_alarm_on';
+export const VehicleWithSirens = {
+    // LSMC
+    [joaat('ambulance')]: true,
+    [joaat('ambulance2')]: true,
+    [joaat('ambcar')]: true,
+    [joaat('lguard')]: true,
+    [joaat('firetruk')]: true,
+    // LSPD
+    [joaat('police')]: true,
+    [joaat('police2')]: true,
+    [joaat('police3')]: true,
+    [joaat('police4')]: true,
+    [joaat('police5')]: true,
+    [joaat('lspd10')]: true,
+    [joaat('lspd11')]: true,
+    [joaat('lspd12')]: true,
+    [joaat('lspd20')]: true,
+    [joaat('lspd21')]: true,
+    [joaat('lspd30')]: true,
+    [joaat('lspd40')]: true,
+    [joaat('lspd41')]: true,
+    [joaat('lspd50')]: true,
+    [joaat('lspd51')]: true,
+    [joaat('lspd60')]: true,
+    // BCSO
+    [joaat('sheriff')]: true,
+    [joaat('sheriff2')]: true,
+    [joaat('sheriff3')]: true,
+    [joaat('sheriff4')]: true,
+    [joaat('sheriffb')]: true,
+    [joaat('bcso10')]: true,
+    [joaat('bcso11')]: true,
+    [joaat('bcso12')]: true,
+    [joaat('bcso20')]: true,
+    [joaat('bcso21')]: true,
+    [joaat('bcso30')]: true,
+    [joaat('bcso40')]: true,
+    [joaat('bcso41')]: true,
+    [joaat('bcso50')]: true,
+    [joaat('bcso51')]: true,
+    [joaat('bcso60')]: true,
+    // LSPD + BCSO
+    [joaat('pbus')]: true,
+    //SASP
+    [joaat('sasp1')]: true,
+    [joaat('sasp20')]: true,
+    [joaat('sasp70')]: true,
+    [joaat('sasp71')]: true,
+    // FBI
+    [joaat('fbi')]: true,
+    [joaat('fbi2')]: true,
+    [joaat('cogfbi')]: true,
+    [joaat('paragonfbi')]: true,
+    [joaat('paragonsfbi')]: true,
+    [joaat('dodgebana')]: true,
+    [joaat('polgauntlet')]: true,
+    // policeold
+    [joaat('policeold1')]: true,
+    [joaat('policeold2')]: true,
+    // policenew
+    [joaat('polimpaler6')]: true,
+    [joaat('poldominator10')]: true,
+    [joaat('polimpaler5')]: true,
+    [joaat('polgreenwood')]: true,
+    [joaat('poldorado')]: true,
 };
