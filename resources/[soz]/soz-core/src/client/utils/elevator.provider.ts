@@ -12,6 +12,8 @@ import {
     ElevatorDirectionDisplay,
     ElevatorFloor,
     Elevators,
+    Interior,
+    InteriorsLocation,
 } from '@public/shared/elevators';
 import { ServerEvent } from '@public/shared/event';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
@@ -59,6 +61,8 @@ export class ElevatorProvider {
     public animationService: AnimationService;
 
     private elevators = new Map<DynamicElevator, number>();
+    private closeElevator = new Map<DynamicElevator, boolean>();
+    private elevatorDimentions = new Map<number, [number[], number[]]>();
     private doors = new Map<string, number>();
     private doorsMovement = new Map<
         string,
@@ -66,10 +70,13 @@ export class ElevatorProvider {
             offset: Vector3;
             target: Vector3;
             norm: number;
+            interior: number;
+            room: string;
         }
     >();
     private doorInternal = new Map<DynamicElevator, number[]>();
     private musicSound: number = -1;
+    private interiorIds = new Map<Interior, number>();
 
     @Once()
     public onStart() {
@@ -106,6 +113,11 @@ export class ElevatorProvider {
 
     @Once(OnceStep.RepositoriesLoaded)
     public async repoLoaded() {
+        for (const interior of Object.values(Interior)) {
+            const coords = InteriorsLocation[interior];
+            this.interiorIds.set(interior, GetInteriorAtCoords(coords[0], coords[1], coords[2]));
+        }
+
         for (const elevator of Object.values(DynamicElevator)) {
             const config = DynamicElevatorConfigs[elevator];
             const state = this.elevatorRepository.find(elevator);
@@ -115,6 +127,14 @@ export class ElevatorProvider {
                 model: GetHashKey(config.model),
                 position: [config.position[0], config.position[1], config.floors[state.current].z, config.heading],
             });
+            if (config.floors[state.current].interior) {
+                ForceRoomForEntity(
+                    obj,
+                    this.interiorIds.get(config.floors[state.current].interior),
+                    config.floors[state.current].room
+                );
+            }
+            this.elevatorDimentions.set(GetHashKey(config.model), GetModelDimensions(GetEntityModel(obj)));
 
             this.elevators.set(elevator, obj);
 
@@ -133,6 +153,13 @@ export class ElevatorProvider {
                 });
                 doorInternalList.push(entity);
                 this.doors.set(id, entity);
+                if (config.floors[state.current].interior) {
+                    ForceRoomForEntity(
+                        entity,
+                        this.interiorIds.get(config.floors[state.current].interior),
+                        config.floors[state.current].room
+                    );
+                }
             });
             this.doorInternal.set(elevator, doorInternalList);
 
@@ -145,6 +172,9 @@ export class ElevatorProvider {
                         position: [door.close[0], door.close[1], floor.doorz, config.heading],
                     });
                     this.doors.set(id, entity);
+                    if (floor.interior != null) {
+                        ForceRoomForEntity(entity, this.interiorIds.get(floor.interior), floor.room);
+                    }
                 });
 
                 this.targetFactory.createForBoxZone('elevator_button_' + elevator + '_' + floorIndex, floor.button, [
@@ -193,12 +223,26 @@ export class ElevatorProvider {
         }
     }
 
+    @Tick(10_000)
+    public findCloseElevator() {
+        const playerPed = PlayerPedId();
+        const coords = GetEntityCoords(playerPed) as Vector3;
+        for (const elevator of Object.values(DynamicElevator)) {
+            const config = DynamicElevatorConfigs[elevator];
+            this.closeElevator.set(elevator, getDistance(coords, config.position) < 100);
+        }
+    }
+
     @Tick()
     public elevatorTick() {
         for (const elevator of Object.values(DynamicElevator)) {
             const obj = this.elevators.get(elevator);
             const state = this.elevatorRepository.find(elevator);
             if (!obj || !state) {
+                continue;
+            }
+
+            if (!this.closeElevator.get(elevator)) {
                 continue;
             }
 
@@ -212,6 +256,11 @@ export class ElevatorProvider {
             SetEntityRotation(obj, 0, 0, config.heading, 0, false);
 
             const coords = GetEntityCoords(obj) as Vector3;
+
+            if (coords[0] != config.position[0] || coords[1] != config.position[1]) {
+                SetEntityCoordsNoOffset(obj, config.position[0], config.position[1], coords[2], false, false, true);
+            }
+
             const delta = targetZ - coords[2];
             if (Math.abs(delta) < 0.01) {
                 FreezeEntityPosition(obj, true);
@@ -261,21 +310,51 @@ export class ElevatorProvider {
         for (const [id, doorMovement] of this.doorsMovement.entries()) {
             const entity = this.doors.get(id);
             const current = GetEntityCoords(entity) as Vector3;
-            const end = getDistance(current, doorMovement.target) < doorMovement.norm;
+            const dist = getDistance(current, doorMovement.target);
+            const target = add2Vector3(current, doorMovement.offset);
+            const end = dist < doorMovement.norm || dist < getDistance(target, doorMovement.target);
 
-            const coords = end ? doorMovement.target : add2Vector3(current, doorMovement.offset);
+            const coords = end ? doorMovement.target : target;
 
             SetEntityCoordsNoOffset(entity, coords[0], coords[1], coords[2], false, false, false);
 
+            if (doorMovement.interior) {
+                ForceRoomForEntity(entity, doorMovement.interior, doorMovement.room);
+            } else {
+                ClearInteriorForEntity(entity);
+            }
+
             if (end) {
                 this.doorsMovement.delete(id);
+            }
+        }
+
+        for (const [elevator, value] of this.elevators.entries()) {
+            if (!this.closeElevator.get(elevator)) {
+                continue;
+            }
+
+            const playerPed = PlayerPedId();
+            const interior = GetInteriorFromEntity(playerPed);
+            const room = GetRoomKeyFromEntity(playerPed);
+            if (interior) {
+                ForceRoomForEntity(value, interior, room);
+            } else {
+                ClearInteriorForEntity(value);
+            }
+            for (const doorI of this.doorInternal.get(elevator)) {
+                if (interior) {
+                    ForceRoomForEntity(doorI, interior, room);
+                } else {
+                    ClearInteriorForEntity(doorI);
+                }
             }
         }
     }
 
     private isInside(entity: number) {
         const coords = GetEntityCoords(entity) as Vector3;
-        const dimentions = GetModelDimensions(GetEntityModel(entity));
+        const dimentions = this.elevatorDimentions.get(GetEntityModel(entity));
         const zone = new BoxZone(coords, dimentions[1][1] * 2, dimentions[1][0] * 2, {
             minZ: coords[2] + dimentions[0][2],
             maxZ: coords[2] + dimentions[1][2],
@@ -309,6 +388,13 @@ export class ElevatorProvider {
             const config = DynamicElevatorConfigs[elevator.id];
             const floor = config.floors[elevator.current];
 
+            const elevatorEntity = this.elevators.get(elevator.id);
+            if (floor.interior) {
+                ForceRoomForEntity(elevatorEntity, this.interiorIds.get(floor.interior), floor.room);
+            } else {
+                ClearInteriorForEntity(elevatorEntity);
+            }
+
             floor.doors.map(async (door, doorIndex) => {
                 const dstCoords = elevator.doorState ? door.open : door.close;
                 const srcCoords = elevator.doorState ? door.close : door.open;
@@ -322,6 +408,8 @@ export class ElevatorProvider {
                     target: [dstCoords[0], dstCoords[1], floor.doorz],
                     offset,
                     norm: toVectorNorm(offset),
+                    interior: this.interiorIds.get(floor.interior),
+                    room: floor.room,
                 });
 
                 const entity = this.doors.get(id);
@@ -345,12 +433,13 @@ export class ElevatorProvider {
                     target: [dstCoords[0], dstCoords[1], floor.doorz],
                     offset,
                     norm: toVectorNorm(offset),
+                    interior: this.interiorIds.get(floor.interior),
+                    room: floor.room,
                 });
             });
 
             if (elevator.doorState) {
-                const entity = this.elevators.get(elevator.id);
-                this.playSound(entity, 'elevator_ding');
+                this.playSound(elevatorEntity, 'elevator_ding');
                 if (this.musicSound >= 0) {
                     StopSound(this.musicSound);
                     ReleaseSoundId(this.musicSound);
@@ -364,14 +453,18 @@ export class ElevatorProvider {
             this.playSound(entity, 'elevator_start');
             if (this.isInside(entity)) {
                 this.musicSound = GetSoundId();
-                this.playSound(entity, elevator.music, this.musicSound);
+                this.playSound(null, elevator.music, this.musicSound);
             }
         }
     }
 
     private async playSound(entity: number, sound: string, soundId = -1) {
         await this.resourceLoader.requestScriptAudioBank('audiodirectory/elevator');
-        PlaySoundFromEntity(soundId, sound, entity, 'elevator_soundset', false, 0);
+        if (entity) {
+            PlaySoundFromEntity(soundId, sound, entity, 'elevator_soundset', false, 0);
+        } else {
+            PlaySoundFrontend(soundId, sound, 'elevator_soundset', false);
+        }
         this.resourceLoader.unloadScriptAudioBank('audiodirectory/elevator');
     }
 }

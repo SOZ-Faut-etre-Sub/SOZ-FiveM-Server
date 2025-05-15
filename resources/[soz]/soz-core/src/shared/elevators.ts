@@ -7,6 +7,16 @@ export enum DynamicElevator {
     MirrorParkLSPD2 = 'MirrorParkLSPD2',
 }
 
+export enum Interior {
+    MirrorParkLSPD_0 = 'MirrorParkLSPD_0',
+    MirrorParkLSPD_1 = 'MirrorParkLSPD_1',
+}
+
+export const InteriorsLocation: Record<Interior, Vector3> = {
+    MirrorParkLSPD_0: [1150.53955, -469.072, 60.6435],
+    MirrorParkLSPD_1: [1149.92883, -459.462555, 70.1152],
+};
+
 export type DynamicElevatorConfig = {
     position: Vector2;
     model: string;
@@ -27,6 +37,8 @@ export type DynamicElevatorConfig = {
             close: Vector2;
         }[];
         doorsInternalIndex: number[];
+        interior: Interior;
+        room: string;
     }[];
 };
 
@@ -81,6 +93,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 60.7,
                 }),
                 doorsInternalIndex: [0, 1],
+                interior: Interior.MirrorParkLSPD_0,
+                room: '-1_corridor',
             },
             {
                 z: 66.80515,
@@ -102,6 +116,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 65.55,
                 }),
                 doorsInternalIndex: [0, 1],
+                interior: Interior.MirrorParkLSPD_1,
+                room: '0_atrium',
             },
             {
                 z: 70.52464,
@@ -123,6 +139,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 69.28,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: Interior.MirrorParkLSPD_1,
+                room: '0_atrium',
             },
             {
                 z: 74.26419,
@@ -144,6 +162,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 73.0,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: Interior.MirrorParkLSPD_1,
+                room: '0_atrium',
             },
             {
                 z: 77.99447,
@@ -165,6 +185,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 76.74,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: null,
+                room: null,
             },
         ],
         heading: 76.6579028,
@@ -216,6 +238,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 60.68,
                 }),
                 doorsInternalIndex: [0, 1],
+                interior: Interior.MirrorParkLSPD_0,
+                room: '-1_corridor',
             },
             {
                 z: 66.80515,
@@ -237,6 +261,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 65.54,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: Interior.MirrorParkLSPD_1,
+                room: '0_corridor',
             },
             {
                 z: 70.52464,
@@ -258,6 +284,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 69.25,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: Interior.MirrorParkLSPD_1,
+                room: '1_corridor',
             },
             {
                 z: 74.26419,
@@ -279,6 +307,8 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                     maxZ: 72.99,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: Interior.MirrorParkLSPD_1,
+                room: '2_corridor',
             },
             {
                 z: 77.99447,
@@ -294,12 +324,14 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                         open: [1154.51147, -440.164124],
                     },
                 ],
-                button: new BoxZone([1154.56, -439.98, 75.94], 0.6, 1.0, {
-                    heading: -15.7,
-                    minZ: 74.94,
-                    maxZ: 76.94,
+                button: new BoxZone([1154.53, -439.92, 76.34], 0.4, 0.4, {
+                    heading: 347.7,
+                    minZ: 76.34,
+                    maxZ: 76.74,
                 }),
                 doorsInternalIndex: [2, 3],
+                interior: null,
+                room: null,
             },
         ],
         heading: 76.6579028,
