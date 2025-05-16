@@ -67,7 +67,9 @@ export const useAppDarkWebStateHandlers = () => {
         }
 
         setMessages(prev => {
-            if (!prev || !prev.some(m => m.conversation_id === message.conversation_id)) return;
+            if (!prev || !prev.some(m => m.conversation_id === message.conversation_id)) {
+                return prev;
+            }
             return [...prev, message];
         });
     });
