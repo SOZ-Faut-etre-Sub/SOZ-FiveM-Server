@@ -44,6 +44,7 @@ export type Outfit = {
     GlovesID?: number;
     TopID?: number;
     type?: 'SPORT' | null;
+    category?: string;
 };
 
 export type ClothConfig = {

@@ -74,6 +74,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [WINTER]: {
                 Components: {
@@ -89,6 +90,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             /*["Tenue SWAT"]:  {
                 Components:  {
@@ -122,6 +124,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [MOTO]: {
                 Components: {
@@ -138,6 +141,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 56000,
+                category: 'Original',
             },
             ['Equipement seulement']: {
                 Components: {
@@ -155,6 +159,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                category: 'Original',
             },
             ['Tenue Sportive']: {
                 Components: {
@@ -166,6 +171,1459 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {},
                 type: 'SPORT',
+                category: 'Original',
+            },
+            ['Cérémonie clair']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 16, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Cérémonie sombre']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 16, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Motocycle Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Air Support Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Sweat']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 8, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Tenue de pilote 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 30, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Helmet]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise verte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Patrol 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Imperméable capuche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 36, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {},
+                category: 'Modern',
+            },
+            ['Imperméable']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 35, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 40, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 40, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 40, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 40, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte bleu-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette bleu-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col K9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col Cadet']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate verte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
             },
         },
         [PlayerPedHash.Female]: {
@@ -182,6 +1640,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [WINTER]: {
                 Components: {
@@ -197,25 +1656,8 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
-            /* ["Tenue SWAT"]:  {
-            Components:  {
-                [Component.Mask]:  {Drawable:  185, Texture:  0, Palette:  0},
-                [Component.Torso]:  {Drawable:  215, Texture:  0, Palette:  0},
-                [Component.Legs]:  {Drawable:  30, Texture:  0, Palette:  0},
-                [Component.Bag]:  {Drawable:  48, Texture:  0, Palette:  0},
-                [Component.Shoes]:  {Drawable:  25, Texture:  0, Palette:  0},
-                [Component.Accessories]:  {Drawable:  81, Texture:  0, Palette:  0},
-                [Component.Undershirt]:  {Drawable:  15, Texture:  0, Palette:  0},
-                [Component.BodyArmor]:  {Drawable:  18, Texture:  0, Palette:  0},
-                [Component.Decals]:  {Drawable:  0, Texture:  0, Palette:  0},
-                [Component.Tops]:  {Drawable:  230, Texture:  0, Palette:  0},
-            },
-            Props:  {
-                [Prop.Helmet]:  {Drawable:  149, Texture:  0, Palette:  0},
-                [Prop.Glasses]:  {Drawable:  22, Texture:  0, Palette:  0},
-            },
-        }, */
             ['Tenue de pilote']: {
                 Components: {
                     [Component.Torso]: { Drawable: 17, Texture: 0, Palette: 0 },
@@ -230,6 +1672,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [MOTO]: {
                 Components: {
@@ -246,6 +1689,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 55000,
+                category: 'Original',
             },
             ['Equipement seulement']: {
                 Components: {
@@ -263,6 +1707,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                category: 'Original',
             },
             ['Tenue Sportive']: {
                 Components: {
@@ -274,6 +1719,887 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {},
                 type: 'SPORT',
+                category: 'Original',
+            },
+            ['Cérémonie']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Cérémonie jupe courte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Cérémonie jupe longue']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 17, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Motocycle Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Air Support Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 26, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine 3']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise doré 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate doré 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Imperméable capuche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 29, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Clear: true },
+                    [Prop.Helmet]: { Clear: true },
+                },
+                category: 'Modern',
+            },
+            ['Imperméable']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 30, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Vice']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert K9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
             },
         },
     },
@@ -307,6 +2633,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             ['Tenue de pilote']: {
                 Components: {
@@ -322,6 +2649,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [MOTO]: {
                 Components: {
@@ -338,6 +2666,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 56000,
+                category: 'Original',
             },
             ['Equipement seulement']: {
                 Components: {
@@ -355,6 +2684,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                category: 'Original',
             },
             ['Tenue Sportive']: {
                 Components: {
@@ -366,6 +2696,1459 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {},
                 type: 'SPORT',
+                category: 'Original',
+            },
+            ['Cérémonie clair']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 16, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Cérémonie sombre']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Motocycle Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Air Support Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 18, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Sweat']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 8, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Tenue de pilote 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 30, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Helmet]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise verte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise m. courte Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Patrol 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Pull Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 33, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Imperméable capuche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 36, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {},
+                category: 'Modern',
+            },
+            ['Imperméable']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 35, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 37, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver Chemise Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 38, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson col Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 39, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 40, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 40, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 40, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 40, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette m. courte bleu-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 41, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette bleu-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col K9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette col Cadet']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate verte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise épaulette cravate bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
             },
         },
         [PlayerPedHash.Female]: {
@@ -382,6 +4165,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [WINTER]: {
                 Components: {
@@ -397,6 +4181,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             ['Tenue de pilote']: {
                 Components: {
@@ -412,6 +4197,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Helmet]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
             },
             [MOTO]: {
                 Components: {
@@ -428,6 +4214,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Helmet]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 55000,
+                category: 'Original',
             },
             ['Equipement seulement']: {
                 Components: {
@@ -445,6 +4232,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     },
                 },
                 Props: {},
+                category: 'Original',
             },
             ['Tenue Sportive']: {
                 Components: {
@@ -456,6 +4244,887 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 Props: {},
                 type: 'SPORT',
+                category: 'Original',
+            },
+            ['Cérémonie']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 14, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Cérémonie jupe courte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Cérémonie jupe longue']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 16, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Motocycle Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Air Support Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 19, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['T-Shirt Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 20, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 22, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 21, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 24, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manchon Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 23, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Traffic Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Marine Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Wildlife Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Training Team']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 26, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Polo manche courte Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 25, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson K-9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Vice Unit']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Cadets']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 32, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise bleu marine 3']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise doré 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 27, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate bleu marine']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate vert']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Chemise cravate doré 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 28, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Imperméable capuche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 29, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Clear: true },
+                    [Prop.Helmet]: { Clear: true },
+                },
+                category: 'Modern',
+            },
+            ['Imperméable']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 30, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Hiver']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Patrol']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Vice']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Manteau ouvert K9']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    [Component.Tops]: { Drawable: 33, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
             },
         },
     },

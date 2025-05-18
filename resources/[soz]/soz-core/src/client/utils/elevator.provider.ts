@@ -83,6 +83,24 @@ export class ElevatorProvider {
         for (const [id, value] of Object.entries(Elevators)) {
             this.targetFactory.createForBoxZone('Elevator:' + id, value.button, this.createTargetOptions(value), 3.0);
         }
+
+        for (const elevator of Object.values(DynamicElevator)) {
+            const config = DynamicElevatorConfigs[elevator];
+            this.targetFactory.createForBoxZone(
+                elevator + '_emergency',
+                config.emergency,
+                [
+                    {
+                        label: 'Sortie de secours',
+                        category: 'citizen',
+                        action: () => {
+                            this.playerPositionProvider.teleportAdminToPosition(config.emergencyTarget);
+                        },
+                    },
+                ],
+                3.0
+            );
+        }
     }
 
     private createTargetOptions(elevator: ElevatorFloor) {

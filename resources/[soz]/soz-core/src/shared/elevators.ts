@@ -40,6 +40,8 @@ export type DynamicElevatorConfig = {
         interior: Interior;
         room: string;
     }[];
+    emergency: BoxZone;
+    emergencyTarget: Vector4;
 };
 
 export const DynamicElevatorParams = {
@@ -192,6 +194,12 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
         heading: 76.6579028,
         model: 'cube_mppd_elevator_cab',
         doormodel: 'cube_mppd_elevator_door',
+        emergency: new BoxZone([1133.2, -474.42, 57.91], 2.6, 2.0, {
+            heading: 166.31,
+            minZ: 56.91,
+            maxZ: 58.91,
+        }),
+        emergencyTarget: [1132.39, -476.54, 60.28, 179.12],
     },
     [DynamicElevator.MirrorParkLSPD2]: {
         position: [1153.38818, -441.327942],
@@ -337,6 +345,12 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
         heading: 76.6579028,
         model: 'cube_mppd_elevator_cab',
         doormodel: 'cube_mppd_elevator_door',
+        emergency: new BoxZone([1153.38, -441.42, 57.9], 2.2, 1.8, {
+            heading: 167.85,
+            minZ: 56.9,
+            maxZ: 58.9,
+        }),
+        emergencyTarget: [1151.31, -441.03, 60.28, 72.67],
     },
 };
 

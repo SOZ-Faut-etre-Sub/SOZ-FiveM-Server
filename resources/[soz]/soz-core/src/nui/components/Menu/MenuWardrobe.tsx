@@ -12,6 +12,7 @@ import {
     MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuSubTitle,
     MenuTitle,
     SubMenu,
 } from '../Styleguide/Menu';
@@ -41,6 +42,8 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
         fetchNui(NuiEvent.SetWardrobeOutfit, name ? wardrobe.wardrobe[name] || null : null);
     };
 
+    const categories = Array.from(new Set(Object.values(wardrobe.wardrobe).map(elem => elem.category)));
+
     return (
         <Menu type={MenuType.Wardrobe}>
             <MainMenu>
@@ -49,15 +52,29 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
                     {wardrobe.allowNullLabel && (
                         <MenuItemButton onConfirm={() => onConfirm(null)}>{wardrobe.allowNullLabel}</MenuItemButton>
                     )}
-                    {Object.keys(wardrobe.wardrobe).map(name => {
+
+                    {categories.map(cat => {
                         return (
-                            <MenuItemButton key={name} onConfirm={() => onConfirm(name)}>
-                                {icon[name] ? icon[name] + ' ' + name : name}
-                            </MenuItemButton>
+                            <>
+                                {categories.length > 0 && <MenuSubTitle>{cat}</MenuSubTitle>}
+                                {Object.keys(wardrobe.wardrobe)
+                                    .filter(name => wardrobe.wardrobe[name].category === cat)
+                                    .map(name => {
+                                        return (
+                                            <MenuItemButton key={name} onConfirm={() => onConfirm(name)}>
+                                                {icon[name] ? icon[name] + ' ' + name : name}
+                                            </MenuItemButton>
+                                        );
+                                    })}
+                            </>
                         );
                     })}
+
                     {wardrobe.allowCustom && (
-                        <MenuItemButton onConfirm={() => selectCustom()}>👮‍♀️ {wardrobe.allowCustom}</MenuItemButton>
+                        <>
+                            <MenuSubTitle>------------------------</MenuSubTitle>
+                            <MenuItemButton onConfirm={() => selectCustom()}>👮‍♀️ {wardrobe.allowCustom}</MenuItemButton>
+                        </>
                     )}
                 </MenuContent>
             </MainMenu>
@@ -97,7 +114,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
                             >
                                 {elems.map(item => {
                                     return (
-                                        <MenuItemSelectOption value={item} key={item}>
+                                        <MenuItemSelectOption value={item} key={item} helper={item}>
                                             <div className="flex justify-between items-center">
                                                 <span>{item}</span>
                                             </div>
