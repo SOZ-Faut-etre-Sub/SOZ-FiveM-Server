@@ -1,6 +1,6 @@
 import { Injectable } from '../../../core/decorators/injectable';
-import { LocationZone } from './zones.interface';
 import { BoxZone } from '../../../shared/polyzone/box.zone';
+import { LocationZone } from './zones.interface';
 
 @Injectable('LocationZone')
 export class SouvenirMemoryZones implements LocationZone {
