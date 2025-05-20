@@ -233,7 +233,7 @@ export class HousingApartmentZoneProvider {
         }
     }
 
-    public async openApartmentCloakroom(gang = false) {
+    public async openApartmentCloakroom(title = 'Habitation') {
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -250,7 +250,7 @@ export class HousingApartmentZoneProvider {
 
         this.nuiMenu.openMenu(MenuType.HousingCloakroomMenu, {
             items: cloakroomItems,
-            gang,
+            title,
         });
     }
 }

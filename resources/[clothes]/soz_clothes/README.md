@@ -92,7 +92,7 @@
 22 GPB complex 2, bcso lspd each, patrol / K9 / swat clair / swat sombre / vice | Detention officier, bcso, lspd
 23 another GPB, bcso lspd each, patrol / K9 / vice / criminal | GPB complex, lspd vice / sheriff criminal / lspd criminal / BCSO / LSPD / BCSO K9 / LSPD K9 / BCSO vice
 24 undershirt  5 textures | GPB complex 2, bcso lspd each, patrol / K9 / SWAT clair / SWAT sombre / Vice
-25 N/A                    | GPB complex 2, bcso lspd each, criminal / patrol / training / SWAT clair / SWAT sombre / vice / supervisor
+25 SWAT                   | GPB complex 2, bcso lspd each, criminal / patrol / training / SWAT clair / SWAT sombre / vice / supervisor
 
     Undershirt
 0  stonk holster radio epaule // pas utilisé?

@@ -740,4 +740,6 @@ export enum NuiEvent {
     LaserGameSetScoreGoal = 'soz-core:nui:laser-game:set-score-goal',
     LaserGameSetGameDuration = 'soz-core:nui:laser-game:set-game-duration',
     Screenshot = 'soz-core:nui:screenshot',
+
+    PersonnalCloakroom = 'soz-core:nui:personnal-cloakroom',
 }

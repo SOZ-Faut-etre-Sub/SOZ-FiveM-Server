@@ -1,3 +1,4 @@
+import { HousingApartmentZoneProvider } from '@public/client/housing/housing.apartment.zone.provider';
 import { ItemService } from '@public/client/item/item.service';
 import { PlayerHealthProvider } from '@public/client/player/player.health.provider';
 import { PlayerService } from '@public/client/player/player.service';
@@ -11,8 +12,6 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { Armors, DUTY_OUTFIT_NAME, ObjectOutFits, PrisonerClothes, RankOutfit } from '@public/shared/job/police';
 import { Vector3 } from '@public/shared/polyzone/vector';
-
-import { JobCloakroomProvider } from '../job.cloakroom.provider';
 
 const prisonerCloakroomInfos = [
     {
@@ -56,14 +55,14 @@ export class PoliceCloakRoomProvider {
     @Inject(TargetFactory)
     private targetFactory: TargetFactory;
 
-    @Inject(JobCloakroomProvider)
-    private jobCloakroomProvider: JobCloakroomProvider;
-
     @Inject(ItemService)
     private itemService: ItemService;
 
     @Inject(PlayerHealthProvider)
     private playerHealthProvider: PlayerHealthProvider;
+
+    @Inject(HousingApartmentZoneProvider)
+    private housingApartmentZoneProvider: HousingApartmentZoneProvider;
 
     @Once(OnceStep.Start)
     public onStart() {

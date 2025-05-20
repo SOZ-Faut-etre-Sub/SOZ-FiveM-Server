@@ -75,6 +75,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: DUTY_OUTFIT_NAME,
             },
             [WINTER]: {
                 Components: {
@@ -91,6 +92,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: WINTER,
             },
             /*["Tenue SWAT"]:  {
                 Components:  {
@@ -142,6 +144,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 GlovesID: 56000,
                 category: 'Original',
+                rankType: MOTO,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -828,6 +831,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine']: {
                 Components: {
@@ -842,6 +846,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu']: {
                 Components: {
@@ -856,6 +861,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise verte']: {
                 Components: {
@@ -870,6 +876,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise noir-doré']: {
                 Components: {
@@ -884,6 +891,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte Patrol']: {
                 Components: {
@@ -898,6 +906,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte K-9']: {
                 Components: {
@@ -912,6 +921,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte Traffic Unit']: {
                 Components: {
@@ -926,6 +936,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte Cadets']: {
                 Components: {
@@ -940,6 +951,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Pull Patrol']: {
                 Components: {
@@ -1120,6 +1132,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver K-9']: {
                 Components: {
@@ -1134,6 +1147,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Traffic Unit']: {
                 Components: {
@@ -1148,6 +1162,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Supervisor']: {
                 Components: {
@@ -1162,6 +1177,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise Patrol']: {
                 Components: {
@@ -1176,6 +1192,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise K-9']: {
                 Components: {
@@ -1190,6 +1207,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise Traffic Unit']: {
                 Components: {
@@ -1204,6 +1222,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise Supervisor']: {
                 Components: {
@@ -1218,6 +1237,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Blouson col Patrol']: {
                 Components: {
@@ -1358,6 +1378,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte bleu marine']: {
                 Components: {
@@ -1372,6 +1393,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte bleu']: {
                 Components: {
@@ -1386,6 +1408,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte vert']: {
                 Components: {
@@ -1400,6 +1423,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte noir-doré']: {
                 Components: {
@@ -1414,6 +1438,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte bleu-doré']: {
                 Components: {
@@ -1428,6 +1453,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette blanche']: {
                 Components: {
@@ -1442,6 +1468,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette bleu marine']: {
                 Components: {
@@ -1456,6 +1483,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette bleu']: {
                 Components: {
@@ -1470,6 +1498,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette vert']: {
                 Components: {
@@ -1484,6 +1513,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette noir-doré']: {
                 Components: {
@@ -1498,6 +1528,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette bleu-doré']: {
                 Components: {
@@ -1512,6 +1543,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col noir-doré']: {
                 Components: {
@@ -1526,6 +1558,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col blanche']: {
                 Components: {
@@ -1540,6 +1573,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col K9']: {
                 Components: {
@@ -1554,6 +1588,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col Cadet']: {
                 Components: {
@@ -1568,6 +1603,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate blanche']: {
                 Components: {
@@ -1582,6 +1618,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate verte']: {
                 Components: {
@@ -1596,6 +1633,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate noir-doré']: {
                 Components: {
@@ -1610,6 +1648,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate bleu marine']: {
                 Components: {
@@ -1624,6 +1663,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
         },
         [PlayerPedHash.Female]: {
@@ -1641,6 +1681,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: DUTY_OUTFIT_NAME,
             },
             [WINTER]: {
                 Components: {
@@ -1657,6 +1698,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: WINTER,
             },
             ['Tenue de pilote']: {
                 Components: {
@@ -1690,6 +1732,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 GlovesID: 55000,
                 category: 'Original',
+                rankType: MOTO,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -1724,40 +1767,34 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             ['Cérémonie']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 14, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['Cérémonie jupe courte']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['Cérémonie jupe longue']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['T-Shirt Patrol']: {
@@ -2284,8 +2321,8 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 32, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 32, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -2298,7 +2335,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 32, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -2312,7 +2349,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -2326,8 +2363,22 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+            },
+            ['Blouson Supervisor']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Tops]: { Drawable: 32, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -2347,6 +2398,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine']: {
                 Components: {
@@ -2361,6 +2413,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine 2']: {
                 Components: {
@@ -2375,6 +2428,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine 3']: {
                 Components: {
@@ -2389,20 +2443,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-            },
-            ['Chemise vert']: {
-                Components: {
-                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 27, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
-                },
-                Props: {
-                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                },
-                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise doré']: {
                 Components: {
@@ -2417,6 +2458,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise doré 2']: {
                 Components: {
@@ -2431,6 +2473,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise cravate blanche']: {
                 Components: {
@@ -2445,22 +2488,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
-            ['Chemise cravate bleu marine']: {
-                Components: {
-                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 28, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
-                },
-                Props: {
-                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                },
-                category: 'Modern',
-            },
-            ['Chemise cravate vert']: {
+            ['Chemise cravate noir-doré']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -2473,8 +2503,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
-            ['Chemise cravate doré']: {
+            ['Chemise cravate noir-doré 2']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -2487,20 +2518,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-            },
-            ['Chemise cravate doré 2']: {
-                Components: {
-                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 28, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
-                },
-                Props: {
-                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                },
-                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Imperméable capuche']: {
                 Components: {
@@ -2511,10 +2529,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 29, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Clear: true },
-                    [Prop.Helmet]: { Clear: true },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['Imperméable']: {
@@ -2544,6 +2559,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Manteau ouvert Patrol']: {
                 Components: {
@@ -2618,6 +2634,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                rankType: DUTY_OUTFIT_NAME,
             },
             [WINTER]: {
                 Components: {
@@ -2634,6 +2651,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: WINTER,
             },
             ['Tenue de pilote']: {
                 Components: {
@@ -2667,6 +2685,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 GlovesID: 56000,
                 category: 'Original',
+                rankType: MOTO,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -3353,6 +3372,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine']: {
                 Components: {
@@ -3367,6 +3387,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu']: {
                 Components: {
@@ -3381,6 +3402,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise verte']: {
                 Components: {
@@ -3395,6 +3417,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise noir-doré']: {
                 Components: {
@@ -3409,6 +3432,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte Patrol']: {
                 Components: {
@@ -3423,6 +3447,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte K-9']: {
                 Components: {
@@ -3437,6 +3462,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte Traffic Unit']: {
                 Components: {
@@ -3451,6 +3477,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise m. courte Cadets']: {
                 Components: {
@@ -3465,6 +3492,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Pull Patrol']: {
                 Components: {
@@ -3645,6 +3673,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver K-9']: {
                 Components: {
@@ -3659,6 +3688,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Traffic Unit']: {
                 Components: {
@@ -3673,6 +3703,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Supervisor']: {
                 Components: {
@@ -3687,6 +3718,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise Patrol']: {
                 Components: {
@@ -3701,6 +3733,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise K-9']: {
                 Components: {
@@ -3715,6 +3748,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise Traffic Unit']: {
                 Components: {
@@ -3729,6 +3763,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Hiver Chemise Supervisor']: {
                 Components: {
@@ -3743,6 +3778,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Blouson col Patrol']: {
                 Components: {
@@ -3883,6 +3919,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte bleu marine']: {
                 Components: {
@@ -3897,6 +3934,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte bleu']: {
                 Components: {
@@ -3911,6 +3949,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte vert']: {
                 Components: {
@@ -3925,6 +3964,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte noir-doré']: {
                 Components: {
@@ -3939,6 +3979,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette m. courte bleu-doré']: {
                 Components: {
@@ -3953,6 +3994,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette blanche']: {
                 Components: {
@@ -3967,6 +4009,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette bleu marine']: {
                 Components: {
@@ -3981,6 +4024,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette bleu']: {
                 Components: {
@@ -3995,6 +4039,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette vert']: {
                 Components: {
@@ -4009,6 +4054,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette noir-doré']: {
                 Components: {
@@ -4023,6 +4069,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette bleu-doré']: {
                 Components: {
@@ -4037,6 +4084,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col noir-doré']: {
                 Components: {
@@ -4051,6 +4099,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col blanche']: {
                 Components: {
@@ -4065,6 +4114,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col K9']: {
                 Components: {
@@ -4079,6 +4129,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette col Cadet']: {
                 Components: {
@@ -4093,6 +4144,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate blanche']: {
                 Components: {
@@ -4107,6 +4159,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate verte']: {
                 Components: {
@@ -4121,6 +4174,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate noir-doré']: {
                 Components: {
@@ -4135,6 +4189,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise épaulette cravate bleu marine']: {
                 Components: {
@@ -4149,6 +4204,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
         },
         [PlayerPedHash.Female]: {
@@ -4166,6 +4222,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: DUTY_OUTFIT_NAME,
             },
             [WINTER]: {
                 Components: {
@@ -4182,6 +4239,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Original',
+                rankType: WINTER,
             },
             ['Tenue de pilote']: {
                 Components: {
@@ -4215,6 +4273,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 GlovesID: 55000,
                 category: 'Original',
+                rankType: MOTO,
             },
             ['Equipement seulement']: {
                 Components: {
@@ -4254,35 +4313,29 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['Cérémonie jupe courte']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['Cérémonie jupe longue']: {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0 },
-                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['T-Shirt Patrol']: {
@@ -4872,6 +4925,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine']: {
                 Components: {
@@ -4886,6 +4940,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine 2']: {
                 Components: {
@@ -4900,6 +4955,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise bleu marine 3']: {
                 Components: {
@@ -4914,6 +4970,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise vert']: {
                 Components: {
@@ -4928,6 +4985,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise doré']: {
                 Components: {
@@ -4942,6 +5000,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise doré 2']: {
                 Components: {
@@ -4956,6 +5015,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise cravate blanche']: {
                 Components: {
@@ -4970,6 +5030,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise cravate bleu marine']: {
                 Components: {
@@ -4984,6 +5045,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise cravate vert']: {
                 Components: {
@@ -4998,6 +5060,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise cravate doré']: {
                 Components: {
@@ -5012,6 +5075,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Chemise cravate doré 2']: {
                 Components: {
@@ -5026,6 +5090,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
             ['Imperméable capuche']: {
                 Components: {
@@ -5036,10 +5101,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 29, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
-                Props: {
-                    [Prop.Hat]: { Clear: true },
-                    [Prop.Helmet]: { Clear: true },
-                },
+                Props: {},
                 category: 'Modern',
             },
             ['Imperméable']: {
@@ -5069,6 +5131,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: WINTER,
             },
             ['Manteau ouvert Patrol']: {
                 Components: {

@@ -131,12 +131,13 @@ export class JobCloakroomProvider {
             const configs = POLICE_CLOAKROOM[player.job.id];
 
             if (RankOutfit[player.job.id]) {
-                for (const outfitName of Object.keys(RankOutfit[player.job.id])) {
-                    configs[model][outfitName].Components[Component.Decals] = { Drawable: 0, Texture: 0, Palette: 0 };
-                    if (RankOutfit[player.job.id][outfitName][player.job.grade]) {
-                        configs[model][outfitName].Components[Component.Decals] = {
-                            Drawable: RankOutfit[player.job.id][outfitName][player.job.grade][0],
-                            Texture: RankOutfit[player.job.id][outfitName][player.job.grade][1],
+                for (const outfitName of Object.keys(configs[model])) {
+                    const outfit = configs[model][outfitName];
+                    outfit.Components[Component.Decals] = { Drawable: 0, Texture: 0, Palette: 0 };
+                    if (outfit.rankType && RankOutfit[player.job.id][outfit.rankType][player.job.grade]) {
+                        outfit.Components[Component.Decals] = {
+                            Drawable: RankOutfit[player.job.id][outfit.rankType][player.job.grade][0],
+                            Texture: RankOutfit[player.job.id][outfit.rankType][player.job.grade][1],
                             Palette: 0,
                             Collection: 'soz_bcso',
                         };

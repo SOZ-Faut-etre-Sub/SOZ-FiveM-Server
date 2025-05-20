@@ -209,10 +209,10 @@ export class PlayerSnowProvider {
             if (data[component] == null) {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
                     item =>
-                        item.Components[component] &&
-                        outfitInput.Components[component] &&
-                        item.Components[component].Drawable == outfitInput.Components[component].Drawable &&
-                        item.Components[component].Collection == outfitInput.Components[component].Collection
+                        item?.Components[component] &&
+                        outfitInput?.Components[component] &&
+                        item?.Components[component].Drawable == outfitInput.Components[component].Drawable &&
+                        item?.Components[component].Collection == outfitInput.Components[component].Collection
                 );
                 if (extra) {
                     coldScore += 2;

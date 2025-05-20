@@ -222,7 +222,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.HousingVisitMenu]: ApartmentMenuData;
     [MenuType.HousingCloakroomMenu]: {
         items: PlayerCloakroomItem[];
-        gang: boolean;
+        title: string;
     };
     [MenuType.ZkeaFournitureMenu]: never;
     [MenuType.LsmcPlaster]: PlasterMenuData;

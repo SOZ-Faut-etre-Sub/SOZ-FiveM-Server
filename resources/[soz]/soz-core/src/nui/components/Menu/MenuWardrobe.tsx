@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -28,6 +29,7 @@ const icon = {
 export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const player = usePlayer();
     if (!wardrobe) {
         return null;
     }
@@ -49,8 +51,13 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
             <MainMenu>
                 <MenuTitle title="Vestiaire" />
                 <MenuContent>
-                    {wardrobe.allowNullLabel && (
+                    {wardrobe.allowNullLabel && player.cloth_config.JobClothSet && (
                         <MenuItemButton onConfirm={() => onConfirm(null)}>{wardrobe.allowNullLabel}</MenuItemButton>
+                    )}
+                    {wardrobe.allowCustom && !player.cloth_config.JobClothSet && (
+                        <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PersonnalCloakroom)}>
+                            Tenues Personnelles
+                        </MenuItemButton>
                     )}
 
                     {categories.map(cat => {
@@ -109,9 +116,17 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
                                     await fetchNui(NuiEvent.WardrobeElementSelect, {
                                         outfit: wardrobe.wardrobe[item],
                                         wardRobeElementId: wardRobeElementId,
+                                        clear: item == 'clear',
                                     });
                                 }}
                             >
+                                {WardRobeElements[wardRobeElementId].addClear && (
+                                    <MenuItemSelectOption value="clear" key="clear" helper="Aucun">
+                                        <div className="flex justify-between items-center">
+                                            <span>Aucun</span>
+                                        </div>
+                                    </MenuItemSelectOption>
+                                )}
                                 {elems.map(item => {
                                     return (
                                         <MenuItemSelectOption value={item} key={item} helper={item}>

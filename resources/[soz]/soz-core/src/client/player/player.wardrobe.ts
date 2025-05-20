@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Animation } from '@public/shared/animation';
 
-import { ClothConfig, Outfit, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
+import { ClothConfig, Component, Outfit, Prop, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
@@ -199,8 +199,16 @@ export class PlayerWardrobe {
     }
 
     @OnNuiEvent(NuiEvent.WardrobeElementSelect)
-    public async onWardrobeElementSelect({ outfit, wardRobeElementId }: { outfit: Outfit; wardRobeElementId: number }) {
-        if (!outfit) {
+    public async onWardrobeElementSelect({
+        outfit,
+        wardRobeElementId,
+        clear,
+    }: {
+        outfit: Outfit;
+        wardRobeElementId: number;
+        clear: boolean;
+    }) {
+        if (!outfit && !clear) {
             return;
         }
 
@@ -213,15 +221,21 @@ export class PlayerWardrobe {
 
         const wardRobeElement = WardRobeElements[wardRobeElementId];
 
-        if (wardRobeElement.componentId) {
-            wardRobeElement.componentId.forEach(element => {
+        if (wardRobeElement?.componentId) {
+            wardRobeElement.componentId.forEach((element: Component) => {
                 this.customOutfit.Components[element] = outfit.Components[element];
             });
         }
-        if (wardRobeElement.propId) {
-            wardRobeElement.propId.forEach(element => {
-                this.customOutfit.Props[element] = outfit.Props[element];
-            });
+        if (wardRobeElement?.propId) {
+            if (clear) {
+                wardRobeElement.propId.forEach((element: Prop) => {
+                    this.customOutfit.Props[element] = { Clear: true };
+                });
+            } else {
+                wardRobeElement.propId.forEach((element: Prop) => {
+                    this.customOutfit.Props[element] = outfit.Props[element];
+                });
+            }
         }
 
         this.playerService.setTempClothes(this.customOutfit);

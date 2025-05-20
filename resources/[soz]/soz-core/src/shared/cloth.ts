@@ -45,6 +45,7 @@ export type Outfit = {
     TopID?: number;
     type?: 'SPORT' | null;
     category?: string;
+    rankType?: string;
 };
 
 export type ClothConfig = {
@@ -82,11 +83,13 @@ export type WardrobeMenuData = {
 };
 
 export const WardRobeElements = {
-    [0]: { label: 'Casque', propId: ['Helmet'] },
-    [1]: { label: 'Chapeau', propId: [0] },
+    [0]: { label: 'Casque', propId: ['Helmet'], addClear: true },
+    [1]: { label: 'Chapeau', propId: [0], addClear: true },
     [2]: { label: 'Masque', componentId: [1] },
-    [3]: { label: 'Haut', componentId: [3, 5, 7, 8, 9, 10, 11] },
-    [4]: { label: 'Bas', componentId: [4, 6] },
+    [3]: { label: 'Haut', componentId: [3, 5, 7, 9, 10, 11] },
+    [4]: { label: 'ceinture', componentId: [8] },
+    [5]: { label: 'Bas', componentId: [4] },
+    [6]: { label: 'Chaussures', componentId: [6] },
 };
 
 // A list of wardrobe indexed by model hash

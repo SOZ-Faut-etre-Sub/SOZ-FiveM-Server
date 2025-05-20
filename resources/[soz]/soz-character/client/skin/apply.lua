@@ -1,5 +1,6 @@
 PlayerData = QBCore.Functions.GetPlayerData()
 local mask = 0
+local maskCollection = nil
 
 -----------------------------------------------------
 -- All the + 0.0 are needed to convert from integer to num ber (float) as values may come from Typescript removing comma
@@ -42,7 +43,7 @@ local function ApplyPedHair(ped, hair)
 end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
-    if MaskResetFace[mask] then
+    if MaskResetFace[maskCollection or ""][mask] then
         SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     else
         SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
@@ -58,7 +59,7 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
 
     SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, (faceTrait.EyesOpening or 0) + 0.0);
 
-    if MaskResetFace[mask] then
+    if MaskResetFace[maskCollection or ""][mask] then
         SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, -1.0);
@@ -215,7 +216,19 @@ function CanApplyBaseHeadProp(clothConfig)
 end
 
 function ClothConfigComputeToClothSet(clothConfig)
+    local empty = {
+        Props = {
+            [PropType.Head] = {Clear = true},
+            [PropType.Helmet] = {Clear = true},
+            [PropType.Glasses] = {Clear = true},
+            [PropType.Ear] = {Clear = true},
+            [PropType.RightHand] = {Clear = true},
+            [PropType.LeftHand] = {Clear = true},
+        },
+    }
+
     local clothSet = Clone(clothConfig.BaseClothSet)
+    clothSet = MergeClothSet(clothSet, empty)
 
     local function getNakedComponent(component)
         return clothConfig.NakedClothSet.Components[component] or clothConfig.NakedClothSet.Components[tostring(component)]
@@ -233,7 +246,7 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
-    local hasHelmet = clothSet.Props[PropType.Helmet] ~= nil
+    local hasHelmet = clothSet.Props[PropType.Helmet] ~= nil and not clothSet.Props[PropType.Helmet].Clear
     if not hasHelmet then
         SetPedConfigFlag(PlayerPedId(), 34, hasHelmet)
     end
@@ -267,7 +280,7 @@ function ClothConfigComputeToClothSet(clothConfig)
         local hair = 0
         local collection = nil
 
-        if exports["soz-core"]:DisplayHairWithMask(maskDrawable) then
+        if exports["soz-core"]:DisplayHairWithMask(maskDrawable, component.Collection) then
             hair = PlayerData.skin.Hair.HairType
             collection = PlayerData.skin.Hair.Collection
         end
@@ -281,6 +294,7 @@ function ClothConfigComputeToClothSet(clothConfig)
 
         if maskDrawable ~= mask then
             mask = maskDrawable
+            maskCollection = component.Collection
             ApplyPedFaceTrait(PlayerPedId(), PlayerData.skin.FaceTrait, PlayerData.skin.Model)
         end
     end

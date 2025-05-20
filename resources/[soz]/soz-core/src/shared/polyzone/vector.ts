@@ -200,3 +200,30 @@ export function quaternionToEuler(quaternion: Vector4): Vector3 {
         ),
     ];
 }
+
+export function normalize180(ang: number) {
+    while (ang < -180) {
+        ang += 360;
+    }
+    while (ang >= 180) {
+        ang -= 360;
+    }
+    return ang;
+}
+
+export function angleDist(angle1: number, angle2: number) {
+    const delta = Math.abs(normalize180(angle1) - normalize180(angle2));
+    return Math.min(delta, 360 - delta);
+}
+
+export function clampAngle(angle: number, center: number, maxOffset: number) {
+    const offset = this.angleDist(center, angle);
+
+    if (offset < maxOffset) {
+        return angle;
+    }
+    if (this.angleDist(angle, center + maxOffset) > this.angleDist(angle, center - maxOffset)) {
+        return normalize180(center - maxOffset);
+    }
+    return normalize180(center + maxOffset);
+}

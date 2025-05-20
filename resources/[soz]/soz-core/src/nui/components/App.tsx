@@ -133,7 +133,6 @@ export const App: FunctionComponent = () => {
                     <BreathAnalyzerApp />
                     <DrugScreeningApp />
                     <DetectiveBoard />
-                    <ScientistCamera />
                     <ScientistPhoto />
                     <HoodApp />
                     <TaxiHorodateurApp />
@@ -166,6 +165,8 @@ export const App: FunctionComponent = () => {
                     <PincrakerMinigameApp />
                     <ScreenshotApp />
                 </div>
+                <HoodApp />
+                <ScientistCamera />
                 <div className={menuClasses}>
                     <InputApp />
                     <PhoneApp />

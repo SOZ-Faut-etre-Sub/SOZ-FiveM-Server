@@ -1088,6 +1088,12 @@ export const Weapons: Record<WeaponName, WeaponConfig> = {
         recoil: 0.4,
         ammo: 'ammo_16',
         drawPosition: { model: 'w_sr_heavysnipermk2', ...DrawPositions['RPG'] },
+        extaDraw: [
+            {
+                bone: 'WAPBarrel',
+                model: 'w_at_sr_barrel_1',
+            },
+        ],
         attachments: [
             { label: 'Grand chargeur', component: 'COMPONENT_HEAVYSNIPER_MK2_CLIP_02', type: WeaponComponentType.Clip },
             { label: 'Viseur', component: 'COMPONENT_AT_SCOPE_LARGE_MK2', type: WeaponComponentType.Scope },
