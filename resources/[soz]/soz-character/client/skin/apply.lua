@@ -178,7 +178,7 @@ local function ApplyPedClothSet(ped, clothSet)
     for _, propId in pairs(PropType) do
         local prop = clothSet.Props[tostring(propId)]
         if tonumber(propId) ~= nil then
-            if prop == nil or prop.Clear == true then
+            if prop == nil or prop.Clear == true or prop.Drawable == -1 then
                 ClearPedProp(ped, tonumber(propId))
             elseif prop.Collection then
                 SetPedCollectionPropIndex(ped, tonumber(propId), prop.Collection, prop.Drawable, prop.Texture or 0, true)
@@ -217,6 +217,7 @@ end
 
 function ClothConfigComputeToClothSet(clothConfig)
     local empty = {
+        Components = {[ComponentType.Mask] = {Drawable = 0, Texture = 0, Palette = 0}},
         Props = {
             [PropType.Head] = {Clear = true},
             [PropType.Helmet] = {Clear = true},
@@ -228,7 +229,7 @@ function ClothConfigComputeToClothSet(clothConfig)
     }
 
     local clothSet = Clone(clothConfig.BaseClothSet)
-    clothSet = MergeClothSet(clothSet, empty)
+    clothSet = MergeClothSet(empty, clothSet)
 
     local function getNakedComponent(component)
         return clothConfig.NakedClothSet.Components[component] or clothConfig.NakedClothSet.Components[tostring(component)]

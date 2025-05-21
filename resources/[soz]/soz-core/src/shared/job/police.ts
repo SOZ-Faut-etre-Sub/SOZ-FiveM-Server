@@ -2616,6 +2616,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
+                category: 'Original',
                 rankType: DUTY_OUTFIT_NAME,
             },
             [WINTER]: {

@@ -62,7 +62,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
 
                     {categories.map(cat => {
                         return (
-                            <>
+                            <div key={cat}>
                                 {categories.length > 0 && <MenuSubTitle>{cat}</MenuSubTitle>}
                                 {Object.keys(wardrobe.wardrobe)
                                     .filter(name => wardrobe.wardrobe[name].category === cat)
@@ -73,7 +73,7 @@ export const MenuWardrobe: FunctionComponent<MenuWardrobeProps> = ({ wardrobe })
                                             </MenuItemButton>
                                         );
                                     })}
-                            </>
+                            </div>
                         );
                     })}
 
