@@ -1084,9 +1084,10 @@ enum casino_table_type {
 }
 
 model casino_tables {
-    id       String            @id @db.VarChar(128)
-    kind     casino_table_kind
-    position String            @db.Text
-    model    String            @db.VarChar(50)
-    type     casino_table_type @default(base)
+    id           String            @id @db.VarChar(128)
+    kind         casino_table_kind
+    position     String            @db.Text
+    model        String            @db.VarChar(50)
+    type         casino_table_type @default(base)
+    requireSpawn Boolean           @default(false)
 }

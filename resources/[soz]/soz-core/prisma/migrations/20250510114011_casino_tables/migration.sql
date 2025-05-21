@@ -5,26 +5,33 @@ CREATE TABLE `casino_tables` (
     `position` TEXT NOT NULL,
     `model` VARCHAR(50) NOT NULL,
     `type` ENUM('base', 'highLimit') NOT NULL DEFAULT 'base',
+    `requireSpawn` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- Create default data
-INSERT INTO `casino_tables` VALUES
+INSERT INTO `casino_tables`(`id`,`kind`,`position`,`model`,`type`) VALUES
     -- poker
-    (uuid(), 'poker', '{"x":1148.74, "y":251.6947, "z":-52.0409, "w":-45.0}', 'vw_prop_casino_3cardpoker_01b', 'highLimit'),
-    (uuid(), 'poker', '{"x":1146.329, "y":261.2543, "z":-52.8409, "w":45.0}', 'vw_prop_casino_3cardpoker_01', 'base'),
-    (uuid(), 'poker', '{"x":1143.3379, "y":264.2453, "z":-52.8409, "w":-135.0}', 'vw_prop_casino_3cardpoker_01', 'base'),
-    (uuid(), 'poker', '{"x":1133.74, "y":266.6947, "z":-52.0409, "w":-45.0}', 'vw_prop_casino_3cardpoker_01b', 'highLimit'),
+    (uuid(), 'poker', '{"x":993.2344, "y":43.61603, "z":69.23276, "w":-283}', 'vw_prop_casino_3cardpoker_01b', 'highLimit'),
+    (uuid(), 'poker', '{"x":991.465, "y":40.09433, "z":69.23276, "w":203}', 'vw_prop_casino_3cardpoker_01b', 'highLimit'),
+    (uuid(), 'poker', '{"x":996.3485, "y":51.73592, "z":68.43275, "w":323}', 'vw_prop_casino_3cardpoker_01', 'base'),
+    (uuid(), 'poker', '{"x":1000.784, "y":51.02497, "z":68.43275, "w":13}', 'vw_prop_casino_3cardpoker_01', 'base'),
+    (uuid(), 'poker', '{"x":998.4394, "y":61.03186, "z":68.43275, "w":193}', 'vw_prop_casino_3cardpoker_01', 'base'),
+    (uuid(), 'poker', '{"x":994.9095, "y":58.21835, "z":68.43275, "w":243}', 'vw_prop_casino_3cardpoker_01', 'base'),
+    (uuid(), 'poker', '{"x":988.4625, "y":64.28557, "z":69.23276, "w":283}', 'vw_prop_casino_3cardpoker_01b', 'highLimit'),
+    (uuid(), 'poker', '{"x":985.048, "y":66.63026, "z":69.23276, "w":8}', 'vw_prop_casino_3cardpoker_01b', 'highLimit'),
     -- blackjack
-    (uuid(), 'blackjack', '{"x":1148.8368, "y":269.747, "z":-52.8409, "w":-134.69}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
-    (uuid(), 'blackjack', '{"x":1151.84, "y":266.747, "z":-52.8409, "w":45.31}', 'vw_prop_casino_blckjack_01', 'base'),
-    (uuid(), 'blackjack', '{"x":1129.4065, "y":262.3578, "z":-52.041, "w":135.31}', 'vw_prop_casino_blckjack_01', 'base'),
-    (uuid(), 'blackjack', '{"x":1144.4291, "y":247.3352, "z":-52.041, "w":135.31}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
+    (uuid(), 'blackjack', '{"x":987.2684, "y":42.20339, "z":69.23269, "w":103}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
+    (uuid(), 'blackjack', '{"x":989.0378, "y":45.7245, "z":69.23269, "w":23}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
+    (uuid(), 'blackjack', '{"x":1004.184, "y":53.19243, "z":68.43275, "w":58}', 'vw_prop_casino_blckjack_01', 'base'),
+    (uuid(), 'blackjack', '{"x":1002.383, "y":60.50793, "z":68.43275, "w":143}', 'vw_prop_casino_blckjack_01', 'base'),
+    (uuid(), 'blackjack', '{"x":985.9037, "y":60.55936, "z":69.23269, "w":188}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
+    (uuid(), 'blackjack', '{"x":982.4893, "y":62.90397, "z":69.23269, "w":103}', 'vw_prop_casino_blckjack_01b', 'highLimit'),
     -- roulette
-    (uuid(), 'roulette', '{"x":1144.8137, "y":268.2634, "z":-52.8409, "w":-135.0}', 'vw_prop_casino_roulette_01', 'base'),
-    (uuid(), 'roulette', '{"x":1150.3547, "y":262.7224, "z":-52.8409, "w":45.0}', 'vw_prop_casino_roulette_01', 'base'),
-    (uuid(), 'roulette', '{"x":1133.9583, "y":262.1071, "z":-52.0409, "w":135.0}', 'vw_prop_casino_roulette_01b', 'highLimit'),
-    (uuid(), 'roulette', '{"x":1129.5952, "y":267.2637, "z":-52.0409, "w":-45.0}', 'vw_prop_casino_roulette_01b', 'highLimit'),
-    (uuid(), 'roulette', '{"x":1144.6178, "y":252.2411, "z":-52.0409, "w":-45.0}', 'vw_prop_casino_roulette_01b', 'highLimit'),
-    (uuid(), 'roulette', '{"x":1148.9808, "y":247.0846, "z":-52.0409, "w":135.0}', 'vw_prop_casino_roulette_01b', 'highLimit');
+    (uuid(), 'roulette', '{"x":985.9124, "y":49.01048, "z":69.23275, "w":225}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":982.1644, "y":52.20396, "z":69.23276, "w":283}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":984.3021, "y":55.93538, "z":69.23275, "w":342}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":1004.79, "y":57.29507, "z":68.43275, "w":283}', 'vw_prop_casino_roulette_01b', 'highLimit'),
+    (uuid(), 'roulette', '{"x":999.8859, "y":54.40334, "z":68.43275, "w":13}', 'vw_prop_casino_roulette_01', 'base'),
+    (uuid(), 'roulette', '{"x":999.4816, "y":57.88892, "z":68.43275, "w":193}', 'vw_prop_casino_roulette_01', 'base');
