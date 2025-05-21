@@ -639,9 +639,9 @@ export const ShopsConfig: Record<string, ShopConfig> = {
     },
     ['ponsonbys_casino']: {
         brand: ShopBrand.Ponsonbys,
-        location: [1100.58, 195.5, -49.44, 315.75],
-        positionInShop: [1096.34, 201.08, -49.44, 227.59],
-        cameraInShop: [1098.54, 199.04, -48.44, 44.91],
+        location: [922.58, 21.58, 71.83, 285.25],
+        positionInShop: [922.22, 28.14, 71.83, 192.53],
+        cameraInShop: [923.05, 24.89, 72.83, 10.31],
     },
 };
 
