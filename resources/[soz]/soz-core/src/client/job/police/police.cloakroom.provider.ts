@@ -4,29 +4,28 @@ import { PlayerHealthProvider } from '@public/client/player/player.health.provid
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerWardrobe } from '@public/client/player/player.wardrobe';
 import { TargetFactory } from '@public/client/target/target.factory';
-import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Component } from '@public/shared/cloth';
-import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { Armors, DUTY_OUTFIT_NAME, ObjectOutFits, PrisonerClothes, RankOutfit } from '@public/shared/job/police';
-import { Vector3 } from '@public/shared/polyzone/vector';
+import { Zone } from '@public/shared/polyzone/box.zone';
 
-const prisonerCloakroomInfos = [
+const prisonerCloakroomInfos: Zone<string>[] = [
     {
-        job: JobType.LSPD,
-        position: [580.91, -29.72, 76.63] as Vector3,
+        data: 'lspd',
+        center: [580.91, -29.72, 76.63],
         length: 0.6,
         width: 9.0,
         heading: 350,
         minZ: 75.63,
         maxZ: 78.63,
     },
-    // MISSION ROW
     {
-        job: JobType.LSPD,
-        position: [474.65, -992.71, 24.74] as Vector3,
+        data: 'lspd_mr',
+        center: [474.65, -992.71, 24.74],
         length: 1.0,
         width: 5.0,
         heading: -0.03,
@@ -34,8 +33,35 @@ const prisonerCloakroomInfos = [
         maxZ: 26.74,
     },
     {
-        job: JobType.BCSO,
-        position: [1864.93, 3681.1, 30.27] as Vector3,
+        data: 'lspd_mp1',
+        center: [1143.53, -467.41, 60.28],
+        length: 4.6,
+        width: 0.7,
+        heading: 76.73,
+        minZ: 59.28,
+        maxZ: 61.28,
+    },
+    {
+        data: 'lspd_mp2',
+        center: [1145.28, -469.91, 60.28],
+        length: 2.4,
+        width: 1.0,
+        heading: 256.62,
+        minZ: 59.28,
+        maxZ: 61.28,
+    },
+    {
+        data: 'lspd_mp3',
+        center: [1144.9, -471.91, 60.28],
+        length: 0.7,
+        width: 4.6,
+        heading: 166.24,
+        minZ: 59.28,
+        maxZ: 61.28,
+    },
+    {
+        data: 'bcso',
+        center: [1864.93, 3681.1, 30.27],
         length: 1.0,
         width: 7.8,
         heading: 30,
@@ -68,15 +94,8 @@ export class PoliceCloakRoomProvider {
     public onStart() {
         for (const prisonerCloakroomInfo of prisonerCloakroomInfos) {
             this.targetFactory.createForBoxZone(
-                `${prisonerCloakroomInfo.job}:prisonerCloakroom`,
-                {
-                    center: prisonerCloakroomInfo.position,
-                    length: prisonerCloakroomInfo.length,
-                    width: prisonerCloakroomInfo.width,
-                    heading: prisonerCloakroomInfo.heading,
-                    minZ: prisonerCloakroomInfo.minZ,
-                    maxZ: prisonerCloakroomInfo.maxZ,
-                },
+                `${prisonerCloakroomInfo.data}:prisonerCloakroom`,
+                prisonerCloakroomInfo,
                 [
                     {
                         label: 'Se changer',
@@ -175,5 +194,10 @@ export class PoliceCloakRoomProvider {
     @OnEvent(ClientEvent.POLICE_REMOVE_ARMOR)
     public async removeArmor() {
         await this.playerWardrobe.setClothConfig('HideBulletproof', true, true);
+    }
+
+    @OnNuiEvent(NuiEvent.PersonnalCloakroom)
+    public async onPersonnalCloakroom() {
+        this.housingApartmentZoneProvider.openApartmentCloakroom('Tenues Personnelles');
     }
 }

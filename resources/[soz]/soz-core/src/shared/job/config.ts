@@ -110,6 +110,15 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
                 minZ: 34.94,
                 maxZ: 36.94,
             },
+            // MIRROR PARK
+            {
+                center: [1147.86, -466.25, 72.62],
+                length: 28.2,
+                width: 33.6,
+                heading: 166.7,
+                minZ: 71.62,
+                maxZ: 73.62,
+            },
         ],
         phone: '555-LSPD',
         canReceiveSocietyInvoice: true,
@@ -131,6 +140,15 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
                 heading: 30,
                 minZ: 37.07,
                 maxZ: 41.01,
+            },
+            // MIRROR PARK
+            {
+                center: [1147.86, -466.25, 72.62],
+                length: 28.2,
+                width: 33.6,
+                heading: 166.7,
+                minZ: 71.62,
+                maxZ: 73.62,
             },
         ],
         phone: '555-BCSO',
@@ -579,6 +597,15 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
                 heading: 90.0,
                 minZ: 33.68,
                 maxZ: 35.68,
+            },
+            // MIRROR PARK
+            {
+                center: [1147.86, -466.25, 72.62],
+                length: 28.2,
+                width: 33.6,
+                heading: 166.7,
+                minZ: 71.62,
+                maxZ: 73.62,
             },
         ],
         canInvoice: true,

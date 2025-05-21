@@ -180,6 +180,8 @@ const getInventoryTitle = (type: InventoryType): string => {
             return 'Poubelle';
 
         case InventoryType.Ammo:
+            return 'Munitions';
+
         case InventoryType.Armory:
             return 'Armurerie';
 

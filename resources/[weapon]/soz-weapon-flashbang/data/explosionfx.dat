@@ -9,6 +9,6 @@
 																																																											
 EXPLOSIONFX_TABLE_START																																										   												
 																																																											
-EXP_VFXTAG_FLASHBANG			exp_arc_grd_flashbang		-						-							exp_arc_grd_flashbang_lod	exp_arc_grd_flashbang		-						-					exp_arc_grd_flashbang_lod	0.3		0			0		0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0
+EXP_VFXTAG_FLASHBANG			exp_arc_grd_flashbang		-						-							exp_arc_grd_flashbang_lod	exp_arc_grd_flashbang		-						-					exp_arc_grd_flashbang_lod	1.0		0			0		0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0		0.0
 
 EXPLOSIONFX_TABLE_END

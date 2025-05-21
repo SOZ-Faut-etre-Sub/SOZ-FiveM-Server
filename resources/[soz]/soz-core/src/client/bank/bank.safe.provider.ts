@@ -32,16 +32,16 @@ export class BankSafeProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
-        Object.entries(SocietySafeStorage).forEach(([job, zone]) => {
+        SocietySafeStorage.forEach((zone, index) => {
             if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
-                const override = SocietySafeStorageWhatIf[job];
+                const override = SocietySafeStorageWhatIf[zone.data];
                 if (override) {
                     zone = override;
                 }
             }
 
             this.targetFactory.createForBoxZone(
-                `bank:safe:${job}`,
+                `bank:safe:${zone.data}_${index}`,
                 BoxZone.fromZone(zone),
                 [
                     {
@@ -54,7 +54,7 @@ export class BankSafeProvider {
 
                             const safe = await emitRpc<BankAccount>(
                                 RpcServerEvent.BANK_GET_ACCOUNT,
-                                `safe_${job}`,
+                                `safe_${zone.data}`,
                                 'safestorages'
                             );
                             if (!safe) return;
@@ -62,7 +62,7 @@ export class BankSafeProvider {
                             this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
                             this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
                         },
-                        job,
+                        job: zone.data,
                     },
                 ],
                 2.5

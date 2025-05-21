@@ -81,174 +81,226 @@ export const FarmAccount: Record<string, { money: number; marked_money?: number 
     farm_gouv: { money: 300_000 },
 };
 
-export const SocietySafeStorage: Partial<Record<JobType, Zone>> = {
-    [JobType.CashTransfer]: {
+export const SocietySafeStorage: Zone<JobType>[] = [
+    {
         center: [-33.94, -715.14, 40.62],
         length: 1.0,
         width: 3.0,
         heading: 113.9,
         minZ: 39.62,
         maxZ: 41.62,
+        data: JobType.CashTransfer,
     },
-    [JobType.LSPD]: {
+    {
+        //MP
+        center: [1147.42, -475.6, 72.62],
+        length: 1.0,
+        width: 1.3,
+        heading: 166.51,
+        minZ: 71.62,
+        maxZ: 73.62,
+        data: JobType.LSPD,
+    },
+    {
+        //MR
         center: [468.97, -981.2, 35.94],
         length: 0.8,
         width: 2.8,
         heading: 0.11,
         minZ: 34.94,
         maxZ: 37.14,
+        data: JobType.LSPD,
     },
-    [JobType.BCSO]: {
+    {
         center: [1855.94, 3690.49, 37.75],
         length: 1.0,
         width: 2.5,
         heading: 120.0,
         minZ: 36.75,
         maxZ: 38.75,
+        data: JobType.BCSO,
     },
-    [JobType.LSMC]: {
+    {
+        //MP
+        center: [1147.42, -475.6, 72.62],
+        length: 1.0,
+        width: 1.3,
+        heading: 166.51,
+        minZ: 71.62,
+        maxZ: 73.62,
+        data: JobType.BCSO,
+    },
+    {
         center: [368.9, -1415.68, 38.19],
         length: 0.6,
         width: 0.7,
         heading: 320,
         minZ: 37.04,
         maxZ: 37.99,
+        data: JobType.LSMC,
     },
-    [JobType.News]: {
+    {
         center: [-575.83, -937.5, 28.7],
         length: 1.3,
         width: 2.5,
         minZ: 27.7,
         maxZ: 29.7,
+        data: JobType.News,
     },
-    [JobType.YouNews]: {
+    {
         center: [-1057.23, -234.11, 44.02],
         length: 0.6,
         width: 1.8,
         heading: 117.47,
         minZ: 43.02,
         maxZ: 44.02,
+        data: JobType.YouNews,
     },
-    [JobType.Garbage]: {
+    {
         center: [-623.89, -1616.37, 33.01],
         length: 0.2,
         width: 1.8,
         heading: 354,
         minZ: 32.01,
         maxZ: 34.51,
+        data: JobType.Garbage,
     },
-    [JobType.Taxi]: {
+    {
         center: [907.77, -149.83, 74.17],
         length: 0.4,
         width: 1.4,
         heading: 328,
         minZ: 73.17,
         maxZ: 75.37,
+        data: JobType.Taxi,
     },
-    [JobType.Oil]: {
+    {
         center: [-246.3, 6064.38, 40.57],
         length: 0.2,
         width: 0.95,
         heading: 315,
         minZ: 40.37,
         maxZ: 41.57,
+        data: JobType.Oil,
     },
-    [JobType.Bennys]: {
+    {
         center: [-203.8, -1333.11, 34.89],
         length: 1.0,
         width: 1.5,
         minZ: 33.89,
         maxZ: 35.89,
+        data: JobType.Bennys,
     },
-    [JobType.Food]: {
+    {
         center: [-1877.15, 2055.42, 154.09],
         length: 0.8,
         width: 0.8,
         heading: 249.99,
         minZ: 153.49,
         maxZ: 154.49,
+        data: JobType.Food,
     },
-    [JobType.Upw]: {
+    {
         center: [602.59, 2760.5, 47.76],
         length: 1.2,
         width: 1.0,
         heading: 4,
         minZ: 46.76,
         maxZ: 48.76,
+        data: JobType.Upw,
     },
-    [JobType.Pawl]: {
+    {
         center: [-543.77, 5306.63, 76.37],
         length: 0.75,
         width: 0.3,
         heading: 340,
         minZ: 75.37,
         maxZ: 77.37,
+        data: JobType.Pawl,
     },
-    [JobType.Baun]: {
+    {
         center: [-1384.84, -631.58, 30.81],
         length: 0.7,
         width: 0.7,
         heading: 303,
         minZ: 26.81,
         maxZ: 30.81,
+        data: JobType.Baun,
     },
-    [JobType.Ffs]: {
+    {
         center: [709.57, -966.87, 30.41],
         length: 1.1,
         width: 0.6,
         heading: 0,
         minZ: 30.21,
         maxZ: 30.81,
+        data: JobType.Ffs,
     },
-    [JobType.MDR]: {
+    {
         center: [-546.25, -200.29, 47.66],
         length: 1.0,
         width: 1.0,
         heading: 30.0,
         minZ: 46.66,
         maxZ: 48.66,
+        data: JobType.MDR,
     },
-    [JobType.SASP]: {
+    {
         center: [-583.08, -590.96, 34.68],
         length: 1.0,
         width: 0.8,
         heading: 0.0,
         minZ: 33.68,
         maxZ: 35.68,
+        data: JobType.SASP,
     },
-    [JobType.FDF]: {
+    {
+        //MP
+        center: [1147.42, -475.6, 72.62],
+        length: 1.0,
+        width: 1.3,
+        heading: 166.51,
+        minZ: 71.62,
+        maxZ: 73.62,
+        data: JobType.SASP,
+    },
+    {
         center: [2436.49, 4964.26, 46.81],
         length: 1.0,
         width: 0.85,
         heading: 43.58,
         minZ: 45.81,
         maxZ: 47.81,
+        data: JobType.FDF,
     },
-    [JobType.Gouv]: {
+    {
         center: [-525.62, -590.78, 34.68],
         length: 0.4,
         width: 1.0,
         heading: 0.0,
         minZ: 33.68,
         maxZ: 35.68,
+        data: JobType.Gouv,
     },
-    [JobType.DMC]: {
+    {
         center: [1076.19, -2008.55, 32.09],
         length: 1.0,
         width: 2.0,
         heading: 143.57,
         minZ: 31.09,
         maxZ: 33.09,
+        data: JobType.DMC,
     },
-    [JobType.LSCS]: {
+    {
         center: [450.15, -972.49, 30.44],
         length: 1.0,
         width: 1.2,
         heading: 181.33,
         minZ: 29.44,
         maxZ: 31.04,
+        data: JobType.LSCS,
     },
-};
+];
 
 export const SocietySafeStorageWhatIf: Partial<Record<JobType, Zone>> = {
     [JobType.SASP]: {
