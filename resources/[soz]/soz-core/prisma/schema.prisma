@@ -568,7 +568,6 @@ model investigation {
     title                  String                   @db.VarChar(128)
     type                   report_type              @default(investigation)
     isTemplate             Boolean?                 @default(false)
-    isFavorite             Boolean?                 @default(false)
     closed                 Boolean?                 @default(false)
     granted                String?                  @db.LongText
     granted_services       String?                  @db.LongText
@@ -580,6 +579,7 @@ model investigation {
     created_at             DateTime?                @default(now()) @db.Timestamp(0)
     updated_at             DateTime?                @default(now()) @db.Timestamp(0)
     investigation_revision investigation_revision[]
+    investigation_favori   investigation_favori[]
 }
 
 model investigation_revision {
@@ -593,6 +593,14 @@ model investigation_revision {
     investigation   investigation? @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_investigation")
 
     @@index([investigationId], map: "fk_investigation")
+}
+
+model investigation_favori {
+    citizenid       String        @db.VarChar(255)
+    investigationId Int
+    investigation   investigation @relation(fields: [investigationId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+    @@id([citizenid, investigationId])
 }
 
 model player_records_history {
