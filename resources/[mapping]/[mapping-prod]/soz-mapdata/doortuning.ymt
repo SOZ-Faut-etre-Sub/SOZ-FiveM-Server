@@ -951,6 +951,31 @@
         <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
       </Tuning>
     </Item>
+    <Item>
+        <Name>CubeMppdBollards</Name>
+        <Tuning>
+            <AutoOpenVolumeOffset x="0.000000" y="-1.675000" z="-2.450000" />
+            <Flags>AutoOpensForAllVehicles</Flags>
+            <AutoOpenRadiusModifier value="3.000000" />
+            <AutoOpenRate value="100.000000" />
+            <AutoOpenCosineAngleBetweenThreshold value="-1.000000" />
+            <AutoOpenCloseRateTaper value="true" />
+            <UseAutoOpenTriggerBox value="true" />
+            <CustomTriggerBox value="true" />
+            <TriggerBoxMinMax>
+                <min x="-7.000000" y="-7.000000" z="-7.000000" />
+                <max x="7.000000" y="7.000000" z="7.000000" />
+            </TriggerBoxMinMax>
+            <BreakableByVehicle value="false" />
+            <BreakingImpulse value="0.000000" />
+            <ShouldLatchShut value="false" />
+            <MassMultiplier value="1.000000" />
+            <WeaponImpulseMultiplier value="1.000000" />
+            <RotationLimitAngle value="0.000000" />
+            <TorqueAngularVelocityLimit value="5.000000" />
+            <StdDoorRotDir>StdDoorOpenBothDir</StdDoorRotDir>
+        </Tuning>
+    </Item>
   </NamedTuningArray>
   <ModelToTuneMapping>
     <Item>
@@ -1450,6 +1475,10 @@
     <Item>
       <ModelName>soz_hc_garages_hall03_garagedoor</ModelName>
       <TuningName>MichaelGarageCustomBox2</TuningName>
+    </Item>
+    <Item>
+        <ModelName>cube_mppd_ext_bollards</ModelName>
+        <TuningName>CubeMppdBollards</TuningName>
     </Item>
   </ModelToTuneMapping>
 </CDoorTuningFile>
