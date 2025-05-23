@@ -2,6 +2,7 @@ import { MenuSmugglingPricesData } from '@private/shared/business.smuggling';
 import { BlackjackMenuData } from '@private/shared/casino.blackjack';
 import { PokerMenuData } from '@private/shared/casino.poker';
 import { RouletteMenuData } from '@private/shared/casino.roulette';
+import { SlotMachineMenuData } from '@private/shared/casino.slot';
 import { LaserGameAdminInfo, LaserGameData } from '@public/shared/games/laser';
 import { ApartmentMenuData, ApartmentSelectUpgradesMenuData } from '@public/shared/housing/housing';
 import { HudSettings } from '@public/shared/hud';
@@ -159,6 +160,7 @@ export enum MenuType {
     LaserGameManage = 'laser_game_manage',
     LaserGameAdmin = 'laser_game_admin',
     Traveling = 'traveling',
+    CasinoSlotMachine = 'casino_slot_machine',
     CasinoPoker = 'casino_poker',
     CasinoBlackjack = 'casino_blackjack',
     CasinoRoulette = 'casino_roulette',
@@ -244,6 +246,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LaserGameCreate]: null;
     [MenuType.LaserGameManage]: LaserGameData;
     [MenuType.LaserGameAdmin]: Record<string, LaserGameAdminInfo>;
+    [MenuType.CasinoSlotMachine]: SlotMachineMenuData;
     [MenuType.CasinoBlackjack]: BlackjackMenuData;
     [MenuType.CasinoPoker]: PokerMenuData;
     [MenuType.CasinoRoulette]: RouletteMenuData;

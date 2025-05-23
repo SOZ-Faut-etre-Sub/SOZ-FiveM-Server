@@ -362,6 +362,7 @@ export enum RpcServerEvent {
     CASINO_LUCKY_WHEEL_USE = 'soz-core:server:casino:licky-wheel:use',
     CASINO_LUCKY_WHEEL_LEAVE = 'soz-core:server:casino:licky-wheel:leave',
     CASINO_SLOT_MACHINE_USE = 'soz-core:server:casino:slot-machine-use',
+    CASINO_SLOT_MACHINE_SPIN = 'soz-core:server:casino:slot-machine-spin',
     CASINO_SLOT_MACHINE_LEAVE = 'soz-core:server:casino:slot-machine-leave',
     CASINO_POKER_JOIN_TABLE = 'soz-core:server:casino:poker-join-table',
     CASINO_POKER_PLACE_BET = 'soz-core:server:casino:poker-place-bet',
