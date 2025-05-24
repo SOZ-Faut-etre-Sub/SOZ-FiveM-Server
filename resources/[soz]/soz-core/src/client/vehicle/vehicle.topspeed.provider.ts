@@ -13,7 +13,7 @@ export class VehicleTopSpeedProvider {
 
     @Once()
     init() {
-        SetEnableVehicleSlipstreaming(true);
+        //SetEnableVehicleSlipstreaming(true);
     }
 
     @Tick(TickInterval.EVERY_SECOND)
