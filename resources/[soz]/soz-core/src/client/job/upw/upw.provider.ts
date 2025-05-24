@@ -166,8 +166,9 @@ export class UpwProvider {
             const blip: Blip = {
                 ...UpwConfig.FacilitiesBlip[facility.type],
                 position: facility.position || facility.energyZone.center,
+                hidden: true,
             };
-            this.blipFactory.create(blip_id, blip, false);
+            this.blipFactory.create(blip_id, blip);
 
             if (facility.energyZone) {
                 this.targetFactory.createForBoxZone('upw_harvest_' + facility.identifier, facility.energyZone, [
@@ -224,11 +225,11 @@ export class UpwProvider {
         }
 
         // Resale zone
-        this.blipFactory.create(
-            'job_upw_resell',
-            { ...UpwConfig.FacilitiesBlip['resell'], position: UpwConfig.Resale.Zone.center },
-            false
-        );
+        this.blipFactory.create('job_upw_resell', {
+            ...UpwConfig.FacilitiesBlip['resell'],
+            position: UpwConfig.Resale.Zone.center,
+            hidden: true,
+        });
     }
 
     @Tick(TickInterval.EVERY_SECOND * 10)

@@ -368,7 +368,6 @@ export class PlayerZombieProvider {
                     },
                     sprite: 885,
                 },
-                true,
                 [
                     {
                         label: 'Téléporter',

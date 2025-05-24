@@ -95,12 +95,7 @@ export class BlipFactory {
     }
 
     @OnEvent(ClientEvent.BLIP_CREATE)
-    public create<T = undefined>(
-        id: string,
-        blipCreated: Blip,
-        show = true,
-        actions?: Omit<BlipAction<T>, 'id'>[]
-    ): number {
+    public create<T = undefined>(id: string, blipCreated: Blip, actions?: Omit<BlipAction<T>, 'id'>[]): number {
         const blip = {
             range: true,
             scale: 0.8,
@@ -150,7 +145,7 @@ export class BlipFactory {
             }),
         });
 
-        if (!show) {
+        if (blip.hidden) {
             this.hide(id, true);
         }
 
@@ -164,6 +159,7 @@ export class BlipFactory {
             return;
         }
 
+        gameBlip.blip.hidden = value;
         if (value) {
             SetBlipAlpha(gameBlip.gameId, 0);
             SetBlipHiddenOnLegend(gameBlip.gameId, true);
@@ -188,7 +184,7 @@ export class BlipFactory {
             return;
         }
 
-        return GetBlipAlpha(gameBlip.gameId) === 0;
+        return gameBlip.blip.hidden;
     }
 
     public qbHide(id: string, value: boolean): void {
@@ -313,6 +309,10 @@ export class BlipFactory {
 
         if (blip.flash !== undefined) {
             SetBlipFlashes(gameId, blip.flash);
+        }
+
+        if (blip.rotation !== undefined) {
+            SetBlipRotation(gameId, blip.rotation);
         }
 
         if (blip.name !== undefined) {

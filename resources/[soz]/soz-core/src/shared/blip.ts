@@ -38,6 +38,8 @@ export type QbBlip = {
     type?: BlipType;
     group?: string;
     flash?: boolean;
+    rotation?: number;
+    hidden?: boolean;
 };
 
 export type Blip = RequireAtLeastOne<QbBlip, 'coords' | 'position'>;

@@ -137,22 +137,19 @@ export class PoliceSpeedZoneProvider {
                     ...zones[k],
                     zoneId,
                 };
-                this.blipFactory.create(
-                    k,
-                    {
-                        name: k,
-                        coords: {
-                            x: zones[k].position[0],
-                            y: zones[k].position[1],
-                            z: zones[k].position[2],
-                        },
-                        radius: zones[k].radius,
-                        color: 1,
-                        sprite: 4,
-                        type: BlipType.Radius,
+                this.blipFactory.create(k, {
+                    name: k,
+                    coords: {
+                        x: zones[k].position[0],
+                        y: zones[k].position[1],
+                        z: zones[k].position[2],
                     },
-                    shouldDisplayBlip
-                );
+                    radius: zones[k].radius,
+                    color: 1,
+                    sprite: 4,
+                    type: BlipType.Radius,
+                    hidden: !shouldDisplayBlip,
+                });
             }
         });
 

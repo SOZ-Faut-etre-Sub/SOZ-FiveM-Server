@@ -1,5 +1,6 @@
 import { Module } from '../../../core/decorators/module';
 import { PoliceAnimationProvider } from './police.animation.provider';
+import { PoliceCameraProvider } from './police.camera.provider';
 import { PoliceCloakRoomProvider } from './police.cloakroom.provider';
 import { PoliceFineProvider } from './police.fine.provider';
 import { PoliceJobMenuProvider } from './police.jobMenu.provider';
@@ -28,6 +29,7 @@ import { PoliceVehicleProvider } from './police.vehicle.provider';
         PoliceAnimationProvider,
         PoliceSpeedZoneProvider,
         PoliceSearchWarrantProvider,
+        PoliceCameraProvider,
     ],
 })
 export class PoliceModule {}

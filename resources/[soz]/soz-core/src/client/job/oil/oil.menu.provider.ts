@@ -25,49 +25,37 @@ export class OilMenuProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public setupOilBlips() {
-        this.blipFactory.create(
-            'oil_field_1',
-            {
-                name: 'Point de récolte',
-                position: [585.93, 2901.68, 39.72],
-                sprite: 436,
-                scale: 0.9,
-            },
-            this.showOilFields
-        );
+        this.blipFactory.create('oil_field_1', {
+            name: 'Point de récolte',
+            position: [585.93, 2901.68, 39.72],
+            sprite: 436,
+            scale: 0.9,
+            hidden: !this.showOilFields,
+        });
 
-        this.blipFactory.create(
-            'oil_field_2',
-            {
-                name: 'Point de récolte',
-                position: [1435.49, -2284.8, 71.37],
-                sprite: 436,
-                scale: 0.9,
-            },
-            this.showOilFields
-        );
+        this.blipFactory.create('oil_field_2', {
+            name: 'Point de récolte',
+            position: [1435.49, -2284.8, 71.37],
+            sprite: 436,
+            scale: 0.9,
+            hidden: !this.showOilFields,
+        });
 
-        this.blipFactory.create(
-            'oil_refinery',
-            {
-                name: 'Point de raffinage',
-                position: [2793.73, 1524.45, 24.52],
-                sprite: 436,
-                scale: 0.9,
-            },
-            this.showRefinery
-        );
+        this.blipFactory.create('oil_refinery', {
+            name: 'Point de raffinage',
+            position: [2793.73, 1524.45, 24.52],
+            sprite: 436,
+            scale: 0.9,
+            hidden: !this.showRefinery,
+        });
 
-        this.blipFactory.create(
-            'oil_reseller',
-            {
-                name: 'Point de vente',
-                position: [263.41, -2979.47, 4.93],
-                sprite: 436,
-                scale: 0.9,
-            },
-            this.showReseller
-        );
+        this.blipFactory.create('oil_reseller', {
+            name: 'Point de vente',
+            position: [263.41, -2979.47, 4.93],
+            sprite: 436,
+            scale: 0.9,
+            hidden: !this.showReseller,
+        });
     }
 
     @OnEvent(ClientEvent.JOBS_OIL_OPEN_SOCIETY_MENU)

@@ -97,7 +97,7 @@ export class AlbumProvider {
             },
         });
 
-        const id = 'misic_shop';
+        const id = 'music_shop';
         if (!this.blipFactory.exist(id)) {
             this.blipFactory.create(id, {
                 coords: { x: -840.71, y: -230.52, z: 37.26 },

@@ -442,16 +442,12 @@ export class VampireGameProvider {
                 );
 
                 this.objectiveInteractions.add(interactionId);
-                this.blipFactory.create(
-                    `halloween_vampire_objective_${interactionId}`,
-                    {
-                        name: VampireGameLabel(collection as VampireGameCollection),
-                        coords: toVector3Object(objective),
-                        sprite: VampireGameSprite(collection as VampireGameCollection),
-                        color: 1,
-                    },
-                    true
-                );
+                this.blipFactory.create(`halloween_vampire_objective_${interactionId}`, {
+                    name: VampireGameLabel(collection as VampireGameCollection),
+                    coords: toVector3Object(objective),
+                    sprite: VampireGameSprite(collection as VampireGameCollection),
+                    color: 1,
+                });
             }
         }
     }
@@ -473,16 +469,12 @@ export class VampireGameProvider {
 
         for (const [objective, { finished }] of Object.entries(this.gameState.getObjectivePart2() ?? {})) {
             const id = uuidv4();
-            this.blipFactory.create(
-                `halloween_vampire_objective_${id}`,
-                {
-                    name: VampireGameLabel(objective as VampireGameObjectiveTypePart2),
-                    coords: toVector3Object(VampireGameObjectivePart2[objective].center),
-                    sprite: VampireGameSprite(objective as VampireGameObjectiveTypePart2),
-                    color: finished ? 2 : 1,
-                },
-                true
-            );
+            this.blipFactory.create(`halloween_vampire_objective_${id}`, {
+                name: VampireGameLabel(objective as VampireGameObjectiveTypePart2),
+                coords: toVector3Object(VampireGameObjectivePart2[objective].center),
+                sprite: VampireGameSprite(objective as VampireGameObjectiveTypePart2),
+                color: finished ? 2 : 1,
+            });
 
             this.collectiveObjectives.add(id);
         }
@@ -507,16 +499,12 @@ export class VampireGameProvider {
                 label = 'Danger';
             }
 
-            this.blipFactory.create(
-                blipName,
-                {
-                    name: label,
-                    coords: toVector3Object(position),
-                    sprite: 1,
-                    color: isEnemy ? 1 : 0,
-                },
-                true
-            );
+            this.blipFactory.create(blipName, {
+                name: label,
+                coords: toVector3Object(position),
+                sprite: 1,
+                color: isEnemy ? 1 : 0,
+            });
             this.vampirePositionBlip.add(blipName);
         }
     }
@@ -858,7 +846,6 @@ export class VampireGameProvider {
                         },
                         sprite: 885,
                     },
-                    true,
                     [
                         {
                             label: 'Téléporter',
@@ -890,7 +877,6 @@ export class VampireGameProvider {
                         coords: toVector3Object(location),
                         sprite: 40,
                     },
-                    true,
                     [
                         {
                             label: 'Téléporter',
