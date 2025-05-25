@@ -330,6 +330,15 @@ export class AnimationFactory {
         this.resourceLoader.unloadPtfxAsset(fx.dictionary);
     }
 
+    public async playFx(entity: number, fx: Vfx, range = 100) {
+        const playerPedId = PlayerPedId();
+        const pedCoords = GetEntityCoords(playerPedId) as Vector3;
+        const playersInrange = this.playerService.getPlayersAround(pedCoords, range, false);
+        if (playersInrange.length) {
+            TriggerServerEvent(ServerEvent.ANIMATION_FX, ObjToNet(entity), fx, playersInrange);
+        }
+    }
+
     public createScenario(scenario: Scenario, options: Partial<PlayOptions> = {}): AnimationRunner {
         return this.createFromCallback(async (animationCanceller, ped) => {
             // If we launch over an existing scenario, we need to cancel it first

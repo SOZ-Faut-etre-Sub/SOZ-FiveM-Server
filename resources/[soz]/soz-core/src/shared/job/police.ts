@@ -5529,19 +5529,19 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Palette: 0,
         },
         ['swat_1']: {
-            Drawable: 15,
+            Drawable: 14,
             Texture: 0,
             Palette: 0,
             Collection: 'soz_bcso',
         },
         ['swat_2']: {
-            Drawable: 13,
+            Drawable: 15,
             Texture: 0,
             Palette: 0,
             Collection: 'soz_bcso',
         },
         ['swat_3']: {
-            Drawable: 14,
+            Drawable: 13,
             Texture: 0,
             Palette: 0,
             Collection: 'soz_bcso',
@@ -5634,19 +5634,19 @@ export const Armors: Record<PlayerPedHash, Record<string, OutfitItem>> = {
             Palette: 0,
         },
         ['swat_1']: {
-            Drawable: 15,
+            Drawable: 14,
             Texture: 0,
             Palette: 0,
             Collection: 'soz_bcso',
         },
         ['swat_2']: {
-            Drawable: 16,
+            Drawable: 15,
             Texture: 0,
             Palette: 0,
             Collection: 'soz_bcso',
         },
         ['swat_3']: {
-            Drawable: 17,
+            Drawable: 16,
             Texture: 0,
             Palette: 0,
             Collection: 'soz_bcso',
@@ -5995,3 +5995,9 @@ export const SWAT_ITEM_TYPE = 'SWAT';
 
 export const POLICE_DRONE_NAME = 'police_recon_drone';
 export const POLICE_MINESWEEPER_ROBOT_OBJECT = 'soz_eodrobot';
+
+export const GyroOffset = {
+    [joaat('elegy')]: 0.04,
+    [joaat('panto')]: -0.02,
+    [joaat('youga')]: 0.0,
+};

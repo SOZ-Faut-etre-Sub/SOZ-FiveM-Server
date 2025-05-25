@@ -5,7 +5,7 @@ import { VehicleSirenRepository } from '@public/client/repository/vehicle.siren.
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
 import { NuiEvent } from '@public/shared/event/nui';
-import { GyroModel, VehicleWithSirens } from '@public/shared/job/police';
+import { GyroModel, GyroOffset, VehicleWithSirens } from '@public/shared/job/police';
 
 import { Command } from '../../../core/decorators/command';
 import { OnNuiEvent } from '../../../core/decorators/event';
@@ -182,7 +182,7 @@ export class PoliceSirenProvider {
             0,
             offset[0],
             offset[1],
-            offset[2] - 0.01,
+            offset[2] - (GyroOffset[vehModel] ?? 0.01),
             -90,
             0,
             0,

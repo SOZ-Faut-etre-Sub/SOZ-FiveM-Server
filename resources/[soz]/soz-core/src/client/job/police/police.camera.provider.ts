@@ -173,6 +173,7 @@ export class PoliceCameraProvider {
         SetTimecycleModifierStrength(1.0);
 
         RenderScriptCams(true, true, 0.0, true, false);
+        this.nuiDispatch.dispatch('police', 'OpenScientistCamera');
 
         for (let i = 0; i < 50; i++) {
             await wait(100);
