@@ -71,8 +71,8 @@ RegisterNetEvent("soz-character:server:SetPlayerJobClothes", function(clothes, m
                 clothConfig.Config["ShowHelmet"] = true
             end
         end
-        clothConfig["JobClothSet"].GlovesID = clothes.GlovesID
-        if clothes.GlovesID and clothes.GlovesID > 0 then
+        if clothes.GlovesID ~= nil then
+            clothConfig["JobClothSet"].GlovesID = clothes.GlovesID
             clothConfig.Config.HideGloves = false
         end
     end
