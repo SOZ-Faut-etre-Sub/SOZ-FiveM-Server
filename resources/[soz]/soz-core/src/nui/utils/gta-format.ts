@@ -251,6 +251,7 @@ export const formatText = (text: string) => {
         return '';
     }
 
+    text = text.replace(/µ/g, ' ');
     text = text.replace(/~a~/g, '');
     text = text.replace(/~n~/g, '<br />');
     text = text.replace(/~h~/g, '<strong>');
@@ -270,6 +271,7 @@ export const cleanText = (text: string) => {
         return '';
     }
 
+    text = text.replace(/µ/g, ' ');
     text = text.replace(/~a~/g, '');
     text = text.replace(/~n~/g, '');
     text = text.replace(/~h~/g, '');
