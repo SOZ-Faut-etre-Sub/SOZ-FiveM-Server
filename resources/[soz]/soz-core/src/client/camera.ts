@@ -106,7 +106,12 @@ export class CameraService {
         RenderScriptCams(true, true, duration, true, true);
     }
 
-    public deleteCamera() {
+    public deleteCamera(cam: number) {
+        DestroyCam(cam, false);
+        ClearFocus();
+    }
+
+    public deleteAllCameras() {
         RenderScriptCams(false, true, 1000, true, true);
         DestroyAllCams(true);
         ClearFocus();

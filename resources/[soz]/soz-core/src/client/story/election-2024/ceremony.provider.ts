@@ -122,7 +122,7 @@ export class Election2024CeremonyProvider {
         DoScreenFadeOut(500);
         await wait(500);
 
-        this.cameraService.deleteCamera();
+        this.cameraService.deleteAllCameras();
         this.hudStateProvider.setHudVisible(true);
         this.playerHealthProvider.setNutritionDisabled(false);
         this.hudStateProvider.setCinematicMode(false);

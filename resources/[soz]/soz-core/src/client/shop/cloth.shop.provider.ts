@@ -138,7 +138,7 @@ export class ClothingShopProvider {
     @OnNuiEvent(NuiEvent.ClothShopToggleCamera)
     public async onToggleCamera(check: boolean) {
         if (check) {
-            this.cameraService.deleteCamera();
+            this.cameraService.deleteAllCameras();
         } else {
             await this.setupShop(true);
         }
@@ -257,7 +257,7 @@ export class ClothingShopProvider {
         }
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
-        await this.cameraService.deleteCamera();
+        await this.cameraService.deleteAllCameras();
         await this.animationService.clearShopAnimations(PlayerPedId());
         this.currentShop = undefined;
         FreezeEntityPosition(PlayerPedId(), false);

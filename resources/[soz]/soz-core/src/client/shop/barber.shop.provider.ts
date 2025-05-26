@@ -165,7 +165,7 @@ export class BarberShopProvider {
         }
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
-        await this.cameraService.deleteCamera();
+        await this.cameraService.deleteAllCameras();
         await this.animationService.clearShopAnimations(PlayerPedId());
         FreezeEntityPosition(PlayerPedId(), false);
     }

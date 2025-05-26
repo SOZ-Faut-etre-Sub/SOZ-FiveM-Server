@@ -33,7 +33,7 @@ export class MapPickerProvider {
     public async showSouthLocationPicker(locations: MapPickerLocation[]): Promise<MapPickerLocation> {
         SetCloudHatOpacity(0.0);
 
-        this.cameraService.deleteCamera();
+        this.cameraService.deleteAllCameras();
         this.cameraService.setupCamera(add2Vector3(this.southLocation, this.skyOffset), this.southLocation);
 
         await wait(2000);
@@ -61,6 +61,6 @@ export class MapPickerProvider {
         SetCloudHatOpacity(1.0);
         this.locationSelected = null;
         this.nuiDispatch.dispatch('picker', 'map', []);
-        this.cameraService.deleteCamera();
+        this.cameraService.deleteAllCameras();
     }
 }

@@ -349,7 +349,7 @@ export class ParadeProvider {
             this.spotlightProvider.deleteSpotlight(spotlight.id);
         });
 
-        this.cameraService.deleteCamera();
+        this.cameraService.deleteAllCameras();
         this.hudStateProvider.setHudVisible(true);
         this.playerHealthProvider.setNutritionDisabled(false);
 
