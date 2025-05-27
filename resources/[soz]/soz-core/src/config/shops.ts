@@ -54,6 +54,7 @@ export enum ShopBrand {
     SouvenirMemory = 'souvenir-memory',
     SouvenirJewel = 'souvenir-jewel',
     LsCustom = 'ls-custom',
+    CasinoClothing = 'casino-clothing',
 }
 
 export enum NoZoneShopBrand {
@@ -171,6 +172,12 @@ export const NoZonesShopConfig: NoZoneShopConfig[] = [
 
 export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
     [ShopBrand.Ponsonbys]: {
+        label: 'Ponsonbys',
+        blipSprite: 73,
+        blipColor: 26,
+        pedModel: 's_f_m_shop_high',
+    },
+    [ShopBrand.CasinoClothing]: {
         label: 'Ponsonbys',
         blipSprite: 73,
         blipColor: 26,
