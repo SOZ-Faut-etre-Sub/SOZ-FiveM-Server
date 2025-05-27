@@ -16,5 +16,6 @@ export type AdminMapperMenuData = {
     permission: SozRole;
     properties: Property[];
     showInterior: boolean;
+    showPortal: boolean;
     parties: SenateParty[];
 };

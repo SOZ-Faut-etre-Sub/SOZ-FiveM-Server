@@ -84,6 +84,15 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     >
                         🚧 Voir les informations de l'interieur
                     </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={data.showPortal}
+                        onChange={value => {
+                            fetchNui(NuiEvent.AdminMenuMapperSetShowPortal, { value: value });
+                        }}
+                        description="Uniquement si les informations de l'interieur sont activés"
+                    >
+                        🪟 Voir les portails
+                    </MenuItemCheckbox>
                     <MenuItemButton onConfirm={onDrugAdminMenuOpen}>💊 Drogue</MenuItemButton>
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                     <MenuItemButton onConfirm={onLaserGameAdminMenuOpen}>🔫 Laser Game</MenuItemButton>

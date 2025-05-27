@@ -175,3 +175,28 @@ export const getRotationForATargetingB = (A: Vector3, B: Vector3): Vector3 => {
 
     return [pitchDeg, roll, yawDeg];
 };
+
+export function quaternionToEuler(quaternion: Vector4): Vector3 {
+    return [
+        deg(
+            Math.atan2(
+                2 * (quaternion[3] * quaternion[0] + quaternion[1] * quaternion[2]),
+                1 - 2 * (quaternion[0] * quaternion[0] + quaternion[1] * quaternion[1])
+            )
+        ),
+        deg(
+            -Math.PI / 2 +
+                2 *
+                    Math.atan2(
+                        Math.sqrt(1 + 2 * (quaternion[3] * quaternion[1] - quaternion[0] * quaternion[2])),
+                        Math.sqrt(1 - 2 * (quaternion[3] * quaternion[1] - quaternion[0] * quaternion[2]))
+                    )
+        ),
+        deg(
+            Math.atan2(
+                2 * (quaternion[3] * quaternion[2] + quaternion[0] * quaternion[1]),
+                1 - 2 * (quaternion[1] * quaternion[1] + quaternion[2] * quaternion[2])
+            )
+        ),
+    ];
+}

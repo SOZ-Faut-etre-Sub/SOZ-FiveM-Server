@@ -23,7 +23,7 @@ import { JobType } from '../../shared/job';
 import { NotEmptyStringValidator, PositiveNumberValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { BoxZone, Zone, ZoneType, ZoneTypeBlipColor, ZoneTyped, ZoneTypeLabel } from '../../shared/polyzone/box.zone';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { applyOffset, quaternionToEuler, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { BlipFactory } from '../blip';
 import { DrawService } from '../draw.service';
@@ -91,6 +91,7 @@ export class AdminMenuMapperProvider {
     private blipFactory: BlipFactory;
 
     private showInteriorData = false;
+    private showPortalData = false;
 
     @Tick()
     public async showMenuMapperZones(): Promise<void> {
@@ -106,6 +107,8 @@ export class AdminMenuMapperProvider {
                 const roomCount = GetInteriorRoomCount(interiorId);
                 const roomName = GetInteriorRoomName(interiorId, roomId);
                 const roomFlag = GetInteriorRoomFlag(interiorId, roomId);
+                const quaternion = GetInteriorRotation(interiorId);
+                const rotation = quaternionToEuler(quaternion);
                 const style = {
                     color: [66, 182, 245, 255] as RGBAColor,
                     size: 0.4,
@@ -119,6 +122,111 @@ export class AdminMenuMapperProvider {
                 this.drawService.drawText('~b~PortalCount: ~w~' + portalCount, [0.25, 0.09], style);
                 this.drawService.drawText('~b~RoomFlag: ~w~' + roomFlag, [0.25, 0.11], style);
                 this.drawService.drawText('~b~RoomName: ~w~' + roomName, [0.25, 0.13], style);
+
+                if (this.showPortalData) {
+                    const pos = GetInteriorPosition(interiorId) as Vector3;
+                    const fullPos = [pos[0], pos[1], pos[2], rotation[2]] as Vector4;
+                    for (let portalId = 0; portalId < portalCount; portalId++) {
+                        const entitycount = GetInteriorPortalEntityCount(interiorId, portalId);
+
+                        const roomTo = GetInteriorPortalRoomTo(interiorId, portalId);
+                        const roomFrom = GetInteriorPortalRoomFrom(interiorId, portalId);
+                        const flag = GetInteriorPortalFlag(interiorId, portalId);
+
+                        for (let j = 0; j < entitycount; j++) {
+                            const archetype = GetInteriorPortalEntityArchetype(interiorId, portalId, j);
+                            const entityflag = GetInteriorPortalEntityFlag(interiorId, portalId, j);
+                            const position = GetInteriorPortalEntityPosition(interiorId, portalId, j) as Vector3;
+                            const entityRotation = GetInteriorPortalEntityRotation(interiorId, portalId, j);
+                            this.drawService.drawText3d(
+                                applyOffset(fullPos, position) as unknown as Vector3,
+                                'Portal entity:' +
+                                    j +
+                                    ', ach: ' +
+                                    archetype +
+                                    ', entityflag: ' +
+                                    entityflag +
+                                    ', rot: ' +
+                                    entityRotation.map(elem => elem.toFixed(2))
+                            );
+                        }
+
+                        const corner1 = applyOffset(fullPos, GetInteriorPortalCornerPosition(interiorId, portalId, 0));
+                        const corner2 = applyOffset(fullPos, GetInteriorPortalCornerPosition(interiorId, portalId, 1));
+                        const corner3 = applyOffset(fullPos, GetInteriorPortalCornerPosition(interiorId, portalId, 2));
+                        const corner4 = applyOffset(fullPos, GetInteriorPortalCornerPosition(interiorId, portalId, 3));
+
+                        this.drawService.drawText3d(
+                            [
+                                (corner1[0] + corner2[0] + corner3[0] + corner4[0]) / 4,
+                                (corner1[1] + corner2[1] + corner3[1] + corner4[1]) / 4,
+                                (corner1[2] + corner2[2] + corner3[2] + corner4[2]) / 4 - 0.2,
+                            ],
+                            'Portal:' + portalId + ', flag: ' + flag + ', roomFrom: ' + roomFrom + ', roomTo: ' + roomTo
+                        );
+
+                        DrawPoly(
+                            corner1[0],
+                            corner1[1],
+                            corner1[2],
+                            corner2[0],
+                            corner2[1],
+                            corner2[2],
+                            corner3[0],
+                            corner3[1],
+                            corner3[2],
+                            255,
+                            0,
+                            0,
+                            150
+                        );
+                        DrawPoly(
+                            corner2[0],
+                            corner2[1],
+                            corner2[2],
+                            corner1[0],
+                            corner1[1],
+                            corner1[2],
+                            corner3[0],
+                            corner3[1],
+                            corner3[2],
+                            255,
+                            0,
+                            0,
+                            150
+                        );
+                        DrawPoly(
+                            corner4[0],
+                            corner4[1],
+                            corner4[2],
+                            corner1[0],
+                            corner1[1],
+                            corner1[2],
+                            corner3[0],
+                            corner3[1],
+                            corner3[2],
+                            255,
+                            0,
+                            0,
+                            150
+                        );
+                        DrawPoly(
+                            corner1[0],
+                            corner1[1],
+                            corner1[2],
+                            corner4[0],
+                            corner4[1],
+                            corner4[2],
+                            corner3[0],
+                            corner3[1],
+                            corner3[2],
+                            255,
+                            0,
+                            0,
+                            150
+                        );
+                    }
+                }
             }
         }
     }
@@ -148,6 +256,7 @@ export class AdminMenuMapperProvider {
             permission: permission as SozRole,
             properties: this.housingRepository.get(),
             showInterior: this.showInteriorData,
+            showPortal: this.showPortalData,
             parties: this.senateRepository.get(),
         });
     }
@@ -489,6 +598,11 @@ export class AdminMenuMapperProvider {
     @OnNuiEvent(NuiEvent.AdminMenuMapperSetShowInterior)
     public async setShowInterior({ value }: { value: boolean }): Promise<void> {
         this.showInteriorData = value;
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuMapperSetShowPortal)
+    public async setShowPortal({ value }: { value: boolean }): Promise<void> {
+        this.showPortalData = value;
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuMapperAddObject)

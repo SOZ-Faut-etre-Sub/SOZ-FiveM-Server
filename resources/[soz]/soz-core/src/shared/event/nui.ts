@@ -28,6 +28,7 @@ export enum NuiEvent {
     AdminMenuMapperShowAllProperty = 'soz-core:nui:admin:mapper:show-all-property',
     AdminMenuMapperAddObject = 'soz-core:nui:admin:mapper:add-object',
     AdminMenuMapperSetShowInterior = 'soz-core:nui:admin:mapper:set-show-interior',
+    AdminMenuMapperSetShowPortal = 'soz-core:nui:admin:mapper:set-show-portal',
     AdminMenuMapperAddZone = 'soz-core:nui:admin:mapper:add-zone',
     AdminMenuMapperDeleteZone = 'soz-core:nui:admin:mapper:delete-zone',
     AdminMenuMapperBlipZone = 'soz-core:nui:admin:mapper:blip-zone',
