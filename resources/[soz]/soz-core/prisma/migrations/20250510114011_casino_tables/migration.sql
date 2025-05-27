@@ -13,7 +13,7 @@ CREATE TABLE `casino_tables` (
 -- Create default data
 INSERT INTO `casino_tables` VALUES
     -- poker
-    (uuid(), 'poker', '{"x":993.2344, "y":43.61603, "z":69.23276, "w":-283}', 'vw_prop_casino_3cardpoker_01b', 'highLimit', true),
+    (uuid(), 'poker', '{"x":993.2344, "y":43.61603, "z":69.23276, "w":280}', 'vw_prop_casino_3cardpoker_01b', 'highLimit', true),
     (uuid(), 'poker', '{"x":991.465, "y":40.09433, "z":69.23276, "w":203}', 'vw_prop_casino_3cardpoker_01b', 'highLimit', true),
     (uuid(), 'poker', '{"x":996.3485, "y":51.73592, "z":68.43275, "w":323}', 'vw_prop_casino_3cardpoker_01', 'base', true),
     (uuid(), 'poker', '{"x":1000.784, "y":51.02497, "z":68.43275, "w":13}', 'vw_prop_casino_3cardpoker_01', 'base', true),
