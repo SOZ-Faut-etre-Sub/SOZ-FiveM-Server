@@ -54,7 +54,6 @@ export enum ShopBrand {
     SouvenirMemory = 'souvenir-memory',
     SouvenirJewel = 'souvenir-jewel',
     LsCustom = 'ls-custom',
-    CasinoClothing = 'casino-clothing',
 }
 
 export enum NoZoneShopBrand {
