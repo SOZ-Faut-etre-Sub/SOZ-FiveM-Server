@@ -3,6 +3,7 @@ import './247supermarket-north.zones';
 import './247supermarket-south.zones';
 import './ammunation.zones';
 import './barber.zones';
+import './casino-clothing.zones';
 import './clothing-binco.zones';
 import './clothing-ponsonbys.zones';
 import './clothing-suburban.zones';

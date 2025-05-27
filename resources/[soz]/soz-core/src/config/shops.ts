@@ -54,6 +54,7 @@ export enum ShopBrand {
     SouvenirMemory = 'souvenir-memory',
     SouvenirJewel = 'souvenir-jewel',
     LsCustom = 'ls-custom',
+    CasinoClothing = 'casino-clothing',
 }
 
 export enum NoZoneShopBrand {
@@ -637,7 +638,7 @@ export const ShopsConfig: Record<string, ShopConfig> = {
         brand: ShopBrand.SouvenirJewel,
         location: [-715.15, -248.64, 36.98, 349.29],
     },
-    ['ponsonbys_casino']: {
+    'casino-clothing1': {
         brand: ShopBrand.Ponsonbys,
         location: [922.58, 21.58, 71.83, 285.25],
         positionInShop: [922.22, 28.14, 71.83, 192.53],
