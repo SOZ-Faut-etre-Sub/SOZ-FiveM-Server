@@ -68,7 +68,7 @@ export const BindName: Record<string, string> = {
     b_196: 'Left Arrow',
     b_197: 'Right Arrow',
     b_198: 'Del',
-    b_199: 'Esc',
+    b_199: 'Backspace',
     b_200: 'Ins',
     b_201: 'End',
     b_202: 'Suppr',

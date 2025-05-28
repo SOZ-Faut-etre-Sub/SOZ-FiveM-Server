@@ -14,6 +14,7 @@ export enum DealershipType {
     Electric = 'electric',
     Armored = 'armored',
     Cartel = 'cartel',
+    Casino = 'casino',
 }
 
 export type DealershipConfigItem = {
@@ -94,6 +95,13 @@ export const DealershipConfig: Partial<Record<DealershipType, DealershipConfigIt
         ped: null,
         showroom: null,
         garageName: 'airport_public_air',
+    },
+    [DealershipType.Casino]: {
+        position: null,
+        blip: null,
+        ped: null,
+        showroom: null,
+        garageName: 'diamond',
     },
     [DealershipType.Cycle]: {
         position: [-1222.26, -1494.83, 3.34, 120.0],
