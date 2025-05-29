@@ -719,7 +719,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -733,7 +733,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -747,7 +747,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson Vice Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -761,7 +761,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson Supervisor']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -878,9 +878,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -893,9 +893,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
@@ -908,9 +908,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte Traffic Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
@@ -923,9 +923,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte Cadets']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
@@ -966,7 +966,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -980,7 +980,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Vice Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -994,7 +994,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Traffic Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1008,7 +1008,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Marine Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1022,7 +1022,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Wildlife Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1036,7 +1036,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Training Team']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1050,7 +1050,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Cadets']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1064,7 +1064,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Supervisor']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1078,7 +1078,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Imperméable capuche']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1090,7 +1090,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Imperméable']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1104,7 +1104,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1119,7 +1119,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1134,7 +1134,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver Traffic Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1149,7 +1149,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver Supervisor']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -1294,11 +1294,11 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Manteau ouvert Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -1312,7 +1312,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -1326,7 +1326,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -1340,7 +1340,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -1565,7 +1565,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -1580,7 +1580,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -1601,7 +1601,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
             ['Chemise épaulette cravate verte']: {
                 Components: {
@@ -1610,13 +1610,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 42, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
             ['Chemise épaulette cravate noir-doré']: {
                 Components: {
@@ -1625,13 +1625,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 42, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
             ['Chemise épaulette cravate bleu marine']: {
                 Components: {
@@ -1640,13 +1640,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 42, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
         },
         [PlayerPedHash.Female]: {
@@ -2531,7 +2531,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
@@ -3261,7 +3261,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3275,7 +3275,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3289,7 +3289,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson Vice Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3303,7 +3303,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Blouson Supervisor']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3347,7 +3347,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -3362,7 +3362,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 31, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
@@ -3377,7 +3377,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 31, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
@@ -3392,7 +3392,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 31, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
@@ -3407,7 +3407,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 31, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
@@ -3420,9 +3420,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -3435,9 +3435,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
@@ -3450,9 +3450,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte Traffic Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
@@ -3465,9 +3465,9 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Chemise m. courte Cadets']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
@@ -3508,7 +3508,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3522,7 +3522,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Vice Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3536,7 +3536,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Traffic Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3550,7 +3550,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Marine Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3564,7 +3564,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Wildlife Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3578,7 +3578,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Training Team']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3592,7 +3592,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Cadets']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3606,7 +3606,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Pull Supervisor']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3620,7 +3620,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Imperméable capuche']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3632,7 +3632,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Imperméable']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3646,7 +3646,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3661,7 +3661,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver K-9']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3676,7 +3676,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver Traffic Unit']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3691,7 +3691,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver Supervisor']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
@@ -3836,11 +3836,11 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Manteau ouvert Patrol']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -3854,7 +3854,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -3868,7 +3868,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -3882,7 +3882,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     [Component.Tops]: { Drawable: 40, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -4107,7 +4107,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -4122,7 +4122,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 43, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -4143,7 +4143,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
             ['Chemise épaulette cravate verte']: {
                 Components: {
@@ -4152,13 +4152,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
             ['Chemise épaulette cravate noir-doré']: {
                 Components: {
@@ -4167,13 +4167,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 42, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
             ['Chemise épaulette cravate bleu marine']: {
                 Components: {
@@ -4182,13 +4182,13 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                    [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 44, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
-                rankType: DUTY_OUTFIT_NAME,
+                rankType: MOTO,
             },
         },
         [PlayerPedHash.Female]: {
@@ -4294,7 +4294,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 2, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
@@ -5104,7 +5104,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
@@ -5727,28 +5727,28 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Blouson Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Blouson K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Blouson Vice Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Blouson Supervisor']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -5810,32 +5810,32 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Chemise m. courte Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte Traffic Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte Cadets']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -5856,77 +5856,77 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Pull K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Vice Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Traffic Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Marine Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 34, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Wildlife Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 34, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Training Team']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Cadets']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 34, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Supervisor']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Imperméable capuche']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 36, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Imperméable']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 35, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Hiver Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -5934,7 +5934,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -5942,7 +5942,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver Traffic Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -5950,7 +5950,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver Supervisor']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -6025,7 +6025,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Manteau ouvert Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 40, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -6167,7 +6167,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
@@ -6175,7 +6175,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
@@ -6185,31 +6185,31 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 44, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
                 ['Chemise épaulette cravate verte']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 42, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
                 ['Chemise épaulette cravate noir-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 42, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
                 ['Chemise épaulette cravate bleu marine']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 42, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
             },
             [WardRobeElements.Accessory]: {
@@ -6252,7 +6252,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Chemise']: {
                     Components: {
-                        [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                        [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     },
                 },
             },
@@ -6777,7 +6777,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 31, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -6959,7 +6959,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Chapeau']: {
                     Props: {
-                        [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                        [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
             },
@@ -6967,7 +6967,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 [DUTY_OUTFIT_NAME]: {
                     Components: {
                         [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -6990,7 +6990,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 [MOTO]: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                     GlovesID: 56000,
@@ -7292,28 +7292,28 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Blouson Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Blouson K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Blouson Vice Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Blouson Supervisor']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -7335,7 +7335,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise blanche']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7343,7 +7343,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise bleu marine']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 31, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7351,7 +7351,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise bleu']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 31, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7359,7 +7359,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise verte']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 31, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                     },
                     category: 'Modern',
@@ -7368,39 +7368,39 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise noir-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 31, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte Traffic Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise m. courte Cadets']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7421,77 +7421,77 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Pull K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Vice Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Traffic Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Marine Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 34, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Wildlife Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 34, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Training Team']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Cadets']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 34, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pull Supervisor']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 33, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Imperméable capuche']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 36, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Imperméable']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 35, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Hiver Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -7499,7 +7499,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver K-9']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -7507,7 +7507,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver Traffic Unit']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -7515,7 +7515,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver Supervisor']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 6, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 37, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -7590,7 +7590,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Manteau ouvert Patrol']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 40, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -7618,48 +7618,48 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Chemise épaulette m. courte blanche']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 41, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette m. courte bleu marine']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 41, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette m. courte bleu']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 41, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette m. courte vert']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 41, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette m. courte noir-doré']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 41, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette m. courte bleu-doré']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 41, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7667,7 +7667,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette blanche']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 42, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7675,7 +7675,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette bleu marine']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7683,7 +7683,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette bleu']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7691,7 +7691,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette vert']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 42, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7699,7 +7699,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette noir-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 42, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7707,7 +7707,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette bleu-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 42, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7715,7 +7715,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette col noir-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 43, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7723,7 +7723,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette col blanche']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7731,50 +7731,50 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise épaulette col K9']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette col Cadet']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
                 },
                 ['Chemise épaulette cravate blanche']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 44, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
                 ['Chemise épaulette cravate verte']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
                 ['Chemise épaulette cravate noir-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 42, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
                 ['Chemise épaulette cravate bleu marine']: {
                     Components: {
                         [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                        [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
-                    rankType: DUTY_OUTFIT_NAME,
+                    rankType: MOTO,
                 },
             },
             [WardRobeElements.Accessory]: {
@@ -7817,7 +7817,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Chemise']: {
                     Components: {
-                        [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                        [Component.Undershirt]: { Drawable: 11, Texture: 1, Palette: 0 },
                     },
                 },
             },
@@ -7905,7 +7905,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 [DUTY_OUTFIT_NAME]: {
                     Components: {
                         [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -7928,7 +7928,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 [MOTO]: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
                     GlovesID: 55000,
@@ -8257,7 +8257,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise blanche']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8265,7 +8265,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise bleu marine']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 27, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8273,7 +8273,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise bleu marine 2']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8281,7 +8281,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise bleu marine 3']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 27, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8289,7 +8289,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 27, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8297,7 +8297,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise doré 2']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 27, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8305,7 +8305,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise cravate blanche']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 28, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8313,7 +8313,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise cravate noir-doré']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 28, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8321,7 +8321,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Chemise cravate noir-doré 2']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 28, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: DUTY_OUTFIT_NAME,
@@ -8342,7 +8342,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -8444,7 +8444,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Cérémonie']: {
                     Components: {
-                        [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Legs]: { Drawable: 14, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
                 ['Pantalon vert']: {
