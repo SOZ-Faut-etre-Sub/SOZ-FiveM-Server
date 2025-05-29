@@ -18,11 +18,11 @@ export const CameraOffsets: Record<number, Vector3> = {
     [GetHashKey('prop_cctv_pole_03')]: [0, 0, 5],
     [GetHashKey('prop_cctv_pole_04')]: [0, 0, 4],
     [GetHashKey('prop_cs_cctv')]: [0, 0, 0],
-    [GetHashKey('p_cctv_s')]: [0, 0, 0],
+    [GetHashKey('p_cctv_s')]: [0, 0, -0.5],
     [GetHashKey('xm_prop_x17_server_farm_cctv_01')]: [0, 0, 0],
     [GetHashKey('xm_prop_x17_cctv_01a')]: [0, 0, 0],
     [GetHashKey('hei_prop_bank_cctv_02')]: [0, 0, 0],
-    [GetHashKey('hei_prop_bank_cctv_01')]: [0, 0, 0],
+    [GetHashKey('hei_prop_bank_cctv_01')]: [0, 0, -0.5],
     [GetHashKey('ba_prop_battle_cctv_cam_01a')]: [0, 0, 0],
     [GetHashKey('ba_prop_battle_cctv_cam_01b')]: [0, 0, 0],
     [GetHashKey('h4_prop_h4_cctv_pole_04')]: [0, 0, 4],
@@ -836,6 +836,7 @@ export const CameraLocations: CameraDef[] = [
         street: 127506487,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1175.6004638671875, -455.3765563964844, 62.344600677490234],
         heading: 326.64434814453125,
@@ -844,6 +845,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1175.220458984375, 2702.989990234375, 40.838783264160156],
         heading: 0,
@@ -876,6 +878,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1172.5587158203125, -433.1034851074219, 75.05503845214844],
         heading: 311.64434814453125,
@@ -884,6 +887,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1171.7413330078125, 2712.287841796875, 40.17217254638672],
         heading: 80.00006103515625,
@@ -956,6 +960,7 @@ export const CameraLocations: CameraDef[] = [
         street: 2142106034,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1168.102783203125, -453.5888977050781, 62.345802307128906],
         heading: 325.9530334472656,
@@ -972,6 +977,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1166.2225341796875, -321.8387145996094, 71.9510498046875],
         heading: 9.989541053771973,
@@ -980,6 +986,7 @@ export const CameraLocations: CameraDef[] = [
         street: 11678836,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1166.008056640625, -476.2080993652344, 62.34370040893555],
         heading: 151.64430236816406,
@@ -996,6 +1003,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    */
     {
         position: [1164.9881591796875, -318.1188049316406, 71.73554992675781],
         heading: 325.0000915527344,
@@ -1004,6 +1012,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1165.495849609375, -464.9354248046875, 75.05533599853516],
         heading: 311.64434814453125,
@@ -1012,6 +1021,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1164.1522216796875, -312.5277404785156, 71.25353240966797],
         heading: 350.00006103515625,
@@ -1020,6 +1030,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1164.2593994140625, -432.4469299316406, 75.05352783203125],
         heading: 331.6444396972656,
@@ -1052,6 +1063,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    */
     {
         position: [1162.387451171875, -429.9906311035156, 63.50287628173828],
         heading: 346.6443176269531,
@@ -1060,6 +1072,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1161.801025390625, -441.7613220214844, 71.32640838623047],
         heading: 336.6444396972656,
@@ -1092,6 +1105,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    */
     {
         position: [1161.420654296875, -485.50048828125, 71.33524322509766],
         heading: 26.999975204467773,
@@ -1100,6 +1114,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    /* MPPD
     {
         position: [1159.685546875, -471.0506896972656, 67.58623504638672],
         heading: 216.6443176269531,
@@ -1116,6 +1131,7 @@ export const CameraLocations: CameraDef[] = [
         street: 128684945,
         street2: 530762033,
     },
+    */
     {
         position: [1158.6468505859375, -314.07177734375, 71.25208282470703],
         heading: 54.999961853027344,
@@ -1124,6 +1140,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1159.281494140625, -455.1915588378906, 71.32971954345703],
         heading: 28.309537887573242,
@@ -1196,6 +1213,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1156.1549072265625, -422.60028076171875, 75.32064819335938],
         heading: 52.0000114440918,
@@ -1228,6 +1246,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1154.8875732421875, -463.9578857421875, 67.58485412597656],
         heading: 201.6443634033203,
@@ -1236,6 +1255,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1154.566162109375, -1309.859130859375, 39.76104736328125],
         heading: 355.0000305175781,
@@ -1276,6 +1296,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1152.983154296875, -463.9158020019531, 62.34823989868164],
         heading: 241.6443328857422,
@@ -1316,6 +1337,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    */
     {
         position: [1151.3642578125, -458.8147277832031, 75.19134521484375],
         heading: 167,
@@ -1324,6 +1346,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1151.4969482421875, -468.7088317871094, 62.34823989868164],
         heading: 201.6443328857422,
@@ -1340,6 +1363,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    */
     {
         position: [1149.745361328125, -434.64642333984375, 74.57154846191406],
         heading: 90.00008392333984,
@@ -1348,6 +1372,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1150.0623779296875, -463.6643981933594, 67.58623504638672],
         heading: 51.64432144165039,
@@ -1484,6 +1509,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1144.232177734375, -478.47540283203125, 67.08362579345703],
         heading: 90.0000228881836,
@@ -1492,6 +1518,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    /* MPPD
     {
         position: [1141.6187744140625, -463.00238037109375, 71.32820129394531],
         heading: 101.64432525634766,
@@ -1516,6 +1543,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1139.9591064453125, -424.5322570800781, 70.76362609863281],
         heading: 257,
@@ -1524,6 +1552,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1140.150146484375, -470.8517150878906, 62.347713470458984],
         heading: 196.64434814453125,
@@ -1588,6 +1617,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1133.0142822265625, -978.5855712890625, 48.992637634277344],
         heading: 33.84004211425781,
@@ -1612,6 +1642,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1131.85400390625, -469.4219055175781, 62.347713470458984],
         heading: 101.64435577392578,
@@ -1628,6 +1659,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
+    */
     {
         position: [1130.893798828125, -476.1512451171875, 73.09196472167969],
         heading: 90.0000228881836,
@@ -1652,6 +1684,7 @@ export const CameraLocations: CameraDef[] = [
         street: 11678836,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1130.0157470703125, -472.3927307128906, 75.05162048339844],
         heading: 106.64430236816406,
@@ -1660,6 +1693,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1130.1170654296875, -1598.6484375, 36.770240783691406],
         heading: 0,
@@ -8412,6 +8446,7 @@ export const CameraLocations: CameraDef[] = [
         street: -221825258,
         street2: 30934387,
     },
+    /* Villa Glory
     {
         position: [-1090.6502685546875, 366.5111083984375, 71.25807189941406],
         heading: 90.40311431884766,
@@ -8420,6 +8455,7 @@ export const CameraLocations: CameraDef[] = [
         street: -641602866,
         street2: 421113525,
     },
+    */
     {
         position: [-1092.1181640625, 2709.222412109375, 21.14842987060547],
         heading: 41.87705993652344,
@@ -8612,6 +8648,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1284661444,
         street2: 0,
     },
+    /* Villa Glory
     {
         position: [-1125.91552734375, 389.69439697265625, 73.30067443847656],
         heading: 176.65309143066406,
@@ -8620,6 +8657,7 @@ export const CameraLocations: CameraDef[] = [
         street: 421113525,
         street2: 0,
     },
+    */
     {
         position: [-1126.1539306640625, -2532.816162109375, 20.033687591552734],
         heading: 255,
@@ -9260,6 +9298,7 @@ export const CameraLocations: CameraDef[] = [
         street: 629262578,
         street2: 0,
     },
+    /* Villa OB
     {
         position: [-1454.14892578125, -35.48200988769531, 58.88703155517578],
         heading: 72.20135498046875,
@@ -9268,6 +9307,7 @@ export const CameraLocations: CameraDef[] = [
         street: -1740997275,
         street2: -1264085241,
     },
+    */
     {
         position: [-1454.9779052734375, 539.948791503906, 122.38814544677734],
         heading: 90,
@@ -9316,6 +9356,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1502743981,
         street2: 0,
     },
+    /* Villa OB
     {
         position: [-1475.2535400390625, -14.707817077636719, 58.88703155517578],
         heading: 102.20135498046875,
@@ -9324,6 +9365,7 @@ export const CameraLocations: CameraDef[] = [
         street: -1264085241,
         street2: 0,
     },
+    */
     {
         position: [-1482.962158203125, -380.3922119140625, 42.7402229309082],
         heading: 250.92575073242188,
@@ -9420,6 +9462,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1884297396,
         street2: 0,
     },
+    /* Millitary
     {
         position: [-1588.8984375, 2794.019287109375, 20.688739776611328],
         heading: 41.73629379272461,
@@ -9428,6 +9471,7 @@ export const CameraLocations: CameraDef[] = [
         street: -163478756,
         street2: 0,
     },
+    */
     {
         position: [-1589.264404296875, 15.58437728881836, 63.333702087402344],
         heading: 80.00006103515625,
@@ -9436,6 +9480,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1884297396,
         street2: 0,
     },
+    /* Millitary
     {
         position: [-1592.662841796875, 2800.056640625, 18.35782241821289],
         heading: 131.99278259277344,
@@ -9444,6 +9489,7 @@ export const CameraLocations: CameraDef[] = [
         street: -163478756,
         street2: 0,
     },
+    */
     {
         position: [-1597.822021484375, 16.0517578125, 63.333702087402344],
         heading: 260.00006103515625,
@@ -10140,6 +10186,7 @@ export const CameraLocations: CameraDef[] = [
         street: 302348953,
         street2: 0,
     },
+    /* Millitary
     {
         position: [-2134.803955078125, 2800.89990234375, 31.7726993560791],
         heading: 49.99995803833008,
@@ -10148,6 +10195,7 @@ export const CameraLocations: CameraDef[] = [
         street: 127506487,
         street2: 0,
     },
+    */
     {
         position: [-2173.34912109375, 4283.7431640625, 51.29498291015625],
         heading: 60.46385192871094,

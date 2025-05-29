@@ -178,7 +178,7 @@ export class PoliceCameraProvider {
         for (let i = 0; i < 50; i++) {
             await wait(100);
 
-            const entity = GetClosestObjectOfType(
+            this.entity = GetClosestObjectOfType(
                 data.position[0],
                 data.position[1],
                 data.position[2],
@@ -189,9 +189,9 @@ export class PoliceCameraProvider {
                 false
             );
 
-            if (entity) {
-                SetEntityCollision(entity, false, true);
-                SetEntityVisible(entity, false, false);
+            if (this.entity) {
+                SetEntityCollision(this.entity, false, true);
+                SetEntityVisible(this.entity, false, false);
                 break;
             }
         }
