@@ -1,4 +1,4 @@
-import { Component, OutfitItem, Prop, WardrobeConfig } from '../cloth';
+import { Component, CustomWardrobe, OutfitItem, Prop, WardrobeConfig, WardRobeElements } from '../cloth';
 import { joaat } from '../joaat';
 import { JobType } from '../job';
 import { PlayerLicenceType, PlayerPedHash } from '../player';
@@ -8,6 +8,7 @@ export const DUTY_OUTFIT_NAME = 'Tenue de service';
 export const WINTER = 'Tenue Hiver';
 export const SASP_DARK = 'Tenue sombre';
 export const MOTO = 'Tenue de moto';
+export const PILOT = 'Tenue de pilote';
 
 export const PrisonerClothes = {
     [PlayerPedHash.Male]: {
@@ -94,7 +95,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Original',
                 rankType: WINTER,
             },
-            ['Tenue de pilote']: {
+            [PILOT]: {
                 Components: {
                     [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -926,7 +927,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -1682,7 +1683,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Original',
                 rankType: WINTER,
             },
-            ['Tenue de pilote']: {
+            [PILOT]: {
                 Components: {
                     [Component.Torso]: { Drawable: 17, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -1739,7 +1740,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 12, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
@@ -2636,7 +2637,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Original',
                 rankType: WINTER,
             },
-            ['Tenue de pilote']: {
+            [PILOT]: {
                 Components: {
                     [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -3468,7 +3469,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
@@ -4224,7 +4225,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Original',
                 rankType: WINTER,
             },
-            ['Tenue de pilote']: {
+            [PILOT]: {
                 Components: {
                     [Component.Torso]: { Drawable: 36, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
@@ -4281,7 +4282,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
-                    [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 12, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {},
@@ -5197,6 +5198,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 56000,
+                rankType: DUTY_OUTFIT_NAME,
             },
             [SASP_DARK]: {
                 Components: {
@@ -5219,6 +5221,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 56000,
+                rankType: DUTY_OUTFIT_NAME,
             },
         },
         [PlayerPedHash.Female]: {
@@ -5243,6 +5246,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 55000,
+                rankType: DUTY_OUTFIT_NAME,
             },
             [SASP_DARK]: {
                 Components: {
@@ -5265,6 +5269,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 GlovesID: 55000,
+                rankType: DUTY_OUTFIT_NAME,
             },
         },
     },
@@ -5349,6 +5354,3325 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                         Drawable: 45,
                         Texture: 0,
                         Palette: 0,
+                    },
+                },
+            },
+        },
+    },
+};
+
+export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHash, CustomWardrobe>>> = {
+    [JobType.LSPD]: {
+        [PlayerPedHash.Male]: {
+            [WardRobeElements.Helmet]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Helmet]: { Clear: true },
+                    },
+                },
+                [MOTO]: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 1']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 2']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 18, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Hat]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Hat]: { Clear: true },
+                    },
+                },
+                ['Casquette']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Top]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                [WINTER]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    GlovesID: 56000,
+                    rankType: MOTO,
+                },
+                ['Equipement seulement']: {
+                    Components: {
+                        [Component.Decals]: {
+                            Drawable: 4,
+                            Texture: 0,
+                            Palette: 0,
+                            Collection: 'soz_bcso',
+                        },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 12, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie clair']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 16, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie sombre']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 16, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Motocycle Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Air Support Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Sweat']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 8, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 28, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Tenue de pilote 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 30, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise verte']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Pull Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Patrol 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 34, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 34, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 34, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Imperméable capuche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 36, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Imperméable']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 35, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Hiver Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Blouson col Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise épaulette m. courte blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte vert']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte bleu-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette vert']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette bleu-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col K9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col Cadet']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate verte']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+            },
+            [WardRobeElements.Accessory]: {
+                ['Aucun']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Holster']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Belt]: {
+                ['Aucune']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['BCSO']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['LSPD']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Anti-Emeute']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    },
+                },
+            },
+            [WardRobeElements.Bottom]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pantalon noir']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Shoes]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 13, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
+                    },
+                },
+            },
+        },
+        [PlayerPedHash.Female]: {
+            [WardRobeElements.Helmet]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Helmet]: { Clear: true },
+                    },
+                },
+                [MOTO]: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 1']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 2']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Hat]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Hat]: { Clear: true },
+                    },
+                },
+                ['Casquette']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Top]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                [WINTER]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 17, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    GlovesID: 55000,
+                    rankType: MOTO,
+                },
+                ['Equipement seulement']: {
+                    Components: {
+                        [Component.Decals]: {
+                            Drawable: 4,
+                            Texture: 0,
+                            Palette: 0,
+                            Collection: 'soz_bcso',
+                        },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 12, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 17, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Motocycle Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Air Support Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    Props: {
+                        [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                },
+                ['Polo Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 23, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 19, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 21, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 26, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 15, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 9, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine 3']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise doré 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 28, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 28, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise cravate noir-doré 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 28, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Imperméable capuche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 29, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Imperméable']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 30, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Hiver']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 31, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Manteau ouvert Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Vice']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert K9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Accessory]: {
+                ['Aucun']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Holster']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Belt]: {
+                ['Aucune']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['BCSO']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['LSPD']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Anti-Emeute']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    },
+                },
+            },
+            [WardRobeElements.Bottom]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 5, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pantalon noir']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Jupe courte']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Jupe longue']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 7, Texture: 0, Palette: 0 },
+                    },
+                },
+            },
+            [WardRobeElements.Shoes]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    },
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Talons']: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
+                    },
+                },
+            },
+        },
+    },
+    [JobType.BCSO]: {
+        [PlayerPedHash.Male]: {
+            [WardRobeElements.Helmet]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Helmet]: { Clear: true },
+                    },
+                },
+                [MOTO]: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 1']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 2']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 18, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Hat]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Hat]: { Clear: true },
+                    },
+                },
+                ['Chapeau']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Top]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                [WINTER]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    GlovesID: 56000,
+                    rankType: MOTO,
+                },
+                ['Equipement seulement']: {
+                    Components: {
+                        [Component.Decals]: {
+                            Drawable: 4,
+                            Texture: 1,
+                            Palette: 0,
+                            Collection: 'soz_bcso',
+                        },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 12, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie clair']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 16, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie sombre']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Motocycle Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Air Support Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 18, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 27, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Sweat']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 8, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 28, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Tenue de pilote 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 16, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 30, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise verte']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 31, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise m. courte Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Pull Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Patrol 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 34, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 34, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 34, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pull Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Imperméable capuche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 36, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Imperméable']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 35, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Hiver Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 37, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Hiver Chemise Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 38, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Blouson col Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson col Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 39, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 40, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise épaulette m. courte blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte vert']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette m. courte bleu-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 41, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette vert']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette bleu-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col K9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette col Cadet']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 43, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 44, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate verte']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise épaulette cravate bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 42, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+            },
+            [WardRobeElements.Accessory]: {
+                ['Aucun']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Holster']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Belt]: {
+                ['Aucune']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['BCSO']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['LSPD']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Anti-Emeute']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 32, Texture: 1, Palette: 0 },
+                    },
+                },
+            },
+            [WardRobeElements.Bottom]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 3, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pantalon vert']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 14, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Shoes]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 13, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 2, Texture: 0, Palette: 0 },
+                    },
+                },
+            },
+        },
+        [PlayerPedHash.Female]: {
+            [WardRobeElements.Helmet]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Helmet]: { Clear: true },
+                    },
+                },
+                [MOTO]: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 1']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote 2']: {
+                    Props: {
+                        [Prop.Helmet]: { Drawable: 15, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Hat]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Hat]: { Clear: true },
+                    },
+                },
+                ['Chapeau']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Top]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                [WINTER]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 17, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    GlovesID: 55000,
+                    rankType: MOTO,
+                },
+                ['Equipement seulement']: {
+                    Components: {
+                        [Component.Decals]: {
+                            Drawable: 4,
+                            Texture: 0,
+                            Palette: 0,
+                            Collection: 'soz_bcso',
+                        },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 12, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 16, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Motocycle Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Air Support Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 19, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['T-Shirt Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 20, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    Props: {
+                        [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                },
+                ['Polo Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 22, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 21, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 24, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manchon Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 23, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 22, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 24, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 18, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Traffic Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Marine Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 20, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Wildlife Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Training Team']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 26, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Polo manche courte Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 25, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson K-9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Vice Unit']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Cadets']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Blouson Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 32, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise bleu marine 3']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise doré 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 27, Texture: 12, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 28, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 28, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise cravate noir-doré 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 28, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Imperméable capuche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 29, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Imperméable']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 30, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Hiver']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: WINTER,
+                },
+                ['Manteau ouvert Patrol']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Vice']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert Supervisor']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Manteau ouvert K9']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Tops]: { Drawable: 33, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Accessory]: {
+                ['Aucun']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Holster']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Belt]: {
+                ['Aucune']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['BCSO']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['LSPD']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Anti-Emeute']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pilote']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chemise']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 39, Texture: 1, Palette: 0 },
+                    },
+                },
+            },
+            [WardRobeElements.Bottom]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 5, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 3, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 10, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Cérémonie']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 14, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Pantalon vert']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 15, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Jupe courte']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Jupe longue']: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Shoes]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    },
+                },
+                [PILOT]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
+                    },
+                },
+                [MOTO]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 34, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Tenue Sportive']: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 10, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Talons']: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
+                    },
+                },
+            },
+        },
+    },
+    [JobType.SASP]: {
+        [PlayerPedHash.Male]: {
+            [WardRobeElements.Hat]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Hat]: { Clear: true },
+                    },
+                },
+                ['Chapeau']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chapeau sombre']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Top]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.BodyArmor]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                [SASP_DARK]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.BodyArmor]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+            },
+            [WardRobeElements.Accessory]: {
+                ['Aucun']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Holster']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Belt]: {
+                ['Aucune']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['BCSO']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['LSPD']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Anti-Emeute']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Bottom]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 1, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [SASP_DARK]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Shoes]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    },
+                },
+            },
+        },
+        [PlayerPedHash.Female]: {
+            [WardRobeElements.Hat]: {
+                ['Aucun']: {
+                    Props: {
+                        [Prop.Hat]: { Clear: true },
+                    },
+                },
+                ['Chapeau']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 6, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Chapeau sombre']: {
+                    Props: {
+                        [Prop.Hat]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Top]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.BodyArmor]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                [SASP_DARK]: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 2, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.BodyArmor]: { Drawable: 10, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 2, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+            },
+            [WardRobeElements.Accessory]: {
+                ['Aucun']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['Holster']: {
+                    Components: {
+                        [Component.Accessories]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Belt]: {
+                ['Aucune']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                    },
+                },
+                ['BCSO']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['LSPD']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                ['Anti-Emeute']: {
+                    Components: {
+                        [Component.Undershirt]: { Drawable: 7, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Bottom]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 1, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+                [SASP_DARK]: {
+                    Components: {
+                        [Component.Legs]: { Drawable: 8, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                },
+            },
+            [WardRobeElements.Shoes]: {
+                [DUTY_OUTFIT_NAME]: {
+                    Components: {
+                        [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     },
                 },
             },

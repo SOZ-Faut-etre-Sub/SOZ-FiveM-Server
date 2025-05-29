@@ -21,7 +21,7 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { emitRpc } from '../../core/rpc';
 import { ServerEvent } from '../../shared/event';
-import { POLICE_CLOAKROOM, RankOutfit } from '../../shared/job/police';
+import { POLICE_CLOAKROOM, POLICE_CUSTOM_CLOAKROOM, RankOutfit } from '../../shared/job/police';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
@@ -86,12 +86,12 @@ export class JobCloakroomProvider {
         this.notifier.notify(`Il reste ${result} tenues de travail dans le vestiaire.`);
     }
 
-    public async openCloakroom(storageIdToSave: string, config: WardrobeConfig, customLabel?: string) {
+    public async openCloakroom(storageIdToSave: string, config: WardrobeConfig, allowCustom?: boolean) {
         if (!config) {
             return;
         }
 
-        const outfitSelection = await this.playerWardrobe.selectOutfit(config, 'Tenue civile', customLabel);
+        const outfitSelection = await this.playerWardrobe.selectOutfit(config, 'Tenue civile', allowCustom);
 
         if (outfitSelection.canceled) {
             return;
@@ -146,7 +146,7 @@ export class JobCloakroomProvider {
                 }
             }
 
-            return await this.openCloakroom(storageIdToSave, configs, 'Tenue Personnalisée');
+            return await this.openCloakroom(storageIdToSave, configs, !!POLICE_CUSTOM_CLOAKROOM[player.job.id]);
         }
 
         await this.openCloakroom(storageIdToSave, jobStorage[job]);

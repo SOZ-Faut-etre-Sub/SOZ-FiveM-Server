@@ -41,8 +41,8 @@ export type GlovesItem = {
 export type OutfitType = 'SPORT' | 'SWAT' | 'MINE' | '';
 
 export type Outfit = {
-    Components: Partial<Record<Component, OutfitItem>>;
-    Props: Partial<Record<Prop, OutfitItem>>;
+    Components?: Partial<Record<Component, OutfitItem>>;
+    Props?: Partial<Record<Prop, OutfitItem>>;
     GlovesID?: number;
     TopID?: number;
     type?: OutfitType;
@@ -77,21 +77,46 @@ export type ClothConfig = {
 
 // A list of outfit indexed by name
 export type Wardrobe = Record<string, Outfit>;
+export type CustomWardrobe = Partial<Record<WardRobeElements, Record<string, Outfit>>>;
 
 export type WardrobeMenuData = {
     wardrobe: Wardrobe;
     allowNullLabel?: string;
-    allowCustom?: string;
+    allowCustom?: boolean;
 };
 
-export const WardRobeElements = {
-    [0]: { label: 'Casque', propId: ['Helmet'], addClear: true },
-    [1]: { label: 'Chapeau', propId: [0], addClear: true },
-    [2]: { label: 'Masque', componentId: [1] },
-    [3]: { label: 'Haut', componentId: [3, 5, 7, 9, 10, 11] },
-    [4]: { label: 'ceinture', componentId: [8] },
-    [5]: { label: 'Bas', componentId: [4] },
-    [6]: { label: 'Chaussures', componentId: [6] },
+export enum WardRobeElements {
+    Helmet = 'helmet',
+    Hat = 'hat',
+    Mask = 'mask',
+    Top = 'top',
+    Accessory = 'accessory',
+    Belt = 'belt',
+    Bottom = 'bottom',
+    Shoes = 'shoes',
+}
+
+export type WardRobeElementConfig = {
+    label: string;
+    propId?: Prop[];
+    componentId?: Component[];
+};
+
+export const WardRobeElementConfigs: Record<WardRobeElements, WardRobeElementConfig> = {
+    [WardRobeElements.Helmet]: { label: 'Casque', propId: [Prop.Helmet] },
+    [WardRobeElements.Hat]: { label: 'Chapeau', propId: [Prop.Hat] },
+    [WardRobeElements.Mask]: { label: 'Masque', componentId: [Component.Mask] },
+    [WardRobeElements.Top]: {
+        label: 'Haut',
+        componentId: [Component.Torso, Component.Bag, Component.BodyArmor, Component.Decals, Component.Tops],
+    },
+    [WardRobeElements.Accessory]: {
+        label: 'Accessoire',
+        componentId: [Component.Accessories],
+    },
+    [WardRobeElements.Belt]: { label: 'Ceinture', componentId: [Component.Undershirt] },
+    [WardRobeElements.Bottom]: { label: 'Bas', componentId: [Component.Legs] },
+    [WardRobeElements.Shoes]: { label: 'Chaussures', componentId: [Component.Shoes] },
 };
 
 // A list of wardrobe indexed by model hash

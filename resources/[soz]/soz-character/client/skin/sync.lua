@@ -14,6 +14,23 @@ RegisterNetEvent("soz-character:Client:ApplyTemporaryClothSet", function(clothSe
     local tempClothConfig = Clone(PlayerData.cloth_config)
     tempClothConfig.TemporaryClothSet = clothSet
 
+    for componentId, component in pairs(clothSet.Components or {}) do
+        if MappingCompomentKeyToReset[tostring(componentId)] then
+            tempClothConfig.Config[MappingCompomentKeyToReset[tostring(componentId)]] = false
+        end
+    end
+    for propId, prop in pairs(clothSet.Props or {}) do
+        if MappingPropKeyToReset[tostring(propId)] then
+            tempClothConfig.Config[MappingPropKeyToReset[tostring(propId)]] = false
+        end
+        if tostring(propId) == "Helmet" then
+            tempClothConfig.Config["ShowHelmet"] = true
+        end
+    end
+    if clothSet.GlovesID ~= nil then
+        tempClothConfig.Config.HideGloves = false
+    end
+
     ApplyPlayerClothConfig(PlayerId(), tempClothConfig)
 end)
 
@@ -57,8 +74,8 @@ RegisterNetEvent("soz-character:Client:SetTemporaryNaked", function()
 end)
 
 exports("ReApplyHeadConfig", function()
-    local clothSet = ClothConfigComputeToClothSet(PlayerData.cloth_config)
     local ped = PlayerPedId()
+    local clothSet = ClothConfigComputeToClothSet(ped, PlayerData.cloth_config)
 
     local prop = clothSet.Props[tostring(PropType.Head)] or clothSet.Components[PropType.Head]
     if prop == nil or prop.Clear == true then

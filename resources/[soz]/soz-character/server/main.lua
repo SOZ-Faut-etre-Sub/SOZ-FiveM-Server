@@ -1,22 +1,5 @@
 QBCore = exports["qb-core"]:GetCoreObject()
 
-local MappingCompomentKeyToReset = {
-    ["1"] = "HideMask",
-    ["4"] = "HidePants",
-    ["5"] = "HideBag",
-    ["6"] = "HideShoes",
-    ["7"] = "HideChain",
-    ["9"] = "HideBulletproof",
-    ["11"] = "HideTop",
-}
-
-local MappingPropKeyToReset = {
-    ["0"] = "HideHead",
-    ["1"] = "HideGlasses",
-    ["6"] = "HideLeftHand",
-    ["7"] = "HideRightHand",
-}
-
 RegisterNetEvent("soz-character:server:SetPlayerClothes", function(clothes)
     local Player = QBCore.Functions.GetPlayer(source)
     local clothConfig = Player.PlayerData.cloth_config

@@ -52,3 +52,15 @@ Config.NewPlayerDefaultItems = {
     {name = "health_book", quantity = 1},
     {name = "politic_book", quantity = 1},
 }
+
+MappingCompomentKeyToReset = {
+    ["1"] = "HideMask",
+    ["4"] = "HidePants",
+    ["5"] = "HideBag",
+    ["6"] = "HideShoes",
+    ["7"] = "HideChain",
+    ["9"] = "HideBulletproof",
+    ["11"] = "HideTop",
+}
+
+MappingPropKeyToReset = {["0"] = "HideHead", ["1"] = "HideGlasses", ["6"] = "HideLeftHand", ["7"] = "HideRightHand"}

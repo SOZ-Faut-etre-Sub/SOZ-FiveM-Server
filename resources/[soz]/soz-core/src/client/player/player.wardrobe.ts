@@ -3,13 +3,20 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { Animation } from '@public/shared/animation';
+import { RankOutfit } from '@public/shared/job/police';
 
-import { ClothConfig, Component, Outfit, Prop, WardrobeConfig, WardRobeElements } from '../../shared/cloth';
+import {
+    ClothConfig,
+    Component,
+    Outfit,
+    WardrobeConfig,
+    WardRobeElementConfigs,
+    WardRobeElements,
+} from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { ProgressResult } from '../../shared/progress';
-import { ClothingService } from '../clothing/clothing.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
@@ -30,9 +37,6 @@ export class PlayerWardrobe {
     @Inject(ProgressService)
     private progressService: ProgressService;
 
-    @Inject(ClothingService)
-    private clothingService: ClothingService;
-
     @Inject(AnimationService)
     private animationService: AnimationService;
 
@@ -43,7 +47,7 @@ export class PlayerWardrobe {
     public async selectOutfit(
         config: WardrobeConfig,
         nullLabel?: string,
-        customLabel?: string
+        allowCustom?: boolean
     ): Promise<OutfitSelection | null> {
         const model = GetEntityModel(PlayerPedId());
         const wardrobe = config[model];
@@ -61,7 +65,7 @@ export class PlayerWardrobe {
             {
                 wardrobe,
                 allowNullLabel: nullLabel,
-                allowCustom: customLabel,
+                allowCustom,
             },
             {
                 position: {
@@ -197,15 +201,15 @@ export class PlayerWardrobe {
     public async onWardrobeElementSelect({
         outfit,
         wardRobeElementId,
-        clear,
     }: {
         outfit: Outfit;
-        wardRobeElementId: number;
-        clear: boolean;
+        wardRobeElementId: WardRobeElements;
     }) {
-        if (!outfit && !clear) {
+        if (!outfit) {
             return;
         }
+
+        const player = this.playerService.getPlayer();
 
         if (!this.customOutfit) {
             this.customOutfit = {
@@ -214,22 +218,49 @@ export class PlayerWardrobe {
             };
         }
 
-        const wardRobeElement = WardRobeElements[wardRobeElementId];
-
-        if (wardRobeElement?.componentId) {
-            wardRobeElement.componentId.forEach((element: Component) => {
-                this.customOutfit.Components[element] = outfit.Components[element];
-            });
+        if (WardRobeElementConfigs[wardRobeElementId].componentId) {
+            for (const comp of WardRobeElementConfigs[wardRobeElementId].componentId) {
+                if (outfit.Components && outfit.Components[comp]) {
+                    this.customOutfit.Components[comp] = outfit.Components[comp];
+                } else {
+                    delete this.customOutfit.Components[comp];
+                }
+            }
         }
-        if (wardRobeElement?.propId) {
-            if (clear) {
-                wardRobeElement.propId.forEach((element: Prop) => {
-                    this.customOutfit.Props[element] = { Clear: true };
-                });
+        if (WardRobeElementConfigs[wardRobeElementId].propId) {
+            for (const prop of WardRobeElementConfigs[wardRobeElementId].propId) {
+                if (outfit.Props && outfit.Props[prop]) {
+                    this.customOutfit.Props[prop] = outfit.Props[prop];
+                } else {
+                    delete this.customOutfit.Props[prop];
+                }
+            }
+        }
+
+        if (outfit.GlovesID != null) {
+            this.customOutfit.GlovesID = outfit.GlovesID;
+        } else if (WardRobeElementConfigs[wardRobeElementId].componentId?.includes(Component.Torso)) {
+            delete this.customOutfit.GlovesID;
+        }
+
+        if (
+            RankOutfit[player.job.id] &&
+            WardRobeElementConfigs[wardRobeElementId].componentId?.includes(Component.Decals) &&
+            !(outfit.Components && outfit.Components[Component.Decals])
+        ) {
+            if (outfit.rankType && RankOutfit[player.job.id][outfit.rankType][player.job.grade]) {
+                this.customOutfit.Components[Component.Decals] = {
+                    Drawable: RankOutfit[player.job.id][outfit.rankType][player.job.grade][0],
+                    Texture: RankOutfit[player.job.id][outfit.rankType][player.job.grade][1],
+                    Palette: 0,
+                    Collection: 'soz_bcso',
+                };
             } else {
-                wardRobeElement.propId.forEach((element: Prop) => {
-                    this.customOutfit.Props[element] = outfit.Props[element];
-                });
+                this.customOutfit.Components[Component.Decals] = {
+                    Drawable: 0,
+                    Texture: 0,
+                    Palette: 0,
+                };
             }
         }
 

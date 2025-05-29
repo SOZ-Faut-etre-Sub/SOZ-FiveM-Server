@@ -215,7 +215,7 @@ function CanApplyBaseHeadProp(clothConfig)
     return false
 end
 
-function ClothConfigComputeToClothSet(clothConfig)
+function ClothConfigComputeToClothSet(ped, clothConfig)
     local empty = {
         Components = {[ComponentType.Mask] = {Drawable = 0, Texture = 0, Palette = 0}},
         Props = {
@@ -247,13 +247,13 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, clothConfig.NakedClothSet)
     end
 
-    local hasHelmet = clothSet.Props[PropType.Helmet] ~= nil and not clothSet.Props[PropType.Helmet].Clear
+    local hasHelmet = clothSet.Props[PropType.Helmet] ~= nil and not clothSet.Props[PropType.Helmet].Clear and clothConfig.Config.ShowHelmet
     if not hasHelmet then
-        SetPedConfigFlag(PlayerPedId(), 34, hasHelmet)
+        SetPedConfigFlag(ped, 34, hasHelmet)
     end
 
-    SetPedCanLosePropsOnDamage(PlayerPedId(), not clothConfig.Config.ShowHelmet or not hasHelmet, 0)
-    if clothConfig.Config.ShowHelmet and hasHelmet then
+    SetPedCanLosePropsOnDamage(ped, not hasHelmet, 0)
+    if hasHelmet then
         local override = {Props = {[PropType.Head] = clothSet.Props[PropType.Helmet]}}
 
         clothSet = MergeClothSet(clothSet, override)
@@ -275,7 +275,7 @@ function ClothConfigComputeToClothSet(clothConfig)
         clothSet = MergeClothSet(clothSet, override)
     end
 
-    if PlayerData.skin then
+    if PlayerData.skin and ped == PlayerPedId() then
         local component = clothSet.Components[tostring(ComponentType.Mask)] or clothSet.Components[ComponentType.Mask]
         local maskDrawable = component.Drawable
         local hair = 0
@@ -296,7 +296,7 @@ function ClothConfigComputeToClothSet(clothConfig)
         if maskDrawable ~= mask then
             mask = maskDrawable
             maskCollection = component.Collection
-            ApplyPedFaceTrait(PlayerPedId(), PlayerData.skin.FaceTrait, PlayerData.skin.Model)
+            ApplyPedFaceTrait(ped, PlayerData.skin.FaceTrait, PlayerData.skin.Model)
         end
     end
 
@@ -387,11 +387,14 @@ function ApplyPlayerClothSet(playerId, clothSet)
 
     ApplyPedClothSet(ped, clothSet)
 
-    TriggerEvent("soz-character:Client:Cloth:Applied", clothSet)
+    if ped == PlayerPedId() then
+        TriggerEvent("soz-character:Client:Cloth:Applied", clothSet)
+    end
 end
 
 function ApplyPlayerClothConfig(playerId, clothConfig)
-    local clothSet = ClothConfigComputeToClothSet(clothConfig)
+    local ped = GetPlayerPed(playerId)
+    local clothSet = ClothConfigComputeToClothSet(ped, clothConfig)
 
     ApplyPlayerClothSet(playerId, clothSet)
 end
