@@ -273,6 +273,5 @@ export type MonitorEvent = {
     objective?: VampireGameCollection | VampireGameObjectiveTypePart2;
     // Casino
     bet?: number;
-    reels?: Vector3;
     reward?: number;
 };

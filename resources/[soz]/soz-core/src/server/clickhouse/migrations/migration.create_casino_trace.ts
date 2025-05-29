@@ -10,7 +10,7 @@ export class MigrationCreateCasinoTrace implements ClickhouseMigration {
     async migrate(): Promise<void> {
         await this.clickhouseService.exec({
             query: `
-                ALTER TABLE soz.trace_events ADD COLUMN bet Nullable(Int64), ADD COLUMN reels LowCardinality(Nullable(Tuple(1 Int64, 2 Int64, 3 Int64))), ADD COLUMN reward Nullable(Int64);
+                ALTER TABLE soz.trace_events ADD COLUMN bet Nullable(Int64), ADD COLUMN reward Nullable(Int64);
             `,
         });
     }
