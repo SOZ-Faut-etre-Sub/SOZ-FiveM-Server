@@ -739,6 +739,7 @@ export enum ServerEvent {
     DRONE_DELETE = 'soz-core:server:drone-delete',
 
     MINESWEEPER_ROBOT_RETRIEVE = 'soz-core:server:minesweeper:retrieve',
+    MINESWEEPER_ROBOT_DESTROY = 'soz-core:server:minesweeper:destroy',
 
     OILRIG_HEIST_THERMITE = 'soz-core:server:oilrig-heist:thermite',
     OILRIG_HEIST_PIPELINE_HARVEST = 'soz-core:server:oilrig-heist:pipeline-harvest',
