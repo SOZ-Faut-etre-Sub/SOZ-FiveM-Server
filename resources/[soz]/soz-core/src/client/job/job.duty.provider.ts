@@ -256,6 +256,44 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 30.99,
         heading: 159.31,
     },
+    {
+        data: JobType.LSCS,
+        center: [1132.37, -490.36, 65.16],
+        length: 0.8,
+        width: 1.8,
+        heading: 151.27,
+        minZ: 64.16,
+        maxZ: 66.16,
+    },
+
+    // MIRROR PARK
+    {
+        data: JobType.LSPD,
+        center: [1132.37, -490.36, 65.16],
+        length: 0.8,
+        width: 1.8,
+        heading: 151.27,
+        minZ: 64.16,
+        maxZ: 66.16,
+    },
+    {
+        data: JobType.BCSO,
+        center: [1132.37, -490.36, 65.16],
+        length: 0.8,
+        width: 1.8,
+        heading: 151.27,
+        minZ: 64.16,
+        maxZ: 66.16,
+    },
+    {
+        data: JobType.LSCS,
+        center: [1132.37, -490.36, 65.16],
+        length: 0.8,
+        width: 1.8,
+        heading: 151.27,
+        minZ: 64.16,
+        maxZ: 66.16,
+    },
 ];
 
 const DutyZoneConfigWhatIf: Zone<JobType>[] = [
