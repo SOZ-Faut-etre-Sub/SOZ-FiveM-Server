@@ -70,6 +70,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         this.data[scene.id] = {
             id: scene.id,
             name: scene.name,
+            owner: creatorId,
             persistent: false,
             entities: {},
             peds: {},
