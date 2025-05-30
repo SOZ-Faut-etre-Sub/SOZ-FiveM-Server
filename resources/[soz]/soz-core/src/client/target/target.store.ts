@@ -74,22 +74,23 @@ export class TargetStore {
         this.models.add({ model: this.getId(models), targets, distance });
     }
 
-    public async addEntities(
+    public addEntities(
         entities: number[] | number,
         targets: TargetStoreBase['targets'],
-        distance = DEFAULT_DISTANCE
+        distance = DEFAULT_DISTANCE,
+        id?: string
     ) {
         if (entities instanceof Array) {
             for (const entity of entities) {
-                this.entities.add({ entity, targets, distance });
+                this.entities.add({ entity, targets, distance }, id);
             }
             return;
         }
 
-        this.entities.add({ entity: entities, targets, distance });
+        this.entities.add({ entity: entities, targets, distance }, id);
     }
 
-    public async addBones(bones: string[] | string, targets: TargetStoreBase['targets'], distance = DEFAULT_DISTANCE) {
+    public addBones(bones: string[] | string, targets: TargetStoreBase['targets'], distance = DEFAULT_DISTANCE) {
         if (bones instanceof Array) {
             for (const bone of bones) {
                 this.bones.add({ bone: bone, targets, distance });

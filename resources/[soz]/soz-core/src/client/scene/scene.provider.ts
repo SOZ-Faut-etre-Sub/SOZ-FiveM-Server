@@ -6,8 +6,9 @@ import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { RepositoryDelete, RepositoryUpdate } from '../../core/decorators/repository';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { uuidv4 } from '../../core/utils';
+import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
@@ -15,13 +16,16 @@ import { InventoryType } from '../../shared/inventory';
 import { FDO, JobType } from '../../shared/job';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
+import { PlacementProp } from '../../shared/nui/prop_placement';
 import { ObjectEditorContext } from '../../shared/object';
+import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RepositoryType } from '../../shared/repository';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
-import { Scene, ScenePedBehavior, ScenePedData } from '../../shared/scene';
+import { Scene, SceneEntity, ScenePed, ScenePedBehavior, ScenePedData } from '../../shared/scene';
 import { TargetOption } from '../../shared/target';
 import { AnimationService } from '../animation/animation.service';
+import { FlyingCameraProvider } from '../camera/flying.camera.provider';
 import { PedFactory } from '../factory/ped.factory';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { InputService } from '../nui/input.service';
@@ -29,10 +33,12 @@ import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
+import { ObjectService } from '../object/object.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { ProgressService } from '../progress.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { SceneRepository } from '../repository/scene.repository';
+import { ScreenService } from '../screen.service';
 import { WorldEventProvider } from '../world/world.event.provider';
 
 type CurrentSceneEdited = {
@@ -84,11 +90,30 @@ export class SceneProvider {
     @Inject(AnimationService)
     private animationService: AnimationService;
 
+    @Inject(FlyingCameraProvider)
+    private flyingCameraProvider: FlyingCameraProvider;
+
+    @Inject(ScreenService)
+    private screenService: ScreenService;
+
+    @Inject(ObjectService)
+    private objectService: ObjectService;
+
     private highlightedObjectId: string = null;
+
+    private targetedObjectId: string = null;
 
     private loadedScenes = new Set<string>();
 
     private currentSceneEdited: CurrentSceneEdited = null;
+
+    private camera: number;
+
+    private previewEntity: number | null = null;
+
+    public isEditingScene(): boolean {
+        return this.currentSceneEdited !== null;
+    }
 
     @Once(OnceStep.RepositoriesLoaded)
     public async initLoadScenes() {
@@ -126,6 +151,19 @@ export class SceneProvider {
         };
         this.highlightedObjectId = null;
 
+        if (!this.camera) {
+            this.camera = this.flyingCameraProvider.createCamera();
+            this.flyingCameraProvider.setRestrictionLogic((oldPosition, newPosition) => {
+                const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
+                if (getDistance(position, newPosition) > 20) {
+                    return oldPosition;
+                }
+
+                return newPosition;
+            });
+        }
+
         await this.doLoadScene(scene, true);
         await this.applyHighlight(scene);
     }
@@ -145,9 +183,19 @@ export class SceneProvider {
         if (this.loadedScenes.has(this.currentSceneEdited.scene.id)) {
             // reload scene if necessary without highlight
             await this.doLoadScene(this.currentSceneEdited.scene);
-            await this.applyHighlight(this.currentSceneEdited.scene);
+
+            const scene = this.currentSceneEdited.scene;
+            this.currentSceneEdited = null;
+
+            await this.applyHighlight(scene);
         }
 
+        if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
+            DeleteEntity(this.previewEntity);
+        }
+
+        this.flyingCameraProvider.deleteCamera();
+        this.camera = null;
         this.currentSceneEdited = null;
     }
 
@@ -171,7 +219,10 @@ export class SceneProvider {
 
             if (
                 this.currentSceneEdited?.scene?.id === scene.id &&
-                (this.highlightedObjectId === null || sceneEntity.id === this.highlightedObjectId)
+                this.nuiMenu.getOpened() !== MenuType.ObjectEditor &&
+                ((this.highlightedObjectId === null && this.targetedObjectId === null) ||
+                    this.highlightedObjectId === sceneEntity.id ||
+                    this.targetedObjectId === sceneEntity.id)
             ) {
                 SetEntityDrawOutlineColor(0, 180, 0, 255);
                 SetEntityDrawOutlineShader(1);
@@ -236,34 +287,56 @@ export class SceneProvider {
         TriggerServerEvent(ServerEvent.SCENE_DELETE, sceneId);
     }
 
+    @OnNuiEvent(NuiEvent.ScenePreviewModel)
+    async onNuiPreviewModelForScene({ prop }: { prop: PlacementProp | null }) {
+        if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
+            DeleteEntity(this.previewEntity);
+        }
+
+        if (!prop) {
+            return;
+        }
+
+        const position = this.getCoordForNewEntity();
+
+        this.previewEntity = await this.objectService.createObject({
+            model: GetHashKey(prop.model),
+            position,
+            id: uuidv4(),
+            noCollision: true,
+        });
+    }
+
     @OnNuiEvent(NuiEvent.SceneSearchEntity)
     async onNuiSearchSceneEntity() {
         this.nuiDispatch.dispatch('scene', 'ShowSearch', 'https://gtahash.ru/');
     }
 
     @OnNuiEvent(NuiEvent.SceneAddEntity)
-    async onNuiAddSceneEntity({ sceneId }: { sceneId: string }) {
-        const model = await this.inputService.askInput<string>(
-            {
-                title: "Modèle de l'objet",
-                defaultValue: '',
-                maxCharacters: 50,
-            },
-            input => {
-                if (!input) {
-                    return Ok(null);
+    async onNuiAddSceneEntity({ sceneId, model }: { sceneId: string; model?: string }) {
+        if (!model) {
+            model = await this.inputService.askInput<string>(
+                {
+                    title: "Modèle de l'objet",
+                    defaultValue: '',
+                    maxCharacters: 50,
+                },
+                input => {
+                    if (!input) {
+                        return Ok(null);
+                    }
+
+                    const model = input.trim();
+                    const modelHash = GetHashKey(model);
+
+                    if (!IsModelInCdimage(modelHash) || !IsModelValid(modelHash)) {
+                        return Err("Ce modèle n'existe pas");
+                    }
+
+                    return Ok(model);
                 }
-
-                const model = input.trim();
-                const modelHash = GetHashKey(model);
-
-                if (!IsModelInCdimage(modelHash) || !IsModelValid(modelHash)) {
-                    return Err("Ce modèle n'existe pas");
-                }
-
-                return Ok(model);
-            }
-        );
+            );
+        }
 
         if (!model) {
             return;
@@ -276,6 +349,8 @@ export class SceneProvider {
             allowAddEffect: true,
             allowTogglePermanent: true,
             context: this.currentSceneEdited?.context,
+            useCircularCamera: false,
+            initialPosition: this.getCoordForNewEntity(),
         });
 
         if (!object) {
@@ -305,6 +380,7 @@ export class SceneProvider {
             allowAddEffect: true,
             allowTogglePermanent: true,
             context: this.currentSceneEdited?.context,
+            useCircularCamera: false,
         });
 
         if (!object) {
@@ -336,6 +412,8 @@ export class SceneProvider {
                 allowAddEffect: true,
                 allowTogglePermanent: true,
                 context: this.currentSceneEdited?.context,
+                useCircularCamera: false,
+                allowDuplicate: true,
             },
             entity.object
         );
@@ -344,7 +422,11 @@ export class SceneProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, entityId, object);
+        if (entityId !== object.id) {
+            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, entity.model, object);
+        } else {
+            TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, entityId, object);
+        }
     }
 
     @OnNuiEvent(NuiEvent.SceneRemoveEntity)
@@ -387,6 +469,7 @@ export class SceneProvider {
             allowTogglePermanent: false,
             snapToGround: true,
             context: this.currentSceneEdited?.context,
+            useCircularCamera: false,
         });
 
         if (!object) {
@@ -426,6 +509,7 @@ export class SceneProvider {
                 allowTogglePermanent: false,
                 snapToGround: true,
                 context: this.currentSceneEdited?.context,
+                useCircularCamera: false,
             },
             {
                 id: uuidv4(),
@@ -465,6 +549,7 @@ export class SceneProvider {
             allowAddEffect: true,
             allowTogglePermanent: false,
             context: this.currentSceneEdited?.context,
+            useCircularCamera: false,
         });
 
         if (!object) {
@@ -613,20 +698,59 @@ export class SceneProvider {
             return;
         }
 
+        if (this.camera) {
+            this.flyingCameraProvider.deleteCamera();
+
+            await wait(1000);
+        }
+
         const [firstProp] = Object.values(scene.entities);
 
         if (firstProp) {
             await this.playerPositionProvider.teleportAdminToPosition(firstProp.object.position);
         }
+
+        if (this.camera) {
+            this.camera = this.flyingCameraProvider.createCamera();
+            this.flyingCameraProvider.setRestrictionLogic((oldPosition, newPosition) => {
+                const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
+                if (getDistance(position, newPosition) > 20) {
+                    return oldPosition;
+                }
+
+                return newPosition;
+            });
+        }
     }
 
     @OnNuiEvent(NuiEvent.SceneLoad)
     async onNuiSceneLoad({ sceneId }: { sceneId: string }) {
+        const { completed } = await this.progressService.progress(
+            'prop_toggle_load',
+            'Chargement de la collection...',
+            5000
+        );
+
+        if (!completed) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.SCENE_LOAD, sceneId);
     }
 
     @OnNuiEvent(NuiEvent.SceneUnload)
     async onNuiSceneUnload({ sceneId }: { sceneId: string }) {
+        const { completed } = await this.progressService.progress(
+            'prop_toggle_load',
+            'Déchargement de la collection...',
+            5000
+        );
+
+        if (!completed) {
+            return;
+        }
+
         TriggerServerEvent(ServerEvent.SCENE_UNLOAD, sceneId);
     }
 
@@ -678,13 +802,51 @@ export class SceneProvider {
     async onSceneUpdate(scene: Scene, previousScene: Scene) {
         const sceneInEdition = this.currentSceneEdited?.scene.id === scene.id;
         const wasLoaded = sceneInEdition || this.loadedScenes.has(scene.id);
-        await this.doUnloadScene(previousScene);
 
         if (!wasLoaded) {
             return;
         }
 
-        await this.doLoadScene(scene, sceneInEdition);
+        const objectsToAddOrUpdate = [];
+        const pedsToAddOrUpdate = [];
+
+        const previousEntitiesId = Object.keys(previousScene.entities);
+        const previousPedsId = Object.keys(previousScene.peds);
+
+        for (const entity of Object.values(scene.entities)) {
+            objectsToAddOrUpdate.push(entity);
+
+            if (previousEntitiesId.includes(entity.id)) {
+                previousEntitiesId.splice(previousEntitiesId.indexOf(entity.id), 1);
+            }
+        }
+
+        for (const ped of Object.values(scene.peds)) {
+            pedsToAddOrUpdate.push(ped);
+
+            if (previousPedsId.includes(ped.id)) {
+                previousPedsId.splice(previousPedsId.indexOf(ped.id), 1);
+            }
+        }
+
+        // Remove old entities and peds
+        if (previousEntitiesId.length > 0) {
+            this.objectProvider.deleteObjects(previousEntitiesId);
+        }
+
+        for (const pedId of previousPedsId) {
+            this.pedFactory.deletePedOnGrid(pedId);
+        }
+
+        for (const entity of objectsToAddOrUpdate) {
+            await this.loadSceneEntity(entity, sceneInEdition);
+        }
+
+        if (sceneInEdition) {
+            for (const ped of pedsToAddOrUpdate) {
+                await this.loadScenePed(ped);
+            }
+        }
 
         if (sceneInEdition) {
             await this.applyHighlight(scene);
@@ -713,106 +875,145 @@ export class SceneProvider {
 
     async doLoadScene(scene: Scene, editing = false) {
         for (const entity of Object.values(scene.entities)) {
-            const targets: TargetOption[] = [];
+            await this.loadSceneEntity(entity, editing);
+        }
 
-            if (entity.inventoryId && !editing) {
-                targets.push({
-                    label: 'Ouvrir',
-                    icon: 'inventory/ouvrir_le_stockage',
-                    category: 'criminal',
-                    canInteract: () =>
-                        this.worldEventProvider.isUnlock(entity.inventoryId) &&
-                        !this.worldEventProvider.isSignaled(entity.inventoryId),
-                    action: () => {
-                        this.inventoryManager.openInventory(
-                            InventoryType.ObjectStorage,
-                            entity.inventoryId,
-                            entity.object.position
-                        );
-                    },
-                });
-
-                targets.push({
-                    label: 'Dévérouiller',
-                    icon: 'crimi/unlock',
-                    category: 'criminal',
-                    canInteract: () =>
-                        !this.worldEventProvider.isUnlock(entity.inventoryId) &&
-                        !this.worldEventProvider.isSignaled(entity.inventoryId),
-                    action: async () => {
-                        const anim = this.animationService.playAnimation({
-                            enter: {
-                                dictionary: 'anim@heists@humane_labs@emp@hack_door',
-                                name: 'hack_intro',
-                                duration: 6433,
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                            },
-                            base: {
-                                dictionary: 'anim@heists@humane_labs@emp@hack_door',
-                                name: 'hack_loop',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'anim@heists@humane_labs@emp@hack_door',
-                                name: 'hack_outro',
-                                duration: 4033,
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                            },
-                            props: [
-                                {
-                                    bone: 28422,
-                                    model: 'prop_police_phone',
-                                    position: [0.0, 0.0, 0.0301],
-                                    rotation: [0.0, 0.0, 0.0],
-                                },
-                            ],
-                        });
-                        const success = await this.minigameProvider.runGame('ShowPincraker', {
-                            delay: 20,
-                            nbDigit: 3,
-                        });
-
-                        if (success) {
-                            TriggerServerEvent(ServerEvent.WORLD_EVENT_UNLOCK_INVENTORY, entity.inventoryId);
-                        }
-                        anim.cancel();
-                    },
-                });
-
-                targets.push({
-                    label: "Signaler l'emplacement",
-                    icon: 'inventory/ouvrir_le_stockage',
-                    job: FDO.reduce((prev, cur) => ({ ...prev, [cur]: 0 }), {} as Record<JobType, number>),
-                    category: 'society',
-                    canInteract: () => !this.worldEventProvider.isSignaled(entity.inventoryId),
-                    action: async () => {
-                        const progress = await this.progressService.progress(
-                            'world_event_signal',
-                            'Signalement en cours...',
-                            GetConvar('soz_core_environment', 'development') == 'production' ? 180_000 : 10_000,
-                            {
-                                dictionary: 'Rcm_epsilonism4',
-                                name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
-                                options: { repeat: true },
-                            },
-                            {}
-                        );
-                        if (!progress.completed) {
-                            return;
-                        }
-
-                        TriggerServerEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY, entity.inventoryId);
-                    },
-                });
+        if (editing) {
+            for (const ped of Object.values(scene.peds)) {
+                await this.loadScenePed(ped);
             }
+        }
+    }
 
+    async loadScenePed(ped: ScenePed) {
+        if (this.pedFactory.hasPed(ped.id)) {
+            await this.pedFactory.deletePedOnGrid(ped.id);
+        }
+
+        await this.pedFactory.createPedOnGrid({
+            id: ped.id,
+            coords: toVector4Object(ped.position),
+            model: ped.model,
+            weapon: ped.weapon,
+            alpha: 200,
+            freeze: true,
+            blockevents: true,
+        });
+    }
+
+    async loadSceneEntity(entity: SceneEntity, editing = false) {
+        const targets: TargetOption[] = [];
+
+        if (entity.inventoryId && !editing) {
+            targets.push({
+                label: 'Ouvrir',
+                icon: 'inventory/ouvrir_le_stockage',
+                category: 'criminal',
+                canInteract: () =>
+                    this.worldEventProvider.isUnlock(entity.inventoryId) &&
+                    !this.worldEventProvider.isSignaled(entity.inventoryId),
+                action: () => {
+                    this.inventoryManager.openInventory(
+                        InventoryType.ObjectStorage,
+                        entity.inventoryId,
+                        entity.object.position
+                    );
+                },
+            });
+
+            targets.push({
+                label: 'Dévérouiller',
+                icon: 'crimi/unlock',
+                category: 'criminal',
+                canInteract: () =>
+                    !this.worldEventProvider.isUnlock(entity.inventoryId) &&
+                    !this.worldEventProvider.isSignaled(entity.inventoryId),
+                action: async () => {
+                    const anim = this.animationService.playAnimation({
+                        enter: {
+                            dictionary: 'anim@heists@humane_labs@emp@hack_door',
+                            name: 'hack_intro',
+                            duration: 6433,
+                            options: {
+                                onlyUpperBody: true,
+                            },
+                        },
+                        base: {
+                            dictionary: 'anim@heists@humane_labs@emp@hack_door',
+                            name: 'hack_loop',
+                            options: {
+                                repeat: true,
+                                onlyUpperBody: true,
+                            },
+                        },
+                        exit: {
+                            dictionary: 'anim@heists@humane_labs@emp@hack_door',
+                            name: 'hack_outro',
+                            duration: 4033,
+                            options: {
+                                onlyUpperBody: true,
+                            },
+                        },
+                        props: [
+                            {
+                                bone: 28422,
+                                model: 'prop_police_phone',
+                                position: [0.0, 0.0, 0.0301],
+                                rotation: [0.0, 0.0, 0.0],
+                            },
+                        ],
+                    });
+                    const success = await this.minigameProvider.runGame('ShowPincraker', {
+                        delay: 20,
+                        nbDigit: 3,
+                    });
+
+                    if (success) {
+                        TriggerServerEvent(ServerEvent.WORLD_EVENT_UNLOCK_INVENTORY, entity.inventoryId);
+                    }
+                    anim.cancel();
+                },
+            });
+
+            targets.push({
+                label: "Signaler l'emplacement",
+                icon: 'inventory/ouvrir_le_stockage',
+                job: FDO.reduce((prev, cur) => ({ ...prev, [cur]: 0 }), {} as Record<JobType, number>),
+                category: 'society',
+                canInteract: () => !this.worldEventProvider.isSignaled(entity.inventoryId),
+                action: async () => {
+                    const progress = await this.progressService.progress(
+                        'world_event_signal',
+                        'Signalement en cours...',
+                        GetConvar('soz_core_environment', 'development') == 'production' ? 180_000 : 10_000,
+                        {
+                            dictionary: 'Rcm_epsilonism4',
+                            name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
+                            options: { repeat: true },
+                        },
+                        {}
+                    );
+                    if (!progress.completed) {
+                        return;
+                    }
+
+                    TriggerServerEvent(ServerEvent.WORLD_EVENT_SIGNAL_INVENTORY, entity.inventoryId);
+                },
+            });
+        }
+
+        if (this.objectProvider.hasObject(entity.id)) {
+            await this.objectProvider.updateObject(
+                {
+                    ...{
+                        ...entity.object,
+                        vfx: this.worldEventProvider.isSignaled(entity.inventoryId) ? null : entity.object.vfx,
+                    },
+                    alpha: editing ? 200 : null,
+                },
+                targets
+            );
+        } else {
             await this.objectProvider.createObject(
                 {
                     ...{
@@ -823,20 +1024,6 @@ export class SceneProvider {
                 },
                 targets
             );
-        }
-
-        if (editing) {
-            for (const ped of Object.values(scene.peds)) {
-                await this.pedFactory.createPedOnGrid({
-                    id: ped.id,
-                    coords: toVector4Object(ped.position),
-                    model: ped.model,
-                    weapon: ped.weapon,
-                    alpha: 200,
-                    freeze: true,
-                    blockevents: true,
-                });
-            }
         }
     }
 
@@ -872,5 +1059,158 @@ export class SceneProvider {
         for (const ped of Object.values(scene.peds)) {
             this.pedFactory.deletePedOnGrid(ped.id);
         }
+    }
+
+    @OnNuiEvent(NuiEvent.SceneSelectObjectOnClick)
+    async selectObjectOnClick() {
+        if (null === this.currentSceneEdited || !IsNuiFocused()) {
+            return;
+        }
+
+        const entityOnMouse = await this.getEntityFromMouse();
+
+        if (!entityOnMouse) {
+            return;
+        }
+
+        const objectId = this.objectProvider.getIdFromEntity(entityOnMouse);
+
+        if (!objectId) {
+            return;
+        }
+
+        const sceneEntity = this.currentSceneEdited?.scene.entities[objectId] ?? null;
+
+        if (!sceneEntity) {
+            return;
+        }
+
+        const sceneId = this.currentSceneEdited.scene.id;
+        const object = await this.objectEditorProvider.createOrUpdateObject(
+            sceneEntity.object.model,
+            {
+                allowToggleCollision: true,
+                allowToggleSnap: true,
+                allowAddEffect: true,
+                allowTogglePermanent: true,
+                context: this.currentSceneEdited?.context,
+                useCircularCamera: false,
+                allowDuplicate: true,
+            },
+            sceneEntity.object
+        );
+
+        if (!object) {
+            return;
+        }
+
+        if (sceneEntity.id !== object.id) {
+            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, sceneEntity.model, object);
+        } else {
+            TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, sceneEntity.id, object);
+        }
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    public async handlePreviewEntity() {
+        if (null === this.currentSceneEdited) {
+            if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
+                DeleteEntity(this.previewEntity);
+                this.previewEntity = null;
+            }
+
+            return;
+        }
+
+        if (!this.previewEntity || !DoesEntityExist(this.previewEntity)) {
+            return;
+        }
+
+        const position = this.getCoordForNewEntity();
+
+        SetEntityCoords(this.previewEntity, position[0], position[1], position[2], false, false, false, false);
+    }
+
+    @Tick(TickInterval.EVERY_FRAME)
+    public async handleMouseSelection() {
+        if (null === this.currentSceneEdited || !IsNuiFocused()) {
+            if (this.targetedObjectId) {
+                this.targetedObjectId = null;
+                await this.applyHighlight(this.currentSceneEdited.scene);
+            }
+
+            return;
+        }
+
+        const entityOnMouse = await this.getEntityFromMouse();
+
+        if (!entityOnMouse) {
+            if (this.targetedObjectId) {
+                this.targetedObjectId = null;
+                await this.applyHighlight(this.currentSceneEdited.scene);
+            }
+
+            return;
+        }
+
+        const objectId = this.objectProvider.getIdFromEntity(entityOnMouse);
+
+        if (!objectId) {
+            if (this.targetedObjectId) {
+                this.targetedObjectId = null;
+                await this.applyHighlight(this.currentSceneEdited.scene);
+            }
+
+            return;
+        }
+
+        const sceneEntity = this.currentSceneEdited.scene.entities[objectId] ?? null;
+
+        if (!sceneEntity) {
+            if (this.targetedObjectId) {
+                this.targetedObjectId = null;
+                await this.applyHighlight(this.currentSceneEdited.scene);
+            }
+
+            return;
+        }
+
+        if (this.targetedObjectId === sceneEntity.id) {
+            return;
+        }
+
+        this.targetedObjectId = sceneEntity.id;
+
+        await this.applyHighlight(this.currentSceneEdited.scene);
+    }
+
+    private async getEntityFromMouse() {
+        const [screenX, screenY] = GetActiveScreenResolution();
+        const [x, y] = GetNuiCursorPosition();
+
+        const cameraPosition = GetCamCoord(this.camera) as Vector3;
+        const cameraRotation = GetCamRot(this.camera, 0) as Vector3;
+
+        const [hitEntDebug] = await this.screenService.getEntityOnPosition(
+            [x / screenX, y / screenY],
+            cameraPosition,
+            cameraRotation
+        );
+        return hitEntDebug;
+    }
+
+    private getCoordForNewEntity(): Vector4 {
+        let position = GetEntityCoords(PlayerPedId(), true) as Vector3;
+        let heading = GetEntityHeading(PlayerPedId());
+
+        if (this.camera) {
+            position = GetCamCoord(this.camera) as Vector3;
+            heading = GetCamRot(this.camera, 0)[2];
+        }
+
+        return [
+            ...GetObjectOffsetFromCoords(position[0], position[1], position[2] - 0.8, heading, 0, 2.5, 0),
+            0,
+        ] as Vector4;
     }
 }

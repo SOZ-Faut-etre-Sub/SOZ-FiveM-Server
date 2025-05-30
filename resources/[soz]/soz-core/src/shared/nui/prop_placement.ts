@@ -2,12 +2,6 @@ import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { HousingDebugProp, PropCollection, PropCollectionData, PropServerData } from '../object';
 
-export type PropPlacementMenuData = {
-    props: PlacementPropList;
-    serverData: PropServerData;
-    collections: PropCollectionData[];
-};
-
 export type NuiPlacementPropMethodMap = {
     SetCollectionList: PropCollectionData[];
     SetCollection: PropCollection;
@@ -18,6 +12,11 @@ export type NuiPlacementPropMethodMap = {
 
 export type NuiHousingPlacementPropMethodMap = {
     SetFourniture: { fournitures: HousingProp[]; max: number; shellEnable: boolean };
+};
+
+export type NuiObjectEditorMethodMap = {
+    setEntityPosition: { matrix: number[] };
+    setCameraPosition: { position: Vector3; rotation: Vector3 };
 };
 
 export type NuiGizmoMethodMap = {
@@ -6834,3 +6833,13 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
         },
     ],
 };
+
+export const PLACEMENT_PROP_LABELS: Record<string, string> = Object.values(PLACEMENT_PROP_LIST)
+    .reduce((acc, elements) => {
+        return acc.concat(elements);
+    }, [])
+    .reduce((acc, element) => {
+        acc[element.model] = element.label;
+
+        return acc;
+    }, {});

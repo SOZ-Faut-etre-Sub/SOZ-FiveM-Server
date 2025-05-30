@@ -42,7 +42,12 @@ import { NuiPanelMethodMap } from './panel';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
 import { NuiProgressMethodMap } from './progress';
-import { NuiGizmoMethodMap, NuiHousingPlacementPropMethodMap, NuiPlacementPropMethodMap } from './prop_placement';
+import {
+    NuiGizmoMethodMap,
+    NuiHousingPlacementPropMethodMap,
+    NuiObjectEditorMethodMap,
+    NuiPlacementPropMethodMap,
+} from './prop_placement';
 import { NuiRaceMethodMap } from './race';
 import { NuiRepairMethodMap } from './repair';
 import { NuiSozedexMethodMap } from './sozedex';
@@ -90,6 +95,7 @@ export interface NuiMethodMap {
     placement_prop: NuiPlacementPropMethodMap;
     housing_placement_prop: NuiHousingPlacementPropMethodMap;
     gizmo: NuiGizmoMethodMap;
+    object_editor: NuiObjectEditorMethodMap;
     craft: NuiCraftMethodMap;
     zombie: NuiZombieMethodMap;
     halloween: NuiHalloweenMethodMap;

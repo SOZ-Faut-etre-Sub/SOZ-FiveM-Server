@@ -4,7 +4,6 @@ import { useNuiEvent } from '@public/nui/hook/nui';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { HousingDebugProp } from '@public/shared/object';
-import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { isOk, Result } from '@public/shared/result';
 import { PerspectiveCamera, TransformControls } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
@@ -22,6 +21,8 @@ import {
 } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MathUtils, Mesh } from 'three';
+
+import { gameToGizmo, gizmoToGame, roundAt } from '../../utils/gizmo';
 
 type GizmoProps = {
     setDebugProp: Dispatch<SetStateAction<HousingDebugProp>>;
@@ -64,36 +65,13 @@ export const MenuGizmo: FunctionComponent<PropsWithChildren<MenuGizmoProps>> = (
     );
 };
 
-const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, setPosition, childTextFocus }) => {
+export const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, setPosition, childTextFocus }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const mesh = useRef<Mesh>(null!);
     const [drag, setDrag] = useState<boolean>(false);
     const [editorMode, setEditorMode] = useState<'translate' | 'rotate'>('translate');
     const [spaceMode, setSpaceMode] = useState<'local' | 'world'>('local');
-
-    const gameToGizmo = (position: Vector4, rotation: Vector3) => {
-        return [
-            [position[0], position[2], -position[1]],
-            [MathUtils.degToRad(rotation[0]), MathUtils.degToRad(rotation[2]), MathUtils.degToRad(-rotation[1])],
-        ];
-    };
-
-    const gizmoToGame = (currentMesh: Mesh) => {
-        return [
-            [currentMesh.position.x, -currentMesh.position.z, currentMesh.position.y],
-            [
-                MathUtils.radToDeg(currentMesh.rotation.x),
-                MathUtils.radToDeg(-currentMesh.rotation.z),
-                MathUtils.radToDeg(currentMesh.rotation.y),
-            ],
-        ];
-    };
-
-    const roundAt = (valueToRound: number): number => {
-        const power = Math.pow(10, 3);
-        return Math.round(valueToRound * power) / power;
-    };
 
     useNuiEvent('gizmo', 'setGizmoEntity', ({ debug }) => {
         setDebugProp(debug);

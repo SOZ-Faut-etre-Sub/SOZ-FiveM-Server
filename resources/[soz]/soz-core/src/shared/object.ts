@@ -99,6 +99,7 @@ export type ObjectEditorContext = 'hammer' | 'admin' | JobType.Gouv;
 export type ObjectEditorOptions = {
     onDrawCallback: (object: WorldObject) => void;
     maxDistance: number;
+    allowDuplicate: boolean;
     allowDelete: boolean;
     allowRotation: boolean;
     allowScale: boolean;
@@ -112,9 +113,14 @@ export type ObjectEditorOptions = {
     effect: string | null;
     vfx: Vfx | null;
     snapToGround: boolean;
+    useCircularCamera: boolean;
+    initialPosition: Vector4;
 };
 
-export type EditorMenuData = Omit<ObjectEditorOptions, 'onDrawCallback'>;
+export type EditorMenuData = Omit<ObjectEditorOptions, 'onDrawCallback'> & {
+    object: WorldObject;
+};
+
 export const CollectionRadius = 400.0;
 
 export const ForbiddenPropModels = [joaat('vw_prop_notebook_01a')];

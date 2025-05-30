@@ -169,14 +169,15 @@ export enum NuiEvent {
 
     NewsCreateAnnounce = 'soz-core:nui:news:create-announce',
 
-    ObjectEditorReset = 'soz-core:nui:object-editor:reset',
     ObjectEditorCancel = 'soz-core:nui:object-editor:cancel',
     ObjectEditorSave = 'soz-core:nui:object-editor:save',
     ObjectEditorDelete = 'soz-core:nui:object-editor:delete',
     ObjectEditorToggleCollision = 'soz-core:nui:object-editor:toggle-collision',
     ObjectEditorTogglePermanent = 'soz-core:nui:object-editor:toggle-permanent',
     ObjectEditorSetEffect = 'soz-core:nui:object-editor:set-effect',
-    ObjectEditorToggleSnap = 'soz-core:nui:object-editor:toggle-snap',
+    ObjectEditorSnap = 'soz-core:nui:object-editor:snap',
+    ObjectEditorSetPosition = 'soz-core:nui:object-editor:set-position',
+    ObjectEditorStopDrag = 'soz-core:nui:object-editor:stop-drag',
 
     BennysUpgradeVehicle = 'soz-core:nui:job:bennys:upgrade-vehicle',
 
@@ -439,27 +440,7 @@ export enum NuiEvent {
     GouvFineSetMaxPrice = 'soz-core:nui:gouv:fine-set-max-price',
 
     // #soz_hammer
-    SelectPlacedProp = 'soz-core:client:placement:select-placed-prop',
-    SelectPropToCreate = 'soz-core:client:placement:select-prop-to-create',
-    ChoosePropToCreate = 'soz-core:client:placement:choose-prop-to-create',
-    ChoosePlacedPropToEdit = 'soz-core:client:placement:choose-placed-prop-to-edit',
-    SearchProp = 'soz-core:client:placement:search-prop',
-    LeaveEditorMode = 'soz-core:client:placement:leave-mode',
-    ToggleMouseSelection = 'soz-core:client:placement:toggle-mouse-selection',
-    TogglePipette = 'soz-core:client:placement:toggle-pipette',
-    ValidatePlacement = 'soz-core:client:placement:validate',
-    RequestDeleteCurrentProp = 'soz-core:client:placement:request-delete-current-prop',
-    PropPlacementReset = 'soz-core:client:placement:reset',
-    PropPlacementReturnToMainMenu = 'soz-core:client:placement:return-to-main-menu',
-    PropToggleCollision = 'soz-core:client:placement:toggle-collision',
-    SelectPlacementCollection = 'soz-core:client:placement:select-collection',
-    RequestToggleCollectionLoad = 'soz-core:client:placement:toggle-collection-load',
-    RequestDeletePropCollection = 'soz-core:client:placement:delete-collection',
-    RequestCreatePropCollection = 'soz-core:client:placement:create-collection',
-    RequestPersistPropCollection = 'soz-core:client:placement:persist-collection',
-    PlacementCollectionTeleport = 'soz-core:client:placement:tp-collection',
-    RequestDeleteProp = 'soz-core:client:placement:delete-prop',
-    PlacementCollectionRename = 'soz-core:client:placement:rename-collection',
+    RequestCreatePropCollection = 'soz-core:client:placement:persist-collection',
 
     // #housing
     SelectHousingPlacedProp = 'soz-core:client:placement:select-housing-placed-prop',
@@ -645,6 +626,8 @@ export enum NuiEvent {
     SceneRemovePed = 'soz-core:nui-client:scene:set-ped-remove',
     SceneSetPedWeapon = 'soz-core:nui-client:scene:set-ped-weapon',
     SceneSetPedBehavior = 'soz-core:nui-client:scene:set-ped-behavior',
+    SceneSelectObjectOnClick = 'soz-core:nui-client:scene:select-object-on-click',
+    ScenePreviewModel = 'soz-core:nui-client:scene:preview-model',
 
     TargetReset = 'soz-core:nui:target:reset',
     TargetSelect = 'soz-core:nui:target:select',

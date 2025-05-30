@@ -153,13 +153,19 @@ export class PedFactory {
         return this.loadedPeds[id];
     }
 
-    public findPed(id: string) {
+    public hasPed(id: string): boolean {
+        return this.findPed(id) !== null;
+    }
+
+    public findPed(id: string): GridPed | null {
         for (const peds of this.pedsByChunk.values()) {
             const ped = peds.find(ped => ped.id == id);
             if (ped) {
                 return ped;
             }
         }
+
+        return null;
     }
 
     public isPedLoaded(id: string) {

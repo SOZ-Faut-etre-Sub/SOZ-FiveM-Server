@@ -109,10 +109,11 @@ export type SubMenuProps = {
 
 export const SubMenu: FunctionComponent<PropsWithChildren<SubMenuProps>> = ({ children, id }) => {
     const slugId = slugify(id);
+    const inSubMenu = useIsInSubMenu(slugId);
 
     return (
         <Routes>
-            <Route path={`/${slugId}`} element={<MenuContainer>{children}</MenuContainer>} />
+            <Route path={`/${slugId}`} element={inSubMenu ? <MenuContainer>{children}</MenuContainer> : null} />
         </Routes>
     );
 };
@@ -721,8 +722,12 @@ export const useCurrentMenu = (): [MenuType, string | null] => {
     return [type, subPath];
 };
 
-export const useIsInSubMenu = (id: string): boolean => {
+export const useIsInSubMenu = (id: string | string[]): boolean => {
     const [, subPath] = useCurrentMenu();
+
+    if (Array.isArray(id)) {
+        return id.some(subId => subPath === subId);
+    }
 
     return subPath === id;
 };
@@ -760,7 +765,7 @@ export const MenuItemSubMenuLink: FunctionComponent<MenuItemSubMenuLinkProps> = 
                 description={description}
             >
                 <div className="flex items-center justify-between">
-                    <div>{children}</div>
+                    <div className="grow">{children}</div>
                     <ChevronRightIcon className="size-5 p-0.5" />
                 </div>
             </MenuItemContainer>

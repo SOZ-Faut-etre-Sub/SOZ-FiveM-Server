@@ -97,6 +97,7 @@ import { useMenuNuiEvent, useNuiEvent, useNuiFocus } from '@public/nui/hook/nui'
 import { usePrevious } from '@public/nui/hook/previous';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
@@ -110,6 +111,8 @@ export const MenuApp: FunctionComponent = () => {
     );
 };
 
+const menuFocus = atom<boolean>(false);
+
 const MenuRouter: FunctionComponent = () => {
     const location = useLocation();
     const state = location.state as { data: any; skipCloseEvent?: boolean; originMenuType?: MenuType } | undefined;
@@ -119,19 +122,13 @@ const MenuRouter: FunctionComponent = () => {
     const [menuType, setMenuType] = useState<MenuType>(null);
     const prevMenuType = usePrevious(menuType);
     const prevOriginMenuType = usePrevious(state?.originMenuType);
-    const [useFocus, setFocus] = useState(false);
+    const useFocus = useAtomValue(menuFocus);
+    const setFocus = useSetAtom(menuFocus);
     const [visibility, setVisibility] = useState(true);
 
-    useNuiEvent('menu', 'SetMenuVisibility', (visibliity: boolean) => {
-        console.log('SetMenuVisibility', visibliity);
-        setVisibility(visibliity);
+    useNuiEvent('menu', 'SetMenuVisibility', setVisibility);
 
-        if (useFocus) {
-            setFocus(false);
-        }
-    });
-
-    useNuiFocus(useFocus, useFocus, false);
+    useNuiFocus(useFocus && visibility && menuType !== null, useFocus && visibility && menuType !== null, false);
 
     useControl(() => {
         if (menuType !== null && visibility) {
@@ -156,8 +153,6 @@ const MenuRouter: FunctionComponent = () => {
             setMenuType(nextMenuType);
 
             if (nextMenuType === null) {
-                setFocus(false);
-
                 navigate('/', {
                     state: {
                         skipCloseEvent: true,
@@ -166,8 +161,6 @@ const MenuRouter: FunctionComponent = () => {
                 });
             }
         } else if (prevMenuType !== null && prevMenuType !== menuType) {
-            setFocus(false);
-
             if (!state?.skipCloseEvent) {
                 fetchNui(NuiEvent.MenuClosed, {
                     menuType: prevMenuType,
@@ -207,7 +200,6 @@ const MenuRouter: FunctionComponent = () => {
         });
 
         setMenuType(menuType);
-        setFocus(false);
     });
 
     useMenuNuiEvent('CloseMenu', skipCloseEvent => {
@@ -220,7 +212,6 @@ const MenuRouter: FunctionComponent = () => {
             });
         }
         setMenuType(null);
-        setFocus(false);
     });
 
     return (
@@ -275,7 +266,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin />} />
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
-            <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
+            <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement />} />
             <Route
                 path={`/${MenuType.HousingPropPlacementMenu}/*`}
                 element={<MenuPropPlacementHousing data={menuData} />}

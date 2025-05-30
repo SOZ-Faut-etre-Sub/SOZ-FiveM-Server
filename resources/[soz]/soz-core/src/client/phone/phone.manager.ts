@@ -7,6 +7,7 @@ import { PlayerTalentService } from '@private/client/player/player.talent.servic
 import { PoliceSwatProvider } from '@private/client/police/police.swat.provider';
 import { MineSweeperRobotProvider } from '@private/client/vehicle/minesweeper.provider';
 import { PhoneState } from '@public/client/phone/phone.state';
+import { SceneProvider } from '@public/client/scene/scene.provider';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { ClientEvent } from '@public/shared/event/client';
 import { NuiEvent } from '@public/shared/event/nui';
@@ -16,7 +17,6 @@ import { HousingFournitureProvider } from '../housing/housing.fourniture.provide
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { PropPlacementProvider } from '../object/prop.placement.provider';
 import { PlayerService } from '../player/player.service';
 import { StateSelector } from '../store/store';
 import { PhoneService } from './phone.service';
@@ -36,8 +36,8 @@ export class PhoneManager {
     @Inject(InventoryManager)
     private readonly inventoryManager: InventoryManager;
 
-    @Inject(PropPlacementProvider)
-    private readonly propPlacementProvider: PropPlacementProvider;
+    @Inject(SceneProvider)
+    private readonly sceneProvider: SceneProvider;
 
     @Inject(HousingFournitureProvider)
     private readonly housingFournitureProvider: HousingFournitureProvider;
@@ -187,7 +187,7 @@ export class PhoneManager {
     })
     async togglePhone() {
         if (
-            this.propPlacementProvider.IsEditorModeActive() ||
+            this.sceneProvider.isEditingScene() ||
             this.housingFournitureProvider.isHousingEditorModeActive() ||
             this.mineSweeperRobotProvider.isUsingRobot() ||
             this.policeSwatProvider.isUsingShield()

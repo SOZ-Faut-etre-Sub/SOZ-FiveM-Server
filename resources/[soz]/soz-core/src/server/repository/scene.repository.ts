@@ -30,7 +30,10 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 entities[entity.id] = {
                     id: entity.id,
                     model: entity.model,
-                    object: entity.object as WorldObject,
+                    object: {
+                        ...(entity.object as WorldObject),
+                        id: entity.id,
+                    },
                     inventoryId: entity.inventory_id,
                 };
             }
@@ -55,7 +58,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         return list;
     }
 
-    public async addScene(name: string, creatorId: string, eventId?: string) {
+    public async addScene(name: string, creatorId: string, eventId?: string): Promise<Scene> {
         const scene = await this.prismaService.scene.create({
             data: {
                 name,
@@ -137,7 +140,10 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         scene.entities[entity.id] = {
             id: entity.id,
             model: entity.model,
-            object,
+            object: {
+                ...object,
+                id: entity.id,
+            },
         };
     }
 
@@ -164,7 +170,10 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 id: entityId,
             },
             data: {
-                object,
+                object: {
+                    ...object,
+                    id: entityId, // Ensure the ID remains the same
+                },
             },
         });
 

@@ -33,7 +33,7 @@ import {
     VehicleOrderMenuData,
 } from '../vehicle/vehicle';
 import { WeaponsMenuData } from '../weapons/weapon';
-import { HousingPropPlacementMenuData, PropPlacementMenuData } from './prop_placement';
+import { HousingPropPlacementMenuData } from './prop_placement';
 
 export interface NuiMenuMethodMap {
     ArrowDown: never;
@@ -199,7 +199,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.RaceAdmin]: null;
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: GouvJobMenuPropData;
-    [MenuType.PropPlacementMenu]: PropPlacementMenuData;
+    [MenuType.PropPlacementMenu]: null;
     [MenuType.HousingPropPlacementMenu]: HousingPropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };

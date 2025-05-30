@@ -86,7 +86,7 @@ export class TargetFactory {
         this.removeBoxZone(`entity_${id}`);
     }
 
-    public async createForModel(
+    public createForModel(
         models: string[] | number[] | string | number,
         targets: TargetOption[],
         distance = DEFAULT_DISTANCE
@@ -94,15 +94,20 @@ export class TargetFactory {
         return this.targetStore.addModels(models, targets, distance);
     }
 
-    public async createForEntity(entities: number[] | number, targets: TargetOption[], distance = DEFAULT_DISTANCE) {
-        return this.targetStore.addEntities(entities, targets, distance);
+    public createForEntity(
+        entities: number[] | number,
+        targets: TargetOption[],
+        distance = DEFAULT_DISTANCE,
+        id?: string
+    ) {
+        return this.targetStore.addEntities(entities, targets, distance, id);
     }
 
-    public async createForAllVehicle(targets: TargetOption[], distance = 3.0) {
+    public createForAllVehicle(targets: TargetOption[], distance = 3.0) {
         return this.targetStore.vehicles.add({ vehicle: -1, targets, distance });
     }
 
-    public async createForAllPed(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
+    public createForAllPed(targets: TargetOption[], distance = DEFAULT_DISTANCE) {
         return this.targetStore.peds.add({ ped: -1, targets, distance });
     }
 

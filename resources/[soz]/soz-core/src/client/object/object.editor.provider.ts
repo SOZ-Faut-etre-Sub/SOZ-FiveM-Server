@@ -1,4 +1,5 @@
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
@@ -7,9 +8,8 @@ import { ObjectEffects } from '@public/shared/animation';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/inventory';
 import { ObjectEditorOptions, WorldObject } from '@public/shared/object';
-import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
-import { Control } from '../../shared/input';
 import { MenuType } from '../../shared/nui/menu';
 import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
@@ -44,16 +44,10 @@ export class ObjectEditorProvider {
     @Inject(ObjectService)
     private objectService: ObjectService;
 
-    private currentObject: CurrentObject | null;
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
 
-    @Once(OnceStep.Start)
-    public async onInit() {
-        RegisterKeyMapping('+gizmoSelect', 'Gizmo : Sélectionner un axe.', 'MOUSE_BUTTON', 'MOUSE_LEFT');
-        RegisterKeyMapping('+gizmoTranslation', 'Gizmo : Mode Translation', 'keyboard', 'T');
-        RegisterKeyMapping('+gizmoRotation', 'Gizmo : Mode Rotation', 'keyboard', 'R');
-        RegisterKeyMapping('+gizmoScale', 'Gizmo : Mode Scale', 'keyboard', 'S');
-        RegisterKeyMapping('+gizmoLocal', 'Gizmo : Coordonnées locales', 'keyboard', 'L');
-    }
+    private currentObject: CurrentObject | null;
 
     public async createOrUpdateObject(
         model: number,
@@ -76,30 +70,34 @@ export class ObjectEditorProvider {
             allowRotation: true,
             allowScale: true,
             allowToggleCollision: false,
-            allowToggleSnap: false,
+            allowToggleSnap: true,
             allowAddEffect: false,
             allowTogglePermanent: false,
+            allowDuplicate: false,
             effect: existingObject?.effect || null,
             vfx: existingObject?.vfx || null,
             context: 'hammer',
             collision: !existingObject?.noCollision || false,
             snapToGround: existingObject?.placeOnGround || false,
             permanent: existingObject?.permanent || false,
+            useCircularCamera: true,
+            initialPosition: position,
             ...options,
         };
 
         const initialObject: WorldObject = {
             model,
-            position,
+            position: editorOptions.initialPosition,
             id: existingObject?.id || uuidv4(),
             placeOnGround: editorOptions.snapToGround,
-            noCollision: editorOptions.collision,
+            noCollision: true,
             matrix: existingObject?.matrix,
             invisible: false,
             effect: editorOptions.effect,
             vfx: editorOptions.vfx,
             permanent: editorOptions.permanent,
             rotation: existingObject?.rotation,
+            highlight: true,
         };
 
         const objectEntity = await this.objectService.createObject(initialObject);
@@ -107,6 +105,8 @@ export class ObjectEditorProvider {
         if (!objectEntity) {
             return existingObject;
         }
+
+        initialObject.matrix = this.objectService.getEntityMatrix(objectEntity);
 
         const promise = new Promise<WorldObject>(resolver => {
             this.currentObject = {
@@ -123,14 +123,15 @@ export class ObjectEditorProvider {
         });
 
         promise.finally(() => {
-            LeaveCursorMode();
-
             if (this.currentObject && this.currentObject.entity) {
                 DeleteEntity(this.currentObject.entity);
                 this.currentObject.entity = null;
             }
 
-            this.circularCamera.deleteCamera();
+            if (editorOptions.useCircularCamera) {
+                this.circularCamera.deleteCamera();
+            }
+
             this.currentObject = null;
         });
 
@@ -141,12 +142,23 @@ export class ObjectEditorProvider {
 
         this.refreshObjectPositionFromGame();
 
-        EnterCursorMode();
+        if (editorOptions.useCircularCamera) {
+            this.circularCamera.createCamera([position[0], position[1], position[2]]);
+        }
 
-        this.circularCamera.createCamera([position[0], position[1], position[2]]);
+        this.nuiMenu.openMenu(
+            MenuType.ObjectEditor,
+            {
+                ...editorOptions,
+                object: initialObject,
+            },
+            {
+                originMenuType: this.nuiMenu.getOpened(),
+            }
+        );
 
-        this.nuiMenu.openMenu(MenuType.ObjectEditor, editorOptions, {
-            originMenuType: this.nuiMenu.getOpened(),
+        this.nuiDispatch.dispatch('object_editor', 'setEntityPosition', {
+            matrix: this.objectService.getEntityMatrix(objectEntity),
         });
 
         return promise;
@@ -158,129 +170,12 @@ export class ObjectEditorProvider {
             return;
         }
 
-        if (!DoesEntityExist(this.currentObject.entity)) {
-            return;
-        }
-
-        DisableAllControlActions(0);
-
-        const matrix = new Float32Array(this.objectService.getEntityMatrix(this.currentObject.entity));
-        const changed = DrawGizmo(matrix as any, `Gismo_editor_${this.currentObject.entity}`);
-
-        if (!this.currentObject.options.collision) {
-            this.objectService.applyEntityMatrix(this.currentObject.entity, Array.from(matrix));
-        } else {
-            this.objectService.applyEntityNormalizedMatrix(this.currentObject.entity, Array.from(matrix));
-        }
-
-        if (changed) {
-            this.objectService.applyEntityMatrix(this.currentObject.entity, Array.from(matrix));
-        }
-
-        const position = GetEntityCoords(this.currentObject.entity) as Vector3;
-
-        if (this.currentObject.options.snapToGround && getDistance(position, this.currentObject.position) > 0.001) {
-            PlaceObjectOnGroundProperly(this.currentObject.entity);
-        }
-        this.refreshObjectPositionFromGame();
-
-        // Check distance between the object and the player
-        if (IsDisabledControlJustReleased(0, Control.Attack)) {
-            const pedPosition = GetEntityCoords(PlayerPedId()) as Vector3;
-            const distance = getDistance(pedPosition, this.currentObject.position);
-
-            if (distance > this.currentObject.options.maxDistance) {
-                this.notifier.notify('Vous ne pouvez pas déplacer ce prop plus loin ! Rapprochez vous.', 'error');
-
-                SetEntityCoordsNoOffset(
-                    this.currentObject.entity,
-                    this.currentObject.previousPosition[0],
-                    this.currentObject.previousPosition[1],
-                    this.currentObject.previousPosition[2],
-                    false,
-                    false,
-                    false
-                );
-
-                return;
-            }
-
-            this.currentObject.previousPosition = this.currentObject.position;
-
-            this.circularCamera.updateTarget([
-                this.currentObject.position[0],
-                this.currentObject.position[1],
-                this.currentObject.position[2],
-            ]);
-        }
+        this.nuiDispatch.dispatch('object_editor', 'setCameraPosition', {
+            position: GetFinalRenderedCamCoord() as Vector3,
+            rotation: GetFinalRenderedCamRot(0) as Vector3,
+        });
 
         this.currentObject.options.onDrawCallback(this.getWorldObject(this.currentObject));
-
-        if (IsDisabledControlJustPressed(0, 25)) {
-            LeaveCursorMode();
-        }
-
-        if (IsDisabledControlJustReleased(0, 25)) {
-            EnterCursorMode();
-        }
-    }
-
-    @OnNuiEvent(NuiEvent.ObjectEditorReset)
-    public async resetPlacement({
-        position,
-        rotation,
-        scale,
-    }: {
-        position?: boolean;
-        rotation?: boolean;
-        scale?: boolean;
-    }) {
-        if (!this.currentObject) {
-            return;
-        }
-
-        if (position) {
-            SetEntityCoordsNoOffset(
-                this.currentObject.entity,
-                this.currentObject.startingObject.position[0],
-                this.currentObject.startingObject.position[1],
-                this.currentObject.startingObject.position[2],
-                false,
-                false,
-                false
-            );
-        }
-
-        if (rotation) {
-            SetEntityHeading(this.currentObject.entity, this.currentObject.startingObject.position[3]);
-
-            if (this.currentObject.startingObject.rotation) {
-                SetEntityRotation(
-                    this.currentObject.entity,
-                    this.currentObject.startingObject.rotation[0],
-                    this.currentObject.startingObject.rotation[1],
-                    this.currentObject.startingObject.rotation[2],
-                    this.currentObject.startingObject.rotationOrder ?? 0,
-                    false
-                );
-            }
-        }
-
-        if (scale) {
-            const rot = GetEntityRotation(
-                this.currentObject.entity,
-                this.currentObject.startingObject.rotationOrder ?? 0
-            );
-
-            SetEntityRotation(
-                this.currentObject.entity,
-                rot[0],
-                rot[1],
-                rot[2],
-                this.currentObject.startingObject.rotationOrder ?? 0,
-                false
-            );
-        }
     }
 
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
@@ -311,12 +206,18 @@ export class ObjectEditorProvider {
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorSave)
-    public async save() {
+    public async save({ duplicate }: { duplicate?: boolean }) {
         if (!this.currentObject) {
             return;
         }
 
-        this.currentObject.resolver(this.getWorldObject(this.currentObject));
+        const object = this.getWorldObject(this.currentObject);
+
+        if (duplicate) {
+            object.id = uuidv4();
+        }
+
+        this.currentObject.resolver(object);
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorToggleCollision)
@@ -354,16 +255,54 @@ export class ObjectEditorProvider {
         await this.objectService.updateObject(this.currentObject.entity, this.getWorldObject(this.currentObject));
     }
 
-    @OnNuiEvent(NuiEvent.ObjectEditorToggleSnap)
-    public async toggleSnap({ value }: { value: boolean }) {
+    @OnNuiEvent(NuiEvent.ObjectEditorSnap)
+    public async snapCurrentObject() {
         if (!this.currentObject) {
             return;
         }
 
-        this.currentObject.options.snapToGround = value;
+        const matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
+        PlaceObjectOnGroundProperly_2(this.currentObject.entity);
+        const position = GetEntityCoords(this.currentObject.entity) as Vector3;
+        matrix[12] = position[0];
+        matrix[13] = position[1];
+        matrix[14] = position[2];
+        this.objectService.applyEntityMatrix(this.currentObject.entity, matrix);
 
-        if (value) {
-            PlaceObjectOnGroundProperly_2(this.currentObject.entity);
+        this.refreshObjectPositionFromGame();
+
+        this.nuiDispatch.dispatch('object_editor', 'setEntityPosition', {
+            matrix: this.objectService.getEntityMatrix(this.currentObject.entity),
+        });
+
+        if (this.currentObject.options.useCircularCamera) {
+            this.circularCamera.updateTarget([
+                this.currentObject.position[0],
+                this.currentObject.position[1],
+                this.currentObject.position[2],
+            ]);
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.ObjectEditorSetPosition)
+    public async setPosition({ matrix }: { matrix: number[] }) {
+        if (!this.currentObject) {
+            return;
+        }
+
+        this.objectService.applyEntityMatrix(this.currentObject.entity, matrix);
+
+        this.refreshObjectPositionFromGame();
+    }
+
+    @OnNuiEvent(NuiEvent.ObjectEditorStopDrag)
+    public async stopDrag() {
+        if (this.currentObject.options.useCircularCamera) {
+            this.circularCamera.updateTarget([
+                this.currentObject.position[0],
+                this.currentObject.position[1],
+                this.currentObject.position[2],
+            ]);
         }
     }
 

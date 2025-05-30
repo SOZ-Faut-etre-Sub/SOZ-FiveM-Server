@@ -273,6 +273,82 @@ export class ObjectProvider {
         this.unspawnObject(id);
     }
 
+    public async updateObject(
+        object: WorldObject,
+        targets: TargetOption[] = [],
+        dragAndDropCallbacks: DnDCallback[] = []
+    ) {
+        // if the object is not loaded, delete it and create it again
+        if (!this.loadedObjects[object.id]) {
+            this.deleteObject(object.id);
+            await this.createObject(object, targets, dragAndDropCallbacks);
+
+            return;
+        }
+
+        // object is loaded, check if same grid chunk
+        const existingObject = this.loadedObjects[object.id];
+        const existingChunk = getChunkId(existingObject.object.position);
+        const newChunk = getChunkId(object.position);
+
+        // if the chunk is not the same, delete the object and create it again
+        if (existingChunk !== newChunk) {
+            this.deleteObject(object.id);
+            await this.createObject(object, targets, dragAndDropCallbacks);
+
+            return;
+        }
+
+        // if the chunk is the same, update the object
+        const objectInChunk = this.objectsByChunk
+            .get(newChunk)
+            ?.find(spawnableObject => spawnableObject.object.id === object.id);
+
+        if (objectInChunk) {
+            objectInChunk.object = object;
+            objectInChunk.targets = targets;
+            objectInChunk.dragAndDropCallbacks = dragAndDropCallbacks;
+        }
+
+        if (existingObject.dragAndDropCallbacks) {
+            this.inventoryDragAndDropProvider.unregisterEntity(existingObject.entity);
+        }
+
+        existingObject.object = object;
+        existingObject.targets = targets;
+        existingObject.dragAndDropCallbacks = dragAndDropCallbacks;
+
+        if (existingObject.dragAndDropCallbacks) {
+            this.inventoryDragAndDropProvider.registerEntity(existingObject.entity, dragAndDropCallbacks);
+        }
+
+        await this.objectService.updateObject(existingObject.entity, object);
+
+        targets = [...existingObject.targets];
+
+        if (object.inventoryId) {
+            targets.push({
+                label: 'Ouvrir',
+                icon: 'inventory/ouvrir_le_stockage',
+                category: 'citizen',
+                canInteract: () => true,
+                action: () => {
+                    this.inventoryManager.openInventory(
+                        InventoryType.ObjectStorage,
+                        object.inventoryId,
+                        object.position
+                    );
+                },
+            });
+        }
+
+        if (existingObject.targets) {
+            this.targetFactory.createForEntity(existingObject.entity, targets, 2.5, object.id);
+        } else {
+            this.targetFactory.removeForEntity([existingObject.entity]);
+        }
+    }
+
     //@StateSelector(state => state.grid)
     public async updateSpawnObjectOnGridChange(grid: number[]) {
         if (this.disabled) {
@@ -340,7 +416,7 @@ export class ObjectProvider {
         }
 
         if (targets.length > 0) {
-            this.targetFactory.createForEntity(entity, targets);
+            this.targetFactory.createForEntity(entity, targets, 2.5, spawnableObject.object.id);
         }
 
         if (spawnableObject.dragAndDropCallbacks) {

@@ -1,8 +1,10 @@
 import { NuiEvent } from '@public/shared/event/nui';
 import { JobLabel, JobType } from '@public/shared/job';
+import { PLACEMENT_PROP_LABELS, PLACEMENT_PROP_LIST } from '@public/shared/nui/prop_placement';
 import { ObjectEditorContext } from '@public/shared/object';
+import { isStaff } from '@public/shared/player';
 import { Scene } from '@public/shared/scene';
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useCallback, useEffect, useLayoutEffect } from 'react';
 
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
@@ -12,6 +14,7 @@ import {
     MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
+    MenuItemSubMenuLink,
     MenuSubTitle,
     MenuTitle,
     SubMenu,
@@ -22,14 +25,38 @@ export type SubMenuSceneProps = {
     scene: Scene;
     context: ObjectEditorContext;
     allowLoad?: boolean;
+    allowInventory?: boolean;
 };
+/**
+ * @TODO
+ *
+ * When in sub menu activa free camera
+ */
 
-export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, context, allowLoad = false }) => {
+export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
+    scene,
+    context,
+    allowLoad = false,
+    allowInventory = false,
+}) => {
     const subMenuId = `scene-${scene.id}`;
-    const inSubMenu = useIsInSubMenu(subMenuId);
+    const subMenuEntityId = `scene-entity-${scene.id}`;
+    const subMenuPedId = `scene-ped-${scene.id}`;
+    const subMenuCollection = `scene-collection-${scene.id}`;
+    const collections = Object.keys(PLACEMENT_PROP_LIST).sort((a, b) => a.localeCompare(b));
+    const allSubMenus = [subMenuId, subMenuEntityId, subMenuPedId, subMenuCollection];
+    const subMenuPreview = [];
+
+    for (const categoryIndex in collections) {
+        allSubMenus.push(`${subMenuCollection}-${categoryIndex}`);
+        subMenuPreview.push(`${subMenuCollection}-${categoryIndex}`);
+    }
+
+    const inSubMenu = useIsInSubMenu(allSubMenus);
+    const inSubMenuPreview = useIsInSubMenu(subMenuPreview);
     const player = usePlayer();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (inSubMenu) {
             fetchNui(NuiEvent.SceneStartEditing, { sceneId: scene.id, context });
         }
@@ -41,9 +68,42 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
         };
     }, [inSubMenu]);
 
+    useEffect(() => {
+        if (!inSubMenuPreview) {
+            fetchNui(NuiEvent.ScenePreviewModel, { prop: null });
+        }
+
+        return () => {
+            if (inSubMenuPreview) {
+                fetchNui(NuiEvent.ScenePreviewModel, { prop: null });
+            }
+        };
+    }, [inSubMenuPreview]);
+
+    const mouseHandler = useCallback((): void => {
+        if (!inSubMenu) {
+            return;
+        }
+
+        fetchNui(NuiEvent.SceneSelectObjectOnClick);
+    }, [inSubMenu]);
+
+    useEffect(() => {
+        window.addEventListener('mousedown', mouseHandler);
+
+        return () => {
+            window.removeEventListener('mousedown', mouseHandler);
+        };
+    }, [mouseHandler]);
+
+    // avoid rendering when not in sub menu, which save a lot of performance
+    if (!inSubMenu) {
+        return null;
+    }
+
     return (
         <>
-            <SubMenu key={scene.id} id={subMenuId}>
+            <SubMenu id={subMenuId}>
                 <MenuTitle title={context === JobType.Gouv ? JobLabel.gouv : context} />
                 <MenuContent subtitle={`Scène ${scene.name}`}>
                     <MenuItemButton
@@ -54,6 +114,9 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         🔎 Rechercher un modèle
                     </MenuItemButton>
+                    <MenuItemSubMenuLink id={`scene-collection-${scene.id}`}>
+                        ➕ Ajouter une entité via liste
+                    </MenuItemSubMenuLink>
                     <MenuItemButton
                         onConfirm={async () => {
                             await fetchNui(NuiEvent.SceneAddEntity, {
@@ -64,16 +127,18 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         ➕ Ajouter une entité
                     </MenuItemButton>
-                    <MenuItemButton
-                        onConfirm={async () => {
-                            await fetchNui(NuiEvent.SceneAddPed, {
-                                sceneId: scene.id,
-                            });
-                        }}
-                        onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
-                    >
-                        ➕ Ajouter un ped
-                    </MenuItemButton>
+                    {isStaff(player) && (
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.SceneAddPed, {
+                                    sceneId: scene.id,
+                                });
+                            }}
+                            onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
+                        >
+                            ➕ Ajouter un ped
+                        </MenuItemButton>
+                    )}
                     {allowLoad && (
                         <>
                             <MenuItemButton
@@ -108,7 +173,7 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         ✎ Renommer la collection
                     </MenuItemButton>
-                    {['staff', 'admin'].includes(player.role) && (
+                    {isStaff(player) && (
                         <>
                             <MenuItemCheckbox
                                 checked={scene.persistent}
@@ -143,14 +208,25 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     >
                         ❌ Supprimer
                     </MenuItemButton>
-                    <MenuSubTitle>Entités</MenuSubTitle>
+                    <MenuItemSubMenuLink id={`scene-entity-${scene.id}`}>Entités</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id={`scene-ped-${scene.id}`}>PNJS</MenuItemSubMenuLink>
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id={`scene-entity-${scene.id}`}>
+                <MenuTitle title={context === JobType.Gouv ? JobLabel.gouv : context} />
+                <MenuContent subtitle={`Scène ${scene.name} Entités`}>
                     {Object.values(scene.entities).map(entity => (
                         <MenuItemSelect
-                            title={entity.model}
+                            title={PLACEMENT_PROP_LABELS[entity.model] || entity.model}
                             key={entity.id}
                             onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: entity.id })}
                             description={
-                                <div>Inventaire: {entity.inventoryId ? entity.inventoryId : 'Non défini'}</div>
+                                <div>
+                                    <div>{entity.model}</div>
+                                    {allowInventory && (
+                                        <div>Inventaire: {entity.inventoryId ? entity.inventoryId : 'Non défini'}</div>
+                                    )}
+                                </div>
                             }
                             onConfirm={(i, value) => {
                                 switch (value) {
@@ -191,11 +267,21 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                             <MenuItemSelectOption value="edit">Editer</MenuItemSelectOption>
                             <MenuItemSelectOption value="duplicate">Dupliquer</MenuItemSelectOption>
                             <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
-                            <MenuItemSelectOption value="inventory">Définir l'inventaire</MenuItemSelectOption>
-                            <MenuItemSelectOption value="inventory_delete">Supprimer l'inventaire</MenuItemSelectOption>
+                            {allowInventory && (
+                                <>
+                                    <MenuItemSelectOption value="inventory">Définir l'inventaire</MenuItemSelectOption>
+                                    <MenuItemSelectOption value="inventory_delete">
+                                        Supprimer l'inventaire
+                                    </MenuItemSelectOption>
+                                </>
+                            )}
                         </MenuItemSelect>
                     ))}
-                    <MenuSubTitle>PNJs</MenuSubTitle>
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id={`scene-ped-${scene.id}`}>
+                <MenuTitle title={context === JobType.Gouv ? JobLabel.gouv : context} />
+                <MenuContent subtitle={`Scène ${scene.name} PNJs`}>
                     {Object.values(scene.peds).map(ped => (
                         <MenuItemSelect
                             title={ped.model}
@@ -251,6 +337,41 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({ scene, cont
                     ))}
                 </MenuContent>
             </SubMenu>
+            <SubMenu id={`scene-collection-${scene.id}`}>
+                <MenuTitle title="Aménagement" />
+                <MenuContent subtitle="Choisir un type de meuble">
+                    <MenuSubTitle>Type de meuble</MenuSubTitle>
+                    {collections.map((propCategory, index) => (
+                        <MenuItemSubMenuLink key={propCategory} id={`${subMenuCollection}-${index}`}>
+                            {propCategory}
+                        </MenuItemSubMenuLink>
+                    ))}
+                </MenuContent>
+            </SubMenu>
+
+            {collections.map((propCategory, index) => (
+                <SubMenu key={propCategory} id={`${subMenuCollection}-${index}`}>
+                    <MenuTitle title="Aménagement" />
+                    <MenuContent subtitle={`Choisir un ${propCategory}`}>
+                        {PLACEMENT_PROP_LIST[propCategory].map(prop => (
+                            <MenuItemButton
+                                key={prop.model}
+                                onSelected={async () => {
+                                    await fetchNui(NuiEvent.ScenePreviewModel, { prop: prop });
+                                }}
+                                onConfirm={async () => {
+                                    await fetchNui(NuiEvent.SceneAddEntity, {
+                                        sceneId: scene.id,
+                                        model: prop.model,
+                                    });
+                                }}
+                            >
+                                {prop.label}
+                            </MenuItemButton>
+                        ))}
+                    </MenuContent>
+                </SubMenu>
+            ))}
         </>
     );
 };

@@ -1,4 +1,5 @@
 import { ScenePedData } from '@public/shared/scene';
+import { Vector4 } from 'three';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -6,8 +7,10 @@ import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
+import { joaat } from '../../shared/joaat';
 import { WorldObject } from '../../shared/object';
 import { RpcServerEvent } from '../../shared/rpc';
+import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerService } from '../player/player.service';
@@ -27,10 +30,66 @@ export class SceneProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
+
     private loadedScenes = new Set<string>();
+
+    public async migrateLegacyScene() {
+        const collections = await this.prismaService.collection_prop.findMany();
+        console.log('migrate legacy scene');
+
+        for (const collection of collections) {
+            console.log(collection.name);
+            const scene = await this.sceneRepository.addScene(collection.name, collection.creator);
+
+            if (collection.persistant) {
+                await this.sceneRepository.setPersistent(scene.id, true);
+            }
+
+            // load objects of scene
+            const objects = await this.prismaService.placed_prop.findMany({
+                where: {
+                    collection: scene.name,
+                },
+            });
+
+            for (const object of objects) {
+                const position = JSON.parse(object.position) as Vector4;
+                const rotationZ = position[4] <= 180 ? position[4] : position[4] - 360;
+
+                await this.sceneRepository.addEntity(scene.id, object.model, {
+                    id: object.unique_id,
+                    model: joaat(object.model),
+                    position: JSON.parse(object.position),
+                    matrix: JSON.parse(object.matrix),
+                    rotation: [0, 0, rotationZ],
+                    placeOnGround: false,
+                    effect: null,
+                    vfx: null,
+                    noCollision: !object.collision,
+                });
+            }
+
+            await this.prismaService.placed_prop.deleteMany({
+                where: {
+                    collection: scene.name,
+                },
+            });
+
+            await this.prismaService.collection_prop.delete({
+                where: {
+                    id: collection.id,
+                },
+            });
+        }
+    }
 
     @Once(OnceStep.RepositoriesLoaded)
     public async initLoadedScenes() {
+        await this.migrateLegacyScene();
+        await this.sceneRepository.refresh();
+
         const scenes = await this.sceneRepository.get();
 
         for (const scene of Object.values(scenes)) {

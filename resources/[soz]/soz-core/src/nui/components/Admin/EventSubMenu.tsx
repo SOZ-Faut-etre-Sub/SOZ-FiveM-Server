@@ -202,7 +202,7 @@ export const EventSubMenu: FunctionComponent<EventSubMenuProps> = ({ permission,
                     {Object.values(scenes)
                         .filter(scene => scene.worldEventId === event.id)
                         .map(scene => (
-                            <SubMenuScene key={scene.id} scene={scene} context="admin" />
+                            <SubMenuScene key={scene.id} scene={scene} context="admin" allowInventory />
                         ))}
                 </Fragment>
             ))}
