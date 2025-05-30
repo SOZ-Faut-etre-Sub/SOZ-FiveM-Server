@@ -196,6 +196,9 @@ export const EntityConfig: Record<number, Record<string, Vector4>> = {
         [1]: [0.0, 0.0, 0.53, 0.0],
         [2]: [0.8, 0.0, 0.53, 0.0],
     },
+    [joaat('vw_prop_casino_chair_01a')]: {
+        0: [0, 0.2, 0.8, 180],
+    },
 };
 
 export const LoungerTargetList = [-1498352975];
@@ -264,6 +267,7 @@ export const SeatsTargetList = [
     GetHashKey('cube_mppd_sofa_01a'),
     GetHashKey('cube_mppd_sofa_02a'),
     GetHashKey('cube_mppd_sofa_02b'),
+    GetHashKey('vw_prop_casino_chair_01a'),
 ];
 
 export const ComputerTargetList = [
