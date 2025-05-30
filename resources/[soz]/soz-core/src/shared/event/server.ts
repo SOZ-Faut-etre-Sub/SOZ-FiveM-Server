@@ -485,6 +485,7 @@ export enum ServerEvent {
     POLICE_DESTROY_SWAT_ITEMS = 'soz-core:server:police:destroy-swat-items',
     POLICE_RETRIEVE_DRONE = 'soz-core:server:police:retrieve-drone',
     POLICE_SWAT_HEAL = 'soz-core:server:police:swat-heal',
+    POLICE_INCR_STICKYBOMB = 'soz-core:server:police:incr-stickybomb',
     POLICE_DELETE_STICKYBOMB = 'soz-core:server:police:delete-stickybomb',
     POLICE_SHIELD_SET_ANIMATION_OVERRIDE = 'soz-core:server:police:shield-set-animation-override',
 

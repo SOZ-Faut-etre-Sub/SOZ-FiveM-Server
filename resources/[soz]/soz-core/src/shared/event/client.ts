@@ -308,6 +308,7 @@ export enum ClientEvent {
     POLICE_DESTROYED_CLUE = 'soz-core:client:police:destroyed-clue',
     POLICE_PLACE_SPEED_ZONE = 'soz-core:client:police:place-speed-zone',
     POLICE_USE_SHIELD = 'soz-core:client:police:use-shield',
+    POLICE_EXPLODE_STICKYBOMB = 'soz-core:client:police:explode-stickybomb',
     POLICE_SYNC_SHIELD_ANIMATION_OVERRIDE = 'soz-core:client:police:sync-shield-animation-override',
 
     SET_ESCORTING = 'soz-core:client:police:set-escorting',
