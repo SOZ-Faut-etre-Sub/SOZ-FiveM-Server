@@ -379,7 +379,12 @@ export class VehicleMenuProvider {
             hasNeon: hasNeon(),
             crimiPerformance: crimiGarage && this.vehicleBusinessProvider.canPerformance(),
             crimiCustom: crimiGarage && this.vehicleBusinessProvider.canCustom(),
-            canGyro: isDriver && FDO.includes(player.job.id) && !VehicleWithSirens[model] && IsThisModelACar(model),
+            canGyro:
+                isDriver &&
+                FDO.includes(player.job.id) &&
+                player.job.onduty &&
+                !VehicleWithSirens[model] &&
+                IsThisModelACar(model),
             hasGyro: !!vehicleState.gyro,
         });
     }

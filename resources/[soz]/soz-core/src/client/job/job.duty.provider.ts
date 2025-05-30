@@ -286,7 +286,7 @@ const DutyZoneConfig: Zone<JobType>[] = [
         maxZ: 66.16,
     },
     {
-        data: JobType.LSCS,
+        data: JobType.SASP,
         center: [1132.37, -490.36, 65.16],
         length: 0.8,
         width: 1.8,

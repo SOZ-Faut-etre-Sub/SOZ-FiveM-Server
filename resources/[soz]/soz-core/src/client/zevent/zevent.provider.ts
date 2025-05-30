@@ -1,5 +1,4 @@
-import { Component, WardrobeConfig } from '@public/shared/cloth';
-import { VanillaComponentDrawableIndexMaxValue } from '@public/shared/drawable';
+import { WardrobeConfig } from '@public/shared/cloth';
 import { PlayerPedHash } from '@public/shared/player';
 
 import { OnEvent } from '../../core/decorators/event';
@@ -24,9 +23,10 @@ const tshirt: WardrobeConfig = {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [11]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Tops] + 13,
+                    Drawable: 0,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_custom',
                 },
             },
             Props: {},
@@ -36,9 +36,10 @@ const tshirt: WardrobeConfig = {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [11]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Male][Component.Tops] + 13,
+                    Drawable: 0,
                     Texture: 2,
                     Palette: 0,
+                    Collection: 'soz_custom',
                 },
             },
             Props: {},
@@ -58,9 +59,10 @@ const tshirt: WardrobeConfig = {
                 [3]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [11]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Female][Component.Tops] + 24,
+                    Drawable: 10,
                     Texture: 0,
                     Palette: 0,
+                    Collection: 'soz_custom',
                 },
             },
             Props: {},
@@ -70,9 +72,10 @@ const tshirt: WardrobeConfig = {
                 [3]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [11]: {
-                    Drawable: VanillaComponentDrawableIndexMaxValue[PlayerPedHash.Female][Component.Tops] + 24,
+                    Drawable: 10,
                     Texture: 2,
                     Palette: 0,
+                    Collection: 'soz_custom',
                 },
             },
             Props: {},

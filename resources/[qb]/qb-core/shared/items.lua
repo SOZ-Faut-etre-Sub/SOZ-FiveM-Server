@@ -1217,7 +1217,8 @@ QBShared.Items = {
         ["ammotype"] = nil,
         ["unique"] = true,
         ["useable"] = false,
-        ["description"] = "Throwing a Flashbang.",
+        ["description"] = "Et la lumière fut.",
+        ["illustrator"] = ".Laikker",
     },
     -- Miscellaneous
     ["weapon_petrolcan"] = {
