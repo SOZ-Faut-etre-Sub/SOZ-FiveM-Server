@@ -23,14 +23,23 @@ const BELL_ZONES: BellProps[] = [
         coords: [439.15, -980.38, 30.9],
         job: JobType.LSPD,
         number: '555-LSPD',
+        location: 'Mission Row',
     },
-
     // VINEWOOD
     {
         coords: [633.66, 7.62, 82.85],
         job: JobType.LSPD,
         number: '555-LSPD',
+        location: 'Vinewood',
     },
+    // MIRROR PARK
+    {
+        coords: [1130.18, -489.1, 65.16],
+        job: JobType.LSPD,
+        number: '555-LSPD',
+        location: 'Mirror Park',
+    },
+
     {
         coords: [1853.08, 3687.48, 34.42],
         job: JobType.BCSO,

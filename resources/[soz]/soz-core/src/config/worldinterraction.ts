@@ -235,4 +235,12 @@ export const SeatsTargetList = [
     826023884,
     847910771,
     98421364,
+    GetHashKey('cube_mppd_chair_01_top'),
+    GetHashKey('cube_mppd_chair_02'),
+    GetHashKey('cube_mppd_chair_03'),
+    GetHashKey('cube_mppd_chair_04'),
+    GetHashKey('cube_mppd_chair_classroom'),
+    GetHashKey('cube_mppd_sofa_01a'),
+    GetHashKey('cube_mppd_sofa_02a'),
+    GetHashKey('cube_mppd_sofa_02b'),
 ];
