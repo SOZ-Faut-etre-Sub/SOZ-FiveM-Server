@@ -98,6 +98,7 @@ export type ObjectEditorContext = 'hammer' | 'admin' | JobType.Gouv;
 
 export type ObjectEditorOptions = {
     onDrawCallback: (object: WorldObject) => void;
+    deleteCallback: (object: WorldObject) => void;
     maxDistance: number;
     allowDuplicate: boolean;
     allowDelete: boolean;

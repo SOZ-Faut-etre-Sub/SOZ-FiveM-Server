@@ -31,13 +31,24 @@ export type Scene = {
     owner?: string;
     entities: Record<string, SceneEntity>;
     peds: Record<string, ScenePed>;
+    markers: Record<string, SceneMarker>;
 };
 
 export type SceneEntity = {
     id: string;
     model: string;
+    userId?: string;
     inventoryId?: string;
     object: WorldObject;
+};
+
+export type SceneMarker = SceneMarkerData & {
+    id: string;
+    userId: string;
+};
+
+export type SceneMarkerData = {
+    position: Vector4;
 };
 
 export enum ScenePedBehavior {

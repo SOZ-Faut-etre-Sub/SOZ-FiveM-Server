@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '../../core/decorators/injectable';
 import { WorldObject } from '../../shared/object';
 import { RepositoryType } from '../../shared/repository';
-import { Scene, SceneEntity, ScenePed, ScenePedData } from '../../shared/scene';
+import { Scene, SceneEntity, SceneMarker, SceneMarkerData, ScenePed, ScenePedData } from '../../shared/scene';
 import { PrismaService } from '../database/prisma.service';
 import { Repository } from './repository';
 
@@ -17,6 +17,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             include: {
                 entities: true,
                 peds: true,
+                markers: true,
             },
         });
 
@@ -25,11 +26,13 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         for (const scene of scenes) {
             const entities: Record<string, SceneEntity> = {};
             const peds: Record<string, ScenePed> = {};
+            const markers: Record<string, SceneMarker> = {};
 
             for (const entity of scene.entities) {
                 entities[entity.id] = {
                     id: entity.id,
                     model: entity.model,
+                    userId: entity.user_id,
                     object: {
                         ...(entity.object as WorldObject),
                         id: entity.id,
@@ -43,6 +46,13 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                     ...(ped.ped as ScenePedData),
                 };
             }
+            for (const marker of scene.markers) {
+                markers[marker.id] = {
+                    id: marker.id,
+                    userId: marker.user_id,
+                    ...(marker.marker as SceneMarkerData),
+                };
+            }
 
             list[scene.id] = {
                 id: scene.id,
@@ -50,6 +60,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 persistent: scene.persistant,
                 entities: entities,
                 peds: peds,
+                markers: markers,
                 owner: scene.creator_id,
                 worldEventId: scene.event_id,
             };
@@ -74,6 +85,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             persistent: false,
             entities: {},
             peds: {},
+            markers: {},
             worldEventId: scene.event_id,
         };
 
@@ -197,6 +209,22 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         return entity;
     }
 
+    public async setEntityUserId(sceneId: string, entityId: string, userId: string | null) {
+        const entity = this.data[sceneId].entities[entityId];
+        entity.userId = userId;
+
+        await this.prismaService.scene_entity.update({
+            where: {
+                id: entityId,
+            },
+            data: {
+                user_id: userId,
+            },
+        });
+
+        return entity;
+    }
+
     public async addPed(sceneId: string, data: ScenePedData) {
         const scene = this.data[sceneId];
 
@@ -243,5 +271,55 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
         });
 
         return ped;
+    }
+
+    public async addMarker(sceneId: string, userId: string, data: SceneMarkerData) {
+        const scene = this.data[sceneId];
+
+        const marker = await this.prismaService.scene_marker.create({
+            data: {
+                scene_id: sceneId,
+                user_id: userId,
+                marker: data,
+            },
+        });
+
+        scene.markers[marker.id] = {
+            id: marker.id,
+            userId,
+            ...data,
+        };
+    }
+
+    public async removeMarker(sceneId: string, markerId: string) {
+        const marker = this.data[sceneId].markers[markerId];
+        delete this.data[sceneId].markers[markerId];
+
+        await this.prismaService.scene_marker.delete({
+            where: {
+                id: markerId,
+            },
+        });
+
+        return marker;
+    }
+
+    public async updateMarker(sceneId: string, markerId: string, data: Partial<SceneMarkerData>) {
+        const marker = this.data[sceneId].markers[markerId];
+        this.data[sceneId].markers[markerId] = {
+            ...marker,
+            ...data,
+        };
+
+        await this.prismaService.scene_marker.update({
+            where: {
+                id: markerId,
+            },
+            data: {
+                marker: this.data[sceneId].markers[markerId],
+            },
+        });
+
+        return marker;
     }
 }

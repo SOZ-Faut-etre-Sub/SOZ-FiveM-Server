@@ -65,6 +65,7 @@ export class ObjectEditorProvider {
 
         const editorOptions: ObjectEditorOptions = {
             onDrawCallback: () => {},
+            deleteCallback: () => {},
             maxDistance: PROP_MAX_DISTANCE,
             allowDelete: false,
             allowRotation: true,
@@ -202,6 +203,7 @@ export class ObjectEditorProvider {
             return;
         }
 
+        this.currentObject.options.deleteCallback(this.getWorldObject(this.currentObject));
         this.currentObject.resolver(null);
     }
 

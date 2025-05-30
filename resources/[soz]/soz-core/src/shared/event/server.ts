@@ -273,6 +273,10 @@ export enum ServerEvent {
     SCENE_UPDATE_PED = 'soz-core:server:scene:update-ped',
     SCENE_SET_PERSISTENT = 'soz-core:server:scene:set-persistent',
     SCENE_SET_NAME = 'soz-core:server:scene:set-name',
+    SCENE_ADD_MARKER = 'soz-core:server:scene:add-marker',
+    SCENE_REMOVE_MARKER = 'soz-core:server:scene:remove-marker',
+    SCENE_UPDATE_MARKER = 'soz-core:server:scene:update-marker',
+    SCENE_ENTITY_SET_USER_ID = 'soz-core:server:scene:entity:set-user-id',
 
     STORY_HALLOWEEN_2023_SCENARIO_1 = 'soz-core:server:halloween:scenario1',
     STORY_HALLOWEEN_2023_SCENARIO_2 = 'soz-core:server:halloween:scenario2',

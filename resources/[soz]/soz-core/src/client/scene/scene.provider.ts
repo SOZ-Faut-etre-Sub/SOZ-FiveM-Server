@@ -22,7 +22,15 @@ import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RepositoryType } from '../../shared/repository';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
-import { Scene, SceneEntity, ScenePed, ScenePedBehavior, ScenePedData } from '../../shared/scene';
+import {
+    Scene,
+    SceneEntity,
+    SceneMarker,
+    SceneMarkerData,
+    ScenePed,
+    ScenePedBehavior,
+    ScenePedData,
+} from '../../shared/scene';
 import { TargetOption } from '../../shared/target';
 import { AnimationService } from '../animation/animation.service';
 import { FlyingCameraProvider } from '../camera/flying.camera.provider';
@@ -113,6 +121,24 @@ export class SceneProvider {
 
     public isEditingScene(): boolean {
         return this.currentSceneEdited !== null;
+    }
+
+    @OnEvent(ClientEvent.PROP_OPEN_MENU)
+    public async openPlacementMenu() {
+        this.nuiMenu.openMenu(MenuType.PropPlacementMenu);
+    }
+
+    @OnNuiEvent(NuiEvent.RequestCreatePropCollection)
+    public async onRequestCreatePropCollection() {
+        const name = await this.inputService.askInput({
+            title: 'Nom de la collection',
+            maxCharacters: 50,
+        });
+        if (!name) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.SCENE_CREATE, name);
     }
 
     @Once(OnceStep.RepositoriesLoaded)
@@ -255,6 +281,28 @@ export class SceneProvider {
                 );
             } else {
                 ClearPedTasksImmediately(ped.entity);
+            }
+        }
+
+        for (const sceneMarker of Object.values(scene.markers)) {
+            const entity = this.objectProvider.getEntityFromId(sceneMarker.id);
+
+            if (!entity) {
+                continue;
+            }
+
+            if (
+                this.currentSceneEdited?.scene?.id === scene.id &&
+                this.nuiMenu.getOpened() !== MenuType.ObjectEditor &&
+                ((this.highlightedObjectId === null && this.targetedObjectId === null) ||
+                    this.highlightedObjectId === sceneMarker.id ||
+                    this.targetedObjectId === sceneMarker.id)
+            ) {
+                SetEntityDrawOutlineColor(0, 180, 0, 255);
+                SetEntityDrawOutlineShader(1);
+                SetEntityDrawOutline(entity, true);
+            } else {
+                SetEntityDrawOutline(entity, false);
             }
         }
     }
@@ -404,29 +452,7 @@ export class SceneProvider {
             return;
         }
 
-        const object = await this.objectEditorProvider.createOrUpdateObject(
-            entity.object.model,
-            {
-                allowToggleCollision: true,
-                allowToggleSnap: true,
-                allowAddEffect: true,
-                allowTogglePermanent: true,
-                context: this.currentSceneEdited?.context,
-                useCircularCamera: false,
-                allowDuplicate: true,
-            },
-            entity.object
-        );
-
-        if (!object) {
-            return;
-        }
-
-        if (entityId !== object.id) {
-            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, entity.model, object);
-        } else {
-            TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, entityId, object);
-        }
+        return await this.updateEntity(sceneId, entity);
     }
 
     @OnNuiEvent(NuiEvent.SceneRemoveEntity)
@@ -510,6 +536,9 @@ export class SceneProvider {
                 snapToGround: true,
                 context: this.currentSceneEdited?.context,
                 useCircularCamera: false,
+                deleteCallback: () => {
+                    TriggerServerEvent(ServerEvent.SCENE_REMOVE_PED, sceneId, pedId);
+                },
             },
             {
                 id: uuidv4(),
@@ -527,6 +556,71 @@ export class SceneProvider {
         };
 
         TriggerServerEvent(ServerEvent.SCENE_UPDATE_PED, sceneId, pedId, delta);
+    }
+
+    @OnNuiEvent(NuiEvent.SceneAddMarker)
+    async onNuiAddSceneMarker({ sceneId }: { sceneId: string }) {
+        const userId = await this.inputService.askInput({
+            title: 'Identifiant du marqueur',
+            defaultValue: '',
+            maxCharacters: 50,
+        });
+
+        if (!userId) {
+            return;
+        }
+
+        const position = this.getCoordForNewEntity();
+
+        const object = await this.objectEditorProvider.createOrUpdateObject(
+            GetHashKey('prop_pool_ball_01'),
+            {
+                allowToggleCollision: false,
+                allowToggleSnap: true,
+                allowAddEffect: false,
+                allowTogglePermanent: false,
+                allowRotation: false,
+                allowDuplicate: false,
+                allowScale: false,
+                allowDelete: true,
+
+                context: this.currentSceneEdited?.context,
+                useCircularCamera: false,
+                initialPosition: position,
+            },
+            {
+                id: uuidv4(),
+                model: GetHashKey('prop_pool_ball_01'),
+                position: position,
+            }
+        );
+
+        if (!object) {
+            return;
+        }
+
+        const data: SceneMarkerData = {
+            position: [object.position[0], object.position[1], object.position[2], object.position[3]],
+        };
+
+        TriggerServerEvent(ServerEvent.SCENE_ADD_MARKER, sceneId, userId, data);
+    }
+
+    @OnNuiEvent(NuiEvent.SceneUpdateMarker)
+    async onNuiSetSceneUpdateMarker({ sceneId, markerId }: { sceneId: string; markerId: string }) {
+        const scene = this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        const marker = scene.markers[markerId];
+
+        if (!marker) {
+            return;
+        }
+
+        return await this.updateMarker(sceneId, marker);
     }
 
     @OnNuiEvent(NuiEvent.SceneDuplicatePed)
@@ -809,9 +903,11 @@ export class SceneProvider {
 
         const objectsToAddOrUpdate = [];
         const pedsToAddOrUpdate = [];
+        const markersToAddOrUpdate = [];
 
         const previousEntitiesId = Object.keys(previousScene.entities);
         const previousPedsId = Object.keys(previousScene.peds);
+        const previousMarkersId = Object.keys(previousScene.markers);
 
         for (const entity of Object.values(scene.entities)) {
             objectsToAddOrUpdate.push(entity);
@@ -829,6 +925,14 @@ export class SceneProvider {
             }
         }
 
+        for (const marker of Object.values(scene.markers)) {
+            markersToAddOrUpdate.push(marker);
+
+            if (previousScene.markers[marker.id]) {
+                delete previousScene.markers[marker.id];
+            }
+        }
+
         // Remove old entities and peds
         if (previousEntitiesId.length > 0) {
             this.objectProvider.deleteObjects(previousEntitiesId);
@@ -836,6 +940,10 @@ export class SceneProvider {
 
         for (const pedId of previousPedsId) {
             this.pedFactory.deletePedOnGrid(pedId);
+        }
+
+        if (previousMarkersId.length > 0) {
+            this.objectProvider.deleteObjects(previousMarkersId);
         }
 
         for (const entity of objectsToAddOrUpdate) {
@@ -846,9 +954,11 @@ export class SceneProvider {
             for (const ped of pedsToAddOrUpdate) {
                 await this.loadScenePed(ped);
             }
-        }
 
-        if (sceneInEdition) {
+            for (const marker of markersToAddOrUpdate) {
+                await this.loadSceneMarker(marker);
+            }
+
             await this.applyHighlight(scene);
         }
     }
@@ -882,6 +992,10 @@ export class SceneProvider {
             for (const ped of Object.values(scene.peds)) {
                 await this.loadScenePed(ped);
             }
+
+            for (const marker of Object.values(scene.markers)) {
+                await this.loadSceneMarker(marker);
+            }
         }
     }
 
@@ -899,6 +1013,24 @@ export class SceneProvider {
             freeze: true,
             blockevents: true,
         });
+    }
+
+    async loadSceneMarker(marker: SceneMarker) {
+        if (this.objectProvider.hasObject(marker.id)) {
+            await this.objectProvider.updateObject({
+                id: marker.id,
+                model: GetHashKey('prop_pool_ball_01'),
+                position: marker.position,
+                alpha: 200,
+            });
+        } else {
+            await this.objectProvider.createObject({
+                id: marker.id,
+                model: GetHashKey('prop_pool_ball_01'),
+                position: marker.position,
+                alpha: 200,
+            });
+        }
     }
 
     async loadSceneEntity(entity: SceneEntity, editing = false) {
@@ -1059,6 +1191,8 @@ export class SceneProvider {
         for (const ped of Object.values(scene.peds)) {
             this.pedFactory.deletePedOnGrid(ped.id);
         }
+
+        this.objectProvider.deleteObjects(Object.keys(scene.markers));
     }
 
     @OnNuiEvent(NuiEvent.SceneSelectObjectOnClick)
@@ -1081,33 +1215,14 @@ export class SceneProvider {
 
         const sceneEntity = this.currentSceneEdited?.scene.entities[objectId] ?? null;
 
-        if (!sceneEntity) {
-            return;
+        if (sceneEntity) {
+            return await this.updateEntity(this.currentSceneEdited.scene.id, sceneEntity);
         }
 
-        const sceneId = this.currentSceneEdited.scene.id;
-        const object = await this.objectEditorProvider.createOrUpdateObject(
-            sceneEntity.object.model,
-            {
-                allowToggleCollision: true,
-                allowToggleSnap: true,
-                allowAddEffect: true,
-                allowTogglePermanent: true,
-                context: this.currentSceneEdited?.context,
-                useCircularCamera: false,
-                allowDuplicate: true,
-            },
-            sceneEntity.object
-        );
+        const sceneMarker = this.currentSceneEdited?.scene.markers[objectId] ?? null;
 
-        if (!object) {
-            return;
-        }
-
-        if (sceneEntity.id !== object.id) {
-            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, sceneEntity.model, object);
-        } else {
-            TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, sceneEntity.id, object);
+        if (sceneMarker) {
+            return await this.updateMarker(this.currentSceneEdited.scene.id, sceneMarker);
         }
     }
 
@@ -1165,23 +1280,32 @@ export class SceneProvider {
         }
 
         const sceneEntity = this.currentSceneEdited.scene.entities[objectId] ?? null;
+        const sceneMarker = this.currentSceneEdited.scene.markers[objectId] ?? null;
 
-        if (!sceneEntity) {
-            if (this.targetedObjectId) {
-                this.targetedObjectId = null;
+        if (sceneEntity) {
+            if (sceneEntity.object.id !== this.targetedObjectId) {
+                this.targetedObjectId = objectId;
                 await this.applyHighlight(this.currentSceneEdited.scene);
             }
 
             return;
         }
 
-        if (this.targetedObjectId === sceneEntity.id) {
+        if (sceneMarker) {
+            if (sceneMarker.id !== this.targetedObjectId) {
+                this.targetedObjectId = objectId;
+                await this.applyHighlight(this.currentSceneEdited.scene);
+            }
+
             return;
         }
 
-        this.targetedObjectId = sceneEntity.id;
+        if (this.targetedObjectId) {
+            this.targetedObjectId = null;
+            await this.applyHighlight(this.currentSceneEdited.scene);
+        }
 
-        await this.applyHighlight(this.currentSceneEdited.scene);
+        return;
     }
 
     private async getEntityFromMouse() {
@@ -1212,5 +1336,82 @@ export class SceneProvider {
             ...GetObjectOffsetFromCoords(position[0], position[1], position[2] - 0.8, heading, 0, 2.5, 0),
             0,
         ] as Vector4;
+    }
+
+    public async updateEntity(sceneId: string, sceneEntity: SceneEntity) {
+        const object = await this.objectEditorProvider.createOrUpdateObject(
+            sceneEntity.object.model,
+            {
+                allowToggleCollision: true,
+                allowToggleSnap: true,
+                allowAddEffect: true,
+                allowTogglePermanent: true,
+                context: this.currentSceneEdited?.context,
+                useCircularCamera: false,
+                allowDuplicate: true,
+                allowDelete: true,
+                deleteCallback: () => {
+                    TriggerServerEvent(ServerEvent.SCENE_REMOVE_ENTITY, sceneId, sceneEntity.id);
+                },
+            },
+            sceneEntity.object
+        );
+
+        if (!object) {
+            return;
+        }
+
+        if (sceneEntity.id !== object.id) {
+            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, sceneEntity.model, object);
+        } else {
+            TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, sceneEntity.id, object);
+        }
+    }
+
+    public async updateMarker(sceneId: string, sceneMarker: SceneMarker) {
+        const object = await this.objectEditorProvider.createOrUpdateObject(
+            GetHashKey('prop_pool_ball_01'),
+            {
+                allowToggleCollision: false,
+                allowToggleSnap: true,
+                allowAddEffect: false,
+                allowTogglePermanent: false,
+                allowRotation: false,
+                allowDuplicate: false,
+                allowScale: false,
+                allowDelete: true,
+                context: this.currentSceneEdited?.context,
+                useCircularCamera: false,
+                deleteCallback: () => {
+                    TriggerServerEvent(ServerEvent.SCENE_REMOVE_MARKER, sceneId, sceneMarker.id);
+                },
+                initialPosition: [
+                    sceneMarker.position[0],
+                    sceneMarker.position[1],
+                    sceneMarker.position[2],
+                    sceneMarker.position[3],
+                ],
+            },
+            {
+                id: sceneMarker.id,
+                model: GetHashKey('prop_pool_ball_01'),
+                position: [
+                    sceneMarker.position[0],
+                    sceneMarker.position[1],
+                    sceneMarker.position[2],
+                    sceneMarker.position[3],
+                ],
+            }
+        );
+
+        if (!object) {
+            return;
+        }
+
+        const data: SceneMarkerData = {
+            position: [object.position[0], object.position[1], object.position[2], object.position[3]],
+        };
+
+        TriggerServerEvent(ServerEvent.SCENE_UPDATE_MARKER, sceneId, sceneMarker.id, data);
     }
 }

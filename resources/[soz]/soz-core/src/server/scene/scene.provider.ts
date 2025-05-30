@@ -10,6 +10,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { joaat } from '../../shared/joaat';
 import { WorldObject } from '../../shared/object';
 import { RpcServerEvent } from '../../shared/rpc';
+import { SceneMarkerData } from '../../shared/scene';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
@@ -412,6 +413,108 @@ export class SceneProvider {
         await this.sceneRepository.setName(sceneId, name);
 
         this.notifier.notify(source, `Scene ${oldName} renommée en ${name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_ADD_MARKER)
+    public async addMarker(
+        source: number,
+        sceneId: string,
+        userId: string,
+        markerData: SceneMarkerData
+    ): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        await this.sceneRepository.addMarker(sceneId, userId, markerData);
+
+        this.notifier.notify(source, `Marker ${userId} ajouté à la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_REMOVE_MARKER)
+    public async removeMarker(source: number, sceneId: string, markerId: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        const marker = await this.sceneRepository.removeMarker(sceneId, markerId);
+
+        this.notifier.notify(source, `Marker ${marker.userId} supprimé de la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_UPDATE_MARKER)
+    public async updateMarker(
+        source: number,
+        sceneId: string,
+        markerId: string,
+        markerData: SceneMarkerData
+    ): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        await this.sceneRepository.updateMarker(sceneId, markerId, markerData);
+
+        this.notifier.notify(source, `Marker mis à jour dans la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_ENTITY_SET_USER_ID)
+    public async setEntityUserId(source: number, sceneId: string, entityId: string, userId: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        await this.sceneRepository.setEntityUserId(sceneId, entityId, userId);
+
+        this.notifier.notify(source, `Entité défini avec ${userId} dans la scene ${scene.name}`);
     }
 
     public loadScene(sceneId: string) {

@@ -628,6 +628,9 @@ export enum NuiEvent {
     SceneSetPedBehavior = 'soz-core:nui-client:scene:set-ped-behavior',
     SceneSelectObjectOnClick = 'soz-core:nui-client:scene:select-object-on-click',
     ScenePreviewModel = 'soz-core:nui-client:scene:preview-model',
+    SceneRemoveMarker = 'soz-core:nui-client:scene:remove-marker',
+    SceneAddMarker = 'soz-core:nui-client:scene:add-marker',
+    SceneUpdateMarker = 'soz-core:nui-client:scene:update-marker',
 
     TargetReset = 'soz-core:nui:target:reset',
     TargetSelect = 'soz-core:nui:target:select',

@@ -42,9 +42,10 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
     const subMenuId = `scene-${scene.id}`;
     const subMenuEntityId = `scene-entity-${scene.id}`;
     const subMenuPedId = `scene-ped-${scene.id}`;
+    const subMenuMarkerId = `scene-marker-${scene.id}`;
     const subMenuCollection = `scene-collection-${scene.id}`;
     const collections = Object.keys(PLACEMENT_PROP_LIST).sort((a, b) => a.localeCompare(b));
-    const allSubMenus = [subMenuId, subMenuEntityId, subMenuPedId, subMenuCollection];
+    const allSubMenus = [subMenuId, subMenuEntityId, subMenuPedId, subMenuMarkerId, subMenuCollection];
     const subMenuPreview = [];
 
     for (const categoryIndex in collections) {
@@ -139,6 +140,17 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                             ➕ Ajouter un ped
                         </MenuItemButton>
                     )}
+                    <MenuItemButton
+                        onConfirm={async () => {
+                            await fetchNui(NuiEvent.SceneAddMarker, {
+                                sceneId: scene.id,
+                            });
+                        }}
+                        onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: null })}
+                        description="Un marker est un point d'intérêt, il peut être utilisé pour la régie pour définir l'emplacement d'un effet ou faire pointer des lumières sur cet emplacement."
+                    >
+                        ➕ Ajouter un marker
+                    </MenuItemButton>
                     {allowLoad && (
                         <>
                             <MenuItemButton
@@ -209,7 +221,8 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                         ❌ Supprimer
                     </MenuItemButton>
                     <MenuItemSubMenuLink id={`scene-entity-${scene.id}`}>Entités</MenuItemSubMenuLink>
-                    <MenuItemSubMenuLink id={`scene-ped-${scene.id}`}>PNJS</MenuItemSubMenuLink>
+                    {isStaff(player) && <MenuItemSubMenuLink id={`scene-ped-${scene.id}`}>PNJS</MenuItemSubMenuLink>}
+                    <MenuItemSubMenuLink id={`scene-marker-${scene.id}`}>Markers</MenuItemSubMenuLink>
                 </MenuContent>
             </SubMenu>
             <SubMenu id={`scene-entity-${scene.id}`}>
@@ -333,6 +346,37 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                             <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                             <MenuItemSelectOption value="weapon">Arme</MenuItemSelectOption>
                             <MenuItemSelectOption value="behavior">Comportement</MenuItemSelectOption>
+                        </MenuItemSelect>
+                    ))}
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id={`scene-marker-${scene.id}`}>
+                <MenuTitle title="Markers" />
+                <MenuContent>
+                    {Object.values(scene.markers).map(marker => (
+                        <MenuItemSelect
+                            title={marker.userId}
+                            key={marker.id}
+                            onSelected={() => fetchNui(NuiEvent.SceneSetEntityHighlighted, { objectId: marker.id })}
+                            onConfirm={(i, value) => {
+                                switch (value) {
+                                    case 'edit':
+                                        fetchNui(NuiEvent.SceneUpdateMarker, {
+                                            sceneId: scene.id,
+                                            markerId: marker.id,
+                                        });
+                                        break;
+                                    case 'delete':
+                                        fetchNui(NuiEvent.SceneRemoveMarker, {
+                                            sceneId: scene.id,
+                                            markerId: marker.id,
+                                        });
+                                        break;
+                                }
+                            }}
+                        >
+                            <MenuItemSelectOption value="edit">Editer</MenuItemSelectOption>
+                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
                         </MenuItemSelect>
                     ))}
                 </MenuContent>
