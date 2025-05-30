@@ -1,3 +1,4 @@
+import { InputService } from '@public/client/nui/input.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -47,6 +48,9 @@ export class ObjectEditorProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
+    @Inject(InputService)
+    private inputService: InputService;
+
     private currentObject: CurrentObject | null;
 
     public async createOrUpdateObject(
@@ -66,6 +70,7 @@ export class ObjectEditorProvider {
         const editorOptions: ObjectEditorOptions = {
             onDrawCallback: () => {},
             deleteCallback: () => {},
+            setNameCallback: () => {},
             maxDistance: PROP_MAX_DISTANCE,
             allowDelete: false,
             allowRotation: true,
@@ -75,6 +80,7 @@ export class ObjectEditorProvider {
             allowAddEffect: false,
             allowTogglePermanent: false,
             allowDuplicate: false,
+            allowSetName: false,
             effect: existingObject?.effect || null,
             vfx: existingObject?.vfx || null,
             context: 'hammer',
@@ -284,6 +290,24 @@ export class ObjectEditorProvider {
                 this.currentObject.position[2],
             ]);
         }
+    }
+
+    @OnNuiEvent(NuiEvent.ObjectEditorSetName)
+    public async setName() {
+        if (!this.currentObject) {
+            return;
+        }
+
+        const name = await this.inputService.askInput({
+            title: 'Identifiant',
+            maxCharacters: 50,
+        });
+
+        if (!name) {
+            return;
+        }
+
+        this.currentObject.options.setNameCallback(this.getWorldObject(this.currentObject), name);
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorSetPosition)

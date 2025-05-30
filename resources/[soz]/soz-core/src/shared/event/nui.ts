@@ -178,6 +178,7 @@ export enum NuiEvent {
     ObjectEditorSnap = 'soz-core:nui:object-editor:snap',
     ObjectEditorSetPosition = 'soz-core:nui:object-editor:set-position',
     ObjectEditorStopDrag = 'soz-core:nui:object-editor:stop-drag',
+    ObjectEditorSetName = 'soz-core:nui:object-editor:set-name',
 
     BennysUpgradeVehicle = 'soz-core:nui:job:bennys:upgrade-vehicle',
 
@@ -615,6 +616,7 @@ export enum NuiEvent {
     SceneRemoveEntity = 'soz-core:nui-client:scene:remove-entity',
     SceneUpdateEntity = 'soz-core:nui-client:scene:update-entity',
     SceneSetEntityInventory = 'soz-core:nui-client:scene:set-entity-inventory',
+    SceneSetEntityUserId = 'soz-core:nui-client:scene:set-entity-user-id',
     SceneSetPersistent = 'soz-core:nui-client:scene:set-persistent',
     SceneSetName = 'soz-core:nui-client:scene:set-name',
     SceneTeleport = 'soz-core:nui-client:scene:teleport',

@@ -79,6 +79,10 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
         fetchNui(NuiEvent.ObjectEditorSnap);
     };
 
+    const handleSetName = () => {
+        fetchNui(NuiEvent.ObjectEditorSetName);
+    };
+
     const keyHandler = useCallback(
         async (e: KeyboardEvent) => {
             const setRotateMode = 'KeyR';
@@ -88,6 +92,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
             const placeProp = 'Space';
             const duplicateProp = 'KeyN';
             const deleteProp = 'Delete';
+            const setName = 'KeyB';
 
             if (e.code === setRotateMode && data.allowRotation) {
                 setEditorMode('rotate');
@@ -115,6 +120,10 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
 
             if (e.code === deleteProp && data.allowDelete) {
                 handleDeleteObject();
+            }
+
+            if (e.code === setName) {
+                handleSetName();
             }
         },
         [editorMode, data, collision]
@@ -202,6 +211,14 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                     );
                                 })}
                             </MenuItemSelect>
+                        )}
+                        {data.allowSetName && (
+                            <MenuItemButton
+                                onConfirm={handleSetName}
+                                description="Définit un identifiant pour l'objet. Il sera utilisé pour le retrouver dans le futur."
+                            >
+                                🏷️ Définir un identifiant
+                            </MenuItemButton>
                         )}
                         <MenuItemButton
                             onConfirm={() => {
@@ -335,6 +352,7 @@ const HelpPanel: FunctionComponent<HelpPanelProps> = ({ options, collision }) =>
             {options.allowScale && !collision && <MenuItemText> Y : Mode scaling</MenuItemText>}
             <MenuItemText> L : Basculer mode de reférence</MenuItemText>
             {options.allowToggleSnap && <MenuItemText> C : Aligner l'objet ⬇️</MenuItemText>}
+            {options.allowSetName && <MenuItemText> B : Définir un identifiant d'objet</MenuItemText>}
             <MenuItemText> Espace : Confirmer et placer l'objet ✔️</MenuItemText>
             {options.allowDuplicate && <MenuItemText> N : Enregistre en tant que nouveau objet ✔️</MenuItemText>}
             {options.allowDelete && <MenuItemText> Suppr : Effacer l'objet sélectionné ❌</MenuItemText>}

@@ -623,6 +623,11 @@ export class SceneProvider {
         return await this.updateMarker(sceneId, marker);
     }
 
+    @OnNuiEvent(NuiEvent.SceneRemoveMarker)
+    async onNuiRemoveSceneMarker({ sceneId, markerId }: { sceneId: string; markerId: string }) {
+        TriggerServerEvent(ServerEvent.SCENE_REMOVE_MARKER, sceneId, markerId);
+    }
+
     @OnNuiEvent(NuiEvent.SceneDuplicatePed)
     async onNuiSetSceneDuplicatePed({ sceneId, pedId }: { sceneId: string; pedId: string }) {
         const scene = this.sceneRepository.find(sceneId);
@@ -890,6 +895,36 @@ export class SceneProvider {
         }
 
         TriggerServerEvent(ServerEvent.SCENE_SET_ENTITY_INVENTORY, sceneId, entityId, inventoryId);
+    }
+
+    @OnNuiEvent(NuiEvent.SceneSetEntityUserId)
+    public async setUserId({ sceneId, entityId }: { sceneId: string; entityId: string }) {
+        const scene = this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        const entity = scene.entities[entityId];
+
+        if (!entity) {
+            return;
+        }
+
+        const userId = await this.inputService.askInput(
+            {
+                title: 'Identifiant',
+                maxCharacters: 50,
+                defaultValue: entity.userId,
+            },
+            NotEmptyStringValidator
+        );
+
+        if (!userId) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.SCENE_ENTITY_SET_USER_ID, sceneId, entityId, userId);
     }
 
     @RepositoryUpdate(RepositoryType.Scene)
@@ -1350,8 +1385,12 @@ export class SceneProvider {
                 useCircularCamera: false,
                 allowDuplicate: true,
                 allowDelete: true,
+                allowSetName: true,
                 deleteCallback: () => {
                     TriggerServerEvent(ServerEvent.SCENE_REMOVE_ENTITY, sceneId, sceneEntity.id);
+                },
+                setNameCallback: (_, name) => {
+                    TriggerServerEvent(ServerEvent.SCENE_ENTITY_SET_USER_ID, sceneId, sceneEntity.id, name);
                 },
             },
             sceneEntity.object

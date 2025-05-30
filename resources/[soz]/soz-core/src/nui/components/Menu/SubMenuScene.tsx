@@ -274,6 +274,12 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                                             remove: true,
                                         });
                                         break;
+                                    case 'user_id':
+                                        fetchNui(NuiEvent.SceneSetEntityUserId, {
+                                            sceneId: scene.id,
+                                            entityId: entity.id,
+                                        });
+                                        break;
                                 }
                             }}
                         >
@@ -288,6 +294,7 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                                     </MenuItemSelectOption>
                                 </>
                             )}
+                            <MenuItemSelectOption value="user_id">Définir un identifiant</MenuItemSelectOption>
                         </MenuItemSelect>
                     ))}
                 </MenuContent>

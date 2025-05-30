@@ -99,6 +99,7 @@ export type ObjectEditorContext = 'hammer' | 'admin' | JobType.Gouv;
 export type ObjectEditorOptions = {
     onDrawCallback: (object: WorldObject) => void;
     deleteCallback: (object: WorldObject) => void;
+    setNameCallback: (object: WorldObject, name: string) => void;
     maxDistance: number;
     allowDuplicate: boolean;
     allowDelete: boolean;
@@ -108,6 +109,7 @@ export type ObjectEditorOptions = {
     allowToggleSnap: boolean;
     allowTogglePermanent: boolean;
     allowAddEffect: boolean;
+    allowSetName: boolean;
     context: ObjectEditorContext;
     collision: boolean;
     permanent: boolean;
