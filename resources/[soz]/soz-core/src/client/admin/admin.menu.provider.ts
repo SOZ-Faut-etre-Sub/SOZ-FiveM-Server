@@ -1,12 +1,12 @@
 import { HalloweenSubMenuState, MeteorSubMenuState } from '@public/shared/admin/admin';
 
 import { Command } from '../../core/decorators/command';
-import { OnEvent } from '../../core/decorators/event';
+import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { SozRole } from '../../core/permissions';
 import { emitRpc } from '../../core/rpc';
-import { ClientEvent } from '../../shared/event';
+import { ClientEvent, NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { PlayerCharInfo } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -146,5 +146,12 @@ export class AdminMenuProvider {
             },
             { subMenuId }
         );
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuTraveling)
+    public async onAdminTraveling() {
+        this.nuiMenu.openMenu(MenuType.Traveling, null, {
+            originMenuType: this.nuiMenu.getOpened(),
+        });
     }
 }

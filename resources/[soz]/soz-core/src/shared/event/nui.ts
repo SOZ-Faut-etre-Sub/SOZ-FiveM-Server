@@ -150,6 +150,7 @@ export enum NuiEvent {
     AdminMenuCeremonyTime = 'soz-core:nui:admin:parade:time',
     AdminMenuClothes = 'soz-core:client:admin:clothes',
     AdminMenuXmasSetState = 'soz-core:nui:admin:xmas:set-state',
+    AdminMenuTraveling = 'soz-core:nui:admin:traveling',
 
     BlipAction = 'soz-core:client:blip:action',
 
@@ -743,4 +744,13 @@ export enum NuiEvent {
     Screenshot = 'soz-core:nui:screenshot',
 
     PersonnalCloakroom = 'soz-core:nui:personnal-cloakroom',
+
+    TravelingAdd = 'soz-core:nui:traveling-add',
+    TravelingDelete = 'soz-core:nui:traveling-delete',
+    TravelingPointAdd = 'soz-core:nui:traveling-point-add',
+    TravelingPointUpdate = 'soz-core:nui:traveling-update',
+    TravelingLaunch = 'soz-core:nui:traveling-launch',
+    TravelingStartEditing = 'soz-core:nui:traveling-start-editing',
+    TravelingStopEditing = 'soz-core:nui:traveling-stop-editing',
+    TravelingRename = 'soz-core:nui:traveling-rename',
 }

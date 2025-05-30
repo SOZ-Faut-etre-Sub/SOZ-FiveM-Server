@@ -155,6 +155,7 @@ export enum MenuType {
     LaserGameCreate = 'laser_game_create',
     LaserGameManage = 'laser_game_manage',
     LaserGameAdmin = 'laser_game_admin',
+    Traveling = 'traveling',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {

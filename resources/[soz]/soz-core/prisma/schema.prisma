@@ -1050,3 +1050,10 @@ model hc_props {
 
     gang gang? @relation(fields: [gangid], references: [id], onDelete: Cascade, map: "FK_gang_hc_props")
 }
+
+model traveling {
+    id     Int      @id @default(autoincrement())
+    name   String   @unique @db.VarChar(128)
+    job    String   @db.VarChar(15)
+    points String   @db.Text
+}

@@ -16,6 +16,7 @@ const models = [
     'freight2',
     'freightcar',
     'freightcar2',
+    'freightcar3',
     'freightcont1',
     'freightcont2',
     'freightgrain',

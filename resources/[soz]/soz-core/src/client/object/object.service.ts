@@ -97,7 +97,14 @@ export class ObjectService {
         }
 
         if (object.rotation) {
-            SetEntityRotation(entity, object.rotation[0], object.rotation[1], object.rotation[2], 0, false);
+            SetEntityRotation(
+                entity,
+                object.rotation[0],
+                object.rotation[1],
+                object.rotation[2],
+                object.rotationOrder ?? 0,
+                false
+            );
         }
 
         if (object.matrix) {

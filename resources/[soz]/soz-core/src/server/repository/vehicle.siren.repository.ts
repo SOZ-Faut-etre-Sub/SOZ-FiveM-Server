@@ -6,8 +6,6 @@ import { Repository } from './repository';
 export class VehicleSirenRepository extends Repository<RepositoryType.VehicleSiren> {
     public type = RepositoryType.VehicleSiren;
 
-    private sirenState: Record<number, boolean> = {};
-
     protected async load(): Promise<Record<number, boolean>> {
         return {};
     }

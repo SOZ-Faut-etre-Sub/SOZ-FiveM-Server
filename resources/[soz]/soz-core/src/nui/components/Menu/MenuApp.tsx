@@ -90,6 +90,7 @@ import { TattooShopMenu } from '@public/nui/components/Shop/TattooShopMenu';
 import { ZkeaFournitureMenu } from '@public/nui/components/Shop/ZkeaFournitureMenu';
 import { StonkJobMenu } from '@public/nui/components/Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '@public/nui/components/Taxi/TaxiJobMenu';
+import { MenuTraveling } from '@public/nui/components/Traveling/MenuTraveling';
 import { fetchNui } from '@public/nui/fetch';
 import { useControl } from '@public/nui/hook/control';
 import { useMenuNuiEvent, useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
@@ -122,6 +123,7 @@ const MenuRouter: FunctionComponent = () => {
     const [visibility, setVisibility] = useState(true);
 
     useNuiEvent('menu', 'SetMenuVisibility', (visibliity: boolean) => {
+        console.log('SetMenuVisibility', visibliity);
         setVisibility(visibliity);
 
         if (useFocus) {
@@ -352,6 +354,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.LaserGameCreate}/*`} element={<MenuLaserGameCreate />} />
             <Route path={`/${MenuType.LaserGameManage}/*`} element={<MenuLaserGameManage data={menuData} />} />
             <Route path={`/${MenuType.LaserGameAdmin}/*`} element={<MenuLaserGameAdmin data={menuData} />} />
+            <Route path={`/${MenuType.Traveling}/*`} element={<MenuTraveling />} />
         </Routes>
     );
 };

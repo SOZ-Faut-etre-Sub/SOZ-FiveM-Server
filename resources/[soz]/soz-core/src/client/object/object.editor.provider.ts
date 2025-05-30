@@ -260,16 +260,26 @@ export class ObjectEditorProvider {
                     this.currentObject.startingObject.rotation[0],
                     this.currentObject.startingObject.rotation[1],
                     this.currentObject.startingObject.rotation[2],
-                    0,
+                    this.currentObject.startingObject.rotationOrder ?? 0,
                     false
                 );
             }
         }
 
         if (scale) {
-            const rot = GetEntityRotation(this.currentObject.entity);
+            const rot = GetEntityRotation(
+                this.currentObject.entity,
+                this.currentObject.startingObject.rotationOrder ?? 0
+            );
 
-            SetEntityRotation(this.currentObject.entity, rot[0], rot[1], rot[2], 0, false);
+            SetEntityRotation(
+                this.currentObject.entity,
+                rot[0],
+                rot[1],
+                rot[2],
+                this.currentObject.startingObject.rotationOrder ?? 0,
+                false
+            );
         }
     }
 
@@ -360,7 +370,7 @@ export class ObjectEditorProvider {
     private getWorldObject(currentObject: CurrentObject): WorldObject {
         const position = GetEntityCoords(currentObject.entity) as Vector3;
         const heading = GetEntityHeading(currentObject.entity);
-        const rotation = GetEntityRotation(currentObject.entity);
+        const rotation = GetEntityRotation(currentObject.entity, currentObject.startingObject.rotationOrder ?? 0);
         const matrix = this.objectService.getEntityMatrix(currentObject.entity);
 
         return {

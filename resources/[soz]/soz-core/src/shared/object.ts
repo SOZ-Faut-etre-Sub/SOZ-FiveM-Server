@@ -37,6 +37,7 @@ export type WorldObject = {
     inventoryId?: string;
     permanent?: boolean;
     alpha?: number;
+    rotationOrder?: number;
 };
 
 export type WorldPlacedProp = {

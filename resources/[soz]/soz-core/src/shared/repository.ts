@@ -19,6 +19,7 @@ import { JobGrade } from './job';
 import { WorldObject } from './object';
 import { Race } from './race';
 import { ClothingShop } from './shop';
+import { TravelingCamera } from './traveling';
 import { Garage } from './vehicle/garage';
 import { Radar } from './vehicle/radar';
 import { TowRope } from './vehicle/tow.rope';
@@ -60,6 +61,7 @@ export enum RepositoryType {
     WorldEvent = 'worldEvent',
     Zone = 'zone',
     VehicleSiren = 'vehicleSiren',
+    Traveling = 'traveling',
 }
 
 export type RepositoryMapping = {
@@ -98,6 +100,7 @@ export type RepositoryMapping = {
     [RepositoryType.Scene]: Scene;
     [RepositoryType.WorldEvent]: WorldEvent;
     [RepositoryType.VehicleSiren]: boolean;
+    [RepositoryType.Traveling]: TravelingCamera;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -124,6 +127,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.WorldEvent]: Record<string, WorldEvent>;
     [RepositoryType.PhoneLight]: Record<number, [boolean, boolean]>;
     [RepositoryType.VehicleSiren]: Record<number, boolean>;
+    [RepositoryType.Traveling]: Record<number, TravelingCamera>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

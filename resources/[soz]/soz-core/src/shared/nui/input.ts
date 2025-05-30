@@ -14,7 +14,7 @@ export type AskInput = {
 export type ValidateInput<T> = (input: string) => Result<T, string>;
 
 export const NotEmptyStringValidator: ValidateInput<string> = (input: string) => {
-    if (input.trim() === '') {
+    if (input?.trim() === '') {
         return Err('Veuillez entrer une valeur');
     }
 

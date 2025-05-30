@@ -797,4 +797,11 @@ export enum ServerEvent {
     SCREENSHOT = 'soz-core:server:screenshot',
 
     ELEVATOR_CALL = 'soz-core:server:elevator:call',
+
+    TRAVELING_ADD = 'soz-core:server:traveling:add',
+    TRAVELING_DELETE = 'soz-core:server:traveling:delete',
+    TRAVELING_RENAME = 'soz-core:server:elevator:traveling:rename',
+    TRAVELING_POINT_ADD = 'soz-core:server:traveling:point-add',
+    TRAVELING_POINT_DELETE = 'soz-core:server:elevator:traveling:point-delete',
+    TRAVELING_POINT_UPDATE = 'soz-core:server:elevator:traveling:point-update',
 }

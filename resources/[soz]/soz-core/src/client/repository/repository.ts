@@ -1,6 +1,7 @@
 import { Inject } from '@core/decorators/injectable';
 import { RepositoryLoader } from '@core/loader/repository.loader';
 import { emitRpcTimeout } from '@core/rpc';
+import { Logger } from '@public/core/logger';
 import { deepCopy } from '@public/shared/utils/array';
 import { applyPatch, Operation } from 'fast-json-patch';
 
@@ -15,6 +16,9 @@ export abstract class Repository<
     @Inject(RepositoryLoader)
     private repositoryLoader: RepositoryLoader;
 
+    @Inject(Logger)
+    private logger: Logger;
+
     private data: Record<K, V> = {} as Record<K, V>;
 
     public abstract type: RepositoryType;
@@ -22,7 +26,11 @@ export abstract class Repository<
     public isInitialized = false;
 
     async init(): Promise<Record<K, V>> {
-        this.data = (await emitRpcTimeout(RpcServerEvent.REPOSITORY_GET_DATA_2, 10_000, this.type)) as Record<K, V>;
+        try {
+            this.data = (await emitRpcTimeout(RpcServerEvent.REPOSITORY_GET_DATA_2, 10_000, this.type)) as Record<K, V>;
+        } catch (e) {
+            this.logger.error('Failed to init repo ' + this.type + ': ' + e);
+        }
         this.isInitialized = true;
 
         return this.data;
