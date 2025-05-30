@@ -1,6 +1,7 @@
 import { BlipFactory } from '@public/client/blip';
 import { HudWatchProvider } from '@public/client/hud/hud.watch.provider';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
+import { PlayerService } from '@public/client/player/player.service';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { TargetProvider } from '@public/client/target/target.provider';
 import { Once } from '@public/core/decorators/event';
@@ -22,10 +23,10 @@ const SPEED_LR = 8.0;
 const SPEED_UD = 8.0;
 const ZOOM_SPEED = 10.0;
 
-const CamZone = new BoxZone([1163.25, -432.66, 68.88], 1.2, 2.8, {
+const CamZone = new BoxZone([1163.25, -432.66, 68.88], 1.2, 5.2, {
     heading: 166.02,
     minZ: 68.28,
-    maxZ: 68.88,
+    maxZ: 69.28,
 });
 
 @Provider()
@@ -44,6 +45,9 @@ export class PoliceCameraProvider {
 
     @Inject(BlipFactory)
     private readonly blipFactory: BlipFactory;
+
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
 
     private fov = (FOV_MAX + FOV_MIN) * 0.5;
     private camera: number = null;
@@ -67,6 +71,13 @@ export class PoliceCameraProvider {
         if (!this.camera) {
             return;
         }
+
+        const player = this.playerService.getPlayer();
+        if (player.metadata.isdead) {
+            this.deleteCamera();
+            return;
+        }
+
         this.hideHud();
         DisableControlAction(0, Control.Attack, true);
         const zoomValue = (1.0 / (FOV_MAX - FOV_MIN)) * (this.fov - FOV_MIN);
