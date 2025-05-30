@@ -53,6 +53,8 @@ export class GarageRepository extends RepositoryLegacy<Record<string, Garage>> {
         });
 
         for (const houseProperty of houseProperties) {
+            if (!houseProperty.garage_zone || !houseProperty.entry_zone) continue;
+
             garageList[houseProperty.identifier] = this.garageFromDB(
                 houseProperty.identifier,
                 houseProperty.garage_zone,
