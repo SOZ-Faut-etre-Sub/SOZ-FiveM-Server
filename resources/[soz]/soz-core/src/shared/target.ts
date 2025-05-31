@@ -13,6 +13,7 @@ export type TargetOption = TargetContext & {
     subLabel?: string;
     icon?: string;
     category: 'citizen' | 'society' | 'criminal';
+    order?: string;
 
     item?: string;
     event?: string;

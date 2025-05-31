@@ -116,7 +116,6 @@ export class ElevatorProvider {
                         icon: display.icon,
                         label: display.label + destinationFloor.label,
                         category: 'citizen',
-                        event: 'all',
                         action: () => {
                             this.playerPositionProvider.teleportAdminToPosition(destinationFloor.spawnPoint);
                         },
@@ -222,6 +221,7 @@ export class ElevatorProvider {
                     category: 'citizen',
                     label: elem.label,
                     icon: 'elevators/monter',
+                    order: elem.order,
                     canInteract: entity => this.isInside(entity),
                     action: async () => {
                         this.animationService.playAnimation({

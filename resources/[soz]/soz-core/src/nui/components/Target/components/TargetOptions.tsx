@@ -14,7 +14,7 @@ export const TargetOptions: FunctionComponent<{
     onSelect: () => void;
 }> = ({ title, titleRef, color, targets, direction, onSelect }) => {
     const transitions = useTransition(
-        targets.sort((a, b) => a.label.localeCompare(b.label)),
+        targets.sort((a, b) => (a.order ?? a.label).localeCompare(b.order ?? b.label)),
         {
             from: { opacity: 0, height: 0 },
             keys: item => item.id,
