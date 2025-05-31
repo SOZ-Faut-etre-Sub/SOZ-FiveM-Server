@@ -8342,6 +8342,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1945677281,
         street2: -1860704595,
     },
+    /* Culs Nus
     {
         position: [-1043.8084716796875, 4915.70458984375, 212.0636291503906],
         heading: 83.29859161376953,
@@ -8350,6 +8351,7 @@ export const CameraLocations: CameraDef[] = [
         street: -409785781,
         street2: 0,
     },
+    */
     {
         position: [-1046.94921875, -227.8563690185547, 42.69993591308594],
         heading: 152.4670715332031,
@@ -8520,6 +8522,7 @@ export const CameraLocations: CameraDef[] = [
         street: 127506487,
         street2: 0,
     },
+    /* Culs Nus
     {
         position: [-1106.2215576171875, 4940.3701171875, 227.19862365722656],
         heading: 82.77101135253906,
@@ -8528,6 +8531,7 @@ export const CameraLocations: CameraDef[] = [
         street: -409785781,
         street2: 0,
     },
+    */
     {
         position: [-1109.8751220703125, 288.348388671875, 68.10084533691406],
         heading: 40.40300750732422,
@@ -8746,6 +8750,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1284661444,
         street2: 0,
     },
+    /* Culs Nus
     {
         position: [-1142.5516357421875, 4943.15966796875, 226.2402648925781],
         heading: 71.00096893310547,
@@ -8754,6 +8759,7 @@ export const CameraLocations: CameraDef[] = [
         street: -409785781,
         street2: 0,
     },
+    */
     {
         position: [-1144.2506103515625, -201.76864624023438, 42.87866973876953],
         heading: 117.90814208984375,
@@ -8786,6 +8792,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1284661444,
         street2: 0,
     },
+    /* Cul Nus
     {
         position: [-1148.394287109375, 4937.03173828125, 221.83456420898438],
         heading: 342.0946350097656,
@@ -8802,6 +8809,7 @@ export const CameraLocations: CameraDef[] = [
         street: -409785781,
         street2: 0,
     },
+    */
     {
         position: [-1152.1474609375, -1422.273681640625, 7.749626159667969],
         heading: 350.0000915527344,

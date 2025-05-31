@@ -148,6 +148,42 @@ const CHIN_UPS_COORDS = [
         },
         coords: [304.57, -1407.69, 37.99, 314.06] as Vector4,
     },
+    {
+        name: 'chin_ups_11',
+        zone: {
+            center: [1145.71, -435.88, 76.34] as Vector3,
+            width: 1.0,
+            length: 1.0,
+            heading: 166.87,
+            minZ: 75.34,
+            maxZ: 77.34,
+        },
+        coords: [1145.7, -436.33, 76.34, 348.47] as Vector4,
+    },
+    {
+        name: 'chin_ups_12',
+        zone: {
+            center: [1144.06, -435.36, 76.34] as Vector3,
+            width: 1.0,
+            length: 1.0,
+            heading: 166.86,
+            minZ: 75.34,
+            maxZ: 77.34,
+        },
+        coords: [1143.89, -435.93, 76.34, 353.39] as Vector4,
+    },
+    {
+        name: 'chin_ups_13',
+        zone: {
+            center: [1142.23, -435.05, 76.34] as Vector3,
+            width: 1.0,
+            length: 1.0,
+            heading: 166.86,
+            minZ: 75.34,
+            maxZ: 77.34,
+        },
+        coords: [1142.23, -435.46, 76.34, 351.52] as Vector4,
+    },
 ];
 
 const FREE_WEIGHT_COORDS = [
@@ -215,6 +251,17 @@ const FREE_WEIGHT_COORDS = [
             minZ: 37.14,
             maxZ: 38.14,
             heading: 321.91,
+        },
+    },
+    {
+        name: 'free_weight_6',
+        zone: {
+            center: [1139.43, -433.52, 76.34] as Vector3,
+            length: 0.8,
+            width: 1.0,
+            heading: 255.6,
+            minZ: 75.34,
+            maxZ: 77.34,
         },
     },
 ];
