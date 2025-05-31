@@ -60,6 +60,8 @@ export class PoliceCameraProvider {
                 label: 'Caméra',
                 icon: 'heist/camera',
                 category: 'society',
+                blackoutJob: true,
+                blackoutGlobal: true,
                 job: ALL_FDO_JOB_TARGETS,
                 action: () => this.showCameras(),
             },

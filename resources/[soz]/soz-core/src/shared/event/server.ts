@@ -488,6 +488,7 @@ export enum ServerEvent {
     POLICE_INCR_STICKYBOMB = 'soz-core:server:police:incr-stickybomb',
     POLICE_DELETE_STICKYBOMB = 'soz-core:server:police:delete-stickybomb',
     POLICE_SHIELD_SET_ANIMATION_OVERRIDE = 'soz-core:server:police:shield-set-animation-override',
+    POLICE_SECRET = 'soz-core:server:police:secret',
 
     ESCORT_PLAYER = 'soz-core:server:escort',
     REMOVE_ESCORT_PLAYER = 'soz-core:server:remove-escort',

@@ -171,6 +171,7 @@ export enum RpcServerEvent {
     POLICE_GET_ALL_IDENTIFIED_CLUES = 'soz-core:server:police:get-all-identified-clues',
     POLICE_LICENSE_HAS_RECUER = 'soz-core:server:police:has-recuer-license',
     POLICE_SYNC_SHIELD_ANIMATION_OVERRIDE = 'soz-core:server:police-sync-shield-animation-override',
+    POLICE_SECRET_CHECK = 'soz-core:server:police:secret-check',
 
     HUB_EXIT_TIME = 'soz-core:server:hub:exit-time',
     HUB_ENTRY_FETCH_ALL = 'soz-core:server:hub:fetch-all',
