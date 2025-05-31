@@ -62,12 +62,12 @@ export class PoliceSirenProvider {
         for (const [vehicleNetIdStr, state] of Object.entries(sirenStates)) {
             const vehicleNetId = parseInt(vehicleNetIdStr);
             if (!NetworkDoesEntityExistWithNetworkId(vehicleNetId)) {
-                return;
+                continue;
             }
 
             const veh = NetToVeh(vehicleNetId);
             if (!veh) {
-                return;
+                continue;
             }
 
             this.handleSirenUpdate(veh, state, vehicleNetId);
