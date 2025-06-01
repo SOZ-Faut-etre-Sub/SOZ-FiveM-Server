@@ -39,6 +39,7 @@ export type DynamicElevatorConfig = {
         doorsInternalIndex: number[];
         interior: Interior;
         room: string;
+        order: string;
     }[];
     emergency: BoxZone;
     emergencyTarget: Vector4;
@@ -97,6 +98,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [0, 1],
                 interior: Interior.MirrorParkLSPD_0,
                 room: '-1_corridor',
+                order: '5',
             },
             {
                 z: 66.80515,
@@ -120,6 +122,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [0, 1],
                 interior: Interior.MirrorParkLSPD_1,
                 room: '0_atrium',
+                order: '4',
             },
             {
                 z: 70.52464,
@@ -143,6 +146,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: Interior.MirrorParkLSPD_1,
                 room: '0_atrium',
+                order: '3',
             },
             {
                 z: 74.26419,
@@ -166,6 +170,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: Interior.MirrorParkLSPD_1,
                 room: '0_atrium',
+                order: '2',
             },
             {
                 z: 77.99447,
@@ -189,6 +194,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: null,
                 room: null,
+                order: '1',
             },
         ],
         heading: 76.6579028,
@@ -248,6 +254,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [0, 1],
                 interior: Interior.MirrorParkLSPD_0,
                 room: '-1_corridor',
+                order: '5',
             },
             {
                 z: 66.80515,
@@ -271,6 +278,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: Interior.MirrorParkLSPD_1,
                 room: '0_corridor',
+                order: '4',
             },
             {
                 z: 70.52464,
@@ -294,6 +302,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: Interior.MirrorParkLSPD_1,
                 room: '1_corridor',
+                order: '3',
             },
             {
                 z: 74.26419,
@@ -317,6 +326,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: Interior.MirrorParkLSPD_1,
                 room: '2_corridor',
+                order: '2',
             },
             {
                 z: 77.99447,
@@ -340,6 +350,7 @@ export const DynamicElevatorConfigs: Record<DynamicElevator, DynamicElevatorConf
                 doorsInternalIndex: [2, 3],
                 interior: null,
                 room: null,
+                order: '1',
             },
         ],
         heading: 76.6579028,
