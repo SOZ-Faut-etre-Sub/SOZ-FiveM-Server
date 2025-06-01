@@ -812,5 +812,6 @@ export enum ServerEvent {
     TRAVELING_POINT_DELETE = 'soz-core:server:elevator:traveling:point-delete',
     TRAVELING_POINT_UPDATE = 'soz-core:server:elevator:traveling:point-update',
 
+    CASINO_RESELL_CHIP = 'soz-core:server:casino:resell-chip',
     CASINO_SLOT_MACHINE_SPIN = 'soz-core:server:casino:slot-machine-spin',
 }
