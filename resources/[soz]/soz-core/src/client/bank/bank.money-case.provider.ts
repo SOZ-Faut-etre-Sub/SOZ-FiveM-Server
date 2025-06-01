@@ -1,3 +1,4 @@
+import { CasinoService } from '@private/client/casino/casino.service';
 import { GamesProvider } from '@public/client/games/games.provider';
 import { Control } from '@public/shared/input';
 import { SWAT_CASE_ITEM } from '@public/shared/job/police';
@@ -35,12 +36,19 @@ export class BankMoneyCaseProvider {
     @Inject(GamesProvider)
     private readonly gamesProvider: GamesProvider;
 
+    @Inject(CasinoService)
+    private readonly casinoService: CasinoService;
+
     private disableAttack = false;
 
     private shouldDisplayMoneyCase(): boolean {
         const player = this.playerService.getPlayer();
 
-        if (this.gamesProvider.areAnyGameRunning() || this.playerService.getState().isInGameHub) {
+        if (
+            this.casinoService.usingMinigame() ||
+            this.gamesProvider.areAnyGameRunning() ||
+            this.playerService.getState().isInGameHub
+        ) {
             this.disableAttack = false;
             return false;
         }
