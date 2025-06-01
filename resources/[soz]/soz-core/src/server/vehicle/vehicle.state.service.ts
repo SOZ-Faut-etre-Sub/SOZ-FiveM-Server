@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { ClientEvent } from '@public/shared/event';
-import { GyroModel } from '@public/shared/job/police';
+import { GyroModel, VehicleWithSirens } from '@public/shared/job/police';
 import { Vector4 } from '@public/shared/polyzone/vector';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '@public/shared/vehicle/modification';
 import { getDefaultRadioState, Radio } from '@public/shared/voip';
@@ -180,7 +180,12 @@ export class VehicleStateService {
             });
         }
 
-        this.vehicleSirenRepository.set(vehicleNetworkId, !newState.volatile.isSirenMuted && !!newState.volatile.gyro);
+        this.vehicleSirenRepository.set(
+            vehicleNetworkId,
+            VehicleWithSirens[GetHashKey(newState.volatile.model)]
+                ? !newState.volatile.isSirenMuted
+                : !newState.volatile.isSirenMuted && !!newState.volatile.gyro
+        );
         if (newState.volatile.gyro) {
             const entity = NetworkGetEntityFromNetworkId(newState.volatile.gyro);
             SetEntityOrphanMode(entity, 2);
