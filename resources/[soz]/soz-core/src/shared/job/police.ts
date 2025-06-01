@@ -8670,7 +8670,7 @@ export const ObjectOutFits: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Mask]: { Drawable: 185, Texture: 20, Palette: 0 },
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
-                    [Component.Legs]: { Drawable: 6, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Legs]: { Drawable: 6, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 25, Texture: 0, Palette: 0 },
                     [Component.Accessories]: {
