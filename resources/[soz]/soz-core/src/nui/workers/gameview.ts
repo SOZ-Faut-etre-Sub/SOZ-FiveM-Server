@@ -26,11 +26,118 @@ const vertexShaderSrc = `
 `;
 
 const fragmentShaderSrc = `
+precision highp float;
 varying highp vec2 textureCoordinate;
 uniform sampler2D external_texture;
-void main()
-{
-  gl_FragColor = texture2D(external_texture, textureCoordinate);
+
+// Canvas dimensions
+uniform vec2 u_resolution;
+
+// Shape properties
+uniform vec4 u_rect; // x, y, width, height
+uniform float u_rounded;
+uniform bool u_circle;
+uniform bool u_blur;
+uniform bool u_hidden;
+
+// Blur parameters
+uniform float u_blurAmount;
+
+float roundedRectangleSDF(vec2 position, vec2 box, float radius) {
+  vec2 q = abs(position) - box + radius;
+  return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - radius;
+}
+
+float circleSDF(vec2 position, float radius) {
+  return length(position) - radius;
+}
+
+// Simple blur function
+vec4 gaussianBlur(sampler2D texture, vec2 uv, float blurAmount) {
+  // Use a fixed radius for more predictable results
+  const int RADIUS = 5;
+
+  // Calculate pixel size for sampling
+  vec2 pixelSize = 1.0 / u_resolution;
+
+  // Initialize color accumulator and weight sum
+  vec4 color = vec4(0.0);
+  float weightSum = 0.0;
+
+  // Use a constant for sigma that produces visible blur
+  float sigma = max(blurAmount, 1.0);
+  float twoSigmaSquare = 2.0 * sigma * sigma;
+
+  // Sample in a square pattern around the current pixel
+  for (int y = -RADIUS; y <= RADIUS; y++) {
+    for (int x = -RADIUS; x <= RADIUS; x++) {
+      // Calculate the weight using the Gaussian function
+      float distance = float(x * x + y * y);
+      float weight = exp(-distance / twoSigmaSquare);
+
+      // Apply offset and sample
+      vec2 offset = vec2(float(x), float(y)) * pixelSize * blurAmount;
+      color += texture2D(texture, uv + offset) * weight;
+      weightSum += weight;
+    }
+  }
+
+  // Normalize by total weight to preserve brightness
+  return color / weightSum;
+}
+
+void main() {
+  // If hidden, don't render
+  if (u_hidden) {
+    discard;
+    return;
+  }
+
+  // Normalized coordinates of this fragment within canvas
+  vec2 uv = textureCoordinate;
+
+  // Check if pixel is inside the rect
+  vec2 position = vec2(uv.x * u_resolution.x, (1.0 - uv.y) * u_resolution.y);
+  vec2 rectPos = vec2(u_rect.x, u_rect.y);
+  vec2 rectSize = vec2(u_rect.z, u_rect.w);
+
+  // Check if we're in the bounding rect
+  if (position.x < rectPos.x || position.x > rectPos.x + rectSize.x ||
+      position.y < rectPos.y || position.y > rectPos.y + rectSize.y) {
+    discard;
+    return;
+  }
+
+  // Adjust position to be relative to rectangle center
+  vec2 centeredPos = position - (rectPos + rectSize * 0.5);
+
+  float distance;
+  if (u_circle) {
+    // Use circle SDF
+    distance = circleSDF(centeredPos, min(rectSize.x, rectSize.y) * 0.5);
+  } else if (u_rounded > 0.0) {
+    // Use rounded rect SDF
+    distance = roundedRectangleSDF(centeredPos, rectSize * 0.5, u_rounded);
+  } else {
+    // Regular rectangle (always inside)
+    distance = -1.0;
+  }
+
+  // If outside the shape, discard
+  if (distance > 0.0) {
+    discard;
+    return;
+  }
+
+  // Apply texture with or without blur
+  vec4 color;
+  if (u_blur) {
+    color = gaussianBlur(external_texture, uv, u_blurAmount);
+  } else {
+    color = texture2D(external_texture, uv);
+  }
+
+  gl_FragColor = color;
 }
 `;
 
@@ -102,6 +209,15 @@ function createProgram(gl: WebGLRenderingContext): {
     program: WebGLProgram;
     vloc: GLint;
     tloc: GLint;
+    uniforms: {
+        resolution: WebGLUniformLocation;
+        rect: WebGLUniformLocation;
+        rounded: WebGLUniformLocation;
+        circle: WebGLUniformLocation;
+        blur: WebGLUniformLocation;
+        blurAmount: WebGLUniformLocation;
+        hidden: WebGLUniformLocation;
+    };
 } {
     const program = gl.createProgram();
 
@@ -115,14 +231,32 @@ function createProgram(gl: WebGLRenderingContext): {
     const vloc = gl.getAttribLocation(program, 'a_position');
     const tloc = gl.getAttribLocation(program, 'a_texcoord');
 
-    return { program, vloc, tloc };
+    const uniforms = {
+        resolution: gl.getUniformLocation(program, 'u_resolution'),
+        rect: gl.getUniformLocation(program, 'u_rect'),
+        rounded: gl.getUniformLocation(program, 'u_rounded'),
+        circle: gl.getUniformLocation(program, 'u_circle'),
+        blur: gl.getUniformLocation(program, 'u_blur'),
+        blurAmount: gl.getUniformLocation(program, 'u_blurAmount'),
+        hidden: gl.getUniformLocation(program, 'u_hidden'),
+    };
+
+    return { program, vloc, tloc, uniforms };
 }
 
 export class GameViewRenderer {
-    private rootCanvas: OffscreenCanvas;
-    private gameCanvas: OffscreenCanvasRenderingContext2D;
+    private gameCanvas: OffscreenCanvas;
 
     private gl: WebGLRenderingContext;
+    private uniforms: {
+        resolution: WebGLUniformLocation;
+        rect: WebGLUniformLocation;
+        rounded: WebGLUniformLocation;
+        circle: WebGLUniformLocation;
+        blur: WebGLUniformLocation;
+        blurAmount: WebGLUniformLocation;
+        hidden: WebGLUniformLocation;
+    };
 
     private globalHide = false;
     private targetCanvas: Record<string, GameCanvas> = {};
@@ -130,48 +264,6 @@ export class GameViewRenderer {
     private fpsLimit = 30;
     private animationFrame: number;
     private lastFrameTimeStamp: DOMHighResTimeStamp = performance.now();
-
-    constructor() {
-        this.rootCanvas = new OffscreenCanvas(1, 1);
-
-        const gl = this.rootCanvas.getContext('webgl', {
-            alpha: false,
-            antialias: false,
-            depth: false,
-            desynchronized: true,
-            failIfMajorPerformanceCaveat: false,
-            powerPreference: 'high-performance',
-            premultipliedAlpha: false,
-            preserveDrawingBuffer: false,
-            stencil: false,
-        });
-
-        if (!gl) {
-            throw new Error('Failed to acquire webgl context for GameViewRenderer');
-        }
-
-        this.gl = gl;
-
-        const tex = createTexture(gl);
-        const { program, vloc, tloc } = createProgram(gl);
-        const { vertexBuff, texBuff } = createBuffers(gl);
-
-        gl.useProgram(program);
-
-        gl.bindTexture(gl.TEXTURE_2D, tex);
-
-        gl.uniform1i(gl.getUniformLocation(program, 'external_texture'), 0);
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuff);
-        gl.vertexAttribPointer(vloc, 2, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(vloc);
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, texBuff);
-        gl.vertexAttribPointer(tloc, 2, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(tloc);
-
-        this.render();
-    }
 
     resize(width: number, height: number) {
         this.gl.viewport(0, 0, width, height);
@@ -193,7 +285,7 @@ export class GameViewRenderer {
         if (!this.animationFrame) return;
 
         cancelAnimationFrame(this.animationFrame);
-        this.gameCanvas.reset();
+        this.clearCanvas();
         this.animationFrame = null;
     }
 
@@ -206,11 +298,50 @@ export class GameViewRenderer {
     }
 
     setGameCanvas(canvas: OffscreenCanvas) {
-        this.gameCanvas = canvas.getContext('2d', {
+        this.gameCanvas = canvas;
+
+        const gl = this.gameCanvas.getContext('webgl', {
             alpha: true,
+            antialias: true,
+            depth: false,
             desynchronized: true,
-            willReadFrequently: false,
+            failIfMajorPerformanceCaveat: false,
+            powerPreference: 'high-performance',
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false,
+            stencil: false,
         });
+
+        if (!gl) {
+            throw new Error('Failed to acquire webgl context for GameViewRenderer');
+        }
+
+        this.gl = gl;
+
+        const tex = createTexture(gl);
+        const { program, vloc, tloc, uniforms } = createProgram(gl);
+        this.uniforms = uniforms;
+
+        const { vertexBuff, texBuff } = createBuffers(gl);
+
+        gl.useProgram(program);
+
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+
+        gl.uniform1i(gl.getUniformLocation(program, 'external_texture'), 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuff);
+        gl.vertexAttribPointer(vloc, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(vloc);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, texBuff);
+        gl.vertexAttribPointer(tloc, 2, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(tloc);
+
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        this.render();
     }
 
     addCanvas(uuid: string, x: number, y: number, width: number, height: number, options: GameCanvasOptions) {
@@ -234,6 +365,12 @@ export class GameViewRenderer {
         delete this.targetCanvas[uuid];
     }
 
+    private clearCanvas() {
+        this.gl.clearColor(0, 0, 0, 0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+        this.gl.finish();
+    }
+
     private render = async () => {
         const now = performance.now();
         const delta = now - this.lastFrameTimeStamp;
@@ -245,60 +382,26 @@ export class GameViewRenderer {
 
         this.lastFrameTimeStamp = now;
 
-        this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
-        this.gl.finish();
+        this.gl.clearColor(0, 0, 0, 0);
+        this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 
-        if (!this.gameCanvas) {
-            this.animationFrame = requestAnimationFrame(this.render);
-            return;
-        }
-
-        this.gameCanvas.reset();
+        this.gl.uniform2f(this.uniforms.resolution, this.gl.canvas.width, this.gl.canvas.height);
 
         for (const { x, y, width, height, options } of Object.values(this.targetCanvas)) {
             if (this.globalHide && !options.cantBeHidden) continue;
             if (options.disableGameClone) continue;
 
-            this.gameCanvas.filter = 'none';
+            this.gl.uniform4f(this.uniforms.rect, x, y, width, height);
+            this.gl.uniform1f(this.uniforms.rounded, options.rounded || 0);
+            this.gl.uniform1i(this.uniforms.circle, options.circle ? 1 : 0);
+            this.gl.uniform1i(this.uniforms.blur, options.blur ? 1 : 0);
+            this.gl.uniform1f(this.uniforms.blurAmount, options.blur ? 2.0 : 0.0);
+            this.gl.uniform1i(this.uniforms.hidden, 0);
 
-            if (options.rounded || options.circle) {
-                this.gameCanvas.save();
-            }
-
-            if (options.rounded) {
-                this.gameCanvas.beginPath();
-                this.gameCanvas.moveTo(x + options.rounded, y);
-                this.gameCanvas.lineTo(x + width - options.rounded, y);
-                this.gameCanvas.quadraticCurveTo(x + width, y, x + width, y + options.rounded);
-                this.gameCanvas.lineTo(x + width, y + height - options.rounded);
-                this.gameCanvas.quadraticCurveTo(x + width, y + height, x + width - options.rounded, y + height);
-                this.gameCanvas.lineTo(x + options.rounded, y + height);
-                this.gameCanvas.quadraticCurveTo(x, y + height, x, y + height - options.rounded);
-                this.gameCanvas.lineTo(x, y + options.rounded);
-                this.gameCanvas.quadraticCurveTo(x, y, x + options.rounded, y);
-                this.gameCanvas.closePath();
-            }
-
-            if (options.circle) {
-                this.gameCanvas.beginPath();
-                this.gameCanvas.arc(x + width / 2, y + height / 2, height / 2, 0, Math.PI * 2, false);
-                this.gameCanvas.clip();
-            }
-
-            if (options.rounded || options.circle) {
-                this.gameCanvas.clip();
-            }
-
-            if (options.blur) {
-                this.gameCanvas.filter = 'blur(5px)';
-            }
-
-            this.gameCanvas.drawImage(this.rootCanvas, x, y, width, height, x, y, width, height);
-
-            if (options.rounded || options.circle) {
-                this.gameCanvas.restore();
-            }
+            this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
         }
+
+        this.gl.finish();
 
         this.animationFrame = requestAnimationFrame(this.render);
     };
