@@ -7,8 +7,8 @@ import { BoxZone, Zone } from '../shared/polyzone/box.zone';
 
 export const OffShoreMaxWashAmount = getRandomInt(50_000, 150_000);
 
-export const PacificBankZone: BoxZone = new BoxZone([246.43, 223.79, 106.29], 2.0, 15.0, {
-    heading: 340,
+export const PacificBankZone: BoxZone = new BoxZone([247.41, 223.26, 106.29], 5.0, 15.6, {
+    heading: 160.08,
     minZ: 105.29,
     maxZ: 108.29,
 });
