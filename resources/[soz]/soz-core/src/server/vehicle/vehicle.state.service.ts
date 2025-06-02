@@ -182,7 +182,7 @@ export class VehicleStateService {
 
         this.vehicleSirenRepository.set(
             vehicleNetworkId,
-            VehicleWithSirens[GetHashKey(newState.volatile.model)]
+            VehicleWithSirens[GetEntityModel(entityId)]
                 ? !newState.volatile.isSirenMuted
                 : !newState.volatile.isSirenMuted && !!newState.volatile.gyro
         );
