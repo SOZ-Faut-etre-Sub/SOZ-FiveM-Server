@@ -44,6 +44,10 @@ export class PoliceProvider {
         this.itemService.setItemUseCallback('light_intervention_outfit', this.useOutfit.bind(this));
         this.itemService.setItemUseCallback('heavy_antiriot_outfit', this.useOutfit.bind(this));
         this.itemService.setItemUseCallback('mobile_radar', this.useMobileRadar.bind(this));
+        this.itemService.setItemUseCallback('armor_lifejacket', this.useArmor.bind(this));
+        this.itemService.setItemUseCallback('armor_securejacket', this.useArmor.bind(this));
+        this.itemService.setItemUseCallback('armor_marinejacket', this.useArmor.bind(this));
+        this.itemService.setItemUseCallback('armor_detentionjacket', this.useArmor.bind(this));
     }
 
     @OnEvent(ServerEvent.POLICE_TAKE_DOWN)
@@ -96,9 +100,20 @@ export class PoliceProvider {
                 maxPlates = 2;
             }
 
-            this.playerService.setPlayerMetadata(source, 'armor', { current: 100, hidden: true });
+            let armorValue = 100;
+            if (item.name == 'armor_lifejacket') {
+                armorValue = 20;
+            }
 
-            TriggerClientEvent(ClientEvent.POLICE_SETUP_ARMOR, source, armorType, item.metadata?.plates, maxPlates);
+            this.playerService.setPlayerMetadata(source, 'armor', { current: armorValue, hidden: true });
+
+            TriggerClientEvent(
+                ClientEvent.POLICE_SETUP_ARMOR,
+                source,
+                item.name == 'armor' ? armorType : item.name + '_' + armorType,
+                item.metadata?.plates,
+                maxPlates
+            );
         }
 
         return;
