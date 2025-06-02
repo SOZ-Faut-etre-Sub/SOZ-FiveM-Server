@@ -217,12 +217,12 @@ export function angleDist(angle1: number, angle2: number) {
 }
 
 export function clampAngle(angle: number, center: number, maxOffset: number) {
-    const offset = this.angleDist(center, angle);
+    const offset = angleDist(center, angle);
 
     if (offset < maxOffset) {
         return angle;
     }
-    if (this.angleDist(angle, center + maxOffset) > this.angleDist(angle, center - maxOffset)) {
+    if (angleDist(angle, center + maxOffset) > angleDist(angle, center - maxOffset)) {
         return normalize180(center - maxOffset);
     }
     return normalize180(center + maxOffset);
