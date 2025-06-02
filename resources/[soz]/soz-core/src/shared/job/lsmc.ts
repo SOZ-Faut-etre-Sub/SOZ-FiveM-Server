@@ -515,11 +515,9 @@ export const LsmcCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                [Component.Bag]: { Drawable: 1, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 110, Texture: 3, Palette: 0 },
-                [Component.Accessories]: { Drawable: 3, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
-                [Component.Undershirt]: { Drawable: 0, Texture: 25, Palette: 0, Collection: 'soz_custom' },
-                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 11, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
             },
             Props: {
@@ -660,11 +658,9 @@ export const LsmcCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
-                [Component.Bag]: { Drawable: 1, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
+                [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 115, Texture: 3, Palette: 0 },
-                [Component.Accessories]: { Drawable: 3, Texture: 25, Palette: 0, Collection: 'soz_bcso' },
-                [Component.Undershirt]: { Drawable: 0, Texture: 25, Palette: 0, Collection: 'soz_custom' },
-                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 11, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
             },
             Props: {
