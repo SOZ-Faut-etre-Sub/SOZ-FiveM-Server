@@ -5,7 +5,7 @@ import { Field } from '@public/shared/field';
 import { Fine } from '@public/shared/job/police';
 import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { ZoneTyped } from '@public/shared/polyzone/box.zone';
-import { Scene, WorldEvent } from '@public/shared/scene';
+import { Scene, SceneLiveElement, WorldEvent } from '@public/shared/scene';
 import { SenateParty } from '@public/shared/senate';
 import { Tax, TaxType } from '@public/shared/tax';
 
@@ -48,6 +48,7 @@ export enum RepositoryType {
     Race = 'race',
     Radar = 'radar',
     Scene = 'scene',
+    SceneLive = 'sceneLive',
     SenateParty = 'senateParty',
     Shop = 'shop',
     ShopCategory = 'shopCategory',
@@ -98,6 +99,7 @@ export type RepositoryMapping = {
     [RepositoryType.Gang]: Gang;
     [RepositoryType.Door]: Door;
     [RepositoryType.Scene]: Scene;
+    [RepositoryType.SceneLive]: SceneLiveElement;
     [RepositoryType.WorldEvent]: WorldEvent;
     [RepositoryType.VehicleSiren]: boolean;
     [RepositoryType.Traveling]: TravelingCamera;

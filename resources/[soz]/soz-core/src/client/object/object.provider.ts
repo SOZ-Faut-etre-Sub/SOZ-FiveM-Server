@@ -423,6 +423,8 @@ export class ObjectProvider {
             this.inventoryDragAndDropProvider.registerEntity(entity, spawnableObject.dragAndDropCallbacks);
         }
 
+        TriggerEvent(ClientEvent.OBJECT_SPAWN);
+
         await wait(0);
     }
 
@@ -454,6 +456,8 @@ export class ObjectProvider {
         }
 
         delete this.loadedObjects[id];
+
+        TriggerEvent(ClientEvent.OBJECT_DESPAWN, spawnedObject.object.id, spawnedObject.entity);
     }
 
     public disable(): void {

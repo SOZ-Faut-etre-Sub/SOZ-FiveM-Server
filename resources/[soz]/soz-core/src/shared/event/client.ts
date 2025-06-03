@@ -151,6 +151,8 @@ export enum ClientEvent {
     OBJECT_EDIT = 'soz-core:client:object:edit',
     OBJECT_PLACE_ITEM = 'soz-core:client:object:place',
     OBJECT_PLACE_JOB = 'soz-core:client:job-object:place',
+    OBJECT_SPAWN = 'soz-core:client:object:spawn',
+    OBJECT_DESPAWN = 'soz-core:client:object:despawn',
 
     PROP_OPEN_MENU = 'soz-core:client:prop:open-menu',
 

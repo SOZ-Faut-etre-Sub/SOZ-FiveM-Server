@@ -38,3 +38,7 @@ export const Get = (path: string, config?: RouteConfig): MethodDecorator => {
 export const Post = (path: string, config?: RouteConfig): MethodDecorator => {
     return Route('POST', path, config);
 };
+
+export const Delete = (path: string, config?: RouteConfig): MethodDecorator => {
+    return Route('Delete', path, config);
+};

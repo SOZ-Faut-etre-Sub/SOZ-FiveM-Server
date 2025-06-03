@@ -1,3 +1,5 @@
+import { LightState, LightStateAnimation, LightStateTransition } from '@public/shared/spotlight';
+
 import { WorldObject } from './object';
 import { Vector4 } from './polyzone/vector';
 
@@ -73,3 +75,36 @@ export const ScenePedBehaviorRelationship: Record<ScenePedBehavior, number> = {
 };
 
 export const SceneBlipDelay = 60 * 60_000;
+
+export type SceneLiveElement = LiveEffect | LiveLightState | LiveLightTransition | LiveLightAnimation;
+
+export enum LiveEffectType {
+    Explosion = 'explosion',
+}
+
+export type LiveEffect = {
+    id: string;
+    type: 'live_effect';
+    effectType: LiveEffectType;
+    loop: boolean;
+    cycle?: number;
+    interval: number;
+};
+
+export type LiveLightState = {
+    id: string;
+    type: 'live_light';
+    state: Partial<LightState>;
+};
+
+export type LiveLightTransition = {
+    id: string;
+    type: 'live_light_transition';
+    transition: LightStateTransition;
+};
+
+export type LiveLightAnimation = {
+    id: string;
+    type: 'live_light_animation';
+    animation: LightStateAnimation;
+};
