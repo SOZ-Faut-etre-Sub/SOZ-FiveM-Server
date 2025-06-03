@@ -305,7 +305,6 @@ export enum RpcServerEvent {
     DRONE_GET = 'soz-core:server:drone-get',
     MINESWEEPER_ROBOT_NEW = 'soz-core:server:minesweeper:robot-new',
     MINESWEEPER_ROBOT_TAKE_CONTROL = 'soz-core:server:minesweeper:robot-take-control',
-    MINESWEEPER_ROBOT_DELETE_CLONE = 'soz-core:server:minesweeper:robot-delete-clone',
 
     WEATHER_GET_FORECASTS = 'soz-core:server:weather:get-forecasts',
 

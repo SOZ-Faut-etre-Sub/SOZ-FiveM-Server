@@ -740,6 +740,8 @@ export enum ServerEvent {
     DRONE_NEW = 'soz-core:server:drone-new',
     DRONE_DELETE = 'soz-core:server:drone-delete',
 
+    MINESWEEPER_CREATE_PED_CLONE = 'soz-core:server:minesweeper:create-ped-clone',
+    MINESWEEPER_DELETE_PED_CLONE = 'soz-core:server:minesweeper:robot-delete-clone',
     MINESWEEPER_ROBOT_RETRIEVE = 'soz-core:server:minesweeper:retrieve',
     MINESWEEPER_ROBOT_DESTROY = 'soz-core:server:minesweeper:destroy',
 

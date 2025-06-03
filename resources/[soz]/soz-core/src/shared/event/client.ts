@@ -438,6 +438,8 @@ export enum ClientEvent {
     DRONE_REMOVE_REMOTE = 'soz-core:client:drone-remove-remote',
 
     MINESWEEPER_ROBOT_USE = 'soz-core:client:minesweeper:use',
+    MINESWEEPER_CREATE_PED_CLONE = 'soz-core:client:minesweeper:create-ped-clone',
+    MINESWEEPER_DELETE_PED_CLONE = 'soz-core:client:minesweeper:delete-ped-clone',
 
     WEATHER_UPDATE_FORECASTS = 'soz-core:client:weather:update-forecasts',
     UPDATE_MINIMAP_POSITION = 'soz-core:client:update-minimap-position',
