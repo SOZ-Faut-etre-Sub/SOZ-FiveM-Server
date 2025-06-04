@@ -17,7 +17,7 @@ export class FlyingCameraProvider {
 
     private speedMultiplier = 1;
 
-    private restrictionLogic: (previousPosition: Vector3, newPosition: Vector3) => Vector3;
+    private restrictionLogic: null | ((previousPosition: Vector3, newPosition: Vector3) => Vector3);
 
     public createCamera(speedMultiplier: number = 1, render: boolean = true): number {
         const pedPos = GetEntityCoords(PlayerPedId());
@@ -146,8 +146,13 @@ export class FlyingCameraProvider {
         return { lookX, lookY, moveX, moveY, moveZ };
     }
 
-    public setRestrictionLogic(restrictionLogic: (previousPosition: Vector3, newPosition: Vector3) => Vector3) {
+    public setRestrictionLogic(
+        restrictionLogic: null | ((previousPosition: Vector3, newPosition: Vector3) => Vector3)
+    ): null | ((previousPosition: Vector3, newPosition: Vector3) => Vector3) {
+        const oldRestrictionLogic = this.restrictionLogic;
         this.restrictionLogic = restrictionLogic;
+
+        return oldRestrictionLogic;
     }
 
     public getRestrictedCamPosition(previousPosition: Vector3, newPosition: Vector3): Vector3 {

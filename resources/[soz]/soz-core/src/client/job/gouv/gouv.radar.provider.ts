@@ -162,6 +162,8 @@ export class GouvRadarProvider {
             },
             snapToGround: true,
             collision: true,
+            onlyZRotation: true,
+            allowScale: false,
             context: JobType.Gouv,
         });
 

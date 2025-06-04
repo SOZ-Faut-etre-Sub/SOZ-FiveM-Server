@@ -43,6 +43,11 @@ export const useControl = (onKeyPress?: () => void) => {
     useKeyPress('Control', onKeyPress);
 };
 
+export const useTab = (onKeyPress?: () => void) => {
+    useMenuControlNuiEvent('ToggleFocus', onKeyPress);
+    useKeyPress('Tab', onKeyPress);
+};
+
 export const useBackspace = (onKeyPress?: () => void) => {
     useMenuControlNuiEvent('Backspace', onKeyPress);
     useKeyPress('Backspace', onKeyPress);

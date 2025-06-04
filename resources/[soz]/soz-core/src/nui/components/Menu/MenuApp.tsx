@@ -92,7 +92,7 @@ import { StonkJobMenu } from '@public/nui/components/Stonk/StonkJobMenu';
 import { TaxiJobMenu } from '@public/nui/components/Taxi/TaxiJobMenu';
 import { MenuTraveling } from '@public/nui/components/Traveling/MenuTraveling';
 import { fetchNui } from '@public/nui/fetch';
-import { useControl } from '@public/nui/hook/control';
+import { useTab } from '@public/nui/hook/control';
 import { useMenuNuiEvent, useNuiEvent, useNuiFocus } from '@public/nui/hook/nui';
 import { usePrevious } from '@public/nui/hook/previous';
 import { NuiEvent } from '@public/shared/event';
@@ -130,7 +130,7 @@ const MenuRouter: FunctionComponent = () => {
 
     useNuiFocus(useFocus && visibility && menuType !== null, useFocus && visibility && menuType !== null, false);
 
-    useControl(() => {
+    useTab(() => {
         if (menuType !== null && visibility) {
             setFocus(!useFocus);
         }
@@ -266,7 +266,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.RaceAdmin}/*`} element={<MenuRaceAdmin />} />
             <Route path={`/${MenuType.RaceRank}/*`} element={<MenuRaceRank data={menuData} />} />
             <Route path={`/${MenuType.GouvJobMenu}/*`} element={<GouvJobMenu data={menuData} />} />
-            <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement />} />
+            <Route path={`/${MenuType.PropPlacementMenu}/*`} element={<MenuPropPlacement data={menuData} />} />
             <Route
                 path={`/${MenuType.HousingPropPlacementMenu}/*`}
                 element={<MenuPropPlacementHousing data={menuData} />}

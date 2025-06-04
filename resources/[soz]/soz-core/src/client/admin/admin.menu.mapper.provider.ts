@@ -650,7 +650,6 @@ export class AdminMenuMapperProvider {
         let newZone: Zone = null;
         if (ZoneProps[type]) {
             const object = await this.objectEditorProvider.createOrUpdateObject(ZoneProps[type], {
-                snapToGround: true,
                 allowToggleSnap: true,
                 allowScale: false,
                 context: 'admin',
@@ -750,7 +749,6 @@ export class AdminMenuMapperProvider {
             const object = await this.objectEditorProvider.createOrUpdateObject(
                 ZoneProps[zone.data.type],
                 {
-                    snapToGround: true,
                     allowToggleSnap: true,
                     allowScale: false,
                     context: 'admin',

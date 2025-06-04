@@ -38,10 +38,8 @@ export class SceneProvider {
 
     public async migrateLegacyScene() {
         const collections = await this.prismaService.collection_prop.findMany();
-        console.log('migrate legacy scene');
 
         for (const collection of collections) {
-            console.log(collection.name);
             const scene = await this.sceneRepository.addScene(collection.name, collection.creator);
 
             if (collection.persistant) {
@@ -124,6 +122,8 @@ export class SceneProvider {
         }
 
         this.loadScene(sceneId);
+
+        this.notifier.notify(source, `Scene ${scene.name} chargée`);
     }
 
     @OnEvent(ServerEvent.SCENE_UNLOAD)
@@ -145,6 +145,8 @@ export class SceneProvider {
         }
 
         this.unloadScene(sceneId);
+
+        this.notifier.notify(source, `Scene ${scene.name} déchargée`);
     }
 
     @OnEvent(ServerEvent.SCENE_CREATE)
@@ -354,12 +356,6 @@ export class SceneProvider {
             this.notifier.notify(source, `Scene ${scene.name} persistée`);
         } else {
             this.notifier.notify(source, `Scene ${scene.name} non persistée`);
-        }
-
-        if (!scene.worldEventId) {
-            this.notifier.notify(source, `Scene ${scene.name} chargée`);
-
-            await this.startScene(source, sceneId);
         }
     }
 

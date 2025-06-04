@@ -102,7 +102,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                 setEditorMode('translate');
             }
 
-            if (e.code === setScaleMode && data.allowScale && !collision) {
+            if (e.code === setScaleMode && data.allowScale) {
                 setEditorMode('scale');
             }
 
@@ -188,7 +188,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                     fetchNui(NuiEvent.ObjectEditorTogglePermanent, { permanent: value });
                                 }}
                                 checked={data.permanent}
-                                description="Active ou désactive la permanence d'un objet. Si activée, l'objet sera chargé tous le temps."
+                                description="Active ou désactive la permanence d'un objet. Par défaut, les objets sont crées / supprimés en fonction de la distance du joueur. Si la permanence est activée, l'objet sera toujours présent dans le monde peu importe la distance avec le joueur."
                             >
                                 Objet permanent
                             </MenuItemCheckbox>
@@ -255,7 +255,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                 🔄 Réinitialiser la rotation
                             </MenuItemButton>
                         )}
-                        {data.allowScale && !collision && (
+                        {data.allowScale && (
                             <MenuItemButton
                                 onConfirm={() => {
                                     if (!mesh.current) {
@@ -286,6 +286,8 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                         mode={editorMode}
                         translationSnap={0}
                         rotationSnap={0}
+                        showX={editorMode !== 'rotate' || !data.onlyZRotation}
+                        showZ={editorMode !== 'rotate' || !data.onlyZRotation}
                         onObjectChange={handleObjectDataUpdate}
                     />
                     <mesh
@@ -346,16 +348,19 @@ const HelpPanel: FunctionComponent<HelpPanelProps> = ({ options, collision }) =>
     return (
         <>
             <MenuSubTitle>Contrôle du mode editeur</MenuSubTitle>
-            <MenuItemText> Ctrl : Basculer le mode caméra ou souris</MenuItemText>
+            <MenuItemText> Tab : Basculer le mode caméra ou souris</MenuItemText>
             {options.allowRotation && <MenuItemText> R : Mode rotation</MenuItemText>}
             <MenuItemText> T : Mode translation</MenuItemText>
-            {options.allowScale && !collision && <MenuItemText> Y : Mode scaling</MenuItemText>}
+            {options.allowScale && <MenuItemText> Y : Mode scaling</MenuItemText>}
             <MenuItemText> L : Basculer mode de reférence</MenuItemText>
             {options.allowToggleSnap && <MenuItemText> C : Aligner l'objet ⬇️</MenuItemText>}
             {options.allowSetName && <MenuItemText> B : Définir un identifiant d'objet</MenuItemText>}
             <MenuItemText> Espace : Confirmer et placer l'objet ✔️</MenuItemText>
-            {options.allowDuplicate && <MenuItemText> N : Enregistre en tant que nouveau objet ✔️</MenuItemText>}
+            {options.allowDuplicate && <MenuItemText> N : Dupliquer l'objet sélectionner ✔️</MenuItemText>}
             {options.allowDelete && <MenuItemText> Suppr : Effacer l'objet sélectionné ❌</MenuItemText>}
+            {options.allowScale && collision && (
+                <MenuItemText>⚠️⚠️ Le scaling d'objet peut désactiver la collision même si activée.</MenuItemText>
+            )}
         </>
     );
 };

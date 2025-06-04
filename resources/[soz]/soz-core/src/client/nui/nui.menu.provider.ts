@@ -10,13 +10,13 @@ export class NuiMenuProvider {
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
-    @Command('soz_menu_toggle_focus', {
+    @Command('soz_menu_toggle_focus_2', {
         description: 'Active ou désactive la souris dans le menu',
         passthroughNuiFocus: true,
         keys: [
             {
                 mapper: 'keyboard',
-                key: 'RCONTROL',
+                key: 'Tab',
             },
         ],
     })

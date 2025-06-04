@@ -110,6 +110,7 @@ export type ObjectEditorOptions = {
     allowTogglePermanent: boolean;
     allowAddEffect: boolean;
     allowSetName: boolean;
+    onlyZRotation: boolean;
     context: ObjectEditorContext;
     collision: boolean;
     permanent: boolean;

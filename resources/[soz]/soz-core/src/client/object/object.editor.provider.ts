@@ -53,14 +53,19 @@ export class ObjectEditorProvider {
 
     private currentObject: CurrentObject | null;
 
+    private isCreatingObject = false;
+
     public async createOrUpdateObject(
         model: number,
         options?: Partial<ObjectEditorOptions>,
         existingObject: WorldObject | null = null
     ): Promise<WorldObject | null> {
-        if (this.currentObject) {
+        if (this.isCreatingObject) {
             return existingObject;
         }
+
+        // lock early to prevent double object creation
+        this.isCreatingObject = true;
 
         const ped = PlayerPedId();
         const position = existingObject?.position
@@ -81,6 +86,7 @@ export class ObjectEditorProvider {
             allowTogglePermanent: false,
             allowDuplicate: false,
             allowSetName: false,
+            onlyZRotation: false,
             effect: existingObject?.effect || null,
             vfx: existingObject?.vfx || null,
             context: 'hammer',
@@ -140,6 +146,7 @@ export class ObjectEditorProvider {
             }
 
             this.currentObject = null;
+            this.isCreatingObject = false;
         });
 
         SetEntityAlpha(objectEntity, 200, false);
@@ -174,6 +181,16 @@ export class ObjectEditorProvider {
     @Tick(TickInterval.EVERY_FRAME)
     public async drawEditorLoop() {
         if (!this.currentObject) {
+            if (this.isCreatingObject) {
+                this.isCreatingObject = false;
+            }
+
+            return;
+        }
+
+        if (this.nuiMenu.getOpened() !== MenuType.ObjectEditor) {
+            this.currentObject.resolver(null);
+
             return;
         }
 
@@ -269,15 +286,7 @@ export class ObjectEditorProvider {
             return;
         }
 
-        const matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
-        PlaceObjectOnGroundProperly_2(this.currentObject.entity);
-        const position = GetEntityCoords(this.currentObject.entity) as Vector3;
-        matrix[12] = position[0];
-        matrix[13] = position[1];
-        matrix[14] = position[2];
-        this.objectService.applyEntityMatrix(this.currentObject.entity, matrix);
-
-        this.refreshObjectPositionFromGame();
+        this.doSnapCurrentObject();
 
         this.nuiDispatch.dispatch('object_editor', 'setEntityPosition', {
             matrix: this.objectService.getEntityMatrix(this.currentObject.entity),
@@ -290,6 +299,22 @@ export class ObjectEditorProvider {
                 this.currentObject.position[2],
             ]);
         }
+    }
+
+    public doSnapCurrentObject() {
+        if (!this.currentObject) {
+            return;
+        }
+
+        const matrix = this.objectService.getEntityMatrix(this.currentObject.entity);
+        PlaceObjectOnGroundProperly_2(this.currentObject.entity);
+        const position = GetEntityCoords(this.currentObject.entity) as Vector3;
+        matrix[12] = position[0];
+        matrix[13] = position[1];
+        matrix[14] = position[2];
+        this.objectService.applyEntityMatrix(this.currentObject.entity, matrix);
+
+        this.refreshObjectPositionFromGame();
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorSetName)
@@ -318,7 +343,15 @@ export class ObjectEditorProvider {
 
         this.objectService.applyEntityMatrix(this.currentObject.entity, matrix);
 
-        this.refreshObjectPositionFromGame();
+        if (this.currentObject.options.snapToGround) {
+            this.doSnapCurrentObject();
+
+            this.nuiDispatch.dispatch('object_editor', 'setEntityPosition', {
+                matrix: this.objectService.getEntityMatrix(this.currentObject.entity),
+            });
+        } else {
+            this.refreshObjectPositionFromGame();
+        }
     }
 
     @OnNuiEvent(NuiEvent.ObjectEditorStopDrag)

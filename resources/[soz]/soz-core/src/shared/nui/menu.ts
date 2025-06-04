@@ -199,7 +199,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.RaceAdmin]: null;
     [MenuType.RaceRank]: { id: number; name: string };
     [MenuType.GouvJobMenu]: GouvJobMenuPropData;
-    [MenuType.PropPlacementMenu]: null;
+    [MenuType.PropPlacementMenu]: { loaded: string[] };
     [MenuType.HousingPropPlacementMenu]: HousingPropPlacementMenuData;
     [MenuType.FDFJobMenu]: any;
     [MenuType.JobNews]: { job: JobType };

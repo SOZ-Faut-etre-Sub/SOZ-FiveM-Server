@@ -22,7 +22,13 @@ import { SubMenuScene } from './SubMenuScene';
 
 const showAllAtom = atom<boolean>(false);
 
-export const MenuPropPlacement: FunctionComponent = memo(() => {
+type MenuPropPlacementProps = {
+    data: {
+        loaded: string[];
+    };
+};
+
+export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = memo(({ data }) => {
     const player = usePlayer();
     const showAll = useAtomValue(showAllAtom);
     const setShowAll = useSetAtom(showAllAtom);
@@ -62,16 +68,23 @@ export const MenuPropPlacement: FunctionComponent = memo(() => {
                             Voir toutes les collections
                         </MenuItemCheckbox>
                     )}
-                    {filteredScenes.map(scene => (
-                        <MenuItemSubMenuLink key={scene.id} id={`scene-${scene.id}`}>
-                            <div className="pr-2 flex w-full items-center justify-between">
-                                <div>
-                                    {!scene.persistent ? '🔴' : '🟢'} {scene.name}
+                    {filteredScenes.map(scene => {
+                        const isLoaded = data.loaded.includes(scene.id);
+
+                        return (
+                            <MenuItemSubMenuLink key={scene.id} id={`scene-${scene.id}`}>
+                                <div className="pr-2 flex w-full items-center justify-between">
+                                    <div>
+                                        {scene.persistent && isLoaded && '🟢'}
+                                        {!scene.persistent && isLoaded && '🔵'}
+                                        {scene.persistent && !isLoaded && '🟠'}
+                                        {!scene.persistent && !isLoaded && '🔴'} {scene.name}
+                                    </div>
+                                    <div>{Object.values(scene.entities).length}</div>
                                 </div>
-                                <div>{Object.values(scene.entities).length}</div>
-                            </div>
-                        </MenuItemSubMenuLink>
-                    ))}
+                            </MenuItemSubMenuLink>
+                        );
+                    })}
                 </MenuContent>
             </MainMenu>
             {filteredScenes.map(scene => (

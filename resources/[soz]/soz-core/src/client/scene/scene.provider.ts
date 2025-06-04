@@ -8,7 +8,7 @@ import { Provider } from '../../core/decorators/provider';
 import { RepositoryDelete, RepositoryUpdate } from '../../core/decorators/repository';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
-import { uuidv4, wait } from '../../core/utils';
+import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
@@ -53,6 +53,8 @@ type CurrentSceneEdited = {
     scene: Scene;
     context: ObjectEditorContext;
 };
+
+const MAX_DISTANCE_FLYING_CAMERA = 60;
 
 @Provider()
 export class SceneProvider {
@@ -117,6 +119,8 @@ export class SceneProvider {
 
     private camera: number;
 
+    private nextPreviewProp;
+
     private previewEntity: number | null = null;
 
     public isEditingScene(): boolean {
@@ -125,7 +129,9 @@ export class SceneProvider {
 
     @OnEvent(ClientEvent.PROP_OPEN_MENU)
     public async openPlacementMenu() {
-        this.nuiMenu.openMenu(MenuType.PropPlacementMenu);
+        this.nuiMenu.openMenu(MenuType.PropPlacementMenu, {
+            loaded: [...this.loadedScenes],
+        });
     }
 
     @OnNuiEvent(NuiEvent.RequestCreatePropCollection)
@@ -182,7 +188,7 @@ export class SceneProvider {
             this.flyingCameraProvider.setRestrictionLogic((oldPosition, newPosition) => {
                 const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
-                if (getDistance(position, newPosition) > 20) {
+                if (getDistance(position, newPosition) > MAX_DISTANCE_FLYING_CAMERA) {
                     return oldPosition;
                 }
 
@@ -214,10 +220,6 @@ export class SceneProvider {
             this.currentSceneEdited = null;
 
             await this.applyHighlight(scene);
-        }
-
-        if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
-            DeleteEntity(this.previewEntity);
         }
 
         this.flyingCameraProvider.deleteCamera();
@@ -337,22 +339,7 @@ export class SceneProvider {
 
     @OnNuiEvent(NuiEvent.ScenePreviewModel)
     async onNuiPreviewModelForScene({ prop }: { prop: PlacementProp | null }) {
-        if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
-            DeleteEntity(this.previewEntity);
-        }
-
-        if (!prop) {
-            return;
-        }
-
-        const position = this.getCoordForNewEntity();
-
-        this.previewEntity = await this.objectService.createObject({
-            model: GetHashKey(prop.model),
-            position,
-            id: uuidv4(),
-            noCollision: true,
-        });
+        this.nextPreviewProp = prop;
     }
 
     @OnNuiEvent(NuiEvent.SceneSearchEntity)
@@ -490,7 +477,6 @@ export class SceneProvider {
 
         const object = await this.objectEditorProvider.createOrUpdateObject(GetHashKey('prop_ped_gib_01'), {
             allowToggleCollision: false,
-            allowToggleSnap: true,
             allowAddEffect: false,
             allowTogglePermanent: false,
             snapToGround: true,
@@ -530,7 +516,6 @@ export class SceneProvider {
             GetHashKey('prop_ped_gib_01'),
             {
                 allowToggleCollision: false,
-                allowToggleSnap: true,
                 allowAddEffect: false,
                 allowTogglePermanent: false,
                 snapToGround: true,
@@ -797,34 +782,34 @@ export class SceneProvider {
             return;
         }
 
-        if (this.camera) {
-            this.flyingCameraProvider.deleteCamera();
-
-            await wait(1000);
-        }
-
         const [firstProp] = Object.values(scene.entities);
 
         if (firstProp) {
+            let previousRestrictionLogic = null;
+
+            if (this.camera) {
+                previousRestrictionLogic = this.flyingCameraProvider.setRestrictionLogic(null);
+            }
+
+            const previousPosition = GetEntityCoords(PlayerPedId(), true) as Vector3;
+
             await this.playerPositionProvider.teleportAdminToPosition(firstProp.object.position);
-        }
 
-        if (this.camera) {
-            this.camera = this.flyingCameraProvider.createCamera();
-            this.flyingCameraProvider.setRestrictionLogic((oldPosition, newPosition) => {
-                const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
-
-                if (getDistance(position, newPosition) > 20) {
-                    return oldPosition;
-                }
-
-                return newPosition;
-            });
+            if (this.camera) {
+                this.flyingCameraProvider.handleCameraPosition(previousPosition, [
+                    firstProp.object.position[0],
+                    firstProp.object.position[1],
+                    firstProp.object.position[2],
+                ]);
+                this.flyingCameraProvider.setRestrictionLogic(previousRestrictionLogic);
+            }
         }
     }
 
     @OnNuiEvent(NuiEvent.SceneLoad)
     async onNuiSceneLoad({ sceneId }: { sceneId: string }) {
+        this.nuiMenu.closeMenu();
+
         const { completed } = await this.progressService.progress(
             'prop_toggle_load',
             'Chargement de la collection...',
@@ -840,6 +825,8 @@ export class SceneProvider {
 
     @OnNuiEvent(NuiEvent.SceneUnload)
     async onNuiSceneUnload({ sceneId }: { sceneId: string }) {
+        this.nuiMenu.closeMenu();
+
         const { completed } = await this.progressService.progress(
             'prop_toggle_load',
             'Déchargement de la collection...',
@@ -1264,19 +1251,47 @@ export class SceneProvider {
     @Tick(TickInterval.EVERY_FRAME)
     public async handlePreviewEntity() {
         if (null === this.currentSceneEdited) {
-            if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
-                DeleteEntity(this.previewEntity);
+            if (this.previewEntity) {
+                if (DoesEntityExist(this.previewEntity)) {
+                    DeleteEntity(this.previewEntity);
+                }
                 this.previewEntity = null;
             }
 
             return;
         }
 
-        if (!this.previewEntity || !DoesEntityExist(this.previewEntity)) {
-            return;
+        if (this.nextPreviewProp === null && this.previewEntity) {
+            if (DoesEntityExist(this.previewEntity)) {
+                DeleteEntity(this.previewEntity);
+            }
+
+            this.previewEntity = null;
         }
 
         const position = this.getCoordForNewEntity();
+
+        // If next entity changed or previewEntity is null, create a new one
+        if (
+            this.nextPreviewProp &&
+            (this.previewEntity === null ||
+                GetEntityModel(this.previewEntity) !== GetHashKey(this.nextPreviewProp.model))
+        ) {
+            if (this.previewEntity && DoesEntityExist(this.previewEntity)) {
+                DeleteEntity(this.previewEntity);
+            }
+
+            this.previewEntity = await this.objectService.createObject({
+                model: GetHashKey(this.nextPreviewProp.model),
+                position,
+                id: uuidv4(),
+                noCollision: true,
+            });
+        }
+
+        if (!this.previewEntity || !DoesEntityExist(this.previewEntity)) {
+            return;
+        }
 
         SetEntityCoords(this.previewEntity, position[0], position[1], position[2], false, false, false, false);
     }
