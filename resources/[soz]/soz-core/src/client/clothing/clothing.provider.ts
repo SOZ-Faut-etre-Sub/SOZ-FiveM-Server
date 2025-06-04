@@ -1,10 +1,12 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
-import { Outfit } from '@public/shared/cloth';
+import { Tick } from '@public/core/decorators/tick';
+import { Component, Outfit } from '@public/shared/cloth';
 import { PlayerPedHash } from '@public/shared/player';
 import { RpcClientEvent } from '@public/shared/rpc';
 
+import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { ClothingService } from './clothing.service';
 
@@ -13,8 +15,14 @@ export class ClothingProvider {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    private buoyancy = false;
+    private buoyancyForce = 0;
 
     @Rpc(RpcClientEvent.CHECK_WEARING_GLOVES)
     public async checkWearingGloves(): Promise<boolean> {
@@ -66,5 +74,32 @@ export class ClothingProvider {
             DeletePed(ped);
         }
         return ret;
+    }
+
+    @Tick(1000)
+    public lifeJackeBuoyancy() {
+        const playerPed = PlayerPedId();
+        const player = this.playerService.getPlayer();
+        this.buoyancy = false;
+        if (GetPedDrawableVariationCollectionName(playerPed, Component.BodyArmor) == 'soz_bcso') {
+            const index = GetPedDrawableVariationCollectionLocalIndex(playerPed, Component.BodyArmor);
+            if (player.skin.Model.Hash == PlayerPedHash.Male) {
+                this.buoyancy = [16, 17].includes(index);
+            } else if (player.skin.Model.Hash == PlayerPedHash.Female) {
+                this.buoyancy = [19, 21].includes(index);
+            }
+        }
+    }
+
+    @Tick()
+    public lifeJacket() {
+        const playerPed = PlayerPedId();
+        if (this.buoyancy && !IsPedInAnyVehicle(playerPed, false) && IsPedSwimmingUnderWater(playerPed)) {
+            this.buoyancyForce = Math.min(this.buoyancyForce + 0.01, 1.0);
+            const vel = GetEntityVelocity(playerPed);
+            SetEntityVelocity(playerPed, vel[0], vel[1], vel[2] + this.buoyancyForce);
+        } else {
+            this.buoyancyForce = 0;
+        }
     }
 }
