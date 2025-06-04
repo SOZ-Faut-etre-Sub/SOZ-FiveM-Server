@@ -181,16 +181,6 @@ export class ObjectEditorProvider {
     @Tick(TickInterval.EVERY_FRAME)
     public async drawEditorLoop() {
         if (!this.currentObject) {
-            if (this.isCreatingObject) {
-                this.isCreatingObject = false;
-            }
-
-            return;
-        }
-
-        if (this.nuiMenu.getOpened() !== MenuType.ObjectEditor) {
-            this.currentObject.resolver(null);
-
             return;
         }
 
@@ -356,6 +346,10 @@ export class ObjectEditorProvider {
 
     @OnNuiEvent(NuiEvent.ObjectEditorStopDrag)
     public async stopDrag() {
+        if (!this.currentObject) {
+            return;
+        }
+
         if (this.currentObject.options.useCircularCamera) {
             this.circularCamera.updateTarget([
                 this.currentObject.position[0],
