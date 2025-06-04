@@ -352,7 +352,6 @@ const HelpPanel: FunctionComponent<HelpPanelProps> = ({ options, collision }) =>
             {options.allowRotation && <MenuItemText> R : Mode rotation</MenuItemText>}
             <MenuItemText> T : Mode translation</MenuItemText>
             {options.allowScale && <MenuItemText> Y : Mode scaling</MenuItemText>}
-            <MenuItemText> L : Basculer mode de reférence</MenuItemText>
             {options.allowToggleSnap && <MenuItemText> C : Aligner l'objet ⬇️</MenuItemText>}
             {options.allowSetName && <MenuItemText> B : Définir un identifiant d'objet</MenuItemText>}
             <MenuItemText> Espace : Confirmer et placer l'objet ✔️</MenuItemText>
