@@ -1,4 +1,5 @@
 import { useAssetPath } from '@public/nui/hook/assets';
+import { useBackspace } from '@public/nui/hook/control';
 import { useState } from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
@@ -18,12 +19,18 @@ export const BookApp = () => {
         setImageIndex(0);
     });
 
+    useBackspace(() => {
+        if (book) {
+            setBook(null);
+        }
+    });
+
     if (!book) {
         return null;
     }
 
     return (
-        <div className="absolute w-full h-full">
+        <div className="absolute w-full h-full z-40">
             <div className="flex flex-col justify-around h-full w-full">
                 <div className="flex justify-center align-center">
                     <TransformWrapper limitToBounds={true} centerOnInit={true}>
