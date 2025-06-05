@@ -1,6 +1,7 @@
 import { VehicleBusinessProvider } from '@private/client/gang/business.vehicle.provider';
 import { FDO } from '@public/shared/job';
 import { VehicleWithSirens } from '@public/shared/job/police';
+import { Vector3 } from '@public/shared/polyzone/vector';
 import { LSCustomMode, VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Command } from '../../core/decorators/command';
@@ -360,32 +361,47 @@ export class VehicleMenuProvider {
         };
 
         const crimiGarage = this.vehicleBusinessProvider.testCrimiGarage(ped, false);
+        const isLSCustom = this.vehicleCustomProvider.isPedInsideCustomZone();
+        const crimiPerformance = crimiGarage && this.vehicleBusinessProvider.canPerformance();
+        const crimiCustom = crimiGarage && this.vehicleBusinessProvider.canCustom();
 
-        this.nuiMenu.openMenu<MenuType.Vehicle>(MenuType.Vehicle, {
-            isDriver,
-            engineOn: GetIsVehicleEngineRunning(vehicle),
-            speedLimit: vehicleState.speedLimit,
-            doorStatus,
-            hasRadio: vehicleState.hasRadio,
-            insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
-            permission: isAllowed ? permission : null,
-            isAnchor: IsBoatAnchoredAndFrozen(vehicle),
-            isBoat: GetVehicleClass(vehicle) == VehicleClass.Boats,
-            police: FDO.includes(player.job.id) && FDO.includes(vehicleState.job),
-            policeLocator: vehicleState.policeLocatorEnabled,
-            onDutyNg: pitstop[0],
-            pitstopPrice: pitstop[1],
-            neonLightsStatus: vehicleState.neonLightsStatus,
-            hasNeon: hasNeon(),
-            crimiPerformance: crimiGarage && this.vehicleBusinessProvider.canPerformance(),
-            crimiCustom: crimiGarage && this.vehicleBusinessProvider.canCustom(),
-            canGyro:
-                isDriver &&
-                FDO.includes(player.job.id) &&
-                player.job.onduty &&
-                !VehicleWithSirens[model] &&
-                IsThisModelACar(model),
-            hasGyro: !!vehicleState.gyro,
-        });
+        this.nuiMenu.openMenu<MenuType.Vehicle>(
+            MenuType.Vehicle,
+            {
+                isDriver,
+                engineOn: GetIsVehicleEngineRunning(vehicle),
+                speedLimit: vehicleState.speedLimit,
+                doorStatus,
+                hasRadio: vehicleState.hasRadio,
+                insideLSCustom: this.vehicleCustomProvider.isPedInsideCustomZone(),
+                permission: isAllowed ? permission : null,
+                isAnchor: IsBoatAnchoredAndFrozen(vehicle),
+                isBoat: GetVehicleClass(vehicle) == VehicleClass.Boats,
+                police: FDO.includes(player.job.id) && FDO.includes(vehicleState.job),
+                policeLocator: vehicleState.policeLocatorEnabled,
+                onDutyNg: pitstop[0],
+                pitstopPrice: pitstop[1],
+                neonLightsStatus: vehicleState.neonLightsStatus,
+                hasNeon: hasNeon(),
+                crimiPerformance,
+                crimiCustom,
+                canGyro:
+                    isDriver &&
+                    FDO.includes(player.job.id) &&
+                    player.job.onduty &&
+                    !VehicleWithSirens[model] &&
+                    IsThisModelACar(model),
+                hasGyro: !!vehicleState.gyro,
+            },
+            {
+                position:
+                    isLSCustom || crimiPerformance || crimiCustom
+                        ? {
+                              distance: 5.0,
+                              position: GetEntityCoords(ped) as Vector3,
+                          }
+                        : null,
+            }
+        );
     }
 }
