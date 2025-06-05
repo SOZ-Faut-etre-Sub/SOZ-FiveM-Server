@@ -140,10 +140,10 @@ export class LSMCCheckHealthProvider {
         ]);
 
         [
-            new BoxZone([1816.41, 3680.58, 33.48], 1.0, 1.0, {
-                heading: 310.81,
-                minZ: 33.88,
-                maxZ: 34.48,
+            new BoxZone([1824.11, 3680.55, 34.28], 1.8, 3.8, {
+                heading: 299.05,
+                minZ: 33.28,
+                maxZ: 35.28,
             }),
             new BoxZone([373.02, -1416.34, 32.41], 0.8, 0.6, {
                 heading: 231.23,
