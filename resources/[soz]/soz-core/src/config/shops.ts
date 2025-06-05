@@ -1373,7 +1373,7 @@ export const ProperTorsos: Record<PlayerPedHash, Record<string, Record<number, n
             [221]: 4,
             [222]: 0,
             [223]: 5,
-            [224]: 6,
+            [224]: 12,
             [225]: 8,
             [226]: 0,
             [227]: 4,
@@ -1481,7 +1481,7 @@ export const ProperTorsos: Record<PlayerPedHash, Record<string, Record<number, n
             [329]: 4,
             [330]: 4,
             [331]: 6,
-            [332]: 6,
+            [332]: 4,
             [333]: 0, // doomed
             [334]: 0,
             [335]: 8,
