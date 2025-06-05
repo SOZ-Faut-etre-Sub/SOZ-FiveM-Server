@@ -254,7 +254,7 @@ const FREE_WEIGHT_COORDS = [
         },
     },
     {
-        name: 'free_weight_6',
+        name: 'free_weight_7',
         zone: {
             center: [1139.43, -433.52, 76.34] as Vector3,
             length: 0.8,
