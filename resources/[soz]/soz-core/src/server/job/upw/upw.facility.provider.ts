@@ -34,7 +34,7 @@ import {
 } from '@public/shared/job/upw';
 import { Zone } from '@public/shared/polyzone/box.zone';
 import { Vector4 } from '@public/shared/polyzone/vector';
-import { getRandomInt } from '@public/shared/random';
+import { getRandomInt, getRandomItem } from '@public/shared/random';
 import { isErr } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -301,8 +301,9 @@ export class UpwFacilityProvider {
             const terminals = Object.values(this.facilities).filter(elem => elem.job === job);
 
             if (terminals.length > 0) {
-                const terminal = terminals.find(elem => elem.capacity > 0);
-                if (terminal) {
+                const terminalsAvailable = terminals.filter(elem => elem.capacity > 0);
+                if (terminalsAvailable.length > 0) {
+                    const terminal = getRandomItem(terminalsAvailable);
                     const count = connectedPlayers.filter(elem => elem.job.id == job && elem.job.onduty).length;
                     const consumptionJobThisTick = UpwConfig.Consumption.EnergyJobPerTick * count;
                     terminal.capacity = Math.max(0, terminal.capacity - consumptionJobThisTick);
