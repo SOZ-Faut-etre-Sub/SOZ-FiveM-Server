@@ -17,12 +17,15 @@ export class BankInvoiceProvider {
             `Vous avez reçu une facture de ~r~$${amount}~s~~n~Raison: ${label}.~n~~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser`
         );
 
+        console.log('timeout', timeout);
+        console.log('confirmed', confirmed);
+
         if (timeout) {
             return;
         }
 
         if (!confirmed) {
-            await emitRpc(RpcServerEvent.BANK_REJECT_INVOICE);
+            await emitRpc(RpcServerEvent.BANK_REJECT_INVOICE, invoiceId);
             return;
         }
 
