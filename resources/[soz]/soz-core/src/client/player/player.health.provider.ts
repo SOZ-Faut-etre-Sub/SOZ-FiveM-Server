@@ -894,7 +894,6 @@ export class PlayerHealthProvider {
 
             menWardrobe['Homme sport'].Components[Component.Shoes].Texture = getRandomInt(0, 4);
             menWardrobe['Homme sport'].Components[Component.Tops].Texture = getRandomInt(0, 20);
-            menWardrobe['Homme sport'].Components[Component.Undershirt].Texture = getRandomInt(0, 7);
             menWardrobe['Homme sport'].Components[Component.Legs].Texture = getRandomItem([0, 5, 7, 12]);
 
             if (!sportOnly) {
