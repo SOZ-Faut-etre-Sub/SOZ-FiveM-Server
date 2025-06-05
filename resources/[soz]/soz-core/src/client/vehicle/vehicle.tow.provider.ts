@@ -1,9 +1,11 @@
 import { Once, OnEvent } from '@core/decorators/event';
 import { Provider } from '@core/decorators/provider';
 import { Inject } from '@public/core/decorators/injectable';
+import { PlayerUpdate } from '@public/core/decorators/player';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { uuidv4 } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { TowRope } from '@public/shared/vehicle/tow.rope';
 import { VehicleClass, VehicleSeat } from '@public/shared/vehicle/vehicle';
@@ -119,6 +121,15 @@ export class VehicleTowProvider {
     public async onEnteringVehicle() {
         if (this.from) {
             this.ropeService.deleteRope();
+        }
+    }
+
+    @PlayerUpdate()
+    public async onPlayerUpdate(player: PlayerData) {
+        if (player.metadata.isdead || player.metadata.ishandcuffed) {
+            if (this.from) {
+                this.ropeService.deleteRope();
+            }
         }
     }
 

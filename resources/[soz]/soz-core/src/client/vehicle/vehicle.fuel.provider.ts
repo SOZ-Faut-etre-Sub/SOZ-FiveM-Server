@@ -1,4 +1,6 @@
 import { OilTankerProvider } from '@public/client/job/oil/oil.tanker.provider';
+import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerData } from '@public/shared/player';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -493,6 +495,16 @@ export class VehicleFuelProvider {
             this.currentStationPistol.filling = false;
 
             await this.disableStationPistol();
+        }
+    }
+
+    @PlayerUpdate()
+    public async onPlayerUpdate(player: PlayerData) {
+        if (player.metadata.isdead || player.metadata.ishandcuffed) {
+            if (this.currentStationPistol) {
+                this.currentStationPistol.filling = false;
+                await this.disableStationPistol();
+            }
         }
     }
 
