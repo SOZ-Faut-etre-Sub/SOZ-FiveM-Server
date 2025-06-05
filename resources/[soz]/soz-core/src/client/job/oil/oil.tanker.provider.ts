@@ -1,3 +1,6 @@
+import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerData } from '@public/shared/player';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -166,6 +169,13 @@ export class OilTankerProvider {
                 },
             ]
         );
+    }
+
+    @PlayerUpdate()
+    public async onPlayerUpdate(player: PlayerData) {
+        if (player.metadata.isdead || player.metadata.ishandcuffed) {
+            await this.disconnectTanker();
+        }
     }
 
     public async connectTanker(vehicle: number) {

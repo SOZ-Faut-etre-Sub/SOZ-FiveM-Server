@@ -1,3 +1,6 @@
+import { PlayerUpdate } from '@public/core/decorators/player';
+import { PlayerData } from '@public/shared/player';
+
 import { Once, OnceStep, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -149,6 +152,13 @@ export class BennysFlatbedProvider {
     @OnEvent(ClientEvent.BASE_ENTERING_VEHICLE, false)
     public async onEnteringVehicle() {
         if (this.currentFlatbedAttach) {
+            await this.disableFlatbedAttach();
+        }
+    }
+
+    @PlayerUpdate()
+    public async onPlayerUpdate(player: PlayerData) {
+        if (player.metadata.isdead || player.metadata.ishandcuffed) {
             await this.disableFlatbedAttach();
         }
     }

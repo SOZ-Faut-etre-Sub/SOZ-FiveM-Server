@@ -35,9 +35,9 @@ export class PlayerLoader {
                     await method(data);
                 } catch (e) {
                     this.logger.error(
-                        `Error on player listener in method ${methodName} of provider ${provider.constructor.name}`,
-                        e
+                        `Error on player listener in method ${methodName} of provider ${provider.constructor.name}`
                     );
+                    console.log(e);
                 }
             };
 
