@@ -4,6 +4,7 @@ import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent, ServerEvent } from '../../shared/event';
+import { InventoryCard } from '../../shared/inventory';
 import { CardType } from '../../shared/nui/card';
 import { PlayerService } from './player.service';
 
@@ -29,7 +30,7 @@ export class PlayerIdentityProvider {
             return;
         }
 
-        const cards = [
+        const cards: InventoryCard[] = [
             {
                 type: 'identity',
                 label: "Carte d'identité",
@@ -52,6 +53,24 @@ export class PlayerIdentityProvider {
                 iban: player.charinfo.account,
             },
         ];
+
+        if (player.metadata.casino_vip_premium_subscription_expire_at > Date.now()) {
+            cards.push({
+                type: 'casino_premium',
+                label: 'VIP Premium',
+                description: 'Votre carte VIP Premium',
+                expiration: player.metadata.casino_vip_premium_subscription_expire_at,
+                point: player.metadata.casino_vip_point ?? 0,
+            });
+        } else if (player.metadata.casino_vip_standard_subscription_expire_at > Date.now()) {
+            cards.push({
+                type: 'casino_standard',
+                label: 'VIP Basique',
+                description: 'Votre carte VIP Basique',
+                expiration: player.metadata.casino_vip_standard_subscription_expire_at,
+                point: player.metadata.casino_vip_point ?? 0,
+            });
+        }
 
         TriggerClientEvent(ClientEvent.INVENTORY_OPEN_WALLET, source, cards);
     }

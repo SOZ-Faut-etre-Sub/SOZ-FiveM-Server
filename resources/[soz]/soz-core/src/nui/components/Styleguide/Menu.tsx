@@ -167,7 +167,7 @@ export const MenuContainer: FunctionComponent<MainMenuProps> = ({ children, help
 };
 
 export type MenuTitleProps = {
-    type?: 'menu' | 'boutique';
+    type?: 'menu' | 'boutique' | 'abonnement';
     title: string;
 };
 

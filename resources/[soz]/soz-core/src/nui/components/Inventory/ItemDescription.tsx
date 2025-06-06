@@ -12,7 +12,7 @@ export type ItemDescriptionProps = {
     position: 'left' | 'right';
 };
 
-const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
+export const FORMAT_LOCALIZED: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'numeric',
     year: 'numeric',

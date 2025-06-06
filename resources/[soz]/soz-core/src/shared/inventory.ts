@@ -1074,6 +1074,8 @@ export type InventoryCard = {
     label: string;
     description: string;
     iban?: string;
+    expiration?: number;
+    point?: number;
 };
 
 export type InventoryKey = VehicleKey | ApartmentKey;

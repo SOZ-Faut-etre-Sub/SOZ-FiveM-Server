@@ -21,6 +21,7 @@ import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { BorderBox } from '../Styleguide/BorderBox';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { InventoryDiv } from './Inventory';
+import { FORMAT_LOCALIZED } from './ItemDescription';
 import { getItemSlotClassnames } from './ItemSlot';
 import { useInventorySize, useItemSize } from './size';
 
@@ -100,6 +101,16 @@ export const WalletApp: FunctionComponent = () => {
                                                             [ IBAN : {currentCard.iban.replace(/.{4}/g, '$& ')}]
                                                         </span>
                                                     )}
+                                                    {currentCard.expiration && (
+                                                        <span>
+                                                            [ Expiration :{' '}
+                                                            {new Date(currentCard.expiration).toLocaleDateString(
+                                                                'fr-FR',
+                                                                FORMAT_LOCALIZED
+                                                            )}
+                                                            ]
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="mt-2 flex justify-between align-items-center w-full">
@@ -167,6 +178,14 @@ const CardItem: FunctionComponent<{
     }
 
     if (card.type === 'bank') {
+        imgSrc = getPath(`images/inventory/icon/bank.webp`);
+    }
+
+    if (card.type === 'casino_standard') {
+        imgSrc = getPath(`images/inventory/icon/bank.webp`);
+    }
+
+    if (card.type === 'casino_premium') {
         imgSrc = getPath(`images/inventory/icon/bank.webp`);
     }
 

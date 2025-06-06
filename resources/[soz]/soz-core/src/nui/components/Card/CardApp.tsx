@@ -2,15 +2,17 @@ import { Transition } from '@headlessui/react';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { uuidv4 } from '../../../core/utils';
+import { CardType } from '../../../shared/nui/card';
 import { PlayerData } from '../../../shared/player';
 import { useNuiEvent } from '../../hook/nui';
 import { BankCard } from './BankCard';
+import { CasinoCard } from './CasinoCard';
 import { HealthCard } from './HealthCard';
 import { IdentityCard } from './IdentityCard';
 import { LicenseCard } from './LicenseCard';
 
 type CardData = {
-    type: 'identity' | 'license' | 'health' | 'bank';
+    type: CardType;
     player: PlayerData;
     iban?: string;
 };
@@ -61,6 +63,13 @@ export const CardItem: FunctionComponent<CardItemProps> = ({ card }) => {
                 <BankCard
                     account={card.iban}
                     name={`${card.player.charinfo.firstname} ${card.player.charinfo.lastname}`}
+                />
+            )}
+            {['casino_standard', 'casino_premium'].includes(card.type) && (
+                <CasinoCard
+                    type={card.type === 'casino_standard' ? 'standard' : 'premium'}
+                    expiration={card.player.metadata.casino_vip_standard_subscription_expire_at}
+                    point={card.player.metadata.casino_vip_point ?? 0}
                 />
             )}
         </Transition>

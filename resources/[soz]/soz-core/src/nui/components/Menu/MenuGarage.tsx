@@ -33,6 +33,7 @@ const MenutitleMap: Record<GarageType, string> = {
     [GarageType.Depot]: 'Fourrière',
     [GarageType.House]: 'Garage Personnel',
     [GarageType.Gang]: 'Garage',
+    [GarageType.CasinoVip]: 'Garage',
 };
 
 export const MenuGarage: FunctionComponent<MenuGarageProps> = ({ data }) => {

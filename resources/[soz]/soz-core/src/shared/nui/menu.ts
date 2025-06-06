@@ -160,6 +160,7 @@ export enum MenuType {
     LaserGameManage = 'laser_game_manage',
     LaserGameAdmin = 'laser_game_admin',
     Traveling = 'traveling',
+    CasinoSubscription = 'casino_subscription',
     CasinoSlotMachine = 'casino_slot_machine',
     CasinoPoker = 'casino_poker',
     CasinoBlackjack = 'casino_blackjack',
