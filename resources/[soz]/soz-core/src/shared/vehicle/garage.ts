@@ -12,6 +12,7 @@ export enum GarageType {
     Depot = 'depot',
     House = 'house',
     Gang = 'gang',
+    CasinoVip = 'casino_vip',
 }
 
 export enum GarageCategory {
@@ -48,6 +49,7 @@ export const MaxPlaces: Record<GarageType, number> = {
     job_luxury: 0,
     private: 60,
     public: 0,
+    casino_vip: 60,
 };
 
 export type GarageParkingPlaceData = {

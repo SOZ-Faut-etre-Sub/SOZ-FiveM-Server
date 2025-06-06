@@ -413,6 +413,10 @@ export type PlayerMetadata = PlayerHealthBook & {
     main_residence_last_change?: number;
     noclip: boolean;
     cloth_type?: OutfitType;
+    // casino
+    casino_vip_standard_subscription_expire_at: number | null;
+    casino_vip_premium_subscription_expire_at: number | null;
+    casino_vip_point?: number;
 };
 
 export const isAdmin = (player: PlayerData) => {

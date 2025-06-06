@@ -1072,22 +1072,27 @@ model traveling {
     points String @db.Text
 }
 
-enum casino_table_kind {
+enum casino_object_kind {
     poker
     blackjack
     roulette
+    slotMachine
 }
 
-enum casino_table_type {
+enum casino_object_type {
     base
     highLimit
 }
 
-model casino_tables {
-    id           String            @id @db.VarChar(128)
-    kind         casino_table_kind
-    position     String            @db.Text
-    model        String            @db.VarChar(50)
-    type         casino_table_type @default(base)
-    requireSpawn Boolean           @default(false)
+model casino_objects {
+    id           String             @id @db.VarChar(128)
+    kind         casino_object_kind
+    position     String             @db.Text
+    model        String             @db.VarChar(50)
+    type         casino_object_type @default(base)
+    requireSpawn Boolean            @default(false)
+    houseEdge    Float              @default(100)
+    metadata     String?            @db.Text
+
+    @@index([kind], map: "kind")
 }

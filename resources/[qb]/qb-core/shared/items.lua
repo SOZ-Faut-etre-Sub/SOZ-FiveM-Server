@@ -24500,4 +24500,14 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["description"] = "Des jetons de casino, utilisés pour jouer à divers jeux de hasard.",
     },
+    ["casino_lucky_wheel_ticket"] = {
+        ["name"] = "casino_lucky_wheel_ticket",
+        ["label"] = 'Ticket "Lucky Wheel"',
+        ["weight"] = 0,
+        ["useable"] = false,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Tourne la roue afin de jouer avec ton destin pour changer de vie !",
+    },
 }
