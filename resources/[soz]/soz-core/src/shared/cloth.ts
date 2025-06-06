@@ -114,7 +114,7 @@ export const WardRobeElementConfigs: Record<WardRobeElements, WardRobeElementCon
         label: 'Accessoire',
         componentId: [Component.Accessories],
     },
-    [WardRobeElements.Belt]: { label: 'Ceinture', componentId: [Component.Undershirt] },
+    [WardRobeElements.Belt]: { label: 'Ceinture/Chemise', componentId: [Component.Undershirt] },
     [WardRobeElements.Bottom]: { label: 'Bas', componentId: [Component.Legs] },
     [WardRobeElements.Shoes]: { label: 'Chaussures', componentId: [Component.Shoes] },
 };

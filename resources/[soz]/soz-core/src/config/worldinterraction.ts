@@ -180,7 +180,7 @@ export const EntityConfig: Record<number, Record<string, Vector4>> = {
         [0]: [0.0, 0.0, 0.4, -90],
     },
     [joaat('cube_mppd_chair_02')]: {
-        [0]: [0.0, 0.0, 0.5, -90],
+        [0]: [0.0, 0.0, 0.06, -90],
     },
     [joaat('cube_mppd_chair_03')]: {
         [0]: [0.0, 0.0, 0.8, -90],
