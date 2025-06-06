@@ -9092,4 +9092,5 @@ export const GyroOffset = {
     [joaat('elegy')]: 0.04,
     [joaat('panto')]: -0.02,
     [joaat('youga')]: 0.0,
+    [joaat('habanero')]: -0.05,
 };
