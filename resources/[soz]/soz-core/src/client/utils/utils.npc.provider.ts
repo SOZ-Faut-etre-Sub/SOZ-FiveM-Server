@@ -315,6 +315,7 @@ export class UtilsNPCProvider {
 
         //Mirror park LSPD
         AddScenarioBlockingArea(1106.65, -505.32, 63.56, 1204.11, -413.35, 67.79, false, true, true, true);
+        AddScenarioBlockingArea(1052.66, -501.14, 60.37, 1064.44, -491.58, 67.16, false, true, true, true);
 
         SetPedPopulationBudget(3.0);
         SetVehiclePopulationBudget(3.0);

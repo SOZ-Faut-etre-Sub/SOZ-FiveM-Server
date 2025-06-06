@@ -96,31 +96,6 @@ export class PoliceProvider {
             invincible: true,
             blockevents: true,
         });
-        await this.pedFactory.createPedOnGrid({
-            model: 's_f_y_cop_01',
-            coords: {
-                x: 608.67,
-                y: -15.94,
-                z: 76.63 - 1,
-                w: 347.54,
-            },
-            freeze: true,
-            invincible: true,
-            blockevents: true,
-        });
-
-        await this.pedFactory.createPedOnGrid({
-            model: 's_f_y_cop_01',
-            coords: {
-                x: 459.35,
-                y: -979.92,
-                z: 30.69 - 1,
-                w: 88.41,
-            },
-            freeze: true,
-            invincible: true,
-            blockevents: true,
-        });
 
         await this.pedFactory.createPedOnGrid({
             model: 's_f_y_cop_01',
