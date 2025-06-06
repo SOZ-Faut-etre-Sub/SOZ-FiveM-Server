@@ -3,16 +3,16 @@ import { Vector3 } from './polyzone/vector';
 export const CameraOffsets: Record<number, Vector3> = {
     [GetHashKey('ch_prop_ch_cctv_cam_01a')]: [0, -2, 0],
     [GetHashKey('ch_prop_ch_cctv_cam_02a')]: [0, -2, 0],
-    [GetHashKey('prop_cctv_cam_01a')]: [0, -2, 0],
-    [GetHashKey('prop_cctv_cam_01b')]: [0, -2, 0],
+    [GetHashKey('prop_cctv_cam_01a')]: [0, -2, -0.5],
+    [GetHashKey('prop_cctv_cam_01b')]: [0, -2, -0.5],
     [GetHashKey('prop_cctv_cam_02a')]: [0, -2, 0],
     [GetHashKey('prop_cctv_cam_03a')]: [0, -2, 0],
     [GetHashKey('prop_cctv_cam_04a')]: [0, -2, 0],
     [GetHashKey('prop_cctv_cam_04b')]: [0, -2, 0],
     [GetHashKey('prop_cctv_cam_04c')]: [0, -2, 0],
-    [GetHashKey('prop_cctv_cam_05a')]: [0, -2, 0],
+    [GetHashKey('prop_cctv_cam_05a')]: [0, -2, -0.5],
     [GetHashKey('prop_cctv_cam_06a')]: [0, -2, -0.5],
-    [GetHashKey('prop_cctv_cam_07a')]: [0, 0, -0.5],
+    [GetHashKey('prop_cctv_cam_07a')]: [0, -0.5, -0.5],
     [GetHashKey('prop_cctv_pole_01a')]: [0, 0, 6],
     [GetHashKey('prop_cctv_pole_02')]: [0, 0, 6],
     [GetHashKey('prop_cctv_pole_03')]: [0, 0, 5],
@@ -52,6 +52,7 @@ export type CameraDef = {
 };
 
 export const CameraLocations: CameraDef[] = [
+    /* HUMLAB
     {
         position: [3597.313232421875, 3699.76318359375, 39.42851257324219],
         heading: 239.99996948242188,
@@ -92,6 +93,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1224796925,
         street2: 0,
     },
+    */
     {
         position: [2988.91162109375, 3477.06298828125, 75.4529113769531],
         heading: 90,
@@ -1222,6 +1224,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    /* MPPD
     {
         position: [1155.5404052734375, -436.0383605957031, 74.57154846191406],
         heading: 90.00008392333984,
@@ -1230,6 +1233,7 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
+    */
     {
         position: [1156.0689697265625, -795.742919921875, 61.22007751464844],
         heading: 90,
@@ -1363,7 +1367,6 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 128684945,
     },
-    */
     {
         position: [1149.745361328125, -434.64642333984375, 74.57154846191406],
         heading: 90.00008392333984,
@@ -1372,7 +1375,6 @@ export const CameraLocations: CameraDef[] = [
         street: 530762033,
         street2: 0,
     },
-    /* MPPD
     {
         position: [1150.0623779296875, -463.6643981933594, 67.58623504638672],
         heading: 51.64432144165039,
@@ -4446,6 +4448,7 @@ export const CameraLocations: CameraDef[] = [
         street: -987282051,
         street2: 0,
     },
+    /* FBI
     {
         position: [139.56137084960938, -764.2161865234375, 47.3774528503418],
         heading: 249.99996948242188,
@@ -4454,6 +4457,7 @@ export const CameraLocations: CameraDef[] = [
         street: -221825258,
         street2: 0,
     },
+    */
     {
         position: [138.26400756835938, -1702.9228515625, 31.38898277282715],
         heading: 0.000005122641596244648,
@@ -4462,6 +4466,7 @@ export const CameraLocations: CameraDef[] = [
         street: 1458733832,
         street2: 0,
     },
+    /*
     {
         position: [136.74229431152344, -763.1901245117188, 47.3774528503418],
         heading: 249.99996948242188,
@@ -4470,6 +4475,7 @@ export const CameraLocations: CameraDef[] = [
         street: -221825258,
         street2: 0,
     },
+    */
     {
         position: [129.36744689941406, -123.42054748535156, 56.72528076171875],
         heading: 160.00001525878906,
@@ -5174,6 +5180,7 @@ export const CameraLocations: CameraDef[] = [
         street: -111553938,
         street2: 0,
     },
+    /* Villa Fabrizzio
     {
         position: [-41.92760467529297, 834.173095703125, 238.46775817871094],
         heading: 339.9554748535156,
@@ -5182,6 +5189,7 @@ export const CameraLocations: CameraDef[] = [
         street: -1755702444,
         street2: 0,
     },
+    */
     {
         position: [-43.040382385253906, -1755.2032470703125, 31.95145606994629],
         heading: 274.9865417480469,
@@ -5230,6 +5238,7 @@ export const CameraLocations: CameraDef[] = [
         street: -119993883,
         street2: 0,
     },
+    /* Villa Fabrizzio
     {
         position: [-61.319786071777344, 853.2578125, 238.46775817871094],
         heading: 339.9554748535156,
@@ -5238,6 +5247,7 @@ export const CameraLocations: CameraDef[] = [
         street: -1755702444,
         street2: 0,
     },
+    */
     {
         position: [-61.54964828491211, 82.36016845703125, 74.3450927734375],
         heading: 248.5280303955078,
@@ -5374,6 +5384,7 @@ export const CameraLocations: CameraDef[] = [
         street: -267870621,
         street2: 0,
     },
+    /* Villa Fabrizzio
     {
         position: [-86.09526824951172, 837.683837890625, 238.47129821777344],
         heading: 209.9555206298828,
@@ -5390,6 +5401,7 @@ export const CameraLocations: CameraDef[] = [
         street: -1755702444,
         street2: 0,
     },
+    */
     {
         position: [-91.98802185058594, 6238.15966796875, 36.05207061767578],
         heading: 75.89998626708984,
@@ -5422,6 +5434,7 @@ export const CameraLocations: CameraDef[] = [
         street: -409785781,
         street2: 0,
     },
+    /* Villa Fabrizzio
     {
         position: [-101.39962005615234, 836.082763671875, 238.77655029296875],
         heading: 154.95545959472656,
@@ -5430,6 +5443,7 @@ export const CameraLocations: CameraDef[] = [
         street: -1755702444,
         street2: 0,
     },
+    */
     {
         position: [-103.24826049804688, 6467.3916015625, 33.74071502685547],
         heading: 200.00013732910156,
