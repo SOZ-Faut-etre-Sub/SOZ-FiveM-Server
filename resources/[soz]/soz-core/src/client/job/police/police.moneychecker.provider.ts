@@ -14,26 +14,24 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 const moneycheckerInfos = [
-    // Vinewood
     {
         job: JobType.LSPD,
-        position: [586.82, 13.41, 76.63] as Vector3,
-        length: 2.4,
-        width: 0.8,
-        heading: 350,
-        minZ: 76.63,
-        maxZ: 77.63,
+        position: [1165.92, -466.76, 60.28] as Vector3,
+        length: 0.6,
+        width: 0.6,
+        heading: 166.64,
+        minZ: 60.08,
+        maxZ: 60.68,
     },
 
-    // Mission Row
     {
-        job: JobType.LSPD,
-        position: [460.49, -989.34, 24.95] as Vector3,
-        length: 2.4,
-        width: 3.4,
-        heading: 269.7,
-        minZ: 23.95,
-        maxZ: 25.95,
+        job: JobType.BCSO,
+        position: [1165.92, -466.76, 60.28] as Vector3,
+        length: 0.6,
+        width: 0.6,
+        heading: 166.64,
+        minZ: 60.08,
+        maxZ: 60.68,
     },
 
     {
@@ -66,9 +64,10 @@ export class PoliceMoneyCheckerProvider {
 
     @Once(OnceStep.Start)
     public async onStart() {
+        let i = 0;
         for (const moneycheckerInfo of moneycheckerInfos) {
             this.targetFactory.createForBoxZone(
-                `${moneycheckerInfo.job}:moneychecker`,
+                `police:moneychecker_` + i++,
                 {
                     center: moneycheckerInfo.position,
                     length: moneycheckerInfo.length,
