@@ -75,12 +75,15 @@ export class SeatAnimationProvider {
         const heading = GetEntityHeading(ped);
         const seatPosition = this.calculateSeatPosition(entity, position);
 
-        await this.animationService.playScenario({
-            name: scenario,
-            position: seatPosition,
-            isSittingScenario,
-            shouldTeleport,
-        });
+        await this.animationService.playScenario(
+            {
+                name: scenario,
+                position: seatPosition,
+                isSittingScenario,
+                shouldTeleport,
+            },
+            { useFreeCam: true }
+        );
 
         if (shouldTeleport) {
             SetPedCoordsKeepVehicle(ped, position[0], position[1], position[2]);
@@ -95,37 +98,40 @@ export class SeatAnimationProvider {
         const seatPosition = this.calculateSeatPosition(entity, position);
         const seatPositionEnter = GetOffsetFromEntityInWorldCoords(entity, 0, -0.5, 1.0);
 
-        await this.animationService.playAnimation({
-            enter: {
-                coords: [seatPositionEnter[0], seatPositionEnter[1], seatPositionEnter[2], seatPosition[3]],
-                dictionary: 'amb@prop_human_seat_chair@female@legs_crossed@enter',
-                name: 'enter_fwd',
-                options: {
-                    freezeLastFrame: true,
-                    ignoreGravity: true,
+        await this.animationService.playAnimation(
+            {
+                enter: {
+                    coords: [seatPositionEnter[0], seatPositionEnter[1], seatPositionEnter[2], seatPosition[3]],
+                    dictionary: 'amb@prop_human_seat_chair@female@legs_crossed@enter',
+                    name: 'enter_fwd',
+                    options: {
+                        freezeLastFrame: true,
+                        ignoreGravity: true,
+                    },
+                    duration: 2500,
                 },
-                duration: 2500,
-            },
-            base: {
-                coords: [seatPosition[0], seatPosition[1], seatPosition[2], seatPosition[3]],
-                dictionary: 'amb@prop_human_seat_chair@female@legs_crossed@base',
-                name: 'base',
-                options: {
-                    repeat: true,
-                    ignoreGravity: true,
+                base: {
+                    coords: [seatPosition[0], seatPosition[1], seatPosition[2], seatPosition[3]],
+                    dictionary: 'amb@prop_human_seat_chair@female@legs_crossed@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                        ignoreGravity: true,
+                    },
+                },
+                exit: {
+                    coords: [seatPosition[0], seatPosition[1], seatPosition[2], seatPosition[3]],
+                    dictionary: 'amb@prop_human_seat_chair@female@legs_crossed@exit',
+                    name: 'exit_fwd',
+                    options: {
+                        ignoreGravity: true,
+                        turnOffCollision: true,
+                    },
+                    duration: 2500,
                 },
             },
-            exit: {
-                coords: [seatPosition[0], seatPosition[1], seatPosition[2], seatPosition[3]],
-                dictionary: 'amb@prop_human_seat_chair@female@legs_crossed@exit',
-                name: 'exit_fwd',
-                options: {
-                    ignoreGravity: true,
-                    turnOffCollision: true,
-                },
-                duration: 2500,
-            },
-        });
+            { useFreeCam: true }
+        );
 
         if (shouldTeleport) {
             SetPedCoordsKeepVehicle(ped, position[0], position[1], position[2]);

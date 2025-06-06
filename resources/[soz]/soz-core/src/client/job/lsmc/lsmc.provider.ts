@@ -297,17 +297,20 @@ export class LSMCProvider {
         SetEntityHeading(player, heading);
         SetPedCoordsKeepVehicle(player, coords[0], coords[1], coords[2] + 0.1);
 
-        this.animationService.playAnimation({
-            base: {
-                dictionary: 'anim@gangops@morgue@table@',
-                name: 'body_search',
-                blendInSpeed: 8.0,
-                blendOutSpeed: 2.0,
-                options: {
-                    repeat: true,
+        this.animationService.playAnimation(
+            {
+                base: {
+                    dictionary: 'anim@gangops@morgue@table@',
+                    name: 'body_search',
+                    blendInSpeed: 8.0,
+                    blendOutSpeed: 2.0,
+                    options: {
+                        repeat: true,
+                    },
                 },
             },
-        });
+            { useFreeCam: true }
+        );
     }
 
     @OnEvent(ClientEvent.LSMC_VEH_PUT_ON)

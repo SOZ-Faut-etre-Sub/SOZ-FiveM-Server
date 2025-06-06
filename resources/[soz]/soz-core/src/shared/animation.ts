@@ -133,6 +133,7 @@ export type PlayOptions = {
     clearTasksBefore: boolean;
     clearTasksAfter: boolean;
     cancellable: boolean;
+    useFreeCam?: boolean;
 };
 
 export type AnimationOptions = {
