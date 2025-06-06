@@ -11,7 +11,7 @@
 9  hiver Stonks
 10 intervention LSPD/BCSO
 11 anti-emeute LSPD/BCSO
-12 sport LSPD/BCSO
+12 sport LSPD/BCSO/SASP
 13 M Bomb | F Swimsuit LSMC
 14 M Swat 1 | F Bomb
 15 M Swat 2 | F Swat 1
@@ -153,6 +153,8 @@
 13 M ??   | F Swat
 14 M new FDO | F cérémonie, lspd, lspd bande jaune, bcso, bleu marine, bleu
 15 M N/A | F new FDO
+16 M N/A | F Jupe longue BCSO
+16 M N/A | F Jupe courte BCSO
 
 
     chapeau
@@ -169,7 +171,7 @@
 10 SWAT
 11 SWAT
 12 SWAT
-13 chapeau BCSO Bug
+13 chapeau BCSO Cérémonie
 14 casque BCSO
 15 casque pilote new BCSO/LSPD
 

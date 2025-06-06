@@ -176,6 +176,26 @@ export const EntityConfig: Record<number, Record<string, Vector4>> = {
         [1]: [0.0, 0.0, 0.45, 0],
         [2]: [-0.8, 0.0, 0.45, 0],
     },
+    [joaat('cube_mppd_chair_01_top')]: {
+        [0]: [0.0, 0.0, 0.4, -90],
+    },
+    [joaat('cube_mppd_chair_02')]: {
+        [0]: [0.0, 0.0, 0.5, -90],
+    },
+    [joaat('cube_mppd_chair_03')]: {
+        [0]: [0.0, 0.0, 0.8, -90],
+    },
+    [joaat('cube_mppd_chair_04')]: {
+        [0]: [0.0, 0.0, 0.53, 0.0],
+    },
+    [joaat('cube_mppd_sofa_02b')]: {
+        [0]: [0.0, 0.0, 0.53, 0.0],
+    },
+    [joaat('cube_mppd_sofa_02a')]: {
+        [0]: [-0.8, 0.0, 0.53, 0.0],
+        [1]: [0.0, 0.0, 0.53, 0.0],
+        [2]: [0.8, 0.0, 0.53, 0.0],
+    },
 };
 
 export const LoungerTargetList = [-1498352975];
