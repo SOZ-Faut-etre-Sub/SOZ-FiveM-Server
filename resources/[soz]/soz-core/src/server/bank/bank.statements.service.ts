@@ -24,7 +24,7 @@ export class BankStatementsService {
     @Rpc(RpcServerEvent.BANK_GET_STATEMENTS)
     public async getStatementsForPlayer(source: number) {
         const player = this.playerService.getPlayer(source);
-        if (!player) return;
+        if (!player) return [];
 
         return this.getStatementsForAccount(player.charinfo.account);
     }
