@@ -15,18 +15,59 @@ export class OrbitalCameraProvider {
     private rotation: Vector3;
     private currentRadius: number;
     private maxRadius: number;
+    private focusOffset: Vector3 = [0, 0, 0];
 
-    public createCamera(entity: number, offset: Vector3 = [0, 0, 0.5], maxRadius: number = 20) {
+    private handleFocusOffset() {
+        const speed = 0.02;
+        let forward = 0;
+        let right = 0;
+        let up = 0;
+
+        if (IsDisabledControlPressed(0, Control.MoveUpOnly)) forward -= speed;
+        if (IsDisabledControlPressed(0, Control.MoveDownOnly)) forward += speed;
+        if (IsDisabledControlPressed(0, Control.MoveLeftOnly)) right -= speed;
+        if (IsDisabledControlPressed(0, Control.MoveRightOnly)) right += speed;
+        if (IsDisabledControlPressed(0, Control.Sprint)) up += speed;
+        if (IsDisabledControlPressed(0, Control.FrontendRs)) up -= speed;
+
+        if (forward !== 0 || right !== 0 || up !== 0) {
+            const yaw = (this.rotation[2] * Math.PI) / 180;
+            const pitch = (this.rotation[1] * Math.PI) / 180;
+
+            const forwardVec: Vector3 = [
+                Math.cos(yaw) * Math.cos(pitch),
+                Math.sin(yaw) * Math.cos(pitch),
+                Math.sin(pitch),
+            ];
+            const rightVec: Vector3 = [-Math.sin(yaw), Math.cos(yaw), 0];
+            const upVec: Vector3 = [0, 0, 1];
+
+            for (let i = 0; i < 3; i++) {
+                this.focusOffset[i] += forward * forwardVec[i] + right * rightVec[i] + up * upVec[i];
+            }
+
+            const length = Math.sqrt(this.focusOffset[0] ** 2 + this.focusOffset[1] ** 2 + this.focusOffset[2] ** 2);
+            if (length > 1) {
+                this.focusOffset = [
+                    this.focusOffset[0] / length,
+                    this.focusOffset[1] / length,
+                    this.focusOffset[2] / length,
+                ] as Vector3;
+            }
+        }
+    }
+
+    public createCamera(entity: number, offset: Vector3 = [0, 0, 0.5], maxRadius: number = 20, initialRadius?: number) {
+        initialRadius = initialRadius ?? 5;
         this.entity = entity;
         this.offset = offset;
         this.maxRadius = maxRadius;
-        this.currentRadius = 5;
+        this.currentRadius = initialRadius ?? maxRadius;
 
         const rotation = GetGameplayCamRot(2);
         this.rotation = [0, -rotation[0], rotation[2] - 90];
 
         ClearFocus();
-
         const pos = GetEntityCoords(this.entity);
         this.focusPoint = [pos[0] + this.offset[0], pos[1] + this.offset[1], pos[2] + this.offset[2]];
         this.camera = CreateCamWithParams(
@@ -55,6 +96,7 @@ export class OrbitalCameraProvider {
         DestroyAllCams(true);
         SetFocusEntity(PlayerPedId());
 
+        this.focusOffset = [0, 0, 0];
         this.camera = null;
         this.entity = null;
         this.offset = null;
@@ -78,6 +120,7 @@ export class OrbitalCameraProvider {
 
         this.handleZoom();
         this.handleRotation();
+        this.handleFocusOffset();
         this.handleFocusPoint();
 
         const cosY = Math.cos((this.rotation[1] * Math.PI) / 180);
@@ -96,7 +139,12 @@ export class OrbitalCameraProvider {
 
     private handleFocusPoint() {
         const pos = GetEntityCoords(this.entity);
-        this.focusPoint = [pos[0] + this.offset[0], pos[1] + this.offset[1], pos[2] + this.offset[2]];
+
+        this.focusPoint = [
+            pos[0] + this.offset[0] + this.focusOffset[0],
+            pos[1] + this.offset[1] + this.focusOffset[1],
+            pos[2] + this.offset[2] + this.focusOffset[2],
+        ];
     }
 
     private handleZoom() {

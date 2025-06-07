@@ -13,6 +13,7 @@ import {
 } from '../../shared/animation';
 import { transformForwardPoint2D, Vector2, Vector3 } from '../../shared/polyzone/vector';
 import { WeaponName } from '../../shared/weapons/weapon';
+import { OrbitalCameraProvider } from '../camera/orbital.camera.provider';
 import { AttachedObjectService } from '../object/attached.object.service';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
@@ -23,6 +24,7 @@ const defaultPlayOptions: PlayOptions = {
     clearTasksBefore: false,
     clearTasksAfter: false,
     cancellable: true,
+    useFreeCam: false,
 };
 
 class AnimationCanceller {
@@ -207,6 +209,9 @@ export class AnimationFactory {
 
     @Inject(AttachedObjectService)
     private attachedObjectService: AttachedObjectService;
+
+    @Inject(OrbitalCameraProvider)
+    private orbitalCameraProvider: OrbitalCameraProvider;
 
     public createAnimation(animation: Animation, options: Partial<PlayOptions> = {}): AnimationRunner {
         return this.createFromCallback(async (animationCanceller, ped) => {
@@ -473,6 +478,13 @@ export class AnimationFactory {
             playOptions.ped = PlayerPedId();
         }
 
+        let freeCamEntity: number = null;
+
+        if (playOptions.useFreeCam) {
+            freeCamEntity = playOptions.ped;
+            this.orbitalCameraProvider.createCamera(freeCamEntity, [0, 0, 0.5], 1, 2);
+        }
+
         if (playOptions.clearTasksBefore) {
             ClearPedTasksImmediately(playOptions.ped);
             ClearPedSecondaryTask(playOptions.ped);
@@ -489,6 +501,10 @@ export class AnimationFactory {
                 if (playOptions.clearTasksAfter) {
                     ClearPedTasks(playOptions.ped);
                     ClearPedSecondaryTask(playOptions.ped);
+                }
+
+                if (playOptions.useFreeCam) {
+                    this.orbitalCameraProvider.deleteCamera();
                 }
             }),
             animationCanceller,
