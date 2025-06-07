@@ -6,7 +6,7 @@ export const CameraOffsets: Record<number, Vector3> = {
     [GetHashKey('prop_cctv_cam_01a')]: [0, -2, -0.5],
     [GetHashKey('prop_cctv_cam_01b')]: [0, -2, -0.5],
     [GetHashKey('prop_cctv_cam_02a')]: [0, -2, 0],
-    [GetHashKey('prop_cctv_cam_03a')]: [0, -2, 0],
+    [GetHashKey('prop_cctv_cam_03a')]: [-2, -2, 0],
     [GetHashKey('prop_cctv_cam_04a')]: [0, -2, 0],
     [GetHashKey('prop_cctv_cam_04b')]: [0, -2, 0],
     [GetHashKey('prop_cctv_cam_04c')]: [0, -2, 0],
