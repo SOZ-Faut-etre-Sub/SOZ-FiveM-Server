@@ -92,6 +92,7 @@ export class PoliceCameraProvider {
         }
 
         DisableAllControlActions(0);
+        EnableControlAction(0, Control.PushToTalk, true);
     }
 
     private handleZoom(cam: number) {
