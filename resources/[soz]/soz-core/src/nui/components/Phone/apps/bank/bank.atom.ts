@@ -1,5 +1,5 @@
 import { atom, useAtomValue } from 'jotai';
-import { useSetAtom } from 'jotai/index';
+import { useSetAtom } from 'jotai';
 
 import { BankContact, BankStatement, Invoice } from '../../../../../shared/bank';
 import { useNuiEvent } from '../../../../hook/nui';
@@ -10,9 +10,11 @@ const balanceAtom = atom<number>(0);
 
 const statementsAtom = atom<BankStatement[]>([]);
 const homeStatementAtom = atom<BankStatement[]>(get => {
-    return get(statementsAtom)
-        .sort((a, b) => b.date - a.date)
-        .slice(0, 5);
+    return (
+        get(statementsAtom)
+            ?.sort((a, b) => b.date - a.date)
+            ?.slice(0, 5) ?? []
+    );
 });
 
 const invoicesAtom = atom<Invoice[]>([]);
