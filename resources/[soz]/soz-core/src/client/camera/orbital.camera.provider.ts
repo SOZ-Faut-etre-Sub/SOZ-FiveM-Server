@@ -16,6 +16,7 @@ export class OrbitalCameraProvider {
     private currentRadius: number;
     private maxRadius: number;
     private focusOffset: Vector3 = [0, 0, 0];
+    private freeMode: boolean = false;
 
     private handleFocusOffset() {
         const speed = 0.02;
@@ -57,12 +58,19 @@ export class OrbitalCameraProvider {
         }
     }
 
-    public createCamera(entity: number, offset: Vector3 = [0, 0, 0.5], maxRadius: number = 20, initialRadius?: number) {
+    public createCamera(
+        entity: number,
+        offset: Vector3 = [0, 0, 0.5],
+        maxRadius: number = 20,
+        initialRadius?: number,
+        freeMode: boolean = false
+    ) {
         initialRadius = initialRadius ?? 5;
         this.entity = entity;
         this.offset = offset;
         this.maxRadius = maxRadius;
         this.currentRadius = initialRadius ?? maxRadius;
+        this.freeMode = freeMode;
 
         const rotation = GetGameplayCamRot(2);
         this.rotation = [0, -rotation[0], rotation[2] - 90];
@@ -104,15 +112,18 @@ export class OrbitalCameraProvider {
         this.rotation = null;
         this.currentRadius = null;
         this.maxRadius = null;
+        this.freeMode = false;
     }
 
     @Tick(TickInterval.EVERY_FRAME)
     public async handleCamera() {
-        if (!this.camera || !this.entity) {
+        if (!this.camera || !this.entity || (IsNuiFocused() && this.freeMode)) {
             return;
         }
 
-        DisableAllControlActions(0);
+        if (!this.freeMode) {
+            DisableAllControlActions(0);
+        }
 
         if (!IsCamActive(this.camera)) {
             return;

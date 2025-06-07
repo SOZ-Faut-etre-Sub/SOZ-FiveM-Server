@@ -482,7 +482,7 @@ export class AnimationFactory {
 
         if (playOptions.useFreeCam) {
             freeCamEntity = playOptions.ped;
-            this.orbitalCameraProvider.createCamera(freeCamEntity, [0, 0, 0.5], 1, 2);
+            this.orbitalCameraProvider.createCamera(freeCamEntity, [0, 0, 0.5], 1, 2, true);
         }
 
         if (playOptions.clearTasksBefore) {
