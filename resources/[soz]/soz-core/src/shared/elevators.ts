@@ -392,6 +392,7 @@ export type ElevatorFloor = {
     downTo: ElevatorFloorName[];
     spawnPoint: Vector4;
     job?: Partial<Record<JobType, number>>;
+    requireCasinoVip?: boolean;
 };
 
 export enum ElevatorFloorName {
@@ -419,6 +420,8 @@ export enum ElevatorFloorName {
     younews2,
     baun0,
     baun1,
+    casino0,
+    casino1,
 }
 
 export const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
@@ -618,5 +621,22 @@ export const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
         upTo: [],
         downTo: [ElevatorFloorName.baun0],
         spawnPoint: [-1379.1, -598.67, 43.8, 109.24],
+    },
+    // Casino
+    [ElevatorFloorName.casino0]: {
+        label: 'Garage',
+        button: new BoxZone([967.61, 7.34, 81.16], 0.4, 1.8, { heading: 58.12, minZ: 80.16, maxZ: 82.56 }),
+        upTo: [ElevatorFloorName.casino1],
+        downTo: [],
+        spawnPoint: [966.49, 7.88, 81.16, 50.74],
+        requireCasinoVip: true,
+    },
+    [ElevatorFloorName.casino1]: {
+        label: 'Rooftop',
+        button: new BoxZone([965.18, 58.26, 112.55], 0.4, 2.2, { heading: 57.79, minZ: 111.55, maxZ: 114.15 }),
+        upTo: [],
+        downTo: [ElevatorFloorName.casino0],
+        spawnPoint: [964.58, 58.81, 112.55, 52.4],
+        requireCasinoVip: true,
     },
 };
