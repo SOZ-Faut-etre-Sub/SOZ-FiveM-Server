@@ -1,6 +1,7 @@
 import { MenuBlackjack } from '@private/nui/casino/MenuBlackjack';
 import { MenuCasinoSubscription } from '@private/nui/casino/MenuCasinoSubscription';
 import { MenuInsideTrack } from '@private/nui/casino/MenuInsideTrack';
+import { MenuLuckyWheel } from '@private/nui/casino/MenuLuckyWheel';
 import { MenuPoker } from '@private/nui/casino/MenuPoker';
 import { MenuRoulette } from '@private/nui/casino/MenuRoulette';
 import { MenuSlotMachine } from '@private/nui/casino/MenuSlotMachine';
@@ -358,6 +359,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.CasinoBlackjack}/*`} element={<MenuBlackjack data={menuData} />} />
             <Route path={`/${MenuType.CasinoRoulette}/*`} element={<MenuRoulette data={menuData} />} />
             <Route path={`/${MenuType.CasinoInsideTrack}/*`} element={<MenuInsideTrack />} />
+            <Route path={`/${MenuType.CasinoLuckyWheel}/*`} element={<MenuLuckyWheel />} />
         </Routes>
     );
 };

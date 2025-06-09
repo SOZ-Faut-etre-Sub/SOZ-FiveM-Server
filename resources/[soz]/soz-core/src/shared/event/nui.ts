@@ -760,6 +760,7 @@ export enum NuiEvent {
     AdminCasinoLuckyWheelResetVehicle = 'soz-core:nui:admin-casino-lucky-wheel:reset-vehicle',
     CasinoVipSubscribe = 'soz-core:nui:casino-vip-subscribe',
     CasinoVipReward = 'soz-core:nui:casino-vip-reward',
+    CasinoLuckyWheelSpin = 'soz-core:nui:casino-lucky-wheel:spin',
     CasinoSlotMachineBetChange = 'soz-core:nui:casino:slot-machine:bet-change',
     CasinoSlotMachineSpin = 'soz-core:nui:casino:slot-machine:spin',
     CasinoPokerBet = 'soz-core:nui:casino:poker:bet',
