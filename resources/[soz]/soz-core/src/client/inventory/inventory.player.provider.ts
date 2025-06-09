@@ -1,3 +1,4 @@
+import { CasinoService } from '@private/client/casino/casino.service';
 import { MineSweeperRobotProvider } from '@private/client/vehicle/minesweeper.provider';
 
 import { Command } from '../../core/decorators/command';
@@ -39,6 +40,9 @@ export class InventoryPlayerProvider {
     @Inject(MineSweeperRobotProvider)
     private readonly mineSweeperRobotProvider: MineSweeperRobotProvider;
 
+    @Inject(CasinoService)
+    private readonly casinoService: CasinoService;
+
     private isOpen = false;
 
     @OnNuiEvent(NuiEvent.InventoryOpenPlayerInventory)
@@ -74,6 +78,10 @@ export class InventoryPlayerProvider {
             }
 
             if (this.mineSweeperRobotProvider.isUsingRobot()) {
+                return;
+            }
+
+            if (this.casinoService.usingMinigame()) {
                 return;
             }
 
