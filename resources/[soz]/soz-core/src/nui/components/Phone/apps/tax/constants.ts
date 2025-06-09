@@ -56,9 +56,8 @@ export const TaxesDescription: Record<TaxType, TaxDescription> = {
         whoModifies: 'Le gouvernement',
     },
     [TaxType.CASINO]: {
-        title: 'Taxe casino',
-        description:
-            "La taxe casino est une imposition qui s'applique à l'achat de jetons et sur les gains au casino Diamond.",
+        title: "Taxe jeux d'argent",
+        description: "La taxe sur les jeux d'argent est une imposition qui s'applique à l'achat de jetons au casino",
         whoModifies: 'Le gouvernement',
     },
 };
