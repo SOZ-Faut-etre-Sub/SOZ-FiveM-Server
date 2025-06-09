@@ -423,26 +423,22 @@ export class WeaponProvider {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
         const weapon = this.weapon.getCurrentWeapon()?.name || '';
-        const weaponDrawable = !!this.weapon.getWeaponConfig(weapon)?.drawPosition;
+        const weaponDrawable = !!this.weapon.getWeaponConfig(weapon)?.drawPositionInfo;
 
         if (this.phoneService.isPhoneVisible()) {
-            await this.weapon.clear();
-            await this.weaponDrawingProvider.refreshDrawWeapons();
+            await this.clearAndRefreshWeapon();
         }
 
         if (this.voipRadioProvider.isRadioOpen()) {
-            await this.weapon.clear();
-            await this.weaponDrawingProvider.refreshDrawWeapons();
+            await this.clearAndRefreshWeapon();
         }
 
         if (IsEntityPlayingAnim(ped, 'missfbi4prepp1', '_idle_garbage_man', 3)) {
-            await this.weapon.clear();
-            await this.weaponDrawingProvider.refreshDrawWeapons();
+            await this.clearAndRefreshWeapon();
         }
 
         if (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped && weaponDrawable) {
-            await this.weapon.clear();
-            await this.weaponDrawingProvider.refreshDrawWeapons();
+            await this.clearAndRefreshWeapon();
         }
 
         if (this.weapon.isInAnimation()) {
@@ -458,10 +454,19 @@ export class WeaponProvider {
                 weaponHash = h;
             }
             if (weaponHash !== hash) {
-                await this.weapon.clear();
-                await this.weaponDrawingProvider.refreshDrawWeapons();
+                await this.clearAndRefreshWeapon();
             }
         }
+    }
+
+    private async clearAndRefreshWeapon() {
+        await this.weapon.clear();
+        await this.cleanAndRefreshWeapon();
+    }
+
+    @OnEvent(ClientEvent.WEAPON_REFRESH)
+    public async cleanAndRefreshWeapon() {
+        await this.weaponDrawingProvider.refreshDrawWeapons();
     }
 
     @OnGameEvent(GameEvent.CEventNetworkEntityDamage)

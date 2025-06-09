@@ -1,12 +1,21 @@
 import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
+import { PoliceSwatProvider } from '@private/client/police/police.swat.provider';
+import { POLICE_SHIELD_OBJECT } from '@private/shared/police';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 import { InventoryItem } from '@public/shared/inventory';
 
 import { ClientEvent } from '../../shared/event';
-import { WeaponConfig, WeaponName, Weapons } from '../../shared/weapons/weapon';
+import {
+    DrawPositions,
+    DrawPositionsWithShield,
+    WeaponConfig,
+    WeaponName,
+    Weapons,
+    WeaponsType,
+} from '../../shared/weapons/weapon';
 import { AttachedObjectService } from '../object/attached.object.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { WeaponService } from './weapon.service';
@@ -15,7 +24,7 @@ import { WeaponService } from './weapon.service';
 export class WeaponDrawingProvider {
     private shouldDrawWeapon = true;
     private shouldAdminDrawWeapon = true;
-    private weaponsToDraw: WeaponName[] = [];
+    private weaponsToDraw: WeaponsType[] = [];
     private weaponAttached: Record<string, number> = {};
 
     @Inject(AttachedObjectService)
@@ -27,6 +36,9 @@ export class WeaponDrawingProvider {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PoliceSwatProvider)
+    private readonly policeSwatProvider: PoliceSwatProvider;
+
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
 
@@ -34,9 +46,9 @@ export class WeaponDrawingProvider {
         const weaponToDraw: WeaponName[] = Object.values(playerItem)
             .filter(
                 item =>
-                    item.type === 'weapon' &&
+                    (item.type === 'weapon' || item.name === POLICE_SHIELD_OBJECT) &&
                     Weapons[item.name.toUpperCase()] &&
-                    Weapons[item.name.toUpperCase()].drawPosition
+                    Weapons[item.name.toUpperCase()].drawPositionInfo
             )
             .map(item => item.name.toUpperCase() as WeaponName);
 
@@ -54,22 +66,24 @@ export class WeaponDrawingProvider {
 
         for (const weapon of this.weaponsToDraw) {
             const config: WeaponConfig = Weapons[weapon];
-            if (this.weaponAttached[config.drawPosition.model]) continue;
-            this.weaponAttached[config.drawPosition.model] = -1;
+            if (this.weaponAttached[config.drawPositionInfo.model]) continue;
+            this.weaponAttached[config.drawPositionInfo.model] = -1;
 
+            const drawPosition =
+                this.playerService.getPlayer().metadata.cloth_type === 'SWAT' ? DrawPositionsWithShield : DrawPositions;
             const object = await this.attachedObjectService.attachObjectToPlayer({
                 bone: 24816,
-                model: config.drawPosition.model,
-                position: config.drawPosition.position,
-                rotation: config.drawPosition.rotation,
+                model: config.drawPositionInfo.model,
+                position: drawPosition[config.drawPositionInfo.type].position,
+                rotation: drawPosition[config.drawPositionInfo.type].rotation,
                 rotationOrder: 2,
             });
 
-            this.weaponAttached[config.drawPosition.model] = object;
+            this.weaponAttached[config.drawPositionInfo.model] = object;
 
             const playerWeapon = this.weaponService.getCurrentWeapon();
             if (playerWeapon) {
-                const weaponModel = Weapons[playerWeapon.name.toUpperCase()].drawPosition?.model;
+                const weaponModel = Weapons[playerWeapon.name.toUpperCase()].drawPositionInfo?.model;
                 if (weaponModel) {
                     SetEntityVisible(object, false, false);
                 }
@@ -87,8 +101,14 @@ export class WeaponDrawingProvider {
                         rotationOrder: 2,
                         entity: object,
                     });
-                    this.weaponAttached[config.drawPosition.model + extra.model] = extraObject;
+                    this.weaponAttached[config.drawPositionInfo.model + extra.model] = extraObject;
                 }
+            }
+        }
+        if (this.policeSwatProvider.isUsingShield()) {
+            const weaponModel = Weapons[POLICE_SHIELD_OBJECT.toUpperCase()].drawPositionInfo?.model;
+            if (weaponModel) {
+                SetEntityVisible(this.weaponAttached[weaponModel], false, false);
             }
         }
     }
@@ -152,11 +172,17 @@ export class WeaponDrawingProvider {
 
         const weapon = this.weaponService.getCurrentWeapon();
         if (weapon) {
-            const weaponModel = Weapons[weapon.name.toUpperCase()]?.drawPosition?.model;
+            const weaponModel = Weapons[weapon.name.toUpperCase()]?.drawPositionInfo?.model;
             if (weaponModel) {
                 if (this.weaponAttached[weaponModel]) {
                     SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
                 }
+            }
+        }
+        if (this.policeSwatProvider.isUsingShield()) {
+            const weaponModel = Weapons[POLICE_SHIELD_OBJECT.toUpperCase()].drawPositionInfo?.model;
+            if (weaponModel) {
+                SetEntityVisible(this.weaponAttached[weaponModel], false, false);
             }
         }
     }
@@ -171,10 +197,16 @@ export class WeaponDrawingProvider {
         });
 
         const weapon = this.weaponService.getCurrentWeapon();
-        const weaponModel = Weapons[usedWeapon?.name.toUpperCase() as WeaponName]?.drawPosition?.model;
+        const weaponModel = Weapons[usedWeapon?.name.toUpperCase() as WeaponName]?.drawPositionInfo?.model;
         if (weaponModel) {
             if (this.weaponAttached[weaponModel]) {
                 SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
+            }
+        }
+        if (this.policeSwatProvider.isUsingShield()) {
+            const weaponModel = Weapons[POLICE_SHIELD_OBJECT.toUpperCase()].drawPositionInfo?.model;
+            if (weaponModel) {
+                SetEntityVisible(this.weaponAttached[weaponModel], false, false);
             }
         }
     }
