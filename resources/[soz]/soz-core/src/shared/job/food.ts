@@ -519,7 +519,7 @@ export const FoodCloakroom: WardrobeConfig = {
                 [3]: { Drawable: 208, Texture: 5, Palette: 0 },
                 [4]: { Drawable: 97, Texture: 5, Palette: 0 },
                 [6]: { Drawable: 72, Texture: 23, Palette: 0 },
-                [8]: { Drawable: 0, Texture: 20, Palette: 0 },
+                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 248, Texture: 3, Palette: 0 },
             },
             Props: {
@@ -592,7 +592,7 @@ export const FoodCloakroom: WardrobeConfig = {
                 [3]: { Drawable: 227, Texture: 5, Palette: 0 },
                 [4]: { Drawable: 4, Texture: 15, Palette: 0 },
                 [6]: { Drawable: 73, Texture: 4, Palette: 0 },
-                [8]: { Drawable: 229, Texture: 19, Palette: 0 },
+                [8]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 256, Texture: 3, Palette: 0 },
             },
             Props: {
