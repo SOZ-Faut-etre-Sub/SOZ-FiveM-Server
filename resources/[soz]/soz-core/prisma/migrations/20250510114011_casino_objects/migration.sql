@@ -35,6 +35,6 @@ INSERT INTO `casino_objects`(`id`,`kind`,`position`,`model`,`type`,`requireSpawn
     (uuid(), 'roulette', '{"x":985.9124, "y":49.01048, "z":69.23275, "w":225}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
     (uuid(), 'roulette', '{"x":982.1644, "y":52.20396, "z":69.23276, "w":283}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
     (uuid(), 'roulette', '{"x":984.3021, "y":55.93538, "z":69.23275, "w":342}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
-    (uuid(), 'roulette', '{"x":1004.79, "y":57.29507, "z":68.43275, "w":283}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
+    (uuid(), 'roulette', '{"x":1004.79, "y":57.29507, "z":68.43275, "w":283}', 'vw_prop_casino_roulette_01', 'base', true, 0),
     (uuid(), 'roulette', '{"x":999.8859, "y":54.40334, "z":68.43275, "w":13}', 'vw_prop_casino_roulette_01', 'base', true, 0),
     (uuid(), 'roulette', '{"x":999.4816, "y":57.88892, "z":68.43275, "w":193}', 'vw_prop_casino_roulette_01', 'base', true, 0);
