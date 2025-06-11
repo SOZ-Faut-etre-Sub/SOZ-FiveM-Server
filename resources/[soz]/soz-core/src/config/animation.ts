@@ -8955,6 +8955,272 @@ export const Animations: AnimationConfigList = [
     },
     {
         type: 'category',
+        name: 'Pride Walk',
+        items: [
+            {
+                type: 'animation',
+                name: 'Pride Sign',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'pride_sign_01',
+                            position: [0.2, 0.3, 0.03],
+                            rotation: [280.0, 40.0, 350.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag1',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag2',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 3',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag3',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 4',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag4',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 5',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag5',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 6',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag6',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 7',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag7',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 8',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag8',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pride Flag 9',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_drinking@coffee@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prideflag9',
+                            position: [0.1, -0.11, -0.02],
+                            rotation: [270.0, 120.0, 340.0],
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+    {
+        type: 'category',
         name: 'Event',
         items: [
             {
