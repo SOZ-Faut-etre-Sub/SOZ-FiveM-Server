@@ -120,12 +120,14 @@ export class PoliceCloakRoomProvider {
         outfit.Components[Component.Decals] = { Drawable: 0, Texture: 0, Palette: 0 };
         if (
             job == player.job.id &&
-            RankOutfit[player.job.id][DUTY_OUTFIT_NAME][player.job.grade] &&
+            RankOutfit[player.job.id][model] &&
+            RankOutfit[player.job.id][model][DUTY_OUTFIT_NAME] &&
+            RankOutfit[player.job.id][model][DUTY_OUTFIT_NAME][player.job.grade] &&
             itemname == 'outfit'
         ) {
             outfit.Components[Component.Decals] = {
-                Drawable: RankOutfit[player.job.id][DUTY_OUTFIT_NAME][player.job.grade][0],
-                Texture: RankOutfit[player.job.id][DUTY_OUTFIT_NAME][player.job.grade][1],
+                Drawable: RankOutfit[player.job.id][model][DUTY_OUTFIT_NAME][player.job.grade][0],
+                Texture: RankOutfit[player.job.id][model][DUTY_OUTFIT_NAME][player.job.grade][1],
                 Palette: 0,
                 Collection: 'soz_bcso',
             };
