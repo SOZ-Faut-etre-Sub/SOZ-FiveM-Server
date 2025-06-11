@@ -452,17 +452,17 @@ function QBCore.Player.CreatePlayer(PlayerData)
     end
 
     self.Functions.UpdateMaxWeight = function()
-        local baseBag = 0
-        local jobBag = 0
+        local hasBaseBag = false
+        local hasJobBag = false
 
         if self.PlayerData.cloth_config["BaseClothSet"] then
             if self.PlayerData.cloth_config["BaseClothSet"].Components["5"] then
-                baseBag = self.PlayerData.cloth_config["BaseClothSet"].Components["5"].Drawable
+                hasBaseBag = self.PlayerData.cloth_config["BaseClothSet"].Components["5"].Drawable ~= 0 or self.PlayerData.cloth_config["BaseClothSet"].Components["5"].Collection
             end
         end
         if self.PlayerData.cloth_config["JobClothSet"] then
             if self.PlayerData.cloth_config["JobClothSet"].Components["5"] then
-                jobBag = self.PlayerData.cloth_config["JobClothSet"].Components["5"].Drawable
+                hasJobBag = self.PlayerData.cloth_config["JobClothSet"].Components["5"].Drawable ~= 0 or self.PlayerData.cloth_config["JobClothSet"].Components["5"].Collection
             end
         end
 
@@ -479,7 +479,7 @@ function QBCore.Player.CreatePlayer(PlayerData)
             baseWeight = baseWeight + 40000
         end
 
-        if (baseBag ~= 0 or jobBag ~= 0) and not self.PlayerData.cloth_config.Config.HideBag then
+        if (hasBaseBag or hasJobBag) and not self.PlayerData.cloth_config.Config.HideBag then
             baseWeight = baseWeight + 40000
         end
 
