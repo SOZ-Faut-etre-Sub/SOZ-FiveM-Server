@@ -1,7 +1,8 @@
 import { useTransition } from '@react-spring/web';
-import { useAtomValue } from 'jotai/index';
+import { useAtomValue } from 'jotai';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { formatMessage } from '../../../apps/messages/utils/format';
 import { ContactPicture } from '../../../components/ContactPicture';
 import { useNotification } from '../../notifications/hooks/useNotifications';
 import { lastNotificationAtom } from '../../notifications/notification.atom';
@@ -80,7 +81,7 @@ export const NotificationDynamicIsland = () => {
 
                 <div className="flex flex-col justify-center grow py-1 h-16">
                     <div className="text-white text-base line-clamp-1">{contact?.display || title}</div>
-                    <div className="text-gray-400 text-sm line-clamp-2">{content}</div>
+                    <div className="text-gray-400 text-sm line-clamp-2">{formatMessage(content)}</div>
                 </div>
             </div>
         </DynamicIslandContainer>
