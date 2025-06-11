@@ -145,6 +145,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                                 </>
                             )}
                             {inventoryItem.metadata?.type && <span>[{inventoryItem.metadata?.type}]</span>}
+                            {inventoryItem.metadata?.url && <span>[{inventoryItem.metadata?.url}]</span>}
                             {inventoryItem.metadata?.notSearchable && <span>[Caché]</span>}
                             {inventoryItem.metadata?.crafted && <span>[Illégal]</span>}
                             {inventoryItem.metadata?.printed && <span>[Réplique]</span>}

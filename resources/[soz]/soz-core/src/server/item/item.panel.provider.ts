@@ -1,3 +1,6 @@
+import { InventoryItem } from '@public/shared/inventory';
+import { Item } from '@public/shared/item';
+
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -13,18 +16,19 @@ export class ItemPanelProvider {
     @Inject(PlayerProvider)
     private playerProvider: PlayerProvider;
 
-    private async useZPad(source: number): Promise<void> {
+    private async useZPad(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
         const token = await this.playerProvider.getJwtToken(source);
-
-        if (null === token) {
+        if (token === null) {
             return;
         }
 
-        TriggerClientEvent(
-            ClientEvent.NUI_SHOW_PANEL,
-            source,
-            `${GetConvar('soz_public_endpoint', 'https://soz.zerator.com')}/token-callback?token=${token}`
-        );
+        let endpointUrl = `${GetConvar('soz_public_endpoint', 'https://soz.zerator.com')}/token-callback?token=${token}`;
+
+        if (inventoryItem.metadata?.url) {
+            endpointUrl += `&redirect=${inventoryItem.metadata?.url}`;
+        }
+
+        TriggerClientEvent(ClientEvent.NUI_SHOW_PANEL, source, endpointUrl);
     }
 
     @Once()
