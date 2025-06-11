@@ -8793,6 +8793,7 @@ export const CameraLocations: CameraDef[] = [
         street: 302348953,
         street2: 1502743981,
     },
+    /*Underground MLO
     {
         position: [-1234.4658203125, -3004.7744140625, -40.97053146362305],
         heading: 229.99996948242188,
@@ -8809,6 +8810,7 @@ export const CameraLocations: CameraDef[] = [
         street: -172004387,
         street2: 0,
     },
+    */
     {
         position: [-1242.011962890625, -688.0089111328125, 27.692686080932617],
         heading: 128.013427734375,
@@ -8817,6 +8819,7 @@ export const CameraLocations: CameraDef[] = [
         street: 302348953,
         street2: 1502743981,
     },
+    /*Underground MLO
     {
         position: [-1241.6800537109375, -2986.657958984375, -38.92182922363281],
         heading: 140.00001525878906,
@@ -8833,6 +8836,7 @@ export const CameraLocations: CameraDef[] = [
         street: -172004387,
         street2: 0,
     },
+    */
     {
         position: [-1258.101806640625, -667.4246826171875, 28.938291549682617],
         heading: 128.013427734375,
@@ -8913,6 +8917,7 @@ export const CameraLocations: CameraDef[] = [
         street: 2122598109,
         street2: -820353525,
     },
+    /*Underground MLO
     {
         position: [-1299.89892578125, -3023.644775390625, -46.22377395629883],
         heading: 140.00001525878906,
@@ -8929,6 +8934,7 @@ export const CameraLocations: CameraDef[] = [
         street: -172004387,
         street2: 0,
     },
+    */
     {
         position: [-1302.3184814453125, -445.8114013671875, 38.409725189208984],
         heading: 288.0000305175781,

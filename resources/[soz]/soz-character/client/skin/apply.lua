@@ -43,7 +43,7 @@ local function ApplyPedHair(ped, hair)
 end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
-    if MaskResetFace[maskCollection or ""][mask] then
+    if MaskResetFace[maskCollection or ""] and MaskResetFace[maskCollection or ""][mask] then
         SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     else
         SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
@@ -59,9 +59,9 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
 
     SetPedFaceFeature(ped, FaceFeatureType.EyesOpening, (faceTrait.EyesOpening or 0) + 0.0);
 
-    if MaskResetFace[maskCollection or ""][mask] then
+    if MaskResetFace[maskCollection or ""] and MaskResetFace[maskCollection or ""][mask] then
         SetPedFaceFeature(ped, FaceFeatureType.EyebrowHigh, 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.EyebrowForward, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneHigh, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksBoneWidth, -1.0);
         SetPedFaceFeature(ped, FaceFeatureType.CheeksWidth, 0.0);
@@ -73,7 +73,7 @@ local function ApplyPedFaceTrait(ped, faceTrait, model)
         SetPedFaceFeature(ped, FaceFeatureType.JawBoneWidth, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.LipsThickness, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.NeckThickness, 0.0);
-        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, 0.0);
+        SetPedFaceFeature(ped, FaceFeatureType.NoseBoneHigh, 1.0);
         SetPedFaceFeature(ped, FaceFeatureType.NoseBoneTwist, 0.0);
         SetPedFaceFeature(ped, FaceFeatureType.NosePeakLength, 1.0);
         SetPedFaceFeature(ped, FaceFeatureType.NosePeakLowering, 0.0);
