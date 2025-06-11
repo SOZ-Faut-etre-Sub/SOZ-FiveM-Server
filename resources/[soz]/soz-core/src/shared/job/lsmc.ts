@@ -297,6 +297,7 @@ export type KillData = {
     ejection: boolean;
     hungerThristDeath: boolean;
     frozenDeath: boolean;
+    loginDuration: number;
 };
 
 export const PHARMACY_PRICES = {

@@ -20,7 +20,7 @@ import { SoundService } from '@public/client/sound.service';
 import { BlurService } from '@public/client/utils/blur.service';
 import { VehicleSeatbeltProvider } from '@public/client/vehicle/vehicle.seatbelt.provider';
 import { WeaponDrawingProvider } from '@public/client/weapon/weapon.drawing.provider';
-import { OnEvent } from '@public/core/decorators/event';
+import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
@@ -226,6 +226,12 @@ export class LSMCDeathProvider {
     private doFeeze = false;
     private hungerThristDeath = false;
     private radioactiveBeerEffect = false;
+    private loginTime = Date.now();
+
+    @Once(OnceStep.PlayerLoaded)
+    public init() {
+        this.loginTime = Date.now();
+    }
 
     @Tick(10)
     public async deathLoop() {
@@ -353,6 +359,7 @@ export class LSMCDeathProvider {
                 ejection: Date.now() - this.vehicleSeatbeltProvider.getLastEjectTime() < 10000,
                 hungerThristDeath: this.hungerThristDeath,
                 frozenDeath: this.playerSnowProvider.isFrozenDeath() || this.playerHeatProvider.isHeatDeath(),
+                loginDuration: Date.now() - this.loginTime,
             };
             this.hungerThristDeath = false;
 
