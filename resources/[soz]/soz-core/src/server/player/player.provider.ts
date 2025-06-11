@@ -106,8 +106,14 @@ export class PlayerProvider {
             weight += 40000;
         }
 
-        const baseBag = player.cloth_config.BaseClothSet?.Components?.['5']?.Drawable || 0;
-        const jobBag = player.cloth_config.JobClothSet?.Components?.['5']?.Drawable || 0;
+        const baseBag =
+            player.cloth_config.BaseClothSet?.Components?.['5']?.Drawable ||
+            player.cloth_config.BaseClothSet?.Components?.['5']?.Collection ||
+            0;
+        const jobBag =
+            player.cloth_config.JobClothSet?.Components?.['5']?.Drawable ||
+            player.cloth_config.JobClothSet?.Components?.['5']?.Collection ||
+            0;
 
         if ((baseBag !== 0 || jobBag !== 0) && !player.cloth_config.Config.HideBag) {
             weight += 40000;
