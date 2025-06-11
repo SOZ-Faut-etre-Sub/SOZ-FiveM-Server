@@ -652,6 +652,7 @@ export type InventoryItemMetadata = {
     notSearchable?: boolean;
     notStorable?: boolean;
     cyberDBSearch?: DBSearch;
+    url?: string;
 };
 
 export const isInventoryItemExpired = (item: InventoryItem): boolean => {
