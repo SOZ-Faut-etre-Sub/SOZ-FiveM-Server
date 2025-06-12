@@ -14,6 +14,7 @@ import { BlipFactory } from '../../blip';
 import { NuiMenu } from '../../nui/nui.menu';
 import { PlayerService } from '../../player/player.service';
 import { TargetFactory } from '../../target/target.factory';
+import { BEER_SHOP_CONFIG } from './baun.harvest.provider';
 
 @Provider()
 export class BaunProvider {
@@ -97,6 +98,15 @@ export class BaunProvider {
             scale: 0.9,
         });
         this.blipFactory.hide('displayFurnitureBlip', true);
+
+        this.blipFactory.create('displayBeerBlip', {
+            name: 'Point de récolte des bières',
+            coords: BEER_SHOP_CONFIG.coords,
+            sprite: 478,
+            color: 28,
+            scale: 0.9,
+        });
+        this.blipFactory.hide('displayBeerBlip', true);
 
         this.blipFactory.create('displaySnackBlip', {
             name: 'Point de récolte de snacks',

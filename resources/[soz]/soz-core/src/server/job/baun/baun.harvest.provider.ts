@@ -1,6 +1,9 @@
+import { Inventory } from '@public/server/inventory/inventory';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { InventoryItem } from '@public/shared/inventory';
+import { Item } from '@public/shared/item';
 
-import { OnEvent } from '../../../core/decorators/event';
+import { Once, OnEvent } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
 import { ServerEvent } from '../../../shared/event/server';
@@ -10,6 +13,7 @@ import { ItemService } from '../../item/item.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
+import { RESTOCK_CONFIG } from './baun.restock.provider';
 
 @Provider()
 export class BaunHarvestProvider {
@@ -27,6 +31,21 @@ export class BaunHarvestProvider {
 
     @Inject(ItemService)
     private itemService: ItemService;
+
+    @Once()
+    public onStart() {
+        this.itemService.setItemUseCallback('beer_crate', this.useBeerCrate.bind(this));
+    }
+
+    private async useBeerCrate(source: number, item: Item, inventoryItem: InventoryItem, inventory: Inventory) {
+        if (inventory.canCarryItems([{ name: 'beer_crate', amount: -1 }, ...RESTOCK_CONFIG.beer_crate])) {
+            inventory.removeAtSlot(inventoryItem.slot, 1);
+
+            for (const beer of RESTOCK_CONFIG.beer_crate) {
+                inventory.add(beer.name, beer.amount, inventoryItem.metadata);
+            }
+        }
+    }
 
     @OnEvent(ServerEvent.BAUN_HARVEST)
     public async onHarvest(source: number, item: string) {

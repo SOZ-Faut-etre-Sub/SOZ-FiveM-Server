@@ -1,3 +1,8 @@
+import { PedFactory } from '@public/client/factory/ped.factory';
+import { InventoryManager } from '@public/client/inventory/inventory.manager';
+import { ItemService } from '@public/client/item/item.service';
+import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
+
 import { Once, OnceStep } from '../../../core/decorators/event';
 import { Inject } from '../../../core/decorators/injectable';
 import { Provider } from '../../../core/decorators/provider';
@@ -61,6 +66,12 @@ const HARVEST_ZONES: HarvestZone[] = [
     },
 ];
 
+export const BEER_SHOP_CONFIG = {
+    model: 'a_m_m_hillbilly_01',
+    coords: { x: 1952.76, y: 3841.97, z: 31.18, w: 303.34 },
+    products: [{ name: 'beer_crate', price: 800 }],
+};
+
 @Provider()
 export class BaunHarvestProvider {
     @Inject(TargetFactory)
@@ -68,6 +79,18 @@ export class BaunHarvestProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
+
+    @Inject(ItemService)
+    private itemService: ItemService;
+
+    @Inject(InteractionProvider)
+    private readonly interactionProvider: InteractionProvider;
 
     @Once(OnceStep.PlayerLoaded)
     public async loadHarvestZones() {
@@ -106,6 +129,44 @@ export class BaunHarvestProvider {
                 }
             }
         }
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    public async loadBeerShop() {
+        const getBeerShop = products => {
+            const hydratedProducts = products.map((product, id) => ({
+                ...this.itemService.getItem(product.name),
+                ...product,
+                slot: id + 1,
+                amount: 0,
+            }));
+
+            return hydratedProducts;
+        };
+
+        await this.pedFactory.createPedOnGrid({
+            model: BEER_SHOP_CONFIG.model,
+            coords: BEER_SHOP_CONFIG.coords,
+            invincible: true,
+            freeze: true,
+            blockevents: true,
+            animDict: 'anim@amb@casino@valet_scenario@pose_d@',
+            anim: 'base_a_m_y_vinewood_01',
+            flag: 49,
+        });
+
+        this.interactionProvider.createInteractionForCoords(
+            [BEER_SHOP_CONFIG.coords.x, BEER_SHOP_CONFIG.coords.y, BEER_SHOP_CONFIG.coords.z + 1],
+            {
+                label: 'Brasseur',
+                blackoutJob: JobType.Baun,
+                blackoutGlobal: true,
+                job: JobType.Baun,
+                action: () => {
+                    this.inventoryManager.openShopInventory(getBeerShop(BEER_SHOP_CONFIG.products), 'Brasseur');
+                },
+            }
+        );
     }
 
     public harvest(zone: HarvestZone) {

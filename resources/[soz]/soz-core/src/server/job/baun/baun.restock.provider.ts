@@ -9,7 +9,7 @@ import { ItemService } from '../../item/item.service';
 import { Notifier } from '../../notifier';
 import { ProgressService } from '../../player/progress.service';
 
-const RESTOCK_CONFIG: Record<string, { name: string; amount: number }[]> = {
+export const RESTOCK_CONFIG: Record<string, { name: string; amount: number }[]> = {
     liquor_crate: [
         { name: 'vodka', amount: 2 },
         { name: 'gin', amount: 2 },
@@ -36,6 +36,14 @@ const RESTOCK_CONFIG: Record<string, { name: string; amount: number }[]> = {
         { name: 'tapas', amount: 10 },
         { name: 'peanuts', amount: 10 },
         { name: 'olives', amount: 10 },
+    ],
+    beer_crate: [
+        { name: 'beer_crown', amount: 4 },
+        { name: 'beer_chiliad_ipa', amount: 4 },
+        { name: 'beer_paleto_wheat', amount: 4 },
+        { name: 'beer_captus', amount: 4 },
+        { name: 'beer_kuro', amount: 4 },
+        { name: 'beer_sunkiss', amount: 4 },
     ],
 };
 
