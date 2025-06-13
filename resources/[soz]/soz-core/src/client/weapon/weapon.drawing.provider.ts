@@ -4,7 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { PoliceSwatProvider } from '@private/client/police/police.swat.provider';
 import { POLICE_SHIELD_OBJECT } from '@private/shared/police';
 import { PlayerService } from '@public/client/player/player.service';
-import { PlayerInventoryUpdate } from '@public/core/decorators/player';
+import { PlayerInventoryUpdate, PlayerUpdate } from '@public/core/decorators/player';
 import { InventoryItem } from '@public/shared/inventory';
 
 import { ClientEvent } from '../../shared/event';
@@ -17,7 +17,6 @@ import {
     WeaponsType,
 } from '../../shared/weapons/weapon';
 import { AttachedObjectService } from '../object/attached.object.service';
-import { ResourceLoader } from '../repository/resource.loader';
 import { WeaponService } from './weapon.service';
 
 @Provider()
@@ -39,8 +38,7 @@ export class WeaponDrawingProvider {
     @Inject(PoliceSwatProvider)
     private readonly policeSwatProvider: PoliceSwatProvider;
 
-    @Inject(ResourceLoader)
-    private resourceLoader: ResourceLoader;
+    currentDrawPosition: string = null;
 
     private async updateWeaponDrawList(playerItem: Record<number, InventoryItem>) {
         const weaponToDraw: WeaponName[] = Object.values(playerItem)
@@ -59,18 +57,33 @@ export class WeaponDrawingProvider {
         }
     }
 
+    @PlayerUpdate()
+    public async forceRedrawWeapon() {
+        const drawPosition = this.playerService.getPlayer().metadata.cloth_type === 'SWAT' ? 'swat' : null;
+        if (drawPosition !== this.currentDrawPosition) {
+            await this.undrawWeapon();
+            await this.drawWeapon();
+        }
+    }
+
     private async drawWeapon() {
         if (!this.shouldDrawWeapon || !this.shouldAdminDrawWeapon || this.playerService.getState().isInGameHub) {
             return;
         }
 
+        let drawPosition;
+        if (this.playerService.getPlayer().metadata.cloth_type === 'SWAT') {
+            drawPosition = DrawPositionsWithShield;
+            this.currentDrawPosition = 'swat';
+        } else {
+            drawPosition = DrawPositions;
+            this.currentDrawPosition = null;
+        }
         for (const weapon of this.weaponsToDraw) {
             const config: WeaponConfig = Weapons[weapon];
             if (this.weaponAttached[config.drawPositionInfo.model]) continue;
             this.weaponAttached[config.drawPositionInfo.model] = -1;
 
-            const drawPosition =
-                this.playerService.getPlayer().metadata.cloth_type === 'SWAT' ? DrawPositionsWithShield : DrawPositions;
             const object = await this.attachedObjectService.attachObjectToPlayer({
                 bone: 24816,
                 model: config.drawPositionInfo.model,
