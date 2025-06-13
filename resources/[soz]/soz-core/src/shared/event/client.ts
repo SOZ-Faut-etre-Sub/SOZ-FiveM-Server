@@ -502,4 +502,6 @@ export enum ClientEvent {
     LASER_GAME_DEATH_IN_HUB = 'soz-core:client:phone:app:laser-game:death-in-hub',
     LASER_GAME_SYNC_PLAYER_MENU = 'soz-core:client:phone:app:laser-game:sync-player-menu',
     LASER_GAME_ADD_KILL = 'soz-core:client:phone:app:laser-game:add-kill',
+
+    THUNDER = 'soz-core:client:thunder',
 }
