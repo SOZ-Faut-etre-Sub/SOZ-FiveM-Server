@@ -10,7 +10,7 @@ export class ThunderProvider {
     @Inject(Notifier)
     public notifier: Notifier;
 
-    @Command('thunder', {
+    @Command('lightning', {
         role: ['admin'],
     })
     public thunder(source: number, target: number) {

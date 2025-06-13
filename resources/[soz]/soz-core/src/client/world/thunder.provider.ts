@@ -31,7 +31,9 @@ export class ThunderProvider {
             this.audioService.playAudio('audio/lightning.ogg', coef);
         }
 
-        AddExplosion(coords[0], coords[1], coords[2], 0, 0.5, false, false, 1);
+        if (target == GetPlayerServerId(PlayerId())) {
+            AddExplosion(coords[0], coords[1], coords[2], 0, 1.0, false, false, 5);
+        }
 
         await wait(600);
         DeleteEntity(entity);
