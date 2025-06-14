@@ -229,17 +229,18 @@ model event {
 }
 
 model scene {
-    id         String         @id @default(uuid())
-    name       String         @db.VarChar(255)
-    entities   scene_entity[]
-    peds       scene_ped[]
-    markers    scene_marker[]
-    persistant Boolean        @default(false)
-    created_at DateTime       @default(now()) @db.Timestamp(0)
-    creator_id String         @db.VarChar(255)
-    creator    player         @relation(fields: [creator_id], references: [citizenid], onDelete: Cascade, map: "FK_collection_creator")
-    event_id   String?
-    event      event?         @relation(fields: [event_id], references: [id], onDelete: Cascade, map: "FK_scene_event")
+    id          String         @id @default(uuid())
+    name        String         @db.VarChar(255)
+    entities    scene_entity[]
+    peds        scene_ped[]
+    markers     scene_marker[]
+    persistant  Boolean        @default(false)
+    created_at  DateTime       @default(now()) @db.Timestamp(0)
+    creator_id  String         @db.VarChar(255)
+    creator     player         @relation(fields: [creator_id], references: [citizenid], onDelete: Cascade, map: "FK_collection_creator")
+    event_id    String?
+    event       event?         @relation(fields: [event_id], references: [id], onDelete: Cascade, map: "FK_scene_event")
+    live_config Json?          @db.Json
 }
 
 model scene_entity {
