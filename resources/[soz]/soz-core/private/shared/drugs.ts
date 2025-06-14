@@ -7,3 +7,12 @@ export enum DrugSkill {
 
 export type DrugNuiZone = any;
 export type DrugTransformList = any;
+
+export enum DrugType {
+    Any = 'any',
+}
+
+type DrugConfigType = any;
+export const DrugConfigs: Record<DrugType, DrugConfigType> = {
+    [DrugType.Any]: {},
+};

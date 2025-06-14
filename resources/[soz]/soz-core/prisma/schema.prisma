@@ -175,6 +175,24 @@ model apartment_fourniture {
     @@index([apartment_id], map: "housing_apartment_housing_apartment_id_fk")
 }
 
+model pet {
+    id           Int         @id @default(autoincrement())
+    owner_id     String      @unique @db.VarChar(255)
+    owner        player      @relation(fields: [owner_id], references: [citizenid], name: "pet")
+    model        String
+    trait_up     String      @db.VarChar(64)
+    trait_down   String      @db.VarChar(64)
+    dead         Boolean     @default(false)
+    hunger       Float       @default(100.00) @db.Float
+    thirst       Float       @default(100.00) @db.Float
+    energy       Float       @default(10.00)  @db.Float
+    affection    Float       @default(50.00)  @db.Float
+    training     Float       @default(5.00)   @db.Float
+    perDays      String      @db.Text
+    components   String      @db.Text
+    created_at   DateTime    @default(now()) @db.Timestamp(0)
+}
+
 model invoices {
     id            Int      @id @default(autoincrement())
     citizenid     String   @db.VarChar(50)
@@ -440,6 +458,7 @@ model player {
     SenatePartyMember       SenatePartyMember?
     scenes                  scene[]
     associatedScenes        scene[]                  @relation("scene_associates")
+    pet                     pet?                     @relation("pet")
 
     @@index([id], map: "id")
     @@index([last_updated], map: "last_updated")

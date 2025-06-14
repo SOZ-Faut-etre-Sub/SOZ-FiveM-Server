@@ -1,3 +1,4 @@
+import { petFood } from '@public/shared/animal';
 import { TaxType } from '@public/shared/tax';
 
 import { OnNuiEvent } from '../../core/decorators/event';
@@ -16,6 +17,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { CartElement } from '../../shared/shop/superette';
+import { AnimalProvider } from '../animal/animal.provider';
 import { PedFactory } from '../factory/ped.factory';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -63,6 +65,9 @@ export class InventoryProvider {
 
     @Inject(InventoryDragAndDropProvider)
     public inventoryDragAndDropProvider: InventoryDragAndDropProvider;
+
+    @Inject(AnimalProvider)
+    private animalProvider: AnimalProvider;
 
     @OnNuiEvent(NuiEvent.InventoryMoveItem)
     public async onInventoryMoveItem({
@@ -248,6 +253,11 @@ export class InventoryProvider {
 
                 ped.dropItemCallback(inventoryId, inventoryItem, amount);
 
+                return;
+            }
+
+            if (entity === this.animalProvider.getPetEntity() && petFood[item.name]) {
+                this.animalProvider.usePetFood(inventoryItem);
                 return;
             }
         }

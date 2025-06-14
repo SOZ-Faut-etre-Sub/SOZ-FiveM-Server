@@ -92,6 +92,7 @@ import { ClothShopMenu } from '@public/nui/components/Shop/ClothShopMenu';
 import { EasterShopMenu } from '@public/nui/components/Shop/EasterShopMenu';
 import { JewelryEngraveShopMenu } from '@public/nui/components/Shop/JewelryEngraveShopMenu';
 import { JewelryShopMenu } from '@public/nui/components/Shop/JewelryShopMenu';
+import { PetShopMenu } from '@public/nui/components/Shop/PetShopMenu';
 import { SuperetteShopMenu } from '@public/nui/components/Shop/SuperetteShopMenu';
 import { TattooShopMenu } from '@public/nui/components/Shop/TattooShopMenu';
 import { ZkeaFournitureMenu } from '@public/nui/components/Shop/ZkeaFournitureMenu';
@@ -238,6 +239,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.JewelryShop}/*`} element={<JewelryShopMenu catalog={menuData} />} />
             <Route path={`/${MenuType.JewelryEngraveShop}/*`} element={<JewelryEngraveShopMenu data={menuData} />} />
             <Route path={`/${MenuType.BarberShop}/*`} element={<BarberShopMenu data={menuData} />} />
+            <Route path={`/${MenuType.PetShop}/*`} element={<PetShopMenu />} />
             <Route path={`/${MenuType.SetHealthState}/*`} element={<MenuSetHealthState source={menuData} />} />
             <Route path={`/${MenuType.Wardrobe}/*`} element={<MenuWardrobe wardrobe={menuData} />} />
             <Route path={`/${MenuType.GunSmith}/*`} element={<MenuGunSmith data={menuData} />} />

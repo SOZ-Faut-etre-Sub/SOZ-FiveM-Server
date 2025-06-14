@@ -21,7 +21,6 @@ export type BrandConfig = {
 
 export type NoZoneShopConfig = {
     ped: Ped;
-    brand: NoZoneShopBrand;
     label: string;
     targetLabel?: string;
     targetIcon?: string;
@@ -58,12 +57,12 @@ export enum ShopBrand {
 
 export enum NoZoneShopBrand {
     SouvenirFIB = 'souvenir-fib',
+    Pet = 'pet',
 }
 
-export const NoZonesShopConfig: NoZoneShopConfig[] = [
-    {
+export const NoZonesShopConfig: Record<NoZoneShopBrand, NoZoneShopConfig> = {
+    [NoZoneShopBrand.SouvenirFIB]: {
         label: 'Mère Noël',
-        brand: NoZoneShopBrand.SouvenirFIB,
         distance: 3,
         blipSprite: 781,
         blipColor: 1,
@@ -167,7 +166,29 @@ export const NoZonesShopConfig: NoZoneShopConfig[] = [
             },
         },
     },
-];
+    [NoZoneShopBrand.Pet]: {
+        label: 'Animalerie',
+        distance: 3,
+        blipSprite: 141,
+        blipColor: 50,
+        shopLabel: 'Animalerie',
+        targetIcon: 'magasin/cart',
+        ped: {
+            model: 'a_m_m_farmer_01',
+            freeze: true,
+            invincible: true,
+            blockevents: true,
+            animDict: 'oddjobs@bailbond_hobohang_out_street_c',
+            anim: 'base',
+            coords: {
+                x: 2400.76,
+                y: 5019.39,
+                z: 45.1,
+                w: 305.13,
+            },
+        },
+    },
+};
 
 export const BrandsConfig: Record<ShopBrand, BrandConfig> = {
     [ShopBrand.Ponsonbys]: {

@@ -440,3 +440,9 @@ export const isGameMaster = (player: PlayerData) => {
 };
 
 export const expirationVisaDuration = 2 * 7 * 24 * 3600 * 1000;
+
+export enum PedType {
+    ANIMAL = 28,
+}
+
+export const IsPedAnAnimal = (entity: number) => GetPedType(entity) === PedType.ANIMAL;

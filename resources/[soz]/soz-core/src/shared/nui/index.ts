@@ -40,6 +40,7 @@ import { NuiMedicalDiagMethodMap } from './medical_diag';
 import { NuiMenuMethodMap } from './menu';
 import { NuiMeteorMap } from './meteor';
 import { NuiPanelMethodMap } from './panel';
+import { NuiPetManagerMethodMap } from './pet_manager';
 import { NuiPLayerMethodMap } from './player';
 import { NuiPoliceMethodMap } from './police';
 import { NuiProgressMethodMap } from './progress';
@@ -119,6 +120,7 @@ export interface NuiMethodMap {
     screenshot: NuiScreenshotMethodMap;
     flash: NuiFlashMap;
     whatif: WhatIfMap;
+    pet_manager: NuiPetManagerMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

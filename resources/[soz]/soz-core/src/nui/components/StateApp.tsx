@@ -21,6 +21,10 @@ export const StateApp: FunctionComponent = () => {
         dispatch.playerPosition.update(data);
     });
 
+    useNuiEvent('pet_manager', 'Update', data => {
+        dispatch.petStats.update(data);
+    });
+
     useNuiEvent('item', 'SetItems', items => {
         dispatch.item.set(items);
     });
@@ -47,6 +51,10 @@ export const StateApp: FunctionComponent = () => {
 
     useNuiEvent('hud', 'SetShowDateTime', showDateTime => {
         dispatch.hud.updateSettings({ showDateTime });
+    });
+
+    useNuiEvent('hud', 'SetShowAnimalStats', showAnimalStats => {
+        dispatch.hud.updateSettings({ showAnimalStats });
     });
 
     useNuiEvent('hud', 'SetShowWeather', showWeather => {

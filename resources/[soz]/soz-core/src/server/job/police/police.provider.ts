@@ -1,3 +1,4 @@
+import { DrugConfigs, DrugType } from '@private/shared/drugs';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -224,6 +225,27 @@ export class PoliceProvider {
         const targetPlayer = this.playerService.getPlayer(target);
         TriggerClientEvent(ClientEvent.POLICE_BREATHANALYZER_TARGET, targetPlayer.source);
         return { level: targetPlayer.metadata.drug, type: targetPlayer.metadata.last_drug_eaten };
+    }
+
+    @Rpc(RpcServerEvent.POLICE_K9_FIND_DRUG_ON_PLAYER)
+    public async onPoliceK9GetDrugOnPlayer(source: number, target: number) {
+        const targetInventory = await this.inventoryFactory.getPlayerInventory(target);
+        if (!targetInventory) return;
+        for (const drugType of Object.values(DrugType)) {
+            const allDetectableItems: Array<string> = [];
+            allDetectableItems.push(DrugConfigs[drugType].consumeItem);
+            allDetectableItems.push(DrugConfigs[drugType].processedItem);
+            allDetectableItems.push(DrugConfigs[drugType].bagItem);
+            allDetectableItems.push(DrugConfigs[drugType].boxItem);
+            allDetectableItems.push(DrugConfigs[drugType].seedling);
+
+            console.log(allDetectableItems);
+            if (allDetectableItems.some(itemName => targetInventory.findItem(item => item.name === itemName))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Rpc(RpcServerEvent.POLICE_GET_MARKED_MONEY)

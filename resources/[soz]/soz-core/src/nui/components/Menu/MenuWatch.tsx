@@ -119,7 +119,13 @@ export const MenuWatch: FunctionComponent<MenuWatchProps> = ({ data }) => {
                     >
                         Stamina
                     </MenuItemCheckbox>
-
+                    <MenuItemCheckbox
+                        checked={data.showDateTime}
+                        description="Active/Désactive l'affichage de l'état de l'animal"
+                        onChange={value => fetchNui(NuiEvent.WatchMenuSetShowAnimalStats, value)}
+                    >
+                        État de l'animal
+                    </MenuItemCheckbox>
                     <MenuSubTitle>État corporel</MenuSubTitle>
                     <MenuItemCheckbox
                         checked={data.showInjuryTracker}

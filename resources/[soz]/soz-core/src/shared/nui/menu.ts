@@ -76,6 +76,7 @@ export enum MenuType {
     JewelryShop = 'jewelry_shop',
     JewelryEngraveShop = 'jewelry_engrave_shop',
     BarberShop = 'barber_shop',
+    PetShop = 'pet_shop',
     FightForStyleJobMenu = 'ffs_job',
     FoodJobMenu = 'food_job_menu',
     HousingUpgrades = 'housing_upgrades',

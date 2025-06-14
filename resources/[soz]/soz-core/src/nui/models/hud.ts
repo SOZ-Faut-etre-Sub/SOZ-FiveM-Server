@@ -16,6 +16,7 @@ export const hud = createModel<RootModel>()({
             showWeather: false,
             showStreetName: false,
             showCompass: false,
+            showAnimalStats: false,
             showStress: false,
             showStamina: false,
             switchPlayerStatsPosition: false,

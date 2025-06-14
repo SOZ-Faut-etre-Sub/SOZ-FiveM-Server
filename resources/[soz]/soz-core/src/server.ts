@@ -11,6 +11,7 @@ import { SendMiddlewareStatebagServer } from './core/middleware/middleware.state
 import { ChainMiddlewareTickServerFactory } from './core/middleware/middleware.tick.server';
 import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
+import { AnimalModule } from './server/animal/animal.module';
 import { ApiModule } from './server/api/api.module';
 import { BankModule } from './server/bank/bank.module';
 import { BillboardModule } from './server/billboard/billboard.module';
@@ -75,7 +76,7 @@ async function bootstrap() {
     setService('MiddlewareStatebagFactory', SendMiddlewareStatebagServer);
 
     try {
-        setMaxEventListeners(20);
+        setMaxEventListeners(100);
     } catch {
         /* empty */
     }
@@ -138,6 +139,7 @@ async function bootstrap() {
         GamesModule,
         CameraModule,
         BillboardModule,
+        AnimalModule,
         ...PrivateModules
     );
 

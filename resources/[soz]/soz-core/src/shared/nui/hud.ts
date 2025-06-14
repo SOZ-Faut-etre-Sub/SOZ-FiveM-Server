@@ -40,6 +40,7 @@ export interface NuiHudMethodMap {
     SetZoom: number;
     SetInventorySize: number;
     SetShowDateTime: boolean;
+    SetShowAnimalStats: boolean;
     SetShowWeather: boolean;
     SetShowStreetName: boolean;
     SetShowCompass: boolean;
