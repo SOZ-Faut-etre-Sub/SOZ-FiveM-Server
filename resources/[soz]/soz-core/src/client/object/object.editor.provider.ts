@@ -1,3 +1,4 @@
+import { Command } from '@core/decorators/command';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
@@ -433,5 +434,44 @@ export class ObjectEditorProvider {
         }
 
         TriggerServerEvent(serverEvent, object.position, inventoryItem);
+    }
+
+    @Command('soz_object_editor_validate', {
+        description: "Valider l'objet en cours de modification",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'SPACE',
+            },
+        ],
+    })
+    onValidateCurrentObject(): void {
+        this.nuiDispatch.dispatch('object_editor', 'validateCurrentObject');
+    }
+
+    @Command('soz_object_editor_delete', {
+        description: "Supprime l'objet en cours de modification",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'DELETE',
+            },
+        ],
+    })
+    onDeleteCurrentObject(): void {
+        this.nuiDispatch.dispatch('object_editor', 'deleteCurrentObject');
+    }
+
+    @Command('soz_object_editor_duplicate', {
+        description: "Duplique et valide l'objet en cours de modification",
+        keys: [
+            {
+                mapper: 'keyboard',
+                key: 'N',
+            },
+        ],
+    })
+    onDuplicateCurrentObject(): void {
+        this.nuiDispatch.dispatch('object_editor', 'duplicateCurrentObject');
     }
 }

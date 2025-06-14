@@ -17,6 +17,9 @@ export type NuiHousingPlacementPropMethodMap = {
 export type NuiObjectEditorMethodMap = {
     setEntityPosition: { matrix: number[] };
     setCameraPosition: { position: Vector3; rotation: Vector3 };
+    validateCurrentObject: never;
+    deleteCurrentObject: never;
+    duplicateCurrentObject: never;
 };
 
 export type NuiGizmoMethodMap = {

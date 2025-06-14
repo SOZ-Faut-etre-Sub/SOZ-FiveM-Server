@@ -118,26 +118,51 @@ export const SubMenu: FunctionComponent<PropsWithChildren<SubMenuProps>> = ({ ch
     );
 };
 
-export const MainMenu: FunctionComponent<PropsWithChildren> = ({ children }) => {
+export type MainMenuProps = PropsWithChildren<{
+    helpPanel?: ReactNode;
+}>;
+
+export const MainMenu: FunctionComponent<MainMenuProps> = ({ children, helpPanel }) => {
     return (
         <Routes>
-            <Route index element={<MenuContainer>{children}</MenuContainer>} />
+            <Route index element={<MenuContainer helpPanel={helpPanel}>{children}</MenuContainer>} />
         </Routes>
     );
 };
 
-export const MenuContainer: FunctionComponent<PropsWithChildren> = ({ children }) => {
+export const MenuContainer: FunctionComponent<MainMenuProps> = ({ children, helpPanel }) => {
     let leftOffset = 'left-8';
+    let rightOffset = 'right-8';
     if (
         (window.innerWidth > 5000 && window.innerHeight < 1500) ||
         (window.innerWidth > 3079 && window.innerHeight < 1200)
     ) {
         leftOffset = 'left-[94vh]';
+        rightOffset = 'right-[94vh]';
     }
+
     return (
-        <div className={clsx('absolute top-10 w-[36vh] min-w-[36vh] font-prompt select-none', leftOffset)}>
-            {children}
-        </div>
+        <>
+            <div className={clsx('absolute top-10 w-[36vh] min-w-[36vh] font-prompt select-none', leftOffset)}>
+                {children}
+            </div>
+            {helpPanel && (
+                <div className={clsx('absolute top-10 w-[36vh] min-w-[36vh] font-prompt select-none', rightOffset)}>
+                    <div>
+                        <div
+                            className="mt-3 max-h-[40vh] overflow-hidden"
+                            style={{
+                                pointerEvents: 'none',
+                            }}
+                        >
+                            <GlassMorphismContainer duration="duration-0" borderClassName="rounded-lg" disableBorder>
+                                <ul>{helpPanel}</ul>
+                            </GlassMorphismContainer>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
     );
 };
 
@@ -685,7 +710,7 @@ type MenuItemSubMenuLinkProps = PropsWithChildren<{
     onSelected?: () => void;
     disabled?: boolean;
     selectable?: boolean;
-    description?: string;
+    description?: ReactNode;
     noChevron?: boolean;
 }>;
 

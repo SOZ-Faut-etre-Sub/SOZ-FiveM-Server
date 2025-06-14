@@ -18,6 +18,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 entities: true,
                 peds: true,
                 markers: true,
+                creator: true,
             },
         });
 
@@ -27,6 +28,9 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             const entities: Record<string, SceneEntity> = {};
             const peds: Record<string, ScenePed> = {};
             const markers: Record<string, SceneMarker> = {};
+            const charInfo = scene.creator?.charinfo
+                ? (JSON.parse(scene.creator?.charinfo) as { firstname: string; lastname: string; dateofbirth: string })
+                : null;
 
             for (const entity of scene.entities) {
                 entities[entity.id] = {
@@ -62,19 +66,28 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 peds: peds,
                 markers: markers,
                 owner: scene.creator_id,
+                ownerName: charInfo ? `${charInfo.firstname} ${charInfo.lastname}` : null,
                 worldEventId: scene.event_id,
+                createdAt: scene.created_at.getTime(),
             };
         }
 
         return list;
     }
 
-    public async addScene(name: string, creatorId: string, eventId?: string): Promise<Scene> {
+    public async addScene(
+        name: string,
+        creatorId: string,
+        ownerName: string,
+        eventId?: string,
+        createdAt?: Date
+    ): Promise<Scene> {
         const scene = await this.prismaService.scene.create({
             data: {
                 name,
                 creator_id: creatorId,
                 event_id: eventId,
+                created_at: createdAt || new Date(),
             },
         });
 
@@ -82,11 +95,13 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             id: scene.id,
             name: scene.name,
             owner: creatorId,
+            ownerName,
             persistent: false,
             entities: {},
             peds: {},
             markers: {},
             worldEventId: scene.event_id,
+            createdAt: scene.created_at.getTime(),
         };
 
         return this.data[scene.id];

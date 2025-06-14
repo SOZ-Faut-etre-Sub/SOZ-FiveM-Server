@@ -83,6 +83,18 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
         fetchNui(NuiEvent.ObjectEditorSetName);
     };
 
+    useNuiEvent('object_editor', 'validateCurrentObject', () => {
+        handlePlaceObject();
+    });
+
+    useNuiEvent('object_editor', 'deleteCurrentObject', () => {
+        handleDeleteObject();
+    });
+
+    useNuiEvent('object_editor', 'duplicateCurrentObject', () => {
+        handlePlaceObject(true);
+    });
+
     const keyHandler = useCallback(
         async (e: KeyboardEvent) => {
             const setRotateMode = 'KeyR';
@@ -152,12 +164,9 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
     return (
         <>
             <Menu type={MenuType.ObjectEditor}>
-                <MainMenu>
+                <MainMenu helpPanel={<HelpPanel options={data} collision={collision} />}>
                     <MenuTitle title={menuTitle} />
-                    <MenuContent
-                        subtitle="Edition d'objet"
-                        helpPanel={<HelpPanel options={data} collision={collision} />}
-                    >
+                    <MenuContent subtitle="Edition d'objet">
                         {data.allowToggleCollision && (
                             <MenuItemCheckbox
                                 onChange={value => {

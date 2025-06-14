@@ -40,7 +40,29 @@ export class SceneProvider {
         const collections = await this.prismaService.collection_prop.findMany();
 
         for (const collection of collections) {
-            const scene = await this.sceneRepository.addScene(collection.name, collection.creator);
+            let ownerName = null;
+
+            if (collection.creator) {
+                const player = await this.prismaService.player.findFirst({
+                    where: {
+                        citizenid: collection.creator,
+                    },
+                });
+
+                if (player) {
+                    const charInfo = JSON.parse(player.charinfo);
+                    ownerName = `${charInfo.firstname} ${charInfo.lastname}`;
+                }
+            }
+
+            const date = new Date(collection.date);
+            const scene = await this.sceneRepository.addScene(
+                collection.name,
+                collection.creator,
+                ownerName,
+                null,
+                date
+            );
 
             if (collection.persistant) {
                 await this.sceneRepository.setPersistent(scene.id, true);
@@ -161,7 +183,8 @@ export class SceneProvider {
             return;
         }
 
-        const scene = await this.sceneRepository.addScene(name, player.citizenid, eventId);
+        const ownerName = `${player.charinfo.firstname} ${player.charinfo.lastname}`;
+        const scene = await this.sceneRepository.addScene(name, player.citizenid, ownerName, eventId);
 
         this.notifier.notify(source, `Scene ${scene.name} crée`);
     }

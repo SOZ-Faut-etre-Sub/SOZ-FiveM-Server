@@ -128,7 +128,7 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                     >
                         ➕ Ajouter une entité
                     </MenuItemButton>
-                    {isStaff(player) && (
+                    {isStaff(player) && context !== 'hammer' && (
                         <MenuItemButton
                             onConfirm={async () => {
                                 await fetchNui(NuiEvent.SceneAddPed, {
@@ -221,7 +221,9 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                         ❌ Supprimer
                     </MenuItemButton>
                     <MenuItemSubMenuLink id={`scene-entity-${scene.id}`}>Entités</MenuItemSubMenuLink>
-                    {isStaff(player) && <MenuItemSubMenuLink id={`scene-ped-${scene.id}`}>PNJS</MenuItemSubMenuLink>}
+                    {isStaff(player) && context !== 'hammer' && (
+                        <MenuItemSubMenuLink id={`scene-ped-${scene.id}`}>PNJS</MenuItemSubMenuLink>
+                    )}
                     <MenuItemSubMenuLink id={`scene-marker-${scene.id}`}>Markers</MenuItemSubMenuLink>
                 </MenuContent>
             </SubMenu>

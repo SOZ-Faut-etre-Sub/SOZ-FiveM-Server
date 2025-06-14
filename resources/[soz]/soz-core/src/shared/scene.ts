@@ -31,9 +31,11 @@ export type Scene = {
     persistent: boolean;
     worldEventId?: string;
     owner?: string;
+    ownerName?: string;
     entities: Record<string, SceneEntity>;
     peds: Record<string, ScenePed>;
     markers: Record<string, SceneMarker>;
+    createdAt: number;
 };
 
 export type SceneEntity = {

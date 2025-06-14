@@ -3,10 +3,11 @@ import { usePlayer } from '@public/nui/hook/data';
 import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
-import { FunctionComponent, memo } from 'react';
+import { FunctionComponent, memo, useState } from 'react';
 
 import { isStaff } from '../../../shared/player';
 import { RepositoryType } from '../../../shared/repository';
+import { Scene } from '../../../shared/scene';
 import { useRepository } from '../../hook/repository';
 import {
     MainMenu,
@@ -14,6 +15,7 @@ import {
     MenuContent,
     MenuItemButton,
     MenuItemCheckbox,
+    MenuItemStringInput,
     MenuItemSubMenuLink,
     MenuSubTitle,
     MenuTitle,
@@ -32,18 +34,36 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = memo
     const player = usePlayer();
     const showAll = useAtomValue(showAllAtom);
     const setShowAll = useSetAtom(showAllAtom);
-    const scenes = useRepository(RepositoryType.Scene);
+    const scenesMap = useRepository(RepositoryType.Scene);
+    const [collectionFilter, setCollectionFilter] = useState('');
 
     const isPlayerInStaff = isStaff(player);
+    const scenes = Object.values(scenesMap).filter(scene => {
+        if (scene.worldEventId !== null) {
+            return false;
+        }
+
+        if (!collectionFilter || collectionFilter === '') {
+            return true;
+        }
+
+        return (
+            scene.name.toLowerCase().includes(collectionFilter.toLowerCase()) ||
+            scene.ownerName.toLowerCase().includes(collectionFilter.toLowerCase()) ||
+            scene.owner.toLowerCase().includes(collectionFilter.toLowerCase())
+        );
+    }) as Scene[];
     const filteredScenes = (
-        showAll && isPlayerInStaff
-            ? Object.values(scenes)
-            : Object.values(scenes).filter(scene => scene.owner == player.citizenid)
+        showAll && isPlayerInStaff ? scenes : scenes.filter(scene => scene.owner == player.citizenid)
     ).sort((a, b) => a.name.localeCompare(b.name));
 
     if (!player) {
         return null;
     }
+
+    const [loadedScenes, loadedEntities] = filteredScenes
+        .map(scene => (data.loaded.includes(scene.id) ? [1, Object.values(scene.entities).length] : [0, 0]))
+        .reduce((a, b) => [a[0] + b[0], a[1] + b[1]], [0, 0]);
 
     return (
         <Menu type={MenuType.PropPlacementMenu}>
@@ -57,27 +77,44 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = memo
                     >
                         ➕ Créer une Collection
                     </MenuItemButton>
-                    <MenuSubTitle>Collections</MenuSubTitle>
+                    <MenuSubTitle>
+                        {loadedEntities} entités / {loadedScenes} scènes chargées
+                    </MenuSubTitle>
                     {isStaff(player) && (
-                        <MenuItemCheckbox
-                            checked={showAll}
-                            onChange={async value => {
-                                setShowAll(value);
-                            }}
-                        >
-                            Voir toutes les collections
-                        </MenuItemCheckbox>
+                        <>
+                            <MenuItemCheckbox
+                                checked={showAll}
+                                onChange={async value => {
+                                    setShowAll(value);
+                                }}
+                            >
+                                Voir toutes les collections
+                            </MenuItemCheckbox>
+                            <MenuItemStringInput onChange={setCollectionFilter} value={collectionFilter}>
+                                Filtre:
+                            </MenuItemStringInput>
+                        </>
                     )}
                     {filteredScenes.map(scene => {
                         const isLoaded = data.loaded.includes(scene.id);
 
                         return (
-                            <MenuItemSubMenuLink key={scene.id} id={`scene-${scene.id}`}>
+                            <MenuItemSubMenuLink
+                                key={scene.id}
+                                id={`scene-${scene.id}`}
+                                description={
+                                    <p>
+                                        Auteur : {scene.ownerName} ({scene.owner})<br />
+                                        Date de création : {new Date(scene.createdAt).toLocaleDateString('fr-FR')}
+                                        <br />
+                                    </p>
+                                }
+                            >
                                 <div className="pr-2 flex w-full items-center justify-between">
                                     <div>
                                         {scene.persistent && isLoaded && '🟢'}
                                         {!scene.persistent && isLoaded && '🔵'}
-                                        {scene.persistent && !isLoaded && '🟠'}
+                                        {scene.persistent && !isLoaded && '🟡'}
                                         {!scene.persistent && !isLoaded && '🔴'} {scene.name}
                                     </div>
                                     <div>{Object.values(scene.entities).length}</div>
