@@ -257,9 +257,6 @@ export enum ServerEvent {
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
 
-    PROP_REQUEST_DELETE_PROP = 'soz-core:server:prop:request-delete',
-    PROP_REQUEST_EDIT_PROP = 'soz-core:server:prop:request-edit',
-
     SCENE_CREATE = 'soz-core:server:scene:create',
     SCENE_DELETE = 'soz-core:server:scene:delete',
     SCENE_LOAD = 'soz-core:server:scene:load',
