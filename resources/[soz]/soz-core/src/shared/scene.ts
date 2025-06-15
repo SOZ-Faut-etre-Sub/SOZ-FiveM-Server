@@ -84,17 +84,13 @@ export const SceneBlipDelay = 60 * 60_000;
 
 export type SceneLiveElement = LiveEffect | LiveLightState | LiveLightTransition | LiveLightAnimation;
 
-export enum LiveEffectType {
-    Explosion = 'explosion',
-}
-
 export type LiveEffect = {
     id: string;
+    sceneId: string;
     type: 'live_effect';
-    effectType: LiveEffectType;
+    dictionary: string;
+    effect: string;
     loop: boolean;
-    cycle?: number;
-    interval: number;
     timestamp: number;
 };
 

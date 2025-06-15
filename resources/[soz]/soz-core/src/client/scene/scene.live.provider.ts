@@ -11,6 +11,8 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { RepositoryType } from '../../shared/repository';
 import { SceneLiveElement } from '../../shared/scene';
 import { ObjectProvider } from '../object/object.provider';
+import { ResourceLoader } from '../repository/resource.loader';
+import { SceneRepository } from '../repository/scene.repository';
 import { LightObject } from '../world/light.object';
 
 const LIGHT_OBJECT_MODELS = [
@@ -30,9 +32,17 @@ export class SceneLiveProvider {
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
+    @Inject(ResourceLoader)
+    private resourceLoader: ResourceLoader;
+
+    @Inject(SceneRepository)
+    private sceneRepository: SceneRepository;
+
     private lightObjects: Map<string, LightObject> = new Map();
 
     private liveStates: Map<string, SceneLiveElement> = new Map();
+
+    private effectHandles: Map<string, number> = new Map();
 
     @RepositoryInsert(RepositoryType.SceneLive)
     @RepositoryUpdate(RepositoryType.SceneLive)
@@ -40,7 +50,64 @@ export class SceneLiveProvider {
         this.liveStates.set(element.id, element);
 
         if (element.type === 'live_effect') {
-            // @TODO: live effects
+            const scene = this.sceneRepository.find(element.sceneId);
+
+            if (!scene) {
+                return;
+            }
+
+            let position = null;
+
+            if (scene.markers[element.id]) {
+                position = scene.markers[element.id].position;
+            }
+
+            if (scene.entities[element.id]) {
+                position = scene.entities[element.id].object.position;
+            }
+
+            if (!position) {
+                return;
+            }
+
+            if (this.effectHandles.has(element.id)) {
+                StopParticleFxLooped(this.effectHandles.get(element.id), false);
+            }
+
+            await this.resourceLoader.loadPtfxAsset(element.dictionary);
+            UseParticleFxAsset(element.dictionary);
+
+            const fx = element.loop
+                ? StartParticleFxLoopedAtCoord(
+                      element.effect,
+                      position[0],
+                      position[1],
+                      position[2],
+                      0,
+                      0,
+                      0,
+                      1.0,
+                      false,
+                      false,
+                      false,
+                      false
+                  )
+                : StartParticleFxNonLoopedAtCoord(
+                      element.effect,
+                      position[0],
+                      position[1],
+                      position[2],
+                      0,
+                      0,
+                      0,
+                      1.0,
+                      false,
+                      false,
+                      false
+                  );
+
+            this.effectHandles.set(element.id, fx);
+            this.resourceLoader.unloadPtfxAsset(element.dictionary);
         }
 
         if (element.type === 'live_light') {
@@ -76,6 +143,10 @@ export class SceneLiveProvider {
 
     @RepositoryDelete(RepositoryType.SceneLive)
     async onSceneDelete(element: SceneLiveElement) {
+        if (this.effectHandles.has(element.id)) {
+            StopParticleFxLooped(this.effectHandles.get(element.id), false);
+        }
+
         this.liveStates.delete(element.id);
 
         const lightObject = this.lightObjects.get(element.id);

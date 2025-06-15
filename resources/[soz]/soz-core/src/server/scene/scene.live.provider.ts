@@ -29,9 +29,12 @@ export class SceneLiveProvider {
     }
 
     @Delete('/live/element')
-    public async deleteElement(request: Request): Promise<Response> {
-        const elementId = JSON.parse(await request.body) as string;
-        this.sceneLiveRepository.delete(elementId);
+    public async deleteElements(request: Request): Promise<Response> {
+        const elementIds = JSON.parse(await request.body) as string[];
+
+        for (const elementId of elementIds) {
+            this.sceneLiveRepository.delete(elementId);
+        }
 
         return new Response(204);
     }
