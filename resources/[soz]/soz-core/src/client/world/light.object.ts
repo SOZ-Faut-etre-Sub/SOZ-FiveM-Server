@@ -39,8 +39,8 @@ export class LightObject {
         const state: LightState = {
             position,
             direction: directionWithoutOffset,
-            color: [0, 0, 0],
-            enabled: false,
+            color: [255, 255, 255],
+            enabled: true,
         };
 
         this.rotationOffset = rotationOffset;

@@ -7,6 +7,7 @@ import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '../../core
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { RepositoryType } from '../../shared/repository';
 import { SceneLiveElement } from '../../shared/scene';
 import { ObjectProvider } from '../object/object.provider';
@@ -17,6 +18,12 @@ const LIGHT_OBJECT_MODELS = [
     joaat('prop_spot_01'),
     joaat('sm_prop_smug_hangar_lamp_led_b'),
 ];
+
+const LIGHT_OBJECT_OFFSET: Record<number, Vector3> = {
+    [joaat('prop_spot_01')]: [0, 0, 90],
+    [joaat('prop_spot_clamp_02')]: [0, 0, 90],
+    [joaat('sm_prop_smug_hangar_lamp_led_b')]: [0, 0, 90],
+};
 
 @Provider()
 export class SceneLiveProvider {
@@ -31,6 +38,8 @@ export class SceneLiveProvider {
     @RepositoryUpdate(RepositoryType.SceneLive)
     async onSceneUpdate(element: SceneLiveElement) {
         this.liveStates.set(element.id, element);
+
+        console.log(element);
 
         if (element.type === 'live_effect') {
             // @TODO: live effects
@@ -156,7 +165,7 @@ export class SceneLiveProvider {
             return null;
         }
 
-        const lightObject = new LightObject(entity);
+        const lightObject = new LightObject(entity, LIGHT_OBJECT_OFFSET[model] || [0, 0, 0]);
         this.lightObjects.set(objectId, lightObject);
 
         return lightObject;

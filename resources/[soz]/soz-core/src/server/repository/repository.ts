@@ -94,6 +94,16 @@ export abstract class Repository<
         this.data[id] = value;
     }
 
+    public async mset(data: Record<K, V>): Promise<void> {
+        if (this.loadPromise) {
+            await this.loadPromise;
+        }
+
+        for (const [id, value] of Object.entries(data)) {
+            this.data[id as K] = value as V;
+        }
+    }
+
     public async find(id: K): Promise<V | null> {
         if (this.loadPromise) {
             await this.loadPromise;

@@ -13,9 +13,14 @@ export class SceneLiveProvider {
 
     @Post('/live/element')
     public async setElement(request: Request): Promise<Response> {
-        const element = JSON.parse(await request.body) as SceneLiveElement;
+        const elements = JSON.parse(await request.body) as SceneLiveElement[];
+        const elementsMap = {};
 
-        await this.sceneLiveRepository.set(element.id, element);
+        for (const element of elements) {
+            elementsMap[element.id] = element;
+        }
+
+        await this.sceneLiveRepository.mset(elementsMap);
 
         return new Response(204);
     }

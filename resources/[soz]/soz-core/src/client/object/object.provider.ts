@@ -423,7 +423,7 @@ export class ObjectProvider {
             this.inventoryDragAndDropProvider.registerEntity(entity, spawnableObject.dragAndDropCallbacks);
         }
 
-        TriggerEvent(ClientEvent.OBJECT_SPAWN);
+        TriggerEvent(ClientEvent.OBJECT_SPAWN, spawnableObject.object.id, entity);
 
         await wait(0);
     }
