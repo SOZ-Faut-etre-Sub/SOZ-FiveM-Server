@@ -19,6 +19,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 peds: true,
                 markers: true,
                 creator: true,
+                associates: true,
             },
         });
 
@@ -28,9 +29,22 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             const entities: Record<string, SceneEntity> = {};
             const peds: Record<string, ScenePed> = {};
             const markers: Record<string, SceneMarker> = {};
+            const associates = [];
             const charInfo = scene.creator?.charinfo
                 ? (JSON.parse(scene.creator?.charinfo) as { firstname: string; lastname: string; dateofbirth: string })
                 : null;
+
+            for (const associate of scene.associates) {
+                const charInfo = JSON.parse(associate.charinfo) as {
+                    firstname: string;
+                    lastname: string;
+                };
+
+                associates.push({
+                    citizenId: associate.citizenid,
+                    name: `${charInfo.firstname} ${charInfo.lastname}`,
+                });
+            }
 
             for (const entity of scene.entities) {
                 entities[entity.id] = {
@@ -69,6 +83,7 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 ownerName: charInfo ? `${charInfo.firstname} ${charInfo.lastname}` : null,
                 worldEventId: scene.event_id,
                 createdAt: scene.created_at.getTime(),
+                associates,
             };
         }
 
@@ -102,9 +117,63 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
             markers: {},
             worldEventId: scene.event_id,
             createdAt: scene.created_at.getTime(),
+            associates: [],
         };
 
         return this.data[scene.id];
+    }
+
+    public async addAssociate(sceneId: string, citizenId: string, name: string) {
+        await this.prismaService.scene.update({
+            where: {
+                id: sceneId,
+            },
+            data: {
+                associates: {
+                    connect: {
+                        citizenid: citizenId,
+                    },
+                },
+            },
+        });
+
+        this.data[sceneId].associates.push({
+            citizenId,
+            name,
+        });
+    }
+
+    public async removeAssociate(sceneId: string, citizenId: string) {
+        await this.prismaService.scene.update({
+            where: {
+                id: sceneId,
+            },
+            data: {
+                associates: {
+                    disconnect: {
+                        citizenid: citizenId,
+                    },
+                },
+            },
+        });
+
+        this.data[sceneId].associates = this.data[sceneId].associates.filter(
+            associate => associate.citizenId !== citizenId
+        );
+    }
+
+    public async setOwnership(sceneId: string, citizenId: string, name: string) {
+        await this.prismaService.scene.update({
+            where: {
+                id: sceneId,
+            },
+            data: {
+                creator_id: citizenId,
+            },
+        });
+
+        this.data[sceneId].owner = citizenId;
+        this.data[sceneId].ownerName = name;
     }
 
     public async setPersistent(sceneId: string, persistent: boolean) {

@@ -44,8 +44,16 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
     const subMenuPedId = `scene-ped-${scene.id}`;
     const subMenuMarkerId = `scene-marker-${scene.id}`;
     const subMenuCollection = `scene-collection-${scene.id}`;
+    const subMenuAssociate = `scene-associate-${scene.id}`;
     const collections = Object.keys(PLACEMENT_PROP_LIST).sort((a, b) => a.localeCompare(b));
-    const allSubMenus = [subMenuId, subMenuEntityId, subMenuPedId, subMenuMarkerId, subMenuCollection];
+    const allSubMenus = [
+        subMenuId,
+        subMenuEntityId,
+        subMenuPedId,
+        subMenuMarkerId,
+        subMenuCollection,
+        subMenuAssociate,
+    ];
     const subMenuPreview = [];
 
     for (const categoryIndex in collections) {
@@ -225,6 +233,41 @@ export const SubMenuScene: FunctionComponent<SubMenuSceneProps> = ({
                         <MenuItemSubMenuLink id={`scene-ped-${scene.id}`}>PNJS</MenuItemSubMenuLink>
                     )}
                     <MenuItemSubMenuLink id={`scene-marker-${scene.id}`}>Markers</MenuItemSubMenuLink>
+                    {(isStaff(player) || scene.owner === player.citizenid) && (
+                        <MenuItemSubMenuLink id={subMenuAssociate}>Associés</MenuItemSubMenuLink>
+                    )}
+                </MenuContent>
+            </SubMenu>
+            <SubMenu id={subMenuAssociate}>
+                <MenuTitle title="Associés" />
+                <MenuContent>
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.SceneAddAssociate, { sceneId: scene.id })}>
+                        Ajouté un associé
+                    </MenuItemButton>
+                    {scene.associates.map(associate => (
+                        <MenuItemSelect
+                            key={associate.citizenId}
+                            title={associate.name}
+                            onConfirm={(_, value) => {
+                                if (value === 'delete') {
+                                    fetchNui(NuiEvent.SceneRemoveAssociate, {
+                                        sceneId: scene.id,
+                                        associateId: associate.citizenId,
+                                    });
+                                }
+
+                                if (value === 'transfer') {
+                                    fetchNui(NuiEvent.SceneTransferOwnership, {
+                                        sceneId: scene.id,
+                                        associateId: associate.citizenId,
+                                    });
+                                }
+                            }}
+                        >
+                            <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                            <MenuItemSelectOption value="transfer">Transféré l'ownership</MenuItemSelectOption>
+                        </MenuItemSelect>
+                    ))}
                 </MenuContent>
             </SubMenu>
             <SubMenu id={`scene-entity-${scene.id}`}>

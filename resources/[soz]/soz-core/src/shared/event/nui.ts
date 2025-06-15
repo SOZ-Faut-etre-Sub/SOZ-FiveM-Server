@@ -633,6 +633,9 @@ export enum NuiEvent {
     SceneRemoveMarker = 'soz-core:nui-client:scene:remove-marker',
     SceneAddMarker = 'soz-core:nui-client:scene:add-marker',
     SceneUpdateMarker = 'soz-core:nui-client:scene:update-marker',
+    SceneAddAssociate = 'soz-core:nui-client:scene:add-associate',
+    SceneRemoveAssociate = 'soz-core:nui-client:scene:remove-associate',
+    SceneTransferOwnership = 'soz-core:nui-client:scene:transfer-ownership',
 
     TargetReset = 'soz-core:nui:target:reset',
     TargetSelect = 'soz-core:nui:target:select',

@@ -241,6 +241,7 @@ model scene {
     event_id    String?
     event       event?         @relation(fields: [event_id], references: [id], onDelete: Cascade, map: "FK_scene_event")
     live_config Json?          @db.Json
+    associates  player[]       @relation("scene_associates", map: "FK_scene_associates_player")
 }
 
 model scene_entity {
@@ -438,6 +439,7 @@ model player {
     radar_speed_records     radar[]                  @relation("radar_speed_record")
     SenatePartyMember       SenatePartyMember?
     scenes                  scene[]
+    associatedScenes        scene[]                  @relation("scene_associates")
 
     @@index([id], map: "id")
     @@index([last_updated], map: "last_updated")
@@ -1064,8 +1066,8 @@ model hc_props {
 }
 
 model traveling {
-    id     Int      @id @default(autoincrement())
-    name   String   @unique @db.VarChar(128)
-    job    String   @db.VarChar(15)
-    points String   @db.Text
+    id     Int    @id @default(autoincrement())
+    name   String @unique @db.VarChar(128)
+    job    String @db.VarChar(15)
+    points String @db.Text
 }

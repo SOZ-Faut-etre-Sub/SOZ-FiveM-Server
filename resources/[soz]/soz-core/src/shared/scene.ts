@@ -32,6 +32,10 @@ export type Scene = {
     worldEventId?: string;
     owner?: string;
     ownerName?: string;
+    associates: {
+        citizenId: string;
+        name: string;
+    }[];
     entities: Record<string, SceneEntity>;
     peds: Record<string, ScenePed>;
     markers: Record<string, SceneMarker>;
@@ -109,4 +113,12 @@ export type LiveLightAnimation = {
     id: string;
     type: 'live_light_animation';
     animation: LightStateAnimation;
+};
+
+export const isPlayerAssociatedToScene = (citizenId: string, scene: Scene): boolean => {
+    if (scene.owner === citizenId) {
+        return true;
+    }
+
+    return scene.associates.some(associate => associate.citizenId === citizenId);
 };

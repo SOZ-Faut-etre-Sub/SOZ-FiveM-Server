@@ -10,7 +10,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { joaat } from '../../shared/joaat';
 import { WorldObject } from '../../shared/object';
 import { RpcServerEvent } from '../../shared/rpc';
-import { SceneMarkerData } from '../../shared/scene';
+import { isPlayerAssociatedToScene, SceneMarkerData } from '../../shared/scene';
 import { PrismaService } from '../database/prisma.service';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
@@ -139,7 +139,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -162,7 +162,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -226,7 +226,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -249,7 +249,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -277,7 +277,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -300,7 +300,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -323,7 +323,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -346,7 +346,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -425,7 +425,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -453,7 +453,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -476,7 +476,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -504,7 +504,7 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
@@ -527,13 +527,117 @@ export class SceneProvider {
             return;
         }
 
-        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+        if (!isPlayerAssociatedToScene(player.citizenid, scene) && !this.permissionService.isStaff(source)) {
             return;
         }
 
         await this.sceneRepository.setEntityUserId(sceneId, entityId, userId);
 
         this.notifier.notify(source, `Entité défini avec ${userId} dans la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_ADD_ASSOCIATE)
+    public async addAssociate(source: number, sceneId: string, associatePhoneNumber: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        const associate = await this.prismaService.player.findFirst({
+            where: {
+                charinfo: {
+                    contains: associatePhoneNumber,
+                },
+            },
+        });
+
+        if (!associate) {
+            this.notifier.notify(source, `Aucun joueur trouvé avec le numéro de téléphone ${associatePhoneNumber}`);
+
+            return;
+        }
+
+        const associateCharInfo = JSON.parse(associate.charinfo);
+        const name = `${associateCharInfo.firstname} ${associateCharInfo.lastname}`;
+
+        await this.sceneRepository.addAssociate(sceneId, associate.citizenid, name);
+
+        this.notifier.notify(source, `Associé ${name} ajouté à la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_REMOVE_ASSOCIATE)
+    public async removeAssociate(source: number, sceneId: string, associateId: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        await this.sceneRepository.removeAssociate(sceneId, associateId);
+
+        this.notifier.notify(source, `Associé supprimé de la scene ${scene.name}`);
+    }
+
+    @OnEvent(ServerEvent.SCENE_TRANSFER_OWNER)
+    public async transferOwner(source: number, sceneId: string, citizenId: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+
+        if (!player) {
+            return;
+        }
+
+        const scene = await this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        if (scene.owner !== player.citizenid && !this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        const newOwner = await this.prismaService.player.findFirst({
+            where: {
+                citizenid: citizenId,
+            },
+        });
+
+        if (!newOwner) {
+            return;
+        }
+
+        const newOwnerCharInfo = JSON.parse(newOwner.charinfo);
+        const name = `${newOwnerCharInfo.firstname} ${newOwnerCharInfo.lastname}`;
+
+        const previousOwnerId = scene.owner;
+        const previousOwnerName = scene.ownerName;
+
+        await this.sceneRepository.removeAssociate(sceneId, citizenId);
+        await this.sceneRepository.addAssociate(sceneId, previousOwnerId, previousOwnerName);
+        await this.sceneRepository.setOwnership(sceneId, citizenId, name);
+
+        this.notifier.notify(source, `Scène ${scene.name} transférée à ${name}`);
     }
 
     public loadScene(sceneId: string) {

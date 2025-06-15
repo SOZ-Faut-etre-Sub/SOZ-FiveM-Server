@@ -1248,6 +1248,40 @@ export class SceneProvider {
         }
     }
 
+    @OnNuiEvent(NuiEvent.SceneAddAssociate)
+    async addAssociate({ sceneId }: { sceneId: string }) {
+        const scene = this.sceneRepository.find(sceneId);
+
+        if (!scene) {
+            return;
+        }
+
+        const phone = await this.inputService.askInput(
+            {
+                title: 'Téléphone du joueur',
+                defaultValue: '555-',
+                maxCharacters: 50,
+            },
+            NotEmptyStringValidator
+        );
+
+        if (!phone) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.SCENE_ADD_ASSOCIATE, sceneId, phone);
+    }
+
+    @OnNuiEvent(NuiEvent.SceneRemoveAssociate)
+    async removeAssociate({ sceneId, associateId }: { sceneId: string; associateId: string }) {
+        TriggerServerEvent(ServerEvent.SCENE_REMOVE_ASSOCIATE, sceneId, associateId);
+    }
+
+    @OnNuiEvent(NuiEvent.SceneTransferOwnership)
+    async transferOwnership({ sceneId, associateId }: { sceneId: string; associateId: string }) {
+        TriggerServerEvent(ServerEvent.SCENE_TRANSFER_OWNER, sceneId, associateId);
+    }
+
     @Tick(TickInterval.EVERY_FRAME)
     public async handlePreviewEntity() {
         if (null === this.currentSceneEdited) {

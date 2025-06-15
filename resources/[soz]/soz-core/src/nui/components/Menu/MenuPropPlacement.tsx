@@ -7,7 +7,7 @@ import { FunctionComponent, memo, useState } from 'react';
 
 import { isStaff } from '../../../shared/player';
 import { RepositoryType } from '../../../shared/repository';
-import { Scene } from '../../../shared/scene';
+import { isPlayerAssociatedToScene, Scene } from '../../../shared/scene';
 import { useRepository } from '../../hook/repository';
 import {
     MainMenu,
@@ -54,7 +54,7 @@ export const MenuPropPlacement: FunctionComponent<MenuPropPlacementProps> = memo
         );
     }) as Scene[];
     const filteredScenes = (
-        showAll && isPlayerInStaff ? scenes : scenes.filter(scene => scene.owner == player.citizenid)
+        showAll && isPlayerInStaff ? scenes : scenes.filter(scene => isPlayerAssociatedToScene(player.citizenid, scene))
     ).sort((a, b) => a.name.localeCompare(b.name));
 
     if (!player) {
