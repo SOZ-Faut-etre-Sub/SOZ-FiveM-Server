@@ -17,7 +17,7 @@ export type Spotlight = {
 
 export type LightStateTransition = {
     duration: number;
-    next: Partial<LightState>;
+    next: NextState;
 };
 
 export type LightStateAnimation = {
@@ -30,5 +30,41 @@ export type LightState = {
     position: Vector3;
     direction: Vector3;
     color: RGBColor;
-    enabled: boolean;
+    brightness: number;
+};
+
+export type NextState = {
+    direction?: Vector3;
+    rotation?: Vector3;
+    color?: RGBColor;
+    enabled?: boolean;
+};
+
+export const getStateWithNext = (current: LightState, next: NextState): LightState => {
+    const newState: LightState = { ...current };
+
+    if (next.direction) {
+        newState.direction = next.direction;
+    }
+
+    if (next.rotation) {
+        newState.direction = [...newState.direction];
+        newState.direction[0] = (newState.direction[0] + next.rotation[0]) % 360;
+        newState.direction[1] = (newState.direction[1] + next.rotation[1]) % 360;
+        newState.direction[2] = (newState.direction[2] + next.rotation[2]) % 360;
+    }
+
+    if (next.color) {
+        newState.color = next.color;
+    }
+
+    if (next.enabled !== undefined) {
+        if (next.enabled) {
+            newState.brightness = 1;
+        } else {
+            newState.brightness = 0;
+        }
+    }
+
+    return newState;
 };

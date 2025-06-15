@@ -1,10 +1,18 @@
+import { hslToRgb, rgbToHsl } from '../../shared/color';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { LightState, LightStateAnimation, LightStateTransition } from '../../shared/spotlight';
+import {
+    getStateWithNext,
+    LightState,
+    LightStateAnimation,
+    LightStateTransition,
+    NextState,
+} from '../../shared/spotlight';
 
 type CurrentTransition = {
     started_at: number;
     end_at: number;
     initial: LightState;
+    next: LightState;
     transition: LightStateTransition;
 };
 
@@ -40,7 +48,7 @@ export class LightObject {
             position,
             direction: directionWithoutOffset,
             color: [255, 255, 255],
-            enabled: true,
+            brightness: 1.0,
         };
 
         this.rotationOffset = rotationOffset;
@@ -56,83 +64,13 @@ export class LightObject {
         });
     }
 
-    blink(duration: number, cycle?: number) {
-        this.applyAnimation({
-            loop: !cycle,
-            cycle,
-            transitions: [
-                {
-                    duration: duration,
-                    next: {
-                        ...this.currentState,
-                        enabled: false,
-                    },
-                },
-                {
-                    duration: duration,
-                    next: {
-                        ...this.currentState,
-                        enabled: true,
-                    },
-                },
-            ],
-        });
-    }
-
-    rotate(duration: number, direction: Vector3, loop?: boolean, cycle?: number) {
-        if (!loop && !cycle) {
-            this.applyTransition({
-                duration,
-                next: {
-                    ...this.currentState,
-                    direction,
-                },
-            });
-
-            return;
-        }
-
-        const transitions = [
-            {
-                duration: duration,
-                next: {
-                    ...this.currentState,
-                    direction,
-                },
-            },
-            {
-                duration: duration,
-                next: {
-                    ...this.currentState,
-                    direction: this.currentState.direction,
-                },
-            },
-        ];
-
-        if (loop) {
-            this.applyAnimation({
-                loop: true,
-                transitions,
-            });
-        }
-
-        if (cycle) {
-            this.applyAnimation({
-                loop: false,
-                cycle,
-                transitions,
-            });
-        }
-    }
-
-    applyState(state: Partial<LightState>) {
+    applyState(state: NextState) {
         this.transition = null;
         this.animation = null;
 
-        this.doApplyState({
-            ...this.currentState,
-            ...state,
-        });
+        const nextState = getStateWithNext(this.currentState, state);
+
+        this.doApplyState(nextState);
     }
 
     applyTransition(transition: LightStateTransition) {
@@ -152,12 +90,11 @@ export class LightObject {
 
     update() {
         if (this.transition) {
-            const { started_at, end_at, transition, initial } = this.transition;
+            const { started_at, end_at, initial, next } = this.transition;
             const now = GetGameTimer();
 
             const progress = Math.min(1, (now - started_at) / (end_at - started_at));
-            const nextState = { ...this.currentState, ...transition.next };
-            const state = calculateState(initial, nextState, progress);
+            const state = calculateState(initial, next, progress);
 
             this.doApplyState(state);
 
@@ -193,6 +130,7 @@ export class LightObject {
     private doApplyTransition(transition: LightStateTransition) {
         const start_at = GetGameTimer();
         const end_at = start_at + transition.duration;
+        const nextState = getStateWithNext(this.currentState, transition.next);
 
         this.transition = {
             started_at: start_at,
@@ -201,8 +139,9 @@ export class LightObject {
                 position: [...this.currentState.position],
                 direction: [...this.currentState.direction],
                 color: [...this.currentState.color],
-                enabled: this.currentState.enabled,
+                brightness: this.currentState.brightness,
             },
+            next: nextState,
             transition,
         };
     }
@@ -238,7 +177,14 @@ export class LightObject {
 
         SetEntityRotation(this.object, pitch, roll, yaw, 2, false);
 
-        const color = state.enabled ? state.color : [0, 0, 0];
+        let color = [...state.color];
+
+        if (state.brightness < 1.0) {
+            const hslColor = rgbToHsl(color);
+            hslColor[2] *= state.brightness; // Adjust lightness based on brightness
+
+            color = hslToRgb(hslColor);
+        }
 
         SetObjectLightColor(this.object, true, color[0], color[1], color[2]);
     }
@@ -253,17 +199,24 @@ const calculateState = (initial: LightState, target: LightState, progress: numbe
     const directionY = calculateProgress(initial.direction[1], target.direction[1], progress, 360);
     const directionZ = calculateProgress(initial.direction[2], target.direction[2], progress, 360);
 
-    // @TODO do better for color
-    const colorR = target.color[0];
-    const colorG = target.color[1];
-    const colorB = target.color[2];
-    const enabled = target.enabled;
+    // Use HSL for color interpolation, as it provides a more natural transition, and also handles the enabled state
+    const initialColorHsl = rgbToHsl(initial.color);
+    const targetColorHsl = rgbToHsl(target.color);
+
+    const colorH = calculateProgress(initialColorHsl[0], targetColorHsl[0], progress);
+    const colorS = calculateProgress(initialColorHsl[1], targetColorHsl[1], progress);
+    const colorL = calculateProgress(initialColorHsl[2], targetColorHsl[2], progress);
+
+    const brightness = calculateProgress(initial.brightness, target.brightness, progress);
+
+    // Convert back to RGB
+    const targetColorRgb = hslToRgb([colorH, colorS, colorL]);
 
     return {
         position: [positionX, positionY, positionZ],
         direction: [directionX, directionY, directionZ],
-        color: [colorR, colorG, colorB],
-        enabled,
+        color: targetColorRgb,
+        brightness,
     };
 };
 
@@ -272,9 +225,9 @@ const calculateProgress = (a: number, b: number, p: number, remainder?: number) 
         // take the closest path when there is a remainder
         if (Math.abs(b - a) > remainder / 2) {
             if (b > a) {
-                a += 360;
+                a += remainder;
             } else {
-                b += 360;
+                b += remainder;
             }
         }
 

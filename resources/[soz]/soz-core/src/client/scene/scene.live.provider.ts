@@ -39,8 +39,6 @@ export class SceneLiveProvider {
     async onSceneUpdate(element: SceneLiveElement) {
         this.liveStates.set(element.id, element);
 
-        console.log(element);
-
         if (element.type === 'live_effect') {
             // @TODO: live effects
         }

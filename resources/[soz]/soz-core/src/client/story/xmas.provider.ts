@@ -11,7 +11,7 @@ import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, getRotationForATargetingB, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { LightState } from '../../shared/spotlight';
+import { LightState, NextState } from '../../shared/spotlight';
 import {
     SCENE_COLOR_TEXTURE_NAMES,
     SCENE_COLORS,
@@ -164,7 +164,7 @@ export class XmasProvider {
         for (const spotName of Object.keys(this.loadedSceneObjects.spots)) {
             const spotObject = this.loadedSceneObjects.spots[spotName as Spot];
             const spotState = this.sceneState.spots[spotName as Spot];
-            const newState: Partial<LightState> = { enabled: false };
+            const newState: NextState = { enabled: false };
 
             if (spotState) {
                 const color = SPOT_COLORS[spotState.color] || [0, 0, 0];
@@ -268,7 +268,7 @@ export class XmasProvider {
             }
 
             const spotObject = this.loadedSceneObjects.spots[spotName as Spot];
-            const newState: Partial<LightState> = {
+            const newState: NextState = {
                 direction: getRotationForATargetingB(spotObject.initialState.position, trackedPosition),
             };
 

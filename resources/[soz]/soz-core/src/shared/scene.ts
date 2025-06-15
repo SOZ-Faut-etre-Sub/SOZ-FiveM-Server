@@ -1,4 +1,4 @@
-import { LightState, LightStateAnimation, LightStateTransition } from '@public/shared/spotlight';
+import { LightStateAnimation, LightStateTransition, NextState } from '@public/shared/spotlight';
 
 import { WorldObject } from './object';
 import { Vector4 } from './polyzone/vector';
@@ -100,7 +100,7 @@ export type LiveEffect = {
 export type LiveLightState = {
     id: string;
     type: 'live_light';
-    state: Partial<LightState>;
+    state: NextState;
 };
 
 export type LiveLightTransition = {
