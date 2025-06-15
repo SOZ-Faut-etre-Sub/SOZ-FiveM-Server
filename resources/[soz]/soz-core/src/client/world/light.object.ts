@@ -199,23 +199,16 @@ const calculateState = (initial: LightState, target: LightState, progress: numbe
     const directionY = calculateProgress(initial.direction[1], target.direction[1], progress, 360);
     const directionZ = calculateProgress(initial.direction[2], target.direction[2], progress, 360);
 
-    // Use HSL for color interpolation, as it provides a more natural transition, and also handles the enabled state
-    const initialColorHsl = rgbToHsl(initial.color);
-    const targetColorHsl = rgbToHsl(target.color);
-
-    const colorH = calculateProgress(initialColorHsl[0], targetColorHsl[0], progress);
-    const colorS = calculateProgress(initialColorHsl[1], targetColorHsl[1], progress);
-    const colorL = calculateProgress(initialColorHsl[2], targetColorHsl[2], progress);
+    const colorR = calculateProgress(initial.color[0], target.color[0], progress);
+    const colorG = calculateProgress(initial.color[1], target.color[1], progress);
+    const colorB = calculateProgress(initial.color[2], target.color[2], progress);
 
     const brightness = calculateProgress(initial.brightness, target.brightness, progress);
-
-    // Convert back to RGB
-    const targetColorRgb = hslToRgb([colorH, colorS, colorL]);
 
     return {
         position: [positionX, positionY, positionZ],
         direction: [directionX, directionY, directionZ],
-        color: targetColorRgb,
+        color: [Math.floor(colorR), Math.floor(colorG), Math.floor(colorB)],
         brightness,
     };
 };

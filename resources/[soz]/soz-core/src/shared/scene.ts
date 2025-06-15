@@ -95,24 +95,28 @@ export type LiveEffect = {
     loop: boolean;
     cycle?: number;
     interval: number;
+    timestamp: number;
 };
 
 export type LiveLightState = {
     id: string;
     type: 'live_light';
     state: NextState;
+    timestamp: number;
 };
 
 export type LiveLightTransition = {
     id: string;
     type: 'live_light_transition';
     transition: LightStateTransition;
+    timestamp: number;
 };
 
 export type LiveLightAnimation = {
     id: string;
     type: 'live_light_animation';
     animation: LightStateAnimation;
+    timestamp: number;
 };
 
 export const isPlayerAssociatedToScene = (citizenId: string, scene: Scene): boolean => {

@@ -17,7 +17,10 @@ export class SceneLiveProvider {
         const elementsMap = {};
 
         for (const element of elements) {
-            elementsMap[element.id] = element;
+            elementsMap[element.id] = {
+                ...element,
+                timestamp: new Date().getTime(),
+            };
         }
 
         await this.sceneLiveRepository.mset(elementsMap);

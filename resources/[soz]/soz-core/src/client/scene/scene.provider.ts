@@ -123,6 +123,8 @@ export class SceneProvider {
 
     private previewEntity: number | null = null;
 
+    private loadingScenePromises: Map<string, Promise<void>> = new Map();
+
     public isEditingScene(): boolean {
         return this.currentSceneEdited !== null;
     }
@@ -172,11 +174,6 @@ export class SceneProvider {
             return;
         }
 
-        if (this.loadedScenes.has(scene.id)) {
-            // Unload scene if necessary to add highlight
-            await this.doUnloadScene(scene);
-        }
-
         this.currentSceneEdited = {
             scene,
             context,
@@ -210,21 +207,21 @@ export class SceneProvider {
             return;
         }
 
-        await this.doUnloadScene(this.currentSceneEdited.scene);
-
-        if (this.loadedScenes.has(this.currentSceneEdited.scene.id)) {
-            // reload scene if necessary without highlight
-            await this.doLoadScene(this.currentSceneEdited.scene);
-
-            const scene = this.currentSceneEdited.scene;
-            this.currentSceneEdited = null;
-
-            await this.applyHighlight(scene);
-        }
+        const currentScene = this.currentSceneEdited.scene;
 
         this.flyingCameraProvider.deleteCamera();
         this.camera = null;
         this.currentSceneEdited = null;
+
+        if (!this.loadedScenes.has(currentScene.id)) {
+            await this.doUnloadScene(currentScene);
+        }
+
+        if (this.currentSceneEdited && this.loadedScenes.has(currentScene.id)) {
+            // reload scene if necessary without highlight
+            await this.doLoadScene(currentScene);
+            await this.applyHighlight(currentScene);
+        }
     }
 
     @OnNuiEvent(NuiEvent.SceneSetEntityHighlighted)
@@ -1006,6 +1003,19 @@ export class SceneProvider {
     }
 
     async doLoadScene(scene: Scene, editing = false) {
+        const existingPromise = this.loadingScenePromises.get(scene.id);
+
+        if (existingPromise) {
+            return existingPromise;
+        }
+
+        let resolvePromise: () => void;
+        const newPromise = new Promise<void>(resolve => {
+            resolvePromise = resolve;
+        });
+
+        this.loadingScenePromises.set(scene.id, newPromise);
+
         for (const entity of Object.values(scene.entities)) {
             await this.loadSceneEntity(entity, editing);
         }
@@ -1019,6 +1029,9 @@ export class SceneProvider {
                 await this.loadSceneMarker(marker);
             }
         }
+
+        resolvePromise();
+        this.loadingScenePromises.delete(scene.id);
     }
 
     async loadScenePed(ped: ScenePed) {
@@ -1202,6 +1215,17 @@ export class SceneProvider {
             return;
         }
 
+        const existingPromise = this.loadingScenePromises.get(scene.id);
+
+        if (existingPromise) {
+            await existingPromise;
+        }
+
+        // It was loaded while waiting for the promise, so we don't need to unload it
+        if (this.loadedScenes.has(scene.id) || this.currentSceneEdited?.scene.id === scene.id) {
+            return;
+        }
+
         const objectIds = [];
 
         for (const entity of Object.values(scene.entities)) {
@@ -1211,7 +1235,7 @@ export class SceneProvider {
         this.objectProvider.deleteObjects(objectIds);
 
         for (const ped of Object.values(scene.peds)) {
-            this.pedFactory.deletePedOnGrid(ped.id);
+            await this.pedFactory.deletePedOnGrid(ped.id);
         }
 
         this.objectProvider.deleteObjects(Object.keys(scene.markers));
