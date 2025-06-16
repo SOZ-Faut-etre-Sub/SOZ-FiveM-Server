@@ -29,6 +29,7 @@ type BahamaUnicornStateProps = {
             displayFurnitureBlip: boolean;
             displayResellBlip: boolean;
             displaySnackBlip: boolean;
+            displayBeerBlip: boolean;
         };
     };
 };
@@ -95,6 +96,18 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
                         onChange={value => displayBlip('displayFurnitureBlip', value)}
                     >
                         Afficher la récolte de fournitures
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={state.displaySnackBlip}
+                        onChange={value => displayBlip('displaySnackBlip', value)}
+                    >
+                        Afficher la récolte de snacks
+                    </MenuItemCheckbox>
+                    <MenuItemCheckbox
+                        checked={state.displayBeerBlip}
+                        onChange={value => displayBlip('displayBeerBlip', value)}
+                    >
+                        Afficher la récolte de bières
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={state.displaySnackBlip}
