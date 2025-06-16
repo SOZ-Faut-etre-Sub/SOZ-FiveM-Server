@@ -1,4 +1,4 @@
-import { hslToRgb, rgbToHsl } from '../../shared/color';
+import { hslToRgb, RGBColor, rgbToHsl } from '../../shared/color';
 import { Vector3 } from '../../shared/polyzone/vector';
 import {
     getStateWithNext,
@@ -13,7 +13,6 @@ type CurrentTransition = {
     end_at: number;
     initial: LightState;
     next: LightState;
-    transition: LightStateTransition;
 };
 
 type CurrentAnimation = {
@@ -64,7 +63,23 @@ export class LightObject {
         });
     }
 
-    applyState(state: NextState) {
+    applyState(state: NextState, mergeTransition = false) {
+        if (this.transition && mergeTransition) {
+            this.transition = {
+                initial: {
+                    position: [...this.currentState.position],
+                    direction: [...this.currentState.direction],
+                    color: [...this.currentState.color],
+                    brightness: this.currentState.brightness,
+                },
+                next: getStateWithNext(this.transition.next, state),
+                started_at: GetGameTimer(),
+                end_at: this.transition.end_at,
+            };
+
+            return;
+        }
+
         this.transition = null;
         this.animation = null;
 
@@ -142,7 +157,6 @@ export class LightObject {
                 brightness: this.currentState.brightness,
             },
             next: nextState,
-            transition,
         };
     }
 
@@ -177,7 +191,7 @@ export class LightObject {
 
         SetEntityRotation(this.object, pitch, roll, yaw, 2, false);
 
-        let color = [...state.color];
+        let color = [...state.color] as RGBColor;
 
         if (state.brightness < 1.0) {
             const hslColor = rgbToHsl(color);

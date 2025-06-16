@@ -98,6 +98,7 @@ export type LiveLightState = {
     id: string;
     type: 'live_light';
     state: NextState;
+    merge: boolean;
     timestamp: number;
 };
 

@@ -117,7 +117,7 @@ export class SceneLiveProvider {
                 return;
             }
 
-            lightObject.applyState(element.state);
+            lightObject.applyState(element.state, element.merge);
         }
 
         if (element.type === 'live_light_transition') {
