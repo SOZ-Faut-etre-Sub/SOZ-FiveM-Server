@@ -242,6 +242,8 @@ export class SceneRepository extends Repository<RepositoryType.Scene> {
                 id: entity.id,
             },
         };
+
+        return scene.entities[entity.id];
     }
 
     public async removeEntity(sceneId: string, entityId: string) {

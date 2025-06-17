@@ -419,7 +419,9 @@ export class SceneProvider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, entity.model, object);
+        const userId = entity.userId ? await this.doAskUserId(scene, entity.userId) : null;
+
+        TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, entity.model, object, userId);
     }
 
     @OnNuiEvent(NuiEvent.SceneUpdateEntity)
@@ -436,7 +438,7 @@ export class SceneProvider {
             return;
         }
 
-        return await this.updateEntity(sceneId, entity);
+        return await this.updateEntity(sceneId, scene, entity);
     }
 
     @OnNuiEvent(NuiEvent.SceneRemoveEntity)
@@ -895,14 +897,7 @@ export class SceneProvider {
             return;
         }
 
-        const userId = await this.inputService.askInput(
-            {
-                title: 'Identifiant',
-                maxCharacters: 50,
-                defaultValue: entity.userId,
-            },
-            NotEmptyStringValidator
-        );
+        const userId = await this.doAskUserId(scene);
 
         if (!userId) {
             return;
@@ -1262,7 +1257,11 @@ export class SceneProvider {
         const sceneEntity = this.currentSceneEdited?.scene.entities[objectId] ?? null;
 
         if (sceneEntity) {
-            return await this.updateEntity(this.currentSceneEdited.scene.id, sceneEntity);
+            return await this.updateEntity(
+                this.currentSceneEdited.scene.id,
+                this.currentSceneEdited.scene,
+                sceneEntity
+            );
         }
 
         const sceneMarker = this.currentSceneEdited?.scene.markers[objectId] ?? null;
@@ -1446,7 +1445,7 @@ export class SceneProvider {
         ] as Vector4;
     }
 
-    public async updateEntity(sceneId: string, sceneEntity: SceneEntity) {
+    public async updateEntity(sceneId: string, scene: Scene, sceneEntity: SceneEntity) {
         const object = await this.objectEditorProvider.createOrUpdateObject(
             sceneEntity.object.model,
             {
@@ -1474,7 +1473,9 @@ export class SceneProvider {
         }
 
         if (sceneEntity.id !== object.id) {
-            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, sceneEntity.model, object);
+            const userId = sceneEntity.userId ? await this.doAskUserId(scene, sceneEntity.userId) : null;
+
+            TriggerServerEvent(ServerEvent.SCENE_ADD_ENTITY, sceneId, sceneEntity.model, object, userId);
         } else {
             TriggerServerEvent(ServerEvent.SCENE_UPDATE_ENTITY, sceneId, sceneEntity.id, object);
         }
@@ -1525,5 +1526,28 @@ export class SceneProvider {
         };
 
         TriggerServerEvent(ServerEvent.SCENE_UPDATE_MARKER, sceneId, sceneMarker.id, data);
+    }
+
+    async doAskUserId(scene: Scene, existingUserId?: string): Promise<string | null> {
+        return await this.inputService.askInput(
+            {
+                title: "Identifiant de l'entité",
+                defaultValue: existingUserId || '',
+                maxCharacters: 50,
+            },
+            input => {
+                if (!input) {
+                    return Ok(null);
+                }
+
+                const existingUserId = Object.values(scene.entities).find(entity => entity.userId === input);
+
+                if (existingUserId) {
+                    return Err('Cet identifiant est déjà utilisé par une autre entité de la collection.');
+                }
+
+                return Ok(input);
+            }
+        );
     }
 }

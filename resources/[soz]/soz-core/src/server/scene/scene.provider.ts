@@ -213,7 +213,13 @@ export class SceneProvider {
     }
 
     @OnEvent(ServerEvent.SCENE_ADD_ENTITY)
-    public async addEntity(source: number, sceneId: string, model: string, object: WorldObject): Promise<void> {
+    public async addEntity(
+        source: number,
+        sceneId: string,
+        model: string,
+        object: WorldObject,
+        userId?: string
+    ): Promise<void> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -230,7 +236,11 @@ export class SceneProvider {
             return;
         }
 
-        await this.sceneRepository.addEntity(sceneId, model, object);
+        const entity = await this.sceneRepository.addEntity(sceneId, model, object);
+
+        if (userId) {
+            await this.sceneRepository.setEntityUserId(sceneId, entity.id, userId);
+        }
 
         this.notifier.notify(source, `Entity ${model} ajoutée à la scene ${scene.name}`);
     }
