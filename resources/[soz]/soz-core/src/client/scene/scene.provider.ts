@@ -217,7 +217,7 @@ export class SceneProvider {
             await this.doUnloadScene(currentScene);
         }
 
-        if (this.currentSceneEdited && this.loadedScenes.has(currentScene.id)) {
+        if (this.loadedScenes.has(currentScene.id)) {
             // reload scene if necessary without highlight
             await this.doLoadScene(currentScene);
             await this.applyHighlight(currentScene);
@@ -1171,7 +1171,7 @@ export class SceneProvider {
                         ...entity.object,
                         vfx: this.worldEventProvider.isSignaled(entity.inventoryId) ? null : entity.object.vfx,
                     },
-                    alpha: editing ? 200 : null,
+                    alpha: editing ? 200 : 255,
                 },
                 targets
             );
@@ -1182,7 +1182,7 @@ export class SceneProvider {
                         ...entity.object,
                         vfx: this.worldEventProvider.isSignaled(entity.inventoryId) ? null : entity.object.vfx,
                     },
-                    alpha: editing ? 200 : null,
+                    alpha: editing ? 200 : 255,
                 },
                 targets
             );
