@@ -15,16 +15,13 @@ import { ResourceLoader } from '../repository/resource.loader';
 import { SceneRepository } from '../repository/scene.repository';
 import { LightObject } from '../world/light.object';
 
-const LIGHT_OBJECT_MODELS = [
-    joaat('prop_spot_clamp_02'),
-    joaat('prop_spot_01'),
-    joaat('sm_prop_smug_hangar_lamp_led_b'),
-];
+const LIGHT_OBJECT_MODELS = [joaat('prop_spot_01'), joaat('soz_spot_01'), joaat('soz_spot_02'), joaat('soz_spot_03')];
 
 const LIGHT_OBJECT_OFFSET: Record<number, Vector3> = {
     [joaat('prop_spot_01')]: [0, 0, 90],
-    [joaat('prop_spot_clamp_02')]: [0, 0, 90],
-    [joaat('sm_prop_smug_hangar_lamp_led_b')]: [0, 0, 90],
+    [joaat('soz_spot_01')]: [0, 0, 90],
+    [joaat('soz_spot_02')]: [0, 0, 90],
+    [joaat('soz_spot_03')]: [0, 0, 90],
 };
 
 @Provider()

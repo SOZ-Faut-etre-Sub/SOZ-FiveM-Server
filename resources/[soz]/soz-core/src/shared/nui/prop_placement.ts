@@ -6835,6 +6835,20 @@ export const PLACEMENT_PROP_LIST: PlacementPropList = {
             label: 'Mur de pneus (virage)',
         },
     ],
+    ['Concert']: [
+        {
+            model: 'soz_spot_01',
+            label: 'Spot 1 - Large',
+        },
+        {
+            model: 'soz_spot_02',
+            label: 'Spot 2 - Moyen',
+        },
+        {
+            model: 'soz_spot_03',
+            label: 'Spot 3 - Petit',
+        },
+    ],
 };
 
 export const PLACEMENT_PROP_LABELS: Record<string, string> = Object.values(PLACEMENT_PROP_LIST)
