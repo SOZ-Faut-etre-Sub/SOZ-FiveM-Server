@@ -77,34 +77,32 @@ export class SceneLiveProvider {
             await this.resourceLoader.loadPtfxAsset(element.dictionary);
             UseParticleFxAsset(element.dictionary);
 
-            const fx = element.loop
-                ? StartParticleFxLoopedAtCoord(
-                      element.effect,
-                      position[0],
-                      position[1],
-                      position[2],
-                      0,
-                      0,
-                      0,
-                      1.0,
-                      false,
-                      false,
-                      false,
-                      false
-                  )
-                : StartParticleFxNonLoopedAtCoord(
-                      element.effect,
-                      position[0],
-                      position[1],
-                      position[2],
-                      0,
-                      0,
-                      0,
-                      1.0,
-                      false,
-                      false,
-                      false
-                  );
+            const rotation = element.rotation || [0, 0, 0];
+
+            const fx = StartParticleFxLoopedAtCoord(
+                element.effect,
+                position[0],
+                position[1],
+                position[2],
+                rotation[0],
+                rotation[1],
+                rotation[2],
+                element.scale || 1.0,
+                false,
+                false,
+                false,
+                false
+            );
+
+            if (element.color) {
+                SetParticleFxLoopedColour(
+                    fx,
+                    element.color[0] / 255,
+                    element.color[1] / 255,
+                    element.color[2] / 255,
+                    true
+                );
+            }
 
             this.effectHandles.set(element.id, fx);
             this.resourceLoader.unloadPtfxAsset(element.dictionary);

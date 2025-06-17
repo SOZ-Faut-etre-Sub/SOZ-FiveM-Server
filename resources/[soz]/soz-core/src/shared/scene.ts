@@ -1,7 +1,8 @@
+import { RGBColor } from '@public/shared/color';
 import { LightStateAnimation, LightStateTransition, NextState } from '@public/shared/spotlight';
 
 import { WorldObject } from './object';
-import { Vector4 } from './polyzone/vector';
+import { Vector3, Vector4 } from './polyzone/vector';
 
 export type EventInfo = {
     currentEventId: string | null;
@@ -90,8 +91,10 @@ export type LiveEffect = {
     type: 'live_effect';
     dictionary: string;
     effect: string;
-    loop: boolean;
     timestamp: number;
+    color?: RGBColor;
+    rotation?: Vector3;
+    scale?: number;
 };
 
 export type LiveLightState = {

@@ -36,7 +36,7 @@ export class LightObject {
 
     constructor(object: number, rotationOffset: Vector3 = [0, 0, 0]) {
         const position = GetEntityCoords(object, false) as Vector3;
-        const direction = GetEntityRotation(object, 2) as Vector3;
+        const direction = GetEntityRotation(object, 0) as Vector3;
         const directionWithoutOffset = [
             direction[0] - rotationOffset[0],
             direction[1] - rotationOffset[1],
@@ -189,7 +189,7 @@ export class LightObject {
         const roll = (state.direction[1] + this.rotationOffset[1]) % 360;
         const yaw = (state.direction[2] + this.rotationOffset[2]) % 360;
 
-        SetEntityRotation(this.object, pitch, roll, yaw, 2, false);
+        SetEntityRotation(this.object, pitch, roll, yaw, 0, false);
 
         let color = [...state.color] as RGBColor;
 
