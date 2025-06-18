@@ -115,9 +115,9 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: true,
     },
     [Feature.SummerHeat]: {
-        production: false,
-        development: false,
-        test: false,
+        production: true,
+        development: true,
+        test: true,
     },
     [Feature.Summer]: {
         production: false,
