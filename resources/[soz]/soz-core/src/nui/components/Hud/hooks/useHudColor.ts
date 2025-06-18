@@ -40,6 +40,8 @@ export const useHudColor = (): GlassmorphismColors => {
                 [HudTheme.Deuteranopie]: { background, border },
                 [HudTheme.Trichromatisme]: { background, border },
                 [HudTheme.HalloweenVein]: { background, border },
+                [HudTheme.Gold]: { background, border },
+                [HudTheme.Diamond]: { background, border },
             };
         }
 
@@ -72,6 +74,14 @@ export const useHudColor = (): GlassmorphismColors => {
                 background: '#00000073',
                 border: '#F02B2B',
             },
+            [HudTheme.Gold]: {
+                background: '#ECEBA74D',
+                border: '#eceba7',
+            },
+            [HudTheme.Diamond]: {
+                background: 'rgba(167,195,236,0.3)',
+                border: '#a7c3ec',
+            },
         };
     }, [isHalloween, halloweenMoon]);
 
@@ -84,6 +94,8 @@ export const useHudColor = (): GlassmorphismColors => {
             [HudTheme.Deuteranopie]: '#F3FBFA',
             [HudTheme.Trichromatisme]: '#F3FBFA',
             [HudTheme.HalloweenVein]: '#F3FBFA',
+            [HudTheme.Gold]: '#F3FBFA',
+            [HudTheme.Diamond]: '#F3FBFA',
         }),
         []
     );
@@ -160,6 +172,26 @@ export const useHudColor = (): GlassmorphismColors => {
                     color: '#F3FBFA',
                 },
             },
+            [HudTheme.Gold]: {
+                primary: {
+                    background: '#F3FBFA',
+                    color: '#22232A',
+                },
+                secondary: {
+                    background: '#22232A',
+                    color: '#F3FBFA',
+                },
+            },
+            [HudTheme.Diamond]: {
+                primary: {
+                    background: '#F3FBFA',
+                    color: '#22232A',
+                },
+                secondary: {
+                    background: '#22232A',
+                    color: '#F3FBFA',
+                },
+            },
         }),
         []
     );
@@ -173,6 +205,8 @@ export const useHudColor = (): GlassmorphismColors => {
             [HudTheme.Deuteranopie]: '#4547544D',
             [HudTheme.Trichromatisme]: '#4547544D',
             [HudTheme.HalloweenVein]: '#4547544D',
+            [HudTheme.Gold]: '#ECEBA74D',
+            [HudTheme.Diamond]: 'rgba(167,195,236,0.3)',
         }),
         []
     );
