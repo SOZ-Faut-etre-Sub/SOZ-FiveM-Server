@@ -208,7 +208,7 @@ export class Inventory {
             };
         }
 
-        if (!metadata?.creation && itemObject.type === 'evidence') {
+        if (!metadata?.creation && (itemObject.type === 'evidence' || itemObject.name.startsWith('champagne_'))) {
             metadata = {
                 ...metadata,
                 creation: new Date().toUTCString(),

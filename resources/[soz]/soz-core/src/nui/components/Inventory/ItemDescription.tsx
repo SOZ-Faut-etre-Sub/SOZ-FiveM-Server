@@ -255,6 +255,16 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             </div>
                         </div>
                     )}
+                    {inventoryItem.metadata.creation && inventoryItem.name.startsWith('champagne_') && (
+                        <div className="mt-1">
+                            <div>
+                                <strong>Millésime : </strong>{' '}
+                                {new Date(inventoryItem.metadata.creation).toLocaleDateString('fr-FR', {
+                                    year: 'numeric',
+                                })}
+                            </div>
+                        </div>
+                    )}
                     {(item?.storageItemType === 'smuggling_ore' || item?.storageItemType === 'smuggling_electronic') &&
                         inventoryItem?.metadata?.storageElements && (
                             <div className="mt-1">
