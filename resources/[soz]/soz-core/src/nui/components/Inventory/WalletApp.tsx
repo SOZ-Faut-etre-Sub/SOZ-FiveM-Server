@@ -182,11 +182,11 @@ const CardItem: FunctionComponent<{
     }
 
     if (card.type === 'casino_standard') {
-        imgSrc = getPath(`images/inventory/icon/bank.webp`);
+        imgSrc = getPath(`images/inventory/icon/casino_vip_standard.webp`);
     }
 
     if (card.type === 'casino_premium') {
-        imgSrc = getPath(`images/inventory/icon/bank.webp`);
+        imgSrc = getPath(`images/inventory/icon/casino_vip_premium.webp`);
     }
 
     return (

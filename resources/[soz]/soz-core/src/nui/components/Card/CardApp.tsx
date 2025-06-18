@@ -68,7 +68,11 @@ export const CardItem: FunctionComponent<CardItemProps> = ({ card }) => {
             {['casino_standard', 'casino_premium'].includes(card.type) && (
                 <CasinoCard
                     type={card.type === 'casino_standard' ? 'standard' : 'premium'}
-                    expiration={card.player.metadata.casino_vip_standard_subscription_expire_at}
+                    expiration={
+                        card.type === 'casino_standard'
+                            ? card.player.metadata.casino_vip_standard_subscription_expire_at
+                            : card.player.metadata.casino_vip_premium_subscription_expire_at
+                    }
                     point={card.player.metadata.casino_vip_point ?? 0}
                 />
             )}
