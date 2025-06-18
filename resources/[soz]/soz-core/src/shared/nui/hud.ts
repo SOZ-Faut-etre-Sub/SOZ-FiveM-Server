@@ -22,6 +22,7 @@ export interface NuiHudMethodMap {
     UpdateWeaponAmmo: HudWeaponAmmo;
     SetSyringeDelay: number;
     SetBattery: number;
+    SetShowStats: boolean;
     SetTwitchNewsOverlay: JobType | null;
     SetShowHud: boolean;
     SetInstructional: string[];

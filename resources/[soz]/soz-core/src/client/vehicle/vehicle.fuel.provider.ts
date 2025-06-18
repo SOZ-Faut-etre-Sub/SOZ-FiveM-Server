@@ -1,3 +1,4 @@
+import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
 import { OilTankerProvider } from '@public/client/job/oil/oil.tanker.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { PlayerData } from '@public/shared/player';
@@ -636,6 +637,13 @@ export class VehicleFuelProvider {
 
         if (IsThisModelABicycle(model)) {
             return {};
+        }
+
+        if (model === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) {
+            return {
+                fuelLevel: vehicleCondition.fuelLevel,
+                oilLevel: vehicleCondition.oilLevel,
+            };
         }
 
         const fuelLevel = vehicleCondition.fuelLevel;

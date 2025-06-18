@@ -18,6 +18,7 @@ type SyringeDelay = {
 export const PlayerStats: FunctionComponent = () => {
     const [syringeDelay, setSyringeDelay] = useState<SyringeDelay>(null);
     const [battery, setBattery] = useState<number>(100);
+    const [showStats, setShowStats] = useState<boolean>(true);
 
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const showStress = useSelector((state: RootState) => state.hud.settings.showStress);
@@ -33,6 +34,7 @@ export const PlayerStats: FunctionComponent = () => {
     const plates = useSelector((state: RootState) => state.playerStats.armorPlates);
     const stamina = useSelector((state: RootState) => state.playerStats.stamina);
 
+    useNuiEvent('hud', 'SetShowStats', setShowStats);
     useNuiEvent('hud', 'SetBattery', setBattery);
     useNuiEvent('hud', 'SetSyringeDelay', delay => {
         setSyringeDelay(previousDelay => {
@@ -75,39 +77,43 @@ export const PlayerStats: FunctionComponent = () => {
 
     return (
         <>
-            <StatusGauge
-                value={healthPercent}
-                color={healthPercent > 20 ? gaugeColors.green_light : gaugeColors.red_light}
-                backgroundColor={healthPercent > 20 ? gaugeColors.green_dark : gaugeColors.red_dark}
-                hideCondition={value => value > 80}
-            >
-                <img
-                    style={{
-                        width: iconSize,
-                        height: iconSize,
-                    }}
-                    src={getPath('images/hud/player/health.webp')}
-                    alt=""
-                />
-            </StatusGauge>
+            {showStats && (
+                <StatusGauge
+                    value={healthPercent}
+                    color={healthPercent > 20 ? gaugeColors.green_light : gaugeColors.red_light}
+                    backgroundColor={healthPercent > 20 ? gaugeColors.green_dark : gaugeColors.red_dark}
+                    hideCondition={value => value > 80}
+                >
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src={getPath('images/hud/player/health.webp')}
+                        alt=""
+                    />
+                </StatusGauge>
+            )}
 
-            <StatusGauge
-                value={armor}
-                color={gaugeColors.blue_light}
-                backgroundColor={gaugeColors.blue_dark}
-                secondaryValue={plates}
-            >
-                <img
-                    style={{
-                        width: iconSize,
-                        height: iconSize,
-                    }}
-                    src={getPath('images/hud/player/armor.webp')}
-                    alt="armor"
-                />
-            </StatusGauge>
+            {showStats && (
+                <StatusGauge
+                    value={armor}
+                    color={gaugeColors.blue_light}
+                    backgroundColor={gaugeColors.blue_dark}
+                    secondaryValue={plates}
+                >
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src={getPath('images/hud/player/armor.webp')}
+                        alt="armor"
+                    />
+                </StatusGauge>
+            )}
 
-            {hasWatch && (
+            {hasWatch && showStats && (
                 <StatusGauge
                     value={syringeDelay ? (syringeDelay.delay / syringeDelay.initialDelay) * 100 : 0}
                     color={gaugeColors.green_light}
@@ -124,7 +130,7 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
-            {hasWatch && (
+            {hasWatch && showStats && (
                 <StatusGauge
                     value={player.metadata.drug}
                     color={gaugeColors.green_light}
@@ -141,7 +147,7 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
-            {hasWatch && (
+            {hasWatch && showStats && (
                 <StatusGauge
                     value={player.metadata.alcohol}
                     color={gaugeColors.red_light}
@@ -158,39 +164,43 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
-            <StatusGauge
-                value={player.metadata.hunger}
-                color={gaugeColors.orange_light}
-                backgroundColor={gaugeColors.orange_dark}
-                hideCondition={value => value >= 50}
-            >
-                <img
-                    style={{
-                        width: iconSize,
-                        height: iconSize,
-                    }}
-                    src={getPath('images/hud/player/hunger.webp')}
-                    alt="hunger"
-                />
-            </StatusGauge>
+            {showStats && (
+                <StatusGauge
+                    value={player.metadata.hunger}
+                    color={gaugeColors.orange_light}
+                    backgroundColor={gaugeColors.orange_dark}
+                    hideCondition={value => value >= 50}
+                >
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src={getPath('images/hud/player/hunger.webp')}
+                        alt="hunger"
+                    />
+                </StatusGauge>
+            )}
 
-            <StatusGauge
-                value={player.metadata.thirst}
-                color={gaugeColors.blue_light}
-                backgroundColor={gaugeColors.blue_dark}
-                hideCondition={value => value >= 50}
-            >
-                <img
-                    style={{
-                        width: iconSize,
-                        height: iconSize,
-                    }}
-                    src={getPath('images/hud/player/thirst.webp')}
-                    alt="thirst"
-                />
-            </StatusGauge>
+            {showStats && (
+                <StatusGauge
+                    value={player.metadata.thirst}
+                    color={gaugeColors.blue_light}
+                    backgroundColor={gaugeColors.blue_dark}
+                    hideCondition={value => value >= 50}
+                >
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src={getPath('images/hud/player/thirst.webp')}
+                        alt="thirst"
+                    />
+                </StatusGauge>
+            )}
 
-            {hasWatch && showStress && (
+            {hasWatch && showStress && showStats && (
                 <StatusGauge
                     value={player.metadata.stress_level}
                     color={gaugeColors.red_light}
@@ -207,7 +217,7 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
-            {hasWatch && showStamina && (
+            {hasWatch && showStamina && showStats && (
                 <StatusGauge
                     value={stamina}
                     color={stamina <= 25 ? gaugeColors.orange_light : gaugeColors.blue_light}

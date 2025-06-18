@@ -1,3 +1,5 @@
+import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
@@ -65,7 +67,7 @@ export class HudVehicleProvider {
         const vehicle = GetVehiclePedIsIn(PlayerPedId(), false);
         let seat = null;
 
-        if (!vehicle) {
+        if (!vehicle || GetEntityModel(vehicle) === GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL)) {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
                 seat,
             });
