@@ -131,6 +131,7 @@ export enum StressLooseType {
     DrinkCoffee,
     DrinkAlcohol,
     Smoke,
+    Thunder,
 }
 
 export const PointsByStressLooseType: Record<StressLooseType, number> = {
@@ -145,6 +146,7 @@ export const PointsByStressLooseType: Record<StressLooseType, number> = {
     [StressLooseType.DrinkCoffee]: -2,
     [StressLooseType.DrinkAlcohol]: -6,
     [StressLooseType.Smoke]: -1,
+    [StressLooseType.Thunder]: 5,
 };
 
 export const IntervalByStressLooseType: Record<StressLooseType, number> = {
@@ -159,6 +161,7 @@ export const IntervalByStressLooseType: Record<StressLooseType, number> = {
     [StressLooseType.DrinkCoffee]: 30,
     [StressLooseType.DrinkAlcohol]: 30,
     [StressLooseType.Smoke]: 30,
+    [StressLooseType.Thunder]: 1,
 };
 
 export const CRITICAL_HEALTH = 120;

@@ -78,9 +78,10 @@ export class PlayerStressProvider {
         [StressLooseType.DrinkCoffee]: null,
         [StressLooseType.DrinkAlcohol]: null,
         [StressLooseType.Smoke]: null,
+        [StressLooseType.Thunder]: null,
     };
 
-    private async updateStress(type: StressLooseType, checkZonePosition: Vector3 = null): Promise<void> {
+    public async updateStress(type: StressLooseType, checkZonePosition: Vector3 = null): Promise<void> {
         const lastUsedAt = this.lastStressTypeUsedAt[type];
 
         const updateTimer = new Date().getTime();
