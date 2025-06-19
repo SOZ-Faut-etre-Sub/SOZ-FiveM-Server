@@ -184,7 +184,8 @@ export class PlayerHeatProvider {
         }
 
         const veh = GetVehiclePedIsIn(playerPed, false);
-        if (veh && !IsThisModelABike(veh) && !IsThisModelAQuadbike(veh)) {
+        const model = GetEntityModel(veh);
+        if (veh && !IsThisModelABike(model) && !IsThisModelAQuadbike(model)) {
             this.hudWeatherIconProvider.remove('heat');
             this.heat = false;
             this.hudWeatherIconProvider.remove('sandstorm');
