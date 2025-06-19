@@ -762,7 +762,6 @@ export class HousingFournitureProvider {
         }
 
         this.isEditorModeOn = true;
-        await this.triggerDispatchTargetFocus({ target: true });
 
         this.nuiDispatch.dispatch('gizmo', 'setGizmoEntity', {
             debug: this.debugProp,
@@ -955,23 +954,6 @@ export class HousingFournitureProvider {
         await this.spawnNewDebug(prop);
         await this.enterEditorMode();
         return Ok(true);
-    }
-
-    @OnNuiEvent(NuiEvent.ToggleDispatchToggleFocus)
-    public async triggerDispatchToggleFocus() {
-        this.toggleDispatchTargetFocus(!IsNuiFocused());
-    }
-
-    @OnNuiEvent(NuiEvent.ToggleDispatchTargetFocus)
-    public async triggerDispatchTargetFocus({ target }) {
-        this.toggleDispatchTargetFocus(target);
-    }
-
-    private toggleDispatchTargetFocus(target: boolean) {
-        const isFocused = IsNuiFocused();
-        if (Boolean(isFocused) !== target) {
-            this.nuiDispatch.dispatch('menu', 'ToggleFocus');
-        }
     }
 
     @OnNuiEvent(NuiEvent.HousingSelectEntityOnClick)
