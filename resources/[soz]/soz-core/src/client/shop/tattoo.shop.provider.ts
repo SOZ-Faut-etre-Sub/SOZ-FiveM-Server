@@ -5,6 +5,7 @@ import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { wait } from '@public/core/utils';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { Control } from '@public/shared/input';
 import { MenuType } from '@public/shared/nui/menu';
@@ -95,6 +96,7 @@ export class TattooShopProvider {
         if (!skipIntro) {
             await this.animationService.walkToCoordsAvoidObstacles([x, y, z], 5000);
         }
+        await wait(1000);
 
         TriggerEvent('soz-character:Client:SetTemporaryNaked', true);
 
