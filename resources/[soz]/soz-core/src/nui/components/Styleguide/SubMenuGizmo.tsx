@@ -134,10 +134,6 @@ export const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, 
         });
     }, [mesh, debugProp?.entity]);
 
-    const handleToggleFocus = () => {
-        fetchNui(NuiEvent.ToggleDispatchToggleFocus);
-    };
-
     const handlePlaceObject = async () => {
         const result: Result<any, never> = await fetchNui(NuiEvent.ValidateHousingPlacement);
         if (isOk(result)) {
@@ -206,22 +202,13 @@ export const Gizmo: FunctionComponent<GizmoProps> = ({ setDebugProp, debugProp, 
         handleToggleEditorMode();
     });
 
-    useNuiEvent('gizmo', 'ToggleFocus', () => {
-        handleToggleFocus();
-    });
-
     const keyHandler = useCallback(
         async (e: KeyboardEvent) => {
-            const toogleFocus = 'Tab';
             const toogleMode = 'KeyR';
             const toggleSpaceMode = 'KeyL';
             const snap = 'KeyC';
             const placeProp = 'Space';
             const deleteProp = 'Delete';
-
-            if (e.code === toogleFocus) {
-                handleToggleFocus();
-            }
 
             if (e.code === toogleMode) {
                 handleToggleEditorMode();
