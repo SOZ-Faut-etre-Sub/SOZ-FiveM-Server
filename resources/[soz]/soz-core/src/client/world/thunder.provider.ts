@@ -92,7 +92,7 @@ export class ThunderProvider {
         }
 
         if (target == GetPlayerServerId(PlayerId())) {
-            AddExplosion(coords[0], coords[1], coords[2] - 0.5, 45, 1.0, false, false, 5);
+            AddExplosion(coords[0], coords[1], coords[2], 6, 1.0, false, false, 5);
         }
 
         const [found, ground] = GetGroundZFor_3dCoord(coords[0], coords[1], coords[2], false);
