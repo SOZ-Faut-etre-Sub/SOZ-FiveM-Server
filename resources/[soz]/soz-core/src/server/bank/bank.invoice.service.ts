@@ -10,6 +10,7 @@ import { Invoice } from '../../shared/bank';
 import { JobPermission, JobType } from '../../shared/job';
 import { PlayerData } from '../../shared/player';
 import { JobService } from '../job.service';
+import { LockService } from '../lock.service';
 import { PlayerService } from '../player/player.service';
 import { BankInvoiceRepository } from '../repository/bank.invoice.repository';
 
@@ -26,6 +27,9 @@ export class BankInvoiceService {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(LockService)
+    private lockService: LockService;
 
     @Inject(BankStatementsService)
     private bankStatementsService: BankStatementsService;
@@ -61,139 +65,151 @@ export class BankInvoiceService {
         if (!player) return false;
 
         const invoice = await this.bankInvoiceRepository.find(invoiceId);
+
         if (!invoice) return false;
 
-        if (invoice.payed || invoice.refused) {
-            return;
-        }
+        await this.lockService.lock(invoice.id.toString(), async () => {
+            if (invoice.payed || invoice.refused) {
+                return;
+            }
 
-        if (!(await this.playerHasPermission(player, invoice))) return false;
+            if (!(await this.playerHasPermission(player, invoice))) return false;
 
-        const emitter = this.playerService.getPlayerByCitizenId(invoice.emitter);
+            const emitter = this.playerService.getPlayerByCitizenId(invoice.emitter);
 
-        if (player.charinfo.account === invoice.targetAccount) {
-            if (useMarkedMoney) {
-                const money = player.money.money;
-                const markedMoney = player.money.marked_money;
+            if (player.charinfo.account === invoice.targetAccount) {
+                if (useMarkedMoney) {
+                    const money = player.money.money;
+                    const markedMoney = player.money.marked_money;
 
-                if (money + markedMoney < invoice.amount) {
-                    this.notifier.error(source, "Vous n'avez pas assez d'argent.");
-                    return false;
-                }
-
-                let moneyTake = 0;
-                let markedMoneyTake = 0;
-
-                if (markedMoney >= invoice.amount) {
-                    markedMoneyTake = invoice.amount;
-                } else {
-                    markedMoneyTake = markedMoney;
-                    moneyTake = invoice.amount - markedMoney;
-                }
-
-                if (moneyTake > 0) {
-                    const moneyTransaction = await this.bankService.transferCashMoney(
-                        source,
-                        invoice.emitterSafe,
-                        'deposit',
-                        'money',
-                        moneyTake,
-                        false,
-                        true
-                    );
-                    if (!moneyTransaction) {
-                        this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
+                    if (money + markedMoney < invoice.amount) {
+                        this.notifier.error(source, "Vous n'avez pas assez d'argent.");
                         return false;
                     }
-                }
 
-                if (markedMoneyTake > 0) {
-                    const markedMoneyTransaction = await this.bankService.transferCashMoney(
-                        source,
-                        invoice.emitterSafe,
-                        'deposit',
-                        'marked_money',
-                        markedMoneyTake,
-                        false,
-                        true
-                    );
-                    if (!markedMoneyTransaction) {
-                        this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
-                        await this.bankService.transferCashMoney(
+                    let moneyTake = 0;
+                    let markedMoneyTake = 0;
+
+                    if (markedMoney >= invoice.amount) {
+                        markedMoneyTake = invoice.amount;
+                    } else {
+                        markedMoneyTake = markedMoney;
+                        moneyTake = invoice.amount - markedMoney;
+                    }
+
+                    if (moneyTake > 0) {
+                        const moneyTransaction = await this.bankService.transferCashMoney(
                             source,
                             invoice.emitterSafe,
-                            'withdraw',
+                            'deposit',
                             'money',
                             moneyTake,
                             false,
                             true
                         );
+                        if (!moneyTransaction) {
+                            this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
+                            return false;
+                        }
+                    }
+
+                    if (markedMoneyTake > 0) {
+                        const markedMoneyTransaction = await this.bankService.transferCashMoney(
+                            source,
+                            invoice.emitterSafe,
+                            'deposit',
+                            'marked_money',
+                            markedMoneyTake,
+                            false,
+                            true
+                        );
+                        if (!markedMoneyTransaction) {
+                            this.notifier.error(source, "Le coffre de destination n'a pas de place pour cette somme.");
+                            await this.bankService.transferCashMoney(
+                                source,
+                                invoice.emitterSafe,
+                                'withdraw',
+                                'money',
+                                moneyTake,
+                                false,
+                                true
+                            );
+                            return false;
+                        }
+                    }
+                } else {
+                    const transaction = await this.bankService.transferCashMoney(
+                        source,
+                        invoice.emitterSafe,
+                        'deposit',
+                        'money',
+                        invoice.amount,
+                        false,
+                        true
+                    );
+                    if (!transaction) {
+                        this.notifier.error(source, 'Transaction impossible.');
                         return false;
                     }
+
+                    await this.bankStatementsService.createStatement(
+                        invoice.targetAccount,
+                        invoice.emitterSafe,
+                        invoice.amount,
+                        `Paiement de facture: ${invoice.label}`
+                    );
+                }
+
+                if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
+
+                this.notifier.notify(source, 'Vous avez ~g~payé~s~ votre facture.', 'success');
+                if (emitter) {
+                    this.notifier.notify(
+                        emitter.source,
+                        `Votre facture ~b~${invoice.label}~s~ a été ~g~payée.`,
+                        'success'
+                    );
                 }
             } else {
-                const transaction = await this.bankService.transferCashMoney(
-                    source,
+                const transaction = await this.bankService.transferBankMoney(
+                    invoice.targetAccount,
                     invoice.emitterSafe,
-                    'deposit',
                     'money',
                     invoice.amount,
                     false,
-                    true
+                    `Paiement de facture: ${invoice.label}`
                 );
                 if (!transaction) {
-                    this.notifier.error(source, 'Transaction impossible.');
+                    this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société.');
                     return false;
                 }
 
-                await this.bankStatementsService.createStatement(
-                    invoice.targetAccount,
-                    invoice.emitterSafe,
-                    invoice.amount,
-                    `Paiement de facture: ${invoice.label}`
-                );
+                if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
+
+                this.notifier.notify(source, 'Vous avez ~g~payé~s~ la facture de la société.', 'success');
+                if (emitter) {
+                    this.notifier.notify(
+                        emitter.source,
+                        `Votre facture ~b~${invoice.label}~s~ a été ~g~payée.`,
+                        'success'
+                    );
+                }
             }
 
-            if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
+            this.monitor.traceEvent('invoice_pay', {
+                player_source: player.source,
+                invoice_kind: 'invoice',
+                invoice_job: player.charinfo.account === invoice.targetAccount ? '' : player.job.id,
+                target_source: emitter ? emitter.source : null,
+                id: invoice.id,
+                amount: invoice.amount,
+                target_account: invoice.emitterSafe,
+                source_account: invoice.targetAccount,
+            });
 
-            this.notifier.notify(source, 'Vous avez ~g~payé~s~ votre facture.', 'success');
-            if (emitter) {
-                this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée.`, 'success');
-            }
-        } else {
-            const transaction = await this.bankService.transferBankMoney(
-                invoice.targetAccount,
-                invoice.emitterSafe,
-                'money',
-                invoice.amount,
-                false,
-                `Paiement de facture: ${invoice.label}`
-            );
-            if (!transaction) {
-                this.notifier.error(source, '~r~Echec~s~ du paiement la facture de la société.');
-                return false;
-            }
-
-            if (!(await this.bankInvoiceRepository.setPayed(invoiceId))) return false;
-
-            this.notifier.notify(source, 'Vous avez ~g~payé~s~ la facture de la société.', 'success');
-            if (emitter) {
-                this.notifier.notify(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~g~payée.`, 'success');
-            }
-        }
-
-        this.monitor.traceEvent('invoice_pay', {
-            player_source: player.source,
-            invoice_kind: 'invoice',
-            invoice_job: player.charinfo.account === invoice.targetAccount ? '' : player.job.id,
-            target_source: emitter ? emitter.source : null,
-            id: invoice.id,
-            amount: invoice.amount,
-            target_account: invoice.emitterSafe,
-            source_account: invoice.targetAccount,
+            TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_PAID, player.source, invoice.id);
         });
 
-        TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_PAID, player.source, invoice.id);
         return true;
     }
 
@@ -204,40 +220,42 @@ export class BankInvoiceService {
         const invoice = await this.bankInvoiceRepository.find(invoiceId);
         if (!invoice) return false;
 
-        if (invoice.payed || invoice.refused) {
-            return;
-        }
-
-        if (!(await this.playerHasPermission(player, invoice))) return false;
-
-        const emitter = this.playerService.getPlayerByCitizenId(invoice.emitter);
-
-        if (player.charinfo.account === invoice.targetAccount) {
-            this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ votre facture.');
-            if (emitter) {
-                this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée.`);
+        await this.lockService.lock(invoice.id.toString(), async () => {
+            if (invoice.payed || invoice.refused) {
+                return false;
             }
-        } else {
-            this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ la facture de la société.');
-            if (emitter) {
-                this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée.`);
-            }
-        }
 
-        this.monitor.traceEvent('invoice_refuse', {
-            player_source: player.source,
-            invoice_kind: 'invoice',
-            invoice_job: player.charinfo.account === invoice.targetAccount ? '' : player.job.id,
-            target_source: emitter ? emitter.source : null,
-            id: invoice.id,
-            amount: invoice.amount,
-            target_account: invoice.emitterSafe,
-            source_account: invoice.targetAccount,
-            title: invoice.label,
+            if (!(await this.playerHasPermission(player, invoice))) return false;
+
+            const emitter = this.playerService.getPlayerByCitizenId(invoice.emitter);
+
+            if (player.charinfo.account === invoice.targetAccount) {
+                this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ votre facture.');
+                if (emitter) {
+                    this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée.`);
+                }
+            } else {
+                this.notifier.error(player.source, 'Vous avez ~r~refusé~s~ la facture de la société.');
+                if (emitter) {
+                    this.notifier.error(emitter.source, `Votre facture ~b~${invoice.label}~s~ a été ~r~refusée.`);
+                }
+            }
+
+            this.monitor.traceEvent('invoice_refuse', {
+                player_source: player.source,
+                invoice_kind: 'invoice',
+                invoice_job: player.charinfo.account === invoice.targetAccount ? '' : player.job.id,
+                target_source: emitter ? emitter.source : null,
+                id: invoice.id,
+                amount: invoice.amount,
+                target_account: invoice.emitterSafe,
+                source_account: invoice.targetAccount,
+                title: invoice.label,
+            });
+
+            await this.bankInvoiceRepository.setRejected(invoiceId);
+            TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_REJECTED, player.source, invoice.id);
         });
-
-        await this.bankInvoiceRepository.setRejected(invoiceId);
-        TriggerClientEvent(ClientEvent.BANK_PHONE_INVOICE_REJECTED, player.source, invoice.id);
 
         return true;
     }
