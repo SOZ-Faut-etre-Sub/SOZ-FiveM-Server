@@ -75,6 +75,11 @@ const lsmcBeds: LSMCBed[] = [
         offset: [-0.1, 0.4, -0.7],
         rotation: 5,
     },
+    {
+        model: GetHashKey('cube_mppd_medbed'),
+        offset: [0.05, 0.2, 0.5],
+        rotation: 5,
+    },
 ];
 
 @Provider()
