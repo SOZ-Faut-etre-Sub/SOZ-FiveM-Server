@@ -84,6 +84,8 @@ MpSecurityOffice3 = {
             for entity, state in pairs(MpSecurityOffice3.Entities) do
                 if type(entity) == 'string' and state then
                     ActivateInteriorEntitySet(MpSecurityOffice3.InteriorId, entity)
+                elseif type(entity) == 'string' and not state then
+                    DeactivateInteriorEntitySet(MpSecurityOffice3.InteriorId, entity)
                 end
             end
         end,
@@ -100,6 +102,6 @@ MpSecurityOffice3 = {
         MpSecurityOffice3.Ipl.Load()
         MpSecurityOffice3.Entities.Load()
 
-        RefreshInterior(MpSecurityOffice3.interiorId)
+        RefreshInterior(MpSecurityOffice3.InteriorId)
     end
 }
