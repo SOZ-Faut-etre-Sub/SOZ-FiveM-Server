@@ -51,6 +51,7 @@ Config.NewPlayerDefaultItems = {
     {name = "cardbord", quantity = 1},
     {name = "health_book", quantity = 1},
     {name = "politic_book", quantity = 1},
+    {name = "full_scarf", quantity = 1},
 }
 
 MappingCompomentKeyToReset = {
