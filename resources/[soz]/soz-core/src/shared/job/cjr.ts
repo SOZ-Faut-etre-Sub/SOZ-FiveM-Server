@@ -111,6 +111,16 @@ export const CjrCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
+        ["Tenue d'été"]: {
+            Components: {
+                [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 133, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 29, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 185, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0 },
+            },
+            Props: {},
+        },
     },
 };
 
