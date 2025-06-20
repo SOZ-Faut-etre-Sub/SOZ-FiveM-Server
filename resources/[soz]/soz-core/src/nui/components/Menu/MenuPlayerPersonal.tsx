@@ -142,6 +142,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemSelect
                         title="Filtre voip"
                         description="Permet de changer les filtre sur la voip"
+                        value={data.voipIntent}
                         onChange={async (_, value) => {
                             await fetchNui(NuiEvent.PlayerMenuVoipSetIntent, { value });
                         }}
