@@ -308,6 +308,9 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             <span>{item.illustrator[inventoryItem.metadata?.type] || ''}</span>
                         )}
                     </div>
+                    {inventoryItem.metadata.extraLabel && (
+                        <div className="mt-1">{inventoryItem.metadata.extraLabel}</div>
+                    )}
                 </div>
             </GlassMorphismContainer>
         </div>
