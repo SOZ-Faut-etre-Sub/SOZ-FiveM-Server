@@ -49,7 +49,7 @@ export class PoliceVehicleProvider {
                 if (data.crimiImport) {
                     const plateUpdate = data.plateUpdateTime || data.boughttime;
                     const deltaInDays = Math.floor((Date.now() / 1000 - plateUpdate) / (24 * 3_600_000));
-                    if (Math.random() < deltaInDays * 0.05) {
+                    if (Math.random() < deltaInDays * 0.1) {
                         msg += '~n~Voiture importée de ~r~contrebande~s~';
                     }
                 }
