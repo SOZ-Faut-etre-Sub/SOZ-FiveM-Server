@@ -12,7 +12,7 @@ const WHISPER_RANGE = 2.0;
 const NORMAL_RANGE = 4.5;
 const SHOUT_RANGE = 8.0;
 const MEGAPHONE_RANGE = 38.0;
-const MICROPHONE_RANGE = 38.0;
+const MICROPHONE_RANGE = 70.0;
 
 type VoiceModeRange = VoiceMode.Shouting | VoiceMode.Normal | VoiceMode.Whisper;
 
