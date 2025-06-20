@@ -870,8 +870,12 @@ export class VehicleGarageProvider {
                     },
                 });
 
-                if (garage.type === GarageType.Depot && vehicleState.configuration.extraStorage) {
+                if (
+                    garage.type === GarageType.Depot &&
+                    (vehicleState.configuration.extraStorage || vehicleState.configuration.handling)
+                ) {
                     vehicleState.configuration.extraStorage = false;
+                    delete vehicleState.configuration.handling;
                     await this.prismaService.playerVehicle.update({
                         where: {
                             id: vehicleState.volatile.id,
