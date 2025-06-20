@@ -135,6 +135,36 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                 </MenuContent>
             </SubMenu>
             <MenuJob data={data.job} />
+            <SubMenu id="voip">
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Gestion de la voip">
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
+                        Redémarrer la voip
+                    </MenuItemButton>
+                    <MenuItemSelect
+                        title="Filtre voip"
+                        description="Permet de changer les filtre sur la voip"
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.PlayerMenuVoipSetIntent, { value });
+                        }}
+                    >
+                        <MenuItemSelectOption value="speech">Voix</MenuItemSelectOption>
+                        <MenuItemSelectOption value="music">Musique</MenuItemSelectOption>
+                    </MenuItemSelect>
+                    <MenuItemSelect
+                        title="Volume vidéo des écran"
+                        value={data.videoVolume}
+                        description="Permet de changer le volume des vidéos sur les écrans"
+                        onConfirm={async (_, value) => {
+                            await fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphismFpsLimit, { value });
+                        }}
+                    >
+                        {[5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(fps => (
+                            <MenuItemSelectOption value={fps}>{fps} FPS</MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                </MenuContent>
+            </SubMenu>
         </Menu>
     );
 };

@@ -19,6 +19,7 @@ import { HalloweenSpiderService } from '../object/halloween.spider.service';
 import { ProgressService } from '../progress.service';
 import { Election2024CeremonyProvider } from '../story/election-2024/ceremony.provider';
 import { ParadeProvider } from '../story/parade.provider';
+import { StreamProvider } from '../stream/stream.provider';
 import { VoiceProvider } from '../voip/voice/voice.provider';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
@@ -74,6 +75,9 @@ export class PlayerMenuProvider {
     @Inject(ParadeProvider)
     private paradeProvider: ParadeProvider;
 
+    @Inject(StreamProvider)
+    private streamProvider: StreamProvider;
+
     @Once()
     public async init() {
         await this.halloweenSpiderService.init();
@@ -115,6 +119,8 @@ export class PlayerMenuProvider {
             arachnophobe: this.halloweenSpiderService.isArachnophobeMode(),
             isGlassmorphismActive: this.hudGlassmorphismProvider.glassmorphism,
             glassmorphismFpsLimit: this.hudGlassmorphismProvider.glassmorphismFpsLimit,
+            voipIntent: this.voiceProvider.intent,
+            videoVolume: this.streamProvider.videoVolume * 100,
         });
     }
 
@@ -181,6 +187,16 @@ export class PlayerMenuProvider {
     @OnNuiEvent(NuiEvent.PlayerMenuVoipReset)
     public async resetVoip() {
         await this.voiceProvider.reconnect(true, 'Demande joueur');
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuVoipSetIntent)
+    public async setVoipIntent({ value }: { value: string }) {
+        this.voiceProvider.setIntent(value);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuSetVideoVolume)
+    public async setVideoVolume({ value }: { value: number }) {
+        this.streamProvider.setVideoVolume(value / 100);
     }
 
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetArachnophobe)

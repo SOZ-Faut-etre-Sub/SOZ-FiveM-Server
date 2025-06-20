@@ -254,6 +254,8 @@ export enum NuiEvent {
     PlayerMenuRemoveDeguisement = 'soz-core:nui:player:menu:cloth-remove-deguisement',
     PlayerMenuReDress = 'soz-core:nui:player:menu:cloth-redress',
     PlayerMenuVoipReset = 'soz-core:nui:player:menu:voip-reset',
+    PlayerMenuVoipSetIntent = 'soz-core:nui:player:menu:voip-set-intent',
+    PlayerMenuSetVideoVolume = 'soz-core:nui:player:menu:set-video-volume',
     PlayerMenuHudSetArachnophobe = 'soz-core:nui:player:menu:arachnophobe',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetShowCursor = 'soz-core:nui:set-show-cursor',

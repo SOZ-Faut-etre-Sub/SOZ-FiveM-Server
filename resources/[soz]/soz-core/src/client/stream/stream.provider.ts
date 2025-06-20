@@ -13,6 +13,8 @@ export class StreamProvider {
     @Inject('Store')
     private store: Store;
 
+    public videoVolume: number = 0.5;
+
     private cinemaScreen: StreamScreen;
     private bennysScreen: StreamScreen;
     private lspdScreen: StreamScreen;
@@ -70,10 +72,14 @@ export class StreamProvider {
         const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
         const streamUrls = this.store.getState().global.streamUrls;
 
-        this.cinemaScreen.update(position, streamUrls.cinema || BLACK_SCREEN_URL);
-        this.bennysScreen.update(position, streamUrls.bennys || BLACK_SCREEN_URL);
-        this.lspdScreen.update(position, streamUrls.lspd || BLACK_SCREEN_URL);
-        this.fdlmScreen.update(position, streamUrls.fdlm || BLACK_SCREEN_URL);
+        this.cinemaScreen.update(position, streamUrls.cinema || BLACK_SCREEN_URL, this.videoVolume);
+        this.bennysScreen.update(position, streamUrls.bennys || BLACK_SCREEN_URL, this.videoVolume);
+        this.lspdScreen.update(position, streamUrls.lspd || BLACK_SCREEN_URL, this.videoVolume);
+        this.fdlmScreen.update(position, streamUrls.fdlm || BLACK_SCREEN_URL, this.videoVolume);
+    }
+
+    setVideoVolume(volume: number) {
+        this.videoVolume = volume;
     }
 
     @Tick(TickInterval.EVERY_FRAME)
