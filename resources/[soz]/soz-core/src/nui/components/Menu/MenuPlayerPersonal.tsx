@@ -63,9 +63,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
                     {data.job.enabled && <MenuItemSubMenuLink id="job">Gestion de votre métier</MenuItemSubMenuLink>}
-                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
-                        Redémarrer la voip
-                    </MenuItemButton>
+                    <MenuItemSubMenuLink id="voip">Voip & Vidéo</MenuItemSubMenuLink>
                     {isHalloween && (
                         <MenuItemCheckbox
                             checked={data.arachnophobe}
@@ -135,6 +133,36 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                 </MenuContent>
             </SubMenu>
             <MenuJob data={data.job} />
+            <SubMenu id="voip">
+                <MenuTitle title="Personnel" />
+                <MenuContent subtitle="Gestion de la voip">
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.PlayerMenuVoipReset)}>
+                        Redémarrer la voip
+                    </MenuItemButton>
+                    <MenuItemSelect
+                        title="Filtre voip"
+                        description="Permet de changer les filtre sur la voip"
+                        onChange={async (_, value) => {
+                            await fetchNui(NuiEvent.PlayerMenuVoipSetIntent, { value });
+                        }}
+                    >
+                        <MenuItemSelectOption value="speech">Voix</MenuItemSelectOption>
+                        <MenuItemSelectOption value="music">Musique</MenuItemSelectOption>
+                    </MenuItemSelect>
+                    <MenuItemSelect
+                        title="Volume vidéo des écran"
+                        value={data.videoVolume}
+                        description="Permet de changer le volume des vidéos sur les écrans"
+                        onChange={async (_, value) => {
+                            await fetchNui(NuiEvent.PlayerMenuSetVideoVolume, { value });
+                        }}
+                    >
+                        {[0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(volume => (
+                            <MenuItemSelectOption value={volume}>{volume}%</MenuItemSelectOption>
+                        ))}
+                    </MenuItemSelect>
+                </MenuContent>
+            </SubMenu>
         </Menu>
     );
 };

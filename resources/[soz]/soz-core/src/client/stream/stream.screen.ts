@@ -37,13 +37,16 @@ export class StreamScreen {
 
     private zone: BoxZone;
 
+    private volume: number;
+
     public constructor(
         zone: BoxZone,
         name: string,
         model: string,
         renderTarget = 'cinscreen',
         width = 4096,
-        height = 2048
+        height = 2048,
+        volume = 0.5
     ) {
         this.textureDictionary = name + '_dict';
         this.textureName = 'video';
@@ -51,6 +54,7 @@ export class StreamScreen {
         this.renderTarget = renderTarget;
         this.model = model;
         this.handle = null;
+        this.volume = volume;
 
         this.duiObject = CreateDui(this.playingUrl, width, height);
 
@@ -65,7 +69,7 @@ export class StreamScreen {
         this.handle = createNamedRenderTargetForModel(this.renderTarget, GetHashKey(this.model));
     }
 
-    public update(position: Vector3, url: string) {
+    public update(position: Vector3, url: string, volume: number) {
         const inside = this.zone.isPointInside(position);
 
         if (!inside) {
@@ -88,6 +92,13 @@ export class StreamScreen {
         }
 
         if (this.playingUrl === url) {
+            SendDuiMessage(
+                this.duiObject,
+                JSON.stringify({
+                    volume: volume,
+                })
+            );
+
             return;
         }
 

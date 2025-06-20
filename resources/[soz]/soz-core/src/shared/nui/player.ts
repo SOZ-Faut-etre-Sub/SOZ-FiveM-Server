@@ -51,4 +51,6 @@ export type PlayerPersonalMenuData = {
     deguisement: boolean;
     naked: boolean;
     arachnophobe: boolean;
+    videoVolume: number;
+    voipIntent: string;
 };
