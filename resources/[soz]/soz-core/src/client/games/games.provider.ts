@@ -1,4 +1,5 @@
 import { Provider } from '@core/decorators/provider';
+import { CasinoService } from '@private/client/casino/casino.service';
 import { LaserGameProvider } from '@public/client/games/laser/laser.game.provider';
 import { VampireGameProvider } from '@public/client/story/vampire.game.provider';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
@@ -15,8 +16,15 @@ export class GamesProvider {
     @Inject(VampireGameProvider)
     private vampireGameProvider: VampireGameProvider;
 
+    @Inject(CasinoService)
+    private casinoService: CasinoService;
+
     public areAnyGameRunning() {
-        return this.laserGameProvider.isGameRunning() || this.vampireGameStateProvider.isGameRunning();
+        return (
+            this.laserGameProvider.isGameRunning() ||
+            this.vampireGameStateProvider.isGameRunning() ||
+            this.casinoService.usingMinigame()
+        );
     }
 
     public async handleOnDeath(): Promise<boolean> {
