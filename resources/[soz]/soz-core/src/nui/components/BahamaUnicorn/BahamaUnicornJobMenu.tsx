@@ -110,12 +110,6 @@ export const BahamaUnicornJobMenu: FunctionComponent<BahamaUnicornStateProps> = 
                         Afficher l'adresse du brasseur de bière
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
-                        checked={state.displaySnackBlip}
-                        onChange={value => displayBlip('displaySnackBlip', value)}
-                    >
-                        Afficher la récolte de snacks
-                    </MenuItemCheckbox>
-                    <MenuItemCheckbox
                         checked={state.displayResellBlip}
                         onChange={value => displayBlip('displayResellBlip', value)}
                     >
