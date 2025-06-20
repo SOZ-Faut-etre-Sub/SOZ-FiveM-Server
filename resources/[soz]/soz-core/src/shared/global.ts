@@ -13,11 +13,7 @@ export type GlobalState = {
     halloween: string;
     rain: number;
     snow: boolean;
-    streamUrls: {
-        bennys: string;
-        cinema: string;
-        lspd: string;
-    };
+    streamUrls: Record<string, string>;
     features: FeaturesConfig;
 };
 

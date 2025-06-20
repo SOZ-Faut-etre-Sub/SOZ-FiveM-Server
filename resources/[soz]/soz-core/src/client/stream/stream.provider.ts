@@ -2,6 +2,7 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
+import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { Store } from '../store/store';
@@ -15,6 +16,7 @@ export class StreamProvider {
     private cinemaScreen: StreamScreen;
     private bennysScreen: StreamScreen;
     private lspdScreen: StreamScreen;
+    private fdlmScreen: StreamScreen;
 
     @Once()
     async onStart(): Promise<void> {
@@ -50,6 +52,17 @@ export class StreamProvider {
             'soz_big_screenbenny',
             'big_disp'
         );
+
+        this.fdlmScreen = new StreamScreen(
+            new BoxZone([-1465.36, -1240.18, 16.85], 148.6, 105.0, {
+                heading: 201.1,
+                minZ: 1.85,
+                maxZ: 26.65,
+            }),
+            'fdlm',
+            'soz_fdlm_scene_animation',
+            'big_disp'
+        );
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -57,9 +70,10 @@ export class StreamProvider {
         const position = GetEntityCoords(PlayerPedId(), false) as Vector3;
         const streamUrls = this.store.getState().global.streamUrls;
 
-        this.cinemaScreen.update(position, streamUrls.cinema);
-        this.bennysScreen.update(position, streamUrls.bennys);
-        this.lspdScreen.update(position, streamUrls.lspd);
+        this.cinemaScreen.update(position, streamUrls.cinema || BLACK_SCREEN_URL);
+        this.bennysScreen.update(position, streamUrls.bennys || BLACK_SCREEN_URL);
+        this.lspdScreen.update(position, streamUrls.lspd || BLACK_SCREEN_URL);
+        this.fdlmScreen.update(position, streamUrls.fdlm || BLACK_SCREEN_URL);
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -67,5 +81,6 @@ export class StreamProvider {
         this.cinemaScreen.stream();
         this.bennysScreen.stream();
         this.lspdScreen.stream();
+        this.fdlmScreen.stream();
     }
 }

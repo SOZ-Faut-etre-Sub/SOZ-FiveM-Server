@@ -40,11 +40,7 @@ export const global = createModel<RootModel>()({
         },
         weather: 'CLEAR',
         snow: false,
-        streamUrls: {
-            lspd: BLACK_SCREEN_URL,
-            bennys: BLACK_SCREEN_URL,
-            cinema: BLACK_SCREEN_URL,
-        },
+        streamUrls: {},
     } as GlobalState,
     reducers: {
         set(state, global: GlobalState) {

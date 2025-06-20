@@ -41,11 +41,7 @@ export const global = createModel<RootModel>()({
         } as Record<JobType, number>,
         weather: 'CLEAR',
         snow: false,
-        streamUrls: {
-            bennys: BLACK_SCREEN_URL,
-            cinema: BLACK_SCREEN_URL,
-            lspd: BLACK_SCREEN_URL,
-        },
+        streamUrls: {},
         features: DefaultFeatureConfig,
     } as GlobalState,
     reducers: {
