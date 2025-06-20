@@ -54,6 +54,7 @@ export class StreamScreen {
         this.renderTarget = renderTarget;
         this.model = model;
         this.handle = null;
+        this.volume = volume;
 
         this.duiObject = CreateDui(this.playingUrl, width, height);
 

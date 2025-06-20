@@ -11,10 +11,9 @@ import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { getDistance, getRotationForATargetingB, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { LightState, NextState } from '../../shared/spotlight';
+import { NextState } from '../../shared/spotlight';
 import {
     SCENE_COLOR_TEXTURE_NAMES,
-    SCENE_COLORS,
     Spot,
     SPOT_COLORS,
     SPOT_GROUP_SECOND_ROW,
@@ -39,7 +38,6 @@ const SCENE_TOP_BASE_TEXTURE_NAME = 'soz_gouv_white';
 const SCENE_MIDDLE_BASE_TEXTURE_NAME = 'soz_gouv_white02';
 const SCENE_BOTTOM_BASE_TEXTURE_NAME = 'soz_gouv_white03';
 const SCENE_TEXTURE_DICTIONARY = 'soz_xmas_gouv_txd';
-const TRIGGER_DISTANCE = 100;
 const SCENE_CENTER_POSITION = [-545.42, -698.82, 33.6] as Vector3;
 
 @Provider()
@@ -140,7 +138,7 @@ export class XmasProvider {
         if (this.sceneStream) {
             const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
-            this.sceneStream.update(position, this.sceneState?.video_url || BLACK_SCREEN_URL);
+            this.sceneStream.update(position, this.sceneState?.video_url || BLACK_SCREEN_URL, 0);
         }
 
         let trackedPosition = null;
@@ -229,7 +227,7 @@ export class XmasProvider {
             if (!this.loadedSceneObjects) {
                 const position = GetEntityCoords(PlayerPedId(), true) as Vector3;
 
-                this.sceneStream.update(position, BLACK_SCREEN_URL);
+                this.sceneStream.update(position, BLACK_SCREEN_URL, 0);
             }
 
             this.sceneStream.stream();
