@@ -395,6 +395,7 @@ export enum ServerEvent {
     VEHICLE_BURST_TYRE_TO_OWNER = 'soz-core:server:vehicle:burst-tire-to-owner',
 
     VOIP_SET_MEGAPHONE = 'soz-core:server:voip:set-megaphone',
+    VOIP_SET_ROBOT = 'soz-core:server:voip:set-robot',
     VOIP_RADIO_VEHICLE_ENABLE = 'soz-core:server:voip:radio-vehicle-enable',
     VOIP_RADIO_VEHICLE_UPDATE = 'soz-core:server:voip:radio-vehicle-update',
     VOIP_PHONE_CALL_START = 'soz-core:server:voip:phone-call-start',
