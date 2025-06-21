@@ -1096,3 +1096,9 @@ model casino_objects {
 
     @@index([kind], map: "kind")
 }
+
+model casino_statements {
+    id     Int      @id @default(autoincrement())
+    date   DateTime @default(now()) @db.Timestamp(0)
+    amount Float
+}
