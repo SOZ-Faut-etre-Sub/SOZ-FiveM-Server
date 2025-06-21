@@ -137,7 +137,11 @@ export class SceneLiveProvider {
     }
 
     @RepositoryDelete(RepositoryType.SceneLive)
-    async onSceneDelete(element: SceneLiveElement) {
+    async onSceneLiveDelete(element: SceneLiveElement) {
+        if (!element) {
+            return;
+        }
+
         if (this.effectHandles.has(element.id)) {
             StopParticleFxLooped(this.effectHandles.get(element.id), false);
         }
