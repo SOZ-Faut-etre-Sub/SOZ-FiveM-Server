@@ -348,7 +348,7 @@ export const Notifications: FunctionComponent = () => {
         if (hasWatch && !showStreetName && minimap.isHidden) {
             return 7 * settings.zoom + 'rem';
         }
-        return '.5rem';
+        return 10 * settings.zoom + 'rem';
     };
 
     useNuiEvent(
