@@ -300,6 +300,15 @@ export const SocietySafeStorage: Zone<JobType>[] = [
         maxZ: 31.04,
         data: JobType.LSCS,
     },
+    {
+        center: [963.5, 8.94, 71.84],
+        length: 2.6,
+        width: 4.4,
+        heading: 327.07,
+        minZ: 70.84,
+        maxZ: 73.24,
+        data: JobType.Casino,
+    },
 ];
 
 export const SocietySafeStorageWhatIf: Partial<Record<JobType, Zone>> = {
