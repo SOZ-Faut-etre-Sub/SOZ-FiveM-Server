@@ -19,6 +19,7 @@ import { getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { Err, isErr, isOk, Ok, Result } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PedFactory } from '../factory/ped.factory';
+import { HudMinimapProvider } from '../hud/hud.minimap.provider';
 import { Notifier } from '../notifier';
 import { PhoneService } from '../phone/phone.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -47,6 +48,9 @@ export class ExamProvider {
 
     @Inject(VehicleSeatbeltProvider)
     private seatbeltProvider: VehicleSeatbeltProvider;
+
+    @Inject(HudMinimapProvider)
+    private hudMinimapProvider: HudMinimapProvider;
 
     @On(ClientEvent.DRIVING_SCHOOL_SETUP_EXAM)
     public async setupDrivingSchoolExam(licenseType: DrivingSchoolLicenseType, spawnPoint: Vector4, spawnName: string) {
@@ -110,8 +114,6 @@ export class ExamProvider {
             }
         }
 
-        DisplayRadar(true);
-
         const dist = getDistance(this.examState.currentCheckpoint.coords, vehCoords);
 
         if (dist > this.examState.license.marker.size) {
@@ -168,6 +170,8 @@ export class ExamProvider {
         this.examState.checkpointEntity = this.displayCheckpoint(this.examState.currentCheckpoint);
 
         this.examState.isExamRunning = true;
+
+        this.hudMinimapProvider.forceGpsInVehicle(true);
     }
 
     private startPenaltyLoop() {
@@ -203,8 +207,6 @@ export class ExamProvider {
             RemoveBlip(this.examState.checkpointBlip);
         }
 
-        DisplayRadar(false);
-
         if (isOk(result)) {
             TriggerServerEvent(
                 ServerEvent.DRIVING_SCHOOL_UPDATE_LICENSE,
@@ -212,6 +214,8 @@ export class ExamProvider {
                 this.examState.license.label.toLowerCase()
             );
         }
+
+        this.hudMinimapProvider.forceGpsInVehicle(false);
 
         this.examState = this.resetExamState();
     }

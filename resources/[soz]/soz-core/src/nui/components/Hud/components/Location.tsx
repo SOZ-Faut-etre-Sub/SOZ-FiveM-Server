@@ -27,7 +27,7 @@ export const Location: FunctionComponent = () => {
             height,
             opacity: hasStreetNamesEnabled ? 1 : 0,
             width:
-                !hasWatch ||
+                (!hasWatch && minimap.isHidden) ||
                 (settings.switchPlayerStatsPosition && !hasStreetNamesEnabled) ||
                 (!hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden)
                     ? `0vw`
