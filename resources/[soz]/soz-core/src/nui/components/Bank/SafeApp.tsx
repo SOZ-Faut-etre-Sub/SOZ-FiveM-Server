@@ -1,4 +1,5 @@
 import { useAssetPath } from '@public/nui/hook/assets';
+import { JobType } from '@public/shared/job';
 import classnames from 'classnames';
 import cn from 'classnames';
 import React, { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
@@ -99,6 +100,10 @@ export const SafeApp: FunctionComponent = () => {
             window.removeEventListener('keyup', onKeyUpReceived);
         };
     }, [onKeyUpReceived]);
+
+    const isCashTransfer = player?.job?.id === JobType.CashTransfer;
+    const isOwnAccount = account?.owner.includes(player?.job?.id);
+    const isSafeStorage = account?.type === 'safestorages';
 
     if (!showApp) return null;
 
@@ -217,8 +222,41 @@ export const SafeApp: FunctionComponent = () => {
                             />
                         </Card>
                     </div>
+                    {action === 0 && (
+                        <>
+                            {isSafeStorage ? (
+                                isCashTransfer ? (
+                                    <Button disabled={isSubmitting}>Retirer l'argent</Button>
+                                ) : (
+                                    <div className="py-[15px]">
+                                        Seul un agent STONK Security peut accéder à ce coffre
+                                    </div>
+                                )
+                            ) : isOwnAccount ? (
+                                <Button disabled={isSubmitting}>Retirer l'argent</Button>
+                            ) : (
+                                <div className="py-[15px]">Vous n'avez pas l'autorisation de retirer de ce compte</div>
+                            )}
+                        </>
+                    )}
 
-                    <Button disabled={isSubmitting}>{action === 0 ? 'Retirer' : 'Déposer'} l'argent</Button>
+                    {action === 1 && (
+                        <>
+                            {isSafeStorage ? (
+                                isCashTransfer && !isOwnAccount ? (
+                                    <div className="py-[15px]">
+                                        Vous n'avez pas l'autorisation de déposer sur ce compte.
+                                    </div>
+                                ) : (
+                                    <Button disabled={isSubmitting}>Déposer l'argent</Button>
+                                )
+                            ) : isOwnAccount ? (
+                                <Button disabled={isSubmitting}>Déposer l'argent</Button>
+                            ) : (
+                                <div className="py-[15px]">Vous ne pouvez déposer que dans votre propre compte</div>
+                            )}
+                        </>
+                    )}
                 </form>
             </ApplicationContent>
         </ApplicationContainer>

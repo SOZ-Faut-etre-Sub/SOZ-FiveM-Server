@@ -13,7 +13,7 @@ export const PacificBankZone: BoxZone = new BoxZone([247.41, 223.26, 106.29], 5.
     maxZ: 108.29,
 });
 
-export const SafeStorageMaxCapacity = 900_000;
+export const SafeStorageMaxCapacity = 10_000_000;
 export const HouseSafeStorageTiers = {
     0: 10_000,
     1: 20_000,

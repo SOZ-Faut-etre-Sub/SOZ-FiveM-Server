@@ -1,4 +1,5 @@
 import { Feature } from '@public/shared/features';
+import { JobType } from '@public/shared/job';
 
 import { SocietySafeStorage, SocietySafeStorageWhatIf } from '../../config/bank';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -57,12 +58,13 @@ export class BankSafeProvider {
                                 `safe_${zone.data}`,
                                 'safestorages'
                             );
+
                             if (!safe) return;
 
                             this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
                             this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
                         },
-                        job: zone.data,
+                        job: { [zone.data]: 0, [JobType.CashTransfer]: 0 },
                     },
                 ],
                 2.5

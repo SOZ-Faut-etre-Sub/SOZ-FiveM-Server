@@ -1,3 +1,5 @@
+import { JobType } from '@public/shared/job';
+
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
@@ -58,7 +60,12 @@ export class BankSafeProvider {
 
         const account = await this.bankAccountRepository.find(accountId);
 
-        if (!(await this.bankAccountRepository.hasAccessToAccount(player, account))) {
+        if (
+            !(await this.bankAccountRepository.hasAccessToAccount(player, account)) ||
+            (account.type === 'safestorages' &&
+                (player.job?.id !== JobType.CashTransfer || !player.job?.onduty) &&
+                type === 'withdraw')
+        ) {
             this.notifier.error(source, "Vous n'avez pas accès à ce coffre.");
             return;
         }
