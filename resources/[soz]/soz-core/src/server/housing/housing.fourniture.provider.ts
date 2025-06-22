@@ -24,6 +24,7 @@ import {
 } from '@public/shared/shop/zkea_fourniture';
 import { isEqual } from 'lodash';
 
+import { ZkeaCasinoAliceFrame } from '../../shared/shop/zkea_fourniture';
 import { InventoryFactory } from '../inventory/inventory.factory';
 
 @Provider()
@@ -62,7 +63,7 @@ export class HousingFournitureProvider {
 
     @OnEvent(ServerEvent.HOUSING_STORE_FOURNITURE)
     public async onStoreFourniture(source: number, apartmentId: number, propertyId: number) {
-        await this.createBaseFourntiureIfNeeded(source, apartmentId, propertyId);
+        await this.createBaseFurnitureIfNeeded(source, apartmentId, propertyId);
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
         if (!inventory) {
@@ -170,9 +171,9 @@ export class HousingFournitureProvider {
         lastUpdate: number | null
     ): Promise<{ fournitures: HousingProp[]; newDate: number }> {
         const newDate = Date.now();
-        const createdBase = await this.createBaseFourntiureIfNeeded(source, apartmentId, propertyId);
-        const modifiedPlate = await this.checkPlateFourntiureIfNeeded(source, apartmentId, propertyId);
-        return createdBase || modifiedPlate
+        const createdBase = await this.createBaseFurnitureIfNeeded(source, apartmentId, propertyId);
+        const extraFurniture = await this.checkExtraFurnitureIfNeeded(source, apartmentId, propertyId);
+        return createdBase || extraFurniture
             ? { fournitures: [], newDate: newDate }
             : { fournitures: this.getFilteredFourntiure(apartmentId, lastUpdate), newDate: newDate };
     }
@@ -193,7 +194,7 @@ export class HousingFournitureProvider {
         });
     }
 
-    private async createBaseFourntiureIfNeeded(source: number, apartmentId: number, propertyId: number) {
+    private async createBaseFurnitureIfNeeded(source: number, apartmentId: number, propertyId: number) {
         if (!this.fournitures[apartmentId] || Object.values(this.fournitures[apartmentId]).length === 0) {
             const fournitures = await this.getFournitureForApartment(apartmentId);
             if (fournitures.length !== 0) {
@@ -213,7 +214,7 @@ export class HousingFournitureProvider {
         return false;
     }
 
-    private async checkPlateFourntiureIfNeeded(source: number, apartmentId: number, propertyId: number) {
+    private async checkExtraFurnitureIfNeeded(source: number, apartmentId: number, propertyId: number) {
         if (this.plateChecked[apartmentId]) {
             return;
         }
@@ -228,19 +229,38 @@ export class HousingFournitureProvider {
         const roommate = this.playerService.getPlayerByCitizenId(apartement.roommate);
 
         const plates = Object.values(this.fournitures[apartmentId]).filter(v => v.model === ZkeaPlateModel);
-        const target = (tenant?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
+        const plateTarget = (tenant?.metadata?.plate ? 1 : 0) + (roommate?.metadata?.plate ? 1 : 0);
 
-        if (plates.length < target) {
+        if (plates.length < plateTarget) {
             await this.addFourntiureForApartement(
                 apartmentId,
-                Array(target - plates.length).fill({ apartment_id: apartmentId, model: ZkeaPlateModel })
+                Array(plateTarget - plates.length).fill({ apartment_id: apartmentId, model: ZkeaPlateModel })
             );
             this.notifier.notify(
                 source,
                 `Des meubles t'ont été offert par le Zkea, n'hésite pas à en acheter plus !<br>- ${Array(
-                    target - plates.length
+                    plateTarget - plates.length
                 )
                     .fill(ZkeaFourniture[ZkeaPlateModel].name)
+                    .join('<br>- ')}`
+            );
+        }
+
+        const aliceFrames = Object.values(this.fournitures[apartmentId]).filter(v => v.model === ZkeaCasinoAliceFrame);
+        const frameTarget =
+            (tenant?.metadata?.casino_alice_frame ? 1 : 0) + (roommate?.metadata?.casino_alice_frame ? 1 : 0);
+
+        if (aliceFrames.length < frameTarget) {
+            await this.addFourntiureForApartement(
+                apartmentId,
+                Array(frameTarget - aliceFrames.length).fill({ apartment_id: apartmentId, model: ZkeaCasinoAliceFrame })
+            );
+            this.notifier.notify(
+                source,
+                `Des meubles t'ont été offert par le Zkea, n'hésite pas à en acheter plus !<br>- ${Array(
+                    frameTarget - aliceFrames.length
+                )
+                    .fill(ZkeaFourniture[ZkeaCasinoAliceFrame].name)
                     .join('<br>- ')}`
             );
         }

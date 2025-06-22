@@ -409,6 +409,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     plaster: PlasterLocation[];
     plate?: boolean;
     special_plate?: boolean;
+    casino_alice_frame?: boolean;
     reputation_token_date?: number;
     main_residence_last_change?: number;
     noclip: boolean;
