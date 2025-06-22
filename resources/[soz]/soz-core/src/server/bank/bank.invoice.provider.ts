@@ -9,6 +9,7 @@ import { InventoryFactory } from '../inventory/inventory.factory';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../player/progress.service';
 import { BankInvoiceRepository } from '../repository/bank.invoice.repository';
 import { BankInvoiceService } from './bank.invoice.service';
 
@@ -31,6 +32,9 @@ export class BankInvoiceProvider {
 
     @Inject(BankInvoiceRepository)
     private bankInvoiceRepository: BankInvoiceRepository;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     @Rpc(RpcServerEvent.BANK_GET_INVOICES)
     public async getInvoices(source: number): Promise<Invoice[]> {
@@ -73,6 +77,40 @@ export class BankInvoiceProvider {
             this.notifier.error(source, "Vous n'avez pas de papier sur vous.");
             return false;
         }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'invoice-create',
+            kind === 'fine' ? "Rédaction de l'amende" : 'Rédaction de la facture',
+            5000,
+            {
+                dictionary: 'missheistdockssetup1clipboard@base',
+                name: 'base',
+                options: { repeat: true },
+                props: [
+                    {
+                        model: 'prop_notepad_01',
+                        bone: 18905,
+                        position: [0.09999999999999432, 0.020000000000003126, 0.04999999999999716],
+                        rotation: [10, 0, 0],
+                    },
+                    {
+                        model: 'prop_pencil_01',
+                        bone: 58866,
+                        position: [0.11000000000001364, -0.020000000000003126, 0.0009999999999998899],
+                        rotation: [-120, 0, 0],
+                    },
+                ],
+            },
+            {
+                disableMovement: false,
+                disableCarMovement: true,
+                disableMouse: false,
+                disableCombat: true,
+            }
+        );
+
+        if (!completed) return;
 
         const targetAccount = type === 'society' ? playerTarget.job.id : playerTarget.charinfo.account;
 

@@ -1,21 +1,17 @@
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
-import { ProgressService } from '@public/client/progress.service';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent } from '@public/shared/event';
 import { Fine } from '@public/shared/job/police';
 
-import { emitRpc } from '../../../core/rpc';
+import { emitRpcTimeout } from '../../../core/rpc';
 import { NotEmptyStringValidator, PositiveNumberValidator } from '../../../shared/nui/input';
 import { RpcServerEvent } from '../../../shared/rpc';
 
 @Provider()
 export class PoliceFineProvider {
-    @Inject(ProgressService)
-    private progressService: ProgressService;
-
     @Inject(InputService)
     private inputService: InputService;
 
@@ -28,17 +24,15 @@ export class PoliceFineProvider {
             maxCharacters: 30,
             title: `Montant de l'amende (${fine.price.min} - ${fine.price.max})`,
         });
+
         if (!amount || isNaN(Number(amount)) || Number(amount) < fine.price.min || Number(amount) > fine.price.max) {
             this.notifier.error('Montant invalide');
             return;
         }
-        const completed = await this.playLicenceAnimation("Rédaction de l'amende");
-        if (!completed) {
-            return;
-        }
 
-        await emitRpc(
+        await emitRpcTimeout(
             RpcServerEvent.BANK_CREATE_INVOICE,
+            10000,
             playerServerId,
             'personal',
             fine.label,
@@ -73,46 +67,14 @@ export class PoliceFineProvider {
             return;
         }
 
-        const completed = await this.playLicenceAnimation("Rédaction de l'amende");
-
-        if (!completed) {
-            return;
-        }
-
-        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, playerServerId, 'personal', title, Number(amount), 'fine');
-    }
-
-    private async playLicenceAnimation(textProgressBar: string): Promise<boolean> {
-        const { completed } = await this.progressService.progress(
-            'police-add-licence',
-            textProgressBar,
-            5000,
-            {
-                dictionary: 'missheistdockssetup1clipboard@base',
-                name: 'base',
-                options: { repeat: true },
-                props: [
-                    {
-                        model: 'prop_notepad_01',
-                        bone: 18905,
-                        position: [0.09999999999999432, 0.020000000000003126, 0.04999999999999716],
-                        rotation: [10, 0, 0],
-                    },
-                    {
-                        model: 'prop_pencil_01',
-                        bone: 58866,
-                        position: [0.11000000000001364, -0.020000000000003126, 0.0009999999999998899],
-                        rotation: [-120, 0, 0],
-                    },
-                ],
-            },
-            {
-                disableMovement: false,
-                disableCarMovement: true,
-                disableMouse: false,
-                disableCombat: true,
-            }
+        await emitRpcTimeout(
+            RpcServerEvent.BANK_CREATE_INVOICE,
+            10000,
+            playerServerId,
+            'personal',
+            title,
+            Number(amount),
+            'fine'
         );
-        return completed;
     }
 }
