@@ -82,7 +82,11 @@ export const WatchInterface: FunctionComponent = () => {
             bottom: `${100 - minimap.bottom * 100}vh`,
             left: settings.switchPlayerStatsPosition
                 ? `${100 - (minimap.right + 0.04) * 100}vw`
-                : !hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden
+                : hasWatch &&
+                    !hasStreetNamesEnabled &&
+                    !settings.showWeather &&
+                    !settings.showDateTime &&
+                    minimap.isHidden
                   ? `${(minimap.left + 0.005) * 100}vw`
                   : `${(minimap.right + 0.005) * 100}vw`,
         },

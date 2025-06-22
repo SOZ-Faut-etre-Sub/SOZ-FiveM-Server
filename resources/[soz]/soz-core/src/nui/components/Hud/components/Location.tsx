@@ -11,6 +11,7 @@ import { useZoom } from '../hooks/useZoom';
 
 export const Location: FunctionComponent = () => {
     const settings = useSelector((state: RootState) => state.hud.settings);
+    const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const streetName = useSelector((state: RootState) => state.hud.streetName);
     const minimap = useSelector((state: RootState) => state.hud.minimap);
 
@@ -26,8 +27,9 @@ export const Location: FunctionComponent = () => {
             height,
             opacity: hasStreetNamesEnabled ? 1 : 0,
             width:
-                (settings.switchPlayerStatsPosition && !hasStreetNamesEnabled) ||
-                (!hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden)
+                hasWatch &&
+                ((settings.switchPlayerStatsPosition && !hasStreetNamesEnabled) ||
+                    (!hasStreetNamesEnabled && !settings.showWeather && !settings.showDateTime && minimap.isHidden))
                     ? `0vw`
                     : `${minimap.width * 100}vw`,
         },
