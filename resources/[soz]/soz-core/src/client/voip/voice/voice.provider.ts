@@ -114,6 +114,7 @@ export class VoiceProvider {
             this.nuiDispatch.dispatch('hud', 'UpdateVoiceActive', true);
 
             this.voiceTargetService.refresh();
+            this.voiceListeningService.refresh();
             this.voipService.resetVoiceMode();
         } finally {
             this.isConnecting = false;

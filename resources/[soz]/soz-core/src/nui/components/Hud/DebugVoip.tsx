@@ -58,6 +58,16 @@ export const DebugVoip: FunctionComponent = () => {
                     );
                 })}
             </div>
+            <div>
+                <h2 className="text-xl">Target Channels</h2>
+                {debugVoip.targetChannels.map(channelId => {
+                    return <div key={channelId}>Channel: {channelId}</div>;
+                })}
+            </div>
+            <div>
+                <h2 className="text-xl">Listening/Connected Channel</h2>
+                <div>Channel: {debugVoip.connectedChannel}</div>
+            </div>
         </div>
     );
 };

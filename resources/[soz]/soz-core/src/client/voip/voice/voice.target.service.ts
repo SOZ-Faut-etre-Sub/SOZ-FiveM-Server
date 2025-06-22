@@ -11,6 +11,8 @@ import { AudioContextType, VOICE_TARGET } from '../../../shared/voip';
 export class VoiceTargetService {
     private players: Map<number, AudioContextType[]> = new Map();
 
+    private channels: Set<number> = new Set();
+
     public getTargets(): Record<number, AudioContextType[]> {
         const targets: Record<number, AudioContextType[]> = {};
 
@@ -27,6 +29,32 @@ export class VoiceTargetService {
         for (const [playerId] of this.players) {
             MumbleAddVoiceTargetPlayerByServerId(VOICE_TARGET, playerId);
         }
+
+        for (const channel of this.channels) {
+            MumbleAddVoiceTargetChannel(VOICE_TARGET, channel);
+        }
+    }
+
+    public addChannel(channelId: number) {
+        if (!this.channels.has(channelId)) {
+            MumbleAddVoiceTargetChannel(VOICE_TARGET, channelId);
+
+            this.channels.add(channelId);
+        }
+    }
+
+    public removeChannel(channelId: number) {
+        if (!this.channels.has(channelId)) {
+            return;
+        }
+
+        MumbleRemoveVoiceTargetChannel(VOICE_TARGET, channelId);
+
+        this.channels.delete(channelId);
+    }
+
+    public getChannels(): number[] {
+        return Array.from(this.channels);
     }
 
     public addPlayer(playerId: number, audioContextType: AudioContextType) {

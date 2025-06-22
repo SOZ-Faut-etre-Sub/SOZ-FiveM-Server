@@ -74,12 +74,33 @@ export class VoiceListeningService {
 
     private usedSubmixes = new Map<number, number>();
 
+    private listeningChannel: number = 0;
+
     public getListeners(): PlayerVoice[] {
         return [...this.players.values()];
     }
 
     public getSubmixes(): [number, number][] {
         return [...this.usedSubmixes.entries()];
+    }
+
+    public setListeningChannel(channel: number) {
+        if (this.listeningChannel === channel) {
+            return;
+        }
+
+        this.listeningChannel = channel;
+        MumbleSetVoiceChannel(channel);
+    }
+
+    public refresh() {
+        if (this.listeningChannel !== 0) {
+            MumbleSetVoiceChannel(this.listeningChannel);
+        }
+    }
+
+    public getListeningChannel(): number {
+        return this.listeningChannel;
     }
 
     public addPlayerAudioContext(playerId: number, audioContextType: AudioContextType, audioContext: AudioContext) {
