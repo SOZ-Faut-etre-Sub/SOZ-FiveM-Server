@@ -1,7 +1,7 @@
 import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
-import { emitRpc } from '../../core/rpc';
+import { emitRpc, emitRpcTimeout } from '../../core/rpc';
 import { JobPermission, JobType } from '../../shared/job';
 import { Err, Ok } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -83,7 +83,7 @@ export class JobInvoiceProvider {
         }
 
         const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, targetSource, 'personal', title, amount);
+        await emitRpcTimeout(RpcServerEvent.BANK_CREATE_INVOICE, 10000, targetSource, 'personal', title, amount);
     }
 
     public async invoicePlayerSociety(entity: number) {
@@ -94,7 +94,7 @@ export class JobInvoiceProvider {
         }
 
         const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
-        await emitRpc(RpcServerEvent.BANK_CREATE_INVOICE, targetSource, 'society', title, amount);
+        await emitRpcTimeout(RpcServerEvent.BANK_CREATE_INVOICE, 10000, targetSource, 'society', title, amount);
     }
 
     public async getTitleAndAmount(): Promise<[string, number]> {
