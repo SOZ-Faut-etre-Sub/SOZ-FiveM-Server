@@ -23,6 +23,7 @@ export const SocietyNumberList: Record<JobType, string> = {
     [JobType.Gouv]: '555-GOUV',
     [JobType.DMC]: '555-DMC',
     [JobType.LSCS]: '555-LSCS',
+    [JobType.Casino]: '555-DIAMOND',
     [JobType.Unemployed]: '',
     [JobType.Adsl]: '',
     [JobType.Delivery]: '',

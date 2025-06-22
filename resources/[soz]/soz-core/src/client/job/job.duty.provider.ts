@@ -294,6 +294,15 @@ const DutyZoneConfig: Zone<JobType>[] = [
         minZ: 64.16,
         maxZ: 66.16,
     },
+    {
+        data: JobType.Casino,
+        center: [960.09, 34.8, 72.69],
+        length: 0.6,
+        width: 2.8,
+        heading: 147.8,
+        minZ: 71.69,
+        maxZ: 72.29,
+    },
 ];
 
 const DutyZoneConfigWhatIf: Zone<JobType>[] = [

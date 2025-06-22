@@ -30,6 +30,7 @@ export enum JobType {
     SASP = 'sasp',
     DMC = 'dmc',
     LSCS = 'lscs',
+    Casino = 'casino',
 }
 
 export const BASE_FDO = [JobType.LSPD, JobType.BCSO];
@@ -145,6 +146,7 @@ export const JobLabel: Record<JobType, string> = {
     [JobType.SASP]: 'San Andreas State Police',
     [JobType.DMC]: 'DeMetal Company',
     [JobType.LSCS]: 'Los Santos County Sheriff',
+    [JobType.Casino]: 'Diamond Casino',
 };
 
 export type JobPermissionData = {
