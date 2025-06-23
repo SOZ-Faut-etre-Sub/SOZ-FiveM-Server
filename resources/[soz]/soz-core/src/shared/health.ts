@@ -146,7 +146,7 @@ export const PointsByStressLooseType: Record<StressLooseType, number> = {
     [StressLooseType.DrinkCoffee]: -2,
     [StressLooseType.DrinkAlcohol]: -6,
     [StressLooseType.Smoke]: -1,
-    [StressLooseType.Thunder]: 5,
+    [StressLooseType.Thunder]: 2,
 };
 
 export const IntervalByStressLooseType: Record<StressLooseType, number> = {

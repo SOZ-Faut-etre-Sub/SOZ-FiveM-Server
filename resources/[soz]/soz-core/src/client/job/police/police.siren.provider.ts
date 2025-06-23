@@ -1,6 +1,7 @@
 import { Notifier } from '@public/client/notifier';
 import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
+import { VehicleRepository } from '@public/client/repository/vehicle.repository';
 import { VehicleSirenRepository } from '@public/client/repository/vehicle.siren.repository';
 import { wait } from '@public/core/utils';
 import { ServerEvent } from '@public/shared/event';
@@ -25,6 +26,9 @@ export class PoliceSirenProvider {
 
     @Inject(ResourceLoader)
     private resourceLoader: ResourceLoader;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     @Inject(VehicleSirenRepository)
     private vehicleSirenRepository: VehicleSirenRepository;
@@ -142,6 +146,13 @@ export class PoliceSirenProvider {
             const sirenStates = this.vehicleSirenRepository.raw();
             sirenStates[vehicleNetId] = false;
             this.handleSirenUpdate(veh, false, vehicleNetId);
+            return;
+        }
+
+        const vehDef = this.vehicleRepository.getByModelHash(vehModel);
+        const isSuper = vehDef ? vehDef.category == 'Super' : GetVehicleClass(veh) == 7;
+        if (isSuper) {
+            this.notifier.error('Véhicule incompatible.');
             return;
         }
 
