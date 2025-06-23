@@ -140,4 +140,18 @@ export class ResourceLoader {
             }
         }
     }
+
+    async loadWeaponAsset(name: number): Promise<void> {
+        if (!HasWeaponAssetLoaded(name)) {
+            RequestWeaponAsset(name, 31, 0);
+
+            while (!HasWeaponAssetLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
+
+    unloadWeaponAsset(name: number): void {
+        RemoveWeaponAsset(name);
+    }
 }
