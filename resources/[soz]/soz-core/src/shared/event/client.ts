@@ -237,6 +237,7 @@ export enum ClientEvent {
 
     VOIP_DEBUG = 'soz-core:client:voip:debug',
     VOIP_SET_MEGAPHONE = 'soz-core:client:voip:set-megaphone',
+    VOIP_SET_ROBOT = 'soz-core:client:voip:set-robot',
     VOIP_ITEM_RADIO_TOGGLE = 'soz-core:client:voip:item-radio:toggle',
     VOIP_ITEM_MEGAPHONE_TOGGLE = 'soz-core:client:voip:item-megaphone:toggle',
     VOIP_ITEM_MICROPHONE_TOGGLE = 'soz-core:client:voip:item-microphone:toggle',

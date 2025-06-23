@@ -122,6 +122,7 @@ export enum RpcServerEvent {
     VOIP_SET_MUTE = 'soz-core:voip:set-mute',
     VOIP_IS_MUTED = 'soz-core:voip:is-muted',
     VOIP_GET_MEGAPHONE_PLAYERS = 'soz-core:voip:get-megaphone-players',
+    VOIP_GET_ROBOT_PLAYERS = 'soz-core:voip:get-robot-players',
     VOIP_VOICE_START_TRANSMITTING = 'soz-core:server:voip:voice-start-transmitting',
     VOIP_VOICE_STOP_TRANSMITTING = 'soz-core:server:voip:voice-stop-transmitting',
 

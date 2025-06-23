@@ -410,15 +410,22 @@ export class VehicleSpawner {
         );
     }
 
-    public async spawnTemporaryVehicle(source: number, model: string): Promise<null | number> {
+    public async spawnTemporaryVehicle(
+        source: number,
+        model: string,
+        position: Vector4 = null,
+        wrap: boolean = true
+    ): Promise<null | number> {
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
             return null;
         }
 
-        const position = GetEntityCoords(GetPlayerPed(source)) as Vector4;
-        position[3] = GetEntityHeading(GetPlayerPed(source));
+        if (!position) {
+            position = GetEntityCoords(GetPlayerPed(source)) as Vector4;
+            position[3] = GetEntityHeading(GetPlayerPed(source));
+        }
 
         const modelHash = GetHashKey(model);
         const volatileState: VehicleVolatileState = {
@@ -435,7 +442,7 @@ export class VehicleSpawner {
                 hash: modelHash,
                 model,
                 position,
-                warp: true,
+                warp: wrap,
             },
             volatileState,
             condition

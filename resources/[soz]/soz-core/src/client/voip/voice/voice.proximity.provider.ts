@@ -22,6 +22,7 @@ export class VoiceProximityProvider {
     private voiceListeningService: VoiceListeningService;
 
     private megaPhonePlayers = new Set<number>();
+    private robotPlayers = new Set<number>();
 
     private currentChunks: Set<number> = new Set();
 
@@ -37,6 +38,17 @@ export class VoiceProximityProvider {
                 priority: 4,
             });
         }
+
+        const robotPlayers = await emitRpc<number[]>(RpcServerEvent.VOIP_GET_ROBOT_PLAYERS);
+
+        for (const player of robotPlayers) {
+            this.robotPlayers.add(player);
+
+            this.voiceListeningService.addPlayerAudioContext(player, 'eodrobot', {
+                type: 'eodrobot',
+                priority: 5,
+            });
+        }
     }
 
     @OnEvent(ClientEvent.VOIP_SET_MEGAPHONE)
@@ -50,6 +62,20 @@ export class VoiceProximityProvider {
         } else {
             this.megaPhonePlayers.delete(player);
             this.voiceListeningService.removePlayerAudioContext(player, 'megaphone');
+        }
+    }
+
+    @OnEvent(ClientEvent.VOIP_SET_ROBOT)
+    public onSetRobot(player: number, state: boolean) {
+        if (state) {
+            this.robotPlayers.add(player);
+            this.voiceListeningService.addPlayerAudioContext(player, 'eodrobot', {
+                type: 'eodrobot',
+                priority: 5,
+            });
+        } else {
+            this.robotPlayers.delete(player);
+            this.voiceListeningService.removePlayerAudioContext(player, 'eodrobot');
         }
     }
 
