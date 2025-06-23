@@ -100,8 +100,6 @@ export type VoiceDebugInfo = {
     targets: Record<number, AudioContextType[]>;
     listeners: PlayerVoice[];
     submixes: [number, number][];
-    targetChannels: number[];
-    connectedChannel: number;
 };
 
 export function getDefaultRadioState(): Radio {

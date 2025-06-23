@@ -46,8 +46,6 @@ export class VoiceDebugProvider {
             voiceMode: this.voipService.getVoiceMode(),
             overrideInputRange: this.voipService.getOverrideInputRange(),
             submixes: this.voiceListeningService.getSubmixes(),
-            targetChannels: this.voiceTargetService.getChannels(),
-            connectedChannel: this.voiceListeningService.getListeningChannel(),
         });
     }
 }
