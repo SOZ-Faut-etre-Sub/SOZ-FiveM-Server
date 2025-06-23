@@ -219,6 +219,7 @@ export class VehicleLockProvider {
             return;
         }
 
+        SetVehicleDoorsLocked(vehicle, VehicleLockStatus.Unlocked);
         const closestSeat = this.getClosestSeat(ped, vehicle);
 
         const start = GetGameTimer();
