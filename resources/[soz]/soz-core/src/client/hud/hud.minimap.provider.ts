@@ -29,6 +29,7 @@ export class HudMinimapProvider {
     private _hasAdminGps = false;
     private _dead = false;
     private _showHud = true;
+    private _forceGpsInVehicle = false;
 
     private _inVehicle = GetVehiclePedIsIn(PlayerPedId(), false) !== 0;
     private _scaledNui = GetResourceKvpInt('soz_scaled_nui') === 1;
@@ -39,6 +40,11 @@ export class HudMinimapProvider {
 
     public set hasAdminGps(value: boolean) {
         this._hasAdminGps = value;
+        this.updateShowRadar();
+    }
+
+    public forceGpsInVehicle(value: boolean) {
+        this._forceGpsInVehicle = value;
         this.updateShowRadar();
     }
 
@@ -123,9 +129,15 @@ export class HudMinimapProvider {
     }
 
     private get shouldDisplayRadar(): boolean {
-        return (
-            this._showHud && ((this._inVehicle && this.hudWatchProvider.haveWatch && !this._dead) || this._hasAdminGps)
-        );
+        if (!this._showHud) return false;
+        if (this._hasAdminGps) return true;
+        if (this._dead) return false;
+
+        if (this._forceGpsInVehicle) {
+            return this._inVehicle;
+        }
+
+        return this._inVehicle && this.hudWatchProvider.haveWatch;
     }
 
     private async updateShowRadar(): Promise<void> {
