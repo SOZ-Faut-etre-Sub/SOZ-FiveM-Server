@@ -23,28 +23,27 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
     circle,
     children,
 }) => {
-    const glassmorphismWorker = useContext(GlassMorphismContext);
+    const gameView = useContext(GlassMorphismContext);
     const [canvasUUID] = useState(uuidv4());
 
     const containerRef = useRef<HTMLDivElement>(null);
     const containerRect = useRef<DOMRect | null>(null);
 
     const updateGlassmorphism = useCallback(() => {
-        glassmorphismWorker.postMessage({
-            type: 'update',
-            uuid: canvasUUID,
-            x: containerRect.current?.x,
-            y: containerRect.current?.y,
-            width: containerRect.current?.width,
-            height: containerRect.current?.height,
-            options: {
+        gameView.updateCanvas(
+            canvasUUID,
+            containerRect.current?.x,
+            containerRect.current?.y,
+            containerRect.current?.width,
+            containerRect.current?.height,
+            {
                 cantBeHidden,
                 disableGameClone,
                 blur,
                 rounded,
                 circle,
-            },
-        });
+            }
+        );
     }, [disableGameClone, blur, rounded, circle]);
 
     useEffect(() => {
@@ -52,41 +51,32 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
 
         const container = containerRef.current?.getBoundingClientRect();
 
-        glassmorphismWorker.postMessage({
-            type: 'add',
-            uuid: canvasUUID,
-            x: container?.x,
-            y: container?.y,
-            width: container?.width,
-            height: container?.height,
-            options: {
-                cantBeHidden,
-                disableGameClone,
-                blur,
-                rounded,
-                circle,
-            },
+        gameView.addCanvas(canvasUUID, container?.x, container?.y, container?.width, container?.height, {
+            cantBeHidden,
+            disableGameClone,
+            blur,
+            rounded,
+            circle,
         });
 
         containerRect.current = container;
     }, [containerRef.current]);
 
     useEffect(() => {
-        glassmorphismWorker.postMessage({
-            type: 'update',
-            uuid: canvasUUID,
-            x: containerRect.current?.x,
-            y: containerRect.current?.y,
-            width: containerRect.current?.width,
-            height: containerRect.current?.height,
-            options: {
+        gameView.updateCanvas(
+            canvasUUID,
+            containerRect.current?.x,
+            containerRect.current?.y,
+            containerRect.current?.width,
+            containerRect.current?.height,
+            {
                 cantBeHidden,
                 disableGameClone,
                 blur,
                 rounded,
                 circle,
-            },
-        });
+            }
+        );
     }, [disableGameClone, blur, rounded, circle]);
 
     useInterval(() => {
@@ -105,12 +95,7 @@ export const GameCanvasBox: FunctionComponent<PropsWithChildren<GameCanvasBoxPro
     }, 10);
 
     useEffect(() => {
-        return () => {
-            glassmorphismWorker.postMessage({
-                type: 'remove',
-                uuid: canvasUUID,
-            });
-        };
+        return () => gameView.removeCanvas(canvasUUID);
     }, []);
 
     return (
