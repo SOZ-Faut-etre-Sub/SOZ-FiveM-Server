@@ -40,7 +40,7 @@ import { BankMoneyType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';
-import { ADD_ERROR_MESSAGE, InventoryItemMetadata } from '../../shared/inventory';
+import { ADD_ERROR_MESSAGE, InventoryItemMetadata, InventoryType } from '../../shared/inventory';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { isErr, isOk } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
@@ -273,7 +273,7 @@ export class ShopProvider {
 
     @OnEvent(ServerEvent.ZKEA_CHECK_STOCK)
     public async zkeaCheckStock(source: number) {
-        const inventory = await this.inventoryFactory.get('cabinet_storage');
+        const inventory = await this.inventoryFactory.getOrCreate('cabinet_storage', InventoryType.CabinetStorage);
         const amount = inventory.getItemCount('cabinet_zkea');
 
         this.notifier.notify(source, `Il reste ${amount} ~b~meubles Zkea~s~ en stock.`, 'info');
@@ -619,7 +619,10 @@ export class ShopProvider {
     }
 
     public async shopZkeaFournitureBuy(source: number, product: ZkeaFournitureItem, taxType: TaxType) {
-        const cabinetStorageInventory = await this.inventoryFactory.get('cabinet_storage');
+        const cabinetStorageInventory = await this.inventoryFactory.getOrCreate(
+            'cabinet_storage',
+            InventoryType.CabinetStorage
+        );
         const playerInventory = await this.inventoryFactory.getPlayerInventory(source);
 
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
