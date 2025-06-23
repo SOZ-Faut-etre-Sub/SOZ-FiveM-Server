@@ -56,17 +56,17 @@ export const CallModalApp = () => {
             <div className="absolute bottom-40 grid grid-cols-3 gap-5 w-full px-5">
                 {callInProgress && (
                     <>
-                        <CallButton
-                            label="Haut-parleur"
-                            icon={BsVolumeUpFill}
-                            onClick={speakerCall}
-                            className={clsx({
-                                'bg-white/80': currentCall.speaker,
-                            })}
-                            iconClassName={clsx({
-                                'text-green-500': currentCall.speaker,
-                            })}
-                        />
+                        {/*<CallButton*/}
+                        {/*    label="Haut-parleur"*/}
+                        {/*    icon={BsVolumeUpFill}*/}
+                        {/*    onClick={speakerCall}*/}
+                        {/*    className={clsx({*/}
+                        {/*        'bg-white/80': currentCall.speaker,*/}
+                        {/*    })}*/}
+                        {/*    iconClassName={clsx({*/}
+                        {/*        'text-green-500': currentCall.speaker,*/}
+                        {/*    })}*/}
+                        {/*/>*/}
                         {!targetContact && (
                             <CallButton
                                 label="Ajouter"
@@ -78,7 +78,7 @@ export const CallModalApp = () => {
                             label="Sourdine"
                             icon={BsFillMicMuteFill}
                             onClick={muteCall}
-                            containerClassName={targetContact ? 'col-start-3' : ''}
+                            containerClassName={targetContact ? 'col-start-2' : 'col-start-3'}
                             className={clsx({
                                 'bg-white/80': currentCall.muted,
                             })}
