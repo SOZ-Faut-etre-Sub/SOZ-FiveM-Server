@@ -76,6 +76,16 @@ export const SafeApp: FunctionComponent = () => {
     const submitForm: SubmitHandler<SafeAppInputs> = async data => {
         if (!account) return;
 
+        if (action === 0) {
+            if (isSafeStorage && !isCashTransfer) {
+                return;
+            }
+        } else if (action === 1) {
+            if (isSafeStorage && isCashTransfer && !isOwnAccount) {
+                return;
+            }
+        }
+
         const moneyType = data.money > 0 ? 'money' : 'marked_money';
         const amount = moneyType === 'money' ? data.money : data.markedMoney;
 
@@ -86,9 +96,8 @@ export const SafeApp: FunctionComponent = () => {
             amount: Number(amount),
             refreshNui: account?.type,
         });
-        if (!result) {
-            return;
-        }
+
+        if (!result) return;
 
         reset();
     };
@@ -232,10 +241,8 @@ export const SafeApp: FunctionComponent = () => {
                                         Seul un agent STONK Security peut accéder à ce coffre
                                     </div>
                                 )
-                            ) : isOwnAccount ? (
-                                <Button disabled={isSubmitting}>Retirer l'argent</Button>
                             ) : (
-                                <div className="py-[15px]">Vous n'avez pas l'autorisation de retirer de ce compte</div>
+                                <Button disabled={isSubmitting}>Retirer l'argent</Button>
                             )}
                         </>
                     )}
@@ -250,10 +257,8 @@ export const SafeApp: FunctionComponent = () => {
                                 ) : (
                                     <Button disabled={isSubmitting}>Déposer l'argent</Button>
                                 )
-                            ) : isOwnAccount ? (
-                                <Button disabled={isSubmitting}>Déposer l'argent</Button>
                             ) : (
-                                <div className="py-[15px]">Vous ne pouvez déposer que dans votre propre compte</div>
+                                <Button disabled={isSubmitting}>Déposer l'argent</Button>
                             )}
                         </>
                     )}
