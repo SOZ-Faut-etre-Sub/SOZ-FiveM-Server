@@ -422,6 +422,8 @@ export enum ElevatorFloorName {
     baun1,
     casino0,
     casino1,
+    casinoPenthouse0,
+    casinoPenthouse1,
 }
 
 export const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
@@ -638,5 +640,20 @@ export const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
         downTo: [ElevatorFloorName.casino0],
         spawnPoint: [964.58, 58.81, 112.55, 52.4],
         requireCasinoVip: true,
+    },
+    // Casino penthouse
+    [ElevatorFloorName.casinoPenthouse0]: {
+        label: 'Bureau',
+        button: new BoxZone([953.11, 58.49, 75.43], 0.4, 1.8, { heading: 238.25, minZ: 74.43, maxZ: 76.78 }),
+        upTo: [ElevatorFloorName.casinoPenthouse1],
+        downTo: [],
+        spawnPoint: [954.11, 57.95, 75.43, 298.52],
+    },
+    [ElevatorFloorName.casinoPenthouse1]: {
+        label: 'Penthouse',
+        button: new BoxZone([982.37, 55.61, 116.26], 1.8, 3.6, { heading: 237.8, minZ: 115.26, maxZ: 117.41 }),
+        upTo: [],
+        downTo: [ElevatorFloorName.casinoPenthouse0],
+        spawnPoint: [982.37, 55.61, 116.16, 57.8],
     },
 };
