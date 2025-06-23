@@ -1,6 +1,5 @@
 import { Command } from '@public/core/decorators/command';
 import { OnEvent } from '@public/core/decorators/event';
-import { Exportable } from '@public/core/decorators/exports';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
@@ -34,7 +33,7 @@ import {
     Property,
 } from '@public/shared/housing/housing';
 import { HousingTiers, TYPE_LABEL } from '@public/shared/housing/upgrades';
-import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS } from '@public/shared/inventory';
+import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS, InventoryType } from '@public/shared/inventory';
 import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -196,27 +195,6 @@ export class HousingProvider {
         }
 
         return apartments;
-    }
-
-    @Exportable('GetApartmentTier')
-    public async getApartmentTier(propertyId: number, apartmentId: number): Promise<ApartementTiers> {
-        const [, apartment] = await this.housingRepository.getApartment(propertyId, apartmentId);
-
-        if (!apartment) {
-            return {
-                tier: 0,
-                money_tier: 0,
-                park_tier: 0,
-                cloth_tier: 0,
-            };
-        }
-
-        return {
-            tier: apartment.tier || 0,
-            money_tier: apartment.money_tier || 0,
-            park_tier: apartment.park_tier || 0,
-            cloth_tier: apartment.cloth_tier || 0,
-        };
     }
 
     @OnEvent(ServerEvent.HOUSING_CHANGE_PRINCIPAL_APARTMENT)
@@ -880,9 +858,15 @@ export class HousingProvider {
             }
         }
 
-        const inventory = await this.inventoryFactory.get('cabinet_storage');
-        const apartmentInventory = await this.inventoryFactory.get(`house_stash_${apartment.identifier}`);
-        const apartmentFridge = await this.inventoryFactory.get(`house_fridge_${apartment.identifier}`);
+        const inventory = await this.inventoryFactory.getOrCreate('cabinet_storage', InventoryType.CabinetStorage);
+        const apartmentInventory = await this.inventoryFactory.getOrCreate(
+            `house_stash_${apartment.identifier}`,
+            InventoryType.HouseStash
+        );
+        const apartmentFridge = await this.inventoryFactory.getOrCreate(
+            `house_fridge_${apartment.identifier}`,
+            InventoryType.HouseFridge
+        );
 
         if (inventory.getItemCount('cabinet_zkea') < zkeaAmount) {
             this.notifier.error(player.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock.");
