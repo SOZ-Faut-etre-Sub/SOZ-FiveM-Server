@@ -491,24 +491,24 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
         recipes: {
             handcuffs: {
                 inputs: {
-                    aluminium_ingot: { count: 2 },
+                    aluminium_ingot: { count: 8 },
                     utilitary_certificate: { count: 1 },
                 },
-                amount: 5,
+                amount: 20,
             },
             handcuffs_key: {
                 inputs: {
-                    steel_ingot: { count: 1 },
+                    steel_ingot: { count: 4 },
                     utilitary_certificate: { count: 1 },
                 },
-                amount: 5,
+                amount: 20,
             },
             spike: {
                 inputs: {
-                    iron_ingot: { count: 5 },
+                    iron_ingot: { count: 20 },
                     utilitary_certificate: { count: 1 },
                 },
-                amount: 5,
+                amount: 20,
             },
             speed_speed_sign: {
                 inputs: {
@@ -519,10 +519,10 @@ export const DmcCraftsLists: Record<string, CraftCategory> = {
             },
             cone: {
                 inputs: {
-                    aluminium_ingot: { count: 5 },
+                    aluminium_ingot: { count: 20 },
                     utilitary_certificate: { count: 1 },
                 },
-                amount: 5,
+                amount: 20,
             },
             police_pliers: {
                 inputs: {
