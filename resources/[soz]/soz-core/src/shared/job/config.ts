@@ -367,6 +367,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.CashTransfer_CollectBags]: { label: "Collecte sacs d'argent" },
             [JobPermission.CashTransfer_ResaleBags]: { label: "Déposer sacs d'argent" },
             [JobPermission.CashTransfer_FillIn]: { label: 'Remplir banque / ATM' },
+            [JobPermission.CashTransfer_AccountAccess]: { label: 'Accès aux coffres sécurisés des sociétés' },
             ...CompanyPanelPermissions,
         },
         bossZones: [
