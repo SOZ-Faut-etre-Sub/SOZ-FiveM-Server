@@ -1,5 +1,5 @@
 import { Feature } from '@public/shared/features';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 
 import { SocietySafeStorage, SocietySafeStorageWhatIf } from '../../config/bank';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -13,7 +13,9 @@ import { NuiEvent } from '../../shared/event/nui';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { RpcServerEvent } from '../../shared/rpc';
 import { FeatureProvider } from '../feature/feature.provider';
+import { JobService } from '../job/job.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { PlayerService } from '../player/player.service';
 import { TargetFactory } from '../target/target.factory';
 import { BankWithdrawManager } from './bank.withdraw.manager';
 
@@ -30,6 +32,12 @@ export class BankSafeProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     @Once(OnceStep.PlayerLoaded)
     public async init() {
@@ -63,6 +71,17 @@ export class BankSafeProvider {
 
                             this.nuiDispatch.dispatch('bank_safe', 'UpdateAccountData', safe);
                             this.nuiDispatch.dispatch('bank_safe', 'ShowSafe', true);
+                        },
+                        canInteract: () => {
+                            const playerJobId = this.playerService.getPlayer().job.id;
+                            const hasPermission =
+                                playerJobId === JobType.CashTransfer &&
+                                this.jobService.hasPermission(
+                                    JobType.CashTransfer,
+                                    JobPermission.CashTransfer_AccountAccess
+                                );
+                            const isSameJob = playerJobId === zone.data;
+                            return hasPermission || isSameJob;
                         },
                         job: { [zone.data]: 0, [JobType.CashTransfer]: 0 },
                     },
