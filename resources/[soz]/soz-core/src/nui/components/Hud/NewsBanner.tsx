@@ -248,7 +248,7 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
     };
 
     const notificationSize = {
-        'h-[20vh]': window.innerHeight < 1200,
+        'h-[21vh]': window.innerHeight < 1200,
         'h-[17vh]': window.innerHeight > 1200,
     };
     const headerSize = {
