@@ -6,6 +6,8 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { Component, Outfit, Prop } from '@public/shared/cloth';
 import { Feature } from '@public/shared/features';
+import { JobType } from '@public/shared/job';
+import { ObjectOutFits } from '@public/shared/job/police';
 import { PlayerPedHash } from '@public/shared/player';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -34,6 +36,17 @@ const ExtraWarnCloths: Record<number, Outfit[]> = {
         LsmcCloakroom[PlayerPedHash.Female]['Tenue Hiver'],
         StonkCloakroom[PlayerPedHash.Female]['Tenue Hiver'],
         */
+    ],
+};
+
+const SkipWarnCloths: Record<number, Outfit[]> = {
+    [PlayerPedHash.Male]: [
+        ObjectOutFits[JobType.LSPD][PlayerPedHash.Male]['light_intervention_outfit'],
+        ObjectOutFits[JobType.BCSO][PlayerPedHash.Male]['heavy_antiriot_outfit'],
+    ],
+    [PlayerPedHash.Female]: [
+        ObjectOutFits[JobType.LSPD][PlayerPedHash.Female]['light_intervention_outfit'],
+        ObjectOutFits[JobType.BCSO][PlayerPedHash.Female]['heavy_antiriot_outfit'],
     ],
 };
 
@@ -105,6 +118,16 @@ export class PlayerHeatProvider {
             this.heatScore = newheatScore;
             this.sandStormProtected = true;
             return;
+        }
+
+        for (const skipOutfit of SkipWarnCloths[player.skin.Model.Hash]) {
+            if (
+                outfit.Components[Component.Tops].Drawable == skipOutfit.Components[Component.Tops].Drawable &&
+                outfit.Components[Component.Tops].Collection == skipOutfit.Components[Component.Tops].Collection
+            ) {
+                newheatScore = -3;
+                break;
+            }
         }
 
         const data = await emitRpc<Partial<Record<Component, number>>>(
