@@ -7,8 +7,11 @@ import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { emitRpc } from '../../core/rpc';
 import { NuiEvent, ServerEvent } from '../../shared/event';
+import { FuelType } from '../../shared/fuel';
 import { Font } from '../../shared/hud';
+import { RpcServerEvent } from '../../shared/rpc';
 import { ClipboardService } from '../clipboard.service';
 import { DrawService } from '../draw.service';
 import { GetObjectList, GetPedList, GetPickupList, GetVehicleList } from '../enumerate';
@@ -384,5 +387,14 @@ export class AdminMenuDeveloperProvider {
             under_types,
             isInCayo: true,
         });
+    }
+    @OnNuiEvent(NuiEvent.AdminMenuOilPrice)
+    public async onOilChange(): Promise<void> {
+        const stationPrices = await emitRpc<Record<FuelType, number>>(RpcServerEvent.OIL_GET_STATION_PRICES);
+        if (!stationPrices) {
+            return;
+        }
+
+        this.nuiMenu.openMenu(MenuType.OilSetStationPrice, stationPrices);
     }
 }
