@@ -24422,7 +24422,7 @@ QBShared.Items = {
     -- Casino
     ["casino_chip_100"] = {
         ["name"] = "casino_chip_100",
-        ["label"] = "Jeton Rouge (Low)",
+        ["label"] = "Jeton Rouge",
         ["weight"] = 50,
         ["useable"] = false,
         ["type"] = "item",
@@ -24433,7 +24433,7 @@ QBShared.Items = {
     },
     ["casino_chip_500"] = {
         ["name"] = "casino_chip_500",
-        ["label"] = "Jeton Bleu (Mid)",
+        ["label"] = "Jeton Bleu",
         ["weight"] = 50,
         ["useable"] = false,
         ["type"] = "item",
@@ -24444,7 +24444,7 @@ QBShared.Items = {
     },
     ["casino_chip_1k"] = {
         ["name"] = "casino_chip_1k",
-        ["label"] = "Jeton Jaune (High)",
+        ["label"] = "Jeton Jaune",
         ["weight"] = 50,
         ["useable"] = false,
         ["type"] = "item",
@@ -24455,7 +24455,7 @@ QBShared.Items = {
     },
     ["casino_chip_5k"] = {
         ["name"] = "casino_chip_5k",
-        ["label"] = "Jeton Vert (Very High)",
+        ["label"] = "Jeton Vert",
         ["weight"] = 50,
         ["useable"] = false,
         ["type"] = "item",
@@ -24466,7 +24466,7 @@ QBShared.Items = {
     },
     ["casino_chip_10k"] = {
         ["name"] = "casino_chip_10k",
-        ["label"] = "Jeton Noir (VIP)",
+        ["label"] = "Jeton Noir",
         ["weight"] = 50,
         ["useable"] = false,
         ["type"] = "item",
