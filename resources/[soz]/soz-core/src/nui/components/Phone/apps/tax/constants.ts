@@ -55,11 +55,6 @@ export const TaxesDescription: Record<TaxType, TaxDescription> = {
             "La taxe verte est une imposition qui s'applique à l'achat de véhicule en concessionnaire électrique.",
         whoModifies: 'Le gouvernement',
     },
-    [TaxType.CASINO]: {
-        title: "Taxe jeux d'argent",
-        description: "La taxe sur les jeux d'argent est une imposition qui s'applique sur les gains de jeux d'argent.",
-        whoModifies: 'Le gouvernement',
-    },
 };
 
 export const defaultTaxes: Tax[] = [
@@ -71,5 +66,4 @@ export const defaultTaxes: Tax[] = [
     { id: TaxType.VEHICLE, value: 0 },
     { id: TaxType.WEAPON, value: 0 },
     { id: TaxType.SERVICE, value: 0 },
-    { id: TaxType.CASINO, value: 0 },
 ];

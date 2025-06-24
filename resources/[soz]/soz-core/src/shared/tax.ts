@@ -9,7 +9,6 @@ export enum TaxType {
     SUPPLY = 'supply',
     TRAVEL = 'travel',
     SERVICE = 'service',
-    CASINO = 'casino',
 }
 
 export type Tax = {
@@ -26,5 +25,4 @@ export const TaxLabel: Record<TaxType, string> = {
     [TaxType.SUPPLY]: '👚 Taxe fourniture',
     [TaxType.TRAVEL]: '🛫 Taxe voyage',
     [TaxType.SERVICE]: '🏥 Taxe service',
-    [TaxType.CASINO]: '🎰 Taxe casino',
 };
