@@ -245,6 +245,8 @@ function createProgram(gl: WebGLRenderingContext): {
 }
 
 export class GameViewRenderer {
+    private gameCanvas: OffscreenCanvas;
+
     private gl: WebGLRenderingContext;
     private uniforms: {
         resolution: WebGLUniformLocation;
@@ -295,8 +297,10 @@ export class GameViewRenderer {
         this.globalHide = true;
     }
 
-    setGameCanvas(canvas: HTMLCanvasElement) {
-        const gl = canvas?.getContext('webgl', {
+    setGameCanvas(canvas: OffscreenCanvas) {
+        this.gameCanvas = canvas;
+
+        const gl = this.gameCanvas.getContext('webgl', {
             alpha: true,
             antialias: true,
             depth: false,
@@ -309,8 +313,7 @@ export class GameViewRenderer {
         });
 
         if (!gl) {
-            this.disable();
-            return;
+            throw new Error('Failed to acquire webgl context for GameViewRenderer');
         }
 
         this.gl = gl;

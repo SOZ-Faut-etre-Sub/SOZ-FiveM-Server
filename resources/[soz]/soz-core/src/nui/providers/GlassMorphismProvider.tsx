@@ -1,18 +1,33 @@
-import { GameViewRenderer } from '@public/nui/components/Styleguide/glassmorphism/glassmoGameView';
 import { useNuiEvent } from '@public/nui/hook/nui';
-import { createContext, FunctionComponent, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, FunctionComponent, PropsWithChildren, useEffect, useMemo } from 'react';
 
-export const GlassMorphismContext = createContext<GameViewRenderer>(null);
+export const GlassMorphismContext = createContext(null);
 
 export const GlassMorphismProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
-    const [gameView] = useState<GameViewRenderer>(new GameViewRenderer());
+    const sharedWorker = useMemo(
+        () =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            new Worker(new URL('../workers/glassmorphism.worker.ts', import.meta.url), {
+                type: 'module',
+                name: 'GlassMorphismWorker',
+            }),
+        []
+    );
 
     const initGlassmorphism = () => {
-        gameView.resize(window.innerWidth, window.innerHeight);
+        sharedWorker.postMessage({
+            type: 'init',
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
     };
 
     useNuiEvent('hud', 'SetGlassmorphismFps', fps => {
-        gameView.setFpsLimit(fps);
+        sharedWorker.postMessage({
+            type: 'fps',
+            fps,
+        });
     });
 
     useEffect(() => {
@@ -21,9 +36,12 @@ export const GlassMorphismProvider: FunctionComponent<PropsWithChildren> = ({ ch
 
         return () => {
             window.removeEventListener('resize', initGlassmorphism);
-            gameView.disable();
+            sharedWorker.postMessage({
+                type: 'disable',
+            });
+            sharedWorker.terminate();
         };
     }, []);
 
-    return <GlassMorphismContext.Provider value={gameView}>{children}</GlassMorphismContext.Provider>;
+    return <GlassMorphismContext.Provider value={sharedWorker}>{children}</GlassMorphismContext.Provider>;
 };
