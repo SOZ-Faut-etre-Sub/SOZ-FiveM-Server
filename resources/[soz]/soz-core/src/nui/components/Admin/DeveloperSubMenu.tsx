@@ -146,6 +146,14 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ per
                     ))}
                 </MenuItemSelect>
                 <MenuItemButton
+                    disabled={!isAdmin}
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuOilPrice);
+                    }}
+                >
+                    ⛽ Changer le prix des stations
+                </MenuItemButton>
+                <MenuItemButton
                     disabled={!isAdminOrStaff}
                     onConfirm={async () => {
                         await fetchNui(NuiEvent.AdminMenuTraveling);

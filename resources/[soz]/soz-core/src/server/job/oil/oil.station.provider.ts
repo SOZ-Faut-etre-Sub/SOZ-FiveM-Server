@@ -18,6 +18,7 @@ import { JobService } from '../../job.service';
 import { LockService } from '../../lock.service';
 import { Monitor } from '../../monitor/monitor';
 import { Notifier } from '../../notifier';
+import { PermissionService } from '../../permission.service';
 import { PlayerMoneyService } from '../../player/player.money.service';
 import { PlayerService } from '../../player/player.service';
 import { ProgressService } from '../../player/progress.service';
@@ -60,6 +61,9 @@ export class OilStationProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
 
     @Rpc(RpcServerEvent.OIL_GET_STATION)
     public async getStation(source: number, stationId: number): Promise<FuelStation | null> {
@@ -129,7 +133,10 @@ export class OilStationProvider {
             return;
         }
 
-        if (!(await this.jobService.hasPermission(player, JobType.Oil, JobPermission.FuelerChangePrice))) {
+        if (
+            !this.permissionService.isAdmin(source) &&
+            !(await this.jobService.hasPermission(player, JobType.Oil, JobPermission.FuelerChangePrice))
+        ) {
             this.notifier.notify(source, "Vous n'avez pas la permission de faire ça.", 'error');
 
             return;

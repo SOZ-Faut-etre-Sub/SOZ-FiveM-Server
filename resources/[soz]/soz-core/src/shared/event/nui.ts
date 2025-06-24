@@ -84,6 +84,7 @@ export enum NuiEvent {
     AdminToggleShowMouseDebug = 'soz-core:client:admin:toggle-show-mouse-debug',
     AdminUpdateState = 'soz-core:client:admin:update-state',
     AdminMenuGameMasterUncuff = 'soz-core:client:admin:game-master:uncuff',
+    AdminMenuOilPrice = 'soz-core:client:admin:oil-price',
     AdminMenuGameMasterArmor = 'soz-core:client:admin:game-master:armor',
     AdminMenuVehicleSpawn = 'soz-core:client:admin:vehicle:spawn',
     AdminMenuVehicleSeeCarPrice = 'soz-core:client:admin:vehicle:see-car-price',
