@@ -1,13 +1,10 @@
-import { Logger } from '@core/logger';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
-import { NoZoneShopBrand, ShopBrand, ShopsConfig } from '@public/config/shops';
+import { NoZoneShopBrand, ShopBrand } from '@public/config/shops';
 import { OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
-import { MenuType } from '@public/shared/nui/menu';
-import { Vector4 } from '@public/shared/polyzone/vector';
 import { ShopProduct } from '@public/shared/shop';
 import { ShopItem, ShopsContent, WhatIfSuperetteContent } from '@public/shared/shop/superette';
 import { TaxType } from '@public/shared/tax';
@@ -99,74 +96,54 @@ export class SuperetteShopProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
-    @Inject(Logger)
-    private logger: Logger;
-
     public openShop(brand: ShopBrand | NoZoneShopBrand, shop: string, shopLabel: string = 'Boutique') {
-        if (brand != ShopBrand.Ammunation) {
-            const superetteContent: ShopItem[] = [];
-            for (let i = 0; i < ShopsContent[brand].length; i++) {
+        const superetteContent: ShopItem[] = [];
+
+        let rawProducts = ShopsContent[brand];
+
+        if (brand === ShopBrand.Ammunation) {
+            const licences = this.playerService.getPlayer().metadata.licences;
+            rawProducts = rawProducts.filter(product => !product.requiredLicense || licences[product.requiredLicense]);
+        }
+
+        for (let i = 0; i < rawProducts.length; i++) {
+            const sharedItem = {
+                ...this.itemService.getItem(rawProducts[i].id),
+                price: rawProducts[i].price,
+                metadata: rawProducts[i].metadata,
+            } as ShopItem;
+            superetteContent.push(sharedItem);
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) && FOOD_BRAND.includes(brand)) {
+            for (const item of EXTRA_FOOD_WHATIF) {
                 const sharedItem = {
-                    ...this.itemService.getItem(ShopsContent[brand][i].id),
-                    price: ShopsContent[brand][i].price,
-                    metadata: ShopsContent[brand][i].metadata,
+                    ...this.itemService.getItem(item),
+                    price: 5,
+                    metadata: {},
                 } as ShopItem;
                 superetteContent.push(sharedItem);
             }
 
-            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) && FOOD_BRAND.includes(brand)) {
-                for (const item of EXTRA_FOOD_WHATIF) {
-                    const sharedItem = {
-                        ...this.itemService.getItem(item),
-                        price: 5,
-                        metadata: {},
-                    } as ShopItem;
-                    superetteContent.push(sharedItem);
-                }
-                superetteContent.push(
-                    ...WhatIfSuperetteContent.map(elem => ({
-                        ...this.itemService.getItem(elem.id),
-                        price: elem.price,
-                        metadata: elem.metadata,
-                    }))
-                );
-            }
-
-            let taxes = null;
-            if (brand === ShopBrand.Zkea) {
-                taxes = TaxType.SERVICE;
-            } else if (SOUVENIR_BRAND.includes(brand)) {
-                taxes = TaxType.SUPPLY;
-            } else if (brand !== ShopBrand.Supermarket247Cayo) {
-                taxes = TaxType.FOOD;
-            }
-            this.inventoryManager.openShopInventory(superetteContent, shopLabel, taxes);
-        } else {
-            // Ammunation are handled by soz-core here
-            const licences = this.playerService.getPlayer().metadata.licences;
-            const products = ShopsContent[brand]
-                .filter(product => !product.requiredLicense || licences[product.requiredLicense])
-                .map(product => ({
-                    ...product,
-                    item: this.itemService.getItem(product.id),
-                }));
-
-            if (!products) {
-                this.logger.error(`Shop ${brand} not found`);
-                return;
-            }
-
-            this.nuiMenu.openMenu(
-                MenuType.SuperetteShop,
-                { brand, products },
-                {
-                    position: {
-                        position: ShopsConfig[shop].location as Vector4,
-                        distance: 6.0,
-                    },
-                }
+            superetteContent.push(
+                ...WhatIfSuperetteContent.map(elem => ({
+                    ...this.itemService.getItem(elem.id),
+                    price: elem.price,
+                    metadata: elem.metadata,
+                }))
             );
         }
+
+        let taxes = null;
+        if (brand === ShopBrand.Zkea) {
+            taxes = TaxType.SERVICE;
+        } else if (SOUVENIR_BRAND.includes(brand)) {
+            taxes = TaxType.SUPPLY;
+        } else if (brand !== ShopBrand.Supermarket247Cayo) {
+            taxes = TaxType.FOOD;
+        }
+
+        this.inventoryManager.openShopInventory(superetteContent, shopLabel, taxes);
     }
 
     @OnNuiEvent(NuiEvent.SuperetteShopBuy)
