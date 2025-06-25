@@ -12,6 +12,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PriceService } from '../bank/price.service';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryFactory } from '../inventory/inventory.factory';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { PlayerMoneyService } from '../player/player.money.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -43,6 +44,9 @@ export class DrivingSchoolProvider {
 
     @Inject(InventoryFactory)
     private inventoryFactory: InventoryFactory;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     @Once()
     public onStart() {
@@ -114,6 +118,12 @@ export class DrivingSchoolProvider {
             )}`,
             'success'
         );
+
+        this.monitor.traceEvent('update_vehicle_limit', {
+            player_source: source,
+            money: price,
+            tier: limit,
+        });
     }
 
     @Rpc(RpcServerEvent.DRIVING_SCHOOL_CHECK_REMAINING_SLOTS)

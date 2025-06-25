@@ -4,6 +4,7 @@ import { TaxRepository } from '@public/server/repository/tax.repository';
 import { BankMoneyType } from '@public/shared/bank';
 import { TaxType } from '@public/shared/tax';
 
+import { Monitor } from '../monitor/monitor';
 import { QBCore } from '../qbcore';
 
 @Injectable()
@@ -16,6 +17,9 @@ export class PlayerMoneyService {
 
     @Inject(BankService)
     private bankService: BankService;
+
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     public add(source: number, money: number, type: BankMoneyType = 'money'): boolean {
         if (isNaN(money)) {
@@ -46,6 +50,11 @@ export class PlayerMoneyService {
 
         if (taxMoney > 0 && moneyRemoved) {
             await this.bankService.addAccountMoney('safe_gouv', taxMoney, type, true);
+            this.monitor.traceEvent('pay_tax', {
+                player_source: source,
+                money: taxMoney,
+                type: type,
+            });
         }
 
         return moneyRemoved;
