@@ -3103,11 +3103,10 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
     },
 
     // Casino
-    diamond_job: {
-        name: 'Diamond Parking',
-        legacyId: 'diamond_job',
-        type: GarageType.Job,
-        job: JobType.Casino,
+    diamond_vip: {
+        name: 'Diamond VIP Parking',
+        legacyId: 'diamond_vip',
+        type: GarageType.CasinoVip,
         category: GarageCategory.Car,
         zone: new BoxZone([933.02, 31.61, 80.16], 0.8, 1, {
             heading: 333.51,
@@ -3144,49 +3143,6 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
                 heading: 237.53,
                 minZ: 80.16,
                 maxZ: 82.16,
-            }),
-        ],
-    },
-    diamond_vip: {
-        name: 'Diamond VIP Parking',
-        legacyId: 'diamond_vip',
-        type: GarageType.CasinoVip,
-        category: GarageCategory.Car,
-        zone: new BoxZone([891.19, 0.44, 77.76], 0.8, 1, {
-            heading: 37.9,
-            minZ: 78,
-            maxZ: 80,
-        }),
-        parkingPlaces: [
-            new BoxZone([895.04, -5.2, 78.76], 5.8, 3.2, {
-                heading: 148.33,
-                minZ: 77.76,
-                maxZ: 79.76,
-            }),
-            new BoxZone([898.47, -7.37, 78.76], 6.0, 3.0, {
-                heading: 148.13,
-                minZ: 77.76,
-                maxZ: 79.76,
-            }),
-            new BoxZone([901.88, -9.49, 78.76], 6.0, 3.0, {
-                heading: 147.79,
-                minZ: 77.76,
-                maxZ: 79.76,
-            }),
-            new BoxZone([905.16, -11.68, 78.76], 5.8, 3.0, {
-                heading: 148.17,
-                minZ: 77.76,
-                maxZ: 79.76,
-            }),
-            new BoxZone([908.63, -13.81, 78.76], 5.8, 3.0, {
-                heading: 147.8,
-                minZ: 77.76,
-                maxZ: 79.76,
-            }),
-            new BoxZone([912.03, -15.9, 78.76], 5.8, 3.0, {
-                heading: 148.11,
-                minZ: 77.76,
-                maxZ: 79.76,
             }),
         ],
     },
