@@ -35,7 +35,7 @@ export const ZkeaBaseFourntiure = ['v_ret_ml_fridge02', 'p_v_43_safe_s', 'prop_d
 
 export const ZkeaPlateModel = 'soz_zevent_plaque';
 export const ZkeaSpecialPlateModel = 'soz_zevent_plaque_jmadison';
-export const ZkeaCasinoAliceFrame = 'soz_casino_alice_frame';
+export const ZkeaCasinoAliceFrame = 'soz_paint_casino_alice';
 
 export const ZkeaFourniture: ZkeaFournitureItemList = {
     prop_devin_box_closed: {
