@@ -107,11 +107,13 @@ export class CameraService {
     }
 
     public deleteCamera(cam: number) {
+        Citizen.invokeNative('0x7659886d4d8ac36a', 4);
         DestroyCam(cam, false);
         ClearFocus();
     }
 
     public deleteAllCameras() {
+        Citizen.invokeNative('0x7659886d4d8ac36a', 4);
         RenderScriptCams(false, true, 1000, true, true);
         DestroyAllCams(true);
         ClearFocus();
