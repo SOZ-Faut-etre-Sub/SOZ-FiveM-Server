@@ -75,12 +75,12 @@ export const useHudColor = (): GlassmorphismColors => {
                 border: '#F02B2B',
             },
             [HudTheme.Gold]: {
-                background: '#ECEBA74D',
-                border: '#eceba7',
+                background: '#ECDCA74C',
+                border: '#ecdca7',
             },
             [HudTheme.Diamond]: {
-                background: 'rgba(167,195,236,0.3)',
-                border: '#a7c3ec',
+                background: '#97BCEC4C',
+                border: '#97bcf1',
             },
         };
     }, [isHalloween, halloweenMoon]);
@@ -205,8 +205,8 @@ export const useHudColor = (): GlassmorphismColors => {
             [HudTheme.Deuteranopie]: '#4547544D',
             [HudTheme.Trichromatisme]: '#4547544D',
             [HudTheme.HalloweenVein]: '#4547544D',
-            [HudTheme.Gold]: '#ECEBA74D',
-            [HudTheme.Diamond]: 'rgba(167,195,236,0.3)',
+            [HudTheme.Gold]: '#ECDCA74C',
+            [HudTheme.Diamond]: '#B59BEC4C',
         }),
         []
     );
