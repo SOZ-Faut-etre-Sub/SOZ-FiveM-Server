@@ -1,7 +1,6 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { wait } from '@core/utils';
 import { Logger } from '@public/core/logger';
-
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { wait, waitUntil } from '../../core/utils';
 
 @Injectable()
 export class ResourceLoader {

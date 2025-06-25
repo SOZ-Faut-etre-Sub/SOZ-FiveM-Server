@@ -236,7 +236,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                                         <strong>Quantité : </strong> {inventoryItem.metadata.evidenceInfos.quantity}
                                     </div>
                                 )}
-                                {inventoryItem.metadata.creation && (
+                                {inventoryItem.metadata?.creation && (
                                     <div>
                                         <strong>Récupéré le : </strong>{' '}
                                         {new Date(inventoryItem.metadata.creation).toLocaleDateString(
@@ -255,7 +255,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             </div>
                         </div>
                     )}
-                    {inventoryItem.metadata.creation && inventoryItem.name.startsWith('champagne_') && (
+                    {inventoryItem.metadata?.creation && inventoryItem.name.startsWith('champagne_') && (
                         <div className="mt-1">
                             <div>
                                 <strong>Millésime : </strong>{' '}
@@ -308,7 +308,7 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             <span>{item.illustrator[inventoryItem.metadata?.type] || ''}</span>
                         )}
                     </div>
-                    {inventoryItem.metadata.extraLabel && (
+                    {inventoryItem.metadata?.extraLabel && (
                         <div className="mt-1">{inventoryItem.metadata.extraLabel}</div>
                     )}
                 </div>
