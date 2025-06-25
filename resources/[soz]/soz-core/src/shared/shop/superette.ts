@@ -62,7 +62,7 @@ const AmmunationContent: ShopContent = [
 
 const ZkeaContent: ShopContent = [{ id: 'house_map', type: 'item', price: 13 }];
 
-const SouvenirOtherContent: ShopContent = [
+export const SouvenirOtherContent: ShopContent = [
     { id: 'red_rose', type: 'item', price: 900 },
     { id: 'chocolate_box', type: 'food', price: 1500 },
     { id: 'prestige_pen', type: 'item', price: 9600 },
@@ -93,7 +93,7 @@ const SouvenirOtherContent: ShopContent = [
     { id: 'wrapping_red', type: 'item', price: 250 },
 ];
 
-const SouvenirPlushContent: ShopContent = [
+export const SouvenirPlushContent: ShopContent = [
     { id: 'puma_plush', type: 'item', price: 1999 },
     { id: 'fish_plush', type: 'item', price: 2000 },
     { id: 'wolf_plush', type: 'item', price: 1999 },
@@ -113,7 +113,7 @@ const SouvenirPlushContent: ShopContent = [
     { id: 'wrapping_red', type: 'item', price: 250 },
 ];
 
-const SouvenirMemoryContent: ShopContent = [
+export const SouvenirMemoryContent: ShopContent = [
     { id: 'snow_globe_zerawood', type: 'item', price: 1500 },
     { id: 'maneki_neko', type: 'item', price: 3000 },
     { id: 'friendship_bracelet', type: 'item', price: 600 },
