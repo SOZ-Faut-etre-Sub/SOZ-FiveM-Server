@@ -1,7 +1,7 @@
 import { Logger } from '@public/core/logger';
 
 import { Inject, Injectable } from '../../core/decorators/injectable';
-import { wait } from '../../core/utils';
+import { wait, waitUntil } from '../../core/utils';
 
 @Injectable()
 export class ResourceLoader {
@@ -109,9 +109,15 @@ export class ResourceLoader {
         SetScaleformMovieAsNoLongerNeeded(scaleform);
     }
 
-    public scaleformGetValue(scaleform: number, method: string) {
+    public async scaleformGetValueInt(scaleform: number, method: string) {
         BeginScaleformMovieMethod(scaleform, method);
-        return EndScaleformMovieMethodReturnValue();
+        const handle = EndScaleformMovieMethodReturnValue();
+
+        while (!IsScaleformMovieMethodReturnValueReady(handle)) {
+            await wait(0);
+        }
+
+        return GetScaleformMovieMethodReturnValueInt(handle);
     }
 
     public scaleformPushString(scaleform: number, method: string, val: string) {
@@ -146,7 +152,7 @@ export class ResourceLoader {
             } else if (typeof val == 'boolean') {
                 PushScaleformMovieFunctionParameterBool(val);
             } else if (typeof val == 'number') {
-                if (Number.isSafeInteger(val)) {
+                if (val % 1 === 0) {
                     PushScaleformMovieFunctionParameterInt(val);
                 } else {
                     PushScaleformMovieFunctionParameterFloat(val);
