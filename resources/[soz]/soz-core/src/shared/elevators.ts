@@ -422,6 +422,9 @@ export enum ElevatorFloorName {
     baun1,
     casino0,
     casino1,
+    casino2,
+    casinoVip0,
+    casinoVip1,
     casinoPenthouse0,
     casinoPenthouse1,
 }
@@ -626,18 +629,52 @@ export const Elevators: Record<ElevatorFloorName, ElevatorFloor> = {
     },
     // Casino
     [ElevatorFloorName.casino0]: {
+        label: 'Coffre',
+        button: new BoxZone([950.58, 55.48, 60.67], 0.2, 0.4, {
+            heading: 237.68,
+            minZ: 59.67,
+            maxZ: 60.32,
+        }),
+        upTo: [ElevatorFloorName.casino1, ElevatorFloorName.casino2],
+        downTo: [],
+        spawnPoint: [949.7, 57.2, 59.88, 235.96],
+    },
+    [ElevatorFloorName.casino1]: {
+        label: 'Poste Sécurité',
+        button: new BoxZone([967.01, 16.05, 71.84], 0.25, 1.8, {
+            heading: 238.15,
+            minZ: 70.84,
+            maxZ: 73.19,
+        }),
+        upTo: [ElevatorFloorName.casino2],
+        downTo: [ElevatorFloorName.casino0],
+        spawnPoint: [967.82, 15.8, 71.84, 232.8],
+    },
+    [ElevatorFloorName.casino2]: {
+        label: 'Chambres',
+        button: new BoxZone([976.39, 32.35, 92.24], 0.1, 0.4, {
+            heading: 147.92,
+            minZ: 91.24,
+            maxZ: 91.89,
+        }),
+        upTo: [],
+        downTo: [ElevatorFloorName.casino0, ElevatorFloorName.casino1],
+        spawnPoint: [974.99, 31.84, 91.44, 331.51],
+    },
+    // Casino VIP
+    [ElevatorFloorName.casinoVip0]: {
         label: 'Garage',
         button: new BoxZone([967.61, 7.34, 81.16], 0.4, 1.8, { heading: 58.12, minZ: 80.16, maxZ: 82.56 }),
-        upTo: [ElevatorFloorName.casino1],
+        upTo: [ElevatorFloorName.casinoVip1],
         downTo: [],
         spawnPoint: [966.49, 7.88, 81.16, 50.74],
         requireCasinoVip: true,
     },
-    [ElevatorFloorName.casino1]: {
+    [ElevatorFloorName.casinoVip1]: {
         label: 'Rooftop',
         button: new BoxZone([965.18, 58.26, 112.55], 0.4, 2.2, { heading: 57.79, minZ: 111.55, maxZ: 114.15 }),
         upTo: [],
-        downTo: [ElevatorFloorName.casino0],
+        downTo: [ElevatorFloorName.casinoVip0],
         spawnPoint: [964.58, 58.81, 112.55, 52.4],
         requireCasinoVip: true,
     },
