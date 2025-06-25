@@ -418,6 +418,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     casino_vip_standard_subscription_expire_at: number | null;
     casino_vip_premium_subscription_expire_at: number | null;
     casino_vip_point?: number;
+    casino_diamond_frame?: boolean;
 };
 
 export const isAdmin = (player: PlayerData) => {

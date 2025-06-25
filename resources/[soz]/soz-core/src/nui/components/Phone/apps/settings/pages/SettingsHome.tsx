@@ -46,6 +46,7 @@ import { useSocietySimCard } from '../../../system/sim-card/hooks/useSocietySimC
 import { SettingItem } from '../components/SettingItem';
 import { SettingItemSlider } from '../components/SettingItemSlider';
 import { SettingSwitch } from '../components/SettingItemSwitch';
+import { useExtraFrames } from '../hooks/useExtraFrames';
 import { MapAudioSettingItem, MapSettingItem } from '../utils/mapper';
 
 export const SettingsHome = () => {
@@ -64,6 +65,8 @@ export const SettingsHome = () => {
     const { sendAlert } = useAlert();
     const { avatar } = useAvatar();
 
+    const extraFrames = useExtraFrames();
+
     const { openActionSheet, closeActionSheet } = useActionSheet();
     const { handleSettingChange, resetSettings } = useSettingsChange();
 
@@ -75,7 +78,7 @@ export const SettingsHome = () => {
             handleSettingChange('dynamicAlertDuration', val)
         )
     );
-    const mappedFrameOptions = frameOptions.map(
+    const mappedFrameOptions = [...frameOptions, ...extraFrames].map(
         MapSettingItem(config.frame, (val: SettingOption) => handleSettingChange('frame', val))
     );
     const mappedZoomOptions = zoomOptions.map(
