@@ -1103,3 +1103,9 @@ model casino_statements {
     amount               Float    @default(0)
     luckywheel_car_model String?  @db.VarChar(128)
 }
+
+model casino_inside_track_pending_gains {
+    id        Int    @id @default(autoincrement())
+    citizenid String @db.VarChar(50)
+    amount    Int
+}

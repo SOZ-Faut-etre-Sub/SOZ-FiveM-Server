@@ -817,4 +817,5 @@ export enum ServerEvent {
     CASINO_VIP_REWARD = 'soz-core:server:casino:vip:reward',
     CASINO_RESELL_CHIP = 'soz-core:server:casino:resell-chip',
     CASINO_SLOT_MACHINE_SPIN = 'soz-core:server:casino:slot-machine-spin',
+    CASINO_INSIDE_TRACK_GET_GAINS = 'soz-core:server:casino:inside-track:get-gains',
 }
