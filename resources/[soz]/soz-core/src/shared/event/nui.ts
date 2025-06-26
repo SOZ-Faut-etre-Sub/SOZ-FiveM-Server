@@ -748,6 +748,7 @@ export enum NuiEvent {
     TravelingStopEditing = 'soz-core:nui:traveling-stop-editing',
     TravelingRename = 'soz-core:nui:traveling-rename',
 
+    AdminCasinoSlotMachineSelect = 'soz-core:nui:admin-casino-slot-machine:select',
     AdminCasinoUpdateHouseEdge = 'soz-core:nui:admin-casino:update-house-edge',
     AdminCasinoPokerSelect = 'soz-core:nui:admin-casino-poker:select',
     AdminCasinoPokerReset = 'soz-core:nui:admin-casino-poker:reset',
