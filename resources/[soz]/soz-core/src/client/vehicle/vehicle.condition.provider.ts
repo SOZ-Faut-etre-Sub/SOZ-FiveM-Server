@@ -387,17 +387,16 @@ export class VehicleConditionProvider {
         );
 
         const tireBurstCompletely = {};
-        const tireTemporaryRepairDistance = { ...currentCondition.tireTemporaryRepairDistance };
 
         let applyCondition = false;
 
         for (const tireKey of keys) {
-            const distance = tireTemporaryRepairDistance[tireKey] + diffDistance;
+            const distance = currentCondition.tireTemporaryRepairDistance[tireKey] + diffDistance;
 
             if (distance < TIRE_TEMPORARY_REPAIR_DISTANCE) {
-                tireTemporaryRepairDistance[tireKey] = distance;
+                currentCondition.tireTemporaryRepairDistance[tireKey] = distance;
             } else {
-                delete tireTemporaryRepairDistance[tireKey];
+                delete currentCondition.tireTemporaryRepairDistance[tireKey];
                 tireBurstCompletely[tireKey] = true;
                 applyCondition = true;
             }
@@ -405,6 +404,7 @@ export class VehicleConditionProvider {
 
         TriggerServerEvent(ServerEvent.VEHICLE_UPDATE_CONDITION_FROM_OWNER, vehicleNetworkId, {
             tireBurstCompletely,
+            tireTemporaryRepairDistance: currentCondition.tireTemporaryRepairDistance,
         });
 
         if (applyCondition) {
@@ -412,6 +412,7 @@ export class VehicleConditionProvider {
                 vehicle,
                 {
                     tireBurstCompletely,
+                    tireTemporaryRepairDistance: currentCondition.tireTemporaryRepairDistance,
                 },
                 currentCondition
             );
