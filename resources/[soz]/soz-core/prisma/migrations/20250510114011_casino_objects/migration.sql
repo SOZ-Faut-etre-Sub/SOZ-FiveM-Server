@@ -27,14 +27,14 @@ INSERT INTO `casino_objects`(`id`,`kind`,`position`,`model`,`type`,`requireSpawn
     -- blackjack
     (uuid(), 'blackjack', '{"x":987.2684, "y":42.20339, "z":69.23269, "w":103}', 'vw_prop_casino_blckjack_01b', 'highLimit', true, 10),
     (uuid(), 'blackjack', '{"x":989.0378, "y":45.7245, "z":69.23269, "w":23}', 'vw_prop_casino_blckjack_01b', 'highLimit', true, 10),
-    (uuid(), 'blackjack', '{"x":1004.184, "y":53.19243, "z":68.43275, "w":58}', 'vw_prop_casino_blckjack_01', 'base', true, 10),
-    (uuid(), 'blackjack', '{"x":1002.383, "y":60.50793, "z":68.43275, "w":143}', 'vw_prop_casino_blckjack_01', 'base', true, 10),
+    (uuid(), 'blackjack', '{"x":1003.96619, "y":53.3181877, "z":68.43275, "w":58}', 'vw_prop_casino_blckjack_01', 'base', true, 10),
+    (uuid(), 'blackjack', '{"x":1002.23804, "y":60.3174, "z":68.43275, "w":143}', 'vw_prop_casino_blckjack_01', 'base', true, 10),
     (uuid(), 'blackjack', '{"x":985.9037, "y":60.55936, "z":69.23269, "w":188}', 'vw_prop_casino_blckjack_01b', 'highLimit', true, 10),
     (uuid(), 'blackjack', '{"x":982.4893, "y":62.90397, "z":69.23269, "w":103}', 'vw_prop_casino_blckjack_01b', 'highLimit', true, 10),
     -- roulette
     (uuid(), 'roulette', '{"x":985.9124, "y":49.01048, "z":69.23275, "w":225}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
     (uuid(), 'roulette', '{"x":982.1644, "y":52.20396, "z":69.23276, "w":283}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
     (uuid(), 'roulette', '{"x":984.3021, "y":55.93538, "z":69.23275, "w":342}', 'vw_prop_casino_roulette_01b', 'highLimit', true, 0),
-    (uuid(), 'roulette', '{"x":1004.79, "y":57.29507, "z":68.43275, "w":283}', 'vw_prop_casino_roulette_01', 'base', true, 0),
+    (uuid(), 'roulette', '{"x":1004.5155, "y":57.22153, "z":68.43275, "w":283}', 'vw_prop_casino_roulette_01', 'base', true, 0),
     (uuid(), 'roulette', '{"x":999.8859, "y":54.40334, "z":68.43275, "w":13}', 'vw_prop_casino_roulette_01', 'base', true, 0),
     (uuid(), 'roulette', '{"x":999.4816, "y":57.88892, "z":68.43275, "w":193}', 'vw_prop_casino_roulette_01', 'base', true, 0);
