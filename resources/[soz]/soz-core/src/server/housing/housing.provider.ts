@@ -750,7 +750,20 @@ export class HousingProvider {
 
         await this.vehicleService.transferToAirport(getApartmentGarageName(apartment));
         await this.housingFournitureProvider.clearFourniture(apartment.id);
+        await this.clearTemporaryAccess(apartment.id);
         await this.housingRepository.clearApartment(apartment.id);
+    }
+
+    private async clearTemporaryAccess(apartmentId: number) {
+        for (const [citizenId, temporaryAccess] of this.playerTemporaryAccess) {
+            if (temporaryAccess.has(apartmentId)) {
+                const target = this.playerService.getPlayerByCitizenId(citizenId);
+                if (target) {
+                    TriggerClientEvent(ClientEvent.HOUSING_REMOVE_TEMPORARY_ACCESS, target.source, apartmentId);
+                }
+                temporaryAccess.delete(apartmentId);
+            }
+        }
     }
 
     @OnEvent(ServerEvent.HOUSING_SELL_APARTMENT)

@@ -123,6 +123,11 @@ export class HousingPropertyZoneProvider {
         this.temporaryAccess.add(apartmentId);
     }
 
+    @OnEvent(ClientEvent.HOUSING_REMOVE_TEMPORARY_ACCESS)
+    public removeTemporaryAccess(apartmentId: number) {
+        this.temporaryAccess.delete(apartmentId);
+    }
+
     @Once(OnceStep.PlayerLoaded)
     public async syncTemporaryAccess() {
         const ids = await emitRpc<number[]>(RpcServerEvent.HOUSING_GET_TEMPORARY_ACCESS);
