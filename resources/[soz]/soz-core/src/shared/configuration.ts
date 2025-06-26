@@ -32,6 +32,7 @@ export type GouvConfig = {
 };
 
 export type CasinoSlotMachineConfig = Record<number, number>;
+export type CasinoInsideTrackConfig = Record<string, number>;
 
 export type Configuration = {
     JobTaxTier: JobTaxTier;
@@ -39,6 +40,7 @@ export type Configuration = {
     VampireGame: VampireGame;
     Gouv: GouvConfig;
     CasinoSlotMachine: CasinoSlotMachineConfig;
+    CasinoInsideTrack: CasinoInsideTrackConfig;
 };
 
 export const DEFAULT_CONFIGURATION: Configuration = {
@@ -85,4 +87,5 @@ export const DEFAULT_CONFIGURATION: Configuration = {
         SenatSalary: 400,
     },
     CasinoSlotMachine: {},
+    CasinoInsideTrack: {},
 };
