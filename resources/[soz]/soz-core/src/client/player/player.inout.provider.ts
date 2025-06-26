@@ -17,7 +17,8 @@ export class PlayerInOutProvider {
             const elem = list[id];
             const isInside = elem.zone.isPointInside(pedCoords);
 
-            if (isInside !== elem.isLastInside) {
+            if (!elem.init || isInside !== elem.isLastInside) {
+                elem.init = true;
                 elem.isLastInside = isInside;
                 elem.cb(isInside);
             }
