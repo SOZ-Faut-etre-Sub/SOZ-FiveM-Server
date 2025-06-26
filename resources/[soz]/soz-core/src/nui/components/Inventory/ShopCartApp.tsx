@@ -259,6 +259,7 @@ export const ShopCartApp: FunctionComponent = () => {
                         items={cartContent}
                         tax={shopContent.tax}
                         shopData={shopContent}
+                        moneyType={shopContent.moneyType}
                     />
                 </div>
             </div>
@@ -392,7 +393,8 @@ const CartInventory: FunctionComponent<{
     tax?: TaxType;
     shopData: ShopData;
     removeItem: (index: number) => void;
-}> = ({ items, tax, shopData, removeItem }) => {
+    moneyType: string | BankMoneyType;
+}> = ({ items, tax, shopData, removeItem, moneyType }) => {
     const { isOver, setNodeRef: setDroppableNodeRef } = useDroppable({
         id: `droppable_cart_content`,
     });
@@ -411,7 +413,7 @@ const CartInventory: FunctionComponent<{
                     width: `${inventorySize.width}px`,
                 }}
             >
-                <InventoryDiv price={getPrice(amount, tax)} isCart title="Panier">
+                <InventoryDiv moneyType={moneyType} price={getPrice(amount, tax)} isCart title="Panier">
                     <div
                         className="overflow-y-scroll scrollbar scrollbar-w-1 scrollbar-thumb-white/80 scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
                         style={{

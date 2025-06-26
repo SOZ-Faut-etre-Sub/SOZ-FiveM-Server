@@ -1,4 +1,5 @@
 import { ShoppingBagIcon } from '@heroicons/react/outline';
+import { BankMoneyType } from '@public/shared/bank';
 import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useState } from 'react';
 import { FixedSizeGrid } from 'react-window';
 
@@ -15,6 +16,7 @@ import { fetchNui } from '../../fetch';
 import { useAssetPath } from '../../hook/assets';
 import { useItemResolver } from '../../hook/data';
 import WeightIcon from '../../icons/inventory/weight.svg';
+import { ItemIcon } from '../Craft/ItemIcon';
 import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
 import { GlassMorphismContainer } from '../Styleguide/GlassMorphismContainer';
 import { ItemDescription } from './ItemDescription';
@@ -269,6 +271,7 @@ type InventoryDivProps = {
         max: number;
     };
     price?: number;
+    moneyType?: string | BankMoneyType;
 };
 
 export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps>> = ({
@@ -280,6 +283,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
     description = undefined,
     isCart = false,
     price = 0,
+    moneyType = null,
 }) => {
     const [showSort, setShowSort] = useState(false);
     const inventorySize = useInventorySize(6);
@@ -289,12 +293,20 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
         <div className="w-full">
             {isCart && (
                 <header className="relative w-full">
-                    <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
+                    <div className="drop-shadow-bg h-[60px] flex w-full justify-between items-center">
                         <h1 className="font-semibold uppercase text-white text-2xl">Panier</h1>
                         <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
                             <span className="flex items-end">
-                                <span className="font-semibold text-xl">{price} $</span>
+                                <span className="font-semibold text-xl">
+                                    {price} {['marked_money', 'money'].includes(moneyType ?? '') ? '$' : ' '}
+                                </span>
                             </span>
+                            {!['marked_money', 'money'].includes(moneyType ?? '') && (
+                                <ItemIcon
+                                    item={{ name: moneyType } as Item}
+                                    className="m-4 h-14 align-middle object-contain"
+                                />
+                            )}
                             <ShoppingBagIcon className="h-8" />
                         </h2>
                     </div>
