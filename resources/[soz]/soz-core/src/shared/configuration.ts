@@ -31,11 +31,14 @@ export type GouvConfig = {
     SenatSalary: number;
 };
 
+export type CasinoSlotMachineConfig = Record<number, number>;
+
 export type Configuration = {
     JobTaxTier: JobTaxTier;
     Water: Water;
     VampireGame: VampireGame;
     Gouv: GouvConfig;
+    CasinoSlotMachine: CasinoSlotMachineConfig;
 };
 
 export const DEFAULT_CONFIGURATION: Configuration = {
@@ -81,4 +84,5 @@ export const DEFAULT_CONFIGURATION: Configuration = {
     Gouv: {
         SenatSalary: 400,
     },
+    CasinoSlotMachine: {},
 };

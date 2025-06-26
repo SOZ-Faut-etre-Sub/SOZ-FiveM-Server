@@ -359,6 +359,7 @@ export enum RpcServerEvent {
     LASER_GAME_GET_BUCKET = 'soz-core:server:phone:app:laser-game:get-bucket',
 
     ADMIN_CASINO_UPDATE_HOUSE_EDGE = 'soz-core:server:admin:casino:house-edge:update',
+    ADMIN_CASINO_UPDATE_HOUSE_EDGE_SLOT_MACHINE = 'soz-core:server:admin:casino:house-edge:slot-machine:update',
     ADMIN_CASINO_POKER_RESET = 'soz-core:server:admin:casino:poker:reset',
     ADMIN_CASINO_BLACKJACK_RESET = 'soz-core:server:admin:casino:blackjack:reset',
     ADMIN_CASINO_ROULETTE_RESET = 'soz-core:server:admin:casino:roulette:reset',
