@@ -320,6 +320,9 @@ export class UtilsNPCProvider {
         SetPedPopulationBudget(3.0);
         SetVehiclePopulationBudget(3.0);
         SetAllVehicleGeneratorsActive();
+		
+		//mhc tower
+        AddScenarioBlockingArea(-235.63 , -1122.33, 20.0, -58.70, -961.62, 270.0, false, true, true, true);
 
         for (let i = 1; i <= 15; i++) {
             EnableDispatchService(i, false);
