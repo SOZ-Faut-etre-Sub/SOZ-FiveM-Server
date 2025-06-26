@@ -162,8 +162,8 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     </MenuItemCheckbox>
                     <MenuItemSelect
                         title="🏢 Bâtiments"
-                        onConfirm={(index, identifier) => {
-                            navigate(`/${MenuType.AdminMapperMenu}/property_${identifier}`, {
+                        onConfirm={(index, identifier: string) => {
+                            navigate(`/${MenuType.AdminMapperMenu}/property_${identifier.toLowerCase()}`, {
                                 state: {
                                     ...(location.state || {}),
                                     activeIndex: 0,
