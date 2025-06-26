@@ -674,6 +674,25 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         },
         taxCollectAccounts: ['dmc', 'safe_dmc'],
     },
+    [JobType.Casino]: {
+        label: 'Diamond Casino',
+        platePrefix: 'DIAM',
+        permissions: BasePermissions,
+        bossZones: [
+            {
+                center: [958.25, 58.3, 75.44],
+                length: 10.6,
+                width: 9.2,
+                heading: 149.4,
+                minZ: 74.44,
+                maxZ: 77.44,
+            },
+        ],
+        canInvoice: true,
+        phone: '555-DIAMOND',
+        canReceiveSocietyInvoice: true,
+        taxCollectAccounts: ['casino', 'safe_casino'],
+    },
 };
 
 export const JobBossZoneWhatIf: Partial<Record<JobType, Zone[]>> = {

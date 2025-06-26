@@ -38,6 +38,7 @@ export type WorldObject = {
     permanent?: boolean;
     alpha?: number;
     rotationOrder?: number;
+    textureVariation?: number;
 };
 
 export type WorldPlacedProp = {

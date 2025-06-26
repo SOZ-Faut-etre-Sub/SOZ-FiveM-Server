@@ -122,7 +122,7 @@ export class ParadeProvider {
             1
         );
 
-        this.camera = this.cameraService.createCamera([-533.97, -686.75, 45.31], 60);
+        this.camera = this.cameraService.createCameraAtPosition([-533.97, -686.75, 45.31], 60);
         this.cameraService.setCameraActive(this.camera, true);
         this.cameraService.setCameraPointAt(this.camera, [-553.84, -641.39, 35.27]);
         this.cameraService.renderCamera(5000);
@@ -349,7 +349,7 @@ export class ParadeProvider {
             this.spotlightProvider.deleteSpotlight(spotlight.id);
         });
 
-        this.cameraService.deleteCamera();
+        this.cameraService.deleteAllCameras();
         this.hudStateProvider.setHudVisible(true);
         this.playerHealthProvider.setNutritionDisabled(false);
 

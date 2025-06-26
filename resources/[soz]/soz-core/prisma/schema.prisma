@@ -1071,3 +1071,41 @@ model traveling {
     job    String @db.VarChar(15)
     points String @db.Text
 }
+
+enum casino_object_kind {
+    poker
+    blackjack
+    roulette
+    slotMachine
+}
+
+enum casino_object_type {
+    base
+    highLimit
+}
+
+model casino_objects {
+    id           String             @id @db.VarChar(128)
+    kind         casino_object_kind
+    position     String             @db.Text
+    model        String             @db.VarChar(50)
+    type         casino_object_type @default(base)
+    requireSpawn Boolean            @default(false)
+    houseEdge    Float              @default(100)
+    metadata     String?            @db.Text
+
+    @@index([kind], map: "kind")
+}
+
+model casino_statements {
+    id                   Int      @id @default(autoincrement())
+    date                 DateTime @default(now()) @db.Timestamp(0)
+    amount               Float    @default(0)
+    luckywheel_car_model String?  @db.VarChar(128)
+}
+
+model casino_inside_track_pending_gains {
+    id        Int    @id @default(autoincrement())
+    citizenid String @db.VarChar(50)
+    amount    Int
+}

@@ -7,7 +7,7 @@ import { PlayerInventoryUpdate } from '@public/core/decorators/player';
 
 import { ClientEvent } from '../../shared/event/client';
 import { NuiEvent } from '../../shared/event/nui';
-import { AllThemesConfig, AvailableTheme, HudSettings, HudTheme } from '../../shared/hud';
+import { AllThemesConfig, AllWatches, AvailableTheme, HudSettings, HudTheme } from '../../shared/hud';
 import { MenuType } from '../../shared/nui/menu';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { AudioService } from '../nui/audio.service';
@@ -56,6 +56,8 @@ export class HudWatchProvider {
         [HudTheme.Green]: true,
         [HudTheme.Uwu]: true,
         [HudTheme.HalloweenVein]: false,
+        [HudTheme.Gold]: false,
+        [HudTheme.Diamond]: false,
     };
 
     @Once(OnceStep.PlayerLoaded)
@@ -128,9 +130,7 @@ export class HudWatchProvider {
 
     @PlayerInventoryUpdate()
     async onInventoryUpdate(): Promise<void> {
-        const haveWatch =
-            this.inventoryManager.hasEnoughItem('smartwatchuiwi', 1, true) ||
-            this.inventoryManager.hasEnoughItem('halloween_smartwatch_nocturnal_vein', 1, true);
+        const haveWatch = AllWatches.some(watch => this.inventoryManager.hasEnoughItem(watch, 1, true));
         if (this._haveWatch !== haveWatch) {
             this._haveWatch = haveWatch;
             this.nuiDispatch.dispatch('hud', 'UpdateHasWatch', this.haveWatch);

@@ -167,7 +167,7 @@ export const MenuContainer: FunctionComponent<MainMenuProps> = ({ children, help
 };
 
 export type MenuTitleProps = {
-    type?: 'menu' | 'boutique';
+    type?: 'menu' | 'boutique' | 'abonnement';
     title: string;
 };
 
@@ -502,11 +502,12 @@ export const MenuItemButton: FunctionComponent<MenuItemButtonProps> = ({
 
 type MenuItemTextProps = PropsWithChildren<{
     onSelected?: () => void;
+    disabled?: boolean;
 }>;
 
-export const MenuItemText: FunctionComponent<MenuItemTextProps> = ({ children, onSelected }) => {
+export const MenuItemText: FunctionComponent<MenuItemTextProps> = ({ children, onSelected, disabled = true }) => {
     return (
-        <MenuItemContainer onSelected={onSelected} disabled={true}>
+        <MenuItemContainer onSelected={onSelected} disabled={disabled}>
             <h3 className="text-white cursor-default">{children}</h3>
         </MenuItemContainer>
     );

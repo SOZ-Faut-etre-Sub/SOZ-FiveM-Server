@@ -51,7 +51,9 @@ export class PhoneState {
         this.nuiDispatch.dispatch('phone', 'SetAvailability', !this.phoneDisabled || player.metadata.isdead);
     }
 
-    public setPhonePropModel(model: 'soz_phone_black' | 'soz_phone_gold' | 'soz_phone_natural' | 'soz_phone_white') {
+    public setPhonePropModel(
+        model: 'soz_phone_black' | 'soz_phone_gold' | 'soz_phone_natural' | 'soz_phone_white' | 'soz_phone_diamond'
+    ) {
         this.phonePropModel = model;
         SetResourceKvp(KVP_PHONE_PROP_MODEL, model);
     }

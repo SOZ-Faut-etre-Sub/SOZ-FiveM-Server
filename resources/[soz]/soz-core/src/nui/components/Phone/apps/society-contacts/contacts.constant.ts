@@ -134,4 +134,10 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'dmc.webp',
         type: 'private',
     },
+    {
+        display: 'Diamond Casino & Resort',
+        number: '555-DIAMOND',
+        avatar: 'casino.webp',
+        type: 'private',
+    },
 ];

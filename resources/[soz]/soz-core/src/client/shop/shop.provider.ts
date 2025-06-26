@@ -432,6 +432,7 @@ export class ShopProvider {
                 break;
             case ShopBrand.Barber:
                 this.barberShopProvider.openShop();
+                break;
         }
     }
 

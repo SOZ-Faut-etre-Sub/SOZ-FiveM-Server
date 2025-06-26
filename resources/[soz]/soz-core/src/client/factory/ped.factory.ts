@@ -7,6 +7,7 @@ import { Outfit, Prop } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
+import { joaat } from '@public/shared/joaat';
 import { Skin } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
@@ -40,6 +41,9 @@ export type Ped = {
     animprops?: AnimationProps[];
     weapon?: string;
     alpha?: number;
+    collision?: boolean;
+    voiceGroup?: string;
+    mixGroup?: string;
     dropItemCallback?: (inventoryId: string, inventoryItem: InventoryItem, amount: number) => void | Promise<void>;
 };
 
@@ -444,6 +448,18 @@ export class PedFactory {
             SetBlockingOfNonTemporaryEvents(pedId, true);
         }
 
+        if (ped.voiceGroup) {
+            SetPedVoiceGroup(pedId, joaat(ped.voiceGroup));
+        }
+
+        if (ped.mixGroup) {
+            AddEntityToAudioMixGroup(pedId, ped.mixGroup, 0);
+        }
+
+        if (ped.collision !== undefined) {
+            SetEntityCollision(pedId, ped.collision, ped.collision);
+        }
+
         if (ped.animDict && ped.anim) {
             await this.resourceLoader.loadAnimationDictionary(ped.animDict);
             TaskPlayAnim(pedId, ped.animDict, ped.anim, 8.0, 0, -1, ped.flag || 1, 0, false, false, false);
@@ -529,7 +545,7 @@ export class PedFactory {
             SetCurrentPedWeapon(pedId, ped.weapon, true);
         }
 
-        if (ped.alpha) {
+        if (ped.alpha !== undefined) {
             SetEntityAlpha(pedId, ped.alpha, false);
         }
 

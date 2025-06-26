@@ -7,11 +7,15 @@ import { VehicleHud } from '@public/shared/vehicle/vehicle';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
-import { PlayerData } from '../../shared/player';
+import { PlayerData, PlayerMetadata } from '../../shared/player';
 import { RootState } from '../store';
 
 export const usePlayer = (): PlayerData | null => {
     return useSelector((state: RootState) => state.player);
+};
+
+export const usePlayerMetadata = <T extends keyof PlayerMetadata>(metadata: T): PlayerMetadata[T] => {
+    return useSelector((state: RootState) => state.player?.metadata?.[metadata]);
 };
 
 export const usePlayerPosition = (): Vector3 => {

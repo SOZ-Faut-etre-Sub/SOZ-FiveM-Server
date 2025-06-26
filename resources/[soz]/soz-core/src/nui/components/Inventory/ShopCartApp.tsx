@@ -24,6 +24,7 @@ import { CartElement, ShopItem } from '../../../shared/shop/superette';
 import { fetchNui } from '../../fetch';
 import { useAssetPath } from '../../hook/assets';
 import { useKeyPress } from '../../hook/control';
+import { useItem } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useGetPrice } from '../../hook/price';
 import { BorderBox } from '../Styleguide/BorderBox';
@@ -289,6 +290,8 @@ const ShopItem: FunctionComponent<{
     const itemSize = useItemSize();
     const { getPath } = useAssetPath();
 
+    const moneyItem = useItem(moneyType);
+
     const itemForIcon = {
         name: item.name,
         type: item.type,
@@ -304,15 +307,21 @@ const ShopItem: FunctionComponent<{
                     width: `${itemSize}px`,
                     height: `${itemSize}px`,
                 }}
-                onMouseEnter={() =>
+                onMouseEnter={() => {
+                    const metadata = item.metadata || {};
+
+                    if (!['money', ' marked_money'].includes(moneyType)) {
+                        metadata.extraLabel = `Prix : ${item.price}x ${moneyItem.label}`;
+                    }
+
                     setCurrentDescription({
                         name: item.name,
                         type: item.type,
                         slot: 0,
                         amount: item.amount || 1,
-                        metadata: item.metadata || {},
-                    })
-                }
+                        metadata,
+                    });
+                }}
                 onMouseLeave={() => {
                     setCurrentDescription(null);
                 }}
@@ -346,7 +355,8 @@ const ShopItem: FunctionComponent<{
                                         margin: '0.1rem 0.2rem',
                                     }}
                                 >
-                                    {getPrice(item.price, tax)} $
+                                    {getPrice(item.price, tax)}{' '}
+                                    {['money', ' marked_money'].includes(moneyType) ? '$' : ''}
                                 </div>
                                 {item.amount && item.amount > 1 && (
                                     <div

@@ -1,3 +1,9 @@
+import { BlackjackTable } from '@private/shared/casino.blackjack';
+import { InsideTrack } from '@private/shared/casino.inside-track';
+import { LuckyWheel } from '@private/shared/casino.lucky-wheel';
+import { PokerTable } from '@private/shared/casino.poker';
+import { RouletteTable } from '@private/shared/casino.roulette';
+import { SlotMachine } from '@private/shared/casino.slot';
 import { Gang } from '@private/shared/gang';
 import { BankAccount, Invoice } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
@@ -31,6 +37,12 @@ export enum RepositoryType {
     BankFarmAccount = 'bankFarmAccount',
     BankInvoice = 'bankInvoice',
     Billboard = 'billboard',
+    CasinoLuckyWheel = 'casinoLuckyWheel',
+    CasinoSlotMachine = 'casinoSlotMachine',
+    CasinoInsideTrack = 'casinoInsideTrack',
+    CasinoPoker = 'casinoPoker',
+    CasinoBlackjack = 'casinoBlackjack',
+    CasinoRoulette = 'casinoRoulette',
     ChargerUpw = 'chargerUpw',
     Configuration = 'configuration',
     Door = 'door',
@@ -70,6 +82,12 @@ export type RepositoryMapping = {
     [RepositoryType.BankFarmAccount]: Partial<BankAccount>;
     [RepositoryType.BankInvoice]: Invoice;
     [RepositoryType.Billboard]: Billboard;
+    [RepositoryType.CasinoLuckyWheel]: LuckyWheel;
+    [RepositoryType.CasinoSlotMachine]: SlotMachine;
+    [RepositoryType.CasinoInsideTrack]: InsideTrack;
+    [RepositoryType.CasinoPoker]: PokerTable;
+    [RepositoryType.CasinoBlackjack]: BlackjackTable;
+    [RepositoryType.CasinoRoulette]: RouletteTable;
     [RepositoryType.ChargerUpw]: UpwCharger;
     [RepositoryType.Configuration]: any;
     [RepositoryType.Elevator]: DynamicElevatorState;
@@ -110,6 +128,12 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.BankAccount]: Record<string, BankAccount>;
     [RepositoryType.BankFarmAccount]: Record<string, Partial<BankAccount>>;
     [RepositoryType.BankInvoice]: Record<number, Invoice>;
+    [RepositoryType.CasinoLuckyWheel]: Record<string, LuckyWheel>;
+    [RepositoryType.CasinoSlotMachine]: Record<number, SlotMachine>;
+    [RepositoryType.CasinoInsideTrack]: Record<string, InsideTrack>;
+    [RepositoryType.CasinoPoker]: Record<string, PokerTable>;
+    [RepositoryType.CasinoBlackjack]: Record<string, BlackjackTable>;
+    [RepositoryType.CasinoRoulette]: Record<string, RouletteTable>;
     [RepositoryType.Configuration]: Configuration;
     [RepositoryType.Field]: Record<string, Field>;
     [RepositoryType.Elevator]: Record<DynamicElevator, DynamicElevatorState>;

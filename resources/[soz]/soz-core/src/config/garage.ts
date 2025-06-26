@@ -3101,4 +3101,49 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+
+    // Casino
+    diamond_vip: {
+        name: 'Diamond VIP Parking',
+        legacyId: 'diamond_vip',
+        type: GarageType.CasinoVip,
+        category: GarageCategory.Car,
+        zone: new BoxZone([933.02, 31.61, 80.16], 0.8, 1, {
+            heading: 333.51,
+            minZ: 80,
+            maxZ: 82,
+        }),
+        parkingPlaces: [
+            new BoxZone([942.22, 40.1, 81.16], 7.8, 7.6, {
+                heading: 147.85,
+                minZ: 80.16,
+                maxZ: 82.16,
+            }),
+            new BoxZone([949.18, 35.78, 81.16], 7.8, 8.6, {
+                heading: 147.85,
+                minZ: 80.16,
+                maxZ: 82.16,
+            }),
+            new BoxZone([956.5, 31.15, 81.16], 7.8, 8.6, {
+                heading: 147.85,
+                minZ: 80.16,
+                maxZ: 82.16,
+            }),
+            new BoxZone([964.51, 26.13, 81.16], 7.8, 10.4, {
+                heading: 147.85,
+                minZ: 80.16,
+                maxZ: 82.16,
+            }),
+            new BoxZone([956.91, 13.93, 81.16], 10.2, 6.0, {
+                heading: 57.57,
+                minZ: 80.16,
+                maxZ: 82.16,
+            }),
+            new BoxZone([941.65, 23.51, 81.16], 8.4, 6.2, {
+                heading: 237.53,
+                minZ: 80.16,
+                maxZ: 82.16,
+            }),
+        ],
+    },
 };

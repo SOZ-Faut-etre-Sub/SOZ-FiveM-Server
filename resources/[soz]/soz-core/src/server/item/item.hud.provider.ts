@@ -2,6 +2,7 @@ import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { AllWatches } from '../../shared/hud';
 import { Notifier } from '../notifier';
 import { ItemService } from './item.service';
 
@@ -15,11 +16,10 @@ export class ItemHudProvider {
 
     @Once()
     public onStart() {
-        this.item.setItemUseCallback('smartwatchuiwi', (source: number) => {
-            TriggerClientEvent(ClientEvent.ITEM_WATCH_USE, source);
-        });
-        this.item.setItemUseCallback('halloween_smartwatch_nocturnal_vein', (source: number) => {
-            TriggerClientEvent(ClientEvent.ITEM_WATCH_USE, source);
+        AllWatches.forEach(watch => {
+            this.item.setItemUseCallback(watch, (source: number) => {
+                TriggerClientEvent(ClientEvent.ITEM_WATCH_USE, source);
+            });
         });
 
         this.item.setItemUseCallback('compass', source => {

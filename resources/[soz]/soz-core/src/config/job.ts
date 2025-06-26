@@ -44,4 +44,12 @@ export const JobBlips: Partial<Record<JobType, Blip[]>> = {
             coords: { x: -1889.54, y: 2045.27 },
         },
     ],
+    [JobType.Casino]: [
+        {
+            name: 'Diamond Casino & Resort',
+            sprite: 679,
+            scale: 0.9,
+            coords: { x: 924.21, y: 46.98 },
+        },
+    ],
 };

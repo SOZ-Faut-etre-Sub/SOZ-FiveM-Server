@@ -1,3 +1,4 @@
+import { CasinoVipService } from '@private/client/casino/casino.vip.service';
 import { Once, OnceStep } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { RepositoryUpdate } from '@public/core/decorators/repository';
@@ -60,6 +61,9 @@ export class ElevatorProvider {
     @Inject(AnimationService)
     public animationService: AnimationService;
 
+    @Inject(CasinoVipService)
+    public casinoVipService: CasinoVipService;
+
     private elevators = new Map<DynamicElevator, number>();
     private closeElevator = new Map<DynamicElevator, boolean>();
     private elevatorDimentions = new Map<number, [number[], number[]]>();
@@ -119,6 +123,9 @@ export class ElevatorProvider {
                         action: () => {
                             this.playerPositionProvider.teleportAdminToPosition(destinationFloor.spawnPoint);
                         },
+                        canInteract: destinationFloor.requireCasinoVip
+                            ? () => this.casinoVipService.hasVipSubscription()
+                            : undefined,
                         job: destinationFloor.job,
                     });
                 }

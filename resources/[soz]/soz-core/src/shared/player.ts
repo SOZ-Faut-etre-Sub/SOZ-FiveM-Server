@@ -409,10 +409,17 @@ export type PlayerMetadata = PlayerHealthBook & {
     plaster: PlasterLocation[];
     plate?: boolean;
     special_plate?: boolean;
+    casino_alice_frame?: boolean;
     reputation_token_date?: number;
     main_residence_last_change?: number;
     noclip: boolean;
     cloth_type?: OutfitType;
+    // casino
+    casino_bundle_claim?: boolean;
+    casino_vip_standard_subscription_expire_at: number | null;
+    casino_vip_premium_subscription_expire_at: number | null;
+    casino_vip_point?: number;
+    casino_diamond_frame?: boolean;
 };
 
 export const isAdmin = (player: PlayerData) => {

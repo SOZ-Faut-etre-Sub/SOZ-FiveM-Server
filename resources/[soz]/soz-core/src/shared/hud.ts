@@ -55,6 +55,13 @@ export enum VoiceMode {
     Megaphone,
 }
 
+export const AllWatches = [
+    'smartwatchuiwi',
+    'halloween_smartwatch_nocturnal_vein',
+    'casino_smartwatch_gold',
+    'casino_smartwatch_diamond',
+];
+
 export enum HudTheme {
     Auto = 'auto',
     Deuteranopie = 'deuteranopie',
@@ -64,6 +71,8 @@ export enum HudTheme {
     Green = 'green',
     Uwu = 'uwu',
     HalloweenVein = 'halloween-vein',
+    Gold = 'gold',
+    Diamond = 'diamond',
 }
 
 export type AvailableTheme = Record<HudTheme, boolean>;
@@ -81,6 +90,8 @@ export const AllThemesConfig: Record<HudTheme, ThemeConfig> = {
     [HudTheme.Green]: { label: 'Green Mode' },
     [HudTheme.Uwu]: { label: 'UwU Mode' },
     [HudTheme.HalloweenVein]: { label: 'Halloween', item: 'halloween_smartwatch_nocturnal_vein' },
+    [HudTheme.Gold]: { label: 'Or', item: 'casino_smartwatch_gold' },
+    [HudTheme.Diamond]: { label: 'Diamant', item: 'casino_smartwatch_diamond' },
 };
 
 export type HudSettings = {

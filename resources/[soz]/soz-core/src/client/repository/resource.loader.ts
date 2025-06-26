@@ -1,7 +1,6 @@
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { wait } from '@core/utils';
 import { Logger } from '@public/core/logger';
-
-import { Inject, Injectable } from '../../core/decorators/injectable';
-import { wait } from '../../core/utils';
 
 @Injectable()
 export class ResourceLoader {
@@ -16,6 +15,10 @@ export class ResourceLoader {
                 await wait(0);
             }
         }
+    }
+
+    async loadStream(streamName: string, soundSet: string): Promise<void> {
+        LoadStream(streamName, soundSet);
     }
 
     unloadPtfxAsset(name: string): void {
@@ -89,6 +92,33 @@ export class ResourceLoader {
         return scaleform;
     }
 
+    async loadScaleformMovieWithIgnoreSuperWidescreen(name: string) {
+        const scaleform = RequestScaleformMovieWithIgnoreSuperWidescreen(name);
+        while (!HasScaleformMovieLoaded(scaleform)) {
+            await wait(0);
+        }
+        SetScaleformMovieToUseSuperLargeRt(scaleform, true);
+        return scaleform;
+    }
+
+    async unloadScaleformMovie(scaleform: number) {
+        if (!HasScaleformMovieLoaded(scaleform)) {
+            return;
+        }
+        SetScaleformMovieAsNoLongerNeeded(scaleform);
+    }
+
+    public async scaleformGetValueInt(scaleform: number, method: string) {
+        BeginScaleformMovieMethod(scaleform, method);
+        const handle = EndScaleformMovieMethodReturnValue();
+
+        while (!IsScaleformMovieMethodReturnValueReady(handle)) {
+            await wait(0);
+        }
+
+        return GetScaleformMovieMethodReturnValueInt(handle);
+    }
+
     public scaleformPushString(scaleform: number, method: string, val: string) {
         PushScaleformMovieFunction(scaleform, method);
         PushScaleformMovieFunctionParameterString(val);
@@ -121,7 +151,7 @@ export class ResourceLoader {
             } else if (typeof val == 'boolean') {
                 PushScaleformMovieFunctionParameterBool(val);
             } else if (typeof val == 'number') {
-                if (Number.isInteger(val)) {
+                if (val % 1 === 0) {
                     PushScaleformMovieFunctionParameterInt(val);
                 } else {
                     PushScaleformMovieFunctionParameterFloat(val);

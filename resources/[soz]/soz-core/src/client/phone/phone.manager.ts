@@ -130,6 +130,9 @@ export class PhoneManager {
             case 'white.webp':
                 this.phoneState.setPhonePropModel('soz_phone_white');
                 break;
+            case 'casino_diamond.webp':
+                this.phoneState.setPhonePropModel('soz_phone_diamond');
+                break;
             case 'black.webp':
             default:
                 this.phoneState.setPhonePropModel('soz_phone_black');

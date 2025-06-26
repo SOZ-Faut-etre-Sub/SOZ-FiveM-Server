@@ -5,6 +5,7 @@ import { DispenserProvider } from './dispenser.provider';
 import { ElevatorProvider } from './elevator.provider';
 import { GuardsProvider } from './guards.provider';
 import { NoClipProvider } from './noclip.provider';
+import { PositionService } from './position.service';
 import { DiscordProvider } from './utils.discord.provider';
 import { UtilsNPCProvider } from './utils.npc.provider';
 import { UtilsProvider } from './utils.provider';
@@ -19,6 +20,7 @@ import { UtilsProvider } from './utils.provider';
         UtilsNPCProvider,
         BunkerProvider,
         GuardsProvider,
+        PositionService,
     ],
 })
 export class UtilsModule {}

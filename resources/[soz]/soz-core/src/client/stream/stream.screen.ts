@@ -1,24 +1,7 @@
 import { BLACK_SCREEN_URL } from '../../shared/global';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3 } from '../../shared/polyzone/vector';
-
-const createNamedRenderTargetForModel = (name: string, model: number): number => {
-    let handle = 0;
-
-    if (!IsNamedRendertargetRegistered(name)) {
-        RegisterNamedRendertarget(name, false);
-    }
-
-    if (!IsNamedRendertargetLinked(model)) {
-        LinkNamedRendertarget(model);
-    }
-
-    if (IsNamedRendertargetRegistered(name)) {
-        handle = GetNamedRendertargetRenderId(name);
-    }
-
-    return handle;
-};
+import { createNamedRenderTargetForModel, releaseNamedRenderTarget } from '../render.target';
 
 export class StreamScreen {
     private readonly duiObject: number;
@@ -123,6 +106,6 @@ export class StreamScreen {
         this.handle = null;
 
         DestroyDui(this.duiObject);
-        ReleaseNamedRendertarget(this.renderTarget);
+        releaseNamedRenderTarget(this.renderTarget);
     }
 }

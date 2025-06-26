@@ -271,4 +271,7 @@ export type MonitorEvent = {
     success?: boolean;
     objective_part?: number;
     objective?: VampireGameCollection | VampireGameObjectiveTypePart2;
+    // Casino
+    bet?: number;
+    reward?: number;
 };

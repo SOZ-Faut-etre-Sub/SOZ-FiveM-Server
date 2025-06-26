@@ -189,7 +189,7 @@ export class TattooShopProvider {
         }
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
-        await this.cameraService.deleteCamera();
+        await this.cameraService.deleteAllCameras();
         this.instructionalService.clear();
         this.state = null;
     }

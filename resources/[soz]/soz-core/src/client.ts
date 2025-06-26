@@ -41,6 +41,7 @@ import { StonkModule } from './client/job/stonk/stonk.module';
 import { TaxiModule } from './client/job/taxi/taxi.module';
 import { JobTemporaryModule } from './client/job/temporary/temporary.module';
 import { UpwModule } from './client/job/upw/upw.module';
+import { LocationModule } from './client/location/location.module';
 import { MonitorModule } from './client/monitor/monitor.module';
 import { NuiModule } from './client/nui/nui.module';
 import { ObjectModule } from './client/object/object.module';
@@ -143,6 +144,7 @@ async function bootstrap() {
         PickerModule,
         PhoneModule,
         GamesModule,
+        LocationModule,
         ...PrivateModules
     );
 

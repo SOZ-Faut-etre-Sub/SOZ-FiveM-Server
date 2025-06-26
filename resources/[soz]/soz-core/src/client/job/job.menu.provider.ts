@@ -1,3 +1,5 @@
+import { CasinoService } from '@private/client/casino/casino.service';
+
 import { Command } from '../../core/decorators/command';
 import { OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -32,6 +34,9 @@ export class JobMenuProvider {
 
     @Inject(ParadeProvider)
     private paradeProvider: ParadeProvider;
+
+    @Inject(CasinoService)
+    private readonly casinoService: CasinoService;
 
     @OnNuiEvent(NuiEvent.PlayerMenuJobGradeCreate)
     public async onPlayerMenuJobGradeCreate() {
@@ -139,6 +144,10 @@ export class JobMenuProvider {
         const job = this.jobService.getJob(player.job.id);
 
         if (!job) {
+            return;
+        }
+
+        if (this.casinoService.usingMinigame()) {
             return;
         }
 

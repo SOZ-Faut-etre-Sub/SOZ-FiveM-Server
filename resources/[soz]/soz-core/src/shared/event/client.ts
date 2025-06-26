@@ -507,4 +507,8 @@ export enum ClientEvent {
     LASER_GAME_ADD_KILL = 'soz-core:client:phone:app:laser-game:add-kill',
 
     THUNDER = 'soz-core:client:thunder',
+
+    CASINO_LUCKY_WHEEL_SPIN = 'soz-core:client:casino:lucky-wheel:spin',
+    CASINO_LUCKY_WHEEL_WIN = 'soz-core:client:casino:lucky-wheel:win',
+    CASINO_SLOT_MACHINE_SPIN_RESULT = 'soz-core:client:casino:slot-machine:spin-result',
 }

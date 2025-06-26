@@ -93,7 +93,7 @@ export class JewelryShopProvider {
     @OnNuiEvent(NuiEvent.JewelryShopToggleCamera)
     public async onToggleCamera(check: boolean) {
         if (check) {
-            this.cameraService.deleteCamera();
+            this.cameraService.deleteAllCameras();
         } else {
             await this.setupShop();
         }
@@ -128,7 +128,7 @@ export class JewelryShopProvider {
         }
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
-        await this.cameraService.deleteCamera();
+        await this.cameraService.deleteAllCameras();
         await this.animationService.clearShopAnimations(PlayerPedId());
         FreezeEntityPosition(PlayerPedId(), false);
     }

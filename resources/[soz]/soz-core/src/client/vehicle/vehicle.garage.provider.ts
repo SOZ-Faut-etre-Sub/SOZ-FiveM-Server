@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { emitRpc } from '@core/rpc';
 import { wait } from '@core/utils';
+import { CasinoVipService } from '@private/client/casino/casino.vip.service';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { InteractionProvider } from '@public/client/quick-interaction/interaction.provider';
 import { Apartment } from '@public/shared/housing/housing';
@@ -102,6 +103,9 @@ export class VehicleGarageProvider {
 
     @Inject(InteractionProvider)
     private interactionProvider: InteractionProvider;
+
+    @Inject(CasinoVipService)
+    private casinoVipService: CasinoVipService;
 
     private pounds: Record<string, Garage> = {};
 
@@ -236,6 +240,25 @@ export class VehicleGarageProvider {
                             this.enterGarage(garageIdentifier, garage);
                         },
                         job: garage.job,
+                    },
+                    interactionDistance,
+                    drawDistance
+                );
+            }
+
+            if (garage.type === GarageType.CasinoVip) {
+                this.objectProvider.createObject({
+                    model: jobGaragePayStation,
+                    position: [...garage.zone.center, garage.zone.heading] as Vector4,
+                    id: `garage_${garageIdentifier}`,
+                });
+
+                this.interactionProvider.createInteractionForCoords(
+                    coordsWithOffset,
+                    {
+                        label: 'Parking VIP',
+                        canInteract: () => this.casinoVipService.hasVipSubscription(),
+                        action: () => this.enterGarage(garageIdentifier, garage),
                     },
                     interactionDistance,
                     drawDistance

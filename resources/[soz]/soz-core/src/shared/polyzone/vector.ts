@@ -227,3 +227,8 @@ export function clampAngle(angle: number, center: number, maxOffset: number) {
     }
     return normalize180(center + maxOffset);
 }
+
+export const getHeadingFromVector2d = (x: number, y: number): number => {
+    const angle = Math.atan2(-x, -y);
+    return (deg(angle) + 360) % 360;
+};

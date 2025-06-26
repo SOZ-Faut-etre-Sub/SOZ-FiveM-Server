@@ -1,3 +1,4 @@
+import { CasinoService } from '@private/client/casino/casino.service';
 import { GamesProvider } from '@public/client/games/games.provider';
 import { wait } from '@public/core/utils';
 
@@ -78,6 +79,9 @@ export class PlayerMenuProvider {
     @Inject(StreamProvider)
     private streamProvider: StreamProvider;
 
+    @Inject(CasinoService)
+    private readonly casinoService: CasinoService;
+
     @Once()
     public async init() {
         await this.halloweenSpiderService.init();
@@ -94,11 +98,9 @@ export class PlayerMenuProvider {
         ],
     })
     public async togglePersonalMenu() {
-        if (this.ceremonyProvider.isRunning) {
-            return;
-        }
+        if (this.casinoService.usingMinigame()) return;
 
-        if (this.paradeProvider.isRunning) {
+        if (this.ceremonyProvider.isRunning || this.paradeProvider.isRunning) {
             return;
         }
 

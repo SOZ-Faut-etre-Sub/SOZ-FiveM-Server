@@ -2733,6 +2733,33 @@ export const JOB_INVENTORIES: Partial<Record<JobType, Zone<JobInventory>[]>> = {
             },
         },
     ],
+    [JobType.Casino]: [
+        {
+            center: [960.12, 73.43, 112.55],
+            length: 0.95,
+            width: 2.5,
+            minZ: 111.55,
+            maxZ: 113.7,
+            heading: 148.09,
+            data: {
+                storage: 'casino_fridge',
+                type: InventoryType.Fridge,
+            },
+        },
+        {
+            center: [962.91, 58.1, 75.43],
+            length: 1.0,
+            width: 4.0,
+            minZ: 74.43,
+            maxZ: 75.48,
+            heading: 57.94,
+            data: {
+                storage: 'casino_boss_storage',
+                type: InventoryType.BossStorage,
+                permission: JobPermission.SocietyPrivateStorage,
+            },
+        },
+    ],
 };
 
 export const JOB_INVENTORIES_WHAT_IF: Partial<Record<JobType, Zone<JobInventory>[]>> = {

@@ -728,6 +728,27 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'weapon_pistol_mk2', type: 'weapon', price: 300 },
         ],
     },
+    {
+        name: 'casino',
+        job: JobType.Casino,
+        zone: {
+            center: [952.36, 30.61, 71.44],
+            length: 1.0,
+            width: 3.0,
+            heading: 58.45,
+            minZ: 70.44,
+            maxZ: 72.44,
+        },
+        targets: [],
+        products: [
+            { id: 'casino_chip_100', type: 'item', price: 1 },
+            { id: 'casino_chip_500', type: 'item', price: 1 },
+            { id: 'casino_chip_1k', type: 'item', price: 1 },
+            { id: 'casino_chip_5k', type: 'item', price: 1 },
+            { id: 'casino_chip_10k', type: 'item', price: 1 },
+            { id: 'casino_lucky_wheel_ticket', type: 'item', price: 1 },
+        ],
+    },
 ];
 
 export const BossShopWhatIf: (ShopConfig & { job: JobType })[] = [
