@@ -1098,7 +1098,8 @@ model casino_objects {
 }
 
 model casino_statements {
-    id     Int      @id @default(autoincrement())
-    date   DateTime @default(now()) @db.Timestamp(0)
-    amount Float
+    id                   Int      @id @default(autoincrement())
+    date                 DateTime @default(now()) @db.Timestamp(0)
+    amount               Float    @default(0)
+    luckywheel_car_model String?  @db.VarChar(128)
 }
