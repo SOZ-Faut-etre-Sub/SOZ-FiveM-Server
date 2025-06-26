@@ -124,7 +124,7 @@ export class ElevatorProvider {
                             this.playerPositionProvider.teleportAdminToPosition(destinationFloor.spawnPoint);
                         },
                         canInteract: destinationFloor.requireCasinoVip
-                            ? () => this.casinoVipService.hasVipSubscription()
+                            ? () => this.casinoVipService.hasVipPremium()
                             : undefined,
                         job: destinationFloor.job,
                     });
