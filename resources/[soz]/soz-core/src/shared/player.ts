@@ -415,6 +415,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     noclip: boolean;
     cloth_type?: OutfitType;
     // casino
+    casino_bundle_claim?: boolean;
     casino_vip_standard_subscription_expire_at: number | null;
     casino_vip_premium_subscription_expire_at: number | null;
     casino_vip_point?: number;
