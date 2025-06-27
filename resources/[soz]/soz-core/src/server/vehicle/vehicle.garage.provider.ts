@@ -524,7 +524,8 @@ export class VehicleGarageProvider {
         if (
             garage.type === GarageType.Depot ||
             garage.type === GarageType.Public ||
-            garage.type === GarageType.Private
+            garage.type === GarageType.Private ||
+            garage.type === GarageType.CasinoVip
         ) {
             const or = [{ citizenid: player.citizenid, job: null }] as Array<Prisma.PlayerVehicleWhereInput>;
 
@@ -638,13 +639,16 @@ export class VehicleGarageProvider {
         if (
             (garage.type === GarageType.Private ||
                 garage.type === GarageType.Public ||
-                garage.type === GarageType.House) &&
+                garage.type === GarageType.House ||
+                garage.type === GarageType.CasinoVip) &&
             !vehicle.job &&
             !citizenIds.has(vehicle.citizenid)
         ) {
             return Err("ce véhicule n'est pas à vous");
         } else if (
-            (garage.type === GarageType.Private || garage.type === GarageType.Public) &&
+            (garage.type === GarageType.Private ||
+                garage.type === GarageType.Public ||
+                garage.type === GarageType.CasinoVip) &&
             vehicle.job &&
             !(await this.jobService.hasPermission(
                 player,
@@ -654,7 +658,9 @@ export class VehicleGarageProvider {
         ) {
             return Err("vous n'avez pas la permission de ranger un véhicule entreprise dans un garage publique/privé");
         } else if (
-            (garage.type === GarageType.Private || garage.type === GarageType.Public) &&
+            (garage.type === GarageType.Private ||
+                garage.type === GarageType.Public ||
+                garage.type === GarageType.CasinoVip) &&
             vehicle.job &&
             (await this.jobService.hasPermission(
                 player,
@@ -981,7 +987,8 @@ export class VehicleGarageProvider {
                     if (
                         (garage.type === GarageType.Private ||
                             garage.type === GarageType.Public ||
-                            garage.type === GarageType.Depot) &&
+                            garage.type === GarageType.Depot ||
+                            garage.type === GarageType.CasinoVip) &&
                         (playerVehicle.job !== player.job.id ||
                             !(await this.jobService.hasPermission(player, player.job.id, permission)) ||
                             !player.job.onduty)

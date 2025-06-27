@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
-import { wait } from '@core/utils';
+import { wait, waitUntil } from '@core/utils';
 import { Logger } from '@public/core/logger';
 
 @Injectable()
@@ -112,9 +112,7 @@ export class ResourceLoader {
         BeginScaleformMovieMethod(scaleform, method);
         const handle = EndScaleformMovieMethodReturnValue();
 
-        while (!IsScaleformMovieMethodReturnValueReady(handle)) {
-            await wait(0);
-        }
+        await waitUntil(async () => IsScaleformMovieMethodReturnValueReady(handle), 1000);
 
         return GetScaleformMovieMethodReturnValueInt(handle);
     }
