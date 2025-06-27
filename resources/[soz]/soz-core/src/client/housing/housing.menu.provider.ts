@@ -41,10 +41,17 @@ export class HousingMenuProvider {
         if (!player) {
             return;
         }
+        this.nuiMenu.closeMenu();
+
+        const [confirmed, timeout] = await this.notifier.notifyWithConfirm(
+            `Êtes-vous sûr.e de vouloir changer d'habitation principale ? Si aucun résident.e ne loge dans cette habitation, les stockages ne seront plus accessible.~n~~n~Faites ~g~Y~s~ pour l'accepter ou ~r~N~s~ pour la refuser`
+        );
+
+        if (timeout || !confirmed) {
+            return;
+        }
 
         TriggerServerEvent(ServerEvent.HOUSING_CHANGE_PRINCIPAL_APARTMENT, propertyId, apartmentId);
-
-        this.nuiMenu.closeMenu();
     }
 
     @OnNuiEvent(NuiEvent.HousingAddTenant)

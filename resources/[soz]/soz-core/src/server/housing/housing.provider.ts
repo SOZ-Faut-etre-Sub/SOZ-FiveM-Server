@@ -119,7 +119,7 @@ export class HousingProvider {
     }
 
     @Command('set-apartment-change', {
-        role: ['admin'],
+        role: ['admin', 'staff'],
         arguments: [
             { name: 'source', help: 'Target player so change the timer' },
             { name: 'minutes', help: 'Number of minute to set the time to be able to change main residence in' },
@@ -129,15 +129,30 @@ export class HousingProvider {
         const target = this.playerService.getPlayer(targetSource);
 
         if (!target) {
-            this.notifier.notify(source, 'Pas de joueur avec cet id');
+            this.notifier.notify(source, 'Aucun joueur avec cet id.');
             return;
         }
 
+        const nextChange = Date.now() + minutes * 60_000;
         this.playerService.setPlayerMetadata(
             target.source,
             'main_residence_last_change',
-            Date.now() - WEEK_IN_MILLISECONDS + minutes * 60_000
+            nextChange - WEEK_IN_MILLISECONDS
         );
+
+        const now = Date.now();
+        if (nextChange > now) {
+            const diffInHours = differenceInHours(nextChange, now);
+            this.notifier.notify(
+                source,
+                `${target.charinfo.lastname} ${target.charinfo.firstname} peut changer de résidence principale dans ${diffInHours < 24 ? `${diffInHours} heure(s).` : `${differenceInCalendarDays(nextChange, now)} jour(s).`}`
+            );
+        } else {
+            this.notifier.notify(
+                source,
+                `${target.charinfo.lastname} ${target.charinfo.firstname} peut changer de résidence principale.`
+            );
+        }
     }
 
     @OnEvent(ServerEvent.HOUSING_ADD_TEMPORARY_ACCESS)
