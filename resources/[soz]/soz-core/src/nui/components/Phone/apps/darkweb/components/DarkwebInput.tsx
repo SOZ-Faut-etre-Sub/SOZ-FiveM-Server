@@ -139,6 +139,7 @@ const DarkWebInput: FunctionComponent<IProps> = ({ darkwebConversationId, autoFo
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder={t('MESSAGES.NEW_MESSAGE')}
+                maxLength={512}
                 autoFocus={autoFocus}
             />
             <button
