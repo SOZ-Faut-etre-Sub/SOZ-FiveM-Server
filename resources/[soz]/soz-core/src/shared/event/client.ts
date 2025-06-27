@@ -50,6 +50,7 @@ export enum ClientEvent {
     HOUSING_SELECT_UPGRADES_MENU = 'soz-core:client:housing:select-upgrades-menu',
     HOUSING_REQUEST_ENTER = 'soz-core:client:housing:request-enter',
     HOUSING_ADD_TEMPORARY_ACCESS = 'soz-core:client:housing:add-temporary-access',
+    HOUSING_REMOVE_TEMPORARY_ACCESS = 'soz-core:client:housing:remove-temporary-access',
     HOUSING_TELEPORT = 'soz-core:client:housing:teleport',
     HOUSING_DELETE_FOURNITURE = 'soz-core:client:housing:delete',
     HOUSING_SYNC_FOURNITURE = 'soz-core:client:housing:sync',
