@@ -458,11 +458,11 @@ export const BaunCloakroom: WardrobeConfig = {
             },
             Props: {},
         },
-        ['Tenue chill']: {
+        ['Tenue chill ']: {
             Components: {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 26, Texture: 6, Palette: 0 },
-                [6]: { Drawable: 40, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 145, Texture: 10, Palette: 0 },
                 [8]: { Drawable: 0, Texture: 4, Palette: 0 },
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
@@ -492,19 +492,6 @@ export const BaunCloakroom: WardrobeConfig = {
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 349, Texture: 12, Palette: 0 },
-            },
-            Props: {},
-        },
-        ['Tenue de patron']: {
-            Components: {
-                [3]: { Drawable: 12, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 24, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 104, Texture: 3, Palette: 0 },
-                [7]: { Drawable: 1, Texture: 2, Palette: 0 },
-                [8]: { Drawable: 32, Texture: 0, Palette: 0 },
-                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 29, Texture: 0, Palette: 0 },
             },
             Props: {},
         },
@@ -591,18 +578,6 @@ export const BaunCloakroom: WardrobeConfig = {
                 [9]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 24, Texture: 6, Palette: 0 },
-            },
-            Props: {},
-        },
-        ['Tenue de patron']: {
-            Components: {
-                [3]: { Drawable: 12, Texture: 0, Palette: 0 },
-                [4]: { Drawable: 15, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 42, Texture: 2, Palette: 0 },
-                [8]: { Drawable: 15, Texture: 0, Palette: 0 },
-                [9]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [11]: { Drawable: 415, Texture: 0, Palette: 0 },
             },
             Props: {},
         },
