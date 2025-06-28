@@ -1,3 +1,4 @@
+import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
 import { PlayerUpdate } from '@public/core/decorators/player';
 import { PlayerData } from '@public/shared/player';
 
@@ -71,7 +72,10 @@ export class HudMinimapProvider {
     @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
     @OnEvent(ClientEvent.BASE_CHANGE_VEHICLE_SEAT)
     public async onBaseEnteredVehicle(vehicle: number, seat: VehicleSeat): Promise<void> {
-        this._inVehicle = vehicle && (VehicleSeat.Driver === seat || VehicleSeat.Copilot === seat);
+        this._inVehicle =
+            vehicle &&
+            (VehicleSeat.Driver === seat || VehicleSeat.Copilot === seat) &&
+            GetEntityModel(vehicle) !== GetHashKey(POLICE_MINESWEEPER_ROBOT_CAR_MODEL);
 
         this.nuiDispatch.dispatch('hud', 'UpdateMinimap', this.getMinimap(true));
         this.updateShowRadar();
