@@ -1,11 +1,9 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { BorderBox } from '@public/nui/components/Styleguide/BorderBox';
 import { GlassMorphismContainer } from '@public/nui/components/Styleguide/GlassMorphismContainer';
-import { fetchNui } from '@public/nui/fetch';
 import { useNuiEvent } from '@public/nui/hook/nui';
 import { slugify } from '@public/nui/utils/slugify';
 import { RGBColor } from '@public/shared/color';
-import { NuiEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import {
     createDescendantContext,
@@ -571,10 +569,8 @@ export const BaseItemInput: FunctionComponent<baseItemInputProps> = ({
     const handleConfirm = async () => {
         if (document.activeElement.id !== ref.current.id) {
             ref.current.focus();
-            fetchNui(NuiEvent.ToggleDispatchTargetFocus, { target: true });
         } else {
             ref.current.blur();
-            fetchNui(NuiEvent.ToggleDispatchTargetFocus, { target: false });
         }
     };
 

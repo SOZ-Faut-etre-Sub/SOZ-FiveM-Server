@@ -458,8 +458,6 @@ export enum NuiEvent {
     PropPlacementHousingSnap = 'soz-core:client:placement:housing-snap',
     RequestHousingDeleteProp = 'soz-core:client:placement:housing-delete-prop',
     HousingUpdateDebugStorageType = 'soz-core:client:placement:housing-update-debug-storage-type',
-    ToggleDispatchToggleFocus = 'soz-core:client:dispatch:toggle-focus',
-    ToggleDispatchTargetFocus = 'soz-core:client:dispatch:target-focus',
     HousingUpdatePosition = 'soz-core:client:dispatch:update-position',
     HousingSelectEntityOnClick = 'soz-core:client:dispatch:select-entity-on-click',
     SetHousingShell = 'soz-core:client:dispatch:set-shell',
