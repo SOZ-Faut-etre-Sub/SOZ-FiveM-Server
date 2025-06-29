@@ -14,3 +14,14 @@ export type Billboard = {
     enabled: boolean;
     owner: string;
 };
+
+export type BillboardModels = {
+    [key: string]: {
+        name: string;
+        width: number;
+        height: number;
+        originDictName: string;
+        originTextureName: string;
+        templateImageUrl: string;
+    };
+};

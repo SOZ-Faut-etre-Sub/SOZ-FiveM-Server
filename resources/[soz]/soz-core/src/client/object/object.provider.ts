@@ -506,6 +506,15 @@ export class ObjectProvider {
         }
     }
 
+    @Tick(TickInterval.EVERY_FRAME, 'object-texture-check')
+    public async objectTextureCheck() {
+        for (const obj of Object.values(this.loadedObjects)) {
+            if (obj.object.textureUrl) {
+                this.objectService.updateObjectTexture(obj.entity, obj.object.textureUrl, obj.object.id);
+            }
+        }
+    }
+
     @Tick(30000, 'object-spawn-check')
     public async objectSpawnCheck() {
         for (const spawnedObject of Object.values(this.loadedObjects)) {

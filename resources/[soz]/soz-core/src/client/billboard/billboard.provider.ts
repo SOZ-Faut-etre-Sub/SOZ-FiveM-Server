@@ -2,9 +2,15 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
-import { ClientEvent } from '@public/shared/event';
+import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { HttpLinkValidator } from '@public/shared/nui/input';
 
+import { InputService } from '../nui/input.service';
+import { ObjectProvider } from '../object/object.provider';
+import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../progress.service';
 import { BillboardRepository } from '../repository/billboard.repository';
+import { TargetFactory } from '../target/target.factory';
 import { BillboardService } from './billboard.service';
 
 @Provider()
@@ -14,6 +20,21 @@ export class BillboardProvider {
 
     @Inject(BillboardService)
     private billboardService: BillboardService;
+
+    @Inject(TargetFactory)
+    public targetFactory: TargetFactory;
+
+    @Inject(ObjectProvider)
+    public objectProvider: ObjectProvider;
+
+    @Inject(PlayerService)
+    public playerService: PlayerService;
+
+    @Inject(InputService)
+    public inputService: InputService;
+
+    @Inject(ProgressService)
+    public progressService: ProgressService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoriesLoaded() {
@@ -64,5 +85,84 @@ export class BillboardProvider {
         }
         this.billboardRepository.deleteBillboard(billboard.id);
         RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
+    }
+
+    @Once(OnceStep.PlayerLoaded)
+    public async mobileBillboard() {
+        this.targetFactory.createForModel(
+            'prop_billboard_16',
+            [
+                {
+                    label: 'Démonter le panneau',
+                    category: 'society',
+                    canInteract: entity => {
+                        const player = this.playerService.getPlayer();
+                        const objectId = this.objectProvider.getIdFromEntity(entity);
+                        const object = this.objectProvider.getObject(objectId);
+                        return object.metadata?.job === player.job.id && player.job.onduty;
+                    },
+                    action: async entity => {
+                        const objectId = this.objectProvider.getIdFromEntity(entity);
+                        const progress = await this.progressService.progress(
+                            'billboard_use',
+                            'Démontage en cours...',
+                            10000,
+                            {
+                                dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                                name: 'machinic_loop_mechandplayer',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            }
+                        );
+
+                        if (!progress.completed) {
+                            return;
+                        }
+                        TriggerServerEvent(ServerEvent.BILLBOARD_DELETE_PROP, objectId);
+                    },
+                },
+                {
+                    label: 'Mettre de la publicité',
+                    category: 'society',
+                    canInteract: entity => {
+                        const player = this.playerService.getPlayer();
+                        const objectId = this.objectProvider.getIdFromEntity(entity);
+                        const object = this.objectProvider.getObject(objectId);
+                        return object.metadata?.job === player.job.id && player.job.onduty;
+                    },
+                    action: async entity => {
+                        const objectId = this.objectProvider.getIdFromEntity(entity);
+                        const textureUrl = await this.inputService.askInput(
+                            {
+                                title: "URL de l'image",
+                            },
+                            HttpLinkValidator
+                        );
+
+                        if (!textureUrl) {
+                            return;
+                        }
+
+                        TriggerServerEvent(ServerEvent.BILLBOARD_UPDATE_PROP, objectId, textureUrl);
+                    },
+                },
+                {
+                    label: 'Retirer la publicité',
+                    category: 'society',
+                    canInteract: entity => {
+                        const player = this.playerService.getPlayer();
+                        const objectId = this.objectProvider.getIdFromEntity(entity);
+                        const object = this.objectProvider.getObject(objectId);
+                        return object.metadata?.job === player.job.id && player.job.onduty;
+                    },
+                    action: async entity => {
+                        const objectId = this.objectProvider.getIdFromEntity(entity);
+                        TriggerServerEvent(ServerEvent.BILLBOARD_UPDATE_PROP, objectId);
+                    },
+                },
+            ],
+            100.0
+        );
     }
 }
