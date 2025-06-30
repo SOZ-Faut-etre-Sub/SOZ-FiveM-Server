@@ -33,15 +33,13 @@ export class PhoneService {
     stopPhoneCall(): void {
         if (!this.phoneState.isInCall()) return;
 
-        this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall()?.transmitter);
+        this.phoneSimCardCalls.onCallEnd(this.phoneState.getCurrentCall()?.transmitter);
     }
 
     setPhoneDisabled(reason: string, value: boolean): void {
         if (value) {
             this.disabledReasons.add(reason);
-            if (this.phoneState.isInCall()) {
-                this.phoneSimCardCalls.onCallDecline(this.phoneState.getCurrentCall()?.transmitter);
-            }
+            this.stopPhoneCall();
             this.phoneState.setPhoneDisabled(value);
         } else {
             this.disabledReasons.delete(reason);
