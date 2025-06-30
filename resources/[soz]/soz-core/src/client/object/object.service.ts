@@ -29,6 +29,7 @@ export class ObjectService {
     private featureProvider: FeatureProvider;
 
     private duiObjects: Map<string, number> = new Map();
+    private textureDict = 0;
 
     public async createObject(object: WorldObject) {
         let model = object.model;
@@ -182,10 +183,12 @@ export class ObjectService {
         }
 
         if (object.textureUrl) {
-            const dict = CreateRuntimeTxd('dynamic_prop_textures');
+            if (!this.textureDict) {
+                this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
+            }
             const dui = CreateDui(object.textureUrl, 512, 512);
             const duiHandle = GetDuiHandle(dui);
-            CreateRuntimeTextureFromDuiHandle(dict, `${object.id}_texture`, duiHandle);
+            CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.textureUrl}_texture`, duiHandle);
             this.duiObjects.set(object.id, dui);
         }
     }
@@ -268,7 +271,7 @@ export class ObjectService {
         } else if (Date.now() < object.growth.endTime) {
             ratio =
                 ((Date.now() - object.growth.beginTime) / (object.growth.endTime - object.growth.beginTime)) *
-                (object.growth.endSize - object.growth.beginSize) +
+                    (object.growth.endSize - object.growth.beginSize) +
                 object.growth.beginSize;
         }
         const matrix = this.getEntityMatrix(entity);
@@ -293,7 +296,7 @@ export class ObjectService {
         );
     }
 
-    public updateObjectTexture(entity: number, textureUrl: string, objectId: string) {
+    public updateObjectTexture(entity: number, textureUrl: string) {
         if (!DoesEntityExist(entity)) {
             return;
         }
@@ -325,7 +328,7 @@ export class ObjectService {
             255,
             255,
             'dynamic_prop_textures',
-            `${objectId}_texture`,
+            `${textureUrl}_texture`,
 
             1,
             0,
@@ -357,7 +360,7 @@ export class ObjectService {
             255,
             255,
             'dynamic_prop_textures',
-            `${objectId}_texture`,
+            `${textureUrl}_texture`,
 
             0,
             0,

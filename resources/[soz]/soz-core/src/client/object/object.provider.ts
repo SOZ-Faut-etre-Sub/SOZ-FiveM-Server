@@ -510,7 +510,7 @@ export class ObjectProvider {
     public async objectTextureCheck() {
         for (const obj of Object.values(this.loadedObjects)) {
             if (obj.object.textureUrl) {
-                this.objectService.updateObjectTexture(obj.entity, obj.object.textureUrl, obj.object.id);
+                this.objectService.updateObjectTexture(obj.entity, obj.object.textureUrl);
             }
         }
     }
