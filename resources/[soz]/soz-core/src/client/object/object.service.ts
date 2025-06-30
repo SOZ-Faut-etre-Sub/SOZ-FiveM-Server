@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import { wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { billboardOffsets } from '@public/shared/billboard';
 import { applyOffset, Vector4 } from '@public/shared/polyzone/vector';
 
 import { Feature } from '../../shared/features';
@@ -306,12 +307,13 @@ export class ObjectService {
         }
 
         const coords = GetEntityCoords(entity, false);
-        const coordsWithHeading = [...coords, GetEntityHeading(entity)] as Vector4;
+        const model = GetEntityModel(entity);
+        const coordsWithHeading = [...coords, GetEntityHeading(entity) + 90] as Vector4;
 
-        const corner1 = applyOffset(coordsWithHeading, [0.4, -0.15, 0.8]);
-        const corner2 = applyOffset(coordsWithHeading, [0.4, -0.15, -0.8]);
-        const corner3 = applyOffset(coordsWithHeading, [-0.4, -0.15, 0.8]);
-        const corner4 = applyOffset(coordsWithHeading, [-0.4, -0.15, -0.8]);
+        const corner1 = applyOffset(coordsWithHeading, billboardOffsets[model][0]);
+        const corner2 = applyOffset(coordsWithHeading, billboardOffsets[model][1]);
+        const corner3 = applyOffset(coordsWithHeading, billboardOffsets[model][2]);
+        const corner4 = applyOffset(coordsWithHeading, billboardOffsets[model][3]);
 
         DrawTexturedPoly(
             corner1[0],

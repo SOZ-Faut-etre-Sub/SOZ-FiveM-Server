@@ -1,3 +1,5 @@
+import { Vector3 } from './polyzone/vector';
+
 export type Billboard = {
     id?: number;
     name: string;
@@ -15,13 +17,11 @@ export type Billboard = {
     owner: string;
 };
 
-export type BillboardModels = {
-    [key: string]: {
-        name: string;
-        width: number;
-        height: number;
-        originDictName: string;
-        originTextureName: string;
-        templateImageUrl: string;
-    };
+export const billboardOffsets: Record<number, Vector3[]> = {
+    [GetHashKey('soz_news_billboard_01')]: [
+        [0.589, -0.0595625, 1.40922],
+        [0.589, -0.0595625, -0.261406],
+        [-0.589, -0.0595625, 1.40922],
+        [-0.589, -0.0595625, -0.261406],
+    ],
 };

@@ -46,7 +46,7 @@ export class BillboardProvider {
 
     @Once()
     public init() {
-        this.itemService.setItemUseCallback('billboard', this.useBillboardProp.bind(this));
+        this.itemService.setItemUseCallback('soz_news_billboard_01', this.useBillboardProp.bind(this));
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -82,13 +82,11 @@ export class BillboardProvider {
             return;
         }
 
-        const config = 'prop_billboard_16';
-
         TriggerClientEvent(
             ClientEvent.OBJECT_PLACE_ITEM,
             source,
             ServerEvent.BILLBOARD_PLACE_PROP,
-            config,
+            item.name,
             inventoryItem
         );
     }
@@ -129,7 +127,7 @@ export class BillboardProvider {
         await this.prismaService.dynamic_prop_billboard.create({
             data: {
                 id: objectId,
-                model: 'prop_billboard_16',
+                model: inventoryItem.name,
                 position: JSON.stringify(toVector4Object(position)),
                 job: player.job.id,
                 createdAt: new Date(),
@@ -138,7 +136,7 @@ export class BillboardProvider {
 
         const object: WorldObject = {
             id: objectId,
-            model: GetHashKey('prop_billboard_16'),
+            model: GetHashKey(inventoryItem.name),
             position: position,
             placeOnGround: true,
             permanent: true,

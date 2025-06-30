@@ -12874,8 +12874,8 @@ QBShared.Items = {
         ["description"] = "L'ouvrage de référence de l'Université de Los Santos, relié en cuir bleu nuit avec ses lettres dorées emblématiques. Ce manuel fondamental couvre l'ensemble du programme de premier cycle en sciences sociales, de la sociologie urbaine aux dynamiques comportementales de la métropole moderne. Un compagnon indispensable pour tout étudiant désireux de comprendre les complexités de la société de Los Santos et ses enjeux contemporains.",
         ["illustrator"] = ".NariieL",
     },
-    ["billboard"] = {
-        ["name"] = "billboard",
+    ["soz_news_billboard_01"] = {
+        ["name"] = "soz_news_billboard_01",
         ["label"] = "Tableau d'affichage",
         ["weight"] = 1000,
         ["useable"] = true,
@@ -12883,7 +12883,7 @@ QBShared.Items = {
         ["shouldClose"] = false,
         ["unique"] = false,
         ["combinable"] = nil,
-        ["description"] = "L'ouvrage de référence de l'Université de Los Santos, relié en cuir bleu nuit avec ses lettres dorées emblématiques. Ce manuel fondamental couvre l'ensemble du programme de premier cycle en sciences sociales, de la sociologie urbaine aux dynamiques comportementales de la métropole moderne. Un compagnon indispensable pour tout étudiant désireux de comprendre les complexités de la société de Los Santos et ses enjeux contemporains.",
+        ["description"] = "Tableau d'affichage pour y afficher des news.",
         ["illustrator"] = ".NariieL",
     },
 

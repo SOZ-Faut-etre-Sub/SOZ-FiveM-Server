@@ -2,6 +2,7 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
+import { billboardOffsets } from '@public/shared/billboard';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { HttpLinkValidator } from '@public/shared/nui/input';
 
@@ -89,8 +90,9 @@ export class BillboardProvider {
 
     @Once(OnceStep.PlayerLoaded)
     public async mobileBillboard() {
+        const billboards = Object.keys(billboardOffsets).map(Number);
         this.targetFactory.createForModel(
-            'prop_billboard_16',
+            billboards,
             [
                 {
                     label: 'Démonter le panneau',
