@@ -58,6 +58,8 @@ const maskEyesProtected = [
     196, 197, 198, 201, 202, 203, 205, 206, 208, 210, 214, 215, 223, 225, 229, 236,
 ];
 
+const maskEyesBCSOProtected = [0];
+
 const maskMouthNotProtected = [0, 11, 12, 27, 32, 37, 47, 57, 58, 73, 77, 109, 114, 117, 119, 120, 121, 122, 145, 148];
 
 const hatProtected = {
@@ -174,9 +176,12 @@ export class PlayerHeatProvider {
         }
 
         this.sandStormProtected = false;
+        const maskEyeList =
+            outfit.Components[Component.Mask]?.Collection === 'soz_bcso' ? maskEyesBCSOProtected : maskEyesProtected;
+
         if (
             hatProtected[player.skin.Model.Hash].includes(outfit.Props[Prop.Hat]?.Drawable) ||
-            maskEyesProtected.includes(outfit.Components[Component.Mask]?.Drawable)
+            maskEyeList.includes(outfit.Components[Component.Mask]?.Drawable)
         ) {
             this.sandStormProtected = true;
         } else if (

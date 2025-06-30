@@ -170,6 +170,7 @@ export enum ClientEvent {
     CHARACTER_SET_TEMPORARY_CLOTH = 'soz-character:Client:ApplyTemporaryClothSet',
 
     PLAYER_DISABLE_SPRINT = 'soz-core:client:player:disable-sprint',
+    PLAYER_DISABLE_JUMP = 'soz-core:client:player:disable-jump',
     PLAYER_FORCE_ALCOHOL_EFFECT = 'soz-core:client:player:force-alcohol-effect',
     PLAYER_FORCE_DRUG_EFFECT = 'soz-core:client:player:force-drug-effect',
     PLAYER_HEALTH_DO_PUSH_UP = 'soz-core:client:player:health:push-up',
