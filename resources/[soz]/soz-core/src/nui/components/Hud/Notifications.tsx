@@ -342,16 +342,19 @@ export const Notifications: FunctionComponent = () => {
     );
 
     const notificationOffset = () => {
+        if (!hasWatch && !minimap.isHidden) {
+            return settings.zoom + 'rem';
+        }
+        if (!hasWatch) {
+            return 10 * settings.zoom + 'rem';
+        }
         if (hasWatch && (showDateTime || showWeather)) {
             return 5 * settings.zoom + 'rem';
         }
         if (hasWatch && !showStreetName && minimap.isHidden) {
             return 7 * settings.zoom + 'rem';
         }
-        if (!hasWatch && !minimap.isHidden) {
-            return settings.zoom + 'rem';
-        }
-        return 10 * settings.zoom + 'rem';
+        return settings.zoom + 'rem';
     };
 
     useNuiEvent(
