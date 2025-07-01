@@ -402,6 +402,8 @@ export class PlayerHealthProvider {
 
     private disableSprint = false;
 
+    private disableJump = false;
+
     private disableNutrition = false;
 
     @Tick(50)
@@ -680,13 +682,20 @@ export class PlayerHealthProvider {
         this.disableSprint = value;
     }
 
+    @OnEvent(ClientEvent.PLAYER_DISABLE_JUMP)
+    public setDisabledJump(value: boolean): void {
+        this.disableJump = value;
+    }
+
     @Tick(TickInterval.EVERY_FRAME)
     async disableSprintLoop(): Promise<void> {
-        if (!this.disableSprint) {
-            return;
+        if (this.disableSprint) {
+            DisableControlAction(0, Control.Sprint, true); // disable sprint
         }
 
-        DisableControlAction(0, Control.Sprint, true); // disable sprint
+        if (GetPlayerStamina(PlayerId()) <= 25 || this.disableJump) {
+            DisableControlAction(0, Control.Jump, true); // disable jump
+        }
     }
 
     @Tick(TickInterval.EVERY_FRAME)
@@ -694,11 +703,7 @@ export class PlayerHealthProvider {
         const playerId = PlayerId();
         const stamina = GetPlayerStamina(playerId);
 
-        if (stamina <= 25) {
-            DisableControlAction(0, Control.Jump, true); // disable jump
-        }
-
-        if (IsPedJumping(PlayerPedId())) {
+        if (IsPedJumping(playerId)) {
             SetPlayerStamina(playerId, stamina - 25);
             await wait(1000);
         }

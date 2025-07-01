@@ -1206,6 +1206,7 @@ export const ExplosionMessage = [
 ];
 
 export enum ExplosionType {
+    STICKYBOMB = 2,
     PETROL_PUMP = 9,
     DIR_WATER_HYDRANT = 13,
     SMOKEGRENADELAUNCHER = 19,
