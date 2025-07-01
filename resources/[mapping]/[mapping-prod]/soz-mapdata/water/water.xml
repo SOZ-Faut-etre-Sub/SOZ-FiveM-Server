@@ -6036,21 +6036,6 @@
 
     <!-- Alamo Sea -->
     <Item>
-      <minX value="-256" />
-      <maxX value="-181" />
-      <minY value="3840" />
-      <maxY value="3884" />
-      <Type value="4" />
-      <IsInvisible value="false" />
-      <HasLimitedDepth value="false" />
-      <z value="30.0" />
-      <a1 value="26" />
-      <a2 value="26" />
-      <a3 value="26" />
-      <a4 value="26" />
-      <NoStencil value="false" />
-    </Item>
-    <Item>
       <minX value="-264" />
       <maxX value="-181" />
       <minY value="4244" />
@@ -6114,23 +6099,8 @@
       <minX value="-212" />
       <maxX value="-181" />
       <minY value="4226" />
-      <maxY value="4256" />
+      <maxY value="4244" />
       <Type value="0" />
-      <IsInvisible value="false" />
-      <HasLimitedDepth value="false" />
-      <z value="30.0" />
-      <a1 value="26" />
-      <a2 value="26" />
-      <a3 value="26" />
-      <a4 value="26" />
-      <NoStencil value="false" />
-    </Item>
-    <Item>
-      <minX value="-212" />
-      <maxX value="-181" />
-      <minY value="4256" />
-      <maxY value="4332" />
-      <Type value="1" />
       <IsInvisible value="false" />
       <HasLimitedDepth value="false" />
       <z value="30.0" />
