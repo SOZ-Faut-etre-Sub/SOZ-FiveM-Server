@@ -185,7 +185,8 @@ export class InventoryProvider {
         this.monitor.traceEvent('give_money', {
             player_source: source,
             target_source: targetId,
-            money: amount,
+            money: moneyToGive,
+            money_marked: markedMoneyToGive,
             money_type: moneyPriority,
         });
 
@@ -262,7 +263,8 @@ export class InventoryProvider {
         this.monitor.traceEvent('transfer_money', {
             player_source: source === player.source ? source : target.source,
             target_source: source === player.source ? target.source : source,
-            money: amount,
+            money: moneyToGive,
+            money_marked: markedMoneyToGive,
             money_type: 'money_and_marked',
         });
 
