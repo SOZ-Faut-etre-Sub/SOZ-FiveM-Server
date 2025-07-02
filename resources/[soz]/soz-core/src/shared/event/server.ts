@@ -818,4 +818,6 @@ export enum ServerEvent {
     CASINO_RESELL_CHIP = 'soz-core:server:casino:resell-chip',
     CASINO_SLOT_MACHINE_SPIN = 'soz-core:server:casino:slot-machine-spin',
     CASINO_INSIDE_TRACK_GET_GAINS = 'soz-core:server:casino:inside-track:get-gains',
+
+    PANEL_UPDATE_ITEM_URL = 'soz-core:server:panel:update-item-url',
 }

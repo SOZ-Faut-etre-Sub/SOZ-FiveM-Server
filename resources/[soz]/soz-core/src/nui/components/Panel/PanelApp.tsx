@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
 import { fetchNui } from '../../fetch';
@@ -9,13 +9,20 @@ import { useOutside } from '../../hook/outside';
 import { usePrevious } from '../../hook/previous';
 
 export const PanelApp: FunctionComponent = () => {
-    const { getPath } = useAssetPath();
+    const embedRef = useRef<HTMLIFrameElement>();
     const [showPanel, setShowPanel] = useState<string>(null);
-    useNuiFocus(showPanel !== null, showPanel !== null, false);
+
     const wasShowPanel = usePrevious(showPanel);
+    const { getPath } = useAssetPath();
+
     const refOutside = useOutside({
-        click: () => setShowPanel(null),
+        click: () => {
+            fetchNui(NuiEvent.PanelUpdateItemUrl, embedRef.current?.contentWindow.location.href);
+            setShowPanel(null);
+        },
     });
+
+    useNuiFocus(showPanel !== null, showPanel !== null, false);
 
     useNuiEvent('panel', 'ShowPanel', url => {
         setShowPanel(url);
@@ -71,18 +78,18 @@ export const PanelApp: FunctionComponent = () => {
                             backgroundImage: `url(${getPath(`images/panel/top-left.webp`)})`,
                         }}
                         className="h-full z-30"
-                    ></div>
+                    />
                     <div
                         style={{ backgroundImage: `url(${getPath(`images/panel/top.webp`)})` }}
                         className="grow h-[73px] bg-center z-30"
-                    ></div>
+                    />
                     <div
                         style={{
                             width: '103px',
                             backgroundImage: `url(${getPath(`images/panel/top-right.webp`)})`,
                         }}
                         className="h-full z-30"
-                    ></div>
+                    />
                 </div>
                 <div className="flex flex-row items-center grow">
                     <div
@@ -91,7 +98,7 @@ export const PanelApp: FunctionComponent = () => {
                             backgroundImage: `url(${getPath(`images/panel/left.webp`)})`,
                         }}
                         className="h-full bg-center z-30"
-                    ></div>
+                    />
                     <div className="grow h-full relative z-20">
                         <div
                             className="absolute z-30"
@@ -105,6 +112,7 @@ export const PanelApp: FunctionComponent = () => {
                             }}
                         >
                             <iframe
+                                ref={embedRef}
                                 src={showPanel}
                                 style={{
                                     width: '100%',
@@ -114,7 +122,7 @@ export const PanelApp: FunctionComponent = () => {
                                 }}
                                 height="100%"
                                 width="100%"
-                            ></iframe>
+                            />
                         </div>
                     </div>
                     <div
@@ -123,7 +131,7 @@ export const PanelApp: FunctionComponent = () => {
                             backgroundImage: `url(${getPath(`images/panel/right.webp`)})`,
                         }}
                         className="h-full bg-center  z-30"
-                    ></div>
+                    />
                 </div>
                 <div
                     style={{
@@ -137,18 +145,18 @@ export const PanelApp: FunctionComponent = () => {
                             backgroundImage: `url(${getPath(`images/panel/bottom-left.webp`)})`,
                         }}
                         className="h-full  z-30"
-                    ></div>
+                    />
                     <div
                         style={{ backgroundImage: `url(${getPath(`images/panel/bottom.webp`)})` }}
                         className="h-[76px] grow bg-center z-30"
-                    ></div>
+                    />
                     <div
                         style={{
                             width: '103px',
                             backgroundImage: `url(${getPath(`images/panel/bottom-right.webp`)})`,
                         }}
                         className="h-full z-30"
-                    ></div>
+                    />
                 </div>
             </div>
         </div>
