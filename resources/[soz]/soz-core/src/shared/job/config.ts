@@ -544,6 +544,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
             [JobPermission.InvestigationProsecutor]: { label: 'Prosecutor dans les enquètes' },
             [JobPermission.MdrViewOtherJobs]: { label: 'Accès aux infos des entreprises' },
             [JobPermission.MdrMarkedMoneyCleaning]: { label: 'Accès à la réhabilitation des billets' },
+            [JobPermission.ManageRoster]: { label: 'Gérer les photos/matricules dans les effectifs panel' },
         },
         bossZones: [
             {
