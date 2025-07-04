@@ -298,83 +298,81 @@ export class ObjectService {
     }
 
     public updateObjectTexture(entity: number, textureUrl: string) {
-        if (!DoesEntityExist(entity)) {
-            return;
-        }
-
-        if (!textureUrl) {
-            return;
-        }
+        if (!DoesEntityExist(entity) || !textureUrl) return;
 
         const coords = GetEntityCoords(entity, false);
         const model = GetEntityModel(entity);
-        const coordsWithHeading = [...coords, GetEntityHeading(entity) + 90] as Vector4;
 
-        const corner1 = applyOffset(coordsWithHeading, billboardOffsets[model][0]);
-        const corner2 = applyOffset(coordsWithHeading, billboardOffsets[model][1]);
-        const corner3 = applyOffset(coordsWithHeading, billboardOffsets[model][2]);
-        const corner4 = applyOffset(coordsWithHeading, billboardOffsets[model][3]);
+        function computeCorners(coordsWithHeading: Vector4): Vector4[] {
+            return billboardOffsets[model].map(offset => applyOffset(coordsWithHeading, offset));
+        }
 
-        DrawTexturedPoly(
-            corner1[0],
-            corner1[1],
-            corner1[2],
-            corner3[0],
-            corner3[1],
-            corner3[2],
-            corner2[0],
-            corner2[1],
-            corner2[2],
-            255,
-            255,
-            255,
-            255,
-            'dynamic_prop_textures',
-            `${textureUrl}_texture`,
+        function drawQuad(c1: Vector4, c2: Vector4, c3: Vector4, c4: Vector4, textureName: string) {
+            DrawTexturedPoly(
+                c1[0],
+                c1[1],
+                c1[2],
+                c3[0],
+                c3[1],
+                c3[2],
+                c2[0],
+                c2[1],
+                c2[2],
+                255,
+                255,
+                255,
+                255,
+                'dynamic_prop_textures',
+                textureName,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+            );
+            DrawTexturedPoly(
+                c3[0],
+                c3[1],
+                c3[2],
+                c4[0],
+                c4[1],
+                c4[2],
+                c2[0],
+                c2[1],
+                c2[2],
+                255,
+                255,
+                255,
+                255,
+                'dynamic_prop_textures',
+                textureName,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
+            );
+        }
 
-            1,
-            0,
-            1,
+        const baseHeading = GetEntityHeading(entity);
+        const headings = [baseHeading];
 
-            0,
-            0,
-            1,
+        if (model === GetHashKey('soz_news_billboard_02')) {
+            headings.push(baseHeading + 120, baseHeading - 120);
+        }
 
-            1,
-            1,
-            1
-        );
-        DrawTexturedPoly(
-            corner3[0],
-            corner3[1],
-            corner3[2],
-
-            corner4[0],
-            corner4[1],
-            corner4[2],
-
-            corner2[0],
-            corner2[1],
-            corner2[2],
-
-            255,
-            255,
-            255,
-            255,
-            'dynamic_prop_textures',
-            `${textureUrl}_texture`,
-
-            0,
-            0,
-            1,
-
-            0,
-            1,
-            1,
-
-            1,
-            1,
-            1
-        );
+        headings.forEach(heading => {
+            const coordsWithHeading = [...coords, heading] as Vector4;
+            const [c1, c2, c3, c4] = computeCorners(coordsWithHeading);
+            drawQuad(c1, c2, c3, c4, `${textureUrl}_texture`);
+        });
     }
 }

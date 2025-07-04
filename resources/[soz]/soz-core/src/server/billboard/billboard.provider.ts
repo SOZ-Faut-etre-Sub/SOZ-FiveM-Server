@@ -47,6 +47,8 @@ export class BillboardProvider {
     @Once()
     public init() {
         this.itemService.setItemUseCallback('soz_news_billboard_01', this.useBillboardProp.bind(this));
+        this.itemService.setItemUseCallback('soz_news_billboard_02', this.useBillboardProp.bind(this));
+        this.itemService.setItemUseCallback('soz_news_billboard_03', this.useBillboardProp.bind(this));
     }
 
     @Once(OnceStep.DatabaseConnected)
@@ -58,7 +60,6 @@ export class BillboardProvider {
                 id: billboard.id,
                 model: GetHashKey(billboard.model),
                 position: fromVector4Object(JSON.parse(billboard.position)),
-                rotation: [0, 0, 0],
                 placeOnGround: false,
                 permanent: true,
                 textureUrl: billboard.textureUrl,
@@ -87,7 +88,8 @@ export class BillboardProvider {
             source,
             ServerEvent.BILLBOARD_PLACE_PROP,
             item.name,
-            inventoryItem
+            inventoryItem,
+            false
         );
     }
 
@@ -138,7 +140,6 @@ export class BillboardProvider {
             id: objectId,
             model: GetHashKey(inventoryItem.name),
             position: position,
-            placeOnGround: true,
             permanent: true,
             metadata: {
                 job: player.job.id,
