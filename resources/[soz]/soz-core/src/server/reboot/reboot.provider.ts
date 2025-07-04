@@ -149,13 +149,6 @@ export class RebootProvider {
         }
     }
 
-    @Command('thunder', {
-        role: 'admin',
-    })
-    private async thunder() {
-        await this.rebootWithThunder();
-    }
-
     @Command('rebootWithThunder', {
         role: 'admin',
     })
