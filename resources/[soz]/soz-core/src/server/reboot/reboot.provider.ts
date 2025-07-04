@@ -153,6 +153,13 @@ export class RebootProvider {
         role: 'admin',
     })
     private async thunder() {
+        await this.rebootWithThunder();
+    }
+
+    @Command('rebootWithThunder', {
+        role: 'admin',
+    })
+    private async rebootWithThunder() {
         this.weatherProvider.setWeatherUpdate(false);
 
         await this.sendRebootMessage(15);
