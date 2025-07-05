@@ -1,4 +1,5 @@
 import { VehicleBusinessProvider } from '@private/server/gang/business.vehicle.provider';
+import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { TaxType } from '@public/shared/tax';
 
@@ -41,6 +42,15 @@ export class VehicleConditionProvider {
 
     @Inject(VehicleBusinessProvider)
     private vehicleBusinessProvider: VehicleBusinessProvider;
+
+    private explodedVehicleToClean = new Map<
+        number,
+        {
+            model: number;
+            date: number;
+            plate: string;
+        }
+    >();
 
     @OnEvent(ServerEvent.VEHICLE_USE_REPAIR_KIT)
     public async onVehicleUseRepairKit(source: number, vehicleNetworkId: number) {
@@ -277,6 +287,39 @@ export class VehicleConditionProvider {
                 reason,
                 position: toVector3Object(GetEntityCoords(NetworkGetEntityFromNetworkId(vehicleNetworkId)) as Vector3),
             });
+        }
+
+        const entity = NetworkGetEntityFromNetworkId(vehicleNetworkId);
+        this.explodedVehicleToClean.set(entity, {
+            model: GetEntityModel(entity),
+            date: Date.now() + 3_600_000,
+            plate: GetVehicleNumberPlateText(entity),
+        });
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE)
+    public cleanExplodedVeh() {
+        for (const [entity, data] of this.explodedVehicleToClean.entries()) {
+            if (!entity || !DoesEntityExist(entity)) {
+                this.explodedVehicleToClean.delete(entity);
+                continue;
+            }
+
+            if (GetEntityModel(entity) !== data.model) {
+                this.explodedVehicleToClean.delete(entity);
+                continue;
+            }
+
+            if (GetVehicleNumberPlateText(entity) !== data.plate) {
+                this.explodedVehicleToClean.delete(entity);
+                continue;
+            }
+
+            if (data.date < Date.now()) {
+                DeleteEntity(entity);
+                this.explodedVehicleToClean.delete(entity);
+                continue;
+            }
         }
     }
 
