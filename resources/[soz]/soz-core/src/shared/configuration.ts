@@ -33,6 +33,7 @@ export type GouvConfig = {
 
 export type CasinoSlotMachineConfig = Record<number, number>;
 export type CasinoInsideTrackConfig = Record<string, number>;
+export type CasinoLuckyWheelConfig = Record<string, string>;
 
 export type Configuration = {
     JobTaxTier: JobTaxTier;
@@ -41,6 +42,7 @@ export type Configuration = {
     Gouv: GouvConfig;
     CasinoSlotMachine: CasinoSlotMachineConfig;
     CasinoInsideTrack: CasinoInsideTrackConfig;
+    CasinoLuckyWheel: CasinoLuckyWheelConfig;
 };
 
 export const DEFAULT_CONFIGURATION: Configuration = {
@@ -88,4 +90,5 @@ export const DEFAULT_CONFIGURATION: Configuration = {
     },
     CasinoSlotMachine: {},
     CasinoInsideTrack: {},
+    CasinoLuckyWheel: {},
 };
