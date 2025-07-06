@@ -9,6 +9,7 @@ import { NuiEvent } from '../../../shared/event/nui';
 import { JobLabel, JobType } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
 import { EditorMenuData } from '../../../shared/object';
+import { deg, rad } from '../../../shared/polyzone/vector';
 import { fetchNui } from '../../fetch';
 import { useNuiEvent } from '../../hook/nui';
 import { gameToGizmoMatrix4, gizmoToGameMatrix4 } from '../../utils/gizmo';
@@ -18,6 +19,7 @@ import {
     MenuContent,
     MenuItemButton,
     MenuItemCheckbox,
+    MenuItemNumberInput,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemText,
@@ -34,8 +36,19 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
     const mesh = useRef<Mesh>(null!);
     const [collision, setCollision] = useState(data.collision);
     const [editorMode, setEditorMode] = useState<'translate' | 'rotate' | 'scale'>('translate');
+    const [spaceMode, setSpaceMode] = useState<'local' | 'world'>('local');
     const initialized = useRef(false);
     const [drag, setDrag] = useState<boolean>(false);
+    const [isCtrlPressed, setIsCtrlPressed] = useState<boolean>(false);
+    const controlRef = useRef<TransformControls>(null!);
+    const [position, setPosition] = useState<{
+        x: string;
+        y: string;
+        z: string;
+        rotX: string;
+        rotY: string;
+        rotZ: string;
+    }>({ x: '0', y: '0', z: '0', rotX: '0', rotY: '0', rotZ: '0' });
 
     useNuiEvent('object_editor', 'setEntityPosition', ({ matrix }) => {
         if (!mesh.current) {
@@ -44,6 +57,19 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
 
         const matrix4 = new Matrix4().fromArray(gameToGizmoMatrix4(matrix));
         mesh.current.position.setFromMatrixPosition(matrix4);
+
+        setPosition({
+            x: mesh.current.position.x.toString(),
+            y: mesh.current.position.y.toString(),
+            z: mesh.current.position.z.toString(),
+            rotX: deg(mesh.current.rotation.x).toString(),
+            rotY: deg(mesh.current.rotation.y).toString(),
+            rotZ: deg(mesh.current.rotation.z).toString(),
+        });
+    });
+
+    useNuiEvent('gizmo', 'handleToggleSpaceMode', () => {
+        handleToggleSpaceMode();
     });
 
     useEffect(() => {
@@ -57,10 +83,21 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
             return;
         }
 
+        mesh.current.updateMatrix();
+
         fetchNui(NuiEvent.ObjectEditorSetPosition, {
             matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
         });
-    }, [mesh]);
+
+        setPosition({
+            x: mesh.current.position.x.toString(),
+            y: mesh.current.position.y.toString(),
+            z: mesh.current.position.z.toString(),
+            rotX: deg(mesh.current.rotation.x).toString(),
+            rotY: deg(mesh.current.rotation.y).toString(),
+            rotZ: deg(mesh.current.rotation.z).toString(),
+        });
+    }, [mesh, editorMode]);
 
     const handlePlaceObject = async (duplicate: boolean = false) => {
         await fetchNui(NuiEvent.ObjectEditorSave, {
@@ -83,6 +120,10 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
         fetchNui(NuiEvent.ObjectEditorSetName);
     };
 
+    const handleToggleSpaceMode = () => {
+        setSpaceMode(spaceMode === 'local' ? 'world' : 'local');
+    };
+
     useNuiEvent('object_editor', 'validateCurrentObject', () => {
         handlePlaceObject();
     });
@@ -95,7 +136,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
         handlePlaceObject(true);
     });
 
-    const keyHandler = useCallback(
+    const keyDownHandler = useCallback(
         async (e: KeyboardEvent) => {
             const setRotateMode = 'KeyR';
             const setTranslateMode = 'KeyT';
@@ -105,6 +146,11 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
             const duplicateProp = 'KeyN';
             const deleteProp = 'Delete';
             const setName = 'KeyB';
+            const toggleSpaceMode = 'KeyL';
+
+            if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
+                setIsCtrlPressed(true);
+            }
 
             if (e.code === setRotateMode && data.allowRotation) {
                 setEditorMode('rotate');
@@ -116,6 +162,10 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
 
             if (e.code === setScaleMode && data.allowScale) {
                 setEditorMode('scale');
+            }
+
+            if (e.code === toggleSpaceMode) {
+                handleToggleSpaceMode();
             }
 
             if (e.code === snap && data.allowToggleSnap) {
@@ -138,16 +188,30 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                 handleSetName();
             }
         },
-        [editorMode, data, collision]
+        [editorMode, data, collision, handleToggleSpaceMode]
     );
 
+    const keyUpHandler = useCallback((e: KeyboardEvent) => {
+        if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
+            setIsCtrlPressed(false);
+        }
+    }, []);
+
     useEffect(() => {
-        window.addEventListener('keydown', keyHandler);
+        window.addEventListener('keydown', keyDownHandler);
+        window.addEventListener('keyup', keyUpHandler);
 
         return () => {
-            window.removeEventListener('keydown', keyHandler);
+            window.removeEventListener('keydown', keyDownHandler);
+            window.removeEventListener('keyup', keyUpHandler);
         };
-    }, [keyHandler]);
+    }, [keyDownHandler, keyUpHandler]);
+
+    const updatePositionFromInput = async (key: string, value: string) => {
+        const newPosition = { ...position };
+        newPosition[key] = value;
+        setPosition(newPosition);
+    };
 
     if (!data) {
         return null;
@@ -180,7 +244,6 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
 
                                         if (mesh.current) {
                                             mesh.current.scale.set(1, 1, 1);
-                                            mesh.current.updateMatrix();
                                             handleObjectDataUpdate();
                                         }
                                     }
@@ -229,6 +292,51 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                 🏷️ Définir un identifiant
                             </MenuItemButton>
                         )}
+                        <MenuItemNumberInput
+                            name="x"
+                            onChange={updatePositionFromInput}
+                            onBlur={() => {
+                                mesh.current.position.x = parseFloat(position.x);
+                                mesh.current.updateMatrix();
+
+                                fetchNui(NuiEvent.ObjectEditorSetPosition, {
+                                    matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
+                                });
+                            }}
+                            value={position.x}
+                        >
+                            Position X:
+                        </MenuItemNumberInput>
+                        <MenuItemNumberInput
+                            name="y"
+                            onChange={updatePositionFromInput}
+                            onBlur={() => {
+                                mesh.current.position.y = parseFloat(position.y);
+                                mesh.current.updateMatrix();
+
+                                fetchNui(NuiEvent.ObjectEditorSetPosition, {
+                                    matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
+                                });
+                            }}
+                            value={position.y}
+                        >
+                            Position Y:
+                        </MenuItemNumberInput>
+                        <MenuItemNumberInput
+                            name="z"
+                            onChange={updatePositionFromInput}
+                            onBlur={() => {
+                                mesh.current.position.z = parseFloat(position.z);
+                                mesh.current.updateMatrix();
+
+                                fetchNui(NuiEvent.ObjectEditorSetPosition, {
+                                    matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
+                                });
+                            }}
+                            value={position.z}
+                        >
+                            Position Z:
+                        </MenuItemNumberInput>
                         <MenuItemButton
                             onConfirm={() => {
                                 if (!mesh.current) {
@@ -240,7 +348,6 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                     data.object.position[2],
                                     -data.object.position[1]
                                 );
-                                mesh.current.updateMatrix();
                                 handleObjectDataUpdate();
                             }}
                             description="Réinitialise la position de l'objet à sa position d'origine."
@@ -248,21 +355,67 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                             🔄 Réinitialiser la position
                         </MenuItemButton>
                         {data.allowRotation && (
-                            <MenuItemButton
-                                onConfirm={() => {
-                                    if (!mesh.current) {
-                                        return;
-                                    }
+                            <>
+                                <MenuItemNumberInput
+                                    name="rotX"
+                                    onChange={updatePositionFromInput}
+                                    onBlur={() => {
+                                        mesh.current.rotation.x = rad(parseFloat(position.rotX));
+                                        mesh.current.updateMatrix();
 
-                                    // set rotation to 0, 0, 0
-                                    mesh.current.rotation.set(0, 0, 0);
-                                    mesh.current.updateMatrix();
-                                    handleObjectDataUpdate();
-                                }}
-                                description="Réinitialise la rotation sur [0, 0, 0]."
-                            >
-                                🔄 Réinitialiser la rotation
-                            </MenuItemButton>
+                                        fetchNui(NuiEvent.ObjectEditorSetPosition, {
+                                            matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
+                                        });
+                                    }}
+                                    value={position.rotX}
+                                >
+                                    Rotation X:
+                                </MenuItemNumberInput>
+                                <MenuItemNumberInput
+                                    name="rotY"
+                                    onChange={updatePositionFromInput}
+                                    onBlur={() => {
+                                        mesh.current.rotation.y = rad(parseFloat(position.rotY));
+                                        mesh.current.updateMatrix();
+
+                                        fetchNui(NuiEvent.ObjectEditorSetPosition, {
+                                            matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
+                                        });
+                                    }}
+                                    value={position.rotY}
+                                >
+                                    Rotation Y:
+                                </MenuItemNumberInput>
+                                <MenuItemNumberInput
+                                    name="rotZ"
+                                    onChange={updatePositionFromInput}
+                                    onBlur={() => {
+                                        mesh.current.rotation.z = rad(parseFloat(position.rotZ));
+                                        mesh.current.updateMatrix();
+
+                                        fetchNui(NuiEvent.ObjectEditorSetPosition, {
+                                            matrix: gizmoToGameMatrix4(mesh.current.matrix.toArray()),
+                                        });
+                                    }}
+                                    value={position.rotZ}
+                                >
+                                    Rotation Z:
+                                </MenuItemNumberInput>
+                                <MenuItemButton
+                                    onConfirm={() => {
+                                        if (!mesh.current) {
+                                            return;
+                                        }
+
+                                        // set rotation to 0, 0, 0
+                                        mesh.current.rotation.set(0, 0, 0);
+                                        handleObjectDataUpdate();
+                                    }}
+                                    description="Réinitialise la rotation sur [0, 0, 0]."
+                                >
+                                    🔄 Réinitialiser la rotation
+                                </MenuItemButton>
+                            </>
                         )}
                         {data.allowScale && (
                             <MenuItemButton
@@ -273,7 +426,6 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
 
                                     // set scale to 1, 1, 1
                                     mesh.current.scale.set(1, 1, 1);
-                                    mesh.current.updateMatrix();
                                     handleObjectDataUpdate();
                                 }}
                                 description="Réinitialise l'échelle de l'objet à [1, 1, 1]."
@@ -288,13 +440,15 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                 <CameraComponent />
                 <Suspense fallback={<p>Loading Gizmo</p>}>
                     <TransformControls
+                        ref={controlRef}
                         onMouseUp={() => setDrag(false)}
                         onMouseDown={() => setDrag(true)}
+                        space={spaceMode}
                         size={0.5}
                         object={mesh}
                         mode={editorMode}
-                        translationSnap={0}
-                        rotationSnap={0}
+                        translationSnap={isCtrlPressed ? 10 : 0}
+                        rotationSnap={isCtrlPressed ? 1 : 0}
                         showX={editorMode !== 'rotate' || !data.onlyZRotation}
                         showZ={editorMode !== 'rotate' || !data.onlyZRotation}
                         onObjectChange={handleObjectDataUpdate}
@@ -306,6 +460,15 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                 ref.applyMatrix4(new Matrix4().fromArray(gizmoMatrix));
 
                                 initialized.current = true;
+
+                                setPosition({
+                                    x: ref.position.x.toString(),
+                                    y: ref.position.y.toString(),
+                                    z: ref.position.z.toString(),
+                                    rotX: deg(ref.rotation.x).toString(),
+                                    rotY: deg(ref.rotation.y).toString(),
+                                    rotZ: deg(ref.rotation.z).toString(),
+                                });
                             }
 
                             mesh.current = ref;
@@ -363,6 +526,7 @@ const HelpPanel: FunctionComponent<HelpPanelProps> = ({ options, collision }) =>
             {options.allowScale && <MenuItemText> Y : Mode scaling</MenuItemText>}
             {options.allowToggleSnap && <MenuItemText> C : Aligner l'objet ⬇️</MenuItemText>}
             {options.allowSetName && <MenuItemText> B : Définir un identifiant d'objet</MenuItemText>}
+            <MenuItemText> L : Basculer mode de reférence</MenuItemText>
             <MenuItemText> Espace : Confirmer et placer l'objet ✔️</MenuItemText>
             {options.allowDuplicate && <MenuItemText> N : Dupliquer l'objet sélectionner ✔️</MenuItemText>}
             {options.allowDelete && <MenuItemText> Suppr : Effacer l'objet sélectionné ❌</MenuItemText>}
