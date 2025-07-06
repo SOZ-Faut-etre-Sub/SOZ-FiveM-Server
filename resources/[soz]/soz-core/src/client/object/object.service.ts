@@ -187,7 +187,16 @@ export class ObjectService {
             if (!this.textureDict) {
                 this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
             }
-            const dui = CreateDui(object.textureUrl, 512, 512);
+            const billboards = Object.keys(billboardOffsets).map(Number);
+            let textureWidth = 512;
+            let textureHeight = 512;
+
+            if (billboards.includes(object.model)) {
+                textureWidth = billboardOffsets[object.model].width;
+                textureHeight = billboardOffsets[object.model].height;
+            }
+
+            const dui = CreateDui(object.textureUrl, textureWidth, textureHeight);
             const duiHandle = GetDuiHandle(dui);
             CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.textureUrl}_texture`, duiHandle);
             this.duiObjects.set(object.id, dui);
@@ -272,7 +281,7 @@ export class ObjectService {
         } else if (Date.now() < object.growth.endTime) {
             ratio =
                 ((Date.now() - object.growth.beginTime) / (object.growth.endTime - object.growth.beginTime)) *
-                    (object.growth.endSize - object.growth.beginSize) +
+                (object.growth.endSize - object.growth.beginSize) +
                 object.growth.beginSize;
         }
         const matrix = this.getEntityMatrix(entity);
@@ -304,7 +313,7 @@ export class ObjectService {
         const model = GetEntityModel(entity);
 
         function computeCorners(coordsWithHeading: Vector4): Vector4[] {
-            return billboardOffsets[model].map(offset => applyOffset(coordsWithHeading, offset));
+            return billboardOffsets[model].offsets.map(offset => applyOffset(coordsWithHeading, offset));
         }
 
         function drawQuad(c1: Vector4, c2: Vector4, c3: Vector4, c4: Vector4, textureName: string) {

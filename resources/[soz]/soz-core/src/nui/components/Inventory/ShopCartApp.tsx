@@ -356,7 +356,7 @@ const ShopItem: FunctionComponent<{
                                         margin: '0.1rem 0.2rem',
                                     }}
                                 >
-                                    {getPrice(item.price, tax)}{' '}
+                                    {getPrice(item.price, tax)?.toLocaleString('fr-FR') ?? 0}{' '}
                                     {['money', ' marked_money'].includes(moneyType) ? '$' : ''}
                                 </div>
                                 {item.amount && item.amount > 1 && (

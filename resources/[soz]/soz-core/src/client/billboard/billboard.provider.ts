@@ -96,7 +96,6 @@ export class BillboardProvider {
             [
                 {
                     label: 'Démonter le panneau',
-                    distance: 3.0,
                     category: 'society',
                     canInteract: entity => {
                         const player = this.playerService.getPlayer();

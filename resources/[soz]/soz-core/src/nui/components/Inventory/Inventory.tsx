@@ -298,7 +298,8 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                         <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
                             <span className="flex items-end">
                                 <span className="font-semibold text-xl">
-                                    {price} {['marked_money', 'money'].includes(moneyType ?? '') ? '$' : ' '}
+                                    {price?.toLocaleString('fr-FR') ?? 0}{' '}
+                                    {['marked_money', 'money'].includes(moneyType ?? '') ? '$' : ' '}
                                 </span>
                             </span>
                             {!['marked_money', 'money'].includes(moneyType ?? '') && (

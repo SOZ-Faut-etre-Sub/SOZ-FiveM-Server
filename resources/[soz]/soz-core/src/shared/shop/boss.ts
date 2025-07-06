@@ -63,6 +63,9 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'n_bmic', type: 'item', price: 100 },
             { id: 'microphone', type: 'item', price: 50 },
             { id: 'press_card', type: 'item', price: 1000 },
+            { id: 'soz_news_billboard_01', type: 'item', price: 50_000 },
+            { id: 'soz_news_billboard_02', type: 'item', price: 100_000 },
+            { id: 'soz_news_billboard_03', type: 'item', price: 150_000 },
         ],
     },
     {
@@ -88,6 +91,9 @@ export const BossShop: (ShopConfig & { job: JobType })[] = [
             { id: 'n_bmic', type: 'item', price: 100 },
             { id: 'microphone', type: 'item', price: 50 },
             { id: 'press_card', type: 'item', price: 1000 },
+            { id: 'soz_news_billboard_01', type: 'item', price: 50_000 },
+            { id: 'soz_news_billboard_02', type: 'item', price: 100_000 },
+            { id: 'soz_news_billboard_03', type: 'item', price: 150_000 },
         ],
     },
     {
