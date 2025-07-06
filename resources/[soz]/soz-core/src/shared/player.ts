@@ -382,6 +382,7 @@ export type PlayerMetadata = PlayerHealthBook & {
             metadata?: {
                 type?: string;
                 serial?: string;
+                url?: string;
             };
         }
     >;

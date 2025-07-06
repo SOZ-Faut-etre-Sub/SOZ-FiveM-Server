@@ -311,7 +311,7 @@ const ShopItem: FunctionComponent<{
                 onMouseEnter={() => {
                     const metadata = item.metadata || {};
 
-                    if (!['money', ' marked_money'].includes(moneyType)) {
+                    if (!['money', 'marked_money'].includes(moneyType)) {
                         metadata.extraLabel = `Prix : ${item.price}x ${moneyItem.label}`;
                     }
 

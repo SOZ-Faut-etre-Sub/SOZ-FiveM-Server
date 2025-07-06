@@ -65,6 +65,7 @@ export class InventoryUsageProvider {
             if (
                 value.name === item.name &&
                 value.metadata?.serial === item.metadata?.serial &&
+                value.metadata?.url === item.metadata?.url &&
                 value.metadata?.type === item.metadata?.type
             ) {
                 player.PlayerData.metadata.shortcuts[key] = null;
@@ -80,6 +81,7 @@ export class InventoryUsageProvider {
                 metadata: {
                     type: item.metadata?.type,
                     serial: item.metadata?.serial,
+                    url: item.metadata?.url,
                 },
             };
         }
@@ -170,6 +172,10 @@ export class InventoryUsageProvider {
         const item = inventory.findItem(item => {
             if (shortcutItem.metadata.serial) {
                 return item.name === shortcutItem.name && item.metadata.serial === shortcutItem.metadata.serial;
+            }
+
+            if (shortcutItem.metadata.url) {
+                return item.name === shortcutItem.name && item.metadata.url === shortcutItem.metadata.url;
             }
 
             if (shortcutItem.metadata.type) {

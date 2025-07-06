@@ -205,6 +205,7 @@ export enum NuiEvent {
     PawlShowFields = 'soz-core:nui:job:pawl:show-fields',
     PawlShowResell = 'soz-core:nui:job:pawl:show-resell',
 
+    PanelUpdateItemUrl = 'soz-core:nui:panel:update-item-url',
     PanelClosed = 'soz-core:nui:panel:closed',
 
     Ping = 'soz-core:nui:ping',

@@ -86,11 +86,12 @@ export class PhoneManager {
     async ensureAvailability() {
         const ped = PlayerPedId();
         const isSwimming = IsPedSwimming(ped);
+        const isInSubmarine = IsPedInAnySub(ped);
 
-        if (isSwimming && !this.phoneState.isPhoneDrowned()) {
+        if (isSwimming && !isInSubmarine && !this.phoneState.isPhoneDrowned()) {
             await this.stopPhoneCall();
             this.phoneState.setPhoneDrowned(true);
-        } else if (!isSwimming && this.phoneState.isPhoneDrowned()) {
+        } else if ((!isSwimming || isInSubmarine) && this.phoneState.isPhoneDrowned()) {
             this.phoneState.setPhoneDrowned(false);
         }
 
