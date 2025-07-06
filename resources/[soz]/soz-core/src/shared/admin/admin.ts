@@ -133,6 +133,7 @@ export type AdminPlayer = {
     plate: boolean | null;
     specialPlate: boolean | null;
     vampireGameExcluded?: boolean;
+    armorPlates: number;
 };
 
 export type FullAdminPlayer = AdminPlayer & {

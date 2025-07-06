@@ -6,8 +6,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { AdminPlayer, FullAdminPlayer, LightAdminPlayer } from '../../shared/admin/admin';
 import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
-import { PlayerService } from '../player/player.service';
-import { QBCore } from '../qbcore';
+import { PlayerStateService } from '../player/player.state.service';
 import { ServerStateService } from '../server.state.service';
 import { VampireGameStateProvider } from '../story/vampire.game.state.provider';
 
@@ -16,19 +15,14 @@ export class AdminMenuInteractiveProvider {
     @Inject(PermissionService)
     private permissionService: PermissionService;
 
-    @Inject(PlayerService)
-    private playerService: PlayerService;
+    @Inject(PlayerStateService)
+    private playerStateService: PlayerStateService;
 
     @Inject(ServerStateService)
     private serverStateService: ServerStateService;
 
-    @Inject(QBCore)
-    private QBCore: QBCore;
-
     @Inject(VampireGameStateProvider)
     private readonly vampireGameStateProvider: VampireGameStateProvider;
-
-    private interactivePlayerSubscriptions: Set<number> = new Set();
 
     @Rpc(RpcServerEvent.ADMIN_GET_PLAYERS)
     public getPlayers(source: number): AdminPlayer[] {
@@ -44,6 +38,7 @@ export class AdminMenuInteractiveProvider {
     }
 
     public getPlayer(playerData: PlayerData): AdminPlayer {
+        const state = this.playerStateService.getClientState(playerData.source);
         return {
             id: playerData.source,
             citizenId: playerData.citizenid,
@@ -55,6 +50,7 @@ export class AdminMenuInteractiveProvider {
             plate: playerData.metadata.plate,
             specialPlate: playerData.metadata.special_plate,
             vampireGameExcluded: this.vampireGameStateProvider.excludedPlayers.has(playerData.citizenid),
+            armorPlates: state.nbArmorPlates,
         };
     }
 
@@ -67,6 +63,7 @@ export class AdminMenuInteractiveProvider {
         const players: FullAdminPlayer[] = [];
         for (const playerData of this.serverStateService.getPlayers()) {
             const ped = GetPlayerPed(playerData.source);
+            const state = this.playerStateService.getClientState(playerData.source);
             const name = `${playerData.charinfo.firstname} ${playerData.charinfo.lastname}`;
             players.push({
                 id: playerData.source,
@@ -82,6 +79,7 @@ export class AdminMenuInteractiveProvider {
                 partyMember: playerData.partyMember,
                 plate: playerData.metadata.plate,
                 specialPlate: playerData.metadata.special_plate,
+                armorPlates: state.nbArmorPlates,
             });
         }
         return players;

@@ -141,6 +141,7 @@ export class AdminMenuInteractiveProvider {
         if (!value) {
             for (const value of this.multiplayerTags.values()) {
                 SetMpGamerTagVisibility(value, 0, false);
+                SetMpGamerTagVisibility(value, 2, false);
                 RemoveMpGamerTag(value);
             }
             clearInterval(this.intervalHandlers.displayPlayerNames);
@@ -213,24 +214,26 @@ export class AdminMenuInteractiveProvider {
             if (player.id == GetPlayerServerId(playerId)) {
                 return;
             }
-            this.multiplayerTags.set(player.citizenId, GetPlayerFromServerId(player.id));
+
+            const localPlayerPed = GetPlayerFromServerId(player.id);
+            this.multiplayerTags.set(player.citizenId, localPlayerPed);
 
             let name = player.rpFullName;
             if (withDetails) {
-                name += ` | ${player.name} | ${player.id}`;
+                name += ` | ${player.name} | ${player.id} | plaques: ${player.armorPlates}`;
             }
-            CreateMpGamerTagWithCrewColor(
-                this.multiplayerTags.get(player.citizenId),
-                name,
-                false,
-                false,
-                '',
-                0,
-                0,
-                0,
-                0
-            );
-            SetMpGamerTagVisibility(this.multiplayerTags.get(player.citizenId), 0, true);
+            CreateMpGamerTagWithCrewColor(localPlayerPed, name, false, false, '', 0, 0, 0, 0);
+            if (withDetails) {
+                SetMpGamerTagName(localPlayerPed, name); // Force update for plates
+            }
+            SetMpGamerTagVisibility(localPlayerPed, 0, true);
+
+            if (withDetails) {
+                SetMpGamerTagVisibility(localPlayerPed, 2, true);
+                SetMpGamerTagAlpha(localPlayerPed, 2, 255);
+            } else {
+                SetMpGamerTagVisibility(localPlayerPed, 2, false);
+            }
         });
     }
 }
