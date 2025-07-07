@@ -20,6 +20,8 @@ export class ItemPanelProvider {
     @Inject(InventoryFactory)
     private inventoryFactory: InventoryFactory;
 
+    private readonly BlacklistedUrls = ['/allowlist', '/allowlist/unregister'];
+
     private async useZPad(source: number, item: Item, inventoryItem: InventoryItem): Promise<void> {
         const token = await this.playerProvider.getJwtToken(source);
         if (token === null) {
@@ -28,7 +30,7 @@ export class ItemPanelProvider {
 
         let endpointUrl = `${GetConvar('soz_public_endpoint', 'https://soz.zerator.com')}/token-callback?token=${token}`;
 
-        if (inventoryItem.metadata?.url) {
+        if (inventoryItem.metadata?.url && !this.BlacklistedUrls.includes(inventoryItem.metadata.url)) {
             endpointUrl += `&redirect=${inventoryItem.metadata?.url}`;
         }
 
