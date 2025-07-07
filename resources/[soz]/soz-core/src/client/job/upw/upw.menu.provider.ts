@@ -102,7 +102,8 @@ export class UpwMenuProvider {
         const blip: Blip = {
             ...UpwConfig.FacilitiesBlip[facility.type],
             position: facility.position || facility.energyZone.center,
+            hidden: !this.displayedBlips[facility.type],
         };
-        this.blipFactory.create(blip_id, blip, this.displayedBlips[facility.type]);
+        this.blipFactory.create(blip_id, blip);
     }
 }
