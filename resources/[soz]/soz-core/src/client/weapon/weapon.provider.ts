@@ -464,7 +464,6 @@ export class WeaponProvider {
         await this.cleanAndRefreshWeapon();
     }
 
-    @OnEvent(ClientEvent.WEAPON_REFRESH)
     public async cleanAndRefreshWeapon() {
         await this.weaponDrawingProvider.refreshDrawWeapons();
     }
