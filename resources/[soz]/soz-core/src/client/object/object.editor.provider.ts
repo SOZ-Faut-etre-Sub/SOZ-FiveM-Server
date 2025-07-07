@@ -393,9 +393,9 @@ export class ObjectEditorProvider {
     }
 
     @OnEvent(ClientEvent.OBJECT_PLACE_ITEM)
-    public async placeItem(serverEvent: ServerEvent, model: string, inventoryItem: InventoryItem) {
+    public async placeItem(serverEvent: ServerEvent, model: string, inventoryItem: InventoryItem, snapToGround = true) {
         const object = await this.createOrUpdateObject(GetHashKey(model), {
-            snapToGround: true,
+            snapToGround: snapToGround,
             allowScale: false,
             maxDistance: 8,
         });

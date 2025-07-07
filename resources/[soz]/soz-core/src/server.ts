@@ -13,6 +13,7 @@ import { AdminModule } from './server/admin/admin.module';
 import { AfkModule } from './server/afk/afk.module';
 import { ApiModule } from './server/api/api.module';
 import { BankModule } from './server/bank/bank.module';
+import { BillboardModule } from './server/billboard/billboard.module';
 import { CameraModule } from './server/camera/camera.module';
 import { ClickhouseModule } from './server/clickhouse/clickhouse.module';
 import { CraftModule } from './server/craft/craft.module';
@@ -136,6 +137,7 @@ async function bootstrap() {
         PhoneModule,
         GamesModule,
         CameraModule,
+        BillboardModule,
         ...PrivateModules
     );
 

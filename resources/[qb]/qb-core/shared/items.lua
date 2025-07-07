@@ -12874,6 +12874,43 @@ QBShared.Items = {
         ["description"] = "L'ouvrage de référence de l'Université de Los Santos, relié en cuir bleu nuit avec ses lettres dorées emblématiques. Ce manuel fondamental couvre l'ensemble du programme de premier cycle en sciences sociales, de la sociologie urbaine aux dynamiques comportementales de la métropole moderne. Un compagnon indispensable pour tout étudiant désireux de comprendre les complexités de la société de Los Santos et ses enjeux contemporains.",
         ["illustrator"] = ".NariieL",
     },
+    ["soz_news_billboard_01"] = {
+        ["name"] = "soz_news_billboard_01",
+        ["label"] = "Panneau d'affichage pédestre",
+        ["weight"] = 10000,
+        ["useable"] = true,
+        ["type"] = "item",
+        ["shouldClose"] = false,
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Panneau numérique d'affichage pédestre pour y afficher des news.",
+        ["illustrator"] = ".Aurukh",
+    },
+    ["soz_news_billboard_02"] = {
+        ["name"] = "soz_news_billboard_02",
+        ["label"] = "Panneau d'affichage triple",
+        ["weight"] = 20000,
+        ["useable"] = true,
+        ["type"] = "item",
+        ["shouldClose"] = false,
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Triple panneau d'affichage sur pylône.",
+        ["illustrator"] = ".Aurukh",
+    },
+    ["soz_news_billboard_03"] = {
+        ["name"] = "soz_news_billboard_03",
+        ["label"] = "Panneau d'affichage mural",
+        ["weight"] = 30000,
+        ["useable"] = true,
+        ["type"] = "item",
+        ["shouldClose"] = false,
+        ["unique"] = false,
+        ["combinable"] = nil,
+        ["description"] = "Grand panneau d'affichage numérique mural.",
+        ["illustrator"] = ".Aurukh",
+    },
+
 
     --- Fishing Items
     ["basic_rod"] = {

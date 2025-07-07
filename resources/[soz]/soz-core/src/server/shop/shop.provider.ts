@@ -177,12 +177,13 @@ export class ShopProvider {
         });
 
         if (['money', 'marked_money'].includes(moneyType)) {
+            const price = await this.priceService.getPrice(
+                cartAmount,
+                taxType
+            )
             this.notifier.notify(
                 source,
-                `Votre achat a bien été validé ! Merci. Prix : ~g~$${await this.priceService.getPrice(
-                    cartAmount,
-                    taxType
-                )}`,
+                `Votre achat a bien été validé ! Merci. Prix : ~g~$${price?.toLocaleString('fr-FR') ?? 0}`,
                 'success'
             );
         } else {
@@ -190,7 +191,7 @@ export class ShopProvider {
 
             this.notifier.notify(
                 source,
-                `Votre achat a bien été validé ! Merci. Prix : ~g~${cartAmount}~s~ ~b~${itemDef?.label || moneyType}~s~`,
+                `Votre achat a bien été validé ! Merci. Prix : ~g~${cartAmount?.toLocaleString('fr-FR') ?? 0}~s~ ~b~${itemDef?.label || moneyType}~s~`,
                 'success'
             );
         }
@@ -492,7 +493,7 @@ export class ShopProvider {
             const replacement = UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType];
             const baseTorsoDrawable =
                 ProperTorsos[playerModel][clothConfig.BaseClothSet.Components[Component.Tops].Collection][
-                    clothConfig.BaseClothSet.Components[Component.Tops].Drawable
+                clothConfig.BaseClothSet.Components[Component.Tops].Drawable
                 ];
             if (replacement && replacement[baseTorsoDrawable] != null) {
                 clothConfig.BaseClothSet.Components[Component.Torso] = {

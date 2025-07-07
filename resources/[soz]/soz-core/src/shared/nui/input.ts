@@ -68,3 +68,14 @@ export const NumberValidatorFactory = (min?: number, max?: number): ValidateInpu
         return Ok(inputNumber);
     };
 };
+
+export const HttpLinkValidator: ValidateInput<string> = (input: string) => {
+    if (input?.trim() === '') {
+        return Err('Veuillez entrer une adresse URL');
+    }
+    const trimmed = input?.trim() ?? '';
+    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
+        return Err('L’URL doit commencer par "http://" ou "https://"');
+    }
+    return Ok(input);
+};

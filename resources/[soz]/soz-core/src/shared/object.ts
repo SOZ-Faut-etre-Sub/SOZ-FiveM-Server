@@ -39,6 +39,7 @@ export type WorldObject = {
     alpha?: number;
     rotationOrder?: number;
     textureVariation?: number;
+    textureUrl?: string;
 };
 
 export type WorldPlacedProp = {

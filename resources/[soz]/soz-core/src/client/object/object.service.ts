@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import { wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { billboardOffsets } from '@public/shared/billboard';
+import { applyOffset, Vector4 } from '@public/shared/polyzone/vector';
 
 import { Feature } from '../../shared/features';
 import { joaat } from '../../shared/joaat';
@@ -26,6 +28,9 @@ export class ObjectService {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    private duiObjects: Map<string, number> = new Map();
+    private textureDict = 0;
 
     public async createObject(object: WorldObject) {
         let model = object.model;
@@ -177,6 +182,25 @@ export class ObjectService {
         if (object.textureVariation) {
             SetObjectTextureVariation(entity, object.textureVariation);
         }
+
+        if (object.textureUrl) {
+            if (!this.textureDict) {
+                this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
+            }
+            const billboards = Object.keys(billboardOffsets).map(Number);
+            let textureWidth = 512;
+            let textureHeight = 512;
+
+            if (billboards.includes(object.model)) {
+                textureWidth = billboardOffsets[object.model].width;
+                textureHeight = billboardOffsets[object.model].height;
+            }
+
+            const dui = CreateDui(object.textureUrl, textureWidth, textureHeight);
+            const duiHandle = GetDuiHandle(dui);
+            CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.textureUrl}_texture`, duiHandle);
+            this.duiObjects.set(object.id, dui);
+        }
     }
 
     public deleteObject(entity: number, object: WorldObject) {
@@ -199,6 +223,10 @@ export class ObjectService {
         }
 
         DeleteEntity(entity);
+        if (this.duiObjects.has(object.id)) {
+            DestroyDui(this.duiObjects.get(object.id));
+            this.duiObjects.delete(object.id);
+        }
 
         return true;
     }
@@ -253,7 +281,7 @@ export class ObjectService {
         } else if (Date.now() < object.growth.endTime) {
             ratio =
                 ((Date.now() - object.growth.beginTime) / (object.growth.endTime - object.growth.beginTime)) *
-                    (object.growth.endSize - object.growth.beginSize) +
+                (object.growth.endSize - object.growth.beginSize) +
                 object.growth.beginSize;
         }
         const matrix = this.getEntityMatrix(entity);
@@ -276,5 +304,84 @@ export class ObjectService {
             matrix[13],
             matrix[14] // Position
         );
+    }
+
+    public updateObjectTexture(entity: number, textureUrl: string) {
+        if (!DoesEntityExist(entity) || !textureUrl) return;
+
+        const coords = GetEntityCoords(entity, false);
+        const model = GetEntityModel(entity);
+
+        function computeCorners(coordsWithHeading: Vector4): Vector4[] {
+            return billboardOffsets[model].offsets.map(offset => applyOffset(coordsWithHeading, offset));
+        }
+
+        function drawQuad(c1: Vector4, c2: Vector4, c3: Vector4, c4: Vector4, textureName: string) {
+            DrawTexturedPoly(
+                c1[0],
+                c1[1],
+                c1[2],
+                c3[0],
+                c3[1],
+                c3[2],
+                c2[0],
+                c2[1],
+                c2[2],
+                255,
+                255,
+                255,
+                255,
+                'dynamic_prop_textures',
+                textureName,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1
+            );
+            DrawTexturedPoly(
+                c3[0],
+                c3[1],
+                c3[2],
+                c4[0],
+                c4[1],
+                c4[2],
+                c2[0],
+                c2[1],
+                c2[2],
+                255,
+                255,
+                255,
+                255,
+                'dynamic_prop_textures',
+                textureName,
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1
+            );
+        }
+
+        const baseHeading = GetEntityHeading(entity);
+        const headings = [baseHeading];
+
+        if (model === GetHashKey('soz_news_billboard_02')) {
+            headings.push(baseHeading + 120, baseHeading - 120);
+        }
+
+        headings.forEach(heading => {
+            const coordsWithHeading = [...coords, heading] as Vector4;
+            const [c1, c2, c3, c4] = computeCorners(coordsWithHeading);
+            drawQuad(c1, c2, c3, c4, `${textureUrl}_texture`);
+        });
     }
 }
