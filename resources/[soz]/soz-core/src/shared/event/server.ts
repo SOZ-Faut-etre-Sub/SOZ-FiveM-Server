@@ -824,4 +824,6 @@ export enum ServerEvent {
     BILLBOARD_UPDATE_PROP = 'soz-core:server:billboard:update-prop',
     BILLBOARD_DELETE_PROP = 'soz-core:server:billboard:delete-prop',
     PANEL_UPDATE_ITEM_URL = 'soz-core:server:panel:update-item-url',
+
+    ADMIN_STAR_NEW_FIRE_PIT = 'soz-core:admin:star:new-fire-pit',
 }

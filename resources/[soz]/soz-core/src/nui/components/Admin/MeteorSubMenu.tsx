@@ -1,6 +1,7 @@
 import { SozRole } from '@core/permissions';
 import { __ } from '@headlessui/react/dist/types';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
+import { FireType } from '@public/shared/fire';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -31,7 +32,10 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
         }, 2000);
 
         // Cleanup function to clear the timeout if the component unmounts
-        return () => clearInterval(timeoutId);
+        return () => {
+            clearInterval(timeoutId);
+            fetchNui(NuiEvent.AdminMenuPreviewFire, null);
+        };
     }, []);
 
     return (
@@ -154,6 +158,23 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
+                <MenuSubTitle>Feux de forêt</MenuSubTitle>
+                <MenuItemSelect
+                    title="Incendie"
+                    initialValue={null}
+                    onChange={async (_index, value) => {
+                        await fetchNui(NuiEvent.AdminMenuPreviewFire, String(value));
+                    }}
+                    onConfirm={async (_index, value) => {
+                        await fetchNui(NuiEvent.AdminMenuStartFire, String(value));
+                    }}
+                >
+                    {[null, FireType.Small, FireType.Medium, FireType.Huge].map(value => (
+                        <MenuItemSelectOption value={value} key={`fire_${value}`}>
+                            {FireType[value]}
+                        </MenuItemSelectOption>
+                    ))}
+                </MenuItemSelect>
                 <MenuSubTitle>Annonces</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {
@@ -175,6 +196,13 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                     }}
                 >
                     Inondation
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuFireFlash, false);
+                    }}
+                >
+                    Incendie
                 </MenuItemButton>
             </MenuContent>
         </SubMenu>
