@@ -1,8 +1,7 @@
 import { On, Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
-import { PoliceSwatProvider } from '@private/client/police/police.swat.provider';
-import { POLICE_SHIELD_OBJECT } from '@private/shared/police';
+import { POLICE_SHIELD_MODEL, POLICE_SHIELD_OBJECT } from '@private/shared/police';
 import { PlayerService } from '@public/client/player/player.service';
 import { PlayerInventoryUpdate, PlayerUpdate } from '@public/core/decorators/player';
 import { InventoryItem } from '@public/shared/inventory';
@@ -34,9 +33,6 @@ export class WeaponDrawingProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(PoliceSwatProvider)
-    private readonly policeSwatProvider: PoliceSwatProvider;
 
     currentDrawPosition: string = null;
 
@@ -118,12 +114,6 @@ export class WeaponDrawingProvider {
                 }
             }
         }
-        if (this.policeSwatProvider.isUsingShield()) {
-            const weaponModel = Weapons[POLICE_SHIELD_OBJECT.toUpperCase()].drawPositionInfo?.model;
-            if (weaponModel) {
-                SetEntityVisible(this.weaponAttached[weaponModel], false, false);
-            }
-        }
     }
 
     private async undrawWeapon() {
@@ -192,12 +182,6 @@ export class WeaponDrawingProvider {
                 }
             }
         }
-        if (this.policeSwatProvider.isUsingShield()) {
-            const weaponModel = Weapons[POLICE_SHIELD_OBJECT.toUpperCase()].drawPositionInfo?.model;
-            if (weaponModel) {
-                SetEntityVisible(this.weaponAttached[weaponModel], false, false);
-            }
-        }
     }
 
     public async onUseWeapon(usedWeapon: InventoryItem | null) {
@@ -216,12 +200,10 @@ export class WeaponDrawingProvider {
                 SetEntityVisible(this.weaponAttached[weaponModel], !weapon, false);
             }
         }
-        if (this.policeSwatProvider.isUsingShield()) {
-            const weaponModel = Weapons[POLICE_SHIELD_OBJECT.toUpperCase()].drawPositionInfo?.model;
-            if (weaponModel) {
-                SetEntityVisible(this.weaponAttached[weaponModel], false, false);
-            }
-        }
+    }
+
+    public getShieldObject() {
+        return this.weaponAttached[POLICE_SHIELD_MODEL];
     }
 
     @Once(OnceStep.Stop)
