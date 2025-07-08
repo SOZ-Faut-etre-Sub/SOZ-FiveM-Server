@@ -56,8 +56,9 @@ export class ObjectProvider {
     private interactionProvider: InteractionProvider;
 
     private loadedObjects: Record<string, SpawnedObject> = {};
+    private loadedObjectsWithTexture: Record<string, SpawnedObject> = {};
 
-    private objectsByChunk = new Map<number, SpawnableObject[]>();
+    private objectsByChunk = new Map<number, Map<string, SpawnableObject>>();
 
     private objectsById = new Map<string, SpawnableObject>();
 
@@ -96,7 +97,7 @@ export class ObjectProvider {
         const objects: WorldObject[] = [];
 
         for (const chunk of this.objectsByChunk.values()) {
-            for (const object of chunk) {
+            for (const object of chunk.values()) {
                 if (!filter || filter(object.object)) {
                     objects.push(object.object);
                 }
@@ -208,10 +209,10 @@ export class ObjectProvider {
         const chunk = getChunkId(object.position);
 
         if (!this.objectsByChunk.has(chunk)) {
-            this.objectsByChunk.set(chunk, []);
+            this.objectsByChunk.set(chunk, new Map());
         }
 
-        this.objectsByChunk.get(chunk).push(spawnableObject);
+        this.objectsByChunk.get(chunk).set(spawnableObject.object.id, spawnableObject);
         this.objectsById.set(object.id, spawnableObject);
 
         if (this.currentChunks.includes(chunk)) {
@@ -258,14 +259,16 @@ export class ObjectProvider {
     }
 
     public deleteObject(id: string): void {
-        for (const [chunk, spawnableObjects] of this.objectsByChunk.entries()) {
-            this.objectsByChunk.set(
-                chunk,
-                spawnableObjects.filter(spawnableObject => spawnableObject.object.id !== id)
-            );
+        const obj = this.objectsById.get(id);
+        if (obj) {
+            const chunk = getChunkId(obj.object.position);
+            const perChunk = this.objectsByChunk.get(chunk);
+            if (perChunk) {
+                perChunk.delete(id);
 
-            if (Object.keys(spawnableObjects).length === 0) {
-                this.objectsByChunk.delete(chunk);
+                if (perChunk?.size === 0) {
+                    this.objectsByChunk.delete(chunk);
+                }
             }
         }
 
@@ -300,9 +303,7 @@ export class ObjectProvider {
         }
 
         // if the chunk is the same, update the object
-        const objectInChunk = this.objectsByChunk
-            .get(newChunk)
-            ?.find(spawnableObject => spawnableObject.object.id === object.id);
+        const objectInChunk = this.objectsByChunk.get(newChunk)?.get(object.id);
 
         if (objectInChunk) {
             objectInChunk.object = object;
@@ -363,7 +364,7 @@ export class ObjectProvider {
         // Unload objects from removed chunks
         for (const chunk of removedChunks) {
             if (this.objectsByChunk.has(chunk)) {
-                for (const spawnableObject of this.objectsByChunk.get(chunk)) {
+                for (const [, spawnableObject] of this.objectsByChunk.get(chunk)) {
                     this.unspawnObject(spawnableObject.object.id);
                 }
             }
@@ -372,7 +373,7 @@ export class ObjectProvider {
         // Load objects from added chunks
         for (const chunk of addedChunks) {
             if (this.objectsByChunk.has(chunk)) {
-                for (const spawnableObject of this.objectsByChunk.get(chunk)) {
+                for (const [, spawnableObject] of this.objectsByChunk.get(chunk)) {
                     await this.spawnObject(spawnableObject);
                 }
             }
@@ -396,6 +397,9 @@ export class ObjectProvider {
             targets: spawnableObject.targets,
             dragAndDropCallbacks: spawnableObject.dragAndDropCallbacks,
         };
+        if (spawnableObject.object.textureUrl) {
+            this.loadedObjectsWithTexture[spawnableObject.object.id] = this.loadedObjects[spawnableObject.object.id];
+        }
 
         const targets = [...spawnableObject.targets];
 
@@ -456,6 +460,7 @@ export class ObjectProvider {
         }
 
         delete this.loadedObjects[id];
+        delete this.loadedObjectsWithTexture[id];
 
         TriggerEvent(ClientEvent.OBJECT_DESPAWN, spawnedObject.object.id, spawnedObject.entity);
     }
@@ -495,6 +500,7 @@ export class ObjectProvider {
         }
 
         this.loadedObjects = {};
+        this.loadedObjectsWithTexture = {};
     }
 
     @Tick(TickInterval.EVERY_MINUTE, 'object-scale')
@@ -508,7 +514,7 @@ export class ObjectProvider {
 
     @Tick(TickInterval.EVERY_FRAME, 'object-texture-check')
     public async objectTextureCheck() {
-        for (const obj of Object.values(this.loadedObjects)) {
+        for (const obj of Object.values(this.loadedObjectsWithTexture)) {
             if (obj.object.textureUrl) {
                 this.objectService.updateObjectTexture(obj.entity, obj.object.textureUrl);
             }
@@ -521,6 +527,7 @@ export class ObjectProvider {
             if (!DoesEntityExist(spawnedObject.entity)) {
                 console.log('object-spawn-check: missing entity, trying to fix it', spawnedObject.object.id);
                 delete this.loadedObjects[spawnedObject.object.id];
+                delete this.loadedObjectsWithTexture[spawnedObject.object.id];
 
                 this.spawnObject({
                     object: spawnedObject.object,

@@ -3,6 +3,7 @@ import './field.repository'; // Required to load the field repository
 
 import { DrugSeedlingRepository } from '@private/client/repository/drug.seedling.repository';
 import { DrugSellLocationRepository } from '@private/client/repository/drug.sell.location.repository';
+import { Command } from '@public/core/decorators/command';
 import { Operation } from 'fast-json-patch';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -82,6 +83,7 @@ export class RepositoryProvider {
         this.onceLoader.trigger(OnceStep.RepositoriesLoaded);
     }
 
+    @Command('reloadnuirepo')
     @Once(OnceStep.NuiLoaded)
     public async onNuiLoaded() {
         for (const repository of this.repositories) {
@@ -106,9 +108,9 @@ export class RepositoryProvider {
 
         try {
             const type = repository.type;
-            const data = repository.patch(patch);
+            repository.patch(patch);
 
-            this.nuiDispatch.dispatch('repository', 'Set', { type, data });
+            this.nuiDispatch.dispatch('repository', 'Patch', { type, patch });
         } catch (e) {
             this.logger.error(`Error while patching repository ${type} ${e} ${JSON.stringify(patch)}`);
         }
