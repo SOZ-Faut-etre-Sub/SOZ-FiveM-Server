@@ -44,7 +44,7 @@ export const UpwCloakroom: WardrobeConfig = {
                 [Component.Legs]: { Palette: 0, Drawable: 129, Texture: 7 },
                 [Component.Shoes]: { Palette: 0, Drawable: 77, Texture: 0 },
                 [Component.Undershirt]: { Palette: 0, Drawable: 23, Texture: 0 },
-                [Component.Tops]: { Palette: 0, Drawable: 491, Texture: 9 },
+                [Component.Tops]: { Palette: 0, Drawable: 491, Texture: 10 },
                 [Component.Bag]: { Palette: 0, Drawable: 82, Texture: 2 },
             },
             Props: { [Prop.Hat]: { Drawable: 145, Texture: 2, Palette: 0 } },
@@ -55,14 +55,14 @@ export const UpwCloakroom: WardrobeConfig = {
                 [Component.Legs]: { Palette: 0, Drawable: 129, Texture: 0 },
                 [Component.Shoes]: { Palette: 0, Drawable: 77, Texture: 0 },
                 [Component.Undershirt]: { Palette: 0, Drawable: 23, Texture: 0 },
-                [Component.Tops]: { Palette: 0, Drawable: 491, Texture: 9 },
+                [Component.Tops]: { Palette: 0, Drawable: 491, Texture: 10 },
                 [Component.Bag]: { Palette: 0, Drawable: 82, Texture: 2 },
             },
             Props: { [Prop.Hat]: { Drawable: 145, Texture: 2, Palette: 0 } },
         },
         ['Décontractée - Électricien']: {
             Components: {
-                [Component.Torso]: { Palette: 0, Drawable: 29, Texture: 0 },
+                [Component.Torso]: { Palette: 0, Drawable: 26, Texture: 0 },
                 [Component.Legs]: { Palette: 0, Drawable: 129, Texture: 7 },
                 [Component.Shoes]: { Palette: 0, Drawable: 77, Texture: 0 },
                 [Component.Undershirt]: { Palette: 0, Drawable: 23, Texture: 0 },
@@ -73,7 +73,7 @@ export const UpwCloakroom: WardrobeConfig = {
         },
         ['Décontractée - Haut Gradé']: {
             Components: {
-                [Component.Torso]: { Palette: 0, Drawable: 29, Texture: 0 },
+                [Component.Torso]: { Palette: 0, Drawable: 26, Texture: 0 },
                 [Component.Legs]: { Palette: 0, Drawable: 129, Texture: 0 },
                 [Component.Shoes]: { Palette: 0, Drawable: 77, Texture: 0 },
                 [Component.Undershirt]: { Palette: 0, Drawable: 23, Texture: 0 },
