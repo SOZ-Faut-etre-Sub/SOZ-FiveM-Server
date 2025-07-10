@@ -40,7 +40,21 @@ const SuperetteContent: ShopContent = [
 ];
 
 const AmmunationContent: ShopContent = [
-    { id: 'parachute', type: 'item', price: 225 },
+    // { id: 'parachute', type: 'item', price: 225 },
+    { id: 'parachute_rainbow', type: 'item', price: 225 },
+    { id: 'parachute_red', type: 'item', price: 225 },
+    { id: 'parachute_seasidestripes', type: 'item', price: 225 },
+    { id: 'parachute_widowmaker', type: 'item', price: 225 },
+    { id: 'parachute_patriot', type: 'item', price: 225 },
+    { id: 'parachute_blue', type: 'item', price: 225 },
+    { id: 'parachute_black', type: 'item', price: 225 },
+    { id: 'parachute_hornet', type: 'item', price: 225 },
+    // { id: 'parachute_airforce', type: 'item', price: 225 },
+    // { id: 'parachute_desert', type: 'item', price: 225 },
+    // { id: 'parachute_shadow', type: 'item', price: 225 },
+    // { id: 'parachute_highaltitude', type: 'item', price: 225 },
+    // { id: 'parachute_airbone', type: 'item', price: 225 },
+    // { id: 'parachute_sunrise', type: 'item', price: 225 },
     { id: 'weapon_bat', type: 'weapon', price: 162 },
     { id: 'weapon_golfclub', type: 'weapon', price: 405 },
     { id: 'weapon_knuckle', type: 'weapon', price: 90 },

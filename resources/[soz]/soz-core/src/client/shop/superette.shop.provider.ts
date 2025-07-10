@@ -46,52 +46,31 @@ export class SuperetteShopProvider {
     private logger: Logger;
 
     public openShop(brand: ShopBrand | NoZoneShopBrand, shop: string, shopLabel: string = 'Boutique') {
-        if (brand != ShopBrand.Ammunation) {
             const superetteContent: ShopItem[] = [];
+            const licences = this.playerService.getPlayer().metadata.licences;
             for (let i = 0; i < ShopsContent[brand].length; i++) {
-                const sharedItem = {
-                    ...this.itemService.getItem(ShopsContent[brand][i].id),
-                    price: ShopsContent[brand][i].price,
-                    metadata: ShopsContent[brand][i].metadata,
-                } as ShopItem;
-                superetteContent.push(sharedItem);
+                const product = ShopsContent[brand][i];
+                if (!product.requiredLicense || licences[product.requiredLicense]) {
+                    const sharedItem = {
+                        ...this.itemService.getItem(ShopsContent[brand][i].id),
+                        price: ShopsContent[brand][i].price,
+                        metadata: ShopsContent[brand][i].metadata,
+                    } as ShopItem;
+                    superetteContent.push(sharedItem);
+                }
             }
 
             let taxes = null;
             if (brand === ShopBrand.Zkea) {
                 taxes = TaxType.SERVICE;
+            } else if (brand === ShopBrand.Ammunation) {
+                taxes = TaxType.WEAPON
             } else if (SOUVENIR_BRAND.includes(brand)) {
                 taxes = TaxType.SUPPLY;
             } else if (brand !== ShopBrand.Supermarket247Cayo) {
                 taxes = TaxType.FOOD;
             }
             this.inventoryManager.openShopInventory(superetteContent, shopLabel, taxes);
-        } else {
-            // Ammunation are handled by soz-core here
-            const licences = this.playerService.getPlayer().metadata.licences;
-            const products = ShopsContent[brand]
-                .filter(product => !product.requiredLicense || licences[product.requiredLicense])
-                .map(product => ({
-                    ...product,
-                    item: this.itemService.getItem(product.id),
-                }));
-
-            if (!products) {
-                this.logger.error(`Shop ${brand} not found`);
-                return;
-            }
-
-            this.nuiMenu.openMenu(
-                MenuType.SuperetteShop,
-                { brand, products },
-                {
-                    position: {
-                        position: ShopsConfig[shop].location as Vector4,
-                        distance: 6.0,
-                    },
-                }
-            );
-        }
     }
 
     @OnNuiEvent(NuiEvent.SuperetteShopBuy)
