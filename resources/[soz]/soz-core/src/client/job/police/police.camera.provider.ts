@@ -242,6 +242,10 @@ export class PoliceCameraProvider {
         }
 
         for (const camInfo of CameraLocations) {
+            if (camInfo.disabledReason) {
+                continue;
+            }
+
             const id = 'policeccam_' + getLocationHash(camInfo.position);
             blips.push(id);
 
