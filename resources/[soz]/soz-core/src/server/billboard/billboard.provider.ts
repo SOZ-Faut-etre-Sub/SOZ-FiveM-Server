@@ -61,7 +61,7 @@ export class BillboardProvider {
                 model: GetHashKey(billboard.model),
                 position: fromVector4Object(JSON.parse(billboard.position)),
                 placeOnGround: false,
-                permanent: true,
+                permanent: false,
                 textureUrl: billboard.textureUrl,
                 metadata: {
                     job: billboard.job as JobType,
@@ -140,7 +140,7 @@ export class BillboardProvider {
             id: objectId,
             model: GetHashKey(inventoryItem.name),
             position: position,
-            permanent: true,
+            permanent: false,
             metadata: {
                 job: player.job.id,
             },
