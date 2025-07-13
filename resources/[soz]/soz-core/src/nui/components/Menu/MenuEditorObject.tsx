@@ -1,3 +1,4 @@
+import { usePlayer } from '@public/nui/hook/data';
 import { PerspectiveCamera, TransformControls } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { FunctionComponent, memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
@@ -33,6 +34,7 @@ type MenuAlbumProps = {
 
 export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) => {
     const navigate = useNavigate();
+    const player = usePlayer();
     const mesh = useRef<Mesh>(null!);
     const [collision, setCollision] = useState(data.collision);
     const [editorMode, setEditorMode] = useState<'translate' | 'rotate' | 'scale'>('translate');
@@ -254,7 +256,7 @@ export const MenuEditorObject: FunctionComponent<MenuAlbumProps> = ({ data }) =>
                                 Activer la collision
                             </MenuItemCheckbox>
                         )}
-                        {data.allowTogglePermanent && (
+                        {data.allowTogglePermanent && ['staff', 'admin'].includes(player.role) && (
                             <MenuItemCheckbox
                                 onChange={value => {
                                     fetchNui(NuiEvent.ObjectEditorTogglePermanent, { permanent: value });
