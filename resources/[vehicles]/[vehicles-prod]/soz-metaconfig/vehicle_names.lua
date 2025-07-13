@@ -146,6 +146,16 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey("rumpo4"), "Bravado Rumpo")
     AddTextEntryByHash(GetHashKey("motovampire"), "Douce Démoniaque")
     AddTextEntryByHash(GetHashKey("zrtblizzard"), "ZRT Blizzard")
+    AddTextEntryByHash(GetHashKey("sandstorm"), "Sandstorm")
 
+    --Vehicles Custom 07/2025
+
+    AddTextEntryByHash(GetHashKey("previons"), "Previons S")
+    AddTextEntryByHash(GetHashKey("sultans"), "Sultan S")
+    AddTextEntryByHash(GetHashKey("kurumas"), "Kuruma S")
+    AddTextEntryByHash(GetHashKey("elegys"), "Elegy S")
+    AddTextEntryByHash(GetHashKey("penumbras"), "Penumbra S")
+    AddTextEntryByHash(GetHashKey("zr360"), "ZR360")
+    AddTextEntryByHash(GetHashKey("ttrz"), "TT RZ")
 
 end)
