@@ -150,7 +150,7 @@ export class VehicleRadarProvider {
                         licenceType = PlayerLicenceType.Truck;
                     } else if (vehicleType == 'heli') {
                         licenceType = PlayerLicenceType.Heli;
-                    } else if (vehicleType == 'boat') {
+                    } else if (vehicleType == 'boat' || vehicleType !== 'submarine') {
                         licenceType = PlayerLicenceType.Boat;
                     }
 

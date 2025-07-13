@@ -65,6 +65,7 @@ export class ItemFuelProvider {
             vehicleType === 'heli' ||
             vehicleType === 'plane' ||
             vehicleType === 'boat' ||
+            vehicleType === 'submarine' ||
             isVehicleModelElectric(GetEntityModel(closestVehicle.vehicleEntityId))
         ) {
             this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule.', 'error');
@@ -140,7 +141,12 @@ export class ItemFuelProvider {
 
         const vehicleType = GetVehicleType(closestVehicle.vehicleEntityId);
 
-        if (vehicleType !== 'heli' && vehicleType !== 'plane' && vehicleType !== 'boat') {
+        if (
+            vehicleType !== 'heli' &&
+            vehicleType !== 'plane' &&
+            vehicleType !== 'boat' &&
+            vehicleType !== 'submarine'
+        ) {
             this.notifier.notify(source, 'Vous ne pouvez pas utiliser ce carburant pour ce véhicule', 'error');
 
             return;
