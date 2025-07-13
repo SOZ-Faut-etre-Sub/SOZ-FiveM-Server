@@ -141,6 +141,11 @@ export class StonkFillInProvider {
         maxBalance: number,
         accountName: string
     ): Promise<[boolean, number]> {
+        const preCheckinventoryItem = inventory.findItem(elem => elem.name == item && !isInventoryItemExpired(elem));
+        if (!preCheckinventoryItem) {
+            return [false, 0];
+        }
+
         const { completed } = await this.progressService.progress(
             source,
             'stonk_fill_in',
