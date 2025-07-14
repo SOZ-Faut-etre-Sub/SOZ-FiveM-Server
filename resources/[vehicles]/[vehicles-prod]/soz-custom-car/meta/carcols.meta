@@ -22102,14 +22102,8 @@
                 <Item>
                     <modelName>penumbras_cage</modelName>
                     <modShopLabel>MNU_CAGE</modShopLabel>
-                    <linkedModels>
-                        <Item>penumbras_aynas_1</Item>
-                        <Item>penumbras_aynay_1</Item>
-                    </linkedModels>
-                    <turnOffBones>
-                        <Item>misc_d</Item>
-                        <Item>misc_e</Item>
-                    </turnOffBones>
+                    <linkedModels/>
+                    <turnOffBones/>
                     <type>VMT_CHASSIS</type>
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
@@ -22123,14 +22117,8 @@
                 <Item>
                     <modelName>penumbras_cage2</modelName>
                     <modShopLabel>MNU_CAGE1</modShopLabel>
-                    <linkedModels>
-                        <Item>penumbras_aynas_2</Item>
-                        <Item>penumbras_aynay_2</Item>
-                    </linkedModels>
-                    <turnOffBones>
-                        <Item>misc_d</Item>
-                        <Item>misc_e</Item>
-                    </turnOffBones>
+                    <linkedModels/>
+                    <turnOffBones/>
                     <type>VMT_CHASSIS</type>
                     <bone>chassis</bone>
                     <collisionBone>chassis</collisionBone>
