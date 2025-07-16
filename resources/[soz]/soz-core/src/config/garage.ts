@@ -2786,321 +2786,321 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
         ],
     },
 
-    bcso_mp: {
-        name: 'BCSO Parking',
-        type: GarageType.Job,
-        job: JobType.BCSO,
-        category: GarageCategory.Car,
-        // Position of the garage
-        zone: new BoxZone([1168.45, -447.74, 59.28], 1.0, 1.0, {
-            heading: -101.99,
-            minZ: 58.28,
-            maxZ: 60.28,
-        }),
+    // bcso_mp: {
+    //     name: 'BCSO Parking',
+    //     type: GarageType.Job,
+    //     job: JobType.BCSO,
+    //     category: GarageCategory.Car,
+    //     // Position of the garage
+    //     zone: new BoxZone([1168.45, -447.74, 59.28], 1.0, 1.0, {
+    //         heading: -101.99,
+    //         minZ: 58.28,
+    //         maxZ: 60.28,
+    //     }),
 
-        parkingPlaces: [
-            new BoxZone([1181.6, -449.08, 60.28], 1.0, 1.0, {
-                heading: 257.01,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1182.31, -445.98, 60.28], 1.0, 1.0, {
-                heading: 256.87,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1183.37, -442.85, 60.28], 1.0, 1.0, {
-                heading: 257.81,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1184.08, -439.73, 60.28], 1.0, 1.0, {
-                heading: 257.87,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1184.82, -436.6, 60.28], 1.0, 1.0, {
-                heading: 257.45,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1185.53, -433.48, 60.28], 1.0, 1.0, {
-                heading: 256.57,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1174.38, -440.24, 60.28], 1.0, 1.0, {
-                heading: 76.22,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1175.15, -437.09, 60.28], 1.0, 1.0, {
-                heading: 76.33,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1175.75, -433.95, 60.28], 1.0, 1.0, {
-                heading: 75.46,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1176.56, -430.9, 60.28], 1.0, 1.0, {
-                heading: 76.17,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1170.67, -429.43, 60.28], 1.0, 1.0, {
-                heading: 255.79,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1169.85, -432.51, 60.28], 1.0, 1.0, {
-                heading: 256.82,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1169.13, -435.57, 60.28], 1.0, 1.0, {
-                heading: 256.15,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1174.85, -425.36, 60.28], 1.0, 1.0, {
-                heading: 257.54,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
-                },
-            }),
-            new BoxZone([1187.22, -427.56, 60.28], 1.0, 1.0, {
-                heading: 165.81,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
-                },
-            }),
-        ],
-    },
+    //     parkingPlaces: [
+    //         new BoxZone([1181.6, -449.08, 60.28], 1.0, 1.0, {
+    //             heading: 257.01,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1182.31, -445.98, 60.28], 1.0, 1.0, {
+    //             heading: 256.87,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1183.37, -442.85, 60.28], 1.0, 1.0, {
+    //             heading: 257.81,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1184.08, -439.73, 60.28], 1.0, 1.0, {
+    //             heading: 257.87,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1184.82, -436.6, 60.28], 1.0, 1.0, {
+    //             heading: 257.45,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1185.53, -433.48, 60.28], 1.0, 1.0, {
+    //             heading: 256.57,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1174.38, -440.24, 60.28], 1.0, 1.0, {
+    //             heading: 76.22,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1175.15, -437.09, 60.28], 1.0, 1.0, {
+    //             heading: 76.33,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1175.75, -433.95, 60.28], 1.0, 1.0, {
+    //             heading: 75.46,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1176.56, -430.9, 60.28], 1.0, 1.0, {
+    //             heading: 76.17,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1170.67, -429.43, 60.28], 1.0, 1.0, {
+    //             heading: 255.79,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1169.85, -432.51, 60.28], 1.0, 1.0, {
+    //             heading: 256.82,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1169.13, -435.57, 60.28], 1.0, 1.0, {
+    //             heading: 256.15,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1174.85, -425.36, 60.28], 1.0, 1.0, {
+    //             heading: 257.54,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //         new BoxZone([1187.22, -427.56, 60.28], 1.0, 1.0, {
+    //             heading: 165.81,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //     ],
+    // },
 
-    bcso_mp_air: {
-        name: 'BCSO Air Parking',
-        type: GarageType.Job,
-        job: JobType.BCSO,
-        category: GarageCategory.Air,
-        zone: new BoxZone([1161.3, -434.08, 75.34], 1.0, 1.0, {
-            heading: 168.76,
-            minZ: 74.34,
-            maxZ: 75.34,
-        }),
-        parkingPlaces: [
-            new BoxZone([1146.26, -433.55, 80.87], 1.0, 1.0, {
-                heading: 81.02,
-                minZ: 79.87,
-                maxZ: 81.87,
-                data: {
-                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
-                },
-            }),
-        ],
-    },
+    // bcso_mp_air: {
+    //     name: 'BCSO Air Parking',
+    //     type: GarageType.Job,
+    //     job: JobType.BCSO,
+    //     category: GarageCategory.Air,
+    //     zone: new BoxZone([1161.3, -434.08, 75.34], 1.0, 1.0, {
+    //         heading: 168.76,
+    //         minZ: 74.34,
+    //         maxZ: 75.34,
+    //     }),
+    //     parkingPlaces: [
+    //         new BoxZone([1146.26, -433.55, 80.87], 1.0, 1.0, {
+    //             heading: 81.02,
+    //             minZ: 79.87,
+    //             maxZ: 81.87,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //     ],
+    // },
 
-    sasp_mp: {
-        name: 'SASP Parking',
-        type: GarageType.Job,
-        job: JobType.SASP,
-        category: GarageCategory.Car,
-        // Position of the garage
-        zone: new BoxZone([1168.45, -447.74, 59.28], 1.0, 1.0, {
-            heading: -101.99,
-            minZ: 58.28,
-            maxZ: 60.28,
-        }),
+    // sasp_mp: {
+    //     name: 'SASP Parking',
+    //     type: GarageType.Job,
+    //     job: JobType.SASP,
+    //     category: GarageCategory.Car,
+    //     // Position of the garage
+    //     zone: new BoxZone([1168.45, -447.74, 59.28], 1.0, 1.0, {
+    //         heading: -101.99,
+    //         minZ: 58.28,
+    //         maxZ: 60.28,
+    //     }),
 
-        parkingPlaces: [
-            new BoxZone([1181.6, -449.08, 60.28], 1.0, 1.0, {
-                heading: 257.01,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1182.31, -445.98, 60.28], 1.0, 1.0, {
-                heading: 256.87,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1183.37, -442.85, 60.28], 1.0, 1.0, {
-                heading: 257.81,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1184.08, -439.73, 60.28], 1.0, 1.0, {
-                heading: 257.87,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1184.82, -436.6, 60.28], 1.0, 1.0, {
-                heading: 257.45,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1185.53, -433.48, 60.28], 1.0, 1.0, {
-                heading: 256.57,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1174.38, -440.24, 60.28], 1.0, 1.0, {
-                heading: 76.22,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1175.15, -437.09, 60.28], 1.0, 1.0, {
-                heading: 76.33,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1175.75, -433.95, 60.28], 1.0, 1.0, {
-                heading: 75.46,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1176.56, -430.9, 60.28], 1.0, 1.0, {
-                heading: 76.17,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1170.67, -429.43, 60.28], 1.0, 1.0, {
-                heading: 255.79,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1169.85, -432.51, 60.28], 1.0, 1.0, {
-                heading: 256.82,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1169.13, -435.57, 60.28], 1.0, 1.0, {
-                heading: 256.15,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Small],
-                },
-            }),
-            new BoxZone([1174.85, -425.36, 60.28], 1.0, 1.0, {
-                heading: 257.54,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
-                },
-            }),
-            new BoxZone([1187.22, -427.56, 60.28], 1.0, 1.0, {
-                heading: 165.81,
-                minZ: 59.28,
-                maxZ: 61.28,
-                data: {
-                    capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
-                },
-            }),
-        ],
-    },
+    //     parkingPlaces: [
+    //         new BoxZone([1181.6, -449.08, 60.28], 1.0, 1.0, {
+    //             heading: 257.01,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1182.31, -445.98, 60.28], 1.0, 1.0, {
+    //             heading: 256.87,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1183.37, -442.85, 60.28], 1.0, 1.0, {
+    //             heading: 257.81,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1184.08, -439.73, 60.28], 1.0, 1.0, {
+    //             heading: 257.87,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1184.82, -436.6, 60.28], 1.0, 1.0, {
+    //             heading: 257.45,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1185.53, -433.48, 60.28], 1.0, 1.0, {
+    //             heading: 256.57,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1174.38, -440.24, 60.28], 1.0, 1.0, {
+    //             heading: 76.22,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1175.15, -437.09, 60.28], 1.0, 1.0, {
+    //             heading: 76.33,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1175.75, -433.95, 60.28], 1.0, 1.0, {
+    //             heading: 75.46,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1176.56, -430.9, 60.28], 1.0, 1.0, {
+    //             heading: 76.17,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1170.67, -429.43, 60.28], 1.0, 1.0, {
+    //             heading: 255.79,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1169.85, -432.51, 60.28], 1.0, 1.0, {
+    //             heading: 256.82,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1169.13, -435.57, 60.28], 1.0, 1.0, {
+    //             heading: 256.15,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small],
+    //             },
+    //         }),
+    //         new BoxZone([1174.85, -425.36, 60.28], 1.0, 1.0, {
+    //             heading: 257.54,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //         new BoxZone([1187.22, -427.56, 60.28], 1.0, 1.0, {
+    //             heading: 165.81,
+    //             minZ: 59.28,
+    //             maxZ: 61.28,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //     ],
+    // },
 
-    sasp_mp_air: {
-        name: 'SASP Air Parking',
-        type: GarageType.Job,
-        job: JobType.SASP,
-        category: GarageCategory.Air,
-        zone: new BoxZone([1161.3, -434.08, 75.34], 1.0, 1.0, {
-            heading: 168.76,
-            minZ: 74.34,
-            maxZ: 75.34,
-        }),
-        parkingPlaces: [
-            new BoxZone([1146.26, -433.55, 80.87], 1.0, 1.0, {
-                heading: 81.02,
-                minZ: 79.87,
-                maxZ: 81.87,
-                data: {
-                    capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
-                },
-            }),
-        ],
-    },
+    // sasp_mp_air: {
+    //     name: 'SASP Air Parking',
+    //     type: GarageType.Job,
+    //     job: JobType.SASP,
+    //     category: GarageCategory.Air,
+    //     zone: new BoxZone([1161.3, -434.08, 75.34], 1.0, 1.0, {
+    //         heading: 168.76,
+    //         minZ: 74.34,
+    //         maxZ: 75.34,
+    //     }),
+    //     parkingPlaces: [
+    //         new BoxZone([1146.26, -433.55, 80.87], 1.0, 1.0, {
+    //             heading: 81.02,
+    //             minZ: 79.87,
+    //             maxZ: 81.87,
+    //             data: {
+    //                 capacity: [PlaceCapacity.Small, PlaceCapacity.Medium, PlaceCapacity.Large],
+    //             },
+    //         }),
+    //     ],
+    // },
 
     // Casino
     diamond_vip: {
