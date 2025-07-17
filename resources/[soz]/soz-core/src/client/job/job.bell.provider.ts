@@ -46,7 +46,7 @@ const BELL_ZONES: BellProps[] = [
         number: '555-BCSO',
     },
     {
-        coords: [-616.73, -1621.55, 33.1],
+        coords: [-617.79, -1621.45, 33.05],
         job: JobType.Garbage,
         number: '555-BLUEBIRD',
     },
