@@ -27,7 +27,7 @@ export class ThunderProvider {
 
     @OnEvent(ClientEvent.THUNDER)
     public async thunder(target: number, coords: Vector3, v2: boolean) {
-        const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+        const playerCoords = GetFinalRenderedCamCoord() as Vector3;
         const dist = getDistance(playerCoords, coords);
 
         const coef = 1 - dist / 300;

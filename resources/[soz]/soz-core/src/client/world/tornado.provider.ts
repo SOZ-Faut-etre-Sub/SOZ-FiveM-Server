@@ -374,12 +374,19 @@ export class TornadoProvider {
         const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
         if (getDistance(playerCoords, center) < 500) {
             SetWind(70.0);
+            SetWindSpeed(70.0);
             const directionVect = sub2Vector3(center, playerCoords);
             const angle = deg(Math.atan2(-directionVect[0], directionVect[1]));
             SetWindDirection(angle);
+            Citizen.invokeNative('0x31950ebe600e22b4', true, GetHashKey('WEATHER_TYPES_HIGH_ELEVATION_BASE_JUMP_HELI'));
         } else {
             SetWind(-1);
             SetWindDirection(-1);
+            Citizen.invokeNative(
+                '0x31950ebe600e22b4',
+                false,
+                GetHashKey('WEATHER_TYPES_HIGH_ELEVATION_BASE_JUMP_HELI')
+            );
             return;
         }
 

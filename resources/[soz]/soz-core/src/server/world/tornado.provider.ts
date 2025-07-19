@@ -106,4 +106,8 @@ export class TornadoProvider {
             this.state?.endPosition
         );
     }
+
+    public getState() {
+        return this.state;
+    }
 }

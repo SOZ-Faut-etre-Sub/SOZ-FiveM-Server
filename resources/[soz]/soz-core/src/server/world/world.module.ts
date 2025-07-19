@@ -1,6 +1,7 @@
 import { Module } from '../../core/decorators/module';
 import { EarthquakeProvider } from './earthquake.provider';
 import { FireProvider } from './fire.provider';
+import { FirestormProvider } from './firestorm.provider';
 import { MeteorProvider } from './meteor.provider';
 import { OceanProvider } from './ocean.provider';
 import { ThunderProvider } from './thunder.provider';
@@ -16,6 +17,8 @@ import { WorldEventProvider } from './world.event.provider';
         ThunderProvider, 
         FireProvider,
         TornadoProvider,
+        FireProvider,
+        FirestormProvider,
     ],
 })
 export class WorldModule {}

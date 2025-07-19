@@ -146,6 +146,7 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 <MenuItemSelect
                     title={`Tempête de Sable`}
                     value={state.siren}
+                    titleWidth={50}
                     onConfirm={async index => {
                         await fetchNui(NuiEvent.AdminMenuSandstormMusic, index);
                     }}
@@ -158,7 +159,29 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
-                <MenuSubTitle>Feux de forêt</MenuSubTitle>
+                <MenuSubTitle>FireStorm</MenuSubTitle>
+                <MenuItemCheckbox
+                    checked={state.tornado}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuTornado, value);
+                    }}
+                >
+                    Tornade
+                </MenuItemCheckbox>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuTornadoMove);
+                    }}
+                >
+                    Déplacer la tornade
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuFireStorm);
+                    }}
+                >
+                    Cinematique
+                </MenuItemButton>
                 <MenuItemSelect
                     title="Incendie"
                     initialValue={null}
@@ -180,22 +203,6 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                     description="Réduit petit à petit le volume de l'incendie jusqu'à extinction"
                 >
                     Stopper l'incendie
-                </MenuItemButton>
-                <MenuSubTitle>Tornade</MenuSubTitle>
-                <MenuItemCheckbox
-                    checked={state.tornado}
-                    onChange={async value => {
-                        await fetchNui(NuiEvent.AdminMenuTornado, value);
-                    }}
-                >
-                    Tornade
-                </MenuItemCheckbox>
-                <MenuItemButton
-                    onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuTornadoMove, true);
-                    }}
-                >
-                    Déplacer la tornade
                 </MenuItemButton>
                 <MenuSubTitle>Annonces</MenuSubTitle>
                 <MenuItemButton

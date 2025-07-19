@@ -831,4 +831,5 @@ export enum ServerEvent {
     ADMIN_FORCE_PIT_EXTINGUISH = 'soz-core:admin:star:force-pit-extinguish',
 
     TORNADO = 'soz-core:server:tornado',
+    ADMIN_FIRESTORM = 'soz-core:server:admin:firestorm',
 }
