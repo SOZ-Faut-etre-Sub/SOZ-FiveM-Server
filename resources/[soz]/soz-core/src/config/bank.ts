@@ -121,16 +121,6 @@ export const SocietySafeStorage: Zone<JobType>[] = [
         data: JobType.BCSO,
     },
     {
-        //MP
-        center: [1147.42, -475.6, 72.62],
-        length: 1.0,
-        width: 1.3,
-        heading: 166.51,
-        minZ: 71.62,
-        maxZ: 73.62,
-        data: JobType.BCSO,
-    },
-    {
         center: [368.9, -1415.68, 38.19],
         length: 0.6,
         width: 0.7,
@@ -252,16 +242,6 @@ export const SocietySafeStorage: Zone<JobType>[] = [
         heading: 0.0,
         minZ: 33.68,
         maxZ: 35.68,
-        data: JobType.SASP,
-    },
-    {
-        //MP
-        center: [1147.42, -475.6, 72.62],
-        length: 1.0,
-        width: 1.3,
-        heading: 166.51,
-        minZ: 71.62,
-        maxZ: 73.62,
         data: JobType.SASP,
     },
     {

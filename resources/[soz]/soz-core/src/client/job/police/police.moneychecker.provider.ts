@@ -23,17 +23,15 @@ const moneycheckerInfos = [
         minZ: 60.08,
         maxZ: 60.68,
     },
-
-    {
-        job: JobType.BCSO,
-        position: [1165.92, -466.76, 60.28] as Vector3,
-        length: 0.6,
-        width: 0.6,
-        heading: 166.64,
-        minZ: 60.08,
-        maxZ: 60.68,
-    },
-
+    // {
+    //     job: JobType.BCSO,
+    //     position: [1165.92, -466.76, 60.28] as Vector3,
+    //     length: 0.6,
+    //     width: 0.6,
+    //     heading: 166.64,
+    //     minZ: 60.08,
+    //     maxZ: 60.68,
+    // },
     {
         job: JobType.BCSO,
         position: [1857.69, 3687.39, 30.27] as Vector3,
