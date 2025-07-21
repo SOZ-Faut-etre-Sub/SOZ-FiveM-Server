@@ -832,4 +832,7 @@ export enum ServerEvent {
 
     TORNADO = 'soz-core:server:tornado',
     ADMIN_FIRESTORM = 'soz-core:server:admin:firestorm',
+
+    ADMIN_SWAPMODEL_ADD = 'soz-core:server:admin:swapmodel-add',
+    ADMIN_SWAPMODEL_DELETE = 'soz-core:server:admin:swapmodel-delete',
 }

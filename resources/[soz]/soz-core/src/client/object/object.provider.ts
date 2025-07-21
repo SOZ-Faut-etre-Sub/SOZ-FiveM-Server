@@ -14,7 +14,9 @@ import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { getChunkId, getGridChunks } from '@public/shared/grid';
 import { InventoryType } from '@public/shared/inventory';
+import { joaat } from '@public/shared/joaat';
 import { LOW_RANGE_JOBS_ITEMS } from '@public/shared/job';
+import { ModelSwap } from '@public/shared/modelswap';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetOption } from '@public/shared/target';
@@ -127,8 +129,7 @@ export class ObjectProvider {
         }
     }
 
-    @Once(OnceStep.PlayerLoaded)
-    private async setupObjects(): Promise<void> {
+    public async setupObjects(): Promise<void> {
         const objects = await emitRpcTimeout<WorldObject[]>(RpcServerEvent.OBJECT_GET_LIST, 10_000);
 
         for (const object of objects) {
@@ -563,5 +564,30 @@ export class ObjectProvider {
         const groundPosition = this.getGroundPosition(props, offset || 0.0, rotation || 0);
 
         TriggerServerEvent(ServerEvent.OBJECT_PLACE, item, props, groundPosition);
+    }
+
+    public async createSwap(swap: ModelSwap) {
+        const model = joaat(swap.source);
+        for (const spawnableObject of Object.values(this.loadedObjects)) {
+            if (spawnableObject.entity && spawnableObject.object.model !== model) {
+                continue;
+            }
+
+            this.unspawnObject(spawnableObject.object.id);
+            await this.spawnObject(spawnableObject);
+        }
+    }
+
+    public async removeSwap(swap: ModelSwap) {
+        const model = joaat(swap.source);
+        for (const chunk of this.currentChunks) {
+            if (this.objectsByChunk.has(chunk)) {
+                for (const [, spawnableObject] of this.objectsByChunk.get(chunk)) {
+                    if (spawnableObject.object.model === model) {
+                        await this.spawnObject(spawnableObject);
+                    }
+                }
+            }
+        }
     }
 }
