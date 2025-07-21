@@ -819,11 +819,12 @@ export enum ServerEvent {
     CASINO_RESELL_CHIP = 'soz-core:server:casino:resell-chip',
     CASINO_SLOT_MACHINE_SPIN = 'soz-core:server:casino:slot-machine-spin',
     CASINO_INSIDE_TRACK_GET_GAINS = 'soz-core:server:casino:inside-track:get-gains',
-  
+
     BILLBOARD_PLACE_PROP = 'soz-core:server:billboard:place-prop',
     BILLBOARD_UPDATE_PROP = 'soz-core:server:billboard:update-prop',
     BILLBOARD_DELETE_PROP = 'soz-core:server:billboard:delete-prop',
     PANEL_UPDATE_ITEM_URL = 'soz-core:server:panel:update-item-url',
 
     ADMIN_STAR_NEW_FIRE_PIT = 'soz-core:admin:star:new-fire-pit',
+    ADMIN_FORCE_PIT_EXTINGUISH = 'soz-core:admin:star:force-pit-extinguish',
 }

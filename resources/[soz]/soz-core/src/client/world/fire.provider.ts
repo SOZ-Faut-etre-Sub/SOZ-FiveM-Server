@@ -22,12 +22,17 @@ import {
     offsetFlameCoords,
     offsetSmokeCoords,
 } from '../../shared/fire';
+import { LsmcCloakroom } from '../../shared/job/lsmc';
 import { NumberValidator } from '../../shared/nui/input';
-import { applyOffset, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { applyOffset, getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { ClothingService } from '../clothing/clothing.service';
+import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
+import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
+import { BlurService } from '../utils/blur.service';
 
 @Provider()
 export class FireProvider {
@@ -40,17 +45,34 @@ export class FireProvider {
     @Inject(Notifier)
     private readonly notifier: Notifier;
 
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
+
+    @Inject(ClothingService)
+    private readonly clothingService: ClothingService;
+
+    @Inject(BlurService)
+    public readonly blurService: BlurService;
+
+    @Inject(HudWeatherIconProvider)
+    public hudWeatherIconProvider: HudWeatherIconProvider;
+
     private usedFireExtinguisherRecently = false;
 
     private readonly gridSize = 25;
     private firePits = new Map<string, FirePitClient>();
 
+    private nearOfPit = false;
+    private wearingFireClothes = false;
+
     private previewFirePit: FirePit | null = null;
 
     @Once(OnceStep.Start, true)
     async onStart() {
-        const pits = await emitRpc(RpcServerEvent.FIRE_GET_ALL_PITS);
+        await this.resourceLoader.loadStreamedTextureDict('soz');
+        AddReplaceTexture('core', 'ptfx_fire_v2', 'soz', 'ptfx_fire_v2');
 
+        const pits = await emitRpc(RpcServerEvent.FIRE_GET_ALL_PITS);
         for (const [id, fire] of Object.entries(pits)) {
             await this.spawnFirePit(id, fire);
         }
@@ -237,6 +259,77 @@ export class FireProvider {
         );
     }
 
+    @Tick(TickInterval.EVERY_SECOND)
+    async onClothingTick() {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        this.wearingFireClothes = this.clothingService.checkWearingClothes(
+            'JobClothSet',
+            LsmcCloakroom[player.skin.Model.Hash]['Tenue incendie']
+        );
+
+        if (this.wearingFireClothes) {
+            this.hudWeatherIconProvider.remove('heat');
+            this.blurService.remove('fireHeat', 1000);
+            return;
+        }
+
+        if (this.firePits.size > 0) {
+            const ped = PlayerPedId();
+            const playerCoords = GetEntityCoords(ped) as Vector3;
+
+            this.nearOfPit = false;
+
+            for (const fire of this.firePits.values()) {
+                if (getDistance(fire.position, playerCoords) > fireScale[fire.type] * 10) continue;
+
+                this.notifier.notify(
+                    'Vous commencer à avoir très chaud, il vous faut une tenue approprié sinon vous risquez de bruler',
+                    'warning'
+                );
+
+                this.nearOfPit = true;
+                break;
+            }
+        }
+
+        if (this.nearOfPit) {
+            this.hudWeatherIconProvider.add('heat');
+            this.blurService.add('fireHeat', 1000);
+        } else {
+            this.hudWeatherIconProvider.remove('heat');
+            this.blurService.remove('fireHeat', 1000);
+        }
+    }
+
+    @Tick(TickInterval.EVERY_SECOND * 5)
+    public onHeatTick() {
+        const playerPed = PlayerPedId();
+
+        if (this.wearingFireClothes) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        if (player.metadata.godmode) {
+            return;
+        }
+
+        if (player.metadata.isdead) {
+            return;
+        }
+
+        const newHealth = GetEntityHealth(playerPed) - 10;
+        SetEntityHealth(playerPed, newHealth);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuFireFlash)
     public async fireFlash() {
         await emitRpc(RpcServerEvent.PHONE_APP_NEWS_CREATE, {
@@ -306,5 +399,11 @@ export class FireProvider {
             type,
             duration
         );
+    }
+    @OnNuiEvent(NuiEvent.AdminMenuStopFire)
+    async stopAllFirePits() {
+        TriggerServerEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH);
+
+        this.notifier.notify("Tous les feux commencent à s'éteindre");
     }
 }

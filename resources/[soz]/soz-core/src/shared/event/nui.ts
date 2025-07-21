@@ -125,6 +125,7 @@ export enum NuiEvent {
     AdminMenuFloodFlash = 'soz-core:nui:admin:flood-flash',
     AdminMenuPreviewFire = 'soz-core:nui:admin:preview-fire',
     AdminMenuStartFire = 'soz-core:nui:admin:start-fire',
+    AdminMenuStopFire = 'soz-core:nui:admin:stop-fire',
     AdminMenuFireFlash = 'soz-core:nui:admin:fire-flash',
     AdminOpenHousingStorage = 'soz-core:nui:admin:open-storage',
     AdminMenuEventCreate = 'soz-core:nui:admin:event:create',

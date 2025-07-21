@@ -1,7 +1,6 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Logger } from '@public/core/logger';
 import { RpcClientEvent } from '@public/shared/rpc';
-import { Weather } from '@public/shared/weather';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
@@ -11,7 +10,6 @@ import { emitClientRpc } from '../../core/rpc';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import {
-    decreaseFirePitChance,
     FirePit,
     firePitDefaultHealth,
     firePitGrid,
@@ -27,7 +25,6 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { QBCore } from '../qbcore';
-import { WeatherProvider } from '../weather/weather.provider';
 
 const PLAYER_RADIUS = 1000;
 const MAX_FIRE_PIT_WEIGHT = 60;
@@ -43,14 +40,11 @@ export class FireProvider {
     @Inject(PlayerPositionProvider)
     private readonly playerPositionProvider: PlayerPositionProvider;
 
-    @Inject(WeatherProvider)
-    private readonly weatherProvider: WeatherProvider;
-
     @Inject(Logger)
     private readonly logger: Logger;
 
     private readonly gridSize = 25;
-    private readonly weathersToReduceFire: Weather[] = ['THUNDER'];
+    private staffRequestPitExtinguish = false;
 
     private firePits = new Map<string, FirePit>();
     private firePitHealth = new Map<string, number>();
@@ -87,15 +81,28 @@ export class FireProvider {
         });
     }
 
+    @OnEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH)
+    async extinguishFirePit(source: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.staffRequestPitExtinguish = true;
+    }
+
     @Tick(TickInterval.EVERY_MINUTE / 2)
     async onPropagationCheck() {
-        const currentWeather = this.weatherProvider.getForecasts().at(0);
-
         if (this.firePits.size === 0 && this.firePitAlreadySpawned.size > 0) {
             this.firePitAlreadySpawned.clear();
+            this.staffRequestPitExtinguish = false;
         }
 
         for (const [id, pit] of this.firePits.entries()) {
+            if (this.staffRequestPitExtinguish) {
+                this.reduceFirePit(id);
+                continue;
+            }
+
             if (pit.endAt) {
                 const remainingTime = (pit.endAt - Date.now()) / 60000;
                 const remainingHealth = [FireType.Small, FireType.Medium, FireType.Huge].reduce((acc, type) => {
@@ -109,17 +116,9 @@ export class FireProvider {
                 }
             }
 
-            if (this.weathersToReduceFire.includes(currentWeather.weather)) {
-                const canReduce = getRandomInt(0, 100) <= decreaseFirePitChance[pit.type];
-                if (canReduce) {
-                    this.reduceFirePit(id);
-                    continue;
-                }
-            } else {
-                const canIncrease = getRandomInt(0, 100) <= increaseFirePitChance[pit.type];
-                if (canIncrease) {
-                    this.increaseFirePit(id);
-                }
+            const canIncrease = getRandomInt(0, 100) <= increaseFirePitChance[pit.type];
+            if (canIncrease) {
+                this.increaseFirePit(id);
             }
 
             if (!this.canSpawnMoreFirePits()) {

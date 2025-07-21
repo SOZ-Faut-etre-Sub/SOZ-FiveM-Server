@@ -11,6 +11,7 @@ import { ObjectOutFits } from '@public/shared/job/police';
 import { PlayerPedHash } from '@public/shared/player';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { LsmcCloakroom } from '../../shared/job/lsmc';
 import { ClothingService } from '../clothing/clothing.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
@@ -43,10 +44,12 @@ const SkipWarnCloths: Record<number, Outfit[]> = {
     [PlayerPedHash.Male]: [
         ObjectOutFits[JobType.LSPD][PlayerPedHash.Male]['light_intervention_outfit'],
         ObjectOutFits[JobType.BCSO][PlayerPedHash.Male]['heavy_antiriot_outfit'],
+        LsmcCloakroom[PlayerPedHash.Male]['Tenue incendie'],
     ],
     [PlayerPedHash.Female]: [
         ObjectOutFits[JobType.LSPD][PlayerPedHash.Female]['light_intervention_outfit'],
         ObjectOutFits[JobType.BCSO][PlayerPedHash.Female]['heavy_antiriot_outfit'],
+        LsmcCloakroom[PlayerPedHash.Female]['Tenue incendie'],
     ],
 };
 
@@ -127,7 +130,7 @@ export class PlayerHeatProvider {
                 outfit.Components[Component.Tops].Drawable == skipOutfit.Components[Component.Tops].Drawable &&
                 outfit.Components[Component.Tops].Collection == skipOutfit.Components[Component.Tops].Collection
             ) {
-                newheatScore = -3;
+                newheatScore = -10;
                 break;
             }
         }
@@ -190,6 +193,8 @@ export class PlayerHeatProvider {
         ) {
             this.sandStormProtected = true;
         }
+
+        console.log(newheatScore);
 
         this.heatScore = newheatScore;
     }

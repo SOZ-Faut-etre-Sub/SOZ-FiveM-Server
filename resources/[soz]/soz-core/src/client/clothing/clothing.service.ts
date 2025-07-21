@@ -258,4 +258,26 @@ export class ClothingService {
             }
         }
     }
+
+    public checkWearingClothes(
+        type: 'AdminOutfit' | 'BaseClothSet' | 'NakedClothSet' | 'JobClothSet' | 'TemporaryClothSet',
+        outfit: Outfit
+    ): boolean {
+        const player = this.playerService.getPlayer();
+        if (!player) return false;
+
+        for (const [component, item] of Object.entries(outfit?.Components ?? {})) {
+            if (player.cloth_config[type]?.Components?.[component]?.Collection !== item.Collection) return false;
+            if (player.cloth_config[type]?.Components?.[component]?.Drawable !== item.Drawable) return false;
+            if (player.cloth_config[type]?.Components?.[component]?.Texture !== item.Texture) return false;
+        }
+
+        for (const [prop, item] of Object.entries(outfit?.Props ?? {})) {
+            if (player.cloth_config[type]?.Props?.[prop]?.Collection !== item.Collection) return false;
+            if (player.cloth_config[type]?.Props?.[prop]?.Drawable !== item.Drawable) return false;
+            if (player.cloth_config[type]?.Props?.[prop]?.Texture !== item.Texture) return false;
+        }
+
+        return true;
+    }
 }
