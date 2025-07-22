@@ -194,8 +194,6 @@ export class PlayerHeatProvider {
             this.sandStormProtected = true;
         }
 
-        console.log(newheatScore);
-
         this.heatScore = newheatScore;
     }
 

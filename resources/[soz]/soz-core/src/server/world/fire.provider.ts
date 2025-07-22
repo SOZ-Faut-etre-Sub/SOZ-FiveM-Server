@@ -88,6 +88,13 @@ export class FireProvider {
         }
 
         this.staffRequestPitExtinguish = true;
+
+        this.firePits.forEach((_pit, id) => {
+            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
+        });
+
+        this.firePits.clear();
+        this.firePitHealth.clear();
     }
 
     @Tick(TickInterval.EVERY_MINUTE / 2)
