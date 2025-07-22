@@ -177,8 +177,18 @@ export class BankAccountRepository extends Repository<RepositoryType.BankAccount
     }
 
     public async hasAccessToAccount(player: PlayerData, account: BankAccount): Promise<boolean> {
-        if (account.type === 'safestorages' && player?.job?.id === JobType.CashTransfer && player?.job?.onduty) {
-            return true;
+        if (
+            account.type === 'safestorages' &&
+            player?.job?.id === JobType.CashTransfer &&
+            player?.job?.onduty &&
+            account.id.replace('safe_', '') !== JobType.CashTransfer
+        ) {
+            return this.jobService.hasTargetJobPermission(
+                JobType.CashTransfer,
+                player.job.id,
+                Number(player.job.grade),
+                JobPermission.CashTransfer_AccountAccess
+            );
         }
 
         if (account.type === 'safestorages' || account.type === 'business') {
