@@ -159,11 +159,12 @@ export class FireProvider {
         const pit = this.firePits.get(id);
         if (!pit) return;
 
+        StopParticleFxLooped(pit.smokePtfx, false);
+        StopParticleFxLooped(pit.flamePtfx, false);
+
         for (const firePtfx of pit.firePtfxs) {
             RemoveScriptFire(firePtfx);
         }
-        StopParticleFxLooped(pit.smokePtfx, false);
-        StopParticleFxLooped(pit.flamePtfx, false);
 
         this.firePits.delete(id);
     }

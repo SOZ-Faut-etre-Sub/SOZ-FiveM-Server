@@ -75,7 +75,9 @@ export class FireProvider {
         this.firePitHealth.set(fireId, firePitDefaultHealth[type]);
         this.firePitAlreadySpawned.add(fireId);
 
-        TriggerClientEvent(ClientEvent.FIRE_PIT_SPAWN, -1, fireId, {
+        this.logger.debug(`[World - Fire] Create new pit ${fireId}`);
+
+        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_SPAWN, -1, 16 * 1024, fireId, {
             position,
             type,
         });
@@ -91,10 +93,9 @@ export class FireProvider {
 
         this.firePits.forEach((_pit, id) => {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
+            this.firePits.delete(id);
+            this.firePitHealth.delete(id);
         });
-
-        this.firePits.clear();
-        this.firePitHealth.clear();
     }
 
     @Tick(TickInterval.EVERY_MINUTE / 2)
@@ -175,6 +176,8 @@ export class FireProvider {
                     continue;
                 }
 
+                if (this.staffRequestPitExtinguish) break;
+
                 this.firePits.set(newPitId, { position: newPitCoords, type: pit.type, endAt: pit.endAt });
                 this.firePitHealth.set(id, firePitDefaultHealth[pit.type]);
                 this.firePitAlreadySpawned.add(newPitId);
@@ -202,6 +205,8 @@ export class FireProvider {
         if (this.firePitHealth.get(id) < firePitDefaultHealth[pit.type]) {
             return;
         }
+
+        if (this.staffRequestPitExtinguish) return;
 
         const newPitType = Math.min(pit.type + 1, FireType.Huge);
         this.firePits.set(id, { ...pit, type: newPitType });
@@ -233,6 +238,8 @@ export class FireProvider {
             this.logger.debug(`[World - Fire] Fire pit ${id} removed`);
             return;
         }
+
+        if (this.staffRequestPitExtinguish) return;
 
         const newPitType = Math.max(FireType.Small, pit.type - 1);
         this.firePits.set(id, { ...pit, type: newPitType });
