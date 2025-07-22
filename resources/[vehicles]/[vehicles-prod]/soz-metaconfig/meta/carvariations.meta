@@ -6720,5 +6720,35 @@
             <lightSettings value="421" />
             <sirenSettings value="0" />
         </Item>
+        <Item>
+            <modelName>seccanis</modelName>
+            <colors>
+                <Item>
+                    <indices content="char_array">
+                        134
+                        134
+                        0
+                        156
+                    </indices>
+                    <liveries>
+                        <Item value="true" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                        <Item value="false" />
+                    </liveries>
+                </Item>
+            </colors>
+            <kits>
+                <Item>0_default_modkit</Item>
+            </kits>
+            <windowsWithExposedEdges />
+            <plateProbabilities />
+            <lightSettings value="0" />
+            <sirenSettings value="6996" />
+        </Item>
     </variationData>
 </CVehicleModelInfoVariation>
