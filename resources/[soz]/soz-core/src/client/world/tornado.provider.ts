@@ -114,6 +114,7 @@ export class TornadoProvider {
         for (const particle of this.particles) {
             this.particuleUpdate(particle, center, frameDelta);
         }
+        this.tornadoPulledEntities(center);
     }
 
     private async createVortex() {
@@ -258,7 +259,7 @@ export class TornadoProvider {
             await wait(0);
         }
 
-        if (!this.particles) {
+        if (this.particles) {
             for (const particle of this.particles) {
                 DeleteEntity(particle.prop);
             }
@@ -292,7 +293,7 @@ export class TornadoProvider {
         const [ret, val] = GetGroundZFor_3dCoord(
             position[0],
             position[1],
-            (this.prevZ ? this.prevZ : position[2]) + 100,
+            (this.prevZ ? this.prevZ : position[2]) + 1000,
             true
         );
         if (ret) {
@@ -302,8 +303,6 @@ export class TornadoProvider {
             } else {
                 position[2] = Math.max(this.prevZ - 0.5, expected);
             }
-        } else if (this.prevZ != null) {
-            position[2] = this.prevZ;
         }
 
         this.prevZ = position[2];
@@ -363,13 +362,10 @@ export class TornadoProvider {
         );
     }
 
-    @Tick()
-    private async tornadoPulledEntities() {
+    private async tornadoPulledEntities(center: Vector3) {
         if (!this.particles || this.exitSlowDown < 1) {
             return;
         }
-
-        const center = this.computePosition();
 
         const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
         if (getDistance(playerCoords, center) < 500) {
@@ -452,6 +448,7 @@ export class TornadoProvider {
                             ResetPedRagdollTimer(entity);
                         } else {
                             SetPedToRagdoll(entity, 15000, 15000, 0, false, false, false);
+                            SetPedRagdollForceFall(entity);
                         }
                     }
 

@@ -6,7 +6,7 @@ import { ClientEvent } from '@public/shared/event';
 import { NuiEvent } from '@public/shared/event/nui';
 import { ServerEvent } from '@public/shared/event/server';
 import { FireType } from '@public/shared/fire';
-import { deg, sub2Vector3, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { applyOffset, deg, sub2Vector3, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 
 import { Provider } from '../../core/decorators/provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
@@ -14,64 +14,86 @@ import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { ThunderProvider } from './thunder.provider';
 
-const SlineNodes: { coords: Vector3; rotation: Vector3; fov: number; delay: number }[] = [
+const SlineNodes: { coords?: Vector3; offset?: Vector3; rotation: Vector3; fov: number; delay: number }[] = [
     {
-        coords: [-840.3261144764728, 1389.5676750916075, 390.9132385253906],
+        offset: [0, 300, 120],
         rotation: [0, 0, -70],
-        fov: 30,
-        delay: 10000,
+        fov: 90,
+        delay: 9000,
     },
     {
-        coords: [-534.4292817618823, 1129.4982079579552, 403.9132385253906],
+        offset: [0, 300, 140],
         rotation: [0, 0, -10],
-        fov: 30,
+        fov: 90,
         delay: 3000,
     },
     {
-        coords: [-153.43502225580437, 1265.40396288914, 416.9132385253906],
+        offset: [0, 300, 160],
         rotation: [0, 0, 50],
-        fov: 30,
+        fov: 90,
         delay: 3000,
     },
     {
-        coords: [-80.11478426067276, 1666.2619710420734, 429.9132385253906],
+        offset: [0, 300, 180],
         rotation: [0, 0, 110],
-        fov: 30,
+        fov: 90,
         delay: 3000,
     },
     {
-        coords: [-392.9060169633337, 1932.1165266629046, 432.9132385253906],
+        offset: [0, 300, 200],
         rotation: [0, 0, 170],
-        fov: 30,
+        fov: 90,
         delay: 3000,
     },
     {
-        coords: [-659.3856811523438, 1948.3482666015625, 268.4766540527344],
-        rotation: [-16.35215377807617, 0, -137.4142608642578],
-        fov: 30,
-        delay: 6000,
-    },
-    {
-        coords: [-659.3856811523438, 1948.3482666015625, 268.4766540527344],
-        rotation: [-16.35215377807617, 0, -137.4142608642578],
-        fov: 40,
-        delay: 3000,
-    },
-    {
-        coords: [-1100.6282958984375, 1806.9210205078125, 445.99755859375],
-        rotation: [-14.365459442138672, 0, -122.4211730957031],
+        coords: [-1138.52, 1699.74, 382.0],
+        rotation: [-14.365459442138672, 0, 238.55],
         fov: 60,
-        delay: 20_000,
+        delay: 10_000,
+    },
+    {
+        coords: [-1138.52, 1699.74, 382.0],
+        rotation: [-14.365459442138672, 0, 238.55],
+        fov: 60,
+        delay: 10_000,
     },
 ];
 
 const ThunderFirePositions: Vector4[] = [
+    //zone1
+    [-2507.19, 1160.7, 214.94, 0],
+    [-2852.57, 914.49, 118.74, 0],
+    [-2877.66, 532.87, 41.87, 0],
+    [-2899.53, 1699.04, 56.77, 0],
+    [-2592.64, 2332.81, 29.55, 0],
+    [-1638.52, 980.5, 151.84, 0],
+
+    //zone2
     [-593.89, 1879.05, 207.05, 0],
     [-820.02, 1753.45, 187.29, 0],
-    [-796.3, 1612.69, 213.19, 0],
+    [-820.06, 1619.68, 212.84, 0], //lightning
     [-370.01, 1600.63, 329.2, 0],
+    [-347.28, 1275.58, 332.73, 0],
+
+    //zone3
+    [-73.57, 2916.64, 52.01, 0],
+    [-203.87, 2738.69, 39.8, 0],
+    [-18.66, 2517.32, 90.27, 0],
+
+    //zone4
+    [1030.73, 1906.68, 81.89, 0],
+    [1055.02, 1547.85, 163.25, 0],
+    [782.79, 1664.56, 179.08, 0],
+    [899.83, 890.52, 185.3, 0],
+    [486.97, 1057.79, 231.93, 0],
+
+    //zone5
+    [1371.16, 2782.59, 48.43, 0],
+    [1614.64, 2976.11, 52.92, 0],
+    [1959.54, 2775.57, 48.43, 0],
+    [1234.09, 2290.91, 74.37, 0],
 ];
-const ThunderPosition: Vector3 = [-593.89, 1879.05, 257.05];
+const ThunderPosition: Vector3 = [-821.53, 1618.92, 258.23];
 
 @Provider()
 export class FirestormProvider {
@@ -102,31 +124,16 @@ export class FirestormProvider {
         this.cam = cam;
 
         const coords = GetFinalRenderedCamCoord() as Vector3;
-        const rotation = GetFinalRenderedCamRot(2);
         const fov = GetFinalRenderedCamFov();
-
-        let newCam = CreateCamWithParams(
-            'DEFAULT_SCRIPTED_CAMERA',
-            coords[0],
-            coords[1],
-            coords[2] + 50,
-            rotation[0],
-            rotation[1],
-            rotation[2],
-            fov,
-            false,
-            2
-        );
-        AddCamSplineNodeUsingCamera(cam, newCam, 2_000, 0);
-        tmpCams.push(newCam);
 
         const directionVect = sub2Vector3(position, coords);
         const angle = deg(Math.atan2(-directionVect[0], directionVect[1]));
-        newCam = CreateCamWithParams(
+        const fixedCoords = applyOffset([coords[0], coords[1], coords[2], angle], [0, 10, 100]);
+        let newCam = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
-            coords[0],
-            coords[1],
-            coords[2] + 100,
+            fixedCoords[0],
+            fixedCoords[1],
+            fixedCoords[2],
             0,
             0,
             angle,
@@ -134,15 +141,34 @@ export class FirestormProvider {
             false,
             2
         );
-        AddCamSplineNodeUsingCamera(cam, newCam, 2_000, 0);
+        AddCamSplineNodeUsingCamera(cam, newCam, 4_000, 0);
+        tmpCams.push(newCam);
+
+        const midCoords = applyOffset([position[0], position[1], position[2], 180 + angle], [0, 500, 120]);
+        newCam = CreateCamWithParams(
+            'DEFAULT_SCRIPTED_CAMERA',
+            midCoords[0],
+            midCoords[1],
+            midCoords[2],
+            0,
+            0,
+            angle,
+            fov,
+            false,
+            2
+        );
+        AddCamSplineNodeUsingCamera(cam, newCam, 8_000, 0);
         tmpCams.push(newCam);
 
         for (const node of SlineNodes) {
+            const coords =
+                node.coords ??
+                applyOffset([position[0], position[1], position[2], node.rotation[2] + 180], node.offset);
             const newCam = CreateCamWithParams(
                 'DEFAULT_SCRIPTED_CAMERA',
-                node.coords[0],
-                node.coords[1],
-                node.coords[2],
+                coords[0],
+                coords[1],
+                coords[2],
                 node.rotation[0],
                 node.rotation[1],
                 node.rotation[2],
@@ -171,20 +197,6 @@ export class FirestormProvider {
         AddCamSplineNodeUsingCamera(cam, newCam, 10_000, 0);
         tmpCams.push(newCam);
 
-        newCam = CreateCamWithParams(
-            'DEFAULT_SCRIPTED_CAMERA',
-            coords[0],
-            coords[1],
-            coords[2] + 50,
-            rotation[0],
-            rotation[1],
-            rotation[2],
-            fov,
-            false,
-            2
-        );
-        AddCamSplineNodeUsingCamera(cam, newCam, 1_000, 0);
-        tmpCams.push(newCam);
         AddCamSplineNodeUsingGameplayFrame(cam, 1_000, 0);
 
         SetCamActive(cam, true);
@@ -196,7 +208,7 @@ export class FirestormProvider {
             await wait(0);
         }
 
-        await this.thunderProvider.thunder(target, ThunderPosition, true);
+        await this.thunderProvider.thunder(target, ThunderPosition, true, 0.6);
         if (target == GetPlayerServerId(PlayerId())) {
             for (const firePos of ThunderFirePositions) {
                 TriggerServerEvent(ServerEvent.ADMIN_STAR_NEW_FIRE_PIT, firePos, FireType.Huge, -1);
