@@ -310,7 +310,7 @@ export class FireProvider {
     public onHeatTick() {
         const playerPed = PlayerPedId();
 
-        if (this.wearingFireClothes) {
+        if (this.wearingFireClothes || !this.nearOfPit) {
             return;
         }
 
@@ -374,6 +374,10 @@ export class FireProvider {
             },
             NumberValidator
         );
+
+        if (duration === null) {
+            return;
+        }
 
         if (this.previewFirePit) {
             TriggerServerEvent(
