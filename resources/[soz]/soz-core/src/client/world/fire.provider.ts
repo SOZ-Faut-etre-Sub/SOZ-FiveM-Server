@@ -33,6 +33,7 @@ import { InputService } from '../nui/input.service';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { BlurService } from '../utils/blur.service';
+import { NoClipProvider } from '../utils/noclip.provider';
 
 @Provider()
 export class FireProvider {
@@ -55,7 +56,10 @@ export class FireProvider {
     public readonly blurService: BlurService;
 
     @Inject(HudWeatherIconProvider)
-    public hudWeatherIconProvider: HudWeatherIconProvider;
+    public readonly hudWeatherIconProvider: HudWeatherIconProvider;
+
+    @Inject(NoClipProvider)
+    public readonly noClipProvider: NoClipProvider;
 
     private usedFireExtinguisherRecently = false;
 
@@ -267,6 +271,10 @@ export class FireProvider {
             return;
         }
 
+        if (this.noClipProvider.IsNoClipMode()) {
+            return;
+        }
+
         this.wearingFireClothes = this.clothingService.checkWearingClothes(
             'JobClothSet',
             LsmcCloakroom[player.skin.Model.Hash]['Tenue incendie']
@@ -309,6 +317,10 @@ export class FireProvider {
     @Tick(TickInterval.EVERY_SECOND * 5)
     public onHeatTick() {
         const playerPed = PlayerPedId();
+
+        if (this.noClipProvider.IsNoClipMode()) {
+            return;
+        }
 
         if (this.wearingFireClothes || !this.nearOfPit) {
             return;
