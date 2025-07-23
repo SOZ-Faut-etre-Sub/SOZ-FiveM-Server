@@ -1,6 +1,7 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Logger } from '@public/core/logger';
 import { RpcClientEvent } from '@public/shared/rpc';
+import { Gauge } from 'prom-client';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Provider } from '../../core/decorators/provider';
@@ -43,6 +44,12 @@ export class FireProvider {
     @Inject(Logger)
     private readonly logger: Logger;
 
+    private firePitGauge = new Gauge({
+        name: 'soz_firestorm_pit',
+        help: 'Firestorm pit',
+        labelNames: ['chunk'],
+    });
+
     private readonly gridSize = 25;
     private staffRequestPitExtinguish = false;
 
@@ -73,6 +80,7 @@ export class FireProvider {
             endAt: duration > 0 ? Date.now() + duration * 60000 : undefined,
         });
         this.firePitHealth.set(fireId, firePitDefaultHealth[type]);
+        this.firePitGauge.set({ chunk: fireId }, firePitDefaultHealth[type]);
         this.firePitAlreadySpawned.add(fireId);
 
         this.logger.debug(`[World - Fire] Create new pit ${fireId}`);
@@ -95,6 +103,7 @@ export class FireProvider {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
             this.firePits.delete(id);
             this.firePitHealth.delete(id);
+            this.firePitGauge.remove({ chunk: id });
         });
     }
 
@@ -112,7 +121,7 @@ export class FireProvider {
             }
 
             if (pit.endAt) {
-                const remainingTime = (pit.endAt - Date.now()) / 60000;
+                const remainingTime = (pit.endAt - Date.now()) / 30000;
                 const remainingHealth = [FireType.Small, FireType.Medium, FireType.Huge].reduce((acc, type) => {
                     if (type > pit.type) return acc;
                     return acc + firePitDefaultHealth[type];
@@ -180,6 +189,7 @@ export class FireProvider {
 
                 this.firePits.set(newPitId, { position: newPitCoords, type: pit.type, endAt: pit.endAt });
                 this.firePitHealth.set(id, firePitDefaultHealth[pit.type]);
+                this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[pit.type]);
                 this.firePitAlreadySpawned.add(newPitId);
 
                 TriggerLatentClientEvent(
@@ -211,6 +221,7 @@ export class FireProvider {
         const newPitType = Math.min(pit.type + 1, FireType.Huge);
         this.firePits.set(id, { ...pit, type: newPitType });
         this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
+        this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
 
         TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, this.firePits.get(id));
 
@@ -221,6 +232,8 @@ export class FireProvider {
         this.firePitHealth.set(id, Math.max(this.firePitHealth.get(id) - 1, 0));
 
         const newFirePitHealth = this.firePitHealth.get(id);
+        this.firePitGauge.set({ chunk: id }, newFirePitHealth);
+
         this.logger.debug(`[World - Fire] Fire pit ${id} reduced its health to ${newFirePitHealth}`);
 
         if (newFirePitHealth > 0) {
@@ -232,6 +245,7 @@ export class FireProvider {
         if (pit.type === FireType.Small) {
             this.firePits.delete(id);
             this.firePitHealth.delete(id);
+            this.firePitGauge.remove({ chunk: id });
 
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
 
@@ -244,6 +258,7 @@ export class FireProvider {
         const newPitType = Math.max(FireType.Small, pit.type - 1);
         this.firePits.set(id, { ...pit, type: newPitType });
         this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
+        this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newFirePitHealth]);
 
         TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, this.firePits.get(id));
 
