@@ -55,6 +55,7 @@ export class FireProvider {
 
     private firePits = new Map<string, FirePit>();
     private firePitHealth = new Map<string, number>();
+    private firePitAlreadyReduced = new Set<string>();
     private firePitAlreadySpawned = new Set<string>();
 
     @Rpc(RpcServerEvent.FIRE_GET_ALL_PITS)
@@ -111,6 +112,7 @@ export class FireProvider {
     async onPropagationCheck() {
         if (this.firePits.size === 0 && this.firePitAlreadySpawned.size > 0) {
             this.firePitAlreadySpawned.clear();
+            this.firePitAlreadyReduced.clear();
             this.staffRequestPitExtinguish = false;
         }
 
@@ -216,6 +218,7 @@ export class FireProvider {
             return;
         }
 
+        if (this.firePitAlreadyReduced.has(id)) return;
         if (this.staffRequestPitExtinguish) return;
 
         const newPitType = Math.min(pit.type + 1, FireType.Huge);
@@ -230,6 +233,8 @@ export class FireProvider {
 
     private reduceFirePit(id: string) {
         this.firePitHealth.set(id, Math.max(this.firePitHealth.get(id) - 1, 0));
+
+        this.firePitAlreadyReduced.add(id);
 
         const newFirePitHealth = this.firePitHealth.get(id);
         this.firePitGauge.set({ chunk: id }, newFirePitHealth);
