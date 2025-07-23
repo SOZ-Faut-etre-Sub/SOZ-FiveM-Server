@@ -83,7 +83,7 @@ export class BankSafeProvider {
                                 );
                             const isSameJob =
                                 playerJobId === zone.data &&
-                                this.jobService.hasPermission(JobType.CashTransfer, JobPermission.SocietyMoneyStorage);
+                                this.jobService.hasPermission(playerJobId, JobPermission.SocietyMoneyStorage);
                             return hasPermission || isSameJob;
                         },
                         job: { [zone.data]: 0, [JobType.CashTransfer]: 0 },
