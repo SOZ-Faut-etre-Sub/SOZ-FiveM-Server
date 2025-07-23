@@ -15,6 +15,7 @@ import { ServerEvent } from '../../shared/event/server';
 import {
     FirePit,
     FirePitClient,
+    firePitDefaultHealth,
     firePitGrid,
     fireScale,
     fireScriptOffsets,
@@ -112,6 +113,14 @@ export class FireProvider {
             firePtfxs.push(fireHandle);
         }
 
+        const prevScale = fire.type >= 1 ? fireScale[fire.type - 1] : 0;
+        const currentScale = fireScale[fire.type];
+        const ptfxScale = this.lerp(
+            prevScale,
+            currentScale,
+            fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
+        );
+
         SetPtfxAssetNextCall('des_vaultdoor');
         const smokePtfx = StartParticleFxLoopedAtCoord(
             'ent_ray_pro1_residual_smoke',
@@ -121,7 +130,7 @@ export class FireProvider {
             0.0,
             0.0,
             smokeCoords[3],
-            fireScale[fire.type],
+            ptfxScale,
             false,
             false,
             false,
@@ -137,7 +146,7 @@ export class FireProvider {
             0.0,
             0.0,
             flameCoords[3],
-            fireScale[fire.type],
+            ptfxScale,
             false,
             false,
             false,
@@ -417,10 +426,15 @@ export class FireProvider {
             duration
         );
     }
+
     @OnNuiEvent(NuiEvent.AdminMenuStopFire)
     async stopAllFirePits() {
         TriggerServerEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH);
 
         this.notifier.notify("Tous les feux commencent à s'éteindre");
+    }
+
+    private lerp(min: number, max: number, percentage: number): number {
+        return min * (1 - percentage) + max * percentage;
     }
 }

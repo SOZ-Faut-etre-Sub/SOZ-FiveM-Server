@@ -5,6 +5,7 @@ import { Vector2, Vector3, Vector4 } from './polyzone/vector';
 export type FirePit = {
     position: Vector4;
     type: FireType;
+    health?: number;
     endAt?: number;
 };
 

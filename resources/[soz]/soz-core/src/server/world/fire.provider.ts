@@ -226,14 +226,18 @@ export class FireProvider {
         this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
         this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
 
-        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, this.firePits.get(id));
+        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
+            ...this.firePits.get(id),
+            health: this.firePitHealth.get(id),
+        });
 
         this.logger.debug(`[World - Fire] Fire pit ${id} increase its intensity`);
     }
 
     private reduceFirePit(id: string) {
-        this.firePitHealth.set(id, Math.max(this.firePitHealth.get(id) - 1, 0));
+        if (!this.firePits.has(id)) return;
 
+        this.firePitHealth.set(id, Math.max(this.firePitHealth.get(id) - 1, 0));
         this.firePitAlreadyReduced.add(id);
 
         const newFirePitHealth = this.firePitHealth.get(id);
@@ -242,6 +246,11 @@ export class FireProvider {
         this.logger.debug(`[World - Fire] Fire pit ${id} reduced its health to ${newFirePitHealth}`);
 
         if (newFirePitHealth > 0) {
+            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
+                ...this.firePits.get(id),
+                health: newFirePitHealth,
+            });
+
             return;
         }
 
@@ -263,9 +272,12 @@ export class FireProvider {
         const newPitType = Math.max(FireType.Small, pit.type - 1);
         this.firePits.set(id, { ...pit, type: newPitType });
         this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
-        this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newFirePitHealth]);
+        this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
 
-        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, this.firePits.get(id));
+        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
+            ...this.firePits.get(id),
+            health: firePitDefaultHealth[newPitType],
+        });
 
         this.logger.debug(`[World - Fire] Fire pit ${id} reduce its intensity`);
     }
