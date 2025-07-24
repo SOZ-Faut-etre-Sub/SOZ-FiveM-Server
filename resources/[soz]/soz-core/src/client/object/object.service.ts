@@ -229,15 +229,18 @@ export class ObjectService {
         }
 
         const swap = this.modelSwapRepository.findSwap(model, object.position);
+        let model2 = null;
         if (swap) {
             if (!swap.target) {
                 return false;
             }
-            model = joaat(swap.target);
+            model2 = joaat(swap.target);
         }
 
-        if (GetEntityModel(entity) !== model) {
-            this.logger.error(`Attemp to delete an entity of wrong model ${GetEntityModel(entity)} expected ${model}`);
+        if (![model, model2].includes(GetEntityModel(entity))) {
+            this.logger.error(
+                `Attemp to delete an entity of wrong model ${GetEntityModel(entity)} expected ${model} or ${model2} for ${object.id}`
+            );
 
             return false;
         }

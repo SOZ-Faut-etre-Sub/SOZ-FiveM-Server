@@ -14,6 +14,8 @@ import {
     FirePit,
     firePitDefaultHealth,
     firePitGrid,
+    fireScale,
+    FireTreeModelMapping,
     FireType,
     increaseFirePitChance,
     newFireOffset,
@@ -26,6 +28,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { QBCore } from '../qbcore';
+import { ModelSwapRepository } from '../repository/modelswap.repository';
 
 const PLAYER_RADIUS = 1000;
 const MAX_FIRE_PIT_WEIGHT = 60;
@@ -40,6 +43,9 @@ export class FireProvider {
 
     @Inject(PlayerPositionProvider)
     private readonly playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(ModelSwapRepository)
+    private readonly modelSwapRepository: ModelSwapRepository;
 
     @Inject(Logger)
     private readonly logger: Logger;
@@ -90,6 +96,8 @@ export class FireProvider {
             position,
             type,
         });
+
+        await this.addSwapModel(type, position);
     }
 
     @OnEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH)
@@ -201,6 +209,8 @@ export class FireProvider {
                     newPitId,
                     this.firePits.get(newPitId)
                 );
+
+                await this.addSwapModel(pit.type, newPitCoords);
 
                 this.logger.debug(`[World - Fire] Fire pit ${id} propagated to fire pit ${newPitId}`);
                 break; // Propagate only one pit during a propagation check
@@ -389,5 +399,42 @@ export class FireProvider {
         }
 
         return deltas;
+    }
+
+    private async addSwapModel(type: FireType, position: Vector4) {
+        for (const [sourceModel, targetModel] of Object.entries(FireTreeModelMapping)) {
+            await this.modelSwapRepository.addSwap({
+                id: 0,
+                position: [position[0], position[1], position[2]],
+                source: sourceModel,
+                target: targetModel,
+                range: fireScale[type] * 3,
+            });
+        }
+    }
+
+    @OnEvent(ServerEvent.ADMIN_FIRE_REMOVE_MODELSWAP)
+    public async removeModelSwap(source: number, position: Vector3, range: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        const models = Object.keys(FireTreeModelMapping);
+        const swaps = await this.modelSwapRepository.get();
+        for (const swap of swaps) {
+            if (!models.includes(swap.source)) {
+                continue;
+            }
+
+            if (getDistance(position, swap.position) > range) {
+                continue;
+            }
+
+            if (swap.target !== FireTreeModelMapping[swap.source]) {
+                continue;
+            }
+
+            this.modelSwapRepository.removeSwap(swap.id);
+        }
     }
 }

@@ -204,6 +204,12 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 >
                     Stopper l'incendie
                 </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={() => fetchNui(NuiEvent.AdminMenuFireRemoveModelSwap)}
+                    description="Enlever les remplacements de modèles d'arbre"
+                >
+                    Enlever les remplacements de modèles d'arbre
+                </MenuItemButton>
                 <MenuSubTitle>Annonces</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {

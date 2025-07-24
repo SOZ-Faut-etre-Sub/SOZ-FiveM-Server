@@ -17,7 +17,7 @@ import { InventoryType } from '@public/shared/inventory';
 import { joaat } from '@public/shared/joaat';
 import { LOW_RANGE_JOBS_ITEMS } from '@public/shared/job';
 import { ModelSwap } from '@public/shared/modelswap';
-import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 import { TargetOption } from '@public/shared/target';
 
@@ -573,6 +573,14 @@ export class ObjectProvider {
                 continue;
             }
 
+            if (getDistance(swap.position, spawnableObject.object.position) > swap.range) {
+                continue;
+            }
+
+            if (GetEntityModel(spawnableObject.entity) !== model) {
+                continue;
+            }
+
             this.unspawnObject(spawnableObject.object.id);
             await this.spawnObject(spawnableObject);
         }
@@ -583,9 +591,16 @@ export class ObjectProvider {
         for (const chunk of this.currentChunks) {
             if (this.objectsByChunk.has(chunk)) {
                 for (const [, spawnableObject] of this.objectsByChunk.get(chunk)) {
-                    if (spawnableObject.object.model === model) {
-                        await this.spawnObject(spawnableObject);
+                    if (spawnableObject.object.model !== model) {
+                        continue;
                     }
+
+                    if (getDistance(swap.position, spawnableObject.object.position) > swap.range) {
+                        continue;
+                    }
+
+                    this.unspawnObject(spawnableObject.object.id);
+                    await this.spawnObject(spawnableObject);
                 }
             }
         }

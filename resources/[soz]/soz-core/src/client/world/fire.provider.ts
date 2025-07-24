@@ -434,6 +434,22 @@ export class FireProvider {
         this.notifier.notify("Tous les feux commencent à s'éteindre");
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuFireRemoveModelSwap)
+    async removeFireModelSwap() {
+        const range = await this.inputService.askInput(
+            {
+                title: 'Portée',
+            },
+            NumberValidator
+        );
+
+        if (range === null) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.ADMIN_FIRE_REMOVE_MODELSWAP, range);
+    }
+
     private lerp(min: number, max: number, percentage: number): number {
         return min * (1 - percentage) + max * percentage;
     }
