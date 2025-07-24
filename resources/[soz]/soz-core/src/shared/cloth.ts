@@ -38,7 +38,7 @@ export type GlovesItem = {
     texture: number;
 };
 
-export type OutfitType = 'SPORT' | 'SWAT' | 'MINE' | '';
+export type OutfitType = 'SPORT' | 'SWAT' | 'MINE' | 'FIRE' | '';
 
 export type Outfit = {
     Components?: Partial<Record<Component, OutfitItem>>;
