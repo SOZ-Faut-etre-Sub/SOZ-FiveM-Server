@@ -46,10 +46,22 @@ const SlineNodes: { coords?: Vector3; offset?: Vector3; rotation: Vector3; fov: 
         delay: 3000,
     },
     {
+        coords: [-854.29, 1690.5, 293.79],
+        rotation: [-14.365459442138672, 0, 206.82],
+        fov: 30,
+        delay: 6_000,
+    },
+    {
+        coords: [-854.29, 1690.5, 293.79],
+        rotation: [-14.365459442138672, 0, 206.82],
+        fov: 90,
+        delay: 6_000,
+    },
+    {
         coords: [-1138.52, 1699.74, 382.0],
         rotation: [-14.365459442138672, 0, 238.55],
         fov: 60,
-        delay: 10_000,
+        delay: 5_000,
     },
     {
         coords: [-1138.52, 1699.74, 382.0],
@@ -144,7 +156,7 @@ export class FirestormProvider {
         AddCamSplineNodeUsingCamera(cam, newCam, 4_000, 0);
         tmpCams.push(newCam);
 
-        const midCoords = applyOffset([position[0], position[1], position[2], 180 + angle], [0, 500, 120]);
+        const midCoords = applyOffset([position[0], position[1], position[2], 180 + angle], [0, 800, 120]);
         newCam = CreateCamWithParams(
             'DEFAULT_SCRIPTED_CAMERA',
             midCoords[0],
