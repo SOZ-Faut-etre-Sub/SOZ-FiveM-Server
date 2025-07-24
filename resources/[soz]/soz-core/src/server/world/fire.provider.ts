@@ -32,6 +32,7 @@ import { ModelSwapRepository } from '../repository/modelswap.repository';
 
 const PLAYER_RADIUS = 1000;
 const MAX_FIRE_PIT_WEIGHT = 60;
+const INVINCIBILITY_TIME_AFTER_REDUCE = 5_000;
 
 @Provider()
 export class FireProvider {
@@ -63,6 +64,7 @@ export class FireProvider {
     private firePitHealth = new Map<string, number>();
     private firePitAlreadyReduced = new Set<string>();
     private firePitAlreadySpawned = new Set<string>();
+    private firePitLastReduced = new Map<string, number>();
 
     @Rpc(RpcServerEvent.FIRE_GET_ALL_PITS)
     async getAllPits() {
@@ -246,6 +248,7 @@ export class FireProvider {
 
     private reduceFirePit(id: string) {
         if (!this.firePits.has(id)) return;
+        if (this.firePitLastReduced.get(id) + INVINCIBILITY_TIME_AFTER_REDUCE > Date.now()) return;
 
         this.firePitHealth.set(id, Math.max(this.firePitHealth.get(id) - 1, 0));
         this.firePitAlreadyReduced.add(id);
@@ -254,6 +257,8 @@ export class FireProvider {
         this.firePitGauge.set({ chunk: id }, newFirePitHealth);
 
         this.logger.debug(`[World - Fire] Fire pit ${id} reduced its health to ${newFirePitHealth}`);
+
+        this.firePitLastReduced.set(id, Date.now());
 
         if (newFirePitHealth > 0) {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
