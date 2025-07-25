@@ -195,6 +195,15 @@ export class FireFiretruckProvider {
 
     @OnEvent(ClientEvent.FIRE_HOSE_DETACH_VEHICLE)
     async onFireHoseDetachment(netId: number) {
+        const playerVehicle = this.playerVehicle.get(netId);
+
+        if (playerVehicle?.vehicle && DoesEntityExist(playerVehicle.vehicle)) {
+            DeleteVehicle(playerVehicle.vehicle);
+        }
+        if (playerVehicle?.ped && DoesEntityExist(playerVehicle.ped)) {
+            DeleteEntity(playerVehicle.ped);
+        }
+
         this.playerVehicle.delete(netId);
         this.activeSpray.delete(netId);
     }
