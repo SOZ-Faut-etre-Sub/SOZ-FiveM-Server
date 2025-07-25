@@ -18,10 +18,12 @@ export class FireFiretruckProvider {
     private lockedFiretrucks = new Map<number, Set<number>>();
 
     @Rpc(RpcServerEvent.FIRE_GET_LOCKED_FIRETRUCK)
-    async getLockedFiretrucks(): Promise<number[]> {
+    async getLockedFiretrucks(): Promise<Array<[number, number]>> {
         const players = [];
 
-        this.lockedFiretrucks.forEach(value => players.push(...value));
+        this.lockedFiretrucks.forEach((player, firetruckNetId) =>
+            player.forEach(p => players.push([p, firetruckNetId]))
+        );
 
         return players;
     }

@@ -11,14 +11,15 @@ import { wait } from '../../core/utils';
 import { ServerEvent } from '../../shared/event/server';
 import { joaat } from '../../shared/joaat';
 import { PlayerData } from '../../shared/player';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
-import { RopeService } from '../rope.service';
 import { TargetFactory } from '../target/target.factory';
 import { WeaponService } from '../weapon/weapon.service';
+
+const ROPE_LENGTH = 25.0;
 
 @Provider()
 export class FireFiretruckProvider {
@@ -27,9 +28,6 @@ export class FireFiretruckProvider {
 
     @Inject(TargetFactory)
     private readonly targetFactory: TargetFactory;
-
-    @Inject(RopeService)
-    private readonly ropeService: RopeService;
 
     @Inject(Notifier)
     private readonly notifier: Notifier;
@@ -43,14 +41,17 @@ export class FireFiretruckProvider {
     public currentFiretruckAttached: number | null = null;
     private isFiring = false;
 
-    private playerVehicle = new Map<number, { vehicle: number; ped: number }>();
+    private playerVehicle = new Map<
+        number,
+        { firetruckNetId: number; vehicle?: number; ped?: number; rope?: number }
+    >();
     private activeSpray = new Set<number>();
 
     @Once(OnceStep.Start)
     public async onStart() {
-        const players = await emitRpc<number[]>(RpcServerEvent.FIRE_GET_LOCKED_FIRETRUCK);
-        for (const player of players) {
-            this.onFireHoseAttachment(player);
+        const players = await emitRpc<Array<[number, number]>>(RpcServerEvent.FIRE_GET_LOCKED_FIRETRUCK);
+        for (const [player, firetruckNetId] of players) {
+            await this.onFireHoseAttachment(player, firetruckNetId);
         }
     }
 
@@ -110,20 +111,6 @@ export class FireFiretruckProvider {
         TaskTurnPedToFaceEntity(PlayerPedId(), vehicle, 1000);
         await wait(500);
 
-        const attachPosition = GetOffsetFromEntityInWorldCoords(vehicle, 0.0, -3.5, 0.0) as Vector3;
-        const nozzle = await this.ropeService.createNewRope(
-            attachPosition,
-            vehicle,
-            3,
-            25.0,
-            undefined,
-            undefined,
-            'BONETAG_R_FINGER2'
-        );
-        if (!nozzle) {
-            return;
-        }
-
         await this.weaponService.set({
             name: 'WEAPON_HOSE',
             slot: 0,
@@ -145,7 +132,6 @@ export class FireFiretruckProvider {
         TaskTurnPedToFaceEntity(PlayerPedId(), this.currentFiretruckAttached, 500);
         await wait(500);
 
-        this.ropeService.deleteRope();
         this.currentFiretruckAttached = null;
 
         this.weaponService.clear();
@@ -154,14 +140,73 @@ export class FireFiretruckProvider {
     }
 
     @OnEvent(ClientEvent.FIRE_HOSE_ATTACH_VEHICLE)
-    async onFireHoseAttachment(netId: number) {
+    async onFireHoseAttachment(netId: number, firetruckNetId: number) {
+        this.playerVehicle.set(netId, { firetruckNetId });
+
+        await this.createPlayerVehicleLocalEntities(netId, firetruckNetId);
+    }
+
+    @OnEvent(ClientEvent.FIRE_HOSE_TRIGGER_SPRAY)
+    async onFireSprayChange(netId: number, active: boolean) {
+        if (active) {
+            this.activeSpray.add(netId);
+        } else {
+            this.activeSpray.delete(netId);
+        }
+    }
+
+    @OnEvent(ClientEvent.FIRE_HOSE_DETACH_VEHICLE)
+    async onFireHoseDetachment(netId: number) {
+        this.deletePlayerVehicleLocalEntities(netId);
+
+        this.playerVehicle.delete(netId);
+        this.activeSpray.delete(netId);
+    }
+
+    @Tick(TickInterval.EVERY_SECOND * 2)
+    onSync() {
+        this.playerVehicle.forEach(async (playerVehicle, netId) => {
+            if (!this.playerIsNear(netId)) {
+                this.deletePlayerVehicleLocalEntities(netId);
+
+                const playerVehicle = this.playerVehicle.get(netId);
+                this.playerVehicle.set(netId, {
+                    ...playerVehicle,
+                    vehicle: undefined,
+                    ped: undefined,
+                    rope: undefined,
+                });
+
+                return;
+            }
+
+            await this.createPlayerVehicleLocalEntities(netId, playerVehicle.firetruckNetId);
+            this.attachVehicleToWeapon(netId, playerVehicle.vehicle);
+        });
+    }
+
+    private playerIsNear(netId: number): boolean {
+        const player = GetPlayerFromServerId(netId);
+        if (player === -1) return false;
+
+        const playerPed = GetPlayerPed(player);
+        if (!playerPed) return false;
+
+        return true;
+    }
+
+    private async createPlayerVehicleLocalEntities(netId: number, firetruckNetId: number) {
+        const playerVehicle = this.playerVehicle.get(netId);
+        if (playerVehicle.vehicle && playerVehicle.ped && playerVehicle.rope) return;
+
         const player = GetPlayerFromServerId(netId);
         if (player === -1) return;
 
         const playerPed = GetPlayerPed(player);
         if (!playerPed) return;
 
-        const coords = GetEntityCoords(playerPed);
+        const firetruck = NetToVeh(firetruckNetId);
+        const coords = GetEntityCoords(playerPed) as Vector3;
 
         await this.resourceLoader.loadModel('hosefiretruk');
         const vehicle = CreateVehicle(joaat('hosefiretruk'), coords[0], coords[1], coords[2] + 1, 0.0, false, false);
@@ -176,43 +221,37 @@ export class FireFiretruckProvider {
         SetEntityCollision(ped, false, true);
         TaskWarpPedIntoVehicle(ped, vehicle, -1);
 
-        this.playerVehicle.set(netId, { vehicle, ped });
+        const attachPosition = GetOffsetFromEntityInWorldCoords(firetruck, 0.0, -3.5, 0.0) as Vector3;
+        const initLength = getDistance(coords, attachPosition);
+        RopeLoadTextures();
+        const [rope] = AddRope(
+            coords[0],
+            coords[1],
+            coords[2],
+            0.0,
+            0.0,
+            0.0,
+            ROPE_LENGTH,
+            3,
+            initLength,
+            0.5,
+            0,
+            false,
+            true,
+            true,
+            1.0,
+            false,
+            0
+        );
+        AttachRopeToEntity(rope, firetruck, attachPosition[0], attachPosition[1], attachPosition[2], true);
+        ActivatePhysics(rope);
+
+        this.playerVehicle.set(netId, { ...playerVehicle, vehicle, ped, rope });
 
         this.attachVehicleToWeapon(netId, vehicle);
 
         this.resourceLoader.unloadModel('hosefiretruk');
         this.resourceLoader.unloadModel('s_m_m_armoured_01');
-    }
-
-    @OnEvent(ClientEvent.FIRE_HOSE_TRIGGER_SPRAY)
-    async onFireSprayChange(netId: number, active: boolean) {
-        if (active) {
-            this.activeSpray.add(netId);
-        } else {
-            this.activeSpray.delete(netId);
-        }
-    }
-
-    @OnEvent(ClientEvent.FIRE_HOSE_DETACH_VEHICLE)
-    async onFireHoseDetachment(netId: number) {
-        const playerVehicle = this.playerVehicle.get(netId);
-
-        if (playerVehicle?.vehicle && DoesEntityExist(playerVehicle.vehicle)) {
-            DeleteVehicle(playerVehicle.vehicle);
-        }
-        if (playerVehicle?.ped && DoesEntityExist(playerVehicle.ped)) {
-            DeleteEntity(playerVehicle.ped);
-        }
-
-        this.playerVehicle.delete(netId);
-        this.activeSpray.delete(netId);
-    }
-
-    @Tick(TickInterval.EVERY_SECOND * 2)
-    async onSync() {
-        this.playerVehicle.forEach((playerVehicle, netId) => {
-            this.attachVehicleToWeapon(netId, playerVehicle.vehicle);
-        });
     }
 
     private attachVehicleToWeapon(netId: number, vehicle: number) {
@@ -229,11 +268,67 @@ export class FireFiretruckProvider {
         AttachEntityToEntity(vehicle, objID, -1, -2, 0.05, -1.5, -40, 0.0, -90, false, true, false, false, 1, true);
     }
 
+    private deletePlayerVehicleLocalEntities(netId: number) {
+        const playerVehicle = this.playerVehicle.get(netId);
+
+        if (playerVehicle?.rope) {
+            DeleteRope(playerVehicle?.rope);
+        }
+
+        if (playerVehicle?.vehicle && DoesEntityExist(playerVehicle.vehicle)) {
+            DeleteVehicle(playerVehicle.vehicle);
+        }
+
+        if (playerVehicle?.ped && DoesEntityExist(playerVehicle.ped)) {
+            DeleteEntity(playerVehicle.ped);
+        }
+    }
+
     @Tick()
     async onParticlesTick() {
         this.playerVehicle.forEach((playerVehicle, netId) => {
             if (this.activeSpray.has(netId)) {
                 SetVehicleShootAtTarget(playerVehicle.ped, -1, 0, 0, 0);
+            }
+
+            if (playerVehicle.rope) {
+                const player = GetPlayerFromServerId(netId);
+                if (player === -1) return;
+
+                const playerPed = GetPlayerPed(player);
+                if (!playerPed) return;
+
+                if (!NetworkDoesNetworkIdExist(playerVehicle.firetruckNetId)) return;
+
+                const firetruck = NetToVeh(playerVehicle.firetruckNetId);
+
+                const attachPosition = GetOffsetFromEntityInWorldCoords(firetruck, 0.0, -3.5, 0.0) as Vector3;
+
+                const handPosition = GetWorldPositionOfEntityBone(
+                    playerPed,
+                    GetEntityBoneIndexByName(playerPed, 'BONETAG_R_FINGER2')
+                ) as Vector3;
+
+                AttachEntitiesToRope(
+                    playerVehicle.rope,
+                    firetruck,
+                    playerPed,
+                    attachPosition[0],
+                    attachPosition[1],
+                    attachPosition[2],
+                    handPosition[0],
+                    handPosition[1],
+                    handPosition[2],
+                    ROPE_LENGTH,
+                    true,
+                    true,
+                    null,
+                    'BONETAG_R_FINGER2'
+                );
+
+                StopRopeWinding(playerVehicle.rope);
+                StartRopeWinding(playerVehicle.rope);
+                RopeForceLength(playerVehicle.rope, Math.max(GetRopeLength(playerVehicle.rope) + 0.3, 3.0));
             }
         });
     }
