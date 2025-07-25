@@ -452,7 +452,7 @@ export class VehicleSpawner {
     public async spawnRentVehicle(
         source: number,
         model: string,
-        data: { position: Vector4; color?: number }
+        data: { position: Vector4; color?: number; open?: boolean }
     ): Promise<null | number | object> {
         const player = this.playerService.getPlayer(source);
         const position = data.position;
@@ -479,7 +479,7 @@ export class VehicleSpawner {
             ...getDefaultVehicleVolatileState(),
             isPlayerVehicle: false,
             owner: player.citizenid,
-            open: false,
+            open: !!data.open,
             rentOwner: player.citizenid,
             model: model,
         };

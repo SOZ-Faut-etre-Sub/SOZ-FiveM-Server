@@ -4,6 +4,7 @@ import { Tick } from '@public/core/decorators/tick';
 import { Outfit, OutfitType } from '@public/shared/cloth';
 import { NuiEvent } from '@public/shared/event/nui';
 import { joaat } from '@public/shared/joaat';
+import { getLocationHash } from '@public/shared/locationhash';
 import { RpcClientEvent } from '@public/shared/rpc';
 
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
@@ -27,7 +28,6 @@ import {
 import { Control } from '../../shared/input';
 import { LsmcCloakroom } from '../../shared/job/lsmc';
 import { NumberValidator } from '../../shared/nui/input';
-import { PlayerData } from '../../shared/player';
 import { applyOffset, getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { ClothingService } from '../clothing/clothing.service';
@@ -39,18 +39,38 @@ import { PlayerService } from '../player/player.service';
 import { PlayerWardrobe } from '../player/player.wardrobe';
 import { InteractionProvider } from '../quick-interaction/interaction.provider';
 import { ResourceLoader } from '../repository/resource.loader';
+import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
 import { NoClipProvider } from '../utils/noclip.provider';
 
-const FireCloakroomPositions: Vector3[] = [
-    [1193.911, -1477.941, 34.86],
-    [197.596, -1650.367, 29.8],
-];
-
-const FireCloakroomPositionsWithProps: Vector4[] = [
-    [-632.0661, -93.8063, 37.15667, -10],
-    [1688.698, 3591.899, 34.71125, 20],
-    [-364.9791, 6125.985, 30.50336, -135],
+const FireStations: {
+    position: Vector4;
+    parking: Vector4;
+    createProp?: boolean;
+}[] = [
+    {
+        position: [1193.911, -1477.941, 34.86, 0],
+        parking: [1196.39, -1458.25, 34.93, 2.34],
+    },
+    {
+        position: [197.596, -1650.367, 29.8, 0],
+        parking: [211.53, -1637.02, 29.62, 320.97],
+    },
+    {
+        position: [-632.0661, -93.8063, 37.15667, -10],
+        parking: [-642.5, -102.15, 38.04, 112.68],
+        createProp: true,
+    },
+    {
+        position: [1688.698, 3591.899, 34.71125, 20],
+        parking: [1707.53, 3595.44, 35.42, 240.36],
+        createProp: true,
+    },
+    {
+        position: [-364.9791, 6125.985, 30.50336, -135],
+        parking: [-358.75, 6132.6, 31.44, 39.75],
+        createProp: true,
+    },
 ];
 
 @Provider()
@@ -88,6 +108,9 @@ export class FireProvider {
     @Inject(PlayerWardrobe)
     private readonly playerWardrobe: PlayerWardrobe;
 
+    @Inject(TargetFactory)
+    private readonly targetFactory: TargetFactory;
+
     private usedFireExtinguisherRecently = false;
 
     private readonly gridSize = 25;
@@ -107,61 +130,122 @@ export class FireProvider {
         for (const [id, fire] of Object.entries(pits)) {
             await this.spawnFirePit(id, fire);
         }
-    }
 
-    @Once(OnceStep.PlayerLoaded, true)
-    async onPlayerLoaded(player: PlayerData) {
-        for (const position of FireCloakroomPositionsWithProps) {
-            const index = FireCloakroomPositionsWithProps.indexOf(position);
-            await this.objectProvider.createObject({
-                id: 'fire_locker_' + index,
-                model: joaat('p_cs_locker_01_s'),
-                position: position,
-            });
+        for (const station of FireStations) {
+            const id = 'fire_locker_' + getLocationHash(station.position);
+            if (station.createProp) {
+                await this.objectProvider.createObject({
+                    id,
+                    model: joaat('p_cs_locker_01_s'),
+                    position: station.position,
+                });
+            }
+
+            this.targetFactory.createForBoxZone(
+                id,
+                {
+                    center: station.position,
+                    length: 1.0,
+                    width: 1.0,
+                    minZ: station.position[2],
+                    maxZ: station.position[2] + 2,
+                },
+                [
+                    {
+                        category: 'citizen',
+                        label: "S'équiper de la tenue d'incendie",
+                        canInteract: this.isClothType.bind(this, ''),
+                        action: async () => {
+                            const outfit: Outfit = {
+                                type: 'FIRE',
+                                ...LsmcCloakroom[GetEntityModel(PlayerPedId())]['Tenue incendie'],
+                            };
+
+                            const { completed } = await this.playerWardrobe.waitProgress(false);
+                            if (completed) {
+                                TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
+                            }
+                        },
+                    },
+                    {
+                        category: 'citizen',
+                        label: "Retirer la tenue d'incendie",
+                        canInteract: this.isClothType.bind(this, 'FIRE'),
+                        action: async () => {
+                            const { completed } = await this.playerWardrobe.waitProgress(false);
+                            if (completed) {
+                                TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+                            }
+                        },
+                    },
+                    {
+                        category: 'citizen',
+                        label: 'Sortir un camion de pompier',
+                        canInteract: this.isClothType.bind(this, 'FIRE'),
+                        action: async () => {
+                            if (
+                                IsPositionOccupied(
+                                    station.parking[0],
+                                    station.parking[1],
+                                    station.parking[2],
+                                    0.2,
+                                    false,
+                                    true,
+                                    true,
+                                    false,
+                                    false,
+                                    0,
+                                    false
+                                )
+                            ) {
+                                this.notifier.notify("L'emplacement est de parking est occupé.", 'error');
+                                return null;
+                            }
+
+                            TriggerServerEvent(ServerEvent.FIRETRUCK_TAKEOUT, station.parking);
+                        },
+                    },
+                    {
+                        category: 'citizen',
+                        label: 'Rendre un camion de pompier',
+                        canInteract: this.isClothType.bind(this, 'FIRE'),
+                        action: async () => {
+                            const DISTANCE_THRESHOLD = 20.0;
+                            const vehicle = GetPlayersLastVehicle();
+
+                            if (!vehicle) {
+                                this.notifier.notify(
+                                    'Vous devez monter dans le camion de pompier avant de pouvoir le ranger.',
+                                    'error'
+                                );
+                                return;
+                            }
+
+                            if (GetEntityModel(vehicle) !== joaat('firetruk')) {
+                                this.notifier.notify(
+                                    "Vous ne pouvez pas ranger autre chose qu'un camion de pompier",
+                                    'error'
+                                );
+                                return;
+                            }
+
+                            const position = GetEntityCoords(vehicle) as Vector3;
+                            if (getDistance(position, station.position) > DISTANCE_THRESHOLD) {
+                                this.notifier.notify(
+                                    'Vous devez vous rapprocher le camion de pompier pour pouvoir le ranger.',
+                                    'error'
+                                );
+                                return;
+                            }
+
+                            const networkId = NetworkGetNetworkIdFromEntity(vehicle);
+
+                            TriggerServerEvent(ServerEvent.FIRETRUCK_RETURN, networkId);
+                        },
+                    },
+                ]
+            );
         }
-
-        [
-            ...FireCloakroomPositions,
-            ...FireCloakroomPositionsWithProps.map(
-                position => [position[0], position[1], position[2] + 0.7, position[3]] as Vector4
-            ),
-        ].forEach(position => {
-            this.interactionProvider.createInteractionForCoords(
-                position,
-                {
-                    label: "S'équiper de la tenue d'incendie",
-                    canInteract: this.isClothType.bind(this, ''),
-                    action: async () => {
-                        const outfit: Outfit = {
-                            type: 'FIRE',
-                            ...LsmcCloakroom[player.skin.Model.Hash]['Tenue incendie'],
-                        };
-
-                        const { completed } = await this.playerWardrobe.waitProgress(false);
-                        if (completed) {
-                            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
-                        }
-                    },
-                },
-                2,
-                5
-            );
-            this.interactionProvider.createInteractionForCoords(
-                position,
-                {
-                    label: "Retirer la tenue d'incendie",
-                    canInteract: this.isClothType.bind(this, 'FIRE'),
-                    action: async () => {
-                        const { completed } = await this.playerWardrobe.waitProgress(false);
-                        if (completed) {
-                            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
-                        }
-                    },
-                },
-                2,
-                5
-            );
-        });
     }
 
     private isClothType(type: OutfitType): boolean {
