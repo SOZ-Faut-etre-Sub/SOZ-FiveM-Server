@@ -1,5 +1,6 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Logger } from '@public/core/logger';
+import { joaat } from '@public/shared/joaat';
 import { RpcClientEvent } from '@public/shared/rpc';
 import { Gauge } from 'prom-client';
 
@@ -25,10 +26,12 @@ import {
 import { getDistance, Point3D, Vector2, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
+import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { QBCore } from '../qbcore';
 import { ModelSwapRepository } from '../repository/modelswap.repository';
+import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 
 const PLAYER_RADIUS = 1000;
 const MAX_FIRE_PIT_WEIGHT = 60;
@@ -47,6 +50,12 @@ export class FireProvider {
 
     @Inject(ModelSwapRepository)
     private readonly modelSwapRepository: ModelSwapRepository;
+
+    @Inject(VehicleSpawner)
+    private readonly vehicleSpawner: VehicleSpawner;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
 
     @Inject(Logger)
     private readonly logger: Logger;
@@ -441,5 +450,31 @@ export class FireProvider {
 
             this.modelSwapRepository.removeSwap(swap.id);
         }
+    }
+
+    @OnEvent(ServerEvent.FIRETRUCK_TAKEOUT)
+    public async onRentBoat(source: number, position: Vector4) {
+        await this.vehicleSpawner.spawnRentVehicle(source, 'firetruk', {
+            position,
+            open: true,
+        });
+
+        this.notifier.notify(
+            source,
+            `Voilà de quoi sauver Los Santos des flammes, n'oublie pas de le rammener pour qu'il puisse servir à d'autre.`,
+            'success'
+        );
+    }
+
+    @OnEvent(ServerEvent.FIRETRUCK_RETURN)
+    public async onReturnBoat(source: number, networkId: number) {
+        const entityId = NetworkGetEntityFromNetworkId(networkId);
+        if (GetEntityModel(entityId) !== joaat('firetruk')) {
+            return;
+        }
+
+        await this.vehicleSpawner.delete(networkId);
+
+        this.notifier.notify(source, `Merci pour votre service.`, 'success');
     }
 }

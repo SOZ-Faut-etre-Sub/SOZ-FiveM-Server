@@ -837,4 +837,7 @@ export enum ServerEvent {
 
     ADMIN_SWAPMODEL_ADD = 'soz-core:server:admin:swapmodel-add',
     ADMIN_SWAPMODEL_DELETE = 'soz-core:server:admin:swapmodel-delete',
+
+    FIRETRUCK_TAKEOUT = 'soz-core:server:firetruck:takeout',
+    FIRETRUCK_RETURN = 'soz-core:server:firetruck:return',
 }
