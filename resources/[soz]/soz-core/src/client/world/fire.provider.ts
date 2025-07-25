@@ -24,6 +24,7 @@ import {
     offsetFlameCoords,
     offsetSmokeCoords,
 } from '../../shared/fire';
+import { Control } from '../../shared/input';
 import { LsmcCloakroom } from '../../shared/job/lsmc';
 import { NumberValidator } from '../../shared/nui/input';
 import { PlayerData } from '../../shared/player';
@@ -331,17 +332,18 @@ export class FireProvider {
             return;
         }
 
-        const weaponGroup = GetWeapontypeGroup(GetSelectedPedWeapon(player));
-        if (weaponGroup !== joaat('GROUP_FIREEXTINGUISHER')) {
-            return;
+        const weapon = GetSelectedPedWeapon(player);
+        const weaponGroup = GetWeapontypeGroup(weapon);
+
+        if (weaponGroup === joaat('GROUP_FIREEXTINGUISHER') && IsPedShooting(player)) {
+            this.usedFireExtinguisherRecently = true;
+            await wait(2_000);
         }
 
-        if (!IsPedShooting(player)) {
-            return;
+        if (weapon === joaat('WEAPON_HOSE') && IsControlPressed(0, Control.Attack)) {
+            this.usedFireExtinguisherRecently = true;
+            await wait(2_000);
         }
-
-        this.usedFireExtinguisherRecently = true;
-        await wait(2_000);
     }
 
     @Tick(TickInterval.EVERY_FRAME)

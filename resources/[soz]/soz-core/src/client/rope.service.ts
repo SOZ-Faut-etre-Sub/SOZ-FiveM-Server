@@ -33,8 +33,9 @@ export class RopeService {
         baseEntity: number,
         ropeType: number,
         maxLength: number,
-        holdingObjectPropName: string,
-        ropeData?: string
+        holdingObjectPropName?: string,
+        ropeData?: string,
+        boneName: string = 'BONETAG_L_FINGER2'
     ): Promise<number | null> {
         const position = GetEntityCoords(PlayerPedId()) as Vector3;
         if (this.ropeState) {
@@ -66,12 +67,14 @@ export class RopeService {
             LoadRopeData(rope, ropeData);
         }
 
-        const object = await this.attachedObjectService.attachObjectToPlayer({
-            bone: 26610,
-            model: holdingObjectPropName,
-            position: [0.04, -0.04, 0.02],
-            rotation: [305.0, 270.0, -40.0],
-        });
+        const object = holdingObjectPropName
+            ? await this.attachedObjectService.attachObjectToPlayer({
+                  bone: 26610,
+                  model: holdingObjectPropName,
+                  position: [0.04, -0.04, 0.02],
+                  rotation: [305.0, 270.0, -40.0],
+              })
+            : 0;
 
         this.ropeState = {
             rope,
@@ -97,20 +100,17 @@ export class RopeService {
             return null;
         }
 
-        this.manageRopePhysics();
+        this.manageRopePhysics(boneName);
 
         return this.ropeState.rope;
     }
 
-    private async manageRopePhysics() {
+    private async manageRopePhysics(boneName: string) {
         while (this.ropeState) {
             const ped = PlayerPedId();
             const rope = this.ropeState.rope;
             const ropeLength = GetRopeLength(rope);
-            const handPosition = GetWorldPositionOfEntityBone(
-                ped,
-                GetEntityBoneIndexByName(ped, 'BONETAG_L_FINGER2')
-            ) as Vector3;
+            const handPosition = GetWorldPositionOfEntityBone(ped, GetEntityBoneIndexByName(ped, boneName)) as Vector3;
 
             AttachEntitiesToRope(
                 this.ropeState.rope,
@@ -126,7 +126,7 @@ export class RopeService {
                 true,
                 true,
                 null,
-                'BONETAG_L_FINGER2'
+                boneName
             );
 
             if (!this.ropeState.lastRopeLength) {
@@ -157,13 +157,13 @@ export class RopeService {
         }
     }
 
-    public getRopeDistance() {
+    public getRopeDistance(boneName = 'BONETAG_L_FINGER2') {
         if (!this.ropeState) {
             return null;
         }
         const handPosition = GetWorldPositionOfEntityBone(
             PlayerPedId(),
-            GetEntityBoneIndexByName(PlayerPedId(), 'BONETAG_L_FINGER2')
+            GetEntityBoneIndexByName(PlayerPedId(), boneName)
         ) as Vector3;
         return getDistance(this.ropeState.attachPosition, handPosition);
     }

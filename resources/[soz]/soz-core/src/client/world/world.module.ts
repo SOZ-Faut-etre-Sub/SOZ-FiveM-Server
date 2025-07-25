@@ -1,6 +1,7 @@
 import { Module } from '../../core/decorators/module';
 import { BlipFactory } from '../blip';
 import { EarthquakeProvider } from './earthquake.provider';
+import { FireFiretruckProvider } from './fire.firetruck.provider';
 import { FireProvider } from './fire.provider';
 import { FirestormProvider } from './firestorm.provider';
 import { FireworkProvider } from './firework.provider';
@@ -28,6 +29,7 @@ import { WorldEventProvider } from './world.event.provider';
         FireProvider,
         FirestormProvider,
         ModelSwapProvider,
+        FireFiretruckProvider,
     ],
 })
 export class WorldModule {}

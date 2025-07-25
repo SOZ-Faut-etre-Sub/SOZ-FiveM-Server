@@ -830,6 +830,7 @@ export enum ServerEvent {
     ADMIN_STAR_NEW_FIRE_PIT = 'soz-core:admin:star:new-fire-pit',
     ADMIN_FORCE_PIT_EXTINGUISH = 'soz-core:admin:star:force-pit-extinguish',
     ADMIN_FIRE_REMOVE_MODELSWAP = 'soz-core:admin:fire:remove-modelswap',
+    FIRE_HOSE_TRIGGER_SPRAY = 'soz-core:server:fire:hose-trigger-spray',
 
     TORNADO = 'soz-core:server:tornado',
     ADMIN_FIRESTORM = 'soz-core:server:admin:firestorm',
