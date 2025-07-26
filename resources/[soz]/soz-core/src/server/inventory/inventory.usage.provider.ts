@@ -174,7 +174,11 @@ export class InventoryUsageProvider {
                 return item.name === shortcutItem.name && item.metadata.serial === shortcutItem.metadata.serial;
             }
 
-            if (shortcutItem.metadata.url) {
+            if (
+                shortcutItem.name === 'zpad' &&
+                inventory.getItemCount(shortcutItem.name) > 1 &&
+                shortcutItem.metadata.url
+            ) {
                 return item.name === shortcutItem.name && item.metadata.url === shortcutItem.metadata.url;
             }
 
