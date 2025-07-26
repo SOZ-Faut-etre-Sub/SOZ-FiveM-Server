@@ -23484,7 +23484,7 @@
             <visibleMods>
                 <Item>
                     <modelName>zr360_bumf_1</modelName>
-                    <modShopLabel>zr360_bumf_1</modShopLabel>
+                    <modShopLabel>ZR360_BUMF_1</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
                     <type>VMT_BUMPER_F</type>
@@ -23499,7 +23499,7 @@
                 </Item>
                 <Item>
                     <modelName>zr360_bumr_1</modelName>
-                    <modShopLabel>zr360_bumr_1</modShopLabel>
+                    <modShopLabel>ZR360_BUMR_1</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
                     <type>VMT_BUMPER_R</type>
@@ -23514,7 +23514,7 @@
                 </Item>
                 <Item>
                     <modelName>zr360_bumr_2</modelName>
-                    <modShopLabel>zr360_bumr_2</modShopLabel>
+                    <modShopLabel>ZR360_BUMR_2</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
                     <type>VMT_BUMPER_R</type>
@@ -23529,7 +23529,7 @@
                 </Item>
                 <Item>
                     <modelName>zr360_wing_1</modelName>
-                    <modShopLabel>zr360_wing_1</modShopLabel>
+                    <modShopLabel>ZR360_WING_1</modShopLabel>
                     <linkedModels />
                     <turnOffBones>
                         <Item>misc_a</Item>
@@ -23546,7 +23546,7 @@
                 </Item>
                 <Item>
                     <modelName>zr360_wing_2</modelName>
-                    <modShopLabel>zr360_wing_2</modShopLabel>
+                    <modShopLabel>ZR360_WING_2</modShopLabel>
                     <linkedModels />
                     <turnOffBones>
                         <Item>misc_a</Item>
@@ -23563,24 +23563,7 @@
                 </Item>
                 <Item>
                     <modelName>zr360_wing_3</modelName>
-                    <modShopLabel>zr360_wing_3</modShopLabel>
-                    <linkedModels />
-                    <turnOffBones>
-                        <Item>misc_a</Item>
-                    </turnOffBones>
-                    <type>VMT_SPOILER</type>
-                    <bone>boot</bone>
-                    <collisionBone>boot</collisionBone>
-                    <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000" />
-                    <weight value="20" />
-                    <turnOffExtra value="false" />
-                    <disableBonnetCamera value="false" />
-                    <allowBonnetSlide value="true" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wing_4</modelName>
-                    <modShopLabel>zr360_wing_4</modShopLabel>
+                    <modShopLabel>ZR360_WING_3</modShopLabel>
                     <linkedModels />
                     <turnOffBones>
                         <Item>misc_a</Item>
@@ -23597,7 +23580,7 @@
                 </Item>
                 <Item>
                     <modelName>zr360_body</modelName>
-                    <modShopLabel>zr360_body</modShopLabel>
+                    <modShopLabel>ZR360_BODY</modShopLabel>
                     <linkedModels />
                     <turnOffBones />
                     <type>VMT_CHASSIS</type>
@@ -23611,32 +23594,8 @@
                     <allowBonnetSlide value="true" />
                 </Item>
                 <Item>
-                    <modelName>zr360_pdm</modelName>
-                    <modShopLabel>zr360_pdm</modShopLabel>
-                    <linkedModels />
-                    <turnOffBones>
-                        <Item>bonnet</Item>
-                        <Item>misc_c</Item>
-                        <Item>misc_f</Item>
-                        <Item>indicator_lf</Item>
-                        <Item>indicator_rf</Item>
-                        <Item>extra_1</Item>
-                        <Item>misc_d</Item>
-                        <Item>misc_e</Item>
-                    </turnOffBones>
-                    <type>VMT_CHASSIS</type>
-                    <bone>chassis</bone>
-                    <collisionBone>chassis</collisionBone>
-                    <cameraPos>VMCP_DEFAULT</cameraPos>
-                    <audioApply value="1.000000" />
-                    <weight value="0" />
-                    <turnOffExtra value="false" />
-                    <disableBonnetCamera value="false" />
-                    <allowBonnetSlide value="true" />
-                </Item>
-                <Item>
                     <modelName>zr360_exh_1</modelName>
-                    <modShopLabel>zr360_exh1</modShopLabel>
+                    <modShopLabel>ZR360_EXH1</modShopLabel>
                     <linkedModels />
                     <turnOffBones>
                         <Item>misc_b</Item>
@@ -23654,7 +23613,7 @@
                 </Item>
                 <Item>
                     <modelName>re_amemiya_zr360</modelName>
-                    <modShopLabel>re_amemiya_zr360</modShopLabel>
+                    <modShopLabel>RE_ANEMIYA_ZR360</modShopLabel>
                     <linkedModels>
                         <Item>re_amemiya_zr3604</Item>
                     </linkedModels>
@@ -23678,7 +23637,7 @@
                 </Item>
                 <Item>
                     <modelName>re_amemiya_zr360</modelName>
-                    <modShopLabel>re_amemiya_zr360</modShopLabel>
+                    <modShopLabel>RE_ANEMIYA_ZR360_1</modShopLabel>
                     <linkedModels>
                         <Item>re_amemiya_zr3602</Item>
                         <Item>re_amemiya_zr3604</Item>
@@ -23686,7 +23645,6 @@
                     <turnOffBones>
                         <Item>bonnet</Item>
                         <Item>misc_c</Item>
-                        <Item>misc_f</Item>
                         <Item>indicator_lf</Item>
                         <Item>indicator_rf</Item>
                         <Item>extra_1</Item>
@@ -23705,7 +23663,7 @@
                 </Item>
                 <Item>
                     <modelName>re_amemiya_zr360</modelName>
-                    <modShopLabel>re_amemiya_zr360</modShopLabel>
+                    <modShopLabel>RE_ANEMIYA_ZR360_2</modShopLabel>
                     <linkedModels>
                         <Item>re_amemiya_zr3603</Item>
                         <Item>re_amemiya_zr3604</Item>
@@ -23713,7 +23671,6 @@
                     <turnOffBones>
                         <Item>bonnet</Item>
                         <Item>misc_c</Item>
-                        <Item>misc_f</Item>
                         <Item>indicator_lf</Item>
                         <Item>indicator_rf</Item>
                         <Item>extra_1</Item>
@@ -23738,6 +23695,11 @@
                     <turnOffExtra value="false" />
                 </Item>
                 <Item>
+                    <modelName>re_amemiya_zr3602</modelName>
+                    <bone>chassis</bone>
+                    <turnOffExtra value="false" />
+                </Item>
+                <Item>
                     <modelName>re_amemiya_zr3603</modelName>
                     <bone>chassis</bone>
                     <turnOffExtra value="false" />
@@ -23745,66 +23707,6 @@
                 <Item>
                     <modelName>re_amemiya_zr3604</modelName>
                     <bone>chassis</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wfp_2</modelName>
-                    <bone>chassis</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wrp_2</modelName>
-                    <bone>boot</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wrfp_2</modelName>
-                    <bone>door_pside_f</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wlfp_2</modelName>
-                    <bone>door_dside_f</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wfp_3</modelName>
-                    <bone>chassis</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wrp_3</modelName>
-                    <bone>boot</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wrfp_3</modelName>
-                    <bone>door_pside_f</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wlfp_3</modelName>
-                    <bone>door_dside_f</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wfp_4</modelName>
-                    <bone>chassis</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wrp_4</modelName>
-                    <bone>boot</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wrfp_4</modelName>
-                    <bone>door_pside_f</bone>
-                    <turnOffExtra value="false" />
-                </Item>
-                <Item>
-                    <modelName>zr360_wlfp_4</modelName>
-                    <bone>door_dside_f</bone>
                     <turnOffExtra value="false" />
                 </Item>
             </linkMods>
@@ -28758,7 +28660,7 @@
         </Item>
     </Lights>
     <Item>
-        <id value="1249" />
+        <id value="1280" />
         <indicator>
             <intensity value="0.375000" />
             <falloffMax value="2.500000" />

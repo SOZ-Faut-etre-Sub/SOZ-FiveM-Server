@@ -148,6 +148,20 @@ Citizen.CreateThread(function()
     AddTextEntryByHash(GetHashKey("zrtblizzard"), "ZRT Blizzard")
     AddTextEntryByHash(GetHashKey("sandstorm"), "Sandstorm")
 
+    -- zr360 Custom names
+
+    AddTextEntryByHash(GetHashKey("ZR360_BUMF_1"), "Lights Front Bumper")
+    AddTextEntryByHash(GetHashKey("ZR360_BUMR_1"), "Black Diffuser Rear Bumper")
+    AddTextEntryByHash(GetHashKey("ZR360_BUMR_2"), "Racing Diffuser Rear Bumper")
+    AddTextEntryByHash(GetHashKey("ZR360_WING_1"), "Racing Spoiler")
+    AddTextEntryByHash(GetHashKey("ZR360_WING_2"), "Minimal Spoiler")
+    AddTextEntryByHash(GetHashKey("ZR360_WING_3"), "Carbon Racing Spoiler")
+    AddTextEntryByHash(GetHashKey("ZR360_BODY"), "Under body Kit")
+    AddTextEntryByHash(GetHashKey("ZR360_EXH1"), "Huge Exhaust")
+    AddTextEntryByHash(GetHashKey("RE_ANEMIYA_ZR360"), "Kit With Front Bumper")
+    AddTextEntryByHash(GetHashKey("RE_ANEMIYA_ZR360_1"), "Kit With Front Bumper And Hood")
+    AddTextEntryByHash(GetHashKey("RE_ANEMIYA_ZR360_2"), "Kit With Front  And Carbon Hood")
+
     --Vehicles Custom 07/2025
 
     AddTextEntryByHash(GetHashKey("previons"), "Previons S")
