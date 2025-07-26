@@ -88,10 +88,15 @@ export class FireFiretruckProvider {
     }
 
     @PlayerUpdate()
-    public async onPlayerUpdate(player: PlayerData) {
+    private async onPlayerUpdate(player: PlayerData) {
         if (player.metadata.isdead || player.metadata.ishandcuffed) {
             await this.disconnectFiretruck();
         }
+    }
+
+    @OnEvent(ClientEvent.BASE_ENTERED_VEHICLE)
+    private async onPlayerEnteredVehicle() {
+        await this.disconnectFiretruck(true);
     }
 
     public async connectFiretruck(vehicle: number) {
@@ -122,15 +127,17 @@ export class FireFiretruckProvider {
         this.currentFiretruckAttached = vehicle;
     }
 
-    public async disconnectFiretruck() {
+    public async disconnectFiretruck(skipTurnFace = false) {
         if (this.currentFiretruckAttached === null) {
             return;
         }
 
         const vehicleNetId = NetworkGetNetworkIdFromEntity(this.currentFiretruckAttached);
 
-        TaskTurnPedToFaceEntity(PlayerPedId(), this.currentFiretruckAttached, 500);
-        await wait(500);
+        if (!skipTurnFace) {
+            TaskTurnPedToFaceEntity(PlayerPedId(), this.currentFiretruckAttached, 500);
+            await wait(500);
+        }
 
         this.currentFiretruckAttached = null;
 
