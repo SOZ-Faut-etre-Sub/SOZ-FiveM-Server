@@ -51,12 +51,6 @@ export const increaseFirePitChance: Record<FireType, number> = {
     [FireType.Huge]: 0,
 };
 
-export const decreaseFirePitChance: Record<FireType, number> = {
-    [FireType.Small]: 70,
-    [FireType.Medium]: 50,
-    [FireType.Huge]: 20,
-};
-
 export const fireScale: Record<FireType, number> = {
     [FireType.Small]: 1,
     [FireType.Medium]: 5,
@@ -72,16 +66,22 @@ export const offsetFlameCoords: Record<FireType, number> = {
 export const fireScriptOffsets: Record<FireType, Vector3[]> = {
     [FireType.Small]: [[0, 0, 0]],
     [FireType.Medium]: [
-        [0, 1.0, 0],
-        [0.866, -0.5, 0],
-        [-0.866, -0.5, 0],
+        [0, 0, 0],
+        [5, 0, 0],
+        [-5, 0, 0],
+        [0, 5, 0],
+        [0, -5, 0],
     ],
     [FireType.Huge]: [
         [0, 0, 0],
-        [1.5, 0, 0],
-        [-1.5, 0, 0],
-        [0, 1.5, 0],
-        [0, -1.5, 0],
+        [5, 0, 0],
+        [-5, 0, 0],
+        [0, 5, 0],
+        [0, -5, 0],
+        [7.07, 7.07, 0],
+        [-7.07, 7.07, 0],
+        [7.07, -7.07, 0],
+        [-7.07, -7.07, 0],
     ],
 };
 

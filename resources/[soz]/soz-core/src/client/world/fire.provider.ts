@@ -374,7 +374,7 @@ export class FireProvider {
     @Tick(TickInterval.EVERY_SECOND)
     async fireCheckTick() {
         for (const [id, fire] of this.firePits.entries()) {
-            const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 5);
+            const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
 
             if (fireNearPit < 5) {
                 for (const firePtfx of fire.firePtfxs) {
