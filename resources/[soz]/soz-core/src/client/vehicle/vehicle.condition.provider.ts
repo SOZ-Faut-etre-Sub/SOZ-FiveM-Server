@@ -182,7 +182,7 @@ export class VehicleConditionProvider {
     }
 
     private checkVehicleWater(vehicle: number, state: VehicleVolatileState) {
-        if (!state.isPlayerVehicle || state.dead) {
+        if (state.dead) {
             return;
         }
 
