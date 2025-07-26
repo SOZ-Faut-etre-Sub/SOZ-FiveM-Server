@@ -23,7 +23,6 @@ import {
     fireScriptOffsets,
     FireType,
     offsetFlameCoords,
-    offsetSmokeCoords,
 } from '../../shared/fire';
 import { Control } from '../../shared/input';
 import { LsmcCloakroom } from '../../shared/job/lsmc';
@@ -271,9 +270,6 @@ export class FireProvider {
         await this.resourceLoader.loadPtfxAsset('soz_fire');
         await this.resourceLoader.loadPtfxAsset('des_vaultdoor');
 
-        const smokeCoords = applyOffset(fire.position, offsetSmokeCoords[fire.type]);
-        const flameCoords = applyOffset(fire.position, offsetFlameCoords[fire.type]);
-
         const firePtfxs: number[] = [];
         for (const offset of fireScriptOffsets[fire.type]) {
             const firePosition = applyOffset(fire.position, offset);
@@ -295,15 +291,23 @@ export class FireProvider {
             fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
         );
 
+        const prevFlameZ = fire.type >= 1 ? offsetFlameCoords[fire.type - 1] : 0;
+        const currentFlameZ = offsetFlameCoords[fire.type];
+        const ptfxFlameZ = this.lerp(
+            prevFlameZ,
+            currentFlameZ,
+            fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
+        );
+
         SetPtfxAssetNextCall('des_vaultdoor');
         const smokePtfx = StartParticleFxLoopedAtCoord(
             'ent_ray_pro1_residual_smoke',
-            smokeCoords[0],
-            smokeCoords[1],
-            smokeCoords[2],
+            fire.position[0],
+            fire.position[1],
+            fire.position[2],
             0.0,
             0.0,
-            smokeCoords[3],
+            fire.position[3],
             ptfxScale,
             false,
             false,
@@ -314,12 +318,12 @@ export class FireProvider {
         SetPtfxAssetNextCall('soz_fire');
         const flamePtfx = StartParticleFxLoopedAtCoord(
             'ent_ray_shipwreck_smoke_plume',
-            flameCoords[0],
-            flameCoords[1],
-            flameCoords[2],
+            fire.position[0],
+            fire.position[1],
+            fire.position[2] + ptfxFlameZ,
             0.0,
             0.0,
-            flameCoords[3],
+            fire.position[3],
             ptfxScale,
             false,
             false,

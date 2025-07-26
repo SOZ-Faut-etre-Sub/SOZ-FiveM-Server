@@ -63,16 +63,10 @@ export const fireScale: Record<FireType, number> = {
     [FireType.Huge]: 10,
 };
 
-export const offsetSmokeCoords: Record<FireType, Vector3> = {
-    [FireType.Small]: [0, 0, 0],
-    [FireType.Medium]: [0, 0, 0],
-    [FireType.Huge]: [0, 0, 0],
-};
-
-export const offsetFlameCoords: Record<FireType, Vector3> = {
-    [FireType.Small]: [0, 0, 1],
-    [FireType.Medium]: [0, 0, 5],
-    [FireType.Huge]: [0, 0, 10],
+export const offsetFlameCoords: Record<FireType, number> = {
+    [FireType.Small]: 1,
+    [FireType.Medium]: 5,
+    [FireType.Huge]: 10,
 };
 
 export const fireScriptOffsets: Record<FireType, Vector3[]> = {

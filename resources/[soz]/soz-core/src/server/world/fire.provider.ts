@@ -259,10 +259,11 @@ export class FireProvider {
         if (!this.firePits.has(id)) return;
         if (this.firePitLastReduced.get(id) + INVINCIBILITY_TIME_AFTER_REDUCE > Date.now()) return;
 
-        this.firePitHealth.set(id, Math.max(this.firePitHealth.get(id) - 1, 0));
+        const newFirePitHealth = Math.max(this.firePitHealth.get(id) - 1, 0);
+
+        this.firePitHealth.set(id, newFirePitHealth);
         this.firePitAlreadyReduced.add(id);
 
-        const newFirePitHealth = this.firePitHealth.get(id);
         this.firePitGauge.set({ chunk: id }, newFirePitHealth);
 
         this.logger.debug(`[World - Fire] Fire pit ${id} reduced its health to ${newFirePitHealth}`);
@@ -280,7 +281,7 @@ export class FireProvider {
 
         const pit = this.firePits.get(id);
 
-        if (pit.type === FireType.Small) {
+        if (Number(pit.type) === FireType.Small) {
             this.firePits.delete(id);
             this.firePitHealth.delete(id);
             this.firePitGauge.remove({ chunk: id });
