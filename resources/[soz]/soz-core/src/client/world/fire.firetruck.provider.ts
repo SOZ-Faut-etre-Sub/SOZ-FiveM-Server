@@ -230,6 +230,7 @@ export class FireFiretruckProvider {
 
         const attachPosition = GetOffsetFromEntityInWorldCoords(firetruck, 0.0, -3.5, 0.0) as Vector3;
         const initLength = getDistance(coords, attachPosition);
+
         RopeLoadTextures();
         const [rope] = AddRope(
             coords[0],
@@ -305,16 +306,16 @@ export class FireFiretruckProvider {
                 const playerPed = GetPlayerPed(player);
                 if (!playerPed) return;
 
+                const hoseEntity = GetCurrentPedWeaponEntityIndex(playerPed);
+
                 if (!NetworkDoesNetworkIdExist(playerVehicle.firetruckNetId)) return;
 
                 const firetruck = NetToVeh(playerVehicle.firetruckNetId);
 
                 const attachPosition = GetOffsetFromEntityInWorldCoords(firetruck, 0.0, -3.5, 0.0) as Vector3;
-
-                const handPosition = GetWorldPositionOfEntityBone(
-                    playerPed,
-                    GetEntityBoneIndexByName(playerPed, 'BONETAG_R_FINGER2')
-                ) as Vector3;
+                const hosePosition = hoseEntity
+                    ? (GetOffsetFromEntityInWorldCoords(hoseEntity, -0.063433, -0.00627, -0.345872) as Vector3)
+                    : (GetOffsetFromEntityInWorldCoords(firetruck, 0.0, 0.0, 0.0) as Vector3);
 
                 AttachEntitiesToRope(
                     playerVehicle.rope,
@@ -323,19 +324,19 @@ export class FireFiretruckProvider {
                     attachPosition[0],
                     attachPosition[1],
                     attachPosition[2],
-                    handPosition[0],
-                    handPosition[1],
-                    handPosition[2],
+                    hosePosition[0],
+                    hosePosition[1],
+                    hosePosition[2],
                     ROPE_LENGTH,
                     true,
                     true,
                     null,
-                    'BONETAG_R_FINGER2'
+                    null
                 );
 
                 StopRopeWinding(playerVehicle.rope);
                 StartRopeWinding(playerVehicle.rope);
-                RopeForceLength(playerVehicle.rope, Math.max(GetRopeLength(playerVehicle.rope) + 0.3, 3.0));
+                RopeForceLength(playerVehicle.rope, Math.max(GetRopeLength(playerVehicle.rope) + 0.3, 0.5));
             }
         });
     }
