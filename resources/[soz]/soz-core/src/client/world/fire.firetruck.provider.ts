@@ -219,13 +219,16 @@ export class FireFiretruckProvider {
         const vehicle = CreateVehicle(joaat('hosefiretruk'), coords[0], coords[1], coords[2] + 1, 0.0, false, false);
         FreezeEntityPosition(vehicle, true);
         SetEntityCollision(vehicle, false, false);
+        SetEntityCompletelyDisableCollision(vehicle, true, false);
         SetEntityAlpha(vehicle, 0, false);
+        SetEntityCanBeDamaged(vehicle, false);
 
         await this.resourceLoader.loadModel('s_m_m_armoured_01');
         const ped = CreatePed(4, joaat('s_m_m_armoured_01'), coords[0], coords[1], coords[2], 0.0, false, false);
         SetEntityAlpha(ped, 0, false);
         SetEntityVisible(ped, false, false);
         SetEntityCollision(ped, false, true);
+        SetEntityInvincible(ped, true);
         TaskWarpPedIntoVehicle(ped, vehicle, -1);
 
         const attachPosition = GetOffsetFromEntityInWorldCoords(firetruck, 0.0, -3.5, 0.0) as Vector3;
