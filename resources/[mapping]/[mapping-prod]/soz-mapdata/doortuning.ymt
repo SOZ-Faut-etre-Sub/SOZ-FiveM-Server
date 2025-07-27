@@ -1417,7 +1417,11 @@
       <TuningName>SozHeavyDefaultStandardLatchShut</TuningName>
     </Item>
     <Item>
-      <ModelName>u_maindor</ModelName>
+      <ModelName>u_maindorl</ModelName>
+      <TuningName>DefaultStandardLatchShut</TuningName>
+    </Item>
+    <Item>
+      <ModelName>u_maindorr</ModelName>
       <TuningName>DefaultStandardLatchShut</TuningName>
     </Item>
     <Item>
