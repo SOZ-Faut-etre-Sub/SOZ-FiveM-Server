@@ -122,9 +122,6 @@ export class FireProvider {
 
     @Once(OnceStep.Start, true)
     async onStart() {
-        await this.resourceLoader.loadStreamedTextureDict('soz');
-        AddReplaceTexture('core', 'ptfx_fire_v2', 'soz', 'ptfx_fire_v2');
-
         const pits = await emitRpc(RpcServerEvent.FIRE_GET_ALL_PITS);
         for (const [id, fire] of Object.entries(pits)) {
             await this.spawnFirePit(id, fire);
