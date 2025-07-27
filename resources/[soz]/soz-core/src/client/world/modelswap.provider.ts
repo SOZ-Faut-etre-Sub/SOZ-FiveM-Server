@@ -53,7 +53,7 @@ export class ModelSwapProvider {
                 swap.position[0],
                 swap.position[1],
                 swap.position[2],
-                swap.range,
+                (swap.range * swap.range) / 160 - 4, //For some reasons, the radius is non linear
                 swap.source,
                 swap.target,
                 true
@@ -71,7 +71,7 @@ export class ModelSwapProvider {
                 swap.position[0],
                 swap.position[1],
                 swap.position[2],
-                swap.range,
+                (swap.range * swap.range) / 160 - 4,
                 swap.source,
                 swap.target,
                 false

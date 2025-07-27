@@ -440,7 +440,7 @@ export class FireProvider {
                 position: [position[0], position[1], position[2]],
                 source: sourceModel,
                 target: targetModel,
-                range: fireScale[type] * 3,
+                range: fireScale[type] * 8,
             });
         }
     }
