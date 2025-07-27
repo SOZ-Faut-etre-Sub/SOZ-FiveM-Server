@@ -44,7 +44,8 @@ end
 
 local function ApplyPedFaceTrait(ped, faceTrait, model)
     if MaskResetFace[maskCollection or ""] and MaskResetFace[maskCollection or ""][mask] then
-        SetPedHeadBlendData(ped, 0, 0, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
+        local defaultFace = model.Hash == GetHashKey("mp_f_freemode_01") and 21 or 0
+        SetPedHeadBlendData(ped, defaultFace, defaultFace, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     else
         SetPedHeadBlendData(ped, model.Father, model.Mother, 0, model.Father, model.Mother, 0, (model.ShapeMix or 0) + 0.0, (model.SkinMix or 0) + 0.0, 0, false);
     end
