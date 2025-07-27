@@ -517,6 +517,7 @@ export enum ClientEvent {
 
     FIRE_PIT_SPAWN = 'soz-core:client:fire-pit:spawn',
     FIRE_PIT_UPDATE = 'soz-core:client:fire-pit:update',
+    FIRE_PIT_RESPAWN = 'soz-core:client:fire-pit:respawn',
     FIRE_PIT_DESPAWN = 'soz-core:client:fire-pit:despawn',
     FIRE_HOSE_ATTACH_VEHICLE = 'soz-core:client:fire-hose:attach-vehicle',
     FIRE_HOSE_DETACH_VEHICLE = 'soz-core:client:fire-hose:detach-vehicle',

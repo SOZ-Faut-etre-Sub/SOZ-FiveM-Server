@@ -343,6 +343,38 @@ export class FireProvider {
         await this.spawnFirePit(id, fire);
     }
 
+    @OnEvent(ClientEvent.FIRE_PIT_RESPAWN)
+    async respawnFirePit(id: string) {
+        const fire = this.firePits.get(id);
+        if (!fire) return;
+
+        const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
+
+        if (fireNearPit >= fireScriptOffsets[fire.type].length) return;
+
+        for (const firePtfx of fire.firePtfxs) {
+            RemoveScriptFire(firePtfx);
+        }
+
+        const firePtfxs: number[] = [];
+        for (const offset of fireScriptOffsets[fire.type]) {
+            const firePosition = applyOffset(fire.position, offset);
+
+            const [valid, z] = await this.getZData(firePosition);
+            if (!valid) {
+                continue;
+            }
+            firePosition[2] = z;
+
+            const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
+            firePtfxs.push(fireHandle);
+        }
+
+        this.firePits.set(id, { ...fire, firePtfxs });
+
+        AddShockingEventAtPosition(24, fire.position[0], fire.position[1], fire.position[2], 10_000);
+    }
+
     @OnEvent(ClientEvent.FIRE_PIT_DESPAWN)
     async despawnFirePit(id: string) {
         const pit = this.firePits.get(id);
@@ -369,34 +401,10 @@ export class FireProvider {
         return GetGroundZFor_3dCoord_2(position[0], position[1], position[2], false);
     }
 
-    @Tick(TickInterval.EVERY_SECOND)
+    @Tick(TickInterval.EVERY_SECOND / 2)
     async fireCheckTick() {
         for (const [id, fire] of this.firePits.entries()) {
             const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
-
-            if (fireNearPit < fireScriptOffsets[fire.type].length) {
-                for (const firePtfx of fire.firePtfxs) {
-                    RemoveScriptFire(firePtfx);
-                }
-
-                const firePtfxs: number[] = [];
-                for (const offset of fireScriptOffsets[fire.type]) {
-                    const firePosition = applyOffset(fire.position, offset);
-
-                    const [valid, z] = await this.getZData(firePosition);
-                    if (!valid) {
-                        continue;
-                    }
-                    firePosition[2] = z;
-
-                    const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
-                    firePtfxs.push(fireHandle);
-                }
-
-                this.firePits.set(id, { ...fire, firePtfxs });
-
-                AddShockingEventAtPosition(24, fire.position[0], fire.position[1], fire.position[2], 10_000);
-            }
 
             if (fireNearPit === 0 && this.usedFireExtinguisherRecently) {
                 emitRpc(RpcServerEvent.FIRE_EXTINGUISHED, id);

@@ -96,6 +96,7 @@ export class FireProvider {
             position,
             type,
             endAt: duration > 0 ? Date.now() + duration * 60000 : undefined,
+            canPropagate: true,
         });
         this.firePitHealth.set(fireId, firePitDefaultHealth[type]);
         this.firePitGauge.set({ chunk: fireId }, firePitDefaultHealth[type]);
@@ -125,6 +126,13 @@ export class FireProvider {
             this.firePitHealth.delete(id);
             this.firePitGauge.remove({ chunk: id });
         });
+    }
+
+    @Tick(10_000)
+    async onFireRespawnCheck() {
+        for (const id of this.firePits.keys()) {
+            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_RESPAWN, -1, 16 * 1024, id);
+        }
     }
 
     @Tick(TickInterval.EVERY_MINUTE / 2)
@@ -162,6 +170,10 @@ export class FireProvider {
             if (!this.canSpawnMoreFirePits()) {
                 this.logger.debug(`[World - Fire] Too many fire pits, stop propagating [${this.firePits.size}]`);
                 break;
+            }
+
+            if (!pit.canPropagate) {
+                continue;
             }
 
             const canPropagate = getRandomInt(0, 100) <= newFirePitChance[pit.type];
@@ -208,7 +220,12 @@ export class FireProvider {
 
                 if (this.staffRequestPitExtinguish) break;
 
-                this.firePits.set(newPitId, { position: newPitCoords, type: pit.type, endAt: pit.endAt });
+                this.firePits.set(newPitId, {
+                    position: newPitCoords,
+                    type: pit.type,
+                    endAt: pit.endAt,
+                    canPropagate: pit.canPropagate,
+                });
                 this.firePitHealth.set(id, firePitDefaultHealth[pit.type]);
                 this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[pit.type]);
                 this.firePitAlreadySpawned.add(newPitId);

@@ -7,6 +7,7 @@ export type FirePit = {
     type: FireType;
     health?: number;
     endAt?: number;
+    canPropagate?: boolean;
 };
 
 export type FirePitClient = FirePit & {
