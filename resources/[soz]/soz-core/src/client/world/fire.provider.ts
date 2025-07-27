@@ -374,7 +374,7 @@ export class FireProvider {
         for (const [id, fire] of this.firePits.entries()) {
             const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
 
-            if (fireNearPit < 5) {
+            if (fireNearPit < fireScriptOffsets[fire.type].length) {
                 for (const firePtfx of fire.firePtfxs) {
                     RemoveScriptFire(firePtfx);
                 }
@@ -501,7 +501,7 @@ export class FireProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_SECOND * 5)
+    @Tick(TickInterval.EVERY_SECOND * 10)
     public onHeatTick() {
         const playerPed = PlayerPedId();
 
