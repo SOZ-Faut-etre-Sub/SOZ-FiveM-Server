@@ -272,9 +272,10 @@ export class FireProvider {
             const firePosition = applyOffset(fire.position, offset);
 
             const [valid, z] = await this.getZData(firePosition);
-            if (valid) {
-                firePosition[2] = z;
+            if (!valid) {
+                continue;
             }
+            firePosition[2] = z;
 
             const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
             firePtfxs.push(fireHandle);
@@ -383,9 +384,10 @@ export class FireProvider {
                     const firePosition = applyOffset(fire.position, offset);
 
                     const [valid, z] = await this.getZData(firePosition);
-                    if (valid) {
-                        firePosition[2] = z;
+                    if (!valid) {
+                        continue;
                     }
+                    firePosition[2] = z;
 
                     const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
                     firePtfxs.push(fireHandle);
