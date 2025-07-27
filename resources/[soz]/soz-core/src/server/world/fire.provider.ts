@@ -226,8 +226,8 @@ export class FireProvider {
                     endAt: pit.endAt,
                     canPropagate: pit.canPropagate,
                 });
-                this.firePitHealth.set(id, firePitDefaultHealth[pit.type]);
-                this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[pit.type]);
+                this.firePitHealth.set(newPitId, firePitDefaultHealth[pit.type]);
+                this.firePitGauge.set({ chunk: newPitId }, firePitDefaultHealth[pit.type]);
                 this.firePitAlreadySpawned.add(newPitId);
 
                 TriggerLatentClientEvent(
