@@ -62,7 +62,10 @@ const GunSmithWeaponSubMenu: FunctionComponent<{
                 Math.floor(100 - ((weapon.metadata.health / weapon.metadata.maxHealth) * 100 || 0));
         }
 
-        if (configuration.tint && configuration.tint !== weapon.metadata.tint) {
+        if (
+            configuration.tint !== weapon.metadata.tint &&
+            (configuration.tint !== 0 || weapon.metadata.tint !== undefined)
+        ) {
             price += WEAPON_CUSTOM_PRICE.tint;
         }
 
