@@ -1,3 +1,4 @@
+import { Command } from '@public/core/decorators/command';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
@@ -12,6 +13,7 @@ import { Provider } from '../../core/decorators/provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { ThunderProvider } from './thunder.provider';
 
 const SlineNodes: { coords?: Vector3; offset?: Vector3; rotation: Vector3; fov: number; delay: number }[] = [
@@ -73,6 +75,10 @@ const SlineNodes: { coords?: Vector3; offset?: Vector3; rotation: Vector3; fov: 
 
 const ThunderFirePositions: Vector4[] = [
     //zone1
+    [-2507.19, 1160.7, 214.936, 0],
+    [-2852.57, 914.49, 118.727, 0],
+    [-2877.66, 532.87, 40.854, 0],
+    [-2899.53, 1699.04, 56.205, 0],
     [-2592.64, 2332.81, 29.536, 0],
     [-1638.52, 980.5, 151.838, 0],
 
@@ -81,6 +87,7 @@ const ThunderFirePositions: Vector4[] = [
     [-820.02, 1753.45, 187.292, 0],
     [-820.06, 1619.68, 213.237, 0], //lightning
     [-370.01, 1600.63, 329.157, 0],
+    [-347.28, 1275.58, 332.725, 0],
 
     //zone3
     [-73.57, 2916.64, 52.015, 0],
@@ -90,11 +97,15 @@ const ThunderFirePositions: Vector4[] = [
     //zone4
     [1030.73, 1906.68, 81.873, 0],
     [1055.02, 1547.85, 163.304, 0],
+    [782.79, 1664.56, 179.058, 0],
+    [899.83, 890.52, 185.271, 0],
     [486.97, 1057.79, 231.94, 0],
 
     //zone5
     [1371.16, 2782.59, 48.427, 0],
     [1614.64, 2976.11, 52.922, 0],
+    [1959.54, 2775.57, 48.443, 0],
+    [1234.09, 2290.91, 73.365, 0],
 ];
 const ThunderPosition: Vector3 = [-821.53, 1618.92, 258.23];
 
@@ -254,5 +265,18 @@ export class FirestormProvider {
         }
 
         TriggerServerEvent(ServerEvent.ADMIN_FIRESTORM);
+    }
+
+    @Inject(PlayerPositionProvider)
+    private p: PlayerPositionProvider;
+
+    @Command('cc')
+    async cc() {
+        for (const position of ThunderFirePositions) {
+            await this.p.teleportAdminToPosition(position);
+            await wait(1000);
+
+            console.log(GetGroundZFor_3dCoord_2(position[0], position[1], position[2] + 100, true));
+        }
     }
 }

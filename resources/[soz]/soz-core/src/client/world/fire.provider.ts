@@ -1,6 +1,7 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
 import { Tick } from '@public/core/decorators/tick';
+import { Logger } from '@public/core/logger';
 import { Outfit, OutfitType } from '@public/shared/cloth';
 import { NuiEvent } from '@public/shared/event/nui';
 import { joaat } from '@public/shared/joaat';
@@ -109,6 +110,9 @@ export class FireProvider {
 
     @Inject(TargetFactory)
     private readonly targetFactory: TargetFactory;
+
+    @Inject(Logger)
+    private readonly logger: Logger;
 
     private usedFireExtinguisherRecently = false;
 
@@ -313,6 +317,10 @@ export class FireProvider {
             false
         );
 
+        if (!smokePtfx) {
+            this.logger.error('Failed to create fire smoke ptfx');
+        }
+
         SetPtfxAssetNextCall('soz_fire');
         const flamePtfx = StartParticleFxLoopedAtCoord(
             'ent_ray_shipwreck_smoke_plume',
@@ -328,6 +336,10 @@ export class FireProvider {
             false,
             false
         );
+
+        if (!flamePtfx) {
+            this.logger.error('Failed to create fire smoke ptfx');
+        }
 
         this.firePits.set(id, {
             ...fire,

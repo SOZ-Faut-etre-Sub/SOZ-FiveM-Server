@@ -2,6 +2,7 @@ import { Command } from '@public/core/decorators/command';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
+import { Logger } from '@public/core/logger';
 import { wait } from '@public/core/utils';
 import { ClientEvent } from '@public/shared/event';
 import { NuiEvent } from '@public/shared/event/nui';
@@ -69,6 +70,9 @@ export class TornadoProvider {
 
     @Inject(Notifier)
     private notifier: Notifier;
+
+    @Inject(Logger)
+    private logger: Logger;
 
     private startLocation: Vector3;
     private startTime: number;
@@ -184,7 +188,25 @@ export class TornadoProvider {
         }
 
         for (const particle of this.particles) {
-            this.startParticuleFx(particle);
+            UseParticleFxAsset(particle.ptfxAsset);
+            particle.ptfx = StartParticleFxLoopedOnEntity(
+                particle.ptfxName,
+                particle.prop,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                particle.ptfxSize,
+                false,
+                false,
+                false
+            );
+
+            if (!particle.ptfx) {
+                this.logger.error('Failed to create tornado ptfx');
+            }
             await wait(200);
         }
 
@@ -223,24 +245,6 @@ export class TornadoProvider {
             isCloud: isTopParticle,
             radius,
         };
-    }
-
-    private startParticuleFx(particule: Particule) {
-        UseParticleFxAsset(particule.ptfxAsset);
-        particule.ptfx = StartParticleFxLoopedOnEntity(
-            particule.ptfxName,
-            particule.prop,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            particule.ptfxSize,
-            false,
-            false,
-            false
-        );
     }
 
     private async delete() {
