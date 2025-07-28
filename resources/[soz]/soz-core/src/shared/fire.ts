@@ -290,5 +290,5 @@ export const FireTreeModelMapping = {
     test_tree_cedar_trunk_001: 'soz_test_tree_cedar_trunk_001_b',
     test_tree_forest_trunk_01: 'soz_test_tree_forest_trunk_01_b',
     test_tree_forest_trunk_04: 'soz_test_tree_forest_trunk_04_b',
-    test_tree_forest_trunkase_01: 'soz_test_tree_forest_trunkase_01_b',
+    test_tree_forest_trunk_base_01: 'soz_test_tree_forest_trunk_base_01_b',
 };
