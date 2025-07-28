@@ -223,7 +223,7 @@ export class FirestormProvider {
         await this.thunderProvider.thunder(target, ThunderPosition, true, 0.6);
         if (target == GetPlayerServerId(PlayerId())) {
             for (const firePos of ThunderFirePositions) {
-                TriggerServerEvent(ServerEvent.ADMIN_STAR_NEW_FIRE_PIT, firePos, FireType.Huge, -1);
+                TriggerServerEvent(ServerEvent.ADMIN_STAR_NEW_FIRE_PIT, firePos, FireType.Huge, -1, false);
             }
         }
 

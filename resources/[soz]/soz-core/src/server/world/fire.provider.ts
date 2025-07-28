@@ -86,7 +86,7 @@ export class FireProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_STAR_NEW_FIRE_PIT)
-    async startNewFirePit(source: number, position: Vector4, type: FireType, duration: number) {
+    async startNewFirePit(source: number, position: Vector4, type: FireType, duration: number, canPropagate = true) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -96,7 +96,7 @@ export class FireProvider {
             position,
             type,
             endAt: duration > 0 ? Date.now() + duration * 60000 : undefined,
-            canPropagate: true,
+            canPropagate,
         });
         this.firePitHealth.set(fireId, firePitDefaultHealth[type]);
         this.firePitGauge.set({ chunk: fireId }, firePitDefaultHealth[type]);
@@ -167,13 +167,13 @@ export class FireProvider {
                 this.increaseFirePit(id);
             }
 
+            if (!pit.canPropagate) {
+                continue;
+            }
+
             if (!this.canSpawnMoreFirePits()) {
                 this.logger.debug(`[World - Fire] Too many fire pits, stop propagating [${this.firePits.size}]`);
                 break;
-            }
-
-            if (!pit.canPropagate) {
-                continue;
             }
 
             const canPropagate = getRandomInt(0, 100) <= newFirePitChance[pit.type];
