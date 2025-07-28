@@ -568,7 +568,6 @@ export class ObjectProvider {
 
     public async createSwap(swap: ModelSwap) {
         const model = joaat(swap.source);
-        const target = joaat(swap.target);
         for (const spawnableObject of Object.values(this.loadedObjects)) {
             if (spawnableObject.entity && spawnableObject.object.model !== model) {
                 continue;
@@ -578,7 +577,7 @@ export class ObjectProvider {
                 continue;
             }
 
-            if (![model, target].includes(GetEntityModel(spawnableObject.entity))) {
+            if (GetEntityModel(spawnableObject.entity) !== model) {
                 continue;
             }
 

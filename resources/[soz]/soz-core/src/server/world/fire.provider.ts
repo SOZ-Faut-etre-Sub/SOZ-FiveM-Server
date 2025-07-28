@@ -479,7 +479,7 @@ export class FireProvider {
 
         this.notifier.notify(
             source,
-            `Voilà de quoi sauver Los Santos des flammes, n'oublie pas de le ramener pour qu'il puisse servir à d'autre.`,
+            `Voilà de quoi sauver Los Santos des flammes, n'oublie pas de le rammener pour qu'il puisse servir à d'autre.`,
             'success'
         );
     }
