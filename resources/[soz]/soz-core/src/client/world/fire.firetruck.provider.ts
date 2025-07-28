@@ -360,4 +360,17 @@ export class FireFiretruckProvider {
             this.isFiring = false;
         }
     }
+
+    @Tick()
+    async onDisableFireTruckTick() {
+        const player = PlayerPedId();
+        const vehicle = GetVehiclePedIsIn(player, false);
+        const model = GetEntityModel(vehicle);
+
+        if (model !== joaat('firetruk')) return;
+
+        DisableControlAction(0, Control.VehicleAim, true);
+        DisableControlAction(0, Control.VehicleAttack, true);
+        DisableControlAction(0, Control.VehicleAttack2, true);
+    }
 }
