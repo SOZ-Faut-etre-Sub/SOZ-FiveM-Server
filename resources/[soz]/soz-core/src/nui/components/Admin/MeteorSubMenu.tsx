@@ -1,6 +1,7 @@
 import { SozRole } from '@core/permissions';
 import { __ } from '@headlessui/react/dist/types';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
+import { Music } from '@public/shared/audio';
 import { FireType } from '@public/shared/fire';
 import { FunctionComponent, useEffect, useState } from 'react';
 
@@ -44,9 +45,9 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
             <MenuContent subtitle="Juste un rond ...">
                 <MenuItemSelect
                     title={`Sirène`}
-                    value={state.siren}
+                    value={state.musics[Music.Siren]}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorSiren, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Siren, value: index });
                     }}
                 >
                     {Array(11)
@@ -59,9 +60,9 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 </MenuItemSelect>
                 <MenuItemSelect
                     title={`Chonos`}
-                    value={state.music}
+                    value={state.musics[Music.Chronos]}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorChronosMusic, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Chronos, value: index });
                     }}
                 >
                     {Array(11)
@@ -73,10 +74,10 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                         ))}
                 </MenuItemSelect>
                 <MenuItemSelect
-                    title={`Musique`}
-                    value={state.music}
+                    title={`Ambiance`}
+                    value={state.musics[Music.Ambiance]}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Ambiance, value: index });
                     }}
                 >
                     {Array(11)
@@ -145,10 +146,10 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 </MenuItemCheckbox>
                 <MenuItemSelect
                     title={`Tempête de Sable`}
-                    value={state.siren}
+                    value={state.musics[Music.SandStorm]}
                     titleWidth={50}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuSandstormMusic, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.SandStorm, value: index });
                     }}
                 >
                     {Array(11)
@@ -218,6 +219,56 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 >
                     Enlever les remplacements de modèles d'arbre
                 </MenuItemButton>
+
+                <MenuItemSelect
+                    title={`Music - Impact`}
+                    value={state.musics[Music.Impact]}
+                    titleWidth={50}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Impact, value: index });
+                    }}
+                >
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`siren_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+                <MenuItemSelect
+                    title={`Music - Dies Irae`}
+                    value={state.musics[Music.DiesIrae]}
+                    titleWidth={50}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.DiesIrae, value: index });
+                    }}
+                >
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`music_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+                <MenuItemSelect
+                    title={`Music - Cinis`}
+                    value={state.musics[Music.Cinis]}
+                    titleWidth={50}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Cinis, value: index });
+                    }}
+                >
+                    {Array(11)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`music_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+
                 <MenuSubTitle>Annonces</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {

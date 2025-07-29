@@ -1,4 +1,3 @@
-import { Command } from '@public/core/decorators/command';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
@@ -7,13 +6,14 @@ import { ClientEvent } from '@public/shared/event';
 import { NuiEvent } from '@public/shared/event/nui';
 import { ServerEvent } from '@public/shared/event/server';
 import { FireType } from '@public/shared/fire';
-import { applyOffset, deg, sub2Vector3, Vector3, Vector4 } from '@public/shared/polyzone/vector';
+import { applyOffset, deg, sub2Vector3, Vector3 } from '@public/shared/polyzone/vector';
+import { getRandomItem } from '@public/shared/random';
 
 import { Provider } from '../../core/decorators/provider';
 import { HudStateProvider } from '../hud/hud.state.provider';
 import { InputService } from '../nui/input.service';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
-import { PlayerPositionProvider } from '../player/player.position.provider';
 import { ThunderProvider } from './thunder.provider';
 
 const SlineNodes: { coords?: Vector3; offset?: Vector3; rotation: Vector3; fov: number; delay: number }[] = [
@@ -73,39 +73,32 @@ const SlineNodes: { coords?: Vector3; offset?: Vector3; rotation: Vector3; fov: 
     },
 ];
 
-const ThunderFirePositions: Vector4[] = [
-    //zone1
-    [-2507.19, 1160.7, 214.936, 0],
-    [-2852.57, 914.49, 118.727, 0],
-    [-2877.66, 532.87, 40.854, 0],
-    [-2899.53, 1699.04, 56.205, 0],
-    [-2592.64, 2332.81, 29.536, 0],
-    [-1638.52, 980.5, 151.838, 0],
+const ThunderFirePositions: Vector3[] = [
+    [-820.06, 1619.68, 213.237], //lightning
 
-    //zone2
-    [-593.89, 1879.05, 232.676, 0],
-    [-820.02, 1753.45, 187.292, 0],
-    [-820.06, 1619.68, 213.237, 0], //lightning
-    [-370.01, 1600.63, 329.157, 0],
-    [-347.28, 1275.58, 332.725, 0],
-
-    //zone3
-    [-73.57, 2916.64, 52.015, 0],
-    [-203.87, 2738.69, 39.757, 0],
-    [-18.66, 2517.32, 90.277, 0],
-
-    //zone4
-    [1030.73, 1906.68, 81.873, 0],
-    [1055.02, 1547.85, 163.304, 0],
-    [782.79, 1664.56, 179.058, 0],
-    [899.83, 890.52, 185.271, 0],
-    [486.97, 1057.79, 231.94, 0],
-
-    //zone5
-    [1371.16, 2782.59, 48.427, 0],
-    [1614.64, 2976.11, 52.922, 0],
-    [1959.54, 2775.57, 48.443, 0],
-    [1234.09, 2290.91, 73.365, 0],
+    [651.982971191406, 1846.8204345703125, 188.6777648925781],
+    [1049.304931640625, 1860.4730224609375, 87.92979431152344],
+    [660.5355224609375, 2237.455078125, 55.056907653808594],
+    [356.906982421875, 2380.454833984375, 57.230934143066406],
+    [206.9198760986328, 2017.8629150390625, 131.2091064453125],
+    [53.48219680786133, 1927.70263671875, 190.8819885253906],
+    [140.88043212890625, 2543.914794921875, 54.62744140625],
+    [-121.8082275390625, 2031.232421875, 191.29147338867188],
+    [-372.20654296875, 2155.973388671875, 178.0392150878906],
+    [-86.7380676269531, 2879.409423828125, 52.59638214111328],
+    [-69.34907531738281, 2690.638427734375, 68.91353607177734],
+    [-327.6528625488281, 2259.945068359375, 136.6593322753906],
+    [-477.8333740234375, 1944.3035888671875, 224.68954467773438],
+    [-364.0010070800781, 2608.6171875, 84.6806945800781],
+    [-523.4008178710938, 2268.137939453125, 121.48753356933594],
+    [-604.486145019531, 1767.3592529296875, 211.4132385253906],
+    [-814.3786010742188, 1915.3421630859375, 166.56488037109375],
+    [-249.3444366455078, 1583.9835205078125, 335.0859069824219],
+    [110.7459716796875, 2343.8427734375, 112.28221893310547],
+    [-192.756103515625, 2371.759765625, 98.24796295166016],
+    [-722.139709472656, 2548.550048828125, 57.83619689941406],
+    [-956.553771972656, 2090.635009765625, 114.61012268066406],
+    [-982.0704345703125, 2570.389404296875, 76.93160247802734],
 ];
 const ThunderPosition: Vector3 = [-821.53, 1618.92, 258.23];
 
@@ -123,6 +116,9 @@ export class FirestormProvider {
     @Inject(NuiMenu)
     private nuiMenu: NuiMenu;
 
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
     private inProgress = false;
     private cam: number = null;
 
@@ -130,6 +126,8 @@ export class FirestormProvider {
     public async firestorm(position: Vector3, target: number) {
         this.nuiMenu.closeMenu();
         this.hudStateProvider.setHudVisible(false);
+        this.hudStateProvider.setCinematicMode(true, 3000);
+        this.nuiDispatch.dispatch('meteor', 'destruction', true);
         this.inProgress = true;
 
         const tmpCams = [];
@@ -225,7 +223,13 @@ export class FirestormProvider {
         await this.thunderProvider.thunder(target, ThunderPosition, true, 0.6);
         if (target == GetPlayerServerId(PlayerId())) {
             for (const firePos of ThunderFirePositions) {
-                TriggerServerEvent(ServerEvent.ADMIN_STAR_NEW_FIRE_PIT, firePos, FireType.Huge, -1, false);
+                TriggerServerEvent(
+                    ServerEvent.ADMIN_STAR_NEW_FIRE_PIT,
+                    [firePos[0], firePos[1], firePos[2], 0],
+                    getRandomItem([FireType.Huge, FireType.Medium]),
+                    -1,
+                    false
+                );
             }
         }
 
@@ -245,6 +249,8 @@ export class FirestormProvider {
         DestroyCam(cam, true);
 
         this.hudStateProvider.setHudVisible(true);
+        this.hudStateProvider.setCinematicMode(false);
+        this.nuiDispatch.dispatch('meteor', 'destruction', false);
         this.inProgress = false;
     }
 
@@ -265,18 +271,5 @@ export class FirestormProvider {
         }
 
         TriggerServerEvent(ServerEvent.ADMIN_FIRESTORM);
-    }
-
-    @Inject(PlayerPositionProvider)
-    private p: PlayerPositionProvider;
-
-    @Command('cc')
-    async cc() {
-        for (const position of ThunderFirePositions) {
-            await this.p.teleportAdminToPosition(position);
-            await wait(1000);
-
-            console.log(GetGroundZFor_3dCoord_2(position[0], position[1], position[2] + 100, true));
-        }
     }
 }

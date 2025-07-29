@@ -112,11 +112,7 @@ export enum NuiEvent {
     AdminMenuCharacterSwitch = 'soz-core:client:admin:character:switch',
     AdminMenuPlayerSetVoipDebug = 'soz-core:nui:admin:player:set-voip-debug',
     AdminMenuPlayerSetPlate = 'soz-core:nui:admin:player:set-plate',
-    AdminMenuMeteorSiren = 'soz-core:nui:admin:meteor:siren',
     AdminMenuMeteorActivate = 'soz-core:nui:admin:meteor:activate',
-    AdminMenuMeteorChronosMusic = 'soz-core:nui:admin:meteor:chonos-music',
-    AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
-    AdminMenuSandstormMusic = 'soz-core:nui:admin:meteor:sandstorm-music',
     AdminMenuMeteorDisableNpc = 'soz-core:nui:admin:meteor:disable-npc',
     AdminMenuMeteorKickPlayers = 'soz-core:nui:admin:meteor:kick-players',
     AdminMenuOceanSetWaterLevel = 'soz-core:nui:admin:ocean:water-level',
@@ -165,6 +161,7 @@ export enum NuiEvent {
     AdminMenuClothes = 'soz-core:client:admin:clothes',
     AdminMenuXmasSetState = 'soz-core:nui:admin:xmas:set-state',
     AdminMenuTraveling = 'soz-core:nui:admin:traveling',
+    AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
 
     BlipAction = 'soz-core:client:blip:action',
 

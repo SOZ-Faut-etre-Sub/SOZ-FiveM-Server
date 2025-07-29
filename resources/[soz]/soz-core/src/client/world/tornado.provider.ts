@@ -1,4 +1,3 @@
-import { Command } from '@public/core/decorators/command';
 import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Tick } from '@public/core/decorators/tick';
@@ -27,8 +26,8 @@ import { ObjectService } from '../object/object.service';
 import { FuelStationRepository } from '../repository/fuel.station.repository';
 import { ResourceLoader } from '../repository/resource.loader';
 
-const VORTEX_MOVE_SPEED = 8.0;
-const VORTEX_MAX_ENTITY_DIST = 300.0;
+const VORTEX_MOVE_SPEED = 10.0;
+const VORTEX_MAX_ENTITY_DIST = 225.0;
 const VORTEX_HORIZONTAL_PULL_FORCE = 300;
 const VORTEX_HORIZONTAL_PULL_FORCE_VEH_BONUS = 5;
 const VORTEX_ROTATION_SPEED = 150;
@@ -300,13 +299,11 @@ export class TornadoProvider {
             (this.prevZ ? this.prevZ : position[2]) + 1000,
             true
         );
-        if (ret) {
-            const expected = val + 1;
-            if (expected > this.prevZ) {
-                position[2] = Math.min(this.prevZ + 0.5, expected);
-            } else {
-                position[2] = Math.max(this.prevZ - 0.5, expected);
-            }
+        const expected = ret ? val + 1 : position[2];
+        if (expected > this.prevZ) {
+            position[2] = Math.min(this.prevZ + 0.5, expected);
+        } else {
+            position[2] = Math.max(this.prevZ - 0.5, expected);
         }
 
         this.prevZ = position[2];
@@ -504,32 +501,5 @@ export class TornadoProvider {
         delete this.prevZ;
         SetWind(-1);
         SetWindDirection(-1);
-    }
-
-    @Command('ptl')
-    public async pt(source: number, dict: string, name: string) {
-        const coords = GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0, 5, 1);
-
-        await this.resourceLoader.loadPtfxAsset(dict);
-        UseParticleFxAsset(dict);
-        const ptfx = StartParticleFxLoopedAtCoord(
-            name,
-            coords[0],
-            coords[1],
-            coords[2],
-            0,
-            0,
-            0,
-            1,
-            false,
-            false,
-            false,
-            false
-        );
-        console.log(ptfx);
-
-        await wait(10_000);
-        StopParticleFxLooped(ptfx, false);
-        this.resourceLoader.unloadPtfxAsset(dict);
     }
 }

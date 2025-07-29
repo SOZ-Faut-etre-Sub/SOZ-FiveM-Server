@@ -213,7 +213,7 @@ export class FireProvider {
                                     false
                                 )
                             ) {
-                                this.notifier.notify("L'emplacement est de parking est occupé.", 'error');
+                                this.notifier.notify("L'emplacement de parking est occupé.", 'error');
                                 return null;
                             }
 

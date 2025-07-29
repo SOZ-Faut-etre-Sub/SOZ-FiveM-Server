@@ -1,3 +1,4 @@
+import { Music } from '@public/shared/audio';
 import { FunctionComponent, MutableRefObject, useRef, useState } from 'react';
 
 import { useNuiEvent } from '../../hook/nui';
@@ -10,6 +11,10 @@ export const Meteor: FunctionComponent = () => {
     const gainEarthQuake = useRef<GainNode>(null);
     const gainSandstorm = useRef<GainNode>(null);
     const meteortrack = useRef<MediaElementAudioSourceNode>(null);
+    const gainCinis = useRef<GainNode>(null);
+    const gainImpact = useRef<GainNode>(null);
+    const gainDiesIrae = useRef<GainNode>(null);
+    const gainDestruction = useRef<GainNode>(null);
     const [white, setWhite] = useState<boolean>(false);
 
     useNuiEvent(
@@ -97,12 +102,12 @@ export const Meteor: FunctionComponent = () => {
         [white, setWhite]
     );
 
-    function handleVolume(id: string, gain: MutableRefObject<GainNode>, value: number) {
+    function handleVolume(id: string, gain: MutableRefObject<GainNode>, value: number, loop = true) {
         const audioElement = document.querySelector(id) as HTMLMediaElement;
 
         if (!gain.current) {
             audioElement.load();
-            audioElement.loop = true;
+            audioElement.loop = loop;
             const track = audioCtx.current.createMediaElementSource(audioElement);
             gain.current = audioCtx.current.createGain();
             gain.current.gain.value = 0;
@@ -125,17 +130,32 @@ export const Meteor: FunctionComponent = () => {
         }
     }
 
-    useNuiEvent('meteor', 'chronos', value => handleVolume('#chronos', gainChronos, value), [audioCtx, gainChronos]);
-    useNuiEvent('meteor', 'music', value => handleVolume('#music-event', gainMusic, value), [audioCtx, gainMusic]);
-    useNuiEvent('meteor', 'siren', value => handleVolume('#siren', gainSiren, value), [audioCtx, gainSiren]);
-    useNuiEvent('meteor', 'sandstorm', value => handleVolume('#sandstorm', gainSandstorm, value), [
-        audioCtx,
-        gainSandstorm,
-    ]);
+    useNuiEvent(
+        'meteor',
+        'musics',
+        value => {
+            handleVolume('#music-event', gainMusic, value[Music.Ambiance]);
+            handleVolume('#chronos', gainChronos, value[Music.Chronos]);
+            handleVolume('#siren', gainSiren, value[Music.Siren]);
+            handleVolume('#sandstorm', gainSandstorm, value[Music.SandStorm]);
+            handleVolume('#cinis', gainCinis, value[Music.Cinis]);
+            handleVolume('#impact', gainImpact, value[Music.Impact]);
+            handleVolume('#dies_irae', gainDiesIrae, value[Music.DiesIrae]);
+        },
+        [audioCtx, gainMusic, gainSandstorm, gainChronos, gainSiren]
+    );
+
     useNuiEvent('meteor', 'earthquake', value => handleVolume('#earthquake', gainEarthQuake, value ? 50.0 : 0.0), [
         audioCtx,
         gainEarthQuake,
     ]);
+
+    useNuiEvent(
+        'meteor',
+        'destruction',
+        value => handleVolume('#destruction', gainDestruction, value ? 1.0 : 0.0, false),
+        [audioCtx, gainDestruction]
+    );
 
     return (
         <div>
@@ -149,6 +169,10 @@ export const Meteor: FunctionComponent = () => {
                 id="earthquake"
                 src="https://cfx-nui-interact-sound/client/html/sounds/earthquake/earthquake.ogg"
             ></audio>
+            <audio id="impact" src="https://cfx-nui-soz-sounds/firestorm/impact.mp3"></audio>
+            <audio id="cinis" src="https://cfx-nui-soz-sounds/firestorm/cinis.mp3"></audio>
+            <audio id="destruction" src="https://cfx-nui-soz-sounds/firestorm/destruction.mp3"></audio>
+            <audio id="dies_irae" src="https://cfx-nui-soz-sounds/firestorm/dies_irae.mp3"></audio>
         </div>
     );
 };
