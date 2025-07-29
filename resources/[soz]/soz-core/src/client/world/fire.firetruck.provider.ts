@@ -61,15 +61,15 @@ export class FireFiretruckProvider {
             ['firetruk'],
             [
                 {
-                    icon: 'fuel/pistolet',
-                    label: 'Connecter le tuyau',
+                    label: 'Prendre la lance',
+                    icon: 'fire/pipe',
                     category: 'society',
                     canInteract: () => !this.currentFiretruckAttached,
                     action: this.connectFiretruck.bind(this),
                 },
                 {
-                    icon: 'fuel/pistolet',
-                    label: 'Déconnecter le tuyau',
+                    label: 'Remettre la lance',
+                    icon: 'fire/pipe',
                     category: 'society',
                     canInteract: () => {
                         const player = this.playerService.getPlayer();

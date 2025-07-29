@@ -28,8 +28,9 @@ import {
 import { Control } from '../../shared/input';
 import { LsmcCloakroom } from '../../shared/job/lsmc';
 import { NumberValidator } from '../../shared/nui/input';
-import { applyOffset, getDistance, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { applyOffset, getDistance, toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { BlipFactory } from '../blip';
 import { ClothingService } from '../clothing/clothing.service';
 import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
 import { Notifier } from '../notifier';
@@ -111,6 +112,9 @@ export class FireProvider {
     @Inject(TargetFactory)
     private readonly targetFactory: TargetFactory;
 
+    @Inject(BlipFactory)
+    private blipFactory: BlipFactory;
+
     @Inject(Logger)
     private readonly logger: Logger;
 
@@ -141,6 +145,14 @@ export class FireProvider {
                 });
             }
 
+            this.blipFactory.create(id, {
+                name: 'Caserne de pompier',
+                coords: toVector4Object(station.position),
+                sprite: 648,
+                color: 59,
+                scale: 0.9,
+            });
+
             this.targetFactory.createForBoxZone(
                 id,
                 {
@@ -153,7 +165,8 @@ export class FireProvider {
                 [
                     {
                         category: 'citizen',
-                        label: "S'équiper de la tenue d'incendie",
+                        label: 'Prendre la tenue',
+                        icon: 'fire/clothes',
                         canInteract: this.isClothType.bind(this, ''),
                         action: async () => {
                             const outfit: Outfit = {
@@ -169,7 +182,8 @@ export class FireProvider {
                     },
                     {
                         category: 'citizen',
-                        label: "Retirer la tenue d'incendie",
+                        label: 'Rendre la tenue',
+                        icon: 'fire/clothes',
                         canInteract: this.isClothType.bind(this, 'FIRE'),
                         action: async () => {
                             const { completed } = await this.playerWardrobe.waitProgress(false);
@@ -180,7 +194,8 @@ export class FireProvider {
                     },
                     {
                         category: 'citizen',
-                        label: 'Sortir un camion de pompier',
+                        label: 'Sortir un camion',
+                        icon: 'fire/truck',
                         canInteract: this.isClothType.bind(this, 'FIRE'),
                         action: async () => {
                             if (
@@ -207,7 +222,8 @@ export class FireProvider {
                     },
                     {
                         category: 'citizen',
-                        label: 'Rendre un camion de pompier',
+                        label: 'Rentrer un camion',
+                        icon: 'fire/truck',
                         canInteract: this.isClothType.bind(this, 'FIRE'),
                         action: async () => {
                             const DISTANCE_THRESHOLD = 20.0;
