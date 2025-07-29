@@ -29,8 +29,8 @@ export const firePitSound: Record<FireType, number> = {
 
 export const firePitVolume: Record<FireType, number> = {
     [FireType.Small]: 0.05,
-    [FireType.Medium]: 0.15,
-    [FireType.Huge]: 0.3,
+    [FireType.Medium]: 0.1,
+    [FireType.Huge]: 0.2,
 };
 
 export const firePitDefaultHealth: Record<FireType, number> = {

@@ -211,6 +211,12 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                     onConfirm={() => fetchNui(NuiEvent.AdminMenuStopFire)}
                     description="Réduit petit à petit le volume de l'incendie jusqu'à extinction"
                 >
+                    Étouffer l'incendie
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={() => fetchNui(NuiEvent.AdminMenuStopFire, true)}
+                    description="Supprime tous les feux instantanément"
+                >
                     Stopper l'incendie
                 </MenuItemButton>
                 <MenuItemButton

@@ -284,6 +284,9 @@ export class FireProvider {
 
     @OnEvent(ClientEvent.FIRE_PIT_SPAWN)
     private async spawnFirePit(id: string, fire: FirePit) {
+        const existingPit = this.firePits.get(id);
+        if (existingPit) return;
+
         await this.resourceLoader.loadPtfxAsset('soz_fire');
         await this.resourceLoader.loadPtfxAsset('des_vaultdoor');
 
@@ -647,8 +650,8 @@ export class FireProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuStopFire)
-    async stopAllFirePits() {
-        TriggerServerEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH);
+    async stopAllFirePits(instant: boolean) {
+        TriggerServerEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH, instant);
 
         this.notifier.notify("Tous les feux commencent à s'éteindre");
     }

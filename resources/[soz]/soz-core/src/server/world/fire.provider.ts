@@ -1,5 +1,6 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Logger } from '@public/core/logger';
+import { wait } from '@public/core/utils';
 import { joaat } from '@public/shared/joaat';
 import { RpcClientEvent } from '@public/shared/rpc';
 import { Gauge } from 'prom-client';
@@ -131,7 +132,7 @@ export class FireProvider {
         });
 
         this.soundService.playGlobal({
-            id: `firepit-${fireId}`,
+            id: `firepit-${fireId}-${type}`,
             name: 'fire',
             location: position.slice(0, 3) as Vector3,
             maxDistance: firePitSound[type],
@@ -142,16 +143,18 @@ export class FireProvider {
     }
 
     @OnEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH)
-    async extinguishFirePit(source: number) {
+    async extinguishFirePit(source: number, instant: boolean) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
         this.staffRequestPitExtinguish = true;
 
-        this.firePits.forEach((_pit, id) => {
+        if (!instant) return;
+
+        this.firePits.forEach((pit, id) => {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
-            this.soundService.stopGlobal(`firepit-${id}`);
+            this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
             this.firePits.delete(id);
             this.firePitHealth.delete(id);
             this.firePitGauge.remove({ chunk: id });
@@ -175,6 +178,8 @@ export class FireProvider {
 
         for (const [id, pit] of this.firePits.entries()) {
             if (this.staffRequestPitExtinguish) {
+                this.reduceFirePit(id);
+                await wait(10);
                 this.reduceFirePit(id);
                 continue;
             }
@@ -271,6 +276,14 @@ export class FireProvider {
                     this.firePits.get(newPitId)
                 );
 
+                this.soundService.playGlobal({
+                    id: `firepit-${newPitId}-${FireType.Medium}`,
+                    name: 'fire',
+                    location: newPitCoords.slice(0, 3) as Vector3,
+                    maxDistance: firePitSound[FireType.Medium],
+                    volume: firePitVolume[FireType.Medium],
+                });
+
                 await this.addSwapModel(pit.type, newPitCoords);
 
                 this.logger.debug(`[World - Fire] Fire pit ${id} propagated to fire pit ${newPitId}`);
@@ -302,12 +315,25 @@ export class FireProvider {
             health: this.firePitHealth.get(id),
         });
 
+        this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
+        this.soundService.playGlobal({
+            id: `firepit-${id}-${newPitType}`,
+            name: 'fire',
+            location: pit.position.slice(0, 3) as Vector3,
+            maxDistance: firePitSound[newPitType],
+            volume: firePitVolume[newPitType],
+        });
+
         this.logger.debug(`[World - Fire] Fire pit ${id} increase its intensity`);
     }
 
     private reduceFirePit(id: string) {
         if (!this.firePits.has(id)) return;
-        if (this.firePitLastReduced.get(id) + INVINCIBILITY_TIME_AFTER_REDUCE > Date.now()) return;
+        if (
+            !this.firePitAlreadyReduced &&
+            this.firePitLastReduced.get(id) + INVINCIBILITY_TIME_AFTER_REDUCE > Date.now()
+        )
+            return;
 
         const newFirePitHealth = Math.max(this.firePitHealth.get(id) - 1, 0);
 
@@ -321,8 +347,10 @@ export class FireProvider {
         this.firePitLastReduced.set(id, Date.now());
 
         if (newFirePitHealth > 0) {
+            const pit = this.firePits.get(id);
+
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
-                ...this.firePits.get(id),
+                ...pit,
                 health: newFirePitHealth,
             });
 
@@ -337,13 +365,11 @@ export class FireProvider {
             this.firePitGauge.remove({ chunk: id });
 
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
-            this.soundService.stopGlobal(`firepit-${id}`);
+            this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
 
             this.logger.debug(`[World - Fire] Fire pit ${id} removed`);
             return;
         }
-
-        if (this.staffRequestPitExtinguish) return;
 
         const newPitType = Math.max(FireType.Small, pit.type - 1);
         this.firePits.set(id, { ...pit, type: newPitType });
@@ -353,6 +379,15 @@ export class FireProvider {
         TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
             ...this.firePits.get(id),
             health: firePitDefaultHealth[newPitType],
+        });
+
+        this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
+        this.soundService.playGlobal({
+            id: `firepit-${id}-${newPitType}`,
+            name: 'fire',
+            location: pit.position.slice(0, 3) as Vector3,
+            maxDistance: firePitSound[newPitType],
+            volume: firePitVolume[newPitType],
         });
 
         this.logger.debug(`[World - Fire] Fire pit ${id} reduce its intensity`);
