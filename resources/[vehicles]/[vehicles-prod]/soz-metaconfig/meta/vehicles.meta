@@ -3352,10 +3352,10 @@
             </firstPersonDrivebyData>
         </Item>
         <Item>
-            <modelName>maverick2</modelName>
-            <txdName>maverick2</txdName>
+            <modelName>maverick3</modelName>
+            <txdName>maverick3</txdName>
             <handlingId>MAVERICK</handlingId>
-            <gameName>MAVERICK2</gameName>
+            <gameName>MAVERICK3</gameName>
             <vehicleMakeName>maverick</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
             <expressionName>null</expressionName>
@@ -7289,7 +7289,7 @@
         </Item>
         <Item>
             <parent>vehicles_flyer_interior</parent>
-            <child>maverick2</child>
+            <child>maverick3</child>
         </Item>
         <Item>
             <parent>vehicles_van_interior</parent>
