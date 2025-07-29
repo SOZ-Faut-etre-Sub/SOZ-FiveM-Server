@@ -90,7 +90,7 @@ const VEHICLE_HAS_RADIO = [
     'bcso50',
     'bcso51',
     'bcso60',
-    'maverick2',
+    'maverick3',
     'pbus',
     'polmav',
     'fbi',

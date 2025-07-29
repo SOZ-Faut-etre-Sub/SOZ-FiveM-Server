@@ -408,10 +408,10 @@ QBShared.Vehicles = {
         ['hash']     = GetHashKey('trash'),
         ['shop']     = 'na',
     },
-    ['maverick2']    = {
+    ['maverick3']    = {
         ['name']     = 'Maverick',
         ['brand']    = 'Los Santos',
-        ['model']    = 'maverick2',
+        ['model']    = 'maverick3',
         ['price']    = 65000,
         ['category'] = 'Emergency',
         ['hash']     = GetHashKey('maverick2'),

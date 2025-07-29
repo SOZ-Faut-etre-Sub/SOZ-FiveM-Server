@@ -52,7 +52,7 @@ export class VehicleMigrationProvider {
                         'sheriff3',
                         'sheriff4',
                         'sheriffb',
-                        'maverick2',
+                        'maverick3',
                         'pbus',
                         'polmav',
                         'fbi',
