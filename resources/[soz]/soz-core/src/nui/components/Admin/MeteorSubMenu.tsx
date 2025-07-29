@@ -182,6 +182,14 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 >
                     Cinematique
                 </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.firePropagation}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuFirePropagation, value);
+                    }}
+                >
+                    Propagation du feu
+                </MenuItemCheckbox>
                 <MenuItemSelect
                     title="Incendie"
                     initialValue={null}

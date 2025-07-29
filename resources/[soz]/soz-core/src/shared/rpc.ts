@@ -392,6 +392,7 @@ export enum RpcServerEvent {
     CASINO_INSIDE_TRACK_LEAVE = 'soz-core:server:casino:inside-track-leave',
     CASINO_INSIDE_TRACK_HAS_PENDING_GAINS = 'soz-core:server:casino:inside-track-has-pending-gains',
 
+    FIRE_GET_FIRE_PIT_PROPAGATION = 'soz-core:server:fire:get-fire-pit-propagation',
     FIRE_GET_ALL_PITS = 'soz-core:server:fire:get-all-pits',
     FIRE_EXTINGUISHED = 'soz-core:server:fire:extinguished',
     FIRE_GET_LOCKED_FIRETRUCK = 'soz-core:server:fire:get-locked-firetruck',

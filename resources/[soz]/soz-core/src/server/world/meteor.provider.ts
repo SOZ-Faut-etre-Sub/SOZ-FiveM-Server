@@ -17,6 +17,7 @@ import { ProgressService } from '../player/progress.service';
 import { RebootProvider } from '../reboot/reboot.provider';
 import { NpcProvider } from '../utils/npc.provider';
 import { EarthquakeProvider } from './earthquake.provider';
+import { FireProvider } from './fire.provider';
 import { OceanProvider } from './ocean.provider';
 import { TornadoProvider } from './tornado.provider';
 
@@ -57,6 +58,9 @@ export class MeteorProvider {
 
     @Inject(TornadoProvider)
     private tornadoProvider: TornadoProvider;
+
+    @Inject(FireProvider)
+    private fireProvider: FireProvider;
 
     private siren = 0;
     private music = 0;
@@ -111,6 +115,7 @@ export class MeteorProvider {
             highWave: this.oceanProvider.getHighWave(),
             sandstormmusic: this.sandstormmusic,
             tornado: this.tornadoProvider.isRunning(),
+            firePropagation: this.fireProvider.propagationIsEnabled(),
         };
     }
 

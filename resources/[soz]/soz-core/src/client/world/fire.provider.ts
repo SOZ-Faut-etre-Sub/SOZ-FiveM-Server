@@ -585,6 +585,11 @@ export class FireProvider {
         };
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuFirePropagation)
+    async firePropagation(activate: boolean) {
+        TriggerServerEvent(ServerEvent.ADMIN_FIRE_PROPAGATION, activate);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuStartFire)
     async startFireAtCoords(type: FireType) {
         const duration = await this.inputService.askInput(

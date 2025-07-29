@@ -7,7 +7,6 @@ export type FirePit = {
     type: FireType;
     health?: number;
     endAt?: number;
-    canPropagate?: boolean;
 };
 
 export type FirePitClient = FirePit & {
@@ -42,12 +41,12 @@ export const newFireOffset: Record<FireType, Vector2> = {
 
 export const newFirePitChance: Record<FireType, number> = {
     [FireType.Small]: 10,
-    [FireType.Medium]: 30,
-    [FireType.Huge]: 60,
+    [FireType.Medium]: 20,
+    [FireType.Huge]: 40,
 };
 
 export const increaseFirePitChance: Record<FireType, number> = {
-    [FireType.Small]: 30,
+    [FireType.Small]: 20,
     [FireType.Medium]: 10,
     [FireType.Huge]: 0,
 };

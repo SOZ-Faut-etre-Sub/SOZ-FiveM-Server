@@ -68,12 +68,17 @@ export class FireProvider {
 
     private readonly gridSize = 25;
     private staffRequestPitExtinguish = false;
+    private firePropagationEnabled = true;
 
     private firePits = new Map<string, FirePit>();
     private firePitHealth = new Map<string, number>();
     private firePitAlreadyReduced = new Set<string>();
     private firePitAlreadySpawned = new Set<string>();
     private firePitLastReduced = new Map<string, number>();
+
+    public propagationIsEnabled(): boolean {
+        return this.firePropagationEnabled;
+    }
 
     @Rpc(RpcServerEvent.FIRE_GET_ALL_PITS)
     async getAllPits() {
@@ -85,8 +90,19 @@ export class FireProvider {
         this.reduceFirePit(id);
     }
 
+    @OnEvent(ServerEvent.ADMIN_FIRE_PROPAGATION)
+    async toggleFirePropagation(source: number, enabled: boolean) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.firePropagationEnabled = enabled;
+
+        this.logger.debug(`[World - Fire] Fire propagation is now ${enabled ? 'enabled' : 'disabled'}`);
+    }
+
     @OnEvent(ServerEvent.ADMIN_STAR_NEW_FIRE_PIT)
-    async startNewFirePit(source: number, position: Vector4, type: FireType, duration: number, canPropagate = true) {
+    async startNewFirePit(source: number, position: Vector4, type: FireType, duration: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
@@ -96,7 +112,6 @@ export class FireProvider {
             position,
             type,
             endAt: duration > 0 ? Date.now() + duration * 60000 : undefined,
-            canPropagate,
         });
         this.firePitHealth.set(fireId, firePitDefaultHealth[type]);
         this.firePitGauge.set({ chunk: fireId }, firePitDefaultHealth[type]);
@@ -167,7 +182,7 @@ export class FireProvider {
                 this.increaseFirePit(id);
             }
 
-            if (!pit.canPropagate) {
+            if (!this.firePropagationEnabled) {
                 continue;
             }
 
@@ -222,9 +237,8 @@ export class FireProvider {
 
                 this.firePits.set(newPitId, {
                     position: newPitCoords,
-                    type: pit.type,
+                    type: FireType.Small,
                     endAt: pit.endAt,
-                    canPropagate: pit.canPropagate,
                 });
                 this.firePitHealth.set(newPitId, firePitDefaultHealth[pit.type]);
                 this.firePitGauge.set({ chunk: newPitId }, firePitDefaultHealth[pit.type]);

@@ -130,6 +130,7 @@ export enum NuiEvent {
     AdminMenuTornadoMove = 'soz-core:nui:admin:tornado-move',
     AdminMenuTornadoFlash = 'soz-core:nui:admin:tornado-flash',
     AdminMenuPreviewFire = 'soz-core:nui:admin:preview-fire',
+    AdminMenuFirePropagation = 'soz-core:nui:admin:fire-propagation',
     AdminMenuStartFire = 'soz-core:nui:admin:start-fire',
     AdminMenuStopFire = 'soz-core:nui:admin:stop-fire',
     AdminMenuFireRemoveModelSwap = 'soz-core:nui:admin:fire-remove-modelswap',
