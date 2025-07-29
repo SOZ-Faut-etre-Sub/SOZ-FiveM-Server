@@ -15,6 +15,8 @@ import {
     FirePit,
     firePitDefaultHealth,
     firePitGrid,
+    firePitSound,
+    firePitVolume,
     fireScale,
     FireTreeModelMapping,
     FireType,
@@ -31,6 +33,7 @@ import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { QBCore } from '../qbcore';
 import { ModelSwapRepository } from '../repository/modelswap.repository';
+import { SoundService } from '../sound/sound.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 
 const PLAYER_RADIUS = 1000;
@@ -59,6 +62,9 @@ export class FireProvider {
 
     @Inject(Logger)
     private readonly logger: Logger;
+
+    @Inject(SoundService)
+    private readonly soundService: SoundService;
 
     private firePitGauge = new Gauge({
         name: 'soz_firestorm_pit',
@@ -124,6 +130,14 @@ export class FireProvider {
             type,
         });
 
+        this.soundService.playGlobal({
+            id: `firepit-${fireId}`,
+            name: 'fire',
+            location: position.slice(0, 3) as Vector3,
+            maxDistance: firePitSound[type],
+            volume: firePitVolume[type],
+        });
+
         await this.addSwapModel(type, position);
     }
 
@@ -137,6 +151,7 @@ export class FireProvider {
 
         this.firePits.forEach((_pit, id) => {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
+            this.soundService.stopGlobal(`firepit-${id}`);
             this.firePits.delete(id);
             this.firePitHealth.delete(id);
             this.firePitGauge.remove({ chunk: id });
@@ -318,6 +333,7 @@ export class FireProvider {
             this.firePitGauge.remove({ chunk: id });
 
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
+            this.soundService.stopGlobal(`firepit-${id}`);
 
             this.logger.debug(`[World - Fire] Fire pit ${id} removed`);
             return;

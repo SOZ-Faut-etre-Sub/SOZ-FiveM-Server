@@ -21,6 +21,18 @@ export enum FireType {
     Huge,
 }
 
+export const firePitSound: Record<FireType, number> = {
+    [FireType.Small]: 70,
+    [FireType.Medium]: 150,
+    [FireType.Huge]: 250,
+};
+
+export const firePitVolume: Record<FireType, number> = {
+    [FireType.Small]: 0.1,
+    [FireType.Medium]: 0.3,
+    [FireType.Huge]: 0.5,
+};
+
 export const firePitDefaultHealth: Record<FireType, number> = {
     [FireType.Small]: 5,
     [FireType.Medium]: 10,
