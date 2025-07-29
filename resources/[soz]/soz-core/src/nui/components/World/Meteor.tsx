@@ -153,7 +153,7 @@ export const Meteor: FunctionComponent = () => {
     useNuiEvent(
         'meteor',
         'destruction',
-        value => handleVolume('#destruction', gainDestruction, value ? 1.0 : 0.0, false),
+        value => handleVolume('#destruction', gainDestruction, value ? 5.0 : 0.0, false),
         [audioCtx, gainDestruction]
     );
 
