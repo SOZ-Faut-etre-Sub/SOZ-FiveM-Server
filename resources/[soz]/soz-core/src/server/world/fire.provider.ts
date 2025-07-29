@@ -37,7 +37,7 @@ import { SoundService } from '../sound/sound.service';
 import { VehicleSpawner } from '../vehicle/vehicle.spawner';
 
 const PLAYER_RADIUS = 1000;
-const MAX_FIRE_PIT_WEIGHT = 60;
+const MAX_FIRE_PIT_WEIGHT = 120;
 const INVINCIBILITY_TIME_AFTER_REDUCE = 5_000;
 
 @Provider()
@@ -197,6 +197,10 @@ export class FireProvider {
                 this.increaseFirePit(id);
             }
 
+            if (pit.type === FireType.Small) {
+                continue;
+            }
+
             if (!this.firePropagationEnabled) {
                 continue;
             }
@@ -252,7 +256,7 @@ export class FireProvider {
 
                 this.firePits.set(newPitId, {
                     position: newPitCoords,
-                    type: FireType.Small,
+                    type: FireType.Medium,
                     endAt: pit.endAt,
                 });
                 this.firePitHealth.set(newPitId, firePitDefaultHealth[pit.type]);
