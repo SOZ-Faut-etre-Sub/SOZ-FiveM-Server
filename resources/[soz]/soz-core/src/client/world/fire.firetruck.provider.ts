@@ -19,7 +19,7 @@ import { ResourceLoader } from '../repository/resource.loader';
 import { TargetFactory } from '../target/target.factory';
 import { WeaponService } from '../weapon/weapon.service';
 
-const ROPE_LENGTH = 25.0;
+const ROPE_LENGTH = 50.0;
 
 @Provider()
 export class FireFiretruckProvider {
