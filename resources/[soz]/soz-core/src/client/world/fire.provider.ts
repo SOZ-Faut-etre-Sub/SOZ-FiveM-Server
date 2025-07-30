@@ -470,12 +470,6 @@ export class FireProvider {
 
         this.usedFireExtinguisherRecently = false;
 
-        if (model === joaat('firetruk')) {
-            this.usedFireExtinguisherRecently = true;
-            await wait(2_000);
-            return;
-        }
-
         const weapon = GetSelectedPedWeapon(player);
         const weaponGroup = GetWeapontypeGroup(weapon);
 
