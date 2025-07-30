@@ -182,7 +182,7 @@ export class FireProvider {
                         category: 'citizen',
                         label: 'Prendre la tenue',
                         icon: 'fire/clothes',
-                        canInteract: this.isClothType.bind(this, ''),
+                        canInteract: this.isClothType.bind(this, 'FIRE', false),
                         action: async () => {
                             const outfit: Outfit = {
                                 type: 'FIRE',
@@ -282,10 +282,14 @@ export class FireProvider {
         }
     }
 
-    private isClothType(type: OutfitType): boolean {
+    private isClothType(type: OutfitType, equal = true): boolean {
         const player = this.playerService.getPlayer();
         if (!player) {
             return false;
+        }
+
+        if (!equal) {
+            return player.metadata.cloth_type !== type;
         }
 
         return player.metadata.cloth_type === type;
