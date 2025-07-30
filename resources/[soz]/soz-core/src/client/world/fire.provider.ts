@@ -355,7 +355,7 @@ export class FireProvider {
         );
 
         if (!smokePtfx) {
-            this.logger.error('Failed to create fire smoke ptfx');
+            console.log('Failed to create fire smoke ptfx');
         }
 
         SetPtfxAssetNextCall('soz_fire');
@@ -375,7 +375,7 @@ export class FireProvider {
         );
 
         if (!flamePtfx) {
-            this.logger.error('Failed to create fire smoke ptfx');
+            console.log('Failed to create fire smoke ptfx');
         }
 
         this.firePits.set(id, {

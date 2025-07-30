@@ -204,7 +204,7 @@ export class TornadoProvider {
             );
 
             if (!particle.ptfx) {
-                this.logger.error('Failed to create tornado ptfx');
+                console.log('Failed to create tornado ptfx');
             }
 
             if (!immediate) {
