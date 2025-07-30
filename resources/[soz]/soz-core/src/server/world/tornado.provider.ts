@@ -103,7 +103,8 @@ export class TornadoProvider {
             1024,
             this.state?.startTime,
             this.state?.startPosition,
-            this.state?.endPosition
+            this.state?.endPosition,
+            true
         );
     }
 

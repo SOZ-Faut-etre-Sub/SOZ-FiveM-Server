@@ -88,7 +88,7 @@ export class TornadoProvider {
     }
 
     @OnEvent(ClientEvent.TORNADO)
-    public async startTornado(startTime: number, startLocation: Vector3, destination: Vector3) {
+    public async startTornado(startTime: number, startLocation: Vector3, destination: Vector3, immediate = false) {
         if (!startTime && !startLocation) {
             this.delete();
             return;
@@ -103,7 +103,7 @@ export class TornadoProvider {
         }
 
         this.particles = [];
-        this.createVortex();
+        this.createVortex(immediate);
     }
 
     @Tick()
@@ -120,7 +120,7 @@ export class TornadoProvider {
         this.tornadoPulledEntities(center);
     }
 
-    private async createVortex() {
+    private async createVortex(immediate: boolean) {
         await this.resourceLoader.requestScriptAudioBank('audiodirectory/tornado');
         const layerSize = VORTEX_LAYER_SEPERATION_SCALE;
         const particleCount = VORTEX_PARTICLE_COUNT;
@@ -206,7 +206,10 @@ export class TornadoProvider {
             if (!particle.ptfx) {
                 this.logger.error('Failed to create tornado ptfx');
             }
-            await wait(200);
+
+            if (!immediate) {
+                await wait(200);
+            }
         }
 
         this.resourceLoader.unloadModel(MODEL);
@@ -292,13 +295,11 @@ export class TornadoProvider {
         const realDiff = multVector3(diffTotal, realdist / distTotal);
 
         const position = add2Vector3(this.startLocation, realDiff);
+        if (this.prevZ == null) {
+            this.prevZ = position[2];
+        }
 
-        const [ret, val] = GetGroundZFor_3dCoord(
-            position[0],
-            position[1],
-            (this.prevZ ? this.prevZ : position[2]) + 1000,
-            true
-        );
+        const [ret, val] = GetGroundZFor_3dCoord(position[0], position[1], this.prevZ + 1000, true);
         const expected = ret ? val + 1 : position[2];
         if (expected > this.prevZ) {
             position[2] = Math.min(this.prevZ + 0.5, expected);
