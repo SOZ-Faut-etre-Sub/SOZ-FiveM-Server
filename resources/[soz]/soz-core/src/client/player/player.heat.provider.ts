@@ -143,7 +143,7 @@ export class PlayerHeatProvider {
             return;
         }
 
-        [Component.Tops, Component.Legs, Component.Shoes, Component.Mask].forEach(component => {
+        [Component.Tops, Component.Legs, Component.Shoes].forEach(component => {
             if (data[component] == null) {
                 const extra = ExtraWarnCloths[player.skin.Model.Hash].find(
                     item =>
