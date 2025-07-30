@@ -22,6 +22,7 @@ import { DynamicElevator, DynamicElevatorState } from './elevators';
 import { FuelStation, UpwCharger, UpwStation } from './fuel';
 import { Property, RentTaxe } from './housing/housing';
 import { JobGrade } from './job';
+import { ModelSwap } from './modelswap';
 import { WorldObject } from './object';
 import { Race } from './race';
 import { ClothingShop } from './shop';
@@ -75,6 +76,7 @@ export enum RepositoryType {
     Zone = 'zone',
     VehicleSiren = 'vehicleSiren',
     Traveling = 'traveling',
+    ModelSwap = 'modelSwap',
 }
 
 export type RepositoryMapping = {
@@ -121,6 +123,7 @@ export type RepositoryMapping = {
     [RepositoryType.WorldEvent]: WorldEvent;
     [RepositoryType.VehicleSiren]: boolean;
     [RepositoryType.Traveling]: TravelingCamera;
+    [RepositoryType.ModelSwap]: ModelSwap;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -154,6 +157,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.PhoneLight]: Record<number, [boolean, boolean]>;
     [RepositoryType.VehicleSiren]: Record<number, boolean>;
     [RepositoryType.Traveling]: Record<number, TravelingCamera>;
+    [RepositoryType.ModelSwap]: Record<number, ModelSwap>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

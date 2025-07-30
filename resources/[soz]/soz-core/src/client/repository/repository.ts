@@ -54,15 +54,15 @@ export abstract class Repository<
             const previousValue = changedValues[key];
             const newValue = this.data[key] || null;
 
-            if (previousValue === null) {
+            if (previousValue == null) {
                 this.repositoryLoader.trigger(this.type, 'insert', newValue);
             }
 
-            if (newValue === null) {
+            if (newValue == null) {
                 this.repositoryLoader.trigger(this.type, 'delete', previousValue);
             }
 
-            if (previousValue !== null && newValue !== null) {
+            if (previousValue != null && newValue != null) {
                 this.repositoryLoader.trigger(this.type, 'update', newValue, previousValue);
             }
         }

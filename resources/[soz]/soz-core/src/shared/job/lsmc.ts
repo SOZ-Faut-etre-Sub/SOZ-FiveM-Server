@@ -435,6 +435,7 @@ export const LsmcCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 96, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 120, Texture: 0, Palette: 0 },
+                [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 151, Texture: 0, Palette: 0 },
@@ -568,6 +569,7 @@ export const LsmcCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 111, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 126, Texture: 0, Palette: 0 },
+                [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 24, Texture: 0, Palette: 0 },
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 187, Texture: 0, Palette: 0 },

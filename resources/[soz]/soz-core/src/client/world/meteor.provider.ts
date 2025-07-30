@@ -6,6 +6,7 @@ import { Tick } from '@public/core/decorators/tick';
 import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
+import { Music } from '@public/shared/audio';
 import { ClientEvent, NuiEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
 import { Control } from '@public/shared/input';
@@ -74,9 +75,7 @@ export class MeteorProvider {
     @Once(OnceStep.NuiLoaded)
     public async init() {
         const data = await emitRpc<MeteorSubMenuState>(RpcServerEvent.ADMIN_METEOR_STATE);
-        this.nuiDispatch.dispatch('meteor', 'siren', data.siren);
-        this.nuiDispatch.dispatch('meteor', 'music', data.music);
-        this.nuiDispatch.dispatch('meteor', 'sandstorm', data.sandstormmusic);
+        this.nuiDispatch.dispatch('meteor', 'musics', data.musics);
         this.earthquakeProvider.onEarthquake(data.earthQuake);
     }
 
@@ -467,19 +466,9 @@ export class MeteorProvider {
         this.inEnd = false;
     }
 
-    @OnEvent(ClientEvent.METEOR_CHONOS_MUSIC)
-    public async meteorChonosMusic(value: number) {
-        this.nuiDispatch.dispatch('meteor', 'chronos', value);
-    }
-
     @OnEvent(ClientEvent.METEOR_MUSIC)
-    public async meteorMusic(value: number) {
-        this.nuiDispatch.dispatch('meteor', 'music', value);
-    }
-
-    @OnEvent(ClientEvent.METEOR_SIREN)
-    public async meteorSiren(value: number) {
-        this.nuiDispatch.dispatch('meteor', 'siren', value);
+    public async meteorMusic(musics: Record<Music, number>) {
+        this.nuiDispatch.dispatch('meteor', 'musics', musics);
     }
 
     private readonly skin: any = {
@@ -506,11 +495,6 @@ export class MeteorProvider {
             this.playerService.setTempClothes(fullScarf);
         }
         this.isWearingFullScarf = !this.isWearingFullScarf;
-    }
-
-    @OnEvent(ClientEvent.METEOR_SANDSTORM_MUSIC)
-    public async sandstormMusic(value: number) {
-        this.nuiDispatch.dispatch('meteor', 'sandstorm', value);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuSandstormFlash)
@@ -541,6 +525,17 @@ export class MeteorProvider {
             job: '',
             message:
                 'Alerte Inondation - Suite à de fortes pluies, une importante montée des eaux à été détéctée. Nous vous invitons à éviter les endroits à risques.',
+        });
+    }
+
+    @OnNuiEvent(NuiEvent.AdminMenuTornadoFlash)
+    public async tornadoFlash() {
+        await emitRpc(RpcServerEvent.PHONE_APP_NEWS_CREATE, {
+            type: 'tornado',
+            reporterId: '',
+            job: '',
+            message:
+                "Une tornade a été détectée dans votre secteur. Mettez-vous immédiatement à l’abri dans un endroit sûr (sous-sol ou pièce sans fenêtre). Évitez les déplacements. Restez à l'écoute des consignes des autorités.",
         });
     }
 }

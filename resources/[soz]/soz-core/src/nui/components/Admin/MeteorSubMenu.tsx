@@ -1,6 +1,8 @@
 import { SozRole } from '@core/permissions';
 import { __ } from '@headlessui/react/dist/types';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
+import { Music } from '@public/shared/audio';
+import { FireType } from '@public/shared/fire';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
@@ -31,7 +33,10 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
         }, 2000);
 
         // Cleanup function to clear the timeout if the component unmounts
-        return () => clearInterval(timeoutId);
+        return () => {
+            clearInterval(timeoutId);
+            fetchNui(NuiEvent.AdminMenuPreviewFire, null);
+        };
     }, []);
 
     return (
@@ -40,9 +45,9 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
             <MenuContent subtitle="Juste un rond ...">
                 <MenuItemSelect
                     title={`Sirène`}
-                    value={state.siren}
+                    value={state.musics[Music.Siren]}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorSiren, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Siren, value: index });
                     }}
                 >
                     {Array(11)
@@ -55,9 +60,9 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 </MenuItemSelect>
                 <MenuItemSelect
                     title={`Chonos`}
-                    value={state.music}
+                    value={state.musics[Music.Chronos]}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorChronosMusic, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Chronos, value: index });
                     }}
                 >
                     {Array(11)
@@ -69,10 +74,10 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                         ))}
                 </MenuItemSelect>
                 <MenuItemSelect
-                    title={`Musique`}
-                    value={state.music}
+                    title={`Ambiance`}
+                    value={state.musics[Music.Ambiance]}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Ambiance, value: index });
                     }}
                 >
                     {Array(11)
@@ -141,9 +146,10 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 </MenuItemCheckbox>
                 <MenuItemSelect
                     title={`Tempête de Sable`}
-                    value={state.siren}
+                    value={state.musics[Music.SandStorm]}
+                    titleWidth={50}
                     onConfirm={async index => {
-                        await fetchNui(NuiEvent.AdminMenuSandstormMusic, index);
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.SandStorm, value: index });
                     }}
                 >
                     {Array(11)
@@ -154,27 +160,156 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                             </MenuItemSelectOption>
                         ))}
                 </MenuItemSelect>
+                <MenuSubTitle>FireStorm</MenuSubTitle>
+                <MenuItemCheckbox
+                    checked={state.tornado}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuTornado, value);
+                    }}
+                >
+                    Tornade
+                </MenuItemCheckbox>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuTornadoMove);
+                    }}
+                >
+                    Déplacer la tornade
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuFireStorm);
+                    }}
+                >
+                    Cinematique
+                </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.firePropagation}
+                    onChange={async value => {
+                        await fetchNui(NuiEvent.AdminMenuFirePropagation, value);
+                    }}
+                >
+                    Propagation du feu
+                </MenuItemCheckbox>
+                <MenuItemSelect
+                    title="Incendie"
+                    initialValue={null}
+                    onChange={async (_index, value) => {
+                        await fetchNui(NuiEvent.AdminMenuPreviewFire, String(value));
+                    }}
+                    onConfirm={async (_index, value) => {
+                        await fetchNui(NuiEvent.AdminMenuStartFire, String(value));
+                    }}
+                >
+                    {[null, FireType.Small, FireType.Medium, FireType.Huge].map(value => (
+                        <MenuItemSelectOption value={value} key={`fire_${value}`}>
+                            {FireType[value]}
+                        </MenuItemSelectOption>
+                    ))}
+                </MenuItemSelect>
+                <MenuItemButton
+                    onConfirm={() => fetchNui(NuiEvent.AdminMenuStopFire)}
+                    description="Réduit petit à petit le volume de l'incendie jusqu'à extinction"
+                >
+                    Étouffer l'incendie
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={() => fetchNui(NuiEvent.AdminMenuStopFire, true)}
+                    description="Supprime tous les feux instantanément"
+                >
+                    Stopper l'incendie
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={() => fetchNui(NuiEvent.AdminMenuFireRemoveModelSwap)}
+                    description="Enlever les remplacements de modèles d'arbre"
+                >
+                    Enlever les remplacements de modèles d'arbre
+                </MenuItemButton>
+
+                <MenuItemSelect
+                    title={`Music - Impact`}
+                    value={state.musics[Music.Impact]}
+                    titleWidth={50}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Impact, value: index });
+                    }}
+                >
+                    {Array(31)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`siren_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+                <MenuItemSelect
+                    title={`Music - Dies Irae`}
+                    value={state.musics[Music.DiesIrae]}
+                    titleWidth={50}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.DiesIrae, value: index });
+                    }}
+                >
+                    {Array(31)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`music_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+                <MenuItemSelect
+                    title={`Music - Cinis`}
+                    value={state.musics[Music.Cinis]}
+                    titleWidth={50}
+                    onConfirm={async index => {
+                        await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Cinis, value: index });
+                    }}
+                >
+                    {Array(31)
+                        .fill(0)
+                        .map((_, index) => (
+                            <MenuItemSelectOption value={index} key={`music_${index}`}>
+                                {index}
+                            </MenuItemSelectOption>
+                        ))}
+                </MenuItemSelect>
+
                 <MenuSubTitle>Annonces</MenuSubTitle>
                 <MenuItemButton
                     onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuEarthquakeFlash, false);
+                        await fetchNui(NuiEvent.AdminMenuEarthquakeFlash);
                     }}
                 >
                     Tremblement de terre
                 </MenuItemButton>
                 <MenuItemButton
                     onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuSandstormFlash, false);
+                        await fetchNui(NuiEvent.AdminMenuSandstormFlash);
                     }}
                 >
                     Tempête de sable
                 </MenuItemButton>
                 <MenuItemButton
                     onConfirm={async () => {
-                        await fetchNui(NuiEvent.AdminMenuFloodFlash, false);
+                        await fetchNui(NuiEvent.AdminMenuFloodFlash);
                     }}
                 >
                     Inondation
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuFireFlash, false);
+                    }}
+                >
+                    Incendie
+                </MenuItemButton>
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuTornadoFlash);
+                    }}
+                >
+                    Tornade
                 </MenuItemButton>
             </MenuContent>
         </SubMenu>

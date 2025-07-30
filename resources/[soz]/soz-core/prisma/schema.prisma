@@ -1112,10 +1112,19 @@ model casino_inside_track_pending_gains {
 
 model dynamic_prop_billboard {
     id           String             @id @db.VarChar(128)
-    textureUrl   String?             @db.Text
+    textureUrl   String?            @db.Text
     position     String             @db.Text
     model        String             @db.VarChar(50)
     job          String             @db.VarChar(50)
     createdAt       DateTime @default(now()) @db.Timestamp(0)
     updatedAt       DateTime @default(now()) @db.Timestamp(0)
+}
+
+
+model model_swap {
+    id          Int                 @id @default(autoincrement())
+    source      String              @db.Text
+    target      String?             @db.Text
+    position    String              @db.Text
+    range       Int                 
 }

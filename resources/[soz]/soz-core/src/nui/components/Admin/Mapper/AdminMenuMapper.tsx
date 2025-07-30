@@ -34,6 +34,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
     const location = useLocation();
     const [properties, setProperties] = useState<AdminMapperMenuData['properties']>([]);
     const zones = useRepository(RepositoryType.Zone);
+    const swaps = useRepository(RepositoryType.ModelSwap);
     const [selectedObject, setSelectedObject] = useState<string>('soz_prop_bb_bin');
     const [job, setJob] = useState<JobType | null>(null);
     const [event, setEvent] = useState<string | null>(null);
@@ -97,6 +98,7 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     <MenuItemButton onConfirm={onRaceAdminMenuOpen}>🏎 Courses</MenuItemButton>
                     <MenuItemButton onConfirm={onLaserGameAdminMenuOpen}>🔫 Laser Game</MenuItemButton>
                     <MenuItemSubMenuLink id="zones">🗺️ Gestion des zones</MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id="modelswap">🆛 Gestion des remplacements de modèle</MenuItemSubMenuLink>
                     <MenuItemButton onConfirm={onHubEntryAdminMenuOpen}>[🕯] Lanterne</MenuItemButton>
                     <MenuItemButton onConfirm={onGangAdminMenuOpen}>💀 Groupe criminel</MenuItemButton>
                 </MenuContent>
@@ -616,6 +618,35 @@ export const AdminMenuMapper: FunctionComponent<AdminMapperMenuStateProps> = ({ 
                     </MenuContent>
                 </SubMenu>
             ))}
+            <SubMenu id={'modelswap'} key={'modelswap'}>
+                <MenuTitle title={data.permission} />
+                <MenuContent subtitle={`Remplacement de modèle`}>
+                    <MenuItemButton onConfirm={() => fetchNui(NuiEvent.AdminMenuMapperModelSwapAdd)}>
+                        ➕ Ajouter un remplacement de modèle
+                    </MenuItemButton>
+                    {Object.values(swaps)
+                        .sort((a, b) => a.source.localeCompare(b.source))
+                        .map(swap => (
+                            <MenuItemSelect
+                                key={`swap-${swap.id}`}
+                                title={swap.source}
+                                description={`${swap.source} ${swap.target}  ${swap.range}`}
+                                onConfirm={async (index, action) => {
+                                    if (action === 'delete') {
+                                        fetchNui(NuiEvent.AdminMenuMapperModelSwapDelete, swap.id);
+                                    }
+
+                                    if (action === 'teleport') {
+                                        fetchNui(NuiEvent.AdminMenuMapperModelSwapTeleport, swap.position);
+                                    }
+                                }}
+                            >
+                                <MenuItemSelectOption value="teleport">Téléporter</MenuItemSelectOption>
+                                <MenuItemSelectOption value="delete">Supprimer</MenuItemSelectOption>
+                            </MenuItemSelect>
+                        ))}
+                </MenuContent>
+            </SubMenu>
         </Menu>
     );
 };

@@ -4,6 +4,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { ItemService } from '@public/server/item/item.service';
 import { MeteorSubMenuState } from '@public/shared/admin/admin';
+import { Music } from '@public/shared/audio';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -17,7 +18,9 @@ import { ProgressService } from '../player/progress.service';
 import { RebootProvider } from '../reboot/reboot.provider';
 import { NpcProvider } from '../utils/npc.provider';
 import { EarthquakeProvider } from './earthquake.provider';
+import { FireProvider } from './fire.provider';
 import { OceanProvider } from './ocean.provider';
+import { TornadoProvider } from './tornado.provider';
 
 @Provider()
 export class MeteorProvider {
@@ -54,10 +57,21 @@ export class MeteorProvider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
-    private siren = 0;
-    private music = 0;
-    private chronos = 0;
-    private sandstormmusic = 0;
+    @Inject(TornadoProvider)
+    private tornadoProvider: TornadoProvider;
+
+    @Inject(FireProvider)
+    private fireProvider: FireProvider;
+
+    private musics: Record<Music, number> = {
+        [Music.Siren]: 0,
+        [Music.Chronos]: 0,
+        [Music.Ambiance]: 0,
+        [Music.SandStorm]: 0,
+        [Music.Impact]: 0,
+        [Music.DiesIrae]: 0,
+        [Music.Cinis]: 0,
+    };
 
     @Once()
     public onStart() {
@@ -97,26 +111,15 @@ export class MeteorProvider {
     }
 
     @Rpc(RpcServerEvent.ADMIN_METEOR_STATE)
-    public getMEteorSate(): MeteorSubMenuState {
+    public getMeteorSate(): MeteorSubMenuState {
         return {
             disableNpc: this.npcProvider.isDisabled(),
-            music: this.music,
-            siren: this.siren,
-            chronos: this.chronos,
+            musics: this.musics,
             earthQuake: this.earthquakeProvider.isEarthQuake(),
             highWave: this.oceanProvider.getHighWave(),
-            sandstormmusic: this.sandstormmusic,
+            tornado: this.tornadoProvider.isRunning(),
+            firePropagation: this.fireProvider.propagationIsEnabled(),
         };
-    }
-
-    @OnEvent(ServerEvent.ADMIN_METEOR_SIREN)
-    public toggleMetorSiren(source: number, value: number) {
-        if (!this.permissionService.isStaff(source)) {
-            return;
-        }
-
-        this.siren = value;
-        TriggerClientEvent(ClientEvent.METEOR_SIREN, -1, value);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_ACTIVATE)
@@ -127,38 +130,18 @@ export class MeteorProvider {
 
         TriggerClientEvent(ClientEvent.METEOR_START, -1);
         this.notifier.notify(source, 'Lancement météorite...');
-        this.music = 0;
-        this.siren = 0;
+        this.musics[Music.Siren] = 0;
+        this.musics[Music.Ambiance] = 0;
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_MUSIC)
-    public activateMusic(source: number, value: number) {
+    public activateMusic(source: number, music: Music, value: number) {
         if (!this.permissionService.isStaff(source)) {
             return;
         }
 
-        this.music = value;
-        TriggerClientEvent(ClientEvent.METEOR_MUSIC, -1, value);
-    }
-
-    @OnEvent(ServerEvent.ADMIN_METEOR_CHONOS_MUSIC)
-    public activateChonosMusic(source: number, value: number) {
-        if (!this.permissionService.isStaff(source)) {
-            return;
-        }
-
-        this.chronos = value;
-        TriggerClientEvent(ClientEvent.METEOR_CHONOS_MUSIC, -1, value);
-    }
-
-    @OnEvent(ServerEvent.ADMIN_SANDSTORM_MUSIC)
-    public activateSandstormMusic(source: number, value: number) {
-        if (!this.permissionService.isStaff(source)) {
-            return;
-        }
-
-        this.sandstormmusic = value;
-        TriggerClientEvent(ClientEvent.METEOR_SANDSTORM_MUSIC, -1, value);
+        this.musics[music] = value;
+        TriggerClientEvent(ClientEvent.METEOR_MUSIC, -1, this.musics);
     }
 
     @OnEvent(ServerEvent.ADMIN_METEOR_KICK_PLAYERS)

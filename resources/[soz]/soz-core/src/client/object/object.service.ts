@@ -8,6 +8,7 @@ import { applyOffset, Vector4 } from '@public/shared/polyzone/vector';
 import { Feature } from '../../shared/features';
 import { joaat } from '../../shared/joaat';
 import { WorldObject } from '../../shared/object';
+import { ModelSwapRepository } from '../repository/modelswap.repository';
 import { ResourceLoader } from '../repository/resource.loader';
 
 const HalloweenMapping: Record<number, number> = {
@@ -29,6 +30,9 @@ export class ObjectService {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
+    @Inject(ModelSwapRepository)
+    private modelSwapRepository: ModelSwapRepository;
+
     private duiObjects: Map<string, number> = new Map();
     private textureDict = 0;
 
@@ -43,6 +47,14 @@ export class ObjectService {
             this.logger.warn(`Model ${model} is not valid for ${object.id}`);
 
             return null;
+        }
+
+        const swap = this.modelSwapRepository.findSwap(model, object.position);
+        if (swap) {
+            if (!swap.target) {
+                return null;
+            }
+            model = joaat(swap.target);
         }
 
         if (!(await this.resourceLoader.loadModel(model))) {
@@ -216,8 +228,19 @@ export class ObjectService {
             model = HalloweenMapping[model] || model;
         }
 
-        if (GetEntityModel(entity) !== model) {
-            this.logger.error(`Attemp to delete an entity of wrong model ${GetEntityModel(entity)} expected ${model}`);
+        const swap = this.modelSwapRepository.findSwap(model, object.position);
+        let model2 = null;
+        if (swap) {
+            if (!swap.target) {
+                return false;
+            }
+            model2 = joaat(swap.target);
+        }
+
+        if (![model, model2].includes(GetEntityModel(entity))) {
+            this.logger.error(
+                `Attemp to delete an entity of wrong model ${GetEntityModel(entity)} expected ${model} or ${model2} for ${object.id}`
+            );
 
             return false;
         }
@@ -281,7 +304,7 @@ export class ObjectService {
         } else if (Date.now() < object.growth.endTime) {
             ratio =
                 ((Date.now() - object.growth.beginTime) / (object.growth.endTime - object.growth.beginTime)) *
-                (object.growth.endSize - object.growth.beginSize) +
+                    (object.growth.endSize - object.growth.beginSize) +
                 object.growth.beginSize;
         }
         const matrix = this.getEntityMatrix(entity);

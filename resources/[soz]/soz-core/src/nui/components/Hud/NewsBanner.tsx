@@ -46,8 +46,12 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                 return getPath('images/hud/weather/sandstorm.webp');
             case 'earthquake':
                 return getPath('images/hud/weather/earthquake.webp');
+            case 'fire':
+                return getPath('images/hud/weather/fire.webp');
             case 'flood':
                 return getPath('images/hud/weather/day/rain.webp');
+            case 'tornado':
+                return getPath('images/hud/weather/tornado.webp');
             default:
                 if (news.job === JobType.YouNews) {
                     return getPath('images/twitch-news/logo-younews.webp');
@@ -82,6 +86,10 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                 return '#DAB16D';
             case 'flood':
                 return '#66BBF4';
+            case 'fire':
+                return '#EF4444';
+            case 'tornado':
+                return '#88708F';
             default:
                 if (news.job === JobType.YouNews) {
                     return '#EF4444';
@@ -116,6 +124,10 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                 return '#5C4B3D73';
             case 'flood':
                 return '#1A2E5073';
+            case 'fire':
+                return '#36262873';
+            case 'tornado':
+                return '#1A2E5073';
             default:
                 if (news.job === JobType.YouNews) {
                     return '#36262873';
@@ -146,6 +158,10 @@ const Banner: FunctionComponent<BannerProps> = ({ news, onDelete }) => {
                 return 'Alerte séisme';
             case 'flood':
                 return 'Alerte inondation';
+            case 'fire':
+                return 'Alerte incendie';
+            case 'tornado':
+                return 'Alerte tornade';
             default:
                 return news.type;
         }

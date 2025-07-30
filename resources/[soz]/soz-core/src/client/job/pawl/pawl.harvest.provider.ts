@@ -119,6 +119,7 @@ export class PawlHarvestProvider {
                 model: GetHashKey(tree.model),
                 position: [tree.position.x, tree.position.y, tree.position.z, tree.position.w || 0],
                 id: tree.identifier,
+                permanent: true,
             },
             [
                 {

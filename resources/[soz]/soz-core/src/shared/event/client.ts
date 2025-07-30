@@ -379,13 +379,12 @@ export enum ClientEvent {
 
     METEOR_START = 'soz-core:client:meteor:start',
     METEOR_MUSIC = 'soz-core:client:meteor:music',
-    METEOR_SIREN = 'soz-core:client:meteor:siren',
-    METEOR_CHONOS_MUSIC = 'soz-core:client:meteor:chronos-music',
-    METEOR_SANDSTORM_MUSIC = 'soz-core:client:meteor:sandstorm-music',
 
     OCEAN_WATER_LEVEL = 'soz-core:client:ocean:water-level',
     OCEAN_WATER_HIGH_WAVE = 'soz-core:client:ocean:high-wave',
     EARTHQUAKE = 'soz-core:client:eathquake',
+    TORNADO = 'soz-core:client:tornado',
+    FIRESTORM = 'soz-core:client:firestorm',
 
     BANK_ATM_CREATED = 'soz-core:client:bank:atm:created',
     BANK_SAFE_OPEN_UI = 'soz-core:client:bank:safe:openui',
@@ -512,4 +511,12 @@ export enum ClientEvent {
     CASINO_LUCKY_WHEEL_SPIN = 'soz-core:client:casino:lucky-wheel:spin',
     CASINO_LUCKY_WHEEL_WIN = 'soz-core:client:casino:lucky-wheel:win',
     CASINO_SLOT_MACHINE_SPIN_RESULT = 'soz-core:client:casino:slot-machine:spin-result',
+
+    FIRE_PIT_SPAWN = 'soz-core:client:fire-pit:spawn',
+    FIRE_PIT_UPDATE = 'soz-core:client:fire-pit:update',
+    FIRE_PIT_RESPAWN = 'soz-core:client:fire-pit:respawn',
+    FIRE_PIT_DESPAWN = 'soz-core:client:fire-pit:despawn',
+    FIRE_HOSE_ATTACH_VEHICLE = 'soz-core:client:fire-hose:attach-vehicle',
+    FIRE_HOSE_DETACH_VEHICLE = 'soz-core:client:fire-hose:detach-vehicle',
+    FIRE_HOSE_TRIGGER_SPRAY = 'soz-core:client:fire-hose:trigger-spray',
 }

@@ -40,17 +40,16 @@ export enum ServerEvent {
     ADMIN_PLAYER_SET_SENATE_PARTY = 'soz-core:server:admin:player:set-senate-party',
     ADMIN_PLAYER_SET_VOIP_DEBUG = 'soz-core:server:admin:player:set-voip-debug',
     ADMIN_PLAYER_SET_PLATE = 'soz-core:server:admin:player:set-plate',
-    ADMIN_METEOR_SIREN = 'soz-core:server:admin:meteor:siren',
     ADMIN_METEOR_ACTIVATE = 'soz-core:server:admin:meteor:activate',
-    ADMIN_METEOR_CHONOS_MUSIC = 'soz-core:server:admin:meteor:chonos-music',
     ADMIN_METEOR_MUSIC = 'soz-core:server:admin:meteor:music',
-    ADMIN_SANDSTORM_MUSIC = 'soz-core:server:admin:meteor:sandsorm-music',
     ADMIN_METEOR_DISABLE_NPC = 'soz-core:server:admin:meteor:disble-npc',
     ADMIN_METEOR_KICK_PLAYERS = 'soz-core:server:admin:meteor:players-kick',
     ADMIN_OCEAN_WATER_CURRENT_LEVEL = 'soz-core:server:admin:ocean:water-current-level',
     ADMIN_OCEAN_WATER_LEVEL = 'soz-core:server:admin:ocean:water-level',
     ADMIN_OCEAN_WATER_HIGH_WAVE = 'soz-core:server:admin:ocean:high-wave',
     ADMIN_EARTHQUAKE = 'soz-core:server:admin:earthquake',
+    ADMIN_TORNADO = 'soz-core:server:admin:tornado',
+    ADMIN_TORNADO_MOVE = 'soz-core:server:admin:tornado-move',
     ADMIN_EVENT_CREATE = 'soz-core:server:admin:event:create',
     ADMIN_EVENT_DELETE = 'soz-core:server:admin:event:delete',
     ADMIN_EVENT_ADD_REWARD = 'soz-core:server:admin:event:add-reward',
@@ -819,9 +818,24 @@ export enum ServerEvent {
     CASINO_RESELL_CHIP = 'soz-core:server:casino:resell-chip',
     CASINO_SLOT_MACHINE_SPIN = 'soz-core:server:casino:slot-machine-spin',
     CASINO_INSIDE_TRACK_GET_GAINS = 'soz-core:server:casino:inside-track:get-gains',
-  
+
     BILLBOARD_PLACE_PROP = 'soz-core:server:billboard:place-prop',
     BILLBOARD_UPDATE_PROP = 'soz-core:server:billboard:update-prop',
     BILLBOARD_DELETE_PROP = 'soz-core:server:billboard:delete-prop',
     PANEL_UPDATE_ITEM_URL = 'soz-core:server:panel:update-item-url',
+
+    ADMIN_FIRE_PROPAGATION = 'soz-core:admin:fire-propagation',
+    ADMIN_STAR_NEW_FIRE_PIT = 'soz-core:admin:star:new-fire-pit',
+    ADMIN_FORCE_PIT_EXTINGUISH = 'soz-core:admin:star:force-pit-extinguish',
+    ADMIN_FIRE_REMOVE_MODELSWAP = 'soz-core:admin:fire:remove-modelswap',
+    FIRE_HOSE_TRIGGER_SPRAY = 'soz-core:server:fire:hose-trigger-spray',
+
+    TORNADO = 'soz-core:server:tornado',
+    ADMIN_FIRESTORM = 'soz-core:server:admin:firestorm',
+
+    ADMIN_SWAPMODEL_ADD = 'soz-core:server:admin:swapmodel-add',
+    ADMIN_SWAPMODEL_DELETE = 'soz-core:server:admin:swapmodel-delete',
+
+    FIRETRUCK_TAKEOUT = 'soz-core:server:firetruck:takeout',
+    FIRETRUCK_RETURN = 'soz-core:server:firetruck:return',
 }

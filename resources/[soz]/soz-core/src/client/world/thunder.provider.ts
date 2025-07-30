@@ -26,11 +26,11 @@ export class ThunderProvider {
     private playerStressProvider: PlayerStressProvider;
 
     @OnEvent(ClientEvent.THUNDER)
-    public async thunder(target: number, coords: Vector3, v2: boolean) {
-        const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+    public async thunder(target: number, coords: Vector3, v2: boolean, overrideSound: number) {
+        const playerCoords = GetFinalRenderedCamCoord() as Vector3;
         const dist = getDistance(playerCoords, coords);
 
-        const coef = 1 - dist / 300;
+        const coef = overrideSound ?? 1 - dist / 300;
         if (coef > 0) {
             this.audioService.playAudio('audio/lightning.mp3', coef * 0.3);
         }

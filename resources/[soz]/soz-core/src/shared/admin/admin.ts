@@ -4,6 +4,7 @@ import { PlayerCharInfo } from '@public/shared/player';
 import { EventInfo } from '@public/shared/scene';
 import { SenateParty, SenatePartyMember } from '@public/shared/senate';
 
+import { Music } from '../audio';
 import { Component, Outfit, Prop } from '../cloth';
 
 export const MONEY_OPTIONS = [
@@ -78,12 +79,11 @@ export type VehicleSubMenuState = {
 
 export type MeteorSubMenuState = {
     disableNpc: boolean;
-    siren: number;
-    music: number;
-    chronos: number;
+    musics: Record<Music, number>;
     highWave: boolean;
     earthQuake: boolean;
-    sandstormmusic: number;
+    tornado: boolean;
+    firePropagation: boolean;
 };
 
 export type CeremonySubMenuState = {
