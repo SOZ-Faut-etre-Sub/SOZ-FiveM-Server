@@ -46,30 +46,45 @@ import { NoClipProvider } from '../utils/noclip.provider';
 
 const FireStations: {
     position: Vector4;
-    parking: Vector4;
+    parkings: Vector4[];
     createProp?: boolean;
 }[] = [
     {
         position: [1193.911, -1477.941, 34.86, 0],
-        parking: [1196.39, -1458.25, 34.93, 2.34],
+        parkings: [
+            [1196.39, -1458.25, 34.93, 2.34],
+            [1204.22, -1458.16, 34.82, 2.34],
+        ],
     },
     {
         position: [197.596, -1650.367, 29.8, 0],
-        parking: [211.53, -1637.02, 29.62, 320.97],
+        parkings: [
+            [211.53, -1637.02, 29.62, 320.97],
+            [217.21, -1641.93, 29.63, 320.97],
+        ],
     },
     {
         position: [-632.0661, -93.8063, 37.15667, -10],
-        parking: [-642.5, -102.15, 38.04, 112.68],
+        parkings: [
+            [-642.5, -102.15, 38.04, 112.68],
+            [-639.11, -109.18, 37.98, 112.68],
+        ],
         createProp: true,
     },
     {
         position: [1688.698, 3591.899, 34.71125, 20],
-        parking: [1707.53, 3595.44, 35.42, 240.36],
+        parkings: [
+            [1707.53, 3595.44, 35.42, 240.36],
+            [1697.58, 3586.26, 35.62, 206.33],
+        ],
         createProp: true,
     },
     {
         position: [-364.9791, 6125.985, 30.50336, -135],
-        parking: [-358.75, 6132.6, 31.44, 39.75],
+        parkings: [
+            [-358.75, 6132.6, 31.44, 39.75],
+            [-373.8, 6128.87, 31.45, 39.75],
+        ],
         createProp: true,
     },
 ];
@@ -198,26 +213,29 @@ export class FireProvider {
                         icon: 'fire/truck',
                         canInteract: this.isClothType.bind(this, 'FIRE'),
                         action: async () => {
-                            if (
-                                IsPositionOccupied(
-                                    station.parking[0],
-                                    station.parking[1],
-                                    station.parking[2],
-                                    0.2,
-                                    false,
-                                    true,
-                                    true,
-                                    false,
-                                    false,
-                                    0,
-                                    false
-                                )
-                            ) {
+                            const parking = station.parkings.find(
+                                parking =>
+                                    !IsPositionOccupied(
+                                        parking[0],
+                                        parking[1],
+                                        parking[2],
+                                        0.1,
+                                        false,
+                                        true,
+                                        true,
+                                        false,
+                                        false,
+                                        0,
+                                        false
+                                    )
+                            );
+
+                            if (!parking) {
                                 this.notifier.notify("L'emplacement de parking est occupé.", 'error');
                                 return null;
                             }
 
-                            TriggerServerEvent(ServerEvent.FIRETRUCK_TAKEOUT, station.parking);
+                            TriggerServerEvent(ServerEvent.FIRETRUCK_TAKEOUT, parking);
                         },
                     },
                     {
