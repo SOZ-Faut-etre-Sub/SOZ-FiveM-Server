@@ -105,6 +105,7 @@ export class FireProvider {
 
         this.firePropagationEnabled = enabled;
 
+        this.notifier.notify(source, `La propagation des foyers est maintenant ${enabled ? 'activée' : 'désactivé'}`);
         this.logger.debug(`[World - Fire] Fire propagation is now ${enabled ? 'enabled' : 'disabled'}`);
     }
 
