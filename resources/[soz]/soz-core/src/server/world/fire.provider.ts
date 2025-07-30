@@ -115,6 +115,11 @@ export class FireProvider {
         }
 
         const fireId = this.getChunkId(position);
+        if (this.firePits.has(fireId)) {
+            this.notifier.error(source, 'Un foyer est déja présent dans cette zone');
+            return;
+        }
+
         this.firePits.set(fireId, {
             position,
             type,
@@ -165,6 +170,12 @@ export class FireProvider {
     async onFireRespawnCheck() {
         for (const id of this.firePits.keys()) {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_RESPAWN, -1, 16 * 1024, id);
+
+            if (this.staffRequestPitExtinguish) {
+                this.reduceFirePit(id);
+                await wait(10);
+                this.reduceFirePit(id);
+            }
         }
     }
 
@@ -178,9 +189,6 @@ export class FireProvider {
 
         for (const [id, pit] of this.firePits.entries()) {
             if (this.staffRequestPitExtinguish) {
-                this.reduceFirePit(id);
-                await wait(10);
-                this.reduceFirePit(id);
                 continue;
             }
 
