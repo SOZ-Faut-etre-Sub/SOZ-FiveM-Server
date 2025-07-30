@@ -234,7 +234,7 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                         await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Impact, value: index });
                     }}
                 >
-                    {Array(11)
+                    {Array(31)
                         .fill(0)
                         .map((_, index) => (
                             <MenuItemSelectOption value={index} key={`siren_${index}`}>
@@ -250,7 +250,7 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                         await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.DiesIrae, value: index });
                     }}
                 >
-                    {Array(11)
+                    {Array(31)
                         .fill(0)
                         .map((_, index) => (
                             <MenuItemSelectOption value={index} key={`music_${index}`}>
@@ -266,7 +266,7 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                         await fetchNui(NuiEvent.AdminMenuMeteorMusic, { music: Music.Cinis, value: index });
                     }}
                 >
-                    {Array(11)
+                    {Array(31)
                         .fill(0)
                         .map((_, index) => (
                             <MenuItemSelectOption value={index} key={`music_${index}`}>
