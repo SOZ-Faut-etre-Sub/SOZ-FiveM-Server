@@ -16,6 +16,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { Notifier } from '../notifier';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
+import { SoundService } from '../sound.service';
 import { TargetFactory } from '../target/target.factory';
 import { WeaponService } from '../weapon/weapon.service';
 
@@ -37,6 +38,9 @@ export class FireFiretruckProvider {
 
     @Inject(WeaponService)
     private weaponService: WeaponService;
+
+    @Inject(SoundService)
+    private soundService: SoundService;
 
     public currentFiretruckAttached: number | null = null;
     private isFiring = false;
@@ -116,6 +120,7 @@ export class FireFiretruckProvider {
         TaskTurnPedToFaceEntity(PlayerPedId(), vehicle, 1000);
         await wait(500);
 
+        this.soundService.playAround('fuel/start_fuel', 5, 0.3);
         await this.weaponService.set({
             name: 'WEAPON_HOSE',
             slot: 0,
@@ -141,6 +146,7 @@ export class FireFiretruckProvider {
 
         this.currentFiretruckAttached = null;
 
+        this.soundService.playAround('fuel/end_fuel', 5, 0.3);
         this.weaponService.clear();
 
         emitRpc(RpcServerEvent.FIRE_UNLOCK_FIRETRUCK, vehicleNetId);
