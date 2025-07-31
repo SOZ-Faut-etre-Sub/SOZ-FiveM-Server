@@ -52,9 +52,9 @@ export const newFireOffset: Record<FireType, Vector2> = {
 };
 
 export const newFirePitChance: Record<FireType, number> = {
-    [FireType.Small]: 10,
-    [FireType.Medium]: 20,
-    [FireType.Huge]: 40,
+    [FireType.Small]: 20,
+    [FireType.Medium]: 30,
+    [FireType.Huge]: 50,
 };
 
 export const increaseFirePitChance: Record<FireType, number> = {

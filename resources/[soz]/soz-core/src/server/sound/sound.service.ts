@@ -17,6 +17,10 @@ export class SoundService {
 
     private globalSounds: Record<string, GlobalSound> = {};
 
+    public getAllGlobalSounds() {
+        return this.globalSounds;
+    }
+
     public playGlobal(sound: GlobalSound) {
         this.globalSounds[sound.id] = sound;
         TriggerClientEvent(

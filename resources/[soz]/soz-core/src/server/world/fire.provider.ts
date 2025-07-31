@@ -29,6 +29,7 @@ import {
 import { getDistance, Point3D, Vector2, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
+import { LockService } from '../lock.service';
 import { Notifier } from '../notifier';
 import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -67,6 +68,9 @@ export class FireProvider {
     @Inject(SoundService)
     private readonly soundService: SoundService;
 
+    @Inject(LockService)
+    private readonly lockService: LockService;
+
     private firePitGauge = new Gauge({
         name: 'soz_firestorm_pit',
         help: 'Firestorm pit',
@@ -94,7 +98,7 @@ export class FireProvider {
 
     @Rpc(RpcServerEvent.FIRE_EXTINGUISHED)
     async extinguishFire(source: number, id: string) {
-        this.reduceFirePit(id);
+        await this.reduceFirePit(id);
     }
 
     @OnEvent(ServerEvent.ADMIN_FIRE_PROPAGATION)
@@ -115,37 +119,9 @@ export class FireProvider {
             return;
         }
 
-        const fireId = this.getChunkId(position);
-        if (this.firePits.has(fireId)) {
-            this.notifier.error(source, 'Un foyer est déja présent dans cette zone');
-            return;
-        }
+        const endAt = duration > 0 ? Date.now() + duration * 60000 : undefined;
 
-        this.firePits.set(fireId, {
-            position,
-            type,
-            endAt: duration > 0 ? Date.now() + duration * 60000 : undefined,
-        });
-        this.firePitHealth.set(fireId, firePitDefaultHealth[type]);
-        this.firePitGauge.set({ chunk: fireId }, firePitDefaultHealth[type]);
-        this.firePitAlreadySpawned.add(fireId);
-
-        this.logger.debug(`[World - Fire] Create new pit ${fireId}`);
-
-        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_SPAWN, -1, 16 * 1024, fireId, {
-            position,
-            type,
-        });
-
-        this.soundService.playGlobal({
-            id: `firepit-${fireId}-${type}`,
-            name: 'fire',
-            location: position.slice(0, 3) as Vector3,
-            maxDistance: firePitSound[type],
-            volume: firePitVolume[type],
-        });
-
-        await this.addSwapModel(type, position);
+        await this.createNewFirePit(position, type, endAt);
     }
 
     @OnEvent(ServerEvent.ADMIN_FORCE_PIT_EXTINGUISH)
@@ -173,9 +149,9 @@ export class FireProvider {
             TriggerLatentClientEvent(ClientEvent.FIRE_PIT_RESPAWN, -1, 16 * 1024, id);
 
             if (this.staffRequestPitExtinguish) {
-                this.reduceFirePit(id);
+                await this.reduceFirePit(id);
                 await wait(10);
-                this.reduceFirePit(id);
+                await this.reduceFirePit(id);
             }
         }
     }
@@ -201,14 +177,14 @@ export class FireProvider {
                 }, 0);
 
                 if (remainingTime <= remainingHealth) {
-                    this.reduceFirePit(id);
+                    await this.reduceFirePit(id);
                     continue;
                 }
             }
 
             const canIncrease = getRandomInt(0, 100) <= increaseFirePitChance[pit.type];
             if (canIncrease) {
-                this.increaseFirePit(id);
+                await this.increaseFirePit(id);
             }
 
             if (pit.type === FireType.Small) {
@@ -260,43 +236,12 @@ export class FireProvider {
                 }
 
                 newPitCoords[2] = newPitZ;
-                const newPitId = this.getChunkId(newPitCoords);
 
-                if (this.firePits.has(newPitId)) {
-                    continue;
+                const newPitId = await this.createNewFirePit(newPitCoords, FireType.Medium, pit.endAt);
+                if (newPitId) {
+                    this.logger.debug(`[World - Fire] Fire pit ${id} propagated to fire pit ${newPitId}`);
+                    break; // Propagate only one pit during a propagation check
                 }
-
-                if (this.staffRequestPitExtinguish) break;
-
-                this.firePits.set(newPitId, {
-                    position: newPitCoords,
-                    type: FireType.Medium,
-                    endAt: pit.endAt,
-                });
-                this.firePitHealth.set(newPitId, firePitDefaultHealth[pit.type]);
-                this.firePitGauge.set({ chunk: newPitId }, firePitDefaultHealth[pit.type]);
-                this.firePitAlreadySpawned.add(newPitId);
-
-                TriggerLatentClientEvent(
-                    ClientEvent.FIRE_PIT_SPAWN,
-                    -1,
-                    16 * 1024,
-                    newPitId,
-                    this.firePits.get(newPitId)
-                );
-
-                this.soundService.playGlobal({
-                    id: `firepit-${newPitId}-${FireType.Medium}`,
-                    name: 'fire',
-                    location: newPitCoords.slice(0, 3) as Vector3,
-                    maxDistance: firePitSound[FireType.Medium],
-                    volume: firePitVolume[FireType.Medium],
-                });
-
-                await this.addSwapModel(pit.type, newPitCoords);
-
-                this.logger.debug(`[World - Fire] Fire pit ${id} propagated to fire pit ${newPitId}`);
-                break; // Propagate only one pit during a propagation check
             } catch (e) {
                 this.logger.debug(`[World - Fire] Error while getting wind data for fire pit ${id} : ${e.message}`);
             }
@@ -304,102 +249,150 @@ export class FireProvider {
     }
 
     /* Fire pit management */
-    private increaseFirePit(id: string) {
-        const pit = this.firePits.get(id);
+    private async createNewFirePit(position: Vector4, type: FireType, endAt?: number) {
+        const id = this.getChunkId(position);
 
-        if (this.firePitHealth.get(id) < firePitDefaultHealth[pit.type]) {
-            return;
-        }
+        return this.lockService.lock(`firepit-${id}`, async () => {
+            if (this.firePits.has(id)) {
+                this.logger.debug(`[World - Fire] Fire pit ${id} already exists`);
+                return;
+            }
 
-        if (this.firePitAlreadyReduced.has(id)) return;
-        if (this.staffRequestPitExtinguish) return;
+            if (this.staffRequestPitExtinguish) {
+                return;
+            }
 
-        const newPitType = Math.min(pit.type + 1, FireType.Huge);
-        this.firePits.set(id, { ...pit, type: newPitType });
-        this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
-        this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
+            this.firePits.set(id, {
+                position,
+                type,
+                endAt: endAt,
+            });
+            this.firePitHealth.set(id, firePitDefaultHealth[type]);
+            this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[type]);
+            this.firePitAlreadySpawned.add(id);
 
-        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
-            ...this.firePits.get(id),
-            health: this.firePitHealth.get(id),
-        });
+            this.logger.debug(`[World - Fire] Create new pit ${id}`);
 
-        this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
-        this.soundService.playGlobal({
-            id: `firepit-${id}-${newPitType}`,
-            name: 'fire',
-            location: pit.position.slice(0, 3) as Vector3,
-            maxDistance: firePitSound[newPitType],
-            volume: firePitVolume[newPitType],
-        });
-
-        this.logger.debug(`[World - Fire] Fire pit ${id} increase its intensity`);
-    }
-
-    private reduceFirePit(id: string) {
-        if (!this.firePits.has(id)) return;
-        if (
-            !this.firePitAlreadyReduced &&
-            this.firePitLastReduced.get(id) + INVINCIBILITY_TIME_AFTER_REDUCE > Date.now()
-        )
-            return;
-
-        const newFirePitHealth = Math.max(this.firePitHealth.get(id) - 1, 0);
-
-        this.firePitHealth.set(id, newFirePitHealth);
-        this.firePitAlreadyReduced.add(id);
-
-        this.firePitGauge.set({ chunk: id }, newFirePitHealth);
-
-        this.logger.debug(`[World - Fire] Fire pit ${id} reduced its health to ${newFirePitHealth}`);
-
-        this.firePitLastReduced.set(id, Date.now());
-
-        if (newFirePitHealth > 0) {
-            const pit = this.firePits.get(id);
-
-            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
-                ...pit,
-                health: newFirePitHealth,
+            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_SPAWN, -1, 16 * 1024, id, {
+                position,
+                type,
             });
 
-            return;
-        }
+            this.soundService.playGlobal({
+                id: `firepit-${id}-${type}`,
+                name: 'fire',
+                location: position.slice(0, 3) as Vector3,
+                maxDistance: firePitSound[type],
+                volume: firePitVolume[type],
+            });
 
-        const pit = this.firePits.get(id);
+            await this.addSwapModel(type, position);
 
-        if (Number(pit.type) === FireType.Small) {
-            this.firePits.delete(id);
-            this.firePitHealth.delete(id);
-            this.firePitGauge.remove({ chunk: id });
+            return id;
+        });
+    }
 
-            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
+    private async increaseFirePit(id: string) {
+        return this.lockService.lock(`firepit-${id}`, async () => {
+            const pit = this.firePits.get(id);
+
+            if (this.firePitHealth.get(id) < firePitDefaultHealth[pit.type]) {
+                return;
+            }
+
+            if (this.firePitAlreadyReduced.has(id)) return;
+            if (this.staffRequestPitExtinguish) return;
+
+            const newPitType = Math.min(pit.type + 1, FireType.Huge);
+            this.firePits.set(id, { ...pit, type: newPitType });
+            this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
+            this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
+
+            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
+                ...this.firePits.get(id),
+                health: this.firePitHealth.get(id),
+            });
+
             this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
+            this.soundService.playGlobal({
+                id: `firepit-${id}-${newPitType}`,
+                name: 'fire',
+                location: pit.position.slice(0, 3) as Vector3,
+                maxDistance: firePitSound[newPitType],
+                volume: firePitVolume[newPitType],
+            });
 
-            this.logger.debug(`[World - Fire] Fire pit ${id} removed`);
-            return;
-        }
-
-        const newPitType = Math.max(FireType.Small, pit.type - 1);
-        this.firePits.set(id, { ...pit, type: newPitType });
-        this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
-        this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
-
-        TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
-            ...this.firePits.get(id),
-            health: firePitDefaultHealth[newPitType],
+            this.logger.debug(`[World - Fire] Fire pit ${id} increase its intensity`);
         });
+    }
 
-        this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
-        this.soundService.playGlobal({
-            id: `firepit-${id}-${newPitType}`,
-            name: 'fire',
-            location: pit.position.slice(0, 3) as Vector3,
-            maxDistance: firePitSound[newPitType],
-            volume: firePitVolume[newPitType],
+    private async reduceFirePit(id: string) {
+        return this.lockService.lock(`firepit-${id}`, async () => {
+            if (!this.firePits.has(id)) return;
+            if (
+                !this.firePitAlreadyReduced &&
+                this.firePitLastReduced.get(id) + INVINCIBILITY_TIME_AFTER_REDUCE > Date.now()
+            ) {
+                return;
+            }
+
+            const newFirePitHealth = Math.max(this.firePitHealth.get(id) - 1, 0);
+
+            this.firePitHealth.set(id, newFirePitHealth);
+            this.firePitAlreadyReduced.add(id);
+
+            this.firePitGauge.set({ chunk: id }, newFirePitHealth);
+
+            this.logger.debug(`[World - Fire] Fire pit ${id} reduced its health to ${newFirePitHealth}`);
+
+            this.firePitLastReduced.set(id, Date.now());
+
+            if (newFirePitHealth > 0) {
+                const pit = this.firePits.get(id);
+
+                TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
+                    ...pit,
+                    health: newFirePitHealth,
+                });
+
+                return;
+            }
+
+            const pit = this.firePits.get(id);
+
+            if (Number(pit.type) === FireType.Small) {
+                this.firePits.delete(id);
+                this.firePitHealth.delete(id);
+                this.firePitGauge.remove({ chunk: id });
+
+                TriggerLatentClientEvent(ClientEvent.FIRE_PIT_DESPAWN, -1, 16 * 1024, id);
+                this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
+
+                this.logger.debug(`[World - Fire] Fire pit ${id} removed`);
+                return;
+            }
+
+            const newPitType = Math.max(FireType.Small, pit.type - 1);
+            this.firePits.set(id, { ...pit, type: newPitType });
+            this.firePitHealth.set(id, firePitDefaultHealth[newPitType]);
+            this.firePitGauge.set({ chunk: id }, firePitDefaultHealth[newPitType]);
+
+            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_UPDATE, -1, 16 * 1024, id, {
+                ...this.firePits.get(id),
+                health: firePitDefaultHealth[newPitType],
+            });
+
+            this.soundService.stopGlobal(`firepit-${id}-${pit.type}`);
+            this.soundService.playGlobal({
+                id: `firepit-${id}-${newPitType}`,
+                name: 'fire',
+                location: pit.position.slice(0, 3) as Vector3,
+                maxDistance: firePitSound[newPitType],
+                volume: firePitVolume[newPitType],
+            });
+
+            this.logger.debug(`[World - Fire] Fire pit ${id} reduce its intensity`);
         });
-
-        this.logger.debug(`[World - Fire] Fire pit ${id} reduce its intensity`);
     }
 
     /* Helpers */
@@ -549,7 +542,7 @@ export class FireProvider {
     }
 
     @OnEvent(ServerEvent.FIRETRUCK_TAKEOUT)
-    public async onRentBoat(source: number, position: Vector4) {
+    public async onRentFireTruck(source: number, position: Vector4) {
         await this.vehicleSpawner.spawnRentVehicle(source, 'firetruk', {
             position,
             open: true,
@@ -563,7 +556,7 @@ export class FireProvider {
     }
 
     @OnEvent(ServerEvent.FIRETRUCK_RETURN)
-    public async onReturnBoat(source: number, networkId: number) {
+    public async onReturnFireTruck(source: number, networkId: number) {
         const entityId = NetworkGetEntityFromNetworkId(networkId);
         if (GetEntityModel(entityId) !== joaat('firetruk')) {
             return;

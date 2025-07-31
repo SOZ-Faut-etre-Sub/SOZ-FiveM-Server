@@ -456,12 +456,17 @@ export class FireProvider {
 
     @Tick(TickInterval.EVERY_SECOND / 2)
     async fireCheckTick() {
+        const player = PlayerPedId();
+        const playerCoords = GetEntityCoords(player) as Vector3;
+
         for (const [id, fire] of this.firePits.entries()) {
+            if (getDistance(playerCoords, fire.position) > 100) continue;
+
             const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
 
             if (fireNearPit === 0 && this.usedFireExtinguisherRecently) {
                 emitRpc(RpcServerEvent.FIRE_EXTINGUISHED, id);
-                await wait(2_000);
+                await wait(5_000);
             }
         }
     }
@@ -469,8 +474,6 @@ export class FireProvider {
     @Tick(TickInterval.EVERY_FRAME)
     async onWeaponTick() {
         const player = PlayerPedId();
-        const vehicle = GetVehiclePedIsIn(player, false);
-        const model = GetEntityModel(vehicle);
 
         this.usedFireExtinguisherRecently = false;
 
