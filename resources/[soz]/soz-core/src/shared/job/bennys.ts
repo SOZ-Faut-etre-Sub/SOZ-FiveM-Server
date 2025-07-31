@@ -157,12 +157,11 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         },
         ["Tenue d'été"]: {
             Components: {
-                [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 9, Texture: 7, Palette: 0 },
-                [Component.Shoes]: { Drawable: 4, Texture: 1, Palette: 0 },
-                [Component.Bag]: { Drawable: 45, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 61, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
-                [Component.Tops]: { Drawable: 238, Texture: 1, Palette: 0 },
+                [Component.Tops]: { Drawable: 146, Texture: 1, Palette: 0 },
             },
             Props: {},
             GlovesID: 56000,
@@ -231,12 +230,11 @@ export const NewGarrayCloakroom: WardrobeConfig = {
         },
         ["Tenue d'été"]: {
             Components: {
-                [Component.Torso]: { Drawable: 4, Texture: 0, Palette: 0 },
-                [Component.Legs]: { Drawable: 135, Texture: 1, Palette: 0 },
-                [Component.Shoes]: { Drawable: 74, Texture: 1, Palette: 0 },
-                [Component.Bag]: { Drawable: 45, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
+                [Component.Shoes]: { Drawable: 64, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
-                [Component.Tops]: { Drawable: 118, Texture: 1, Palette: 0 },
+                [Component.Tops]: { Drawable: 49, Texture: 1, Palette: 0 },
             },
             Props: {},
             GlovesID: 55000,
