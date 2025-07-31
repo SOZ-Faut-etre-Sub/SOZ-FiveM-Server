@@ -140,7 +140,10 @@ export class RebootProvider {
 
         this.upwFacilityProvider.saveLoop();
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            !this.featureProvider.isFeatureEnabled(Feature.SummerHeat)
+        ) {
             const ids = await this.playerCleanService.getPlayerToCleans();
             const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);
 
