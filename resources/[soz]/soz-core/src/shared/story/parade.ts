@@ -430,7 +430,7 @@ export const Parade: {
                         {
                             offsetX: 0,
                             config: 0,
-                            car: 'maverick2',
+                            car: 'maverick3',
                             carConfig: {
                                 livery: 1,
                             },

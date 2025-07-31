@@ -77,7 +77,7 @@ QBShared.Trunks = {
     [GetHashKey('bcso41')] = { slot = 5, weight = 40000 },
     [GetHashKey('bcso50')] = { slot = 5, weight = 80000 },
     [GetHashKey('bcso51')] = { slot = 5, weight = 80000 },
-    [GetHashKey('maverick2')] = { slot = 5, weight = 200000 },
+    [GetHashKey('maverick3')] = { slot = 5, weight = 200000 },
 
     --- LSMC
     [GetHashKey('ambulance')] = { slot = 5, weight = 100000 },
@@ -142,7 +142,7 @@ QBShared.Trunks = {
     -- DMC
     [GetHashKey('tiptruck2')] = { slot = 10, weight = 200000 },
     [GetHashKey('rubble')] = { slot = 10, weight = 200000 },
-    
+
     -- Army
     [GetHashKey('barracks')] = { slot = 50, weight = 1000000 },
     [GetHashKey('dinghy5')] = { slot = 50, weight = 200000 },
