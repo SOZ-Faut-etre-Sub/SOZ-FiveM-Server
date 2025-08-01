@@ -34,9 +34,9 @@ export const firePitVolume: Record<FireType, number> = {
 };
 
 export const firePitDefaultHealth: Record<FireType, number> = {
-    [FireType.Small]: 5,
-    [FireType.Medium]: 10,
-    [FireType.Huge]: 20,
+    [FireType.Small]: 10,
+    [FireType.Medium]: 20,
+    [FireType.Huge]: 30,
 };
 
 export const firePitGrid: Record<FireType, number> = {
