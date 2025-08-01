@@ -159,7 +159,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 98, Texture: 3, Palette: 0 },
-                [Component.Shoes]: { Drawable: 61, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 57, Texture: 10, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 146, Texture: 1, Palette: 0 },
             },
@@ -232,7 +232,7 @@ export const NewGarrayCloakroom: WardrobeConfig = {
             Components: {
                 [Component.Torso]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Legs]: { Drawable: 101, Texture: 3, Palette: 0 },
-                [Component.Shoes]: { Drawable: 64, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 60, Texture: 10, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 49, Texture: 1, Palette: 0 },
             },
