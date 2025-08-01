@@ -30,6 +30,7 @@ import { LsmcCloakroom } from '../../shared/job/lsmc';
 import { NumberValidator } from '../../shared/nui/input';
 import { applyOffset, getDistance, toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { BlipFactory } from '../blip';
 import { ClothingService } from '../clothing/clothing.service';
 import { HudWeatherIconProvider } from '../hud/hud.weathericon.provider';
@@ -88,6 +89,8 @@ const FireStations: {
         createProp: true,
     },
 ];
+
+const fireVehicleExcludedFromDamages = [joaat('polterminus'), joaat('firetruk')];
 
 @Provider()
 export class FireProvider {
@@ -454,6 +457,30 @@ export class FireProvider {
         return GetGroundZFor_3dCoord_2(position[0], position[1], position[2], false);
     }
 
+    @Tick(TickInterval.EVERY_SECOND)
+    async onVehicleDamageTick() {
+        const ped = PlayerPedId();
+        const vehicles = GetGamePool('CVehicle');
+
+        for (const vehicle of vehicles) {
+            if (!NetworkHasControlOfEntity(vehicle)) continue;
+
+            const model = GetEntityModel(vehicle);
+            if (fireVehicleExcludedFromDamages.includes(model)) continue;
+
+            const coords = GetEntityCoords(vehicle) as Vector3;
+            if (!this.getNearFirePit(coords)) continue;
+
+            const vehicleEngineHealth = GetVehicleEngineHealth(vehicle);
+            if (isNaN(vehicleEngineHealth) || IsEntityDead(vehicle)) continue;
+
+            const isDriver = GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === ped;
+            const newVehicleEngineHealth = Math.max(-10, vehicleEngineHealth - (isDriver ? 1 : 10));
+
+            SetVehicleEngineHealth(vehicle, newVehicleEngineHealth);
+        }
+    }
+
     @Tick(TickInterval.EVERY_SECOND / 2)
     async fireCheckTick() {
         const player = PlayerPedId();
@@ -586,6 +613,16 @@ export class FireProvider {
 
         const newHealth = GetEntityHealth(playerPed) - 10;
         SetEntityHealth(playerPed, newHealth);
+    }
+
+    private getNearFirePit(position: Vector3): FirePit | null {
+        for (const fire of this.firePits.values()) {
+            if (getDistance(fire.position, position) < fireScale[fire.type] * 10) {
+                return fire;
+            }
+        }
+
+        return null;
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuFireFlash)
