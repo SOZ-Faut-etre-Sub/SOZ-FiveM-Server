@@ -1469,15 +1469,15 @@
 
     <!--  HC  -->
     <Item>
-      <ModelName>soz_hc_garages_hall01_garagedoor</ModelName>
+      <ModelName>soz_hc_garages_hall04_garagedoor</ModelName>
       <TuningName>SupermodGarage</TuningName>
     </Item>
     <Item>
-      <ModelName>soz_hc_garages_hall02_garagedoor</ModelName>
+      <ModelName>soz_hc_garages_hall05_garagedoor</ModelName>
       <TuningName>MichaelGarageCustomBox2</TuningName>
     </Item>
     <Item>
-      <ModelName>soz_hc_garages_hall03_garagedoor</ModelName>
+      <ModelName>soz_hc_garages_hall06_garagedoor</ModelName>
       <TuningName>MichaelGarageCustomBox2</TuningName>
     </Item>
     <Item>
