@@ -142,7 +142,7 @@ export class RebootProvider {
 
         if (
             !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
-            !this.featureProvider.isFeatureEnabled(Feature.SummerHeat)
+            !this.featureProvider.isFeatureEnabled(Feature.SummerDisabling)
         ) {
             const ids = await this.playerCleanService.getPlayerToCleans();
             const [houseOwnerCount, houseRoommateCount] = await this.playerCleanService.cleanPlayerHouses(ids);

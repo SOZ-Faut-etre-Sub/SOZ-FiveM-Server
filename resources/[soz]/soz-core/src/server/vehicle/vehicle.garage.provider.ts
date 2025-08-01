@@ -165,7 +165,7 @@ export class VehicleGarageProvider {
             },
         });
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.SummerDisabling)) {
             const garages = await this.garageRepository.get();
             const toPound: number[] = [];
             const toVoid: number[] = [];

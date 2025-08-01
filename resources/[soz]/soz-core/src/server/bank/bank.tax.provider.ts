@@ -2,6 +2,7 @@ import { Command } from '@public/core/decorators/command';
 import { PlayerService } from '@public/server/player/player.service';
 import { ApartmentRentTaxeRepository } from '@public/server/repository/apartment.rent.taxe';
 import { HousingRepository } from '@public/server/repository/housing.repository';
+import { Feature } from '@public/shared/features';
 import { getResellPrice } from '@public/shared/housing/housing';
 import { TaxType } from '@public/shared/tax';
 
@@ -9,6 +10,7 @@ import { Cron } from '../../core/decorators/cron';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
+import { FeatureProvider } from '../feature/feature.provider';
 import { HousingProvider } from '../housing/housing.provider';
 import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
@@ -55,6 +57,9 @@ export class BankTaxProvider {
 
     @Inject(PriceService)
     private priceService: PriceService;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     @Command('paySocietyTaxes', { role: 'admin' })
     public manualTaxe() {
@@ -136,6 +141,10 @@ export class BankTaxProvider {
 
     @Cron(4, 30)
     public async saveApartmentRentTaxes() {
+        if (this.featureProvider.isFeatureEnabled(Feature.SummerDisabling)) {
+            return;
+        }
+
         const apartments = await this.housingRepository.getAllOwnedPlayerApartmentForTaxes();
 
         const ownerAndTaxes = {};
@@ -157,6 +166,10 @@ export class BankTaxProvider {
 
     @Cron(5, 0, 3)
     public async payApartmentRentTaxes() {
+        if (this.featureProvider.isFeatureEnabled(Feature.SummerDisabling)) {
+            return;
+        }
+
         const taxes = await this.apartmentRentTaxeRepository.getWeeklyTaxes();
 
         const playerTaxes: Record<number, number[]> = {};
