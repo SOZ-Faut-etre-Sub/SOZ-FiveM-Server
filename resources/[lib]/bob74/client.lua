@@ -143,6 +143,8 @@ CreateThread(function()
     if GetGameBuildNumber() >= 2060 then
         DiamondCasino.LoadDefault() -- 1100.000, 220.000, -50.000
         DiamondPenthouse.LoadDefault() -- 976.636, 70.295, 115.164
+        DiamondArcade.LoadDefault() -- 2732.000, -380.000, -50.000
+        DiamondArcadeBasement.LoadDefault() -- 2710.0, -360.780, -56.0
     end
 
     -- ====================================================================
@@ -229,5 +231,14 @@ CreateThread(function()
         AgentsOffice.LoadDefault() -- 2149.71, 4787.76, -47.0
         AgentsAirstrip.LoadDefault() -- -2106.98, 1468.31, 282.0
         AgentsHangarDoor.LoadDefault() -- -2632.43, 2963.23, 8.5
+    end
+
+    -- ====================================================================
+    -- =----------------------- [DLC: Money Fronts] ----------------------=
+    -- ====================================================================
+    if GetGameBuildNumber() >= 3570 then
+        MoneyCarwash.LoadDefault() -- 26.074, -1398.979, -75.0
+        MoneyOffice.LoadDefault() -- -1160.493, -1538.932, -50.0
+        MoneyConstruction.LoadDefault()
     end
 end)
