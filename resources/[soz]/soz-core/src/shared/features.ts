@@ -17,6 +17,7 @@ export enum Feature {
     NewHorizon = 'NewHorizon',
     Bunkers = 'Bunkers',
     SummerHeat = 'SummerHeat',
+    SummerDisabling = 'SummerDisabling',
     Summer = 'Summer',
     Vampire = 'Vampire',
     Winter = 'Winter',
@@ -115,6 +116,11 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: true,
     },
     [Feature.SummerHeat]: {
+        production: true,
+        development: true,
+        test: true,
+    },
+    [Feature.SummerDisabling]: {
         production: true,
         development: true,
         test: true,
