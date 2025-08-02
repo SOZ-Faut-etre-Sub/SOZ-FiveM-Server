@@ -32,7 +32,7 @@ export class ThunderProvider {
 
         const coef = overrideSound ?? 1 - dist / 300;
         if (coef > 0) {
-            this.audioService.playAudio('audio/lightning.mp3', coef * 0.3);
+            this.audioService.playAudio('audio/lightning.mp3', coef * 0.24);
         }
 
         const start = Date.now();
