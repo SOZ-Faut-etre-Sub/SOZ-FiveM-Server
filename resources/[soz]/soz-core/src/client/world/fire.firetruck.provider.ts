@@ -235,6 +235,8 @@ export class FireFiretruckProvider {
         SetEntityVisible(ped, false, false);
         SetEntityCollision(ped, false, true);
         SetEntityInvincible(ped, true);
+        SetPedCanRagdoll(ped, false);
+        SetBlockingOfNonTemporaryEvents(ped, true);
         TaskWarpPedIntoVehicle(ped, vehicle, -1);
 
         const attachPosition = GetOffsetFromEntityInWorldCoords(firetruck, 0.0, -3.5, 0.0) as Vector3;
