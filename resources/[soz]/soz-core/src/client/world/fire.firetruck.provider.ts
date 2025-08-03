@@ -261,7 +261,12 @@ export class FireFiretruckProvider {
             0
         );
         AttachRopeToEntity(rope, firetruck, attachPosition[0], attachPosition[1], attachPosition[2], true);
-        ActivatePhysics(rope);
+
+        try {
+            ActivatePhysics(rope);
+        } catch (e) {
+            console.error(e);
+        }
 
         this.playerVehicle.set(netId, { ...playerVehicle, vehicle, ped, rope });
 
