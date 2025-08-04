@@ -81,9 +81,11 @@
 32 chevron BCSO-LSPD Manteau
 33 col LSPD Manteau
 34 col BCSO Manteau
-35 chevron BCSO-LSPD Pull
+35 col BCSO Pull
 36 col LSPD Pull
-37 col BCSO Pull
+37 chevron BCSO-LSPD Pull
+38 col LSPD Pull
+39 col BCSO Pull
 
     Armor
 0  stonks

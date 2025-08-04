@@ -10,6 +10,7 @@ export const SASP_DARK = 'Tenue sombre';
 export const MOTO = 'Tenue de moto';
 export const PILOT = 'Tenue de pilote';
 export const BLOUSON = 'BLOUSON';
+export const BLOUSON_SANSCOL = 'BLOUSON_SANSCOL';
 export const TSHIRT = 'TSHIRT';
 export const RAINCOAT = 'RAINCOAT';
 export const COAT = 'COAT';
@@ -175,7 +176,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Tops]: { Drawable: 16, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Prop.Hat]: { Drawable: 19, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
                 rankType: TSHIRT,
@@ -763,6 +764,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Blouson K-9']: {
                 Components: {
@@ -777,6 +779,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Blouson Vice Unit']: {
                 Components: {
@@ -791,6 +794,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Blouson Supervisor']: {
                 Components: {
@@ -805,6 +809,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Sweat']: {
                 Components: {
@@ -1750,7 +1755,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Prop.Hat]: { Drawable: 16, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
             },
@@ -1764,7 +1769,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Prop.Hat]: { Drawable: 16, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
             },
@@ -1778,7 +1783,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Component.Tops]: { Drawable: 17, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                 },
                 Props: {
-                    [Prop.Hat]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Prop.Hat]: { Drawable: 16, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
             },
@@ -3348,6 +3353,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Blouson K-9']: {
                 Components: {
@@ -3362,6 +3368,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Blouson Vice Unit']: {
                 Components: {
@@ -3376,6 +3383,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Blouson Supervisor']: {
                 Components: {
@@ -3390,6 +3398,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                     [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                 },
                 category: 'Modern',
+                rankType: BLOUSON_SANSCOL,
             },
             ['Sweat']: {
                 Components: {
@@ -4255,6 +4264,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 14, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -4268,6 +4278,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -4281,6 +4292,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 Components: {
                     [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Shoes]: { Drawable: 6, Texture: 0, Palette: 0 },
                     [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
                     [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
@@ -5346,7 +5358,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Cérémonie']: {
                     Props: {
-                        [Prop.Hat]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Prop.Hat]: { Drawable: 19, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
             },
@@ -5716,6 +5728,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Blouson K-9']: {
                     Components: {
@@ -5723,6 +5736,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Blouson Vice Unit']: {
                     Components: {
@@ -5730,6 +5744,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Blouson Supervisor']: {
                     Components: {
@@ -5737,6 +5752,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Sweat']: {
                     Components: {
@@ -6330,7 +6346,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Cérémonie']: {
                     Props: {
-                        [Prop.Hat]: { Drawable: 16, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Prop.Hat]: { Drawable: 16, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
             },
@@ -7397,6 +7413,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Blouson K-9']: {
                     Components: {
@@ -7404,6 +7421,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Blouson Vice Unit']: {
                     Components: {
@@ -7411,6 +7429,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 27, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
+                    rankType: BLOUSON_SANSCOL,
                 },
                 ['Blouson Supervisor']: {
                     Components: {
@@ -8038,6 +8057,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 ['Cérémonie']: {
                     Components: {
                         [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 19, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                         [Component.Tops]: { Drawable: 17, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
                 },
@@ -8860,9 +8880,9 @@ export const RankOutfit: Partial<
                 [30]: [21, 5], // Chief of Police
             },
             [PULL]: {
-                [78]: [35, 3], // Officier
-                [284]: [35, 4], // Caporal
-                [77]: [35, 5], // Sergeant
+                [78]: [37, 3], // Officier
+                [284]: [37, 4], // Caporal
+                [77]: [37, 5], // Sergeant
                 [76]: [36, 0], // Second Lieutenant
                 [285]: [36, 1], // Premier Lieutenant
                 [75]: [36, 2], // Captain
@@ -8902,6 +8922,17 @@ export const RankOutfit: Partial<
                 [74]: [33, 3], // Commander
                 [73]: [33, 4], // Deputy Chief
                 [30]: [33, 5], // Chief of Police
+            },
+            [BLOUSON_SANSCOL]: {
+                [78]: [17, 3], // Officier
+                [284]: [17, 4], // Caporal
+                [77]: [17, 5], // Sergeant
+                [76]: [38, 0], // Second Lieutenant
+                [285]: [38, 1], // Premier Lieutenant
+                [75]: [38, 2], // Captain
+                [74]: [38, 3], // Commander
+                [73]: [38, 4], // Deputy Chief
+                [30]: [38, 5], // Chief of Police
             },
         },
         [PlayerPedHash.Female]: {
@@ -9053,15 +9084,15 @@ export const RankOutfit: Partial<
                 [38]: [24, 5], // Sheriff
             },
             [PULL]: {
-                [71]: [35, 0], // Junior
-                [70]: [35, 1], // Senior
-                [69]: [35, 2], // Major
-                [282]: [37, 0], // Second Brigadier
-                [68]: [37, 1], // Premier Brigadier
-                [283]: [37, 2], // supervisor
-                [201]: [37, 3], // Division chief
-                [66]: [37, 4], // Undersheriff
-                [38]: [37, 5], // Sheriff
+                [71]: [37, 0], // Junior
+                [70]: [37, 1], // Senior
+                [69]: [37, 2], // Major
+                [282]: [35, 0], // Second Brigadier
+                [68]: [35, 1], // Premier Brigadier
+                [283]: [35, 2], // supervisor
+                [201]: [35, 3], // Division chief
+                [66]: [35, 4], // Undersheriff
+                [38]: [35, 5], // Sheriff
             },
             [BLOUSON]: {
                 [71]: [26, 0], // Junior
@@ -9095,6 +9126,17 @@ export const RankOutfit: Partial<
                 [201]: [34, 3], // Division chief
                 [66]: [34, 4], // Undersheriff
                 [38]: [34, 5], // Sheriff
+            },
+            [BLOUSON_SANSCOL]: {
+                [71]: [17, 0], // Junior
+                [70]: [17, 1], // Senior
+                [69]: [17, 2], // Major
+                [282]: [39, 0], // Second Brigadier
+                [68]: [39, 1], // Premier Brigadier
+                [283]: [39, 2], // supervisor
+                [201]: [39, 3], // Division chief
+                [66]: [39, 4], // Undersheriff
+                [38]: [39, 5], // Sheriff
             },
         },
         [PlayerPedHash.Female]: {
