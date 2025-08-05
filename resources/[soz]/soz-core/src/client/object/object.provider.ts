@@ -58,7 +58,6 @@ export class ObjectProvider {
     private interactionProvider: InteractionProvider;
 
     private loadedObjects: Record<string, SpawnedObject> = {};
-    private loadedObjectsWithTexture: Record<string, SpawnedObject> = {};
 
     private objectsByChunk = new Map<number, Map<string, SpawnableObject>>();
 
@@ -398,9 +397,6 @@ export class ObjectProvider {
             targets: spawnableObject.targets,
             dragAndDropCallbacks: spawnableObject.dragAndDropCallbacks,
         };
-        if (spawnableObject.object.textureUrl) {
-            this.loadedObjectsWithTexture[spawnableObject.object.id] = this.loadedObjects[spawnableObject.object.id];
-        }
 
         const targets = [...spawnableObject.targets];
 
@@ -461,7 +457,6 @@ export class ObjectProvider {
         }
 
         delete this.loadedObjects[id];
-        delete this.loadedObjectsWithTexture[id];
 
         TriggerEvent(ClientEvent.OBJECT_DESPAWN, spawnedObject.object.id, spawnedObject.entity);
     }
@@ -501,7 +496,6 @@ export class ObjectProvider {
         }
 
         this.loadedObjects = {};
-        this.loadedObjectsWithTexture = {};
     }
 
     @Tick(TickInterval.EVERY_MINUTE, 'object-scale')
@@ -513,22 +507,12 @@ export class ObjectProvider {
         }
     }
 
-    @Tick(TickInterval.EVERY_FRAME, 'object-texture-check')
-    public async objectTextureCheck() {
-        for (const obj of Object.values(this.loadedObjectsWithTexture)) {
-            if (obj.object.textureUrl) {
-                this.objectService.updateObjectTexture(obj.entity, obj.object.textureUrl);
-            }
-        }
-    }
-
     @Tick(30000, 'object-spawn-check')
     public async objectSpawnCheck() {
         for (const spawnedObject of Object.values(this.loadedObjects)) {
             if (!DoesEntityExist(spawnedObject.entity)) {
                 console.log('object-spawn-check: missing entity, trying to fix it', spawnedObject.object.id);
                 delete this.loadedObjects[spawnedObject.object.id];
-                delete this.loadedObjectsWithTexture[spawnedObject.object.id];
 
                 this.spawnObject({
                     object: spawnedObject.object,

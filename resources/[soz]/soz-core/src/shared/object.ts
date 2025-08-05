@@ -39,7 +39,7 @@ export type WorldObject = {
     alpha?: number;
     rotationOrder?: number;
     textureVariation?: number;
-    textureUrl?: string;
+    dynamicTexture?: DynamicTexture;
 };
 
 export type WorldPlacedProp = {
@@ -47,6 +47,12 @@ export type WorldPlacedProp = {
     loaded: boolean;
     model: string;
     object: WorldObject;
+};
+
+export type DynamicTexture = {
+    url: string;
+    index: number;
+    baseModel: number;
 };
 
 export type DebugProp = {

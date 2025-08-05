@@ -20,9 +20,11 @@ export type Billboard = {
 export const billboardOffsets: Record<
     number,
     {
-        offsets: Vector3[];
+        offsets?: Vector3[];
+        offset?: Vector3;
         width: number;
         height: number;
+        mapping?: string;
     }
 > = {
     [GetHashKey('soz_news_billboard_01')]: {
@@ -32,6 +34,8 @@ export const billboardOffsets: Record<
             [-0.589, -0.076625, 1.40922],
             [-0.589, -0.076625, -0.261406],
         ],
+        offset: [0, 0, 0],
+        mapping: 'soz_news_billboard_01_',
         width: 724,
         height: 1024,
     },

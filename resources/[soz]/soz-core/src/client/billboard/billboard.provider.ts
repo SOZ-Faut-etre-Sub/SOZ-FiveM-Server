@@ -88,7 +88,7 @@ export class BillboardProvider {
         RemoveReplaceTexture(billboard.originDictName, billboard.originTextureName);
     }
 
-    @Once(OnceStep.PlayerLoaded)
+    @Once()
     public async mobileBillboard() {
         const billboards = Object.keys(billboardOffsets).map(Number);
         this.targetFactory.createForModel(

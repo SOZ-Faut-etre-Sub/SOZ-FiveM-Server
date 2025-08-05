@@ -195,23 +195,29 @@ export class ObjectService {
             SetObjectTextureVariation(entity, object.textureVariation);
         }
 
-        if (object.textureUrl) {
-            if (!this.textureDict) {
-                this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
-            }
-            const billboards = Object.keys(billboardOffsets).map(Number);
-            let textureWidth = 512;
-            let textureHeight = 512;
+        if (object.dynamicTexture && object.dynamicTexture.url) {
+            const conf = billboardOffsets[object.dynamicTexture.baseModel];
+            if (conf) {
+                if (!this.textureDict) {
+                    this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
+                }
+                const textureWidth = conf.width;
+                const textureHeight = conf.height;
 
-            if (billboards.includes(object.model)) {
-                textureWidth = billboardOffsets[object.model].width;
-                textureHeight = billboardOffsets[object.model].height;
-            }
+                const dui = CreateDui(object.dynamicTexture.url, textureWidth, textureHeight);
+                const duiHandle = GetDuiHandle(dui);
+                CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.dynamicTexture.url}_texture`, duiHandle);
+                this.duiObjects.set(object.id, dui);
 
-            const dui = CreateDui(object.textureUrl, textureWidth, textureHeight);
-            const duiHandle = GetDuiHandle(dui);
-            CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.textureUrl}_texture`, duiHandle);
-            this.duiObjects.set(object.id, dui);
+                const oriTxd = conf.mapping + object.dynamicTexture.index.toString().padStart(3, '0');
+                RemoveReplaceTexture(oriTxd, 'soz_txd_newsbill_01_media_1');
+                AddReplaceTexture(
+                    oriTxd,
+                    'soz_txd_newsbill_01_media_1',
+                    `dynamic_prop_textures`,
+                    `${object.dynamicTexture.url}_texture`
+                );
+            }
         }
     }
 
@@ -247,6 +253,11 @@ export class ObjectService {
 
         DeleteEntity(entity);
         if (this.duiObjects.has(object.id)) {
+            const conf = billboardOffsets[object.dynamicTexture.baseModel];
+            if (conf) {
+                const oriTxd = conf.mapping + object.dynamicTexture.index.toString().padStart(3, '0');
+                RemoveReplaceTexture(oriTxd, 'soz_txd_newsbill_01_media_1');
+            }
             DestroyDui(this.duiObjects.get(object.id));
             this.duiObjects.delete(object.id);
         }
