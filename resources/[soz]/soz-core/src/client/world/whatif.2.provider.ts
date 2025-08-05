@@ -3,7 +3,10 @@ import { Feature } from '@public/shared/features';
 import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
+import { joaat } from '../../shared/joaat';
+import { Vector3 } from '../../shared/polyzone/vector';
 import { WhatIfSafeZone } from '../../shared/whatif';
 import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
@@ -25,6 +28,8 @@ export class WhatIf2Provider {
     private notifier: Notifier;
 
     private inSafeZone = false;
+
+    private zombieRelationHash = joaat('ZombieAgressive');
 
     @Once(OnceStep.Start)
     async onStart() {
@@ -54,6 +59,11 @@ export class WhatIf2Provider {
                 );
             }
         });
+
+        AddRelationshipGroup('ZombieAgressive');
+        SetRelationshipBetweenGroups(0, this.zombieRelationHash, this.zombieRelationHash);
+        SetRelationshipBetweenGroups(5, this.zombieRelationHash, GetHashKey('PLAYER'));
+        SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), this.zombieRelationHash);
     }
 
     private async safeZoneLoop() {
@@ -78,12 +88,35 @@ export class WhatIf2Provider {
         }
     }
 
-    @On('populationPedCreating')
-    public async onPopulationPedCreating() {
+    @Tick(TickInterval.EVERY_SECOND)
+    async onPedConfigurationCheck() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
-        CancelEvent();
+        for (const pedHandle of GetGamePool('CPed')) {
+            if (IsPedAPlayer(pedHandle) || !NetworkHasControlOfEntity(pedHandle)) {
+                continue;
+            }
+
+            SetPedCombatAttributes(pedHandle, 0, false);
+            SetPedCombatAttributes(pedHandle, 4, true);
+            SetPedCombatAttributes(pedHandle, 5, true);
+            SetPedCombatAttributes(pedHandle, 13, true);
+            SetPedCombatAttributes(pedHandle, 21, true);
+            SetPedCombatAttributes(pedHandle, 38, true);
+            SetPedCombatAttributes(pedHandle, 42, true);
+            SetPedCombatAttributes(pedHandle, 46, true);
+            SetPedCombatAttributes(pedHandle, 50, true);
+
+            SetPedCombatMovement(pedHandle, 3);
+            SetPedFleeAttributes(pedHandle, 0, false);
+            SetPedCombatRange(pedHandle, 3);
+            SetPedCombatAbility(pedHandle, 2);
+            SetPedSeeingRange(pedHandle, 200);
+            SetPedHearingRange(pedHandle, 100);
+
+            SetPedRelationshipGroupHash(pedHandle, this.zombieRelationHash);
+        }
     }
 }

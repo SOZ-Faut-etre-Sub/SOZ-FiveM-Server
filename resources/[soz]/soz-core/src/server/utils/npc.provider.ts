@@ -1,14 +1,10 @@
 import { On } from '@public/core/decorators/event';
-import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 
-import { Once, OnceStep } from '../../core/decorators/event';
 import { Rpc } from '../../core/decorators/rpc';
 import { ClientEvent } from '../../shared/event/client';
-import { Feature } from '../../shared/features';
 import { RpcServerEvent } from '../../shared/rpc';
 import { DefaultPedDensity, PedDensityType } from '../../shared/utils/npc';
-import { FeatureProvider } from '../feature/feature.provider';
 
 const BlacklistedPeds = [
     GetHashKey('s_m_y_ranger_01'),
@@ -21,19 +17,7 @@ const BlacklistedPeds = [
 
 @Provider()
 export class NpcProvider {
-    @Inject(FeatureProvider)
-    private readonly featureProvider: FeatureProvider;
-
     private disabled = false;
-
-    @Once(OnceStep.Start)
-    async onStart() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        this.disableNPC(true);
-    }
 
     @On('entityCreating', false)
     public onEntityCreating(handle: number) {

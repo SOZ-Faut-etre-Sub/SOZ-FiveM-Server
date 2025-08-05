@@ -64,7 +64,10 @@ export class ZombieProvider {
 
     @On('populationPedCreating')
     public async onStart(x: number, y: number, z: number, model: number, setters) {
-        if (!this.featureProvider.isFeatureEnabled(Feature.Halloween)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.Halloween) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 

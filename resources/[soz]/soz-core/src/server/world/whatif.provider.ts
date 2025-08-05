@@ -11,11 +11,13 @@ export class WhatIfProvider {
     private readonly featureProvider: FeatureProvider;
 
     @On('entityCreating', false)
-    public onEntityCreating() {
+    public onEntityCreating(handle: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
-        CancelEvent();
+        if (GetEntityType(handle) !== 1) {
+            CancelEvent();
+        }
     }
 }

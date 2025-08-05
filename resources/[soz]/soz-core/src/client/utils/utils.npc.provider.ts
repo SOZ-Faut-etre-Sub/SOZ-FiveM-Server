@@ -9,6 +9,8 @@ import { RpcServerEvent } from '@public/shared/rpc';
 import { DefaultPedDensity, PedDensityType } from '@public/shared/utils/npc';
 
 import { Provider } from '../../core/decorators/provider';
+import { Feature } from '../../shared/features';
+import { FeatureProvider } from '../feature/feature.provider';
 import { OceanProvider } from '../world/ocean.provider';
 
 const DisableSpawn: Vector2[][] = [
@@ -217,6 +219,9 @@ export class UtilsNPCProvider {
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Once()
     public async onStart() {
         const relationshipTypesLike = ['CIVMALE', 'CIVFEMALE', 'COP', 'SECURITY_GUARD', 'PRIVATE_SECURITY'];
@@ -320,9 +325,9 @@ export class UtilsNPCProvider {
         SetPedPopulationBudget(3.0);
         SetVehiclePopulationBudget(3.0);
         SetAllVehicleGeneratorsActive();
-		
-		//mhc tower
-        AddScenarioBlockingArea(-235.63 , -1122.33, 20.0, -58.70, -961.62, 270.0, false, true, true, true);
+
+        //mhc tower
+        AddScenarioBlockingArea(-235.63, -1122.33, 20.0, -58.7, -961.62, 270.0, false, true, true, true);
 
         for (let i = 1; i <= 15; i++) {
             EnableDispatchService(i, false);
@@ -336,6 +341,11 @@ export class UtilsNPCProvider {
         const densities = await emitRpc<Partial<Record<PedDensityType, number>>>(RpcServerEvent.GET_DISABLE_NPC);
         for (const [type, value] of Object.entries(densities)) {
             this.density[type] = value;
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            this.density[PedDensityType.vehicle] = 0.0;
+            this.density[PedDensityType.parked] = 0.0;
         }
     }
 
@@ -368,6 +378,11 @@ export class UtilsNPCProvider {
     public updateDensity(densities: Partial<Record<PedDensityType, number>>) {
         for (const [type, value] of Object.entries(densities)) {
             this.density[type] = value;
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            this.density[PedDensityType.vehicle] = 0.0;
+            this.density[PedDensityType.parked] = 0.0;
         }
     }
 
