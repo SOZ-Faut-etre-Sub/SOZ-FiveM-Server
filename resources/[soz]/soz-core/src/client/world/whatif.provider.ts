@@ -3,6 +3,7 @@ import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { WhatIfExcludeZone } from '@public/shared/whatif';
 
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { FeatureProvider } from '../feature/feature.provider';
@@ -26,6 +27,19 @@ export class WhatIfProvider {
 
     private inZone = false;
     private audio: string = null;
+
+    @Once(OnceStep.Start)
+    async onStart() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const playerBlip = GetMainPlayerBlipId();
+        const northBlip = GetNorthRadarBlip();
+
+        SetBlipAlpha(playerBlip, 0);
+        SetBlipAlpha(northBlip, 0);
+    }
 
     @Tick(5000)
     public whatIfZoneCheck() {

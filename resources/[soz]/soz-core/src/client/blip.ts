@@ -114,6 +114,10 @@ export class BlipFactory {
             return -1;
         }
 
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return -1;
+        }
+
         if (actions) {
             blip.mission = true;
         }
