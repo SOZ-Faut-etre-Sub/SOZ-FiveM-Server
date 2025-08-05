@@ -3,7 +3,7 @@ import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { WhatIfExcludeZone } from '@public/shared/whatif';
 
-import { Once, OnceStep } from '../../core/decorators/event';
+import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { FeatureProvider } from '../feature/feature.provider';
@@ -89,5 +89,14 @@ export class WhatIfProvider {
 
         const playerPed = PlayerPedId();
         SetEntityHealth(playerPed, GetEntityHealth(playerPed) - 5);
+    }
+
+    @On('populationPedCreating')
+    public async onPopulationPedCreating() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        CancelEvent();
     }
 }

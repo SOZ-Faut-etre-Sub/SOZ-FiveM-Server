@@ -8,6 +8,7 @@ import { ModelSwapProvider } from './modelswap.provider';
 import { OceanProvider } from './ocean.provider';
 import { ThunderProvider } from './thunder.provider';
 import { TornadoProvider } from './tornado.provider';
+import { WhatIfProvider } from './whatif.provider';
 import { WorldEventProvider } from './world.event.provider';
 
 @Module({
@@ -22,6 +23,7 @@ import { WorldEventProvider } from './world.event.provider';
         FirestormProvider,
         ModelSwapProvider,
         FireFiretruckProvider,
+        WhatIfProvider,
     ],
 })
 export class WorldModule {}
