@@ -11,7 +11,8 @@ import { OceanProvider } from './ocean.provider';
 import { SpotlightProvider } from './spotlight.provider';
 import { ThunderProvider } from './thunder.provider';
 import { TornadoProvider } from './tornado.provider';
-import { WhatIfProvider } from './whatif.provider';
+import { WhatIf1Provider } from './whatif.1.provider';
+import { WhatIf2Provider } from './whatif.2.provider';
 import { WorldEventProvider } from './world.event.provider';
 
 @Module({
@@ -23,7 +24,8 @@ import { WorldEventProvider } from './world.event.provider';
         EarthquakeProvider,
         FireworkProvider,
         SpotlightProvider,
-        WhatIfProvider,
+        WhatIf1Provider,
+        WhatIf2Provider,
         TornadoProvider,
         ThunderProvider,
         FireProvider,

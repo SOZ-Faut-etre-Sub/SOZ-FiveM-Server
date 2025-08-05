@@ -3,7 +3,6 @@ import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { WhatIfExcludeZone } from '@public/shared/whatif';
 
-import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { FeatureProvider } from '../feature/feature.provider';
@@ -12,7 +11,7 @@ import { AudioService } from '../nui/audio.service';
 import { PlayerService } from '../player/player.service';
 
 @Provider()
-export class WhatIfProvider {
+export class WhatIf1Provider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
 
@@ -27,19 +26,6 @@ export class WhatIfProvider {
 
     private inZone = false;
     private audio: string = null;
-
-    @Once(OnceStep.Start)
-    async onStart() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        const playerBlip = GetMainPlayerBlipId();
-        const northBlip = GetNorthRadarBlip();
-
-        SetBlipAlpha(playerBlip, 0);
-        SetBlipAlpha(northBlip, 0);
-    }
 
     @Tick(5000)
     public whatIfZoneCheck() {
@@ -89,14 +75,5 @@ export class WhatIfProvider {
 
         const playerPed = PlayerPedId();
         SetEntityHealth(playerPed, GetEntityHealth(playerPed) - 5);
-    }
-
-    @On('populationPedCreating')
-    public async onPopulationPedCreating() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        CancelEvent();
     }
 }
