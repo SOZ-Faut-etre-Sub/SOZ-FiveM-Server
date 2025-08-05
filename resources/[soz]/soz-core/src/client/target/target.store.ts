@@ -1,5 +1,7 @@
-import { Injectable } from '@core/decorators/injectable';
+import { Inject, Injectable } from '@core/decorators/injectable';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { TargetStoreData } from '@public/client/target/target.store.data';
+import { Feature } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';
@@ -50,12 +52,19 @@ export class TargetStore {
     public vehicles: TargetStoreData<TargetStoreVehicle> = new TargetStoreData<TargetStoreVehicle>();
     public bones: TargetStoreData<TargetStoreBone> = new TargetStoreData<TargetStoreBone>();
 
+    @Inject(FeatureProvider)
+    private readonly featureProvider: FeatureProvider;
+
     public async addZone(
         id: string,
         zone: TargetStoreZone['zone'],
         targets: TargetStoreZone['targets'],
         distance = DEFAULT_DISTANCE
     ) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         this.zones.add({ zone, targets, distance }, id);
     }
 
@@ -64,6 +73,10 @@ export class TargetStore {
         targets: TargetStoreBase['targets'],
         distance = DEFAULT_DISTANCE
     ) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         if (models instanceof Array) {
             for (const model of models) {
                 this.models.add({ model: this.getId(model), targets, distance });
@@ -80,6 +93,10 @@ export class TargetStore {
         distance = DEFAULT_DISTANCE,
         id?: string
     ) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         if (entities instanceof Array) {
             for (const entity of entities) {
                 this.entities.add({ entity, targets, distance }, id);
@@ -91,6 +108,10 @@ export class TargetStore {
     }
 
     public addBones(bones: string[] | string, targets: TargetStoreBase['targets'], distance = DEFAULT_DISTANCE) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         if (bones instanceof Array) {
             for (const bone of bones) {
                 this.bones.add({ bone: bone, targets, distance });
