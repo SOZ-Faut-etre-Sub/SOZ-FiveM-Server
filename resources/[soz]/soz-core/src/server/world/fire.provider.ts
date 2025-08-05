@@ -146,8 +146,6 @@ export class FireProvider {
     @Tick(10_000)
     async onFireRespawnCheck() {
         for (const id of this.firePits.keys()) {
-            TriggerLatentClientEvent(ClientEvent.FIRE_PIT_RESPAWN, -1, 16 * 1024, id);
-
             if (this.staffRequestPitExtinguish) {
                 await this.reduceFirePit(id);
                 await wait(10);

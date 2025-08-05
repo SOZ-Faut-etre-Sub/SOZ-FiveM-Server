@@ -1,7 +1,6 @@
 import { Inject } from '@public/core/decorators/injectable';
 import { Rpc } from '@public/core/decorators/rpc';
 import { Tick } from '@public/core/decorators/tick';
-import { Logger } from '@public/core/logger';
 import { Outfit, OutfitType } from '@public/shared/cloth';
 import { NuiEvent } from '@public/shared/event/nui';
 import { joaat } from '@public/shared/joaat';
@@ -13,6 +12,7 @@ import { Provider } from '../../core/decorators/provider';
 import { TickInterval } from '../../core/decorators/tick';
 import { emitRpc } from '../../core/rpc';
 import { wait } from '../../core/utils';
+import { LockService } from '../../server/lock.service';
 import { ClientEvent } from '../../shared/event/client';
 import { ServerEvent } from '../../shared/event/server';
 import {
@@ -133,13 +133,14 @@ export class FireProvider {
     @Inject(BlipFactory)
     private blipFactory: BlipFactory;
 
-    @Inject(Logger)
-    private readonly logger: Logger;
+    @Inject(LockService)
+    private readonly lockService: LockService;
 
     private usedFireExtinguisherRecently = false;
 
     private readonly gridSize = 25;
     private firePits = new Map<string, FirePitClient>();
+    private fireToRespawn = new Set<string>();
 
     private nearOfPit = false;
     private wearingFireClothes = false;
@@ -309,87 +310,92 @@ export class FireProvider {
 
     @OnEvent(ClientEvent.FIRE_PIT_SPAWN)
     private async spawnFirePit(id: string, fire: FirePit) {
-        const existingPit = this.firePits.get(id);
-        if (existingPit) return;
+        return this.lockService.lock(`firepit-${id}`, async () => {
+            const existingPit = this.firePits.get(id);
+            if (existingPit) return;
 
-        await this.resourceLoader.loadPtfxAsset('soz_fire');
-        await this.resourceLoader.loadPtfxAsset('des_vaultdoor');
+            await this.resourceLoader.loadPtfxAsset('soz_fire');
+            await this.resourceLoader.loadPtfxAsset('des_vaultdoor');
 
-        const firePtfxs: number[] = [];
-        for (const offset of fireScriptOffsets[fire.type]) {
-            const firePosition = applyOffset(fire.position, offset);
+            const firePtfxs: number[] = [];
+            for (const offset of fireScriptOffsets[fire.type]) {
+                const firePosition = applyOffset(fire.position, offset);
 
-            const [valid, z] = await this.getZData(firePosition);
-            if (!valid) {
-                continue;
+                const [valid, z] = await this.getZData(firePosition);
+                if (!valid) {
+                    this.fireToRespawn.add(id);
+                    continue;
+                }
+                firePosition[2] = z;
+
+                const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
+                firePtfxs.push(fireHandle);
             }
-            firePosition[2] = z;
 
-            const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
-            firePtfxs.push(fireHandle);
-        }
+            AddShockingEventAtPosition(24, fire.position[0], fire.position[1], fire.position[2], 10_000);
 
-        const prevScale = fire.type >= 1 ? fireScale[fire.type - 1] : 0;
-        const currentScale = fireScale[fire.type];
-        const ptfxScale = this.lerp(
-            prevScale,
-            currentScale,
-            fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
-        );
+            const prevScale = fire.type >= 1 ? fireScale[fire.type - 1] : 0;
+            const currentScale = fireScale[fire.type];
+            const ptfxScale = this.lerp(
+                prevScale,
+                currentScale,
+                fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
+            );
 
-        const prevFlameZ = fire.type >= 1 ? offsetFlameCoords[fire.type - 1] : 0;
-        const currentFlameZ = offsetFlameCoords[fire.type];
-        const ptfxFlameZ = this.lerp(
-            prevFlameZ,
-            currentFlameZ,
-            fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
-        );
+            const prevFlameZ = fire.type >= 1 ? offsetFlameCoords[fire.type - 1] : 0;
+            const currentFlameZ = offsetFlameCoords[fire.type];
+            const ptfxFlameZ = this.lerp(
+                prevFlameZ,
+                currentFlameZ,
+                fire.health ? fire.health / firePitDefaultHealth[fire.type] : 1
+            );
 
-        SetPtfxAssetNextCall('des_vaultdoor');
-        const smokePtfx = StartParticleFxLoopedAtCoord(
-            'ent_ray_pro1_residual_smoke',
-            fire.position[0],
-            fire.position[1],
-            fire.position[2],
-            0.0,
-            0.0,
-            fire.position[3],
-            ptfxScale,
-            false,
-            false,
-            false,
-            false
-        );
+            SetPtfxAssetNextCall('des_vaultdoor');
+            const smokePtfx = StartParticleFxLoopedAtCoord(
+                'ent_ray_pro1_residual_smoke',
+                fire.position[0],
+                fire.position[1],
+                fire.position[2],
+                0.0,
+                0.0,
+                fire.position[3],
+                ptfxScale,
+                false,
+                false,
+                false,
+                false
+            );
 
-        if (!smokePtfx) {
-            console.log('Failed to create fire smoke ptfx');
-        }
+            if (!smokePtfx) {
+                console.log('Failed to create fire smoke ptfx');
+            }
 
-        SetPtfxAssetNextCall('soz_fire');
-        const flamePtfx = StartParticleFxLoopedAtCoord(
-            'ent_ray_shipwreck_smoke_plume',
-            fire.position[0],
-            fire.position[1],
-            fire.position[2] + ptfxFlameZ,
-            0.0,
-            0.0,
-            fire.position[3],
-            ptfxScale,
-            false,
-            false,
-            false,
-            false
-        );
+            SetPtfxAssetNextCall('soz_fire');
+            const flamePtfx = StartParticleFxLoopedAtCoord(
+                'ent_ray_shipwreck_smoke_plume',
+                fire.position[0],
+                fire.position[1],
+                fire.position[2] + ptfxFlameZ,
+                0.0,
+                0.0,
+                fire.position[3],
+                ptfxScale,
+                false,
+                false,
+                false,
+                false
+            );
 
-        if (!flamePtfx) {
-            console.log('Failed to create fire smoke ptfx');
-        }
+            if (!flamePtfx) {
+                console.log('Failed to create fire smoke ptfx');
+            }
 
-        this.firePits.set(id, {
-            ...fire,
-            smokePtfx,
-            flamePtfx,
-            firePtfxs,
+            this.firePits.set(id, {
+                ...fire,
+                smokePtfx,
+                flamePtfx,
+                firePtfxs,
+            });
         });
     }
 
@@ -399,51 +405,32 @@ export class FireProvider {
         await this.spawnFirePit(id, fire);
     }
 
-    @OnEvent(ClientEvent.FIRE_PIT_RESPAWN)
-    async respawnFirePit(id: string) {
-        const fire = this.firePits.get(id);
-        if (!fire) return;
+    @Tick(TickInterval.EVERY_SECOND * 30)
+    async respawnFirePit() {
+        this.fireToRespawn.forEach(fireId => {
+            const fire = this.firePits.get(fireId);
+            if (!fire) return;
 
-        const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
-
-        if (fireNearPit >= fireScriptOffsets[fire.type].length) return;
-
-        for (const firePtfx of fire.firePtfxs) {
-            RemoveScriptFire(firePtfx);
-        }
-
-        const firePtfxs: number[] = [];
-        for (const offset of fireScriptOffsets[fire.type]) {
-            const firePosition = applyOffset(fire.position, offset);
-
-            const [valid, z] = await this.getZData(firePosition);
-            if (!valid) {
-                continue;
-            }
-            firePosition[2] = z;
-
-            const fireHandle = StartScriptFire(firePosition[0], firePosition[1], firePosition[2], 25, false);
-            firePtfxs.push(fireHandle);
-        }
-
-        this.firePits.set(id, { ...fire, firePtfxs });
-
-        AddShockingEventAtPosition(24, fire.position[0], fire.position[1], fire.position[2], 10_000);
+            this.updateFirePit(fireId, fire);
+        });
     }
 
     @OnEvent(ClientEvent.FIRE_PIT_DESPAWN)
     async despawnFirePit(id: string) {
-        const pit = this.firePits.get(id);
-        if (!pit) return;
+        return this.lockService.lock(`firepit-${id}`, async () => {
+            const pit = this.firePits.get(id);
+            if (!pit) return;
 
-        StopParticleFxLooped(pit.smokePtfx, false);
-        StopParticleFxLooped(pit.flamePtfx, false);
+            StopParticleFxLooped(pit.smokePtfx, false);
+            StopParticleFxLooped(pit.flamePtfx, false);
 
-        for (const firePtfx of pit.firePtfxs) {
-            RemoveScriptFire(firePtfx);
-        }
+            for (const firePtfx of pit.firePtfxs) {
+                RemoveScriptFire(firePtfx);
+            }
 
-        this.firePits.delete(id);
+            this.firePits.delete(id);
+            this.fireToRespawn.delete(id);
+        });
     }
 
     @Rpc(RpcClientEvent.FIRE_GET_WIND_DATA)
