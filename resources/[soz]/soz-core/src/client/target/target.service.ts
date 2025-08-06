@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PhoneService } from '@public/client/phone/phone.service';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
+import { Feature } from '@public/shared/features';
 import { Interaction } from '@public/shared/interaction';
 
 import { TargetOption } from '../../shared/target';
@@ -32,6 +34,9 @@ export class TargetService {
 
     @Inject(VampireGameStateProvider)
     private readonly vampireGameStateProvider: VampireGameStateProvider;
+
+    @Inject(FeatureProvider)
+    private readonly featureProvider: FeatureProvider;
 
     public async validateTarget(target: TargetOption, entity: number): Promise<boolean> {
         if (!this.globalCheck()) return false;
@@ -94,6 +99,10 @@ export class TargetService {
     }
 
     protected eventCheck(event: string): boolean {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return event === 'what-if:2';
+        }
+
         if (this.vampireGameStateProvider.isGameRunning()) {
             return event === 'all' || event === 'vampire:game';
         }

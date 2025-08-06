@@ -52,19 +52,12 @@ export class TargetStore {
     public vehicles: TargetStoreData<TargetStoreVehicle> = new TargetStoreData<TargetStoreVehicle>();
     public bones: TargetStoreData<TargetStoreBone> = new TargetStoreData<TargetStoreBone>();
 
-    @Inject(FeatureProvider)
-    private readonly featureProvider: FeatureProvider;
-
     public async addZone(
         id: string,
         zone: TargetStoreZone['zone'],
         targets: TargetStoreZone['targets'],
         distance = DEFAULT_DISTANCE
     ) {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
         this.zones.add({ zone, targets, distance }, id);
     }
 
@@ -73,10 +66,6 @@ export class TargetStore {
         targets: TargetStoreBase['targets'],
         distance = DEFAULT_DISTANCE
     ) {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
         if (models instanceof Array) {
             for (const model of models) {
                 this.models.add({ model: this.getId(model), targets, distance });
@@ -93,10 +82,6 @@ export class TargetStore {
         distance = DEFAULT_DISTANCE,
         id?: string
     ) {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
         if (entities instanceof Array) {
             for (const entity of entities) {
                 this.entities.add({ entity, targets, distance }, id);
@@ -108,10 +93,6 @@ export class TargetStore {
     }
 
     public addBones(bones: string[] | string, targets: TargetStoreBase['targets'], distance = DEFAULT_DISTANCE) {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
         if (bones instanceof Array) {
             for (const bone of bones) {
                 this.bones.add({ bone: bone, targets, distance });
