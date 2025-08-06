@@ -2,9 +2,11 @@ import { Once, OnceStep, OnEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { AnimationProps } from '@public/shared/animation';
 import { Outfit, Prop } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
+import { Feature } from '@public/shared/features';
 import { getChunkId } from '@public/shared/grid';
 import { InventoryItem } from '@public/shared/inventory';
 import { joaat } from '@public/shared/joaat';
@@ -111,6 +113,9 @@ export class PedFactory {
     @Inject(ClothingService)
     private clothingService: ClothingService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     public getPedByEntity(entity: number): GridPed | null {
         for (const ped of Object.values(this.loadedPeds)) {
             if (ped.entity === entity) {
@@ -122,6 +127,10 @@ export class PedFactory {
     }
 
     public async createPedOnGrid(ped: Ped): Promise<string> {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         const position = [ped.coords.x, ped.coords.y, ped.coords.z] as Vector3;
         const chunk = getChunkId(position);
         const gridPed = {
