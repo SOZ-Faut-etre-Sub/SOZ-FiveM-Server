@@ -120,6 +120,26 @@ export const Halloween: Forecast = {
     SNOW_HALLOWEEN: {},
 };
 
+export const WhatIf2: Forecast = {
+    CLEAR: { CLOUDS: 60, FOGGY: 20, SMOG: 20 },
+    CLOUDS: { CLEAR: 30, RAIN: 40, FOGGY: 15, SMOG: 15, THUNDER: 5, BLIZZARD: 5 },
+    FOGGY: { CLEAR: 40, CLOUDS: 30, SMOG: 20, RAIN: 10 },
+    SMOG: { CLEAR: 30, CLOUDS: 30, FOGGY: 20, RAIN: 20 },
+    RAIN: { CLOUDS: 50, THUNDER: 20, CLEAR: 10, FOGGY: 20 },
+    THUNDER: { RAIN: 70, CLOUDS: 30 },
+    BLIZZARD: { SMOG: 50, CLOUDS: 30, CLEAR: 20 },
+    EXTRASUNNY: {},
+    NEUTRAL: {},
+    OVERCAST: { CLOUDS: 100 },
+    CLEARING: {},
+    SNOW: {},
+    SNOWLIGHT: {},
+    XMAS: {},
+    HALLOWEEN: {},
+    RAIN_HALLOWEEN: {},
+    SNOW_HALLOWEEN: {},
+};
+
 export const WMOWeatherMapping = {
     0: 'EXTRASUNNY',
     1: 'CLEAR',
