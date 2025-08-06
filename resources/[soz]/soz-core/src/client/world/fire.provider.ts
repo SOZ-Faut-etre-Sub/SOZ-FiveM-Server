@@ -489,11 +489,15 @@ export class FireProvider {
         for (const [id, fire] of this.firePits.entries()) {
             if (getDistance(playerCoords, fire.position) > 100) continue;
 
-            const fireNearPit = GetNumberOfFiresInRange(fire.position[0], fire.position[1], fire.position[2], 10);
+            for (const offset of fireScriptOffsets[fire.type]) {
+                const firePosition = applyOffset(fire.position, offset);
 
-            if (fireNearPit === 0 && this.usedFireExtinguisherRecently) {
-                emitRpc(RpcServerEvent.FIRE_EXTINGUISHED, id);
-                await wait(5_000);
+                const fireNearPit = GetNumberOfFiresInRange(firePosition[0], firePosition[1], firePosition[2], 1);
+                if (fireNearPit === 0 && this.usedFireExtinguisherRecently) {
+                    emitRpc(RpcServerEvent.FIRE_EXTINGUISHED, id);
+                    await wait(5_000);
+                    return;
+                }
             }
         }
     }
