@@ -246,6 +246,10 @@ export class UpwFacilityProvider {
             return UpwBlackout.Zero;
         }
 
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return UpwBlackout.One;
+        }
+
         const percent = this.getBlackoutPercent();
 
         for (const level of Object.values(UpwBlackout)) {
@@ -262,7 +266,10 @@ export class UpwFacilityProvider {
 
     @Tick(UpwConfig.Consumption.Tick)
     public energyConsumptionLoop() {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 

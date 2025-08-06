@@ -1,16 +1,33 @@
-import { On } from '../../core/decorators/event';
+import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Exportable } from '../../core/decorators/exports';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { ClientEvent } from '../../shared/event';
+import { Feature } from '../../shared/features';
 import { GlobalState } from '../../shared/global';
 import { JobType } from '../../shared/job';
+import { FeatureProvider } from '../feature/feature.provider';
 import { StateSelector, Store } from './store';
 
 @Provider()
 export class StateGlobalProvider {
     @Inject('Store')
     private store: Store;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
+    @Once(OnceStep.Start)
+    async onStart() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        this.store.dispatch.global.update({
+            blackout: true,
+            blackoutLevel: 1,
+        });
+    }
 
     @StateSelector(state => state.global)
     public onGlobalStateChange(global: GlobalState) {

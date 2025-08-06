@@ -56,7 +56,10 @@ export class UpwPollutionProvider {
             return;
         }
 
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 
@@ -114,7 +117,10 @@ export class UpwPollutionProvider {
     }
 
     public getPollutionPercent() {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return 0;
         }
 
@@ -122,7 +128,10 @@ export class UpwPollutionProvider {
     }
 
     public getPollutionLevel(): UpwPollution {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return UpwPollution.Low;
         }
 
