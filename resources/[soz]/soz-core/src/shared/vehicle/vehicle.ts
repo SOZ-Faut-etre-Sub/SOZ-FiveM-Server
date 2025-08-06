@@ -525,6 +525,7 @@ export const VehicleElectricModels: Record<number, string> = {
     [joaat('pipistrello')]: 'Pipistrello',
     [joaat('envisage')]: 'Envisage',
     [joaat('eodbot')]: 'Eodbot',
+    [joaat('suzume')]: 'Suzume',
 };
 
 export const VehicleElectricModelClass: Record<number, VehicleClass> = {
@@ -553,6 +554,7 @@ export const VehicleElectricModelClass: Record<number, VehicleClass> = {
     [joaat('pipistrello')]: VehicleClass.Super,
     [joaat('envisage')]: VehicleClass.Sports,
     [joaat('eodbot')]: VehicleClass.OffRoad,
+    [joaat('suzume')]: VehicleClass.Super,
 };
 
 export const VehicleTrailerModels: Record<number, string> = {
