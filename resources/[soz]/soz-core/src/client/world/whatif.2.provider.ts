@@ -29,7 +29,7 @@ export class WhatIf2Provider {
 
     private inSafeZone = false;
 
-    private zombieRelationHash = joaat('ZombieAgressive');
+    private zombieRelation = 'ZombieAggressive';
 
     @Once(OnceStep.Start)
     async onStart() {
@@ -60,10 +60,10 @@ export class WhatIf2Provider {
             }
         });
 
-        AddRelationshipGroup('ZombieAgressive');
-        SetRelationshipBetweenGroups(0, this.zombieRelationHash, this.zombieRelationHash);
-        SetRelationshipBetweenGroups(5, this.zombieRelationHash, GetHashKey('PLAYER'));
-        SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), this.zombieRelationHash);
+        AddRelationshipGroup(this.zombieRelation);
+        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
+        SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
     }
 
     private async safeZoneLoop() {
@@ -99,24 +99,42 @@ export class WhatIf2Provider {
                 continue;
             }
 
+            SetPedMovementClipset(pedHandle, 'move_m@drunk@moderatedrunk', 1.5);
+
+            SetCanAttackFriendly(pedHandle, true, true);
+            SetPedCanEvasiveDive(pedHandle, false);
+            SetPedMoveRateOverride(pedHandle, 10.0);
+            SetRunSprintMultiplierForPlayer(pedHandle, 1.49);
+
+            DisablePedPainAudio(pedHandle, true);
+            StopPedSpeaking(pedHandle, true);
+
             SetPedCombatAttributes(pedHandle, 0, false);
             SetPedCombatAttributes(pedHandle, 4, true);
             SetPedCombatAttributes(pedHandle, 5, true);
+            SetPedCombatAttributes(pedHandle, 9, false);
             SetPedCombatAttributes(pedHandle, 13, true);
+            SetPedCombatAttributes(pedHandle, 14, true);
             SetPedCombatAttributes(pedHandle, 21, true);
             SetPedCombatAttributes(pedHandle, 38, true);
             SetPedCombatAttributes(pedHandle, 42, true);
             SetPedCombatAttributes(pedHandle, 46, true);
             SetPedCombatAttributes(pedHandle, 50, true);
-
-            SetPedCombatMovement(pedHandle, 3);
             SetPedFleeAttributes(pedHandle, 0, false);
-            SetPedCombatRange(pedHandle, 3);
+
+            // GiveWeaponToPed(pedHandle, 'weapon_pistol', 1000, false, true);
+            // SetCurrentPedWeapon(pedHandle, 'weapon_pistol', true);
+            // SetPedDropsWeaponsWhenDead(pedHandle, false);
+
+            SetPedShootRate(pedHandle, 1000);
+            SetPedInfiniteAmmoClip(pedHandle, true);
+            SetPedCombatMovement(pedHandle, 2);
+            SetPedCombatRange(pedHandle, 0);
             SetPedCombatAbility(pedHandle, 2);
             SetPedSeeingRange(pedHandle, 200);
             SetPedHearingRange(pedHandle, 100);
 
-            SetPedRelationshipGroupHash(pedHandle, this.zombieRelationHash);
+            SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
         }
     }
 }
