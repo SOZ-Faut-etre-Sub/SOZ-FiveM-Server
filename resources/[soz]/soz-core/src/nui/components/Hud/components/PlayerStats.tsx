@@ -20,6 +20,8 @@ export const PlayerStats: FunctionComponent = () => {
     const [battery, setBattery] = useState<number>(100);
     const [showStats, setShowStats] = useState<boolean>(true);
 
+    const whatIf2Enabled = useSelector((state: RootState) => state.features.WhatIfSecondEpisode);
+
     const hasWatch = useSelector((state: RootState) => state.hud.hasWatch);
     const showStress = useSelector((state: RootState) => state.hud.settings.showStress);
     const showStamina = useSelector((state: RootState) => state.hud.settings.showStamina);
@@ -220,9 +222,10 @@ export const PlayerStats: FunctionComponent = () => {
             {hasWatch && showStamina && showStats && (
                 <StatusGauge
                     value={stamina}
+                    max={whatIf2Enabled ? 50 : 100}
                     color={stamina <= 25 ? gaugeColors.orange_light : gaugeColors.blue_light}
                     backgroundColor={stamina <= 25 ? gaugeColors.orange_dark : gaugeColors.blue_dark}
-                    hideCondition={value => value >= 80}
+                    hideCondition={value => value >= (whatIf2Enabled ? 40 : 80)}
                 >
                     <img
                         style={{

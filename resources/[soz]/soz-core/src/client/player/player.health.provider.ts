@@ -415,7 +415,7 @@ export class PlayerHealthProvider {
         const health = GetEntityHealth(playerPed);
         const armor = GetPedArmour(playerPed);
         const armorPlates = state.nbArmorPlates;
-        const stamina = 100 - Math.trunc(GetPlayerSprintStaminaRemaining(playerId));
+        const stamina = GetPlayerMaxStamina(playerId) - Math.trunc(GetPlayerSprintStaminaRemaining(playerId));
 
         this.nuiDispatch.dispatch('player', 'UpdatePlayerStats', { health, armor, stamina, armorPlates });
     }
@@ -715,6 +715,17 @@ export class PlayerHealthProvider {
             return;
         }
 
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            const playerId = PlayerId();
+
+            if (GetPlayerMaxStamina(playerId) > 50) {
+                RestorePlayerStamina(playerId, 0.5);
+                SetPlayerMaxStamina(playerId, 50.0);
+            }
+
+            return;
+        }
+
         const player = this.playerService.getPlayer();
 
         if (!player) {
@@ -782,7 +793,10 @@ export class PlayerHealthProvider {
 
     @Once()
     async onStart(): Promise<void> {
-        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.MyBodySummer) ||
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 
@@ -825,7 +839,10 @@ export class PlayerHealthProvider {
 
     @Once(OnceStep.PlayerLoaded)
     async setupPlayerBodySummer(): Promise<void> {
-        if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.MyBodySummer) ||
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 
