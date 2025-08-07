@@ -351,21 +351,33 @@ export class UtilsNPCProvider {
 
     @Tick()
     public onDensityTick() {
-        if (this.density['parked'] != 1) {
-            SetParkedVehicleDensityMultiplierThisFrame(this.density['parked']);
+        const hour = GetClockHours();
+        const isDay = hour >= 6 && hour < 21;
+
+        if (this.density[PedDensityType.parked] != 1) {
+            SetParkedVehicleDensityMultiplierThisFrame(this.density[PedDensityType.parked]);
         }
-        if (this.density['vehicle'] != 1) {
-            SetVehicleDensityMultiplierThisFrame(this.density['vehicle']);
+        if (this.density[PedDensityType.vehicle] != 1) {
+            SetVehicleDensityMultiplierThisFrame(this.density[PedDensityType.vehicle]);
         }
-        if (this.density['multiplier'] != 1) {
-            SetRandomVehicleDensityMultiplierThisFrame(this.density['multiplier']);
+        if (this.density[PedDensityType.multiplier] != 1) {
+            SetRandomVehicleDensityMultiplierThisFrame(this.density[PedDensityType.multiplier]);
         }
-        if (this.density['peds'] != 1) {
-            SetPedDensityMultiplierThisFrame(this.density['peds']);
-            SetAmbientPedRangeMultiplierThisFrame(this.density['peds']);
+        if (this.density[PedDensityType.peds] != 1) {
+            SetPedDensityMultiplierThisFrame(this.density[PedDensityType.peds]);
+            SetAmbientPedRangeMultiplierThisFrame(this.density[PedDensityType.peds]);
         }
-        if (this.density['scenario'] != 1) {
-            SetScenarioPedDensityMultiplierThisFrame(this.density['scenario'], this.density['scenario']);
+        if (this.density[PedDensityType.scenario] != 1) {
+            SetScenarioPedDensityMultiplierThisFrame(
+                this.density[PedDensityType.scenario],
+                this.density[PedDensityType.scenario]
+            );
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) && !isDay) {
+            SetPedDensityMultiplierThisFrame(3.0);
+            SetAmbientPedRangeMultiplierThisFrame(3.0);
+            SetScenarioPedDensityMultiplierThisFrame(3.0, 3.0);
         }
     }
 
