@@ -100,7 +100,7 @@ export class TargetService {
 
     protected eventCheck(event: string): boolean {
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return event === 'what-if:2';
+            return event === 'whatif:2';
         }
 
         if (this.vampireGameStateProvider.isGameRunning()) {

@@ -1,7 +1,5 @@
-import { Inject, Injectable } from '@core/decorators/injectable';
-import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { Injectable } from '@core/decorators/injectable';
 import { TargetStoreData } from '@public/client/target/target.store.data';
-import { Feature } from '@public/shared/features';
 import { joaat } from '@public/shared/joaat';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { PolygonZone } from '@public/shared/polyzone/polygon.zone';

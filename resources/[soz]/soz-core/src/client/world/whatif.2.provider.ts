@@ -1,16 +1,23 @@
+import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
+import { RpcServerEvent } from '@public/shared/rpc';
 
-import { On, Once, OnceStep } from '../../core/decorators/event';
+import { Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
-import { joaat } from '../../shared/joaat';
+import { AnimationStopReason } from '../../shared/animation';
+import { InventoryType } from '../../shared/inventory';
+import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { WhatIfSafeZone } from '../../shared/whatif';
+import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
+import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerInOutService } from '../player/player.inout.service';
+import { TargetFactory } from '../target/target.factory';
 import { WeaponService } from '../weapon/weapon.service';
 
 @Provider()
@@ -27,8 +34,16 @@ export class WhatIf2Provider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private inSafeZone = false;
+    @Inject(TargetFactory)
+    public targetFactory: TargetFactory;
 
+    @Inject(InventoryManager)
+    public inventoryManager: InventoryManager;
+
+    @Inject(AnimationService)
+    public animationService: AnimationService;
+
+    private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
 
     @Once(OnceStep.Start)
@@ -59,6 +74,45 @@ export class WhatIf2Provider {
                 );
             }
         });
+
+        this.targetFactory.createForAllPed(
+            [
+                {
+                    label: 'Fouiller',
+                    icon: 'police/fouiller',
+                    category: 'citizen',
+                    event: 'whatif:2',
+                    action: async (entity: number) => {
+                        const id = this.computeZombieInventory(entity);
+                        TaskTurnPedToFaceEntity(PlayerPedId(), entity, 800);
+                        await wait(800);
+
+                        PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
+                        const cancelled = await this.animationService.playScenario({
+                            name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+                            duration: 4000,
+                        });
+
+                        if (
+                            cancelled === AnimationStopReason.Finished &&
+                            (await emitRpc<boolean>(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED, id))
+                        ) {
+                            const playerPed = PlayerPedId();
+                            const coords = GetEntityCoords(playerPed);
+
+                            this.inventoryManager.openInventory(InventoryType.Zombie, id, coords as Vector3);
+                        }
+                    },
+                    canInteract: async (entity: number) => {
+                        if (!IsEntityDead(entity) || IsPedAPlayer(entity)) return false;
+
+                        const id = this.computeZombieInventory(entity);
+                        return emitRpc<boolean>(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED, id);
+                    },
+                },
+            ],
+            10
+        );
 
         AddRelationshipGroup(this.zombieRelation);
         SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
@@ -136,5 +190,11 @@ export class WhatIf2Provider {
 
             SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
         }
+    }
+
+    computeZombieInventory(entity: number) {
+        const coords = GetEntityCoords(entity) as Vector3;
+        const coordsHash = getLocationHash(coords);
+        return 'zombie_' + coordsHash;
     }
 }

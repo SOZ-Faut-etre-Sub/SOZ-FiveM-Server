@@ -56,6 +56,7 @@ export enum InventoryType {
     Storage = 'storage',
     StorageTank = 'storage_tank',
     Trunk = 'trunk',
+    Zombie = 'zombie',
 }
 
 export type AddError =
@@ -561,6 +562,10 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
     },
     [InventoryType.SmugglingBlackMarket]: {
         maxWeight: 200_000,
+    },
+    [InventoryType.Zombie]: {
+        persistent: false,
+        allowedItemTypes: ['item'],
     },
 };
 
@@ -1137,6 +1142,13 @@ export const INVENTORY_ITEM_CREATORS: Partial<Record<InventoryType, Record<strin
             max: 20,
         },
     },
+    [InventoryType.Zombie]: {
+        phone: {
+            chance: 100,
+            min: 1,
+            max: 1,
+        },
+    },
 };
 
 export type InventoryPosition = InventoryPositionFixed | InventoryPositionDynamic;
@@ -1205,5 +1217,9 @@ export const INVENTORY_STATES: Partial<Record<InventoryType, InventoryState>> = 
     [InventoryType.RecyclerProcessing]: {
         canPutContent: true,
         canGetContent: false,
+    },
+    [InventoryType.Zombie]: {
+        canPutContent: false,
+        canGetContent: true,
     },
 };

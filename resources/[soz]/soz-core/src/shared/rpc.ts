@@ -398,6 +398,8 @@ export enum RpcServerEvent {
     FIRE_GET_LOCKED_FIRETRUCK = 'soz-core:server:fire:get-locked-firetruck',
     FIRE_LOCK_FIRETRUCK = 'soz-core:server:fire:loke-firetruck',
     FIRE_UNLOCK_FIRETRUCK = 'soz-core:server:fire:unlock-firetruck',
+
+    WHAT_IF_ZOMBIE_IS_NOT_LOCKED = 'soz-core:server:what-if:zombie:is-not-locked',
 }
 
 export enum RpcClientEvent {

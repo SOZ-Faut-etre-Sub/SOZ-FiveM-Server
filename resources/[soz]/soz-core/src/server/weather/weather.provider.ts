@@ -29,7 +29,7 @@ import { FeatureProvider } from '../feature/feature.provider';
 import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Monitor } from '../monitor/monitor';
 import { Store } from '../store/store';
-import { Halloween, Polluted, Summer, WhatIf2, Winter, WMOWeatherMapping } from './forecast';
+import { Halloween, Polluted, WhatIf2, Winter, WMOWeatherMapping } from './forecast';
 import { DaySummerTemperature, ForecastAdderTemperatures, NightSummerTemperature } from './temperature';
 
 const MAX_FORECASTS = 6;
