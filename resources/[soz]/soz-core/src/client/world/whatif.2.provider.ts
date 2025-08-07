@@ -114,6 +114,8 @@ export class WhatIf2Provider {
             10
         );
 
+        SetPedMeleeCombatLimits(10, 10, 10);
+
         AddRelationshipGroup(this.zombieRelation);
         SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
         SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));

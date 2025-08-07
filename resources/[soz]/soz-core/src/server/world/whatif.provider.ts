@@ -69,7 +69,7 @@ export class WhatIfProvider {
         arguments: [{ name: 'count', help: 'amount of zombies to spawn' }],
         role: ['admin'],
     })
-    public spawnZombie(source: number, count: number = 50) {
+    public spawnZombie(source: number, count: number = 10) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
