@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
 import { wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
-import { billboardOffsets } from '@public/shared/billboard';
+import { billboardOffsets, getScreenModel } from '@public/shared/billboard';
 import { applyOffset, Vector4 } from '@public/shared/polyzone/vector';
 
 import { Feature } from '../../shared/features';
@@ -209,14 +209,11 @@ export class ObjectService {
                 CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.dynamicTexture.url}_texture`, duiHandle);
                 this.duiObjects.set(object.id, dui);
 
-                const oriTxd = conf.mapping + object.dynamicTexture.index.toString().padStart(3, '0');
-                RemoveReplaceTexture(oriTxd, 'soz_txd_newsbill_01_media_1');
-                AddReplaceTexture(
-                    oriTxd,
-                    'soz_txd_newsbill_01_media_1',
-                    `dynamic_prop_textures`,
-                    `${object.dynamicTexture.url}_texture`
-                );
+                const oriTxd = getScreenModel(object.dynamicTexture.baseModel, object.dynamicTexture.index);
+                for (const texture of conf.textures) {
+                    RemoveReplaceTexture(oriTxd, texture);
+                    AddReplaceTexture(oriTxd, texture, `dynamic_prop_textures`, `${object.dynamicTexture.url}_texture`);
+                }
             }
         }
     }
@@ -255,8 +252,10 @@ export class ObjectService {
         if (this.duiObjects.has(object.id)) {
             const conf = billboardOffsets[object.dynamicTexture.baseModel];
             if (conf) {
-                const oriTxd = conf.mapping + object.dynamicTexture.index.toString().padStart(3, '0');
-                RemoveReplaceTexture(oriTxd, 'soz_txd_newsbill_01_media_1');
+                const oriTxd = getScreenModel(object.dynamicTexture.baseModel, object.dynamicTexture.index);
+                for (const texture of conf.textures) {
+                    RemoveReplaceTexture(oriTxd, texture);
+                }
             }
             DestroyDui(this.duiObjects.get(object.id));
             this.duiObjects.delete(object.id);

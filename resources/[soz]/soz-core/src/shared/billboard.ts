@@ -20,11 +20,12 @@ export type Billboard = {
 export const billboardOffsets: Record<
     number,
     {
-        offsets?: Vector3[];
-        offset?: Vector3;
+        offsets: Vector3[];
+        offset: Vector3;
         width: number;
         height: number;
-        mapping?: string;
+        mapping: string;
+        textures: string[];
     }
 > = {
     [GetHashKey('soz_news_billboard_01')]: {
@@ -38,6 +39,7 @@ export const billboardOffsets: Record<
         mapping: 'soz_news_billboard_01_',
         width: 724,
         height: 1024,
+        textures: ['soz_txd_newsbill_01_media_1'],
     },
     [GetHashKey('soz_news_billboard_02')]: {
         offsets: [
@@ -46,8 +48,11 @@ export const billboardOffsets: Record<
             [-2.2, -2.15, 16.85],
             [-2.2, -2.15, 9.81],
         ],
+        offset: [0, 0, 0],
+        mapping: 'soz_news_billboard_02_',
         width: 648,
         height: 1024,
+        textures: ['soz_txd_newsbill_02_media_1', 'soz_txd_newsbill_02_media_2', 'soz_txd_newsbill_02_media_3'],
     },
     [GetHashKey('soz_news_billboard_03')]: {
         offsets: [
@@ -56,7 +61,14 @@ export const billboardOffsets: Record<
             [-7.22, -0.53, 5.6],
             [-7.22, -0.53, 0.28],
         ],
+        offset: [0, 0, 0],
+        mapping: 'soz_news_billboard_03_',
         width: 1338,
         height: 512,
+        textures: ['soz_txd_newsbill_03_media_1'],
     },
 };
+
+export function getScreenModel(baseModel: number, index: number): string {
+    return billboardOffsets[baseModel].mapping + index.toString().padStart(3, '0');
+}

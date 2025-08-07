@@ -590,4 +590,23 @@ export class ObjectProvider {
             }
         }
     }
+
+    @Command('a1')
+    a1() {
+        AddReplaceTexture('soz_news_billboard_02_020', 'soz_txd_newsbill_02_media_1', `police`, `police_badges`);
+    }
+    @Command('a2')
+    a2() {
+        AddReplaceTexture('soz_news_billboard_02_020', 'soz_txd_newsbill_02_media_2', `police`, `police_badges`);
+    }
+    @Command('a3')
+    a3() {
+        AddReplaceTexture('soz_news_billboard_02_020', 'soz_txd_newsbill_02_media_3', `police`, `police_badges`);
+    }
+    @Command('bb')
+    b() {
+        RemoveReplaceTexture('soz_news_billboard_02_020', 'soz_txd_newsbill_02_media_1');
+        RemoveReplaceTexture('soz_news_billboard_02_020', 'soz_txd_newsbill_02_media_2');
+        RemoveReplaceTexture('soz_news_billboard_02_020', 'soz_txd_newsbill_02_media_3');
+    }
 }

@@ -2,7 +2,7 @@ import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { uuidv4 } from '@public/core/utils';
-import { billboardOffsets } from '@public/shared/billboard';
+import { billboardOffsets, getScreenModel } from '@public/shared/billboard';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
@@ -90,7 +90,7 @@ export class BillboardProvider {
             }
 
             const index = this.usedSlot.get(hashModel).length + 1;
-            const imageModel = billboardOffsets[hashModel].mapping + index.toString().padStart(3, '0');
+            const imageModel = getScreenModel(hashModel, index);
 
             const newObject: WorldObject = {
                 id: billboard.id + '_image_0',
@@ -226,7 +226,7 @@ export class BillboardProvider {
         };
 
         this.objectProvider.createObject(object);
-        const imageModel = billboardOffsets[hashModel].mapping + index.toString().padStart(3, '0');
+        const imageModel = getScreenModel(hashModel, index);
 
         const newObject: WorldObject = {
             id: objectId + '_image_0',
