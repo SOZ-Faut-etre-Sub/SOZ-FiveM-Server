@@ -1,3 +1,4 @@
+import { JobType } from './job';
 import { Vector3 } from './polyzone/vector';
 
 export type Billboard = {
@@ -26,6 +27,7 @@ export const billboardOffsets: Record<
         height: number;
         mapping: string;
         textures: string[];
+        max: Partial<Record<JobType, number>>;
     }
 > = {
     [GetHashKey('soz_news_billboard_01')]: {
@@ -40,6 +42,11 @@ export const billboardOffsets: Record<
         width: 724,
         height: 1024,
         textures: ['soz_txd_newsbill_01_media_1'],
+        max: {
+            [JobType.News]: 20,
+            [JobType.YouNews]: 20,
+            [JobType.FBI]: 2,
+        },
     },
     [GetHashKey('soz_news_billboard_02')]: {
         offsets: [
@@ -53,6 +60,11 @@ export const billboardOffsets: Record<
         width: 648,
         height: 1024,
         textures: ['soz_txd_newsbill_02_media_1'],
+        max: {
+            [JobType.News]: 10,
+            [JobType.YouNews]: 10,
+            [JobType.FBI]: 2,
+        },
     },
     [GetHashKey('soz_news_billboard_03')]: {
         offsets: [
@@ -66,6 +78,11 @@ export const billboardOffsets: Record<
         width: 1338,
         height: 512,
         textures: ['soz_txd_newsbill_03_media_1'],
+        max: {
+            [JobType.News]: 10,
+            [JobType.YouNews]: 10,
+            [JobType.FBI]: 2,
+        },
     },
 };
 

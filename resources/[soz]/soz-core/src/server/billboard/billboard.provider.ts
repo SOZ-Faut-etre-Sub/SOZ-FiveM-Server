@@ -25,8 +25,6 @@ import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 
-const MAX_PER_MODEL = 20;
-
 @Provider()
 export class BillboardProvider {
     @Inject(ItemService)
@@ -59,6 +57,7 @@ export class BillboardProvider {
             id: string;
             index: number;
             url: string;
+            job: JobType;
         }[]
     >();
 
@@ -75,21 +74,19 @@ export class BillboardProvider {
 
         for (const billboard of dynamicBillboards) {
             const hashModel = GetHashKey(billboard.model);
+            const job = billboard.job as JobType;
             const object: WorldObject = {
                 id: billboard.id,
                 model: GetHashKey(billboard.model),
                 position: fromVector4Object(JSON.parse(billboard.position)),
                 metadata: {
-                    job: billboard.job as JobType,
+                    job,
                 },
             };
             this.objectProvider.createObject(object);
 
-            if (!this.usedSlot.has(hashModel)) {
-                this.usedSlot.set(hashModel, []);
-            }
-
-            const index = this.usedSlot.get(hashModel).length + 1;
+            const slotsFormodel = this.getSlotsForModel(hashModel);
+            const index = slotsFormodel.length + 1;
             const imageModel = getScreenModel(hashModel, index);
 
             const newObject: WorldObject = {
@@ -105,20 +102,29 @@ export class BillboardProvider {
 
             this.objectProvider.createObject(newObject);
 
-            if (!this.usedSlot.has(hashModel)) {
-                this.usedSlot.set(hashModel, []);
-            }
-            this.usedSlot.get(hashModel).push({
+            slotsFormodel.push({
                 id: billboard.id,
                 index,
                 url: billboard.textureUrl,
+                job,
             });
         }
     }
 
+    private getSlotsForModel(hashModel: number) {
+        let slotsFormodel = this.usedSlot.get(hashModel);
+        if (!slotsFormodel) {
+            slotsFormodel = [];
+            this.usedSlot.set(hashModel, slotsFormodel);
+        }
+        return slotsFormodel;
+    }
+
     private async useBillboardProp(source: number, item: Item, inventoryItem: InventoryItem) {
+        const hashModel = GetHashKey(item.name);
+        const conf = billboardOffsets[hashModel];
         const player = this.playerService.getPlayer(source);
-        if (!player || ![JobType.YouNews, JobType.News, JobType.FBI].includes(player.job.id)) {
+        if (!player || !Object.keys(conf.max).includes(player.job.id)) {
             this.notifier.error(source, "Vous n'avez pas le droit d'utiliser cet objet.");
             return;
         }
@@ -128,12 +134,8 @@ export class BillboardProvider {
             return;
         }
 
-        const hashModel = GetHashKey(item.name);
-        if (!this.usedSlot.has(hashModel)) {
-            this.usedSlot.set(hashModel, []);
-        }
-
-        if (this.usedSlot.get(hashModel).length >= MAX_PER_MODEL) {
+        const slotsFormodel = this.getSlotsForModel(hashModel);
+        if (slotsFormodel.filter(elem => elem.job === player.job.id).length >= conf.max[player.job.id]) {
             this.notifier.error(source, 'Tous les emplacements pour ce modèle sont utilisés');
             return;
         }
@@ -170,12 +172,16 @@ export class BillboardProvider {
         const item = this.itemService.getItem(inventoryItem.name);
 
         const hashModel = GetHashKey(item.name);
-        if (!this.usedSlot.has(hashModel)) {
-            this.usedSlot.set(hashModel, []);
+        const conf = billboardOffsets[hashModel];
+        const slotsFormodel = this.getSlotsForModel(hashModel);
+        if (slotsFormodel.filter(elem => elem.job === player.job.id).length >= conf.max[player.job.id]) {
+            this.notifier.error(source, 'Tous les emplacements pour ce modèle sont utilisés');
+            return;
         }
         let index = 0;
-        for (let i = 1; i <= MAX_PER_MODEL; i++) {
-            if (!this.usedSlot.get(hashModel).find(elem => elem.index == i)) {
+        const total = Object.values(conf.max).reduce((prev, cur) => prev + cur, 0);
+        for (let i = 1; i <= total; i++) {
+            if (!slotsFormodel.find(elem => elem.index == i)) {
                 index = i;
                 break;
             }
@@ -202,6 +208,7 @@ export class BillboardProvider {
             id: objectId,
             index,
             url: null,
+            job: player.job.id,
         });
 
         await this.prismaService.dynamic_prop_billboard.create({
