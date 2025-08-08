@@ -2,23 +2,31 @@ import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { Once, OnceStep } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnGameEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
+import { ClientEvent } from '../../shared/event/client';
+import { GameEvent } from '../../shared/event/game';
 import { InventoryType } from '../../shared/inventory';
+import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
+import { getRandomInt } from '../../shared/random';
 import { WhatIfSafeZone } from '../../shared/whatif';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerInOutService } from '../player/player.inout.service';
+import { zombieModel } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
+import { BlurService } from '../utils/blur.service';
 import { WeaponService } from '../weapon/weapon.service';
+
+const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
 
 @Provider()
 export class WhatIf2Provider {
@@ -43,8 +51,14 @@ export class WhatIf2Provider {
     @Inject(AnimationService)
     public animationService: AnimationService;
 
+    @Inject(BlurService)
+    public blurService: BlurService;
+
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
+
+    private isInfected = false;
+    private isInfectedAt = 0;
 
     @Once(OnceStep.Start)
     async onStart() {
@@ -142,6 +156,76 @@ export class WhatIf2Provider {
             DisableControlAction(0, 264, true);
             DisableControlAction(0, 257, true);
         }
+    }
+
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    async onPlayerVictim(victim: number, attacker: number): Promise<void> {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        if (this.isInfected) return;
+
+        const playerPed = PlayerPedId();
+        const attackerModel = GetEntityModel(attacker);
+
+        if (playerPed !== victim) return;
+
+        if (attackerModel !== joaat(zombieModel)) return;
+        if (getRandomInt(0, 100) > 20) return;
+
+        this.isInfected = true;
+        this.isInfectedAt = Date.now();
+
+        this.blurService.add('zombie-infected', 500);
+        this.notifier.error(
+            `Vous avez été infecté ! Vous avez ~b~20 minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`
+        );
+    }
+
+    @On(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)
+    async onUseSerum() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        this.isInfected = false;
+        this.notifier.notify(`Vous avez réussis a vous injecter un sérum a temps !`);
+        this.blurService.remove('zombie-infected', 500);
+    }
+
+    @Tick(TickInterval.EVERY_SECOND)
+    async onInfectedCheck() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        if (!this.isInfected) return;
+
+        if (getRandomInt(0, 100) <= 10) {
+            await this.animationService.playAnimation(
+                {
+                    base: {
+                        dictionary: 'random@drunk_driver_1',
+                        name: 'vomit_outside',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                        duration: 2000,
+                    },
+                },
+                {
+                    cancellable: false,
+                }
+            );
+        }
+
+        if (Date.now() - this.isInfectedAt < INFECTED_TIME_BEFORE_DEATH) return;
+
+        SetEntityHealth(PlayerPedId(), 0);
+
+        this.isInfected = false;
+        this.blurService.remove('zombie-infected', 500);
     }
 
     @Tick(TickInterval.EVERY_SECOND)

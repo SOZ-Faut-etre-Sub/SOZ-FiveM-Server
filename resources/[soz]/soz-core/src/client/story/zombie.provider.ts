@@ -52,7 +52,7 @@ const Animals = [
     2910340283, // A_C_Westy
 ];
 
-const zombieModel = 'u_m_y_zombie_01';
+export const zombieModel = 'u_m_y_zombie_01';
 
 @Provider()
 export class ZombieProvider {

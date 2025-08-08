@@ -24775,4 +24775,16 @@ QBShared.Items = {
         ["description"] = "Un dessert d'exception aux notes vanillées et amandées de la mystérieuse fève tonka. Servie dans une coupe en cristal, cette crème glacée artisanale est sublimée par des zestes d'agrumes confits, une fève de vanille caramélisée et des pétales cristallisés. Un dessert rare et raffiné qui évoque les parfums envoûtants des plus grands casinos. Une parenthèse glacée pour les palais les plus exigeants.",
         ["illustrator"] = ".NariieL",
     },
+    -- What IF 2
+    ["zombie_serum"] = {
+        ["name"] = "zombie_serum",
+        ["label"] = "Sérum anti-zombification",
+        ["weight"] = 200,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["description"] = "L'espoir de San Andreas !",
+        ["illustrator"] = ".SuperPG",
+    },
 }

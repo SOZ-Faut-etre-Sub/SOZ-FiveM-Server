@@ -2,14 +2,19 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { Feature } from '@public/shared/features';
 
 import { Command } from '../../core/decorators/command';
-import { On } from '../../core/decorators/event';
+import { On, Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import { WhatIfSafeZone } from '../../shared/whatif';
 import { FeatureProvider } from '../feature/feature.provider';
+import { InventoryFactory } from '../inventory/inventory.factory';
+import { ItemService } from '../item/item.service';
+import { Notifier } from '../notifier';
+import { ProgressService } from '../player/progress.service';
 
 const zombieModel = joaat('u_m_y_zombie_01');
 
@@ -62,7 +67,48 @@ export class WhatIfProvider {
     @Inject(FeatureProvider)
     private readonly featureProvider: FeatureProvider;
 
+    @Inject(ItemService)
+    private readonly itemService: ItemService;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
+
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
+
     private lockedZombie = new Set<string>();
+
+    @Once()
+    init() {
+        this.itemService.setItemUseCallback('zombie_serum', this.useZombieSerum.bind(this));
+    }
+
+    private async useZombieSerum(source: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(source, 'serum', '', 3000, {
+            name: 'base',
+            dictionary: 'amb@prop_human_bum_bin@base',
+            flags: 1,
+        });
+
+        if (!completed) {
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+
+        if (inventory.remove('zombie_serum', 1, false)) {
+            TriggerClientEvent(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM, source);
+        } else {
+            this.notifier.notify(source, "Vous n'avez plus de sérum...");
+        }
+    }
 
     @Command('spawn-zombie', {
         description: 'Spawn des zombies',
