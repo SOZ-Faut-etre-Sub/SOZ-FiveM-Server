@@ -46,7 +46,7 @@
 44 M Chemise longue epaulette cravate, bcso/lspd each, blanche / vert /  noir-doré / bleu marine
 
     Decalque
-0  chevron BCSO 0-3 
+0  chevron BCSO 0-3  bleu
 1  4 étoiles or 0
 2  col BCSO 0-5
 3  épaullete stonks
@@ -62,9 +62,30 @@
 13 moto chevron BCSO
 14 Deputy sur le col
 15 Deputy sur le col
-16 chevron ? | 
-17 chevron ? | 
-18 insigne bras aile fleche | 
+16 chevron ? | chevron Polo BCSO-LSPD
+17 chevron ? | col tshirt LSPD
+18 insigne bras aile fleche | col Polo LSPD
+19 chevron Polo BCSO-LSPD          | chevron tshirt BCSO-LSPD
+20 col tshirt LSPD                 | chevron double tshirt BCSO-LSPD
+21 col Polo LSPD                   | col Polo BCSO
+22 chevron tshirt BCSO-LSPD        | col tshirt BCSO
+23 chevron double tshirt BCSO-LSPD | chevron Blouson BCSO-LSPD
+24 col Polo BCSO                   | col Blouson LSPD
+25 col tshirt BCSO                 | col Blouson BCSO
+26 chevron BCSO-LSPD blouson       | chevron Imperméable BCSO-LSPD
+27 col LSPD blouson                | col Imperméable LSPD
+28 col BCSO  blouson               | col Imperméable BCSO
+29 chevron BCSO-LSPD Imperméable   | chevron Manteau BCSO-LSPD
+30 col LSPD   Imperméable          | col Manteau LSPD
+31 col BCSO   Imperméable          | col Manteau BCSO
+32 chevron BCSO-LSPD Manteau
+33 col LSPD Manteau
+34 col BCSO Manteau
+35 col BCSO Pull
+36 col LSPD Pull
+37 chevron BCSO-LSPD Pull
+38 col LSPD Pull
+39 col BCSO Pull
 
     Armor
 0  stonks
@@ -134,7 +155,13 @@
 9  M BCSO collier badge | BCSO new badge pectoraux
 10 M duplicate 6 | BCSO collier badge
 11 BCSO new juste badge
-12 BCSO badge ceinture | 
+12 BCSO badge ceinture | FIB
+13 | Police sérré
+14 | Police large
+15 | Police sérré
+16 | Police large K9 gauche
+17 | Police large gauche
+18 | Police large K9
 
     pantalon
 0  patient  //don"t use, cause tatoo duplication between legs
@@ -173,7 +200,11 @@
 12 SWAT
 13 chapeau BCSO Cérémonie
 14 casque BCSO
-15 casque pilote new BCSO/LSPD
+15 SWAT | casque pilote new BCSO/LSPD
+16 SWAT | chapeau LSPD Cérémonie
+17 SWAT |
+18 casque pilote new BCSO/LSPD |
+19 chapeau LSPD Cérémonie | 
 
     Chaussure
 0 SWAT

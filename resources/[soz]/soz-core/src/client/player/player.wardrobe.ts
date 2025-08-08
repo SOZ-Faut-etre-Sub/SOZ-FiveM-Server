@@ -243,15 +243,21 @@ export class PlayerWardrobe {
             delete this.customOutfit.GlovesID;
         }
 
+        const model = GetEntityModel(PlayerPedId());
         if (
             RankOutfit[player.job.id] &&
+            RankOutfit[player.job.id][model] &&
             WardRobeElementConfigs[wardRobeElementId].componentId?.includes(Component.Decals) &&
             !(outfit.Components && outfit.Components[Component.Decals])
         ) {
-            if (outfit.rankType && RankOutfit[player.job.id][outfit.rankType][player.job.grade]) {
+            if (
+                outfit.rankType &&
+                RankOutfit[player.job.id][model][outfit.rankType] &&
+                RankOutfit[player.job.id][model][outfit.rankType][player.job.grade]
+            ) {
                 this.customOutfit.Components[Component.Decals] = {
-                    Drawable: RankOutfit[player.job.id][outfit.rankType][player.job.grade][0],
-                    Texture: RankOutfit[player.job.id][outfit.rankType][player.job.grade][1],
+                    Drawable: RankOutfit[player.job.id][model][outfit.rankType][player.job.grade][0],
+                    Texture: RankOutfit[player.job.id][model][outfit.rankType][player.job.grade][1],
                     Palette: 0,
                     Collection: 'soz_bcso',
                 };
