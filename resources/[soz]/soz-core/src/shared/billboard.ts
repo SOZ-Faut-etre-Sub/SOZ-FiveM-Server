@@ -52,7 +52,7 @@ export const billboardOffsets: Record<
         mapping: 'soz_news_billboard_02_',
         width: 648,
         height: 1024,
-        textures: ['soz_txd_newsbill_02_media_1', 'soz_txd_newsbill_02_media_2', 'soz_txd_newsbill_02_media_3'],
+        textures: ['soz_txd_newsbill_02_media_1'],
     },
     [GetHashKey('soz_news_billboard_03')]: {
         offsets: [

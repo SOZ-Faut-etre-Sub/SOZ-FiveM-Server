@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
-import { wait } from '@core/utils';
+import { uuidv4, wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { billboardOffsets, getScreenModel } from '@public/shared/billboard';
+import { BLACK_SCREEN_URL } from '@public/shared/global';
 import { applyOffset, Vector4 } from '@public/shared/polyzone/vector';
 
 import { Feature } from '../../shared/features';
@@ -33,7 +34,7 @@ export class ObjectService {
     @Inject(ModelSwapRepository)
     private modelSwapRepository: ModelSwapRepository;
 
-    private duiObjects: Map<string, number> = new Map();
+    private duiObjects: Map<string, { dui: number; textureId: string }> = new Map();
     private textureDict = 0;
 
     public async createObject(object: WorldObject) {
@@ -201,18 +202,31 @@ export class ObjectService {
                 if (!this.textureDict) {
                     this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
                 }
-                const textureWidth = conf.width;
-                const textureHeight = conf.height;
 
-                const dui = CreateDui(object.dynamicTexture.url, textureWidth, textureHeight);
-                const duiHandle = GetDuiHandle(dui);
-                CreateRuntimeTextureFromDuiHandle(this.textureDict, `${object.dynamicTexture.url}_texture`, duiHandle);
-                this.duiObjects.set(object.id, dui);
+                let duiObject = this.duiObjects.get(object.id);
+                if (!duiObject) {
+                    const textureWidth = conf.width;
+                    const textureHeight = conf.height;
+
+                    const dui = CreateDui(object.dynamicTexture.url, textureWidth, textureHeight);
+                    const duiHandle = GetDuiHandle(dui);
+                    const uuid = uuidv4();
+                    CreateRuntimeTextureFromDuiHandle(this.textureDict, uuid, duiHandle);
+
+                    duiObject = {
+                        dui,
+                        textureId: uuid,
+                    };
+
+                    this.duiObjects.set(object.id, duiObject);
+                } else {
+                    SetDuiUrl(duiObject.dui, object.dynamicTexture.url);
+                }
 
                 const oriTxd = getScreenModel(object.dynamicTexture.baseModel, object.dynamicTexture.index);
                 for (const texture of conf.textures) {
                     RemoveReplaceTexture(oriTxd, texture);
-                    AddReplaceTexture(oriTxd, texture, `dynamic_prop_textures`, `${object.dynamicTexture.url}_texture`);
+                    AddReplaceTexture(oriTxd, texture, `dynamic_prop_textures`, duiObject.textureId);
                 }
             }
         }
@@ -249,16 +263,19 @@ export class ObjectService {
         }
 
         DeleteEntity(entity);
-        if (this.duiObjects.has(object.id)) {
+        if (object.dynamicTexture && object.dynamicTexture.url) {
             const conf = billboardOffsets[object.dynamicTexture.baseModel];
             if (conf) {
                 const oriTxd = getScreenModel(object.dynamicTexture.baseModel, object.dynamicTexture.index);
                 for (const texture of conf.textures) {
                     RemoveReplaceTexture(oriTxd, texture);
                 }
+
+                const duiObject = this.duiObjects.get(object.id);
+                if (duiObject) {
+                    SetDuiUrl(duiObject.dui, BLACK_SCREEN_URL);
+                }
             }
-            DestroyDui(this.duiObjects.get(object.id));
-            this.duiObjects.delete(object.id);
         }
 
         return true;
