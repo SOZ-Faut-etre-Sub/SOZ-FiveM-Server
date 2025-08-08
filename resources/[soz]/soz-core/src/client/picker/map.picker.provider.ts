@@ -1,7 +1,8 @@
-import { OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { wait, waitUntil } from '../../core/utils';
+import { OnNuiEvent } from '@core/decorators/event';
+import { Inject } from '@core/decorators/injectable';
+import { Provider } from '@core/decorators/provider';
+import { wait, waitUntil } from '@core/utils';
+
 import { NuiEvent } from '../../shared/event/nui';
 import { MapPickerLocation, NuiMapPickerLocation } from '../../shared/picker';
 import { add2Vector3, Vector3 } from '../../shared/polyzone/vector';
@@ -20,8 +21,14 @@ export class MapPickerProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private skyOffset: Vector3 = [0, 0, 3000];
-    private southLocation: Vector3 = [-147.99, -961.44, 268.95];
+    private centerPosition: Vector3 = [602.13, 3461.79, 77.75];
+    private centerSkyOffset: Vector3 = [0, 0, 1500];
+
+    private southPosition: Vector3 = [-147.99, -961.44, 268.95];
+    private southSkyOffset: Vector3 = [0, 0, 3000];
+
+    private globalPosition: Vector3 = [0, 1555.414, 324.8574];
+    private globalSkyOffset: Vector3 = [-1, 0, 2500];
 
     private locationSelected: string = null;
 
@@ -30,11 +37,25 @@ export class MapPickerProvider {
         this.locationSelected = id;
     }
 
+    public async showGlobalLocationPicker(locations: MapPickerLocation[]): Promise<MapPickerLocation> {
+        return this.showLocationPicker(locations, this.globalPosition, this.globalSkyOffset);
+    }
+
+    public async showCenterLocationPicker(locations: MapPickerLocation[]): Promise<MapPickerLocation> {
+        return this.showLocationPicker(locations, this.centerPosition, this.centerSkyOffset);
+    }
+
     public async showSouthLocationPicker(locations: MapPickerLocation[]): Promise<MapPickerLocation> {
+        return this.showLocationPicker(locations, this.southPosition, this.southSkyOffset);
+    }
+
+    private async showLocationPicker(locations: MapPickerLocation[], position: Vector3, skyOffset: Vector3) {
         SetCloudHatOpacity(0.0);
 
         this.cameraService.deleteAllCameras();
-        this.cameraService.setupCamera(add2Vector3(this.southLocation, this.skyOffset), this.southLocation);
+        const cam = this.cameraService.setupCamera(add2Vector3(position, skyOffset), position);
+        this.cameraService.setCameraFov(cam, 100);
+        this.cameraService.renderCamera();
 
         await wait(2000);
 
@@ -57,7 +78,7 @@ export class MapPickerProvider {
         return location;
     }
 
-    public hideLocationPicker() {
+    private hideLocationPicker() {
         SetCloudHatOpacity(1.0);
         this.locationSelected = null;
         this.nuiDispatch.dispatch('picker', 'map', []);
