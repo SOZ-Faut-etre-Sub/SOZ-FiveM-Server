@@ -2756,6 +2756,52 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                         Localized: '',
                     },
                 },
+                '234': {
+                    '0': {
+                        GXT: 'CLO_X8F_PH_14_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_PH_14_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_PH_14_2',
+                        Localized: '',
+                    },
+                    '3': {
+                        GXT: 'CLO_X8F_PH_14_3',
+                        Localized: '',
+                    },
+                    '4': {
+                        GXT: 'CLO_X8F_PH_14_4',
+                        Localized: '',
+                    },
+                    '5': {
+                        GXT: 'CLO_X8F_PH_14_5',
+                        Localized: '',
+                    },
+                    '6': {
+                        GXT: 'CLO_X8F_PH_14_6',
+                        Localized: '',
+                    },
+                    '7': {
+                        GXT: 'CLO_X8F_PH_14_7',
+                        Localized: '',
+                    },
+                    '8': {
+                        GXT: 'CLO_X8F_PH_14_8',
+                        Localized: '',
+                    },
+                    '9': {
+                        GXT: 'CLO_X8F_PH_14_9',
+                        Localized: '',
+                    },
+                    '10': {
+                        GXT: 'CLO_X8F_PH_1410',
+                        Localized: '',
+                    },
+                },
             },
             Western: {
                 '2': {
@@ -3079,6 +3125,16 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                     },
                     '3': {
                         GXT: 'CLO_X7F_PH_3_3',
+                        Localized: '',
+                    },
+                },
+                '233': {
+                    '0': {
+                        GXT: 'CLO_X8F_PH_13_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_PH_13_1',
                         Localized: '',
                     },
                 },
@@ -5874,6 +5930,142 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                         Localized: '',
                     },
                 },
+                '226': {
+                    '0': {
+                        GXT: 'CLO_X8F_PH_6_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_PH_6_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_PH_6_2',
+                        Localized: '',
+                    },
+                },
+                '227': {
+                    '0': {
+                        GXT: 'CLO_X8F_PH_7_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_PH_7_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_PH_7_2',
+                        Localized: '',
+                    },
+                },
+                '235': {
+                    '0': {
+                        GXT: 'CLO_X8F_PH_15_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_PH_15_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_PH_15_2',
+                        Localized: '',
+                    },
+                    '3': {
+                        GXT: 'CLO_X8F_PH_15_3',
+                        Localized: '',
+                    },
+                    '4': {
+                        GXT: 'CLO_X8F_PH_15_4',
+                        Localized: '',
+                    },
+                    '5': {
+                        GXT: 'CLO_X8F_PH_15_5',
+                        Localized: '',
+                    },
+                    '6': {
+                        GXT: 'CLO_X8F_PH_15_6',
+                        Localized: '',
+                    },
+                    '7': {
+                        GXT: 'CLO_X8F_PH_15_7',
+                        Localized: '',
+                    },
+                    '8': {
+                        GXT: 'CLO_X8F_PH_15_8',
+                        Localized: '',
+                    },
+                    '9': {
+                        GXT: 'CLO_X8F_PH_15_9',
+                        Localized: '',
+                    },
+                },
+                '236': {
+                    '0': {
+                        GXT: 'CLO_X8F_PH_16_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_PH_16_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_PH_16_2',
+                        Localized: '',
+                    },
+                    '3': {
+                        GXT: 'CLO_X8F_PH_16_3',
+                        Localized: '',
+                    },
+                    '4': {
+                        GXT: 'CLO_X8F_PH_16_4',
+                        Localized: '',
+                    },
+                    '5': {
+                        GXT: 'CLO_X8F_PH_16_5',
+                        Localized: '',
+                    },
+                    '6': {
+                        GXT: 'CLO_X8F_PH_16_6',
+                        Localized: '',
+                    },
+                    '7': {
+                        GXT: 'CLO_X8F_PH_16_7',
+                        Localized: '',
+                    },
+                    '8': {
+                        GXT: 'CLO_X8F_PH_16_8',
+                        Localized: '',
+                    },
+                    '9': {
+                        GXT: 'CLO_X8F_PH_16_9',
+                        Localized: '',
+                    },
+                },
+                '238': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_1_0',
+                        Localized: '',
+                    },
+                },
+                '239': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_2_0',
+                        Localized: '',
+                    },
+                },
+                '244': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_7_0',
+                        Localized: '',
+                    },
+                },
+                '245': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_8_0',
+                        Localized: '',
+                    },
+                },
             },
             Béret: {
                 '6': {
@@ -7123,6 +7315,12 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                     },
                     '2': {
                         GXT: 'CLO_X7F_PH_14_2',
+                        Localized: '',
+                    },
+                },
+                '237': {
+                    '0': {
+                        GXT: 'CLO_SEF_O_0',
                         Localized: '',
                     },
                 },
@@ -10162,6 +10360,12 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                         Localized: 'Écharpe bonhomme de neige large',
                     },
                 },
+                '169': {
+                    '0': {
+                        GXT: 'CLO_SEF_O_0',
+                        Localized: '',
+                    },
+                },
             },
             Chaînes: {
                 '29': {
@@ -10898,6 +11102,74 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                         Localized: '',
                     },
                 },
+                '162': {
+                    '0': {
+                        GXT: 'CLO_X8F_T_0_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_T_0_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_T_0_2',
+                        Localized: '',
+                    },
+                },
+                '163': {
+                    '0': {
+                        GXT: 'CLO_X8F_T_0_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_T_0_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8F_T_0_2',
+                        Localized: '',
+                    },
+                },
+                '164': {
+                    '0': {
+                        GXT: 'CLO_X8F_T_2_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_T_2_1',
+                        Localized: '',
+                    },
+                },
+                '165': {
+                    '0': {
+                        GXT: 'CLO_X8F_T_2_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_T_2_1',
+                        Localized: '',
+                    },
+                },
+                '167': {
+                    '0': {
+                        GXT: 'CLO_X8F_T_5_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_T_5_1',
+                        Localized: '',
+                    },
+                },
+                '168': {
+                    '0': {
+                        GXT: 'CLO_X8F_T_5_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_T_5_1',
+                        Localized: '',
+                    },
+                },
             },
             Accessoires: {
                 '85': {
@@ -11341,6 +11613,26 @@ export const FemaleJewelryItems: ShopJewelryContent = {
                     '9': {
                         GXT: '',
                         Localized: 'Écharpe fine noire',
+                    },
+                },
+                '166': {
+                    '0': {
+                        GXT: 'CLO_X8F_U_21_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_U_21_1',
+                        Localized: '',
+                    },
+                },
+                '170': {
+                    '0': {
+                        GXT: 'CLO_X8F_U_21_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8F_U_21_1',
+                        Localized: '',
                     },
                 },
             },
@@ -14408,6 +14700,52 @@ export const MaleJewelryItems: ShopJewelryContent = {
                         Localized: '',
                     },
                 },
+                '234': {
+                    '0': {
+                        GXT: 'CLO_X8M_PH_14_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_PH_14_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_PH_14_2',
+                        Localized: '',
+                    },
+                    '3': {
+                        GXT: 'CLO_X8M_PH_14_3',
+                        Localized: '',
+                    },
+                    '4': {
+                        GXT: 'CLO_X8M_PH_14_4',
+                        Localized: '',
+                    },
+                    '5': {
+                        GXT: 'CLO_X8M_PH_14_5',
+                        Localized: '',
+                    },
+                    '6': {
+                        GXT: 'CLO_X8M_PH_14_6',
+                        Localized: '',
+                    },
+                    '7': {
+                        GXT: 'CLO_X8M_PH_14_7',
+                        Localized: '',
+                    },
+                    '8': {
+                        GXT: 'CLO_X8M_PH_14_8',
+                        Localized: '',
+                    },
+                    '9': {
+                        GXT: 'CLO_X8M_PH_14_9',
+                        Localized: '',
+                    },
+                    '10': {
+                        GXT: 'CLO_X8M_PH_1410',
+                        Localized: '',
+                    },
+                },
             },
             Bob: {
                 '3': {
@@ -14693,6 +15031,16 @@ export const MaleJewelryItems: ShopJewelryContent = {
                     },
                     '3': {
                         GXT: 'CLO_X7M_PH_3_3',
+                        Localized: '',
+                    },
+                },
+                '233': {
+                    '0': {
+                        GXT: 'CLO_X8M_PH_13_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_PH_13_1',
                         Localized: '',
                     },
                 },
@@ -17397,6 +17745,142 @@ export const MaleJewelryItems: ShopJewelryContent = {
                         Localized: '',
                     },
                 },
+                '227': {
+                    '0': {
+                        GXT: 'CLO_X8M_PH_6_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_PH_6_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_PH_6_2',
+                        Localized: '',
+                    },
+                },
+                '228': {
+                    '0': {
+                        GXT: 'CLO_X8M_PH_7_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_PH_7_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_PH_7_2',
+                        Localized: '',
+                    },
+                },
+                '236': {
+                    '0': {
+                        GXT: 'CLO_X8M_PH_15_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_PH_15_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_PH_15_2',
+                        Localized: '',
+                    },
+                    '3': {
+                        GXT: 'CLO_X8M_PH_15_3',
+                        Localized: '',
+                    },
+                    '4': {
+                        GXT: 'CLO_X8M_PH_15_4',
+                        Localized: '',
+                    },
+                    '5': {
+                        GXT: 'CLO_X8M_PH_15_5',
+                        Localized: '',
+                    },
+                    '6': {
+                        GXT: 'CLO_X8M_PH_15_6',
+                        Localized: '',
+                    },
+                    '7': {
+                        GXT: 'CLO_X8M_PH_15_7',
+                        Localized: '',
+                    },
+                    '8': {
+                        GXT: 'CLO_X8M_PH_15_8',
+                        Localized: '',
+                    },
+                    '9': {
+                        GXT: 'CLO_X8M_PH_15_9',
+                        Localized: '',
+                    },
+                },
+                '237': {
+                    '0': {
+                        GXT: 'CLO_X8M_PH_16_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_PH_16_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_PH_16_2',
+                        Localized: '',
+                    },
+                    '3': {
+                        GXT: 'CLO_X8M_PH_16_3',
+                        Localized: '',
+                    },
+                    '4': {
+                        GXT: 'CLO_X8M_PH_16_4',
+                        Localized: '',
+                    },
+                    '5': {
+                        GXT: 'CLO_X8M_PH_16_5',
+                        Localized: '',
+                    },
+                    '6': {
+                        GXT: 'CLO_X8M_PH_16_6',
+                        Localized: '',
+                    },
+                    '7': {
+                        GXT: 'CLO_X8M_PH_16_7',
+                        Localized: '',
+                    },
+                    '8': {
+                        GXT: 'CLO_X8M_PH_16_8',
+                        Localized: '',
+                    },
+                    '9': {
+                        GXT: 'CLO_X8M_PH_16_9',
+                        Localized: '',
+                    },
+                },
+                '239': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_1_0',
+                        Localized: '',
+                    },
+                },
+                '240': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_2_0',
+                        Localized: '',
+                    },
+                },
+                '245': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_7_0',
+                        Localized: '',
+                    },
+                },
+                '246': {
+                    '0': {
+                        GXT: 'CLO_SEF_PH_8_0',
+                        Localized: '',
+                    },
+                },
             },
             Béret: {
                 '7': {
@@ -18698,6 +19182,12 @@ export const MaleJewelryItems: ShopJewelryContent = {
                     },
                     '14': {
                         GXT: 'CLO_X7M_PH_1114',
+                        Localized: '',
+                    },
+                },
+                '238': {
+                    '0': {
+                        GXT: 'CLO_SEM_O_0',
                         Localized: '',
                     },
                 },
@@ -21653,6 +22143,12 @@ export const MaleJewelryItems: ShopJewelryContent = {
                         Localized: 'Écharpe bonhomme de neige large',
                     },
                 },
+                '199': {
+                    '0': {
+                        GXT: 'CLO_SEF_O_0',
+                        Localized: '',
+                    },
+                },
             },
             Chaînes: {
                 '16': {
@@ -22404,6 +22900,74 @@ export const MaleJewelryItems: ShopJewelryContent = {
                     },
                     '4': {
                         GXT: 'CLO_SDM_T_2_4',
+                        Localized: '',
+                    },
+                },
+                '192': {
+                    '0': {
+                        GXT: 'CLO_X8M_T_0_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_T_0_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_T_0_2',
+                        Localized: '',
+                    },
+                },
+                '193': {
+                    '0': {
+                        GXT: 'CLO_X8M_T_0_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_T_0_1',
+                        Localized: '',
+                    },
+                    '2': {
+                        GXT: 'CLO_X8M_T_0_2',
+                        Localized: '',
+                    },
+                },
+                '194': {
+                    '0': {
+                        GXT: 'CLO_X8M_T_2_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_T_2_1',
+                        Localized: '',
+                    },
+                },
+                '195': {
+                    '0': {
+                        GXT: 'CLO_X8M_T_2_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_T_2_1',
+                        Localized: '',
+                    },
+                },
+                '197': {
+                    '0': {
+                        GXT: 'CLO_X8M_T_5_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_T_5_1',
+                        Localized: '',
+                    },
+                },
+                '198': {
+                    '0': {
+                        GXT: 'CLO_X8M_T_5_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_T_5_1',
                         Localized: '',
                     },
                 },
@@ -23345,6 +23909,26 @@ export const MaleJewelryItems: ShopJewelryContent = {
                     '9': {
                         GXT: '',
                         Localized: 'Écharpe fine noire',
+                    },
+                },
+                '196': {
+                    '0': {
+                        GXT: 'CLO_X8M_U_21_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_U_21_1',
+                        Localized: '',
+                    },
+                },
+                '200': {
+                    '0': {
+                        GXT: 'CLO_X8M_U_21_0',
+                        Localized: '',
+                    },
+                    '1': {
+                        GXT: 'CLO_X8M_U_21_1',
+                        Localized: '',
                     },
                 },
             },
