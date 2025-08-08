@@ -74,6 +74,7 @@ export enum ClientEvent {
     INVENTORY_OPEN_WALLET = 'soz-core:client:inventory:open-wallet',
     INVENTORY_UPDATE = 'soz-core:client:inventory:update',
     INVENTORY_CLOSE = 'soz-core:client:inventory:close',
+    INVENTORY_UNSUBSCRIBE = 'soz-core:client:inventory:unsubscribe',
 
     ITEM_USE = 'soz-core:client:item:use',
     ITEM_ALBUM_USE = 'soz-core:client:item:album:toggle',

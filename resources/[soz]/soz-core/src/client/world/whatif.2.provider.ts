@@ -2,7 +2,7 @@ import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { On, Once, OnceStep, OnGameEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent, OnGameEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -16,11 +16,13 @@ import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { WhatIfSafeZone } from '../../shared/whatif';
+import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
 import { PlayerInOutService } from '../player/player.inout.service';
+import { PlayerListStateService } from '../player/player.list.state.service';
 import { zombieModel } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
@@ -54,11 +56,16 @@ export class WhatIf2Provider {
     @Inject(BlurService)
     public blurService: BlurService;
 
+    @Inject(PlayerListStateService)
+    private readonly playerListStateService: PlayerListStateService;
+
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
 
     private isInfected = false;
     private isInfectedAt = 0;
+
+    private inventoryAnimationRunner: AnimationRunner | null = null;
 
     @Once(OnceStep.Start)
     async onStart() {
@@ -102,15 +109,11 @@ export class WhatIf2Provider {
                         await wait(800);
 
                         PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
-                        const cancelled = await this.animationService.playScenario({
+                        this.inventoryAnimationRunner = this.animationService.playScenario({
                             name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
-                            duration: 4000,
                         });
 
-                        if (
-                            cancelled === AnimationStopReason.Finished &&
-                            (await emitRpc<boolean>(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED, id))
-                        ) {
+                        if (await emitRpc<boolean>(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED, id)) {
                             const playerPed = PlayerPedId();
                             const coords = GetEntityCoords(playerPed);
 
@@ -128,12 +131,59 @@ export class WhatIf2Provider {
             10
         );
 
+        this.targetFactory.createForAllPlayer([
+            {
+                label: 'Fouiller',
+                icon: 'police/fouiller',
+                category: 'citizen',
+                event: 'whatif:2',
+                action: async (entity: number) => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+                    const targetCitizenId = await emitRpc<string>(
+                        RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID,
+                        targetSource
+                    );
+                    if (!targetCitizenId) return;
+
+                    TaskTurnPedToFaceEntity(PlayerPedId(), entity, 800);
+                    await wait(800);
+
+                    PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
+                    this.inventoryAnimationRunner = this.animationService.playScenario({
+                        name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+                    });
+
+                    await wait(4000);
+
+                    const playerPed = PlayerPedId();
+                    const coords = GetEntityCoords(playerPed);
+
+                    this.inventoryManager.openInventory(
+                        InventoryType.Player,
+                        'player_' + targetCitizenId,
+                        coords as Vector3
+                    );
+                },
+                canInteract: async (entity: number) => {
+                    const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
+
+                    return this.playerListStateService.isDead(targetSource);
+                },
+            },
+        ]);
+
         SetPedMeleeCombatLimits(10, 10, 10);
 
         AddRelationshipGroup(this.zombieRelation);
         SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
         SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
         SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
+    }
+
+    @OnEvent(ClientEvent.INVENTORY_UNSUBSCRIBE)
+    public closeInventory() {
+        this.inventoryAnimationRunner?.cancel(AnimationStopReason.Finished);
+        this.inventoryAnimationRunner = null;
     }
 
     private async safeZoneLoop() {
@@ -181,6 +231,12 @@ export class WhatIf2Provider {
         this.notifier.error(
             `Vous avez été infecté ! Vous avez ~b~20 minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`
         );
+    }
+
+    @OnEvent(ClientEvent.PLAYER_ON_DEATH)
+    async clearIsInfected() {
+        this.isInfected = false;
+        this.blurService.remove('zombie-infected', 0);
     }
 
     @On(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)

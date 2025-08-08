@@ -178,6 +178,7 @@ export class InventoryManager {
 
         if (inventoryId && inventoryId !== this._playerInventoryId) {
             TriggerServerEvent(ServerEvent.INVENTORY_UNSUBSCRIBE, this._subscribedInventoryId);
+            TriggerEvent(ClientEvent.INVENTORY_UNSUBSCRIBE, this._subscribedInventoryId);
         }
 
         if (inventoryId === this._subscribedInventoryId) {

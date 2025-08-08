@@ -1,6 +1,8 @@
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
 
 import { useAssetPath } from '../../../../hook/assets';
+import { RootState } from '../../../../store';
 import { AppContainer } from '../../components/system/AppContainer';
 import { LSMCButton } from './components/LSMCButton';
 import { UHUButton } from './components/UHUButton';
@@ -8,6 +10,8 @@ import { useDeathReason } from './emergency.atom';
 
 export const EmergencyApp = () => {
     const { getPath } = useAssetPath();
+
+    const whatIf2Enabled = useSelector((state: RootState) => state.features.WhatIfSecondEpisode);
 
     const deathReason = useDeathReason();
     const isDead = Boolean(deathReason?.length);
@@ -41,18 +45,22 @@ export const EmergencyApp = () => {
                     <div className="flex flex-col justify-center items-center text-white">
                         <div className="text-3xl font-light max-w-[90%] truncate">Urgences SOS</div>
                         <div className="text-3xl font-light max-w-[90%] truncate">Via Satellite</div>
-                        <ul style={{ listStyleType: 'circle' }} className="text-1xl font-light w-3/4 mt-5 pl-5">
-                            <li>L'envoi est instantané</li>
-                            <li>Les médecins seront alertés</li>
-                            <li>L'Unité Hospitalière d'Urgence est disponible après 15 minutes</li>
-                        </ul>
+                        {!whatIf2Enabled && (
+                            <ul style={{ listStyleType: 'circle' }} className="text-1xl font-light w-3/4 mt-5 pl-5">
+                                <li>L'envoi est instantané</li>
+                                <li>Les médecins seront alertés</li>
+                                <li>L'Unité Hospitalière d'Urgence est disponible après 15 minutes</li>
+                            </ul>
+                        )}
                     </div>
                 )}
 
                 <div>
-                    <div className="text-base flex flex-col justify-center items-center text-white">
-                        Votre position sera envoyée.
-                    </div>
+                    {!whatIf2Enabled && (
+                        <div className="text-base flex flex-col justify-center items-center text-white">
+                            Votre position sera envoyée.
+                        </div>
+                    )}
 
                     <div className="flex flex-col justify-center items-center gap-2 mx-5">
                         <LSMCButton />

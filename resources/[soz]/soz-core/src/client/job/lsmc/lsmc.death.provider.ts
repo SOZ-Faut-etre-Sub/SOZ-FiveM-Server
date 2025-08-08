@@ -40,6 +40,8 @@ import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
 import { Feature } from '../../../shared/features';
+import { getRandomItem } from '../../../shared/random';
+import { WhatIf2RespawnPoints } from '../../../shared/whatif';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
 import { PhoneAppSocietyProvider } from '../../phone/apps/phone.app.society.provider';
@@ -412,12 +414,14 @@ export class LSMCDeathProvider {
                     ? 'de ton décès'
                     : 'du coma';
 
-            this.inputService
-                .askInput({
-                    title: `Explique la raison ${status}, celle-ci sera lue par les médecins lorsqu'ils te prendront en charge :`,
-                    maxCharacters: 200,
-                })
-                .then(reason => TriggerServerEvent(ServerEvent.LSMC_SET_DEATH_REASON, reason));
+            if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+                this.inputService
+                    .askInput({
+                        title: `Explique la raison ${status}, celle-ci sera lue par les médecins lorsqu'ils te prendront en charge :`,
+                        maxCharacters: 200,
+                    })
+                    .then(reason => TriggerServerEvent(ServerEvent.LSMC_SET_DEATH_REASON, reason));
+            }
 
             if (this.phoneService.isPhoneVisible()) {
                 this.phoneService.setPhoneFocus(true);
@@ -512,49 +516,57 @@ export class LSMCDeathProvider {
         const ped = PlayerPedId();
         const player = this.playerService.getPlayer();
 
-        this.monitor.traceEvent('lsmx_uhu', {});
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            this.monitor.traceEvent('lsmx_uhu', {});
 
-        this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
+            this.playerService.setTempClothes(PatientClothes[player.skin.Model.Hash]['Patient']);
+        }
+
         this.weaponDrawingProvider.refreshDrawWeapons();
         FreezeEntityPosition(ped, true);
 
-        if (uniteHUBed == -1) {
-            ClearPedTasksImmediately(ped);
-            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, FailoverLocationName);
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, getRandomItem(Object.keys(WhatIf2RespawnPoints)));
         } else {
-            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, getBedName(uniteHUBed));
+            if (uniteHUBed == -1) {
+                ClearPedTasksImmediately(ped);
+                await emitRpc(RpcServerEvent.PLAYER_TELEPORT, FailoverLocationName);
+            } else {
+                await emitRpc(RpcServerEvent.PLAYER_TELEPORT, getBedName(uniteHUBed));
 
-            this.playerInOutService.add(
-                'UniteHU',
-                new BoxZone(BedLocations[uniteHUBed], 3, 3, { heading: 320 }),
-                isInside => {
-                    if (isInside === false) {
-                        TriggerServerEvent(ServerEvent.LSMC_FREE_BED);
-                        this.playerInOutService.remove('UniteHU');
+                this.playerInOutService.add(
+                    'UniteHU',
+                    new BoxZone(BedLocations[uniteHUBed], 3, 3, { heading: 320 }),
+                    isInside => {
+                        if (isInside === false) {
+                            TriggerServerEvent(ServerEvent.LSMC_FREE_BED);
+                            this.playerInOutService.remove('UniteHU');
+                        }
                     }
-                }
-            );
+                );
 
-            await wait(2000);
+                await wait(2000);
 
-            this.animationService.playAnimation(
-                {
-                    base: {
-                        dictionary: 'anim@gangops@morgue@table@',
-                        name: 'body_search',
-                        blendInSpeed: 8.0,
-                        blendOutSpeed: 8.0,
-                        options: {
-                            cancellable: true,
-                            repeat: true,
+                this.animationService.playAnimation(
+                    {
+                        base: {
+                            dictionary: 'anim@gangops@morgue@table@',
+                            name: 'body_search',
+                            blendInSpeed: 8.0,
+                            blendOutSpeed: 8.0,
+                            options: {
+                                cancellable: true,
+                                repeat: true,
+                            },
                         },
                     },
-                },
-                {
-                    clearTasksBefore: true,
-                }
-            );
+                    {
+                        clearTasksBefore: true,
+                    }
+                );
+            }
         }
+
         await wait(2000);
 
         FreezeEntityPosition(ped, false);

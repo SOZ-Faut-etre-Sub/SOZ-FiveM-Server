@@ -1,3 +1,5 @@
+import { Vector4 } from '@public/shared/polyzone/vector';
+
 import { PolygonZone } from './polyzone/polygon.zone';
 
 export const WhatIfExcludeZone = new PolygonZone([
@@ -50,3 +52,7 @@ export const WhatIfSafeZone = new PolygonZone([
     [1519.4086841068893, 2583.6887839649935],
     [1549.9954486869074, 2676.3972867558505],
 ]);
+
+export const WhatIf2RespawnPoints: Record<string, Vector4> = {
+    UHU_WHAT_IF_REPAWN_1: [1663.61, 2519.21, 45.57, 352.21],
+};

@@ -14,6 +14,8 @@ import { BedLocations, FailoverLocation, FailoverLocationName, getBedName } from
 import { PlayerData, PlayerMetadata } from '@public/shared/player';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
+import { Feature } from '../../../shared/features';
+import { FeatureProvider } from '../../feature/feature.provider';
 import { PlayerStateService } from '../../player/player.state.service';
 
 @Provider()
@@ -42,6 +44,9 @@ export class LSMCDeathProvider {
     @Inject(PlayerInjuryProvider)
     private playerInjuryProvider: PlayerInjuryProvider;
 
+    @Inject(FeatureProvider)
+    private readonly featureProvider: FeatureProvider;
+
     private occupiedBeds: Record<number, number> = {};
 
     // Map the source id of the player dead and everyone that has been notified so that we can
@@ -64,6 +69,10 @@ export class LSMCDeathProvider {
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            inventory.clear();
+        }
+
         if (!admin && !uniteHU) {
             if (!inventory.remove(bloodbag ? 'bloodbag' : 'defibrillator', 1, false)) {
                 return;
@@ -79,7 +88,7 @@ export class LSMCDeathProvider {
 
         const datas = {} as Partial<PlayerMetadata>;
 
-        if (uniteHU) {
+        if (uniteHU && !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             uniteHUBed = this.getFreeBed(source);
             this.playerStateService.setClientState(targetid, {
                 isWearingPatientOutfit: true,

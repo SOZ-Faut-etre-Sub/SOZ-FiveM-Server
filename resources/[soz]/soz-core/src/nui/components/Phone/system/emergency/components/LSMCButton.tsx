@@ -1,11 +1,15 @@
 import { fetchNui } from '@public/nui/fetch';
 import { NuiEvent } from '@public/shared/event/nui';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '../../../../../store';
 import { useDeathReason, useLsmcCalled } from '../emergency.atom';
 
 export const LSMCButton = () => {
     const [lsmcCalled, setLsmcCalled] = useLsmcCalled();
     const deathReason = useDeathReason();
+
+    const whatIf2Enabled = useSelector((state: RootState) => state.features.WhatIfSecondEpisode);
 
     const isDead = Boolean(deathReason?.length);
 
@@ -13,6 +17,10 @@ export const LSMCButton = () => {
         setLsmcCalled(true);
         fetchNui(NuiEvent.PhoneEmergencyCallLSMC);
     };
+
+    if (whatIf2Enabled) {
+        return null;
+    }
 
     if (lsmcCalled) {
         return (

@@ -400,6 +400,7 @@ export enum RpcServerEvent {
     FIRE_UNLOCK_FIRETRUCK = 'soz-core:server:fire:unlock-firetruck',
 
     WHAT_IF_ZOMBIE_IS_NOT_LOCKED = 'soz-core:server:what-if:zombie:is-not-locked',
+    WHAT_IF_PLAYER_GET_CITIZEN_ID = 'soz-core:server:what-if:player:get-citizen-id',
 }
 
 export enum RpcClientEvent {

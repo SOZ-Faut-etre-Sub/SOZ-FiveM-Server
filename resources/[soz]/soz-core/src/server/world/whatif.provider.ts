@@ -9,11 +9,13 @@ import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { WhatIfSafeZone } from '../../shared/whatif';
+import { WhatIf2RespawnPoints, WhatIfSafeZone } from '../../shared/whatif';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { PlayerPositionProvider } from '../player/player.position.provider';
+import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 
 const zombieModel = joaat('u_m_y_zombie_01');
@@ -76,6 +78,12 @@ export class WhatIfProvider {
     @Inject(InventoryFactory)
     private inventoryFactory: InventoryFactory;
 
+    @Inject(PlayerPositionProvider)
+    private playerPositionProvider: PlayerPositionProvider;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     @Inject(Notifier)
     private notifier: Notifier;
 
@@ -84,6 +92,10 @@ export class WhatIfProvider {
     @Once()
     init() {
         this.itemService.setItemUseCallback('zombie_serum', this.useZombieSerum.bind(this));
+
+        Object.entries(WhatIf2RespawnPoints).forEach(([key, value]) => {
+            this.playerPositionProvider.registerZone(key, value);
+        });
     }
 
     private async useZombieSerum(source: number) {
@@ -131,6 +143,16 @@ export class WhatIfProvider {
     @Rpc(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED)
     async isZombieNotLocked(source: number, id: string): Promise<boolean> {
         return !this.lockedZombie.has(id);
+    }
+
+    @Rpc(RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID)
+    async getCitizenId(source: number, target: number): Promise<string> {
+        const player = this.playerService.getPlayer(target);
+        if (!player) {
+            return '';
+        }
+
+        return player.citizenid;
     }
 
     @On('entityCreating', false)
