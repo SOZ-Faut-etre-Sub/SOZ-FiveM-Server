@@ -9,7 +9,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { WhatIf2RespawnPoints, WhatIfSafeZone } from '../../shared/whatif';
+import { WhatIf2RespawnPoints, WhatIfSafeZones } from '../../shared/whatif';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
@@ -93,8 +93,10 @@ export class WhatIfProvider {
     init() {
         this.itemService.setItemUseCallback('zombie_serum', this.useZombieSerum.bind(this));
 
-        Object.entries(WhatIf2RespawnPoints).forEach(([key, value]) => {
-            this.playerPositionProvider.registerZone(key, value);
+        Object.entries(WhatIf2RespawnPoints).forEach(([key, positions]) => {
+            positions.forEach((value, index) => {
+                this.playerPositionProvider.registerZone(`UHU_WHAT_IF_REPAWN_${key}_${index}`, value);
+            });
         });
     }
 
@@ -168,7 +170,7 @@ export class WhatIfProvider {
         }
 
         const position = GetEntityCoords(handle, false) as Vector3;
-        if (WhatIfSafeZone.isPointInside(position)) {
+        if (Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
         }
     }

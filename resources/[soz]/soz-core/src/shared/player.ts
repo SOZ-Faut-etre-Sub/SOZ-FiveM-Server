@@ -6,6 +6,7 @@ import { VampireGameRole } from '@public/shared/halloween';
 import { ApartementTiers } from '@public/shared/housing/housing';
 import { SenatePartyMember } from '@public/shared/senate';
 import { Radio } from '@public/shared/voip';
+import { WhatIfGuild } from '@public/shared/whatif';
 
 import { ClothConfig, OutfitType } from './cloth';
 import { Disease, Organ } from './disease';
@@ -421,6 +422,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     casino_vip_premium_subscription_expire_at: number | null;
     casino_vip_point?: number;
     casino_diamond_frame?: boolean;
+    whatif_guild?: WhatIfGuild;
 };
 
 export const isAdmin = (player: PlayerData) => {

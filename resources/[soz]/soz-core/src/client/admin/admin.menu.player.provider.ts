@@ -316,4 +316,9 @@ export class AdminMenuPlayerProvider {
     }): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_PLAYER_SET_PLATE, type, player, value);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerResetWhatIfClan)
+    public async handleResetWhatIfClan(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'whatif_guild', '');
+    }
 }

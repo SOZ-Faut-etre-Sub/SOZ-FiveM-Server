@@ -162,6 +162,7 @@ export enum NuiEvent {
     AdminMenuXmasSetState = 'soz-core:nui:admin:xmas:set-state',
     AdminMenuTraveling = 'soz-core:nui:admin:traveling',
     AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
+    AdminMenuPlayerResetWhatIfClan = 'soz-core:nui:admin:player:reset-whatif-clan',
 
     BlipAction = 'soz-core:client:blip:action',
 
@@ -784,4 +785,6 @@ export enum NuiEvent {
     CasinoRouletteBetHover = 'soz-core:nui:casino:roulette:hover',
     CasinoRouletteBet = 'soz-core:nui:casino:roulette:bet',
     CasinoInsideTrackBet = 'soz-core:nui:casino:inside-track-bet',
+
+    WhatIfSetGuild = 'soz-core:nui:what-if:set-guild',
 }

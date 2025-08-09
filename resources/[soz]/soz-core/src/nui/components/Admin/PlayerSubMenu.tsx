@@ -455,6 +455,8 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ permissio
                             <MenuItemSelectOption value={true}>Activer</MenuItemSelectOption>
                             <MenuItemSelectOption value={false}>Désactiver</MenuItemSelectOption>
                         </MenuItemSelect>
+
+                        <MenuSubTitle>Vampire</MenuSubTitle>
                         <MenuItemCheckbox
                             disabled={!isAdminOrStaff}
                             checked={player.vampireGameExcluded}
@@ -484,6 +486,15 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ permissio
                                 </MenuItemSelectOption>
                             ))}
                         </MenuItemSelect>
+
+                        <MenuSubTitle>What if</MenuSubTitle>
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerResetWhatIfClan, player);
+                            }}
+                        >
+                            Reset Clan
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

@@ -11,5 +11,5 @@ export type NuiMapPickerLocation = Exclude<MapPickerLocation, 'coords'> & {
 export type MapPickerLocation = {
     id: string;
     coords: Vector3;
-    icon: 'coffin';
+    icon: 'location' | 'coffin';
 };

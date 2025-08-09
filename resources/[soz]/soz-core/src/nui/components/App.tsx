@@ -72,6 +72,7 @@ import { StateApp } from './StateApp';
 import { GlassMorphism } from './Styleguide/GlassMorphism';
 import { TargetOverlay } from './Target/TargetOverlay';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
+import { WhatIfApp } from './WhatIf/WhatIfApp';
 import { Election } from './World/Election';
 import { Meteor } from './World/Meteor';
 
@@ -164,6 +165,7 @@ export const App: FunctionComponent = () => {
                     <CyberReportApp />
                     <PincrakerMinigameApp />
                     <ScreenshotApp />
+                    <WhatIfApp />
                 </div>
                 <HoodApp />
                 <FlashApp />

@@ -40,7 +40,7 @@ import { VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Animation } from '../../../shared/animation';
 import { Feature } from '../../../shared/features';
-import { getRandomItem } from '../../../shared/random';
+import { getRandomInt } from '../../../shared/random';
 import { WhatIf2RespawnPoints } from '../../../shared/whatif';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { NuiDispatch } from '../../nui/nui.dispatch';
@@ -526,7 +526,13 @@ export class LSMCDeathProvider {
         FreezeEntityPosition(ped, true);
 
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            await emitRpc(RpcServerEvent.PLAYER_TELEPORT, getRandomItem(Object.keys(WhatIf2RespawnPoints)));
+            await emitRpc(
+                RpcServerEvent.PLAYER_TELEPORT,
+                'UHU_WHAT_IF_REPAWN_' +
+                    player.metadata.whatif_guild +
+                    '_' +
+                    getRandomInt(0, WhatIf2RespawnPoints[player.metadata.whatif_guild].length - 1)
+            );
         } else {
             if (uniteHUBed == -1) {
                 ClearPedTasksImmediately(ped);

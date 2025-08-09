@@ -2,7 +2,7 @@ import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
-import { On, Once, OnceStep, OnEvent, OnGameEvent } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -10,19 +10,23 @@ import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
+import { NuiEvent } from '../../shared/event/nui';
+import { ServerEvent } from '../../shared/event/server';
 import { InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
-import { WhatIfSafeZone } from '../../shared/whatif';
+import { WhatIfGuild, WhatIfSafeZones } from '../../shared/whatif';
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { Notifier } from '../notifier';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
+import { PlayerService } from '../player/player.service';
 import { zombieModel } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
@@ -59,6 +63,12 @@ export class WhatIf2Provider {
     @Inject(PlayerListStateService)
     private readonly playerListStateService: PlayerListStateService;
 
+    @Inject(PlayerService)
+    private readonly playerService: PlayerService;
+
+    @Inject(NuiDispatch)
+    private nuiDispatch: NuiDispatch;
+
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
 
@@ -79,21 +89,23 @@ export class WhatIf2Provider {
         SetBlipAlpha(playerBlip, 0);
         SetBlipAlpha(northBlip, 0);
 
-        this.playerInOutService.add('SafeZone', WhatIfSafeZone, isInside => {
-            this.weapon.setDisabled('hub', isInside);
-            this.inSafeZone = isInside;
+        Object.entries(WhatIfSafeZones).forEach(([guild, zone]) => {
+            this.playerInOutService.add(`SafeZone-${guild}`, zone, isInside => {
+                this.weapon.setDisabled('SafeZone', isInside);
+                this.inSafeZone = isInside;
 
-            this.safeZoneLoop();
+                this.safeZoneLoop();
 
-            if (isInside) {
-                this.notifier.notify(
-                    'Ici, les murs tiennent encore. Un maigre rempart contre l’enfer extérieur.~n~' +
-                        'Aucune créature, aucune arme, aucune trahison n’a sa place entre ces barrières.~n~' +
-                        ' Reprenez votre souffle, échangez, préparez-vous… car au-delà de cette limite, c’est la survie, rien d’autre.',
-                    'info',
-                    20000
-                );
-            }
+                if (isInside) {
+                    this.notifier.notify(
+                        'Ici, les murs tiennent encore. Un maigre rempart contre l’enfer extérieur.~n~' +
+                            'Aucune créature, aucune arme, aucune trahison n’a sa place entre ces barrières.~n~' +
+                            ' Reprenez votre souffle, échangez, préparez-vous… car au-delà de cette limite, c’est la survie, rien d’autre.',
+                        'info',
+                        20000
+                    );
+                }
+            });
         });
 
         this.targetFactory.createForAllPed(
@@ -178,6 +190,38 @@ export class WhatIf2Provider {
         SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
         SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
         SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
+    }
+
+    @Once(OnceStep.NuiLoaded)
+    async onPlayerLoaded() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        if (player.metadata.whatif_guild) {
+            return;
+        }
+
+        this.nuiDispatch.dispatch('whatif', 'OpenWelcomePage', true);
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfSetGuild)
+    async onSetGuild(guild: WhatIfGuild) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        if (!guild) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'whatif_guild', guild);
+        this.nuiDispatch.dispatch('whatif', 'OpenWelcomePage', false);
     }
 
     @OnEvent(ClientEvent.INVENTORY_UNSUBSCRIBE)

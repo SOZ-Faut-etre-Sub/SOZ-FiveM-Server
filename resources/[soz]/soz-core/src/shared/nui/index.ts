@@ -19,6 +19,7 @@ import { NuiSceneSearchMethodMap } from '@public/shared/nui/scene';
 import { NuiTalentMethodMap } from '@public/shared/nui/talent';
 import { NuiTargetMethodMap } from '@public/shared/nui/target';
 import { NuiPickerMethodMap } from '@public/shared/picker';
+import { WhatIfMap } from '@public/shared/whatif';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
@@ -117,6 +118,7 @@ export interface NuiMethodMap {
     laser_game_manage: NuiLaserGameManageMethodMap;
     screenshot: NuiScreenshotMethodMap;
     flash: NuiFlashMap;
+    whatif: WhatIfMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

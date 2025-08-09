@@ -21,8 +21,8 @@ export class MapPickerProvider {
     @Inject(NuiDispatch)
     private readonly nuiDispatch: NuiDispatch;
 
-    private centerPosition: Vector3 = [602.13, 3461.79, 77.75];
-    private centerSkyOffset: Vector3 = [0, 0, 1500];
+    private centerPosition: Vector3 = [533.75, 2383.51, 48.18];
+    private centerSkyOffset: Vector3 = [0, 0, 2000];
 
     private southPosition: Vector3 = [-147.99, -961.44, 268.95];
     private southSkyOffset: Vector3 = [0, 0, 3000];
