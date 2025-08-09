@@ -1,3 +1,5 @@
+import { WardrobeConfig } from '@public/shared/cloth';
+import { PlayerPedHash } from '@public/shared/player';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
 import { PolygonZone } from './polyzone/polygon.zone';
@@ -77,4 +79,14 @@ export const WhatIfSafeZones: Record<WhatIfGuild, PolygonZone> = {
 export const WhatIf2RespawnPoints: Record<WhatIfGuild, Vector4[]> = {
     raider: [[1663.61, 2519.21, 45.57, 352.21]],
     warden: [[2505.71, -384.81, 94.12, 0]],
+};
+
+export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
+    raider: [[1746.51, 2501.78, 44.56, 163.06]],
+    warden: [],
+};
+
+export const WhatIf2Cloakroom: WardrobeConfig = {
+    [PlayerPedHash.Male]: {},
+    [PlayerPedHash.Female]: {},
 };

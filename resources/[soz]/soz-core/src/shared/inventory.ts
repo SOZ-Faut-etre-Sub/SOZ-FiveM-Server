@@ -57,6 +57,7 @@ export enum InventoryType {
     StorageTank = 'storage_tank',
     Trunk = 'trunk',
     Zombie = 'zombie',
+    HugeStash = 'huge_stash',
 }
 
 export type AddError =
@@ -280,6 +281,10 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
     },
     [InventoryType.Stash]: {
         allowedItemTypes: ['item', 'evidence'],
+    },
+    [InventoryType.HugeStash]: {
+        maxWeight: 1_000_000,
+        allowedItemTypes: ['item'],
     },
     [InventoryType.Bin]: {
         persistent: false,

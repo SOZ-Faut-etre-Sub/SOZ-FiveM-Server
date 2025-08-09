@@ -17,13 +17,15 @@ import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
-import { WhatIfGuild, WhatIfSafeZones } from '../../shared/whatif';
+import { WhatIf2Cloakroom, WhatIf2Lockers, WhatIfGuild, WhatIfSafeZones } from '../../shared/whatif';
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { JobCloakroomProvider } from '../job/job.cloakroom.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
@@ -66,6 +68,12 @@ export class WhatIf2Provider {
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
+    @Inject(ObjectProvider)
+    private readonly objectProvider: ObjectProvider;
+
+    @Inject(JobCloakroomProvider)
+    private jobCloakroomProvider: JobCloakroomProvider;
+
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
 
@@ -88,6 +96,48 @@ export class WhatIf2Provider {
 
         SetBlipAlpha(playerBlip, 0);
         SetBlipAlpha(northBlip, 0);
+
+        Object.entries(WhatIf2Lockers).forEach(([guild, lockers]) => {
+            lockers.forEach((locker, index) => {
+                this.objectProvider.createObject(
+                    {
+                        id: `whatif-lockers-${guild}-${index}`,
+                        model: joaat('ch_prop_ch_service_locker_02a'),
+                        position: locker,
+                    },
+                    [
+                        {
+                            label: 'Se changer',
+                            icon: 'jobs/habiller',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: () => this.jobCloakroomProvider.openCloakroom(guild, WhatIf2Cloakroom),
+                        },
+                        {
+                            label: 'Ouvrir mon casier',
+                            icon: 'inventory/archive',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: async () => {
+                                const player = this.playerService.getPlayer();
+                                if (!player) {
+                                    return false;
+                                }
+
+                                const playerPed = PlayerPedId();
+                                const coords = GetEntityCoords(playerPed);
+
+                                this.inventoryManager.openInventory(
+                                    InventoryType.HugeStash,
+                                    `stash_${guild}_${player.citizenid}`,
+                                    coords as Vector3
+                                );
+                            },
+                        },
+                    ]
+                );
+            });
+        });
 
         Object.entries(WhatIfSafeZones).forEach(([guild, zone]) => {
             this.playerInOutService.add(`SafeZone-${guild}`, zone, isInside => {
