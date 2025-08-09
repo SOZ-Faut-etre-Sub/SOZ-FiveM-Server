@@ -311,7 +311,7 @@ export class VehicleMenuProvider {
         const ped = PlayerPedId();
         const vehicle = GetVehiclePedIsIn(ped, false);
 
-        if (!vehicle || player.metadata.isdead) {
+        if (!vehicle || player.metadata.isdead || player.metadata.ishandcuffed) {
             return;
         }
 
