@@ -22,6 +22,8 @@ import {
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
     WhatIf2Lockers,
+    WhatIf2LootInventoryType,
+    WhatIf2LootModels,
     WhatIf2RespawnPoints,
     WhatIfGuild,
     WhatIfSafeZones,
@@ -105,6 +107,37 @@ export class WhatIf2Provider {
         SetBlipAlpha(playerBlip, 0);
         SetBlipAlpha(northBlip, 0);
 
+        this.safeZoneSetup();
+        this.lootingSetup();
+
+        SetPedMeleeCombatLimits(10, 10, 10);
+
+        AddRelationshipGroup(this.zombieRelation);
+        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
+        SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
+    }
+
+    private safeZoneSetup() {
+        Object.entries(WhatIfSafeZones).forEach(([guild, zone]) => {
+            this.playerInOutService.add(`SafeZone-${guild}`, zone, isInside => {
+                this.weapon.setDisabled('SafeZone', isInside);
+                this.inSafeZone = isInside;
+
+                this.safeZoneLoop();
+
+                if (isInside) {
+                    this.notifier.notify(
+                        'Ici, les murs tiennent encore. Un maigre rempart contre l’enfer extérieur.~n~' +
+                            'Aucune créature, aucune arme, aucune trahison n’a sa place entre ces barrières.~n~' +
+                            ' Reprenez votre souffle, échangez, préparez-vous… car au-delà de cette limite, c’est la survie, rien d’autre.',
+                        'info',
+                        20000
+                    );
+                }
+            });
+        });
+
         Object.entries(WhatIf2Lockers).forEach(([guild, lockers]) => {
             lockers.forEach((locker, index) => {
                 this.objectProvider.createObject(
@@ -172,24 +205,37 @@ export class WhatIf2Provider {
                 );
             });
         });
+    }
 
-        Object.entries(WhatIfSafeZones).forEach(([guild, zone]) => {
-            this.playerInOutService.add(`SafeZone-${guild}`, zone, isInside => {
-                this.weapon.setDisabled('SafeZone', isInside);
-                this.inSafeZone = isInside;
+    private lootingSetup() {
+        Object.entries(WhatIf2LootModels).forEach(([lootType, models]) => {
+            this.targetFactory.createForModel(models, [
+                {
+                    label: 'Fouiller',
+                    icon: 'police/fouiller',
+                    category: 'citizen',
+                    event: 'whatif:2',
+                    action: async (entity: number) => {
+                        const id = this.computeInventoryId('lootbox', entity);
+                        TaskTurnPedToFaceEntity(PlayerPedId(), entity, 800);
+                        await wait(800);
 
-                this.safeZoneLoop();
+                        PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
+                        this.inventoryAnimationRunner = this.animationService.playScenario({
+                            name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+                        });
 
-                if (isInside) {
-                    this.notifier.notify(
-                        'Ici, les murs tiennent encore. Un maigre rempart contre l’enfer extérieur.~n~' +
-                            'Aucune créature, aucune arme, aucune trahison n’a sa place entre ces barrières.~n~' +
-                            ' Reprenez votre souffle, échangez, préparez-vous… car au-delà de cette limite, c’est la survie, rien d’autre.',
-                        'info',
-                        20000
-                    );
-                }
-            });
+                        const playerPed = PlayerPedId();
+                        const coords = GetEntityCoords(playerPed);
+
+                        this.inventoryManager.openInventory(WhatIf2LootInventoryType[lootType], id, coords as Vector3);
+                    },
+                    canInteract: async (entity: number) => {
+                        const coords = GetEntityCoords(entity) as Vector3;
+                        return Object.values(WhatIfSafeZones).every(zone => !zone.isPointInside(coords));
+                    },
+                },
+            ]);
         });
 
         this.targetFactory.createForAllPed(
@@ -200,7 +246,7 @@ export class WhatIf2Provider {
                     category: 'citizen',
                     event: 'whatif:2',
                     action: async (entity: number) => {
-                        const id = this.computeZombieInventory(entity);
+                        const id = this.computeInventoryId('zombie', entity);
                         TaskTurnPedToFaceEntity(PlayerPedId(), entity, 800);
                         await wait(800);
 
@@ -209,18 +255,13 @@ export class WhatIf2Provider {
                             name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
                         });
 
-                        if (await emitRpc<boolean>(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED, id)) {
-                            const playerPed = PlayerPedId();
-                            const coords = GetEntityCoords(playerPed);
+                        const playerPed = PlayerPedId();
+                        const coords = GetEntityCoords(playerPed);
 
-                            this.inventoryManager.openInventory(InventoryType.Zombie, id, coords as Vector3);
-                        }
+                        this.inventoryManager.openInventory(InventoryType.Zombie, id, coords as Vector3);
                     },
                     canInteract: async (entity: number) => {
-                        if (!IsEntityDead(entity) || IsPedAPlayer(entity)) return false;
-
-                        const id = this.computeZombieInventory(entity);
-                        return emitRpc<boolean>(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED, id);
+                        return IsEntityDead(entity) && !IsPedAPlayer(entity);
                     },
                 },
             ],
@@ -267,13 +308,6 @@ export class WhatIf2Provider {
                 },
             },
         ]);
-
-        SetPedMeleeCombatLimits(10, 10, 10);
-
-        AddRelationshipGroup(this.zombieRelation);
-        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
-        SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
-        SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
     }
 
     @Once(OnceStep.NuiLoaded)
@@ -468,9 +502,9 @@ export class WhatIf2Provider {
         }
     }
 
-    computeZombieInventory(entity: number) {
+    computeInventoryId(prefix: string, entity: number) {
         const coords = GetEntityCoords(entity) as Vector3;
         const coordsHash = getLocationHash(coords);
-        return 'zombie_' + coordsHash;
+        return prefix + '_' + coordsHash;
     }
 }

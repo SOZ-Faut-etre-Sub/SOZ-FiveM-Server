@@ -5,6 +5,13 @@ import { Vector4 } from '@public/shared/polyzone/vector';
 
 import { PolygonZone } from './polyzone/polygon.zone';
 
+// clone of shared/inventory.ts to prevent circular dependency
+type InventoryItemCreator = {
+    chance: number;
+    min: number;
+    max: number;
+};
+
 export interface WhatIfMap {
     OpenWelcomePage: boolean;
 }
@@ -75,6 +82,41 @@ export const WhatIfSafeZones: Record<WhatIfGuild, PolygonZone> = {
         [2411.190296330452, -378.4042477253588],
         [2423.6515707889776, -419.67083738226574],
     ]),
+};
+
+export enum WhatIf2LootType {
+    Low,
+    Medium,
+    High,
+    Military,
+}
+
+export const WhatIf2LootInventoryType: Record<WhatIf2LootType, string> = {
+    [WhatIf2LootType.Low]: 'zombie',
+    [WhatIf2LootType.Medium]: 'huge_stash',
+    [WhatIf2LootType.High]: 'what_if_loot_low',
+    [WhatIf2LootType.Military]: 'what_if_loot_medium',
+};
+
+export const WhatIf2LootModels: Record<WhatIf2LootType, string[]> = {
+    [WhatIf2LootType.Low]: [],
+    [WhatIf2LootType.Medium]: [],
+    [WhatIf2LootType.High]: [],
+    [WhatIf2LootType.Military]: [],
+};
+
+export const WhatIf2LootInventoryContent: Partial<Record<string, Record<string, InventoryItemCreator>>> = {
+    zombie: {
+        phone: {
+            chance: 100,
+            min: 1,
+            max: 1,
+        },
+    },
+    huge_stash: {},
+    what_if_loot_low: {},
+    what_if_loot_medium: {},
+    what_if_loot_high: {},
 };
 
 export const WhatIf2RespawnPoints: Record<WhatIfGuild, Vector4[]> = {

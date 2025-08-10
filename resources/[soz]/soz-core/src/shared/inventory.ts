@@ -12,6 +12,7 @@ import { deepEqual } from '@public/shared/util';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 import { WeaponComponentType } from '@public/shared/weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from '@public/shared/weapons/tint';
+import { WhatIf2LootInventoryContent } from '@public/shared/whatif';
 
 export enum InventoryType {
     Ammo = 'ammo',
@@ -58,6 +59,10 @@ export enum InventoryType {
     Trunk = 'trunk',
     Zombie = 'zombie',
     HugeStash = 'huge_stash',
+    WhatIfLootLow = 'what_if_loot_low',
+    WhatIfLootMedium = 'what_if_loot_medium',
+    WhatIfLootHigh = 'what_if_loot_high',
+    WhatIfLootMilitary = 'what_if_loot_military',
 }
 
 export type AddError =
@@ -283,7 +288,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         allowedItemTypes: ['item', 'evidence'],
     },
     [InventoryType.HugeStash]: {
-        maxWeight: 1_000_000,
+        maxWeight: 1000000,
         allowedItemTypes: ['item'],
     },
     [InventoryType.Bin]: {
@@ -569,6 +574,22 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
         maxWeight: 200_000,
     },
     [InventoryType.Zombie]: {
+        persistent: false,
+        allowedItemTypes: ['item'],
+    },
+    [InventoryType.WhatIfLootLow]: {
+        persistent: false,
+        allowedItemTypes: ['item'],
+    },
+    [InventoryType.WhatIfLootMedium]: {
+        persistent: false,
+        allowedItemTypes: ['item'],
+    },
+    [InventoryType.WhatIfLootHigh]: {
+        persistent: false,
+        allowedItemTypes: ['item'],
+    },
+    [InventoryType.WhatIfLootMilitary]: {
         persistent: false,
         allowedItemTypes: ['item'],
     },
@@ -1147,13 +1168,11 @@ export const INVENTORY_ITEM_CREATORS: Partial<Record<InventoryType, Record<strin
             max: 20,
         },
     },
-    [InventoryType.Zombie]: {
-        phone: {
-            chance: 100,
-            min: 1,
-            max: 1,
-        },
-    },
+    [InventoryType.Zombie]: WhatIf2LootInventoryContent[InventoryType.Zombie],
+    [InventoryType.WhatIfLootLow]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootLow],
+    [InventoryType.WhatIfLootMedium]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootMedium],
+    [InventoryType.WhatIfLootHigh]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootHigh],
+    [InventoryType.WhatIfLootMilitary]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootMilitary],
 };
 
 export type InventoryPosition = InventoryPositionFixed | InventoryPositionDynamic;
@@ -1224,6 +1243,22 @@ export const INVENTORY_STATES: Partial<Record<InventoryType, InventoryState>> = 
         canGetContent: false,
     },
     [InventoryType.Zombie]: {
+        canPutContent: false,
+        canGetContent: true,
+    },
+    [InventoryType.WhatIfLootLow]: {
+        canPutContent: false,
+        canGetContent: true,
+    },
+    [InventoryType.WhatIfLootMedium]: {
+        canPutContent: false,
+        canGetContent: true,
+    },
+    [InventoryType.WhatIfLootHigh]: {
+        canPutContent: false,
+        canGetContent: true,
+    },
+    [InventoryType.WhatIfLootMilitary]: {
         canPutContent: false,
         canGetContent: true,
     },

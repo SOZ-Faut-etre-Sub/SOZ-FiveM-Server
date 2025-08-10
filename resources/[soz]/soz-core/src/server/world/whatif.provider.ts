@@ -87,8 +87,6 @@ export class WhatIfProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
-    private lockedZombie = new Set<string>();
-
     @Once()
     init() {
         this.itemService.setItemUseCallback('zombie_serum', this.useZombieSerum.bind(this));
@@ -140,11 +138,6 @@ export class WhatIfProvider {
         for (let i = 0; i < count; i++) {
             CreatePed(0, zombieModel, playerCoords[0], playerCoords[1], playerCoords[2], 0, true, false);
         }
-    }
-
-    @Rpc(RpcServerEvent.WHAT_IF_ZOMBIE_IS_NOT_LOCKED)
-    async isZombieNotLocked(source: number, id: string): Promise<boolean> {
-        return !this.lockedZombie.has(id);
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID)
