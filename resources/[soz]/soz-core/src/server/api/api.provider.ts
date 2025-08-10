@@ -9,6 +9,7 @@ import { Request } from '../../core/http/request';
 import { Response } from '../../core/http/response';
 import { BankProvider } from '../bank/bank.provider';
 import { BankService } from '../bank/bank.service';
+import { BillboardProvider } from '../billboard/billboard.provider';
 import { BillboardService } from '../billboard/billboard.service';
 import { ItemService } from '../item/item.service';
 import { FDFFieldProvider } from '../job/fdf/fdf.field.provider';
@@ -31,6 +32,9 @@ export class ApiProvider {
 
     @Inject(BillboardService)
     private billboardService: BillboardService;
+
+    @Inject(BillboardProvider)
+    private billboardProvider: BillboardProvider;
 
     @Inject(FDFFieldProvider)
     private FDFFieldProvider: FDFFieldProvider;
@@ -124,6 +128,20 @@ export class ApiProvider {
             this.billboardService.deleteBillboard(source, billboardId);
         } catch (error) {
             return Response.internalServerError("La supression du panneau d'affichage à échouée");
+        }
+        return Response.ok();
+    }
+
+    @Post('/dynamic-billboard/update-billboard')
+    public async updateDynamicBillboard(request: Request): Promise<Response> {
+        const data = JSON.parse(await request.body);
+        const billboardId = data.billboardId;
+        const url = data.url;
+
+        try {
+            await this.billboardProvider.updateBillboardProp(-1, billboardId, url);
+        } catch (error) {
+            return Response.internalServerError("La mise à jour du panneau d'affichage à échouée");
         }
         return Response.ok();
     }

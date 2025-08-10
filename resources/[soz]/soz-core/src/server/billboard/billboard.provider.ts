@@ -15,6 +15,7 @@ import {
     toVector4Object,
     Vector4,
 } from '@public/shared/polyzone/vector';
+import axios from 'axios';
 
 import { PrismaService } from '../database/prisma.service';
 import { InventoryFactory } from '../inventory/inventory.factory';
@@ -22,6 +23,7 @@ import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
+import { PermissionService } from '../permission.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 
@@ -50,6 +52,9 @@ export class BillboardProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
 
     private usedSlot = new Map<
         number,
@@ -262,6 +267,25 @@ export class BillboardProvider {
         if (!object) {
             return;
         }
+
+        if (textureUrl && source !== -1 && !this.permissionService.isStaff(source)) {
+            try {
+                const resp = await axios.get(textureUrl);
+                if (resp.status != 200 && resp.status != 304) {
+                    this.notifier.error(source, 'URL non valide');
+                    return;
+                }
+                const contentType = resp.headers['content-type'] ?? resp.headers['Content-Type'];
+                if (!contentType || !contentType.toString().startsWith('image')) {
+                    this.notifier.error(source, `L'URL n'est pas une image`);
+                    return;
+                }
+            } catch (e) {
+                this.notifier.error(source, 'URL non valide');
+                return;
+            }
+        }
+
         await this.prismaService.dynamic_prop_billboard.update({
             where: { id: objectId },
             data: { textureUrl: textureUrl ?? '', updatedAt: new Date() },
