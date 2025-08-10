@@ -1,3 +1,5 @@
+import { WhatIf2CraftsLists } from '@public/shared/whatif';
+
 import { AnimationInfo } from '../animation';
 import { Feature } from '../features';
 import { InventoryItemMetadata } from '../inventory';
@@ -53,4 +55,5 @@ export const Crafts: Record<string, Record<string, CraftCategory>> = {
     [JobType.Pawl]: PawlCraftsLists,
     [JobType.FDF]: FDFCraftsLists,
     [JobType.DMC]: DmcCraftsLists,
+    whatif2: WhatIf2CraftsLists,
 };

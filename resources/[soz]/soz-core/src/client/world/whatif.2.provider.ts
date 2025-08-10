@@ -8,6 +8,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
+import { CraftsList } from '../../shared/craft/craft';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
 import { NuiEvent } from '../../shared/event/nui';
@@ -19,6 +20,7 @@ import { Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import {
     WhatIf2Cloakroom,
+    WhatIf2CraftingTables,
     WhatIf2Lockers,
     WhatIf2RespawnPoints,
     WhatIfGuild,
@@ -138,6 +140,32 @@ export class WhatIf2Provider {
                                     `stash_${guild}_${player.citizenid}`,
                                     coords as Vector3
                                 );
+                            },
+                        },
+                    ]
+                );
+            });
+        });
+
+        Object.entries(WhatIf2CraftingTables).forEach(([guild, tables]) => {
+            tables.forEach((table, index) => {
+                this.objectProvider.createObject(
+                    {
+                        id: `whatif-crafting-${guild}-${index}`,
+                        model: joaat('gr_prop_gr_bench_03a'),
+                        position: table,
+                    },
+                    [
+                        {
+                            label: 'Confectionner',
+                            icon: 'dmc/confection',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: async () => {
+                                const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, 'whatif2');
+                                crafting.title = 'Campement';
+                                crafting.subtitle = 'Confection';
+                                this.nuiDispatch.dispatch('craft', 'ShowCraft', crafting);
                             },
                         },
                     ]

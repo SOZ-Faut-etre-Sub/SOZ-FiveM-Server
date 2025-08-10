@@ -1,4 +1,5 @@
 import { WardrobeConfig } from '@public/shared/cloth';
+import { CraftCategory } from '@public/shared/craft/craft';
 import { PlayerPedHash } from '@public/shared/player';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
@@ -89,4 +90,93 @@ export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
 export const WhatIf2Cloakroom: WardrobeConfig = {
     [PlayerPedHash.Male]: {},
     [PlayerPedHash.Female]: {},
+};
+
+export const WhatIf2CraftingTables: Record<WhatIfGuild, Vector4[]> = {
+    raider: [[1752.97, 2504.42, 44.57, 206.94]],
+    warden: [],
+};
+
+export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
+    'Caisses de Metaux': {
+        animation: {
+            dictionary: 'melee@small_wpn@streamed_core_fps',
+            name: 'car_down_attack',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 30000,
+        icon: '📦',
+        event: 'job_dmc_craft',
+        recipes: {
+            resell_box_coal: {
+                inputs: {
+                    raw_coal: { count: 180 },
+                },
+                amount: 1,
+            },
+            resell_box_iron: {
+                inputs: {
+                    iron_ingot: { count: 12 },
+                },
+                amount: 1,
+            },
+            resell_box_aluminium: {
+                inputs: {
+                    aluminium_ingot: { count: 12 },
+                },
+                amount: 1,
+            },
+            resell_box_steel: {
+                inputs: {
+                    steel_ingot: { count: 12 },
+                },
+                amount: 1,
+            },
+        },
+    },
+    'Pièces de Véhicule': {
+        animation: {
+            dictionary: 'melee@small_wpn@streamed_core_fps',
+            name: 'car_down_attack',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 10000,
+        icon: '🔧',
+        event: 'job_dmc_craft',
+        recipes: {
+            repair_part_body: {
+                inputs: {
+                    iron_ingot: { count: 1 },
+                    aluminium_ingot: { count: 1 },
+                },
+                amount: 10,
+            },
+            repair_part_motor: {
+                inputs: {
+                    iron_ingot: { count: 1 },
+                    steel_ingot: { count: 1 },
+                },
+                amount: 10,
+            },
+            repair_part_fuel_tank: {
+                inputs: {
+                    aluminium_ingot: { count: 1 },
+                    steel_ingot: { count: 1 },
+                },
+                amount: 10,
+            },
+            ls_custom_upgrade_part: {
+                inputs: {
+                    aluminium_ingot: { count: 1 },
+                    iron_ingot: { count: 1 },
+                    steel_ingot: { count: 1 },
+                },
+                amount: 10,
+            },
+        },
+    },
 };
