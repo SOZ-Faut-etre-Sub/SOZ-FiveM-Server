@@ -69,6 +69,7 @@ export const RadarAllowedVehicle: number[] = [
     GetHashKey('polimpaler5'),
     GetHashKey('polgreenwood'),
     GetHashKey('poldorado'),
+    GetHashKey('polterminus'),
 ];
 
 export const RadarInformedVehicle: number[] = [
