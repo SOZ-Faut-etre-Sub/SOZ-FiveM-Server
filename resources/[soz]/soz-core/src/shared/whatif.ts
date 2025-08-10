@@ -130,8 +130,100 @@ export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
 };
 
 export const WhatIf2Cloakroom: WardrobeConfig = {
-    [PlayerPedHash.Male]: {},
-    [PlayerPedHash.Female]: {},
+    [PlayerPedHash.Male]: {
+        'Tenue 1': {
+            Components: {
+                '1': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '2': { Collection: 'mp_m_bikerdlc_01', Drawable: 0, Texture: 0, Palette: 0 },
+                '3': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '4': { Collection: 'soz_custom', Drawable: 4, Texture: 0, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_m_smuggler_01', Drawable: 1, Texture: 0, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: 'Male_Heist', Drawable: 8, Texture: 7, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_m_tuner', Drawable: 19, Texture: 0, Palette: 0 },
+            },
+        },
+        'Tenue 2': {
+            Components: {
+                '1': { Collection: 'Male_Heist', Drawable: 1, Texture: 0, Palette: 0 },
+                '2': { Collection: 'mp_m_bikerdlc_01', Drawable: 0, Texture: 0, Palette: 0 },
+                '3': { Collection: '', Drawable: 1, Texture: 0, Palette: 0 },
+                '4': { Collection: '', Drawable: 9, Texture: 0, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_m_christmas2017', Drawable: 4, Texture: 1, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_m_security', Drawable: 3, Texture: 0, Palette: 0 },
+            },
+        },
+        'Tenue 3': {
+            Components: {
+                '1': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '2': { Collection: 'mp_m_bikerdlc_01', Drawable: 0, Texture: 0, Palette: 0 },
+                '3': { Collection: '', Drawable: 1, Texture: 0, Palette: 0 },
+                '4': { Collection: 'mp_m_christmas2018', Drawable: 1, Texture: 3, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_m_gunrunning_01', Drawable: 3, Texture: 1, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: '', Drawable: 12, Texture: 7, Palette: 0 },
+            },
+        },
+    },
+    [PlayerPedHash.Female]: {
+        'Tenue 1': {
+            Components: {
+                '6': { Collection: 'mp_f_bikerdlc_01', Index: 6, Palette: 0, Texture: 4, Drawable: 0 },
+                '7': { Collection: '', Index: 7, Palette: 0, Texture: 0, Drawable: 0 },
+                '8': { Collection: '', Index: 8, Palette: 0, Texture: 0, Drawable: 2 },
+                '9': { Collection: '', Index: 9, Palette: 0, Texture: 0, Drawable: 0 },
+                '1': { Collection: '', Index: 1, Palette: 0, Texture: 0, Drawable: 0 },
+                '10': { Collection: '', Index: 10, Palette: 0, Texture: 0, Drawable: 0 },
+                '11': { Collection: 'Female_Heist', Index: 11, Palette: 0, Texture: 0, Drawable: 17 },
+                '2': { Collection: 'soz_custom', Index: 2, Palette: 0, Texture: 0, Drawable: 2 },
+                '3': { Collection: 'Female_Heist', Index: 3, Palette: 0, Texture: 0, Drawable: 1 },
+                '4': { Collection: 'mp_f_bikerdlc_01', Index: 4, Palette: 0, Texture: 2, Drawable: 1 },
+                '5': { Collection: '', Index: 5, Palette: 0, Texture: 0, Drawable: 0 },
+            },
+        },
+        'Tenue 2': {
+            Components: {
+                '1': { Collection: 'Female_Heist', Drawable: 11, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 2, Texture: 0, Palette: 0 },
+                '3': { Collection: 'Female_Heist', Drawable: 1, Texture: 0, Palette: 0 },
+                '4': { Collection: 'mp_f_christmas2018', Drawable: 0, Texture: 0, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 0, Texture: 4, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 2, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_f_importexport_01', Drawable: 18, Texture: 1, Palette: 0 },
+            },
+        },
+        'Tenue 3': {
+            Components: {
+                '1': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 2, Texture: 0, Palette: 0 },
+                '3': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '4': { Collection: 'soz_bcso', Drawable: 7, Texture: 0, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_christmas3', Drawable: 1, Texture: 0, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 2, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'Female_Apt01', Drawable: 6, Texture: 1, Palette: 0 },
+            },
+        },
+    },
 };
 
 export const WhatIf2CraftingTables: Record<WhatIfGuild, Vector4[]> = {

@@ -8,6 +8,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
+import { WardrobeConfig } from '../../shared/cloth';
 import { CraftsList } from '../../shared/craft/craft';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
@@ -32,13 +33,13 @@ import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
-import { JobCloakroomProvider } from '../job/job.cloakroom.provider';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
+import { PlayerWardrobe } from '../player/player.wardrobe';
 import { zombieModel } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
@@ -81,8 +82,8 @@ export class WhatIf2Provider {
     @Inject(ObjectProvider)
     private readonly objectProvider: ObjectProvider;
 
-    @Inject(JobCloakroomProvider)
-    private jobCloakroomProvider: JobCloakroomProvider;
+    @Inject(PlayerWardrobe)
+    private playerWardrobe: PlayerWardrobe;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -152,7 +153,7 @@ export class WhatIf2Provider {
                             icon: 'jobs/habiller',
                             category: 'citizen',
                             event: 'whatif:2',
-                            action: () => this.jobCloakroomProvider.openCloakroom(guild, WhatIf2Cloakroom),
+                            action: () => this.openCloakroom(WhatIf2Cloakroom),
                         },
                         {
                             label: 'Ouvrir mon casier',
@@ -499,6 +500,28 @@ export class WhatIf2Provider {
             SetPedHearingRange(pedHandle, 100);
 
             SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
+        }
+    }
+
+    private async openCloakroom(config: WardrobeConfig) {
+        if (!config) {
+            return;
+        }
+
+        const outfitSelection = await this.playerWardrobe.selectOutfit(config);
+        if (outfitSelection.canceled) {
+            return;
+        }
+
+        const progress = await this.playerWardrobe.waitProgress(false);
+        if (!progress.completed) {
+            return;
+        }
+
+        if (outfitSelection.outfit) {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfitSelection.outfit);
+        } else {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
         }
     }
 
