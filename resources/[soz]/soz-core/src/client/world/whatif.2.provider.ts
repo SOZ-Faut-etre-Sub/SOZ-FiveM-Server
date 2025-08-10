@@ -17,7 +17,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
-import { Vector3 } from '../../shared/polyzone/vector';
+import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import {
     WhatIf2Cloakroom,
@@ -26,6 +26,8 @@ import {
     WhatIf2LootInventoryType,
     WhatIf2LootModels,
     WhatIf2RespawnPoints,
+    WhatIf2ShopItems,
+    WhatIf2ShopPosition,
     WhatIfGuild,
     WhatIfSafeZones,
 } from '../../shared/whatif';
@@ -33,6 +35,7 @@ import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
+import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ObjectProvider } from '../object/object.provider';
@@ -87,6 +90,9 @@ export class WhatIf2Provider {
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
+
+    @Inject(ItemService)
+    private readonly itemService: ItemService;
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
@@ -204,6 +210,41 @@ export class WhatIf2Provider {
                         },
                     ]
                 );
+            });
+        });
+
+        WhatIf2ShopPosition.forEach(shop => {
+            this.targetFactory.createForPed({
+                model: 'ig_jimmyboston',
+                coords: toVector4Object(shop),
+                invincible: true,
+                freeze: true,
+                spawnNow: true,
+                blockevents: true,
+                scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+                target: {
+                    options: [
+                        {
+                            icon: 'magasin/cart',
+                            label: 'Magasin',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: () => {
+                                this.inventoryManager.openShopInventory(
+                                    WhatIf2ShopItems.map((product, id) => ({
+                                        ...this.itemService.getItem(product.name),
+                                        ...product,
+                                        slot: id + 1,
+                                    })),
+                                    'Vendeur',
+                                    null,
+                                    'money'
+                                );
+                            },
+                        },
+                    ],
+                    distance: 2.5,
+                },
             });
         });
     }

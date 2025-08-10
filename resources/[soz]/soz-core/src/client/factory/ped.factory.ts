@@ -3,6 +3,7 @@ import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { uuidv4 } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
+import { PedOptions } from '@public/client/target/target.factory';
 import { AnimationProps } from '@public/shared/animation';
 import { Outfit, Prop } from '@public/shared/cloth';
 import { ClientEvent } from '@public/shared/event/client';
@@ -126,8 +127,11 @@ export class PedFactory {
         return null;
     }
 
-    public async createPedOnGrid(ped: Ped): Promise<string> {
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+    public async createPedOnGrid(ped: PedOptions): Promise<string> {
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) &&
+            !ped.target.options.some(v => v.event === 'whatif:2')
+        ) {
             return;
         }
 

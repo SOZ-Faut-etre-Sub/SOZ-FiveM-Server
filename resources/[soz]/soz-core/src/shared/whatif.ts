@@ -88,6 +88,13 @@ export const WhatIfSafeZones: Record<WhatIfGuild, PolygonZone> = {
     ]),
 };
 
+export const WhatIf2ShopPosition: Vector4[] = [
+    [1663.61, 2519.21, 44.57, 0], // raider
+    [2504.67, -397.82, 93.12, 349.58], // warden
+];
+
+export const WhatIf2ShopItems = [{ name: 'tapas_777', price: 1 }];
+
 export enum WhatIf2LootType {
     Low,
     Medium,
