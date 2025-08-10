@@ -53,6 +53,8 @@ export const WhatIfRadiationZone = [
     ]),
 ];
 
+export const WhatIf2DefaultItems = [{ name: 'cheese9', quantity: 4 }];
+
 export const WhatIfSafeZones: Record<WhatIfGuild, PolygonZone> = {
     raider: new PolygonZone([
         [1639.5460396886765, 2768.581216950348],

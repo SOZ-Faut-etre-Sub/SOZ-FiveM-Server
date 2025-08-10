@@ -1,4 +1,5 @@
 import { Rpc } from '@public/core/decorators/rpc';
+import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 
 import { Command } from '../../core/decorators/command';
@@ -9,7 +10,7 @@ import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
-import { WhatIf2RespawnPoints, WhatIfSafeZones } from '../../shared/whatif';
+import { WhatIf2DefaultItems, WhatIf2RespawnPoints, WhatIfSafeZones } from '../../shared/whatif';
 import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
@@ -138,6 +139,22 @@ export class WhatIfProvider {
         for (let i = 0; i < count; i++) {
             CreatePed(0, zombieModel, playerCoords[0], playerCoords[1], playerCoords[2], 0, true, false);
         }
+    }
+
+    @On(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS)
+    async giveDefaultItems(source: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!inventory) return;
+
+        inventory.clear();
+
+        WhatIf2DefaultItems.forEach(item => {
+            inventory.add(item.name, item.quantity);
+        });
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID)

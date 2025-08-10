@@ -355,6 +355,8 @@ export class WhatIf2Provider {
 
         const outfit = getRandomItem(Object.values(WhatIf2Cloakroom[player.skin.Model.Hash]));
         TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
+
+        TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS);
     }
 
     @OnEvent(ClientEvent.INVENTORY_UNSUBSCRIBE)

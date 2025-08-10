@@ -838,4 +838,6 @@ export enum ServerEvent {
 
     FIRETRUCK_TAKEOUT = 'soz-core:server:firetruck:takeout',
     FIRETRUCK_RETURN = 'soz-core:server:firetruck:return',
+
+    WHAT_IF_GIVE_DEFAULT_ITEMS = 'soz-core:server:what-if:give-default-items',
 }
