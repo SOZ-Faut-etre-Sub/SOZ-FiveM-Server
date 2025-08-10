@@ -10,7 +10,7 @@ import { ClientEvent } from '@public/shared/event/client';
 import { NuiEvent } from '@public/shared/event/nui';
 import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { WhatIfExcludeZone } from '@public/shared/whatif';
+import { WhatIfRadiationZone } from '@public/shared/whatif';
 
 import { Blip, BlipType } from '../shared/blip';
 
@@ -109,7 +109,7 @@ export class BlipFactory {
 
         if (
             this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
-            WhatIfExcludeZone.isPointInside(blip.position as Vector3)
+            WhatIfRadiationZone.some(zone => zone.isPointInside(blip.position as Vector3))
         ) {
             return -1;
         }

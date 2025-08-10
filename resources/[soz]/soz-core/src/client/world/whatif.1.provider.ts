@@ -1,7 +1,7 @@
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
-import { WhatIfExcludeZone } from '@public/shared/whatif';
+import { WhatIfRadiationZone } from '@public/shared/whatif';
 
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -29,12 +29,15 @@ export class WhatIf1Provider {
 
     @Tick(5000)
     public whatIfZoneCheck() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 
         const coords = GetEntityCoords(PlayerPedId()) as Vector3;
-        const inZone = WhatIfExcludeZone.isPointInside(coords);
+        const inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
         const player = this.playerService.getPlayer();
         if (!player) {
             return;
@@ -60,7 +63,10 @@ export class WhatIf1Provider {
 
     @Tick(TickInterval.EVERY_SECOND)
     public whatIfZoneDamage() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             return;
         }
 
@@ -69,7 +75,7 @@ export class WhatIf1Provider {
         }
 
         const player = this.playerService.getPlayer();
-        if (!player || player.metadata.godmode || player.metadata.isdead) {
+        if (!player || player.metadata.godmode || player.metadata.isdead || player.metadata.hazmat) {
             return;
         }
 
