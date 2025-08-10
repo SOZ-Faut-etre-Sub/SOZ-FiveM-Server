@@ -18,7 +18,7 @@ import { InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
-import { getRandomInt } from '../../shared/random';
+import { getRandomInt, getRandomItem } from '../../shared/random';
 import {
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
@@ -336,6 +336,11 @@ export class WhatIf2Provider {
             return;
         }
 
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
         if (!guild) {
             return;
         }
@@ -347,6 +352,9 @@ export class WhatIf2Provider {
             RpcServerEvent.PLAYER_TELEPORT,
             'UHU_WHAT_IF_REPAWN_' + guild + '_' + getRandomInt(0, WhatIf2RespawnPoints[guild].length - 1)
         );
+
+        const outfit = getRandomItem(Object.values(WhatIf2Cloakroom[player.skin.Model.Hash]));
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
     }
 
     @OnEvent(ClientEvent.INVENTORY_UNSUBSCRIBE)

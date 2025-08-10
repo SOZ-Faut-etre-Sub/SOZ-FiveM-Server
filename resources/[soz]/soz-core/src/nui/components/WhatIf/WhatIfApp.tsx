@@ -3,6 +3,7 @@ import { FunctionComponent, useCallback, useState } from 'react';
 import { NuiEvent } from '../../../shared/event/nui';
 import { WhatIfGuild } from '../../../shared/whatif';
 import { fetchNui } from '../../fetch';
+import { useAssetPath } from '../../hook/assets';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 
 export const WhatIfApp: FunctionComponent = () => {
@@ -29,9 +30,10 @@ export const WhatIfApp: FunctionComponent = () => {
 
 const ClanCard: FunctionComponent<{ id: WhatIfGuild; title: string }> = ({ id, title }) => {
     const handleOnClick = useCallback(() => fetchNui(NuiEvent.WhatIfSetGuild, id), [id]);
+    const { getPath } = useAssetPath();
 
     return (
-        <div className="relative group h-full w-full">
+        <div className="relative group h-full w-full max-w-[50vh]">
             <h3 className="absolute top-5 z-10 w-full text-center text-4xl uppercase font-semibold text-white opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all ease-in-out duration-300">
                 {title}
             </h3>
@@ -47,7 +49,7 @@ const ClanCard: FunctionComponent<{ id: WhatIfGuild; title: string }> = ({ id, t
 
             <div
                 className="bg-cover bg-center h-full w-full grayscale group-hover:grayscale-0 transition-all ease-in-out duration-300"
-                style={{ backgroundImage: 'url(https://placehold.co/400x600/orange/white)' }}
+                style={{ backgroundImage: `url(${getPath('images/whatif/' + id + '.webp')})` }}
             />
         </div>
     );
