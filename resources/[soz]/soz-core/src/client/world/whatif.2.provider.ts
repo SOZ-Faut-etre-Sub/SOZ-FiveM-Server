@@ -17,7 +17,13 @@ import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
-import { WhatIf2Cloakroom, WhatIf2Lockers, WhatIfGuild, WhatIfSafeZones } from '../../shared/whatif';
+import {
+    WhatIf2Cloakroom,
+    WhatIf2Lockers,
+    WhatIf2RespawnPoints,
+    WhatIfGuild,
+    WhatIfSafeZones,
+} from '../../shared/whatif';
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
@@ -243,7 +249,8 @@ export class WhatIf2Provider {
     }
 
     @Once(OnceStep.NuiLoaded)
-    async onPlayerLoaded() {
+    @On(ClientEvent.WHAT_IF_RELOAD_GUILD)
+    async onPlayerLoaded(forceReload = false) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
@@ -253,7 +260,7 @@ export class WhatIf2Provider {
             return;
         }
 
-        if (player.metadata.whatif_guild) {
+        if (!forceReload && player.metadata.whatif_guild) {
             return;
         }
 
@@ -272,6 +279,11 @@ export class WhatIf2Provider {
 
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'whatif_guild', guild);
         this.nuiDispatch.dispatch('whatif', 'OpenWelcomePage', false);
+
+        await emitRpc(
+            RpcServerEvent.PLAYER_TELEPORT,
+            'UHU_WHAT_IF_REPAWN_' + guild + '_' + getRandomInt(0, WhatIf2RespawnPoints[guild].length - 1)
+        );
     }
 
     @OnEvent(ClientEvent.INVENTORY_UNSUBSCRIBE)

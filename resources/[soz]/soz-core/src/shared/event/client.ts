@@ -520,5 +520,6 @@ export enum ClientEvent {
     FIRE_HOSE_DETACH_VEHICLE = 'soz-core:client:fire-hose:detach-vehicle',
     FIRE_HOSE_TRIGGER_SPRAY = 'soz-core:client:fire-hose:trigger-spray',
 
+    WHAT_IF_RELOAD_GUILD = 'soz-core:client:what-if:reload-guild',
     WHAT_IF_USE_ZOMBIE_SERUM = 'soz-core:client:what-if:use-zombie-serum',
 }

@@ -88,6 +88,10 @@ export class AdminMenuPlayerProvider {
     @OnEvent(ServerEvent.ADMIN_SET_METADATA)
     public onSetHealthMetadata(source: number, player: AdminPlayer, key: keyof PlayerMetadata, value: number) {
         this.playerService.setPlayerMetadata(player.id, key, value);
+
+        if (key === 'whatif_guild') {
+            TriggerClientEvent(ClientEvent.WHAT_IF_RELOAD_GUILD, player.id, true);
+        }
     }
 
     @OnEvent(ServerEvent.ADMIN_SET_STAMINA)
