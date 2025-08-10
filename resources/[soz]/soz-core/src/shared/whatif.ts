@@ -1,5 +1,6 @@
 import { WardrobeConfig } from '@public/shared/cloth';
 import { CraftCategory } from '@public/shared/craft/craft';
+import { PlacementPropList } from '@public/shared/nui/prop_placement';
 import { PlayerPedHash } from '@public/shared/player';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
@@ -94,6 +95,12 @@ export const WhatIf2ShopPosition: Vector4[] = [
 ];
 
 export const WhatIf2ShopItems = [{ name: 'tapas_777', price: 1 }];
+
+export const WhatIf2HammerZoneConfig = {
+    prefix: 'whatif_',
+    item: 'water_bottle',
+    price: 5,
+};
 
 export enum WhatIf2LootType {
     Low,
@@ -324,4 +331,113 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+};
+
+export const WHAT_IF_PROP_LIST: PlacementPropList = {
+    ['Poubelles']: [
+        {
+            model: 'prop_cs_bin_02',
+            label: 'Poubelle 1',
+        },
+        {
+            model: 'prop_cs_dumpster_01a',
+            label: 'Benne à ordures 1',
+        },
+        {
+            model: 'prop_rub_binbag_sd_01',
+            label: 'Sac poubelle 1',
+        },
+        {
+            model: 'prop_rub_binbag_03',
+            label: 'Poubelles en bazar 1',
+        },
+        {
+            model: 'prop_rub_binbag_04',
+            label: 'Sac poubelle 2',
+        },
+        {
+            model: 'prop_rub_binbag_05',
+            label: 'Sac poubelle 3',
+        },
+        {
+            model: 'prop_bin_01a',
+            label: 'Poubelle 2',
+        },
+        {
+            model: 'prop_bin_02a',
+            label: 'Poubelle 3',
+        },
+        {
+            model: 'prop_bin_04a',
+            label: 'Poubelle 4',
+        },
+        {
+            model: 'prop_bin_05a',
+            label: 'Poubelle 5',
+        },
+        {
+            model: 'prop_bin_06a',
+            label: 'Poubelle 6',
+        },
+        {
+            model: 'prop_bin_07a',
+            label: 'Poubelle 7',
+        },
+        {
+            model: 'prop_bin_08a',
+            label: 'Poubelle 8',
+        },
+        {
+            model: 'prop_bin_08open',
+            label: 'Poubelle 9',
+        },
+        {
+            model: 'prop_bin_09a',
+            label: 'Poubelle 10',
+        },
+        {
+            model: 'prop_bin_10a',
+            label: 'Poubelle 11',
+        },
+        {
+            model: 'prop_bin_11a',
+            label: 'Poubelle 12',
+        },
+        {
+            model: 'prop_bin_14a',
+            label: 'Benne à ordures 2',
+        },
+        {
+            model: 'prop_bin_beach_01d',
+            label: 'Poubelle de plage 1',
+        },
+        {
+            model: 'prop_bin_delpiero',
+            label: 'Poubelle de plage 2',
+        },
+        {
+            model: 'prop_bin_delpiero_b',
+            label: 'Poubelle de plage 3',
+        },
+        {
+            model: 'prop_dumpster_02a',
+            label: 'Benne à ordures 3',
+        },
+        {
+            model: 'prop_dumpster_4b',
+            label: 'Benne à ordures 4',
+        },
+        {
+            model: 'prop_recyclebin_04_a',
+            label: 'Poubelle de recyclage 1',
+        },
+        {
+            model: 'prop_recyclebin_04_b',
+            label: 'Poubelle de recyclage 2',
+        },
+        {
+            model: 'prop_recyclebin_05_a',
+            label: 'Poubelle de recyclage 3',
+        },
+    ],
 };

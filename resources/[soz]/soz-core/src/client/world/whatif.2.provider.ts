@@ -17,6 +17,9 @@ import { ServerEvent } from '../../shared/event/server';
 import { InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
+import { NotEmptyStringValidator } from '../../shared/nui/input';
+import { MenuType } from '../../shared/nui/menu';
+import { ForbiddenPropModels } from '../../shared/object';
 import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import {
@@ -37,8 +40,12 @@ import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
+import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
+import { NuiMenu } from '../nui/nui.menu';
+import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
+import { PropHighlightService } from '../object/prop.highlight.service';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
@@ -94,11 +101,27 @@ export class WhatIf2Provider {
     @Inject(ItemService)
     private readonly itemService: ItemService;
 
+    @Inject(NuiMenu)
+    public nuiMenu: NuiMenu;
+
+    @Inject(PropHighlightService)
+    private propHighlightService: PropHighlightService;
+
+    @Inject(ObjectEditorProvider)
+    public objectEditorProvider: ObjectEditorProvider;
+
+    @Inject(InputService)
+    public inputService: InputService;
+
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
 
     private isInfected = false;
     private isInfectedAt = 0;
+
+    private isMouseSelectionOn: boolean;
+    private isPipetteOn: boolean;
+    private hammerDebugEntity = 0;
 
     private inventoryAnimationRunner: AnimationRunner | null = null;
 
@@ -468,6 +491,148 @@ export class WhatIf2Provider {
         this.isInfected = false;
         this.notifier.notify(`Vous avez réussis a vous injecter un sérum a temps !`);
         this.blurService.remove('zombie-infected', 500);
+    }
+
+    @On(ClientEvent.WHAT_IF_OPEN_HAMMER)
+    async onOpenHammer() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);
+        this.nuiMenu.openMenu(MenuType.WhatIfHammer, props);
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerSelectPropToRemove)
+    public async onSelectPropToRemove() {
+        if (this.hammerDebugEntity) {
+            DeleteEntity(this.hammerDebugEntity);
+            this.hammerDebugEntity = 0;
+        }
+        this.propHighlightService.unhighlightAllEntities();
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerSelectPlacedProp)
+    public async onSelectProp(id: string) {
+        this.propHighlightService.unhighlightAllEntities();
+        if (!id) {
+            return;
+        }
+        const entity = this.objectProvider.getEntityFromId(id);
+        if (!entity) {
+            return;
+        }
+        this.propHighlightService.highlightEntities([entity]);
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerToggleMouseSelection)
+    public async toggleMouseSelection(value: boolean) {
+        this.isMouseSelectionOn = value;
+        if (value) {
+            EnterCursorMode();
+        } else {
+            LeaveCursorMode();
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerTogglePipette)
+    public async togglePipette(value: boolean) {
+        this.isPipetteOn = value;
+        if (value) {
+            EnterCursorMode();
+        } else {
+            LeaveCursorMode();
+        }
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerSelectPropToCreate)
+    public async onSelectPropToCreate(model: string) {
+        if (this.hammerDebugEntity) {
+            DeleteEntity(this.hammerDebugEntity);
+            this.hammerDebugEntity = 0;
+        }
+
+        const ped = PlayerPedId();
+        const coords = GetOffsetFromEntityInWorldCoords(ped, 0, 2.0, 0);
+
+        this.hammerDebugEntity = CreateObject(model, coords[0], coords[1], coords[2], false, false, false);
+        SetEntityAlpha(this.hammerDebugEntity, 200, false);
+        SetEntityCollision(this.hammerDebugEntity, false, false);
+        SetEntityInvincible(this.hammerDebugEntity, true);
+        FreezeEntityPosition(this.hammerDebugEntity, true);
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerChoosePropToCreate)
+    public async onChoosePropToCreate(model: string) {
+        if (this.hammerDebugEntity) {
+            DeleteEntity(this.hammerDebugEntity);
+            this.hammerDebugEntity = 0;
+        }
+
+        if (model == null) {
+            model = await this.inputService.askInput(
+                {
+                    title: 'Nom du modèle',
+                },
+                NotEmptyStringValidator
+            );
+
+            if (!model) {
+                return;
+            }
+
+            if (ForbiddenPropModels.includes(joaat(model))) {
+                this.notifier.notify(`Ce modèle est interdit`, 'error');
+                return;
+            }
+        }
+
+        const newObj = await this.objectEditorProvider.createOrUpdateObject(GetHashKey(model), {
+            allowRotation: true,
+            allowScale: true,
+            allowToggleCollision: true,
+            allowToggleSnap: true,
+        });
+
+        if (newObj) {
+            await emitRpc(
+                RpcServerEvent.WHAT_IF_HAMMER_CREATE,
+                model,
+                newObj.position,
+                newObj.matrix,
+                newObj.noCollision
+            );
+        }
+
+        const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);
+        this.nuiMenu.openMenu(MenuType.WhatIfHammer, props);
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerRequestDeleteProp)
+    public async onDeleteProp(id: string) {
+        await emitRpc(RpcServerEvent.WHAT_IF_HAMMER_DELETE, id);
+    }
+
+    @OnNuiEvent(NuiEvent.WhatIfHammerChoosePlacedPropToEdit)
+    public async onEditProp(id: string) {
+        const obj = this.objectProvider.getObject(id);
+        const newObj = await this.objectEditorProvider.createOrUpdateObject(
+            obj.model,
+            {
+                allowRotation: true,
+                allowScale: true,
+                allowToggleCollision: true,
+                allowToggleSnap: true,
+            },
+            obj
+        );
+
+        if (newObj) {
+            await emitRpc(RpcServerEvent.WHAT_IF_HAMMER_UPDATE, id, newObj.position, newObj.matrix, newObj.noCollision);
+        }
+
+        const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);
+        this.nuiMenu.openMenu(MenuType.WhatIfHammer, props);
     }
 
     @Tick(TickInterval.EVERY_SECOND)

@@ -167,6 +167,7 @@ export enum MenuType {
     CasinoRoulette = 'casino_roulette',
     CasinoInsideTrack = 'casino_inside_track',
     CasinoLuckyWheel = 'casino_lucky_wheel',
+    WhatIfHammer = 'whatif_hammer',
 }
 
 export interface MenuTypeMap extends Record<MenuType, any> {

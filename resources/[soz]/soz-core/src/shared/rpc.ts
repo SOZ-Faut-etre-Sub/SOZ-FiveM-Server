@@ -400,6 +400,11 @@ export enum RpcServerEvent {
     FIRE_UNLOCK_FIRETRUCK = 'soz-core:server:fire:unlock-firetruck',
 
     WHAT_IF_PLAYER_GET_CITIZEN_ID = 'soz-core:server:what-if:player:get-citizen-id',
+
+    WHAT_IF_GET_HAMMER_PROPS = 'soz-core:server:what-if:hammer:get-props',
+    WHAT_IF_HAMMER_CREATE = 'soz-core:server:what-if:hammer-create',
+    WHAT_IF_HAMMER_UPDATE = 'soz-core:server:what-if:hammer-update',
+    WHAT_IF_HAMMER_DELETE = 'soz-core:server:what-if:hammer-delete',
 }
 
 export enum RpcClientEvent {

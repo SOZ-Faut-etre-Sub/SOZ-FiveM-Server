@@ -108,6 +108,8 @@ import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { FunctionComponent, useLayoutEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
+import { MenuWhatIfHammer } from './MenuWhatIfHammer';
+
 export const MenuApp: FunctionComponent = () => {
     return (
         <div className="fixed inset-0 w-full h-full overflow-hidden opacity-100">
@@ -360,6 +362,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.CasinoRoulette}/*`} element={<MenuRoulette data={menuData} />} />
             <Route path={`/${MenuType.CasinoInsideTrack}/*`} element={<MenuInsideTrack />} />
             <Route path={`/${MenuType.CasinoLuckyWheel}/*`} element={<MenuLuckyWheel />} />
+            <Route path={`/${MenuType.WhatIfHammer}/*`} element={<MenuWhatIfHammer data={menuData} />} />
         </Routes>
     );
 };

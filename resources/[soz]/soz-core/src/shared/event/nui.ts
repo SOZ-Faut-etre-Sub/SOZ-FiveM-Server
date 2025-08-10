@@ -787,4 +787,12 @@ export enum NuiEvent {
     CasinoInsideTrackBet = 'soz-core:nui:casino:inside-track-bet',
 
     WhatIfSetGuild = 'soz-core:nui:what-if:set-guild',
+    WhatIfHammerSelectPropToRemove = 'soz-core:nui:what-if:hammer-select-prop-to-remove',
+    WhatIfHammerSelectPlacedProp = 'soz-core:nui:what-if:hammer-select-placed-prop',
+    WhatIfHammerToggleMouseSelection = 'soz-core:nui:what-if:hammer-toggle-mouse-selection',
+    WhatIfHammerTogglePipette = 'soz-core:nui:what-if:hammer-toggle-pipette',
+    WhatIfHammerSelectPropToCreate = 'soz-core:nui:what-if:hammer-select-prop-to-create',
+    WhatIfHammerChoosePlacedPropToEdit = 'soz-core:nui:what-if:hammer-choose-placed-prop-to-edit',
+    WhatIfHammerRequestDeleteProp = 'soz-core:nui:what-if:hammer-request-delete-prop',
+    WhatIfHammerChoosePropToCreate = 'soz-core:nui:what-if:hammer-choose-prop-to-create',
 }
