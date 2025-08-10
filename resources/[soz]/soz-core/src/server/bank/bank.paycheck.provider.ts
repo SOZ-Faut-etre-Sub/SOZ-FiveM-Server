@@ -3,6 +3,8 @@ import { JobType } from '@public/shared/job';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
+import { Feature } from '../../shared/features';
+import { FeatureProvider } from '../feature/feature.provider';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { ConfigurationRepository } from '../repository/configuration.repository';
@@ -30,8 +32,15 @@ export class BankPaycheckProvider {
     @Inject(ConfigurationRepository)
     private configurationRepository: ConfigurationRepository;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Tick(20 * 60 * 1000)
     public async paycheckLoop() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         const players = this.serverStateService.getPlayers();
 
         for (const player of players) {
