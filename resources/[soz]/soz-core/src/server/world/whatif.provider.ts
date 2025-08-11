@@ -323,7 +323,7 @@ export class WhatIfProvider {
 
         const model = GetEntityModel(handle);
 
-        if (GetEntityType(handle) === 1 || Animals.includes(model)) {
+        if (GetEntityType(handle) === 1 && Animals.includes(model)) {
             CancelEvent();
         }
 

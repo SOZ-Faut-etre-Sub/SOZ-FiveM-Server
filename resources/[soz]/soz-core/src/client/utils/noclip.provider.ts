@@ -113,6 +113,7 @@ export class NoClipProvider {
         }
         this.isClippedVeh = IsEntityAVehicle(this.noClippingEntity);
         SetUserRadioControlEnabled(!val);
+        SetRelationshipToPlayer(playerId, !val);
 
         if (this.isNoClipping) {
             PlaySoundFromEntity(-1, 'CANCEL', playerPed, 'HUD_LIQUOR_STORE_SOUNDSET', false, 0);

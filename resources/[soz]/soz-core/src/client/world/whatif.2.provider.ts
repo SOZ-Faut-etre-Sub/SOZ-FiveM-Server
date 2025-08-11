@@ -467,6 +467,7 @@ export class WhatIf2Provider {
         }
 
         if (this.isInfected) return;
+        if (!victim || !attacker) return;
 
         const playerPed = PlayerPedId();
         const attackerModel = GetEntityModel(attacker);
