@@ -712,8 +712,8 @@ export class WhatIf2Provider {
             SetPedCombatMovement(pedHandle, 2);
             SetPedCombatRange(pedHandle, 0);
             SetPedCombatAbility(pedHandle, 2);
-            SetPedSeeingRange(pedHandle, 200);
-            SetPedHearingRange(pedHandle, 100);
+            SetPedSeeingRange(pedHandle, 50);
+            SetPedHearingRange(pedHandle, 50);
 
             SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
         }
