@@ -124,7 +124,10 @@ export class PlayerHealthProvider {
         datas.alcohol = this.playerService.getIncrementedMetadata(player, 'alcohol', ALCOHOL_RATE, 0, 200);
         datas.drug = this.playerService.getIncrementedMetadata(player, 'drug', DRUG_RATE, 0, 110);
 
-        if (this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
+        if (
+            this.featureProvider.isFeatureEnabled(Feature.MyBodySummer) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             const now = new Date().getTime();
 
             const strengthTimeDiff = now - playerState.lastStrengthUpdate;
