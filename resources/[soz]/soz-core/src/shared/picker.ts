@@ -12,4 +12,9 @@ export type MapPickerLocation = {
     id: string;
     coords: Vector3;
     icon: 'location' | 'coffin';
+    description?: {
+        title: string;
+        description: string;
+        image: string;
+    };
 };

@@ -31,6 +31,7 @@ import {
     WhatIf2RespawnPoints,
     WhatIf2ShopItems,
     WhatIf2ShopPosition,
+    WhatIf2SpawnGuild,
     WhatIfGuild,
     WhatIfSafeZones,
 } from '../../shared/whatif';
@@ -46,6 +47,7 @@ import { NuiMenu } from '../nui/nui.menu';
 import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { PropHighlightService } from '../object/prop.highlight.service';
+import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
@@ -114,6 +116,9 @@ export class WhatIf2Provider {
 
     @Inject(InputService)
     public inputService: InputService;
+
+    @Inject(MapPickerProvider)
+    private mapPickerProvider: MapPickerProvider;
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
@@ -393,7 +398,10 @@ export class WhatIf2Provider {
             return;
         }
 
-        this.nuiDispatch.dispatch('whatif', 'OpenWelcomePage', true);
+        const location = await this.mapPickerProvider.showGlobalLocationPicker(WhatIf2SpawnGuild);
+        if (!location) return;
+
+        await this.onSetGuild(location.id as WhatIfGuild);
     }
 
     @OnNuiEvent(NuiEvent.WhatIfSetGuild)
@@ -412,7 +420,6 @@ export class WhatIf2Provider {
         }
 
         TriggerServerEvent(ServerEvent.QBCORE_SET_METADATA, 'whatif_guild', guild);
-        this.nuiDispatch.dispatch('whatif', 'OpenWelcomePage', false);
 
         await emitRpc(
             RpcServerEvent.PLAYER_TELEPORT,
@@ -472,7 +479,6 @@ export class WhatIf2Provider {
         this.isInfected = true;
         this.isInfectedAt = Date.now();
 
-        this.blurService.add('zombie-infected', 500);
         this.notifier.error(
             `Vous avez été infecté ! Vous avez ~b~20 minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`
         );
@@ -646,6 +652,10 @@ export class WhatIf2Provider {
         if (!this.isInfected) return;
 
         if (getRandomInt(0, 100) <= 10) {
+            this.blurService.add('zombie-infected', 500);
+        }
+
+        if (getRandomInt(0, 100) <= 5) {
             await this.animationService.playAnimation(
                 {
                     base: {
@@ -653,6 +663,7 @@ export class WhatIf2Provider {
                         name: 'vomit_outside',
                         options: {
                             onlyUpperBody: true,
+                            enablePlayerControl: true,
                         },
                         duration: 2000,
                     },
@@ -663,12 +674,13 @@ export class WhatIf2Provider {
             );
         }
 
+        this.blurService.remove('zombie-infected', 500);
+
         if (Date.now() - this.isInfectedAt < INFECTED_TIME_BEFORE_DEATH) return;
 
         SetEntityHealth(PlayerPedId(), 0);
 
         this.isInfected = false;
-        this.blurService.remove('zombie-infected', 500);
     }
 
     @Tick(TickInterval.EVERY_SECOND)

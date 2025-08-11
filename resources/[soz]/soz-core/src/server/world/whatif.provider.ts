@@ -1,28 +1,33 @@
-import {ZombieModels} from '@public/client/story/zombie.provider';
-import {Rpc} from '@public/core/decorators/rpc';
-import {ServerEvent} from '@public/shared/event/server';
-import {Feature} from '@public/shared/features';
+import { ZombieModels } from '@public/client/story/zombie.provider';
+import { Rpc } from '@public/core/decorators/rpc';
+import { ServerEvent } from '@public/shared/event/server';
+import { Feature } from '@public/shared/features';
 
-import {Command} from '../../core/decorators/command';
-import {On, Once, OnceStep} from '../../core/decorators/event';
-import {Inject} from '../../core/decorators/injectable';
-import {Provider} from '../../core/decorators/provider';
-import {uuidv4} from '../../core/utils';
-import {ClientEvent} from '../../shared/event/client';
-import {joaat} from '../../shared/joaat';
-import {Point3D, Vector3, Vector4} from '../../shared/polyzone/vector';
-import {getRandomItem} from '../../shared/random';
-import {RpcServerEvent} from '../../shared/rpc';
-import {WhatIf2DefaultItems, WhatIf2HammerZoneConfig, WhatIf2RespawnPoints, WhatIfSafeZones,} from '../../shared/whatif';
-import {PrismaService} from '../database/prisma.service';
-import {FeatureProvider} from '../feature/feature.provider';
-import {InventoryFactory} from '../inventory/inventory.factory';
-import {ItemService} from '../item/item.service';
-import {Notifier} from '../notifier';
-import {ObjectProvider} from '../object/object.provider';
-import {PlayerPositionProvider} from '../player/player.position.provider';
-import {PlayerService} from '../player/player.service';
-import {ProgressService} from '../player/progress.service';
+import { Command } from '../../core/decorators/command';
+import { On, Once, OnceStep } from '../../core/decorators/event';
+import { Inject } from '../../core/decorators/injectable';
+import { Provider } from '../../core/decorators/provider';
+import { uuidv4 } from '../../core/utils';
+import { ClientEvent } from '../../shared/event/client';
+import { joaat } from '../../shared/joaat';
+import { Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getRandomItem } from '../../shared/random';
+import { RpcServerEvent } from '../../shared/rpc';
+import {
+    WhatIf2DefaultItems,
+    WhatIf2HammerZoneConfig,
+    WhatIf2RespawnPoints,
+    WhatIfSafeZones,
+} from '../../shared/whatif';
+import { PrismaService } from '../database/prisma.service';
+import { FeatureProvider } from '../feature/feature.provider';
+import { InventoryFactory } from '../inventory/inventory.factory';
+import { ItemService } from '../item/item.service';
+import { Notifier } from '../notifier';
+import { ObjectProvider } from '../object/object.provider';
+import { PlayerPositionProvider } from '../player/player.position.provider';
+import { PlayerService } from '../player/player.service';
+import { ProgressService } from '../player/progress.service';
 
 const Animals = [
     joaat('A_C_Boar'),
@@ -186,7 +191,7 @@ export class WhatIfProvider {
 
         inventory.clear();
 
-        WhatIf2DefaultItems.forEach((item) => {
+        WhatIf2DefaultItems.forEach(item => {
             inventory.add(item.name, item.quantity);
         });
     }
@@ -218,7 +223,7 @@ export class WhatIfProvider {
             },
         });
 
-        return props.map((prop) => ({ id: prop.id, model: prop.model }));
+        return props.map(prop => ({ id: prop.id, model: prop.model }));
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_HAMMER_CREATE)
@@ -228,7 +233,7 @@ export class WhatIfProvider {
             return;
         }
 
-        if (Object.values(WhatIfSafeZones).some((zone) => zone.isPointInside(position.slice(0, 3) as Point3D))) {
+        if (Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position.slice(0, 3) as Point3D))) {
             this.notifier.error(source, `Vous ne pouvez pas poser un objet ici.`);
             return;
         }
@@ -327,7 +332,7 @@ export class WhatIfProvider {
         }
 
         const position = GetEntityCoords(handle, false) as Vector3;
-        if (Object.values(WhatIfSafeZones).some((zone) => zone.isPointInside(position))) {
+        if (Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
         }
     }

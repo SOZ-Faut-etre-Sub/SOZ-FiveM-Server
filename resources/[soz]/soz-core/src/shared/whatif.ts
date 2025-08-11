@@ -1,6 +1,7 @@
 import { WardrobeConfig } from '@public/shared/cloth';
 import { CraftCategory } from '@public/shared/craft/craft';
 import { PlacementPropList } from '@public/shared/nui/prop_placement';
+import { MapPickerLocation } from '@public/shared/picker';
 import { PlayerPedHash } from '@public/shared/player';
 import { Vector4 } from '@public/shared/polyzone/vector';
 
@@ -52,6 +53,31 @@ export const WhatIfRadiationZone = [
         [-5612.583564077458, 7846.098989510248],
         [-5595.6794471696, 2748.0506599797573],
     ]),
+];
+
+export const WhatIf2SpawnGuild: MapPickerLocation[] = [
+    {
+        id: 'raider',
+        coords: [1663.61, 2519.21, 45.57],
+        icon: 'location',
+        description: {
+            title: 'Raiders',
+            description:
+                'The raider guild is the most dangerous guild in the game. They are the most likely to be killed by the police.',
+            image: 'https://placehold.co/1280x720',
+        },
+    },
+    {
+        id: 'warden',
+        coords: [2505.71, -384.81, 94.12],
+        icon: 'location',
+        description: {
+            title: 'Wardens',
+            description:
+                'The warden guild is the most dangerous guild in the game. They are the most likely to be killed by the police.',
+            image: 'https://placehold.co/1280x720',
+        },
+    },
 ];
 
 export const WhatIf2DefaultItems = [{ name: 'cheese9', quantity: 4 }];
