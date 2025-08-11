@@ -169,8 +169,14 @@ export const WhatIf2RespawnPoints: Record<WhatIfGuild, Vector4[]> = {
 };
 
 export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
-    raider: [[1746.51, 2501.78, 44.56, 163.06]],
-    warden: [],
+    raider: [
+        [1728.19, 2528.98, 44.56, 208.49],
+        [1730.71, 2530.16, 44.56, 212.74],
+    ],
+    warden: [
+        [2574.55, -348.18, 91.99, 269.23],
+        [2573.61, -344.91, 91.99, 307.49],
+    ],
 };
 
 export const WhatIf2Cloakroom: WardrobeConfig = {
@@ -267,12 +273,48 @@ export const WhatIf2Cloakroom: WardrobeConfig = {
                 '11': { Collection: 'Female_Apt01', Drawable: 6, Texture: 1, Palette: 0 },
             },
         },
+        'Tenue 4': {
+            Components: {
+                '1': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 35, Texture: 0, Palette: 0 },
+                '3': { Collection: 'Female_Heist', Drawable: 4, Texture: 0, Palette: 0 },
+                '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 1, Texture: 3, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 0, Texture: 0, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 2, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_f_importexport_01', Drawable: 19, Texture: 0, Palette: 0 },
+            },
+        },
+        'Tenue 5': {
+            Components: {
+                '1': { Collection: 'Female_Heist', Drawable: 1, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 35, Texture: 0, Palette: 0 },
+                '3': { Collection: 'Female_Heist', Drawable: 4, Texture: 0, Palette: 0 },
+                '4': { Collection: 'Female_freemode_hipster', Drawable: 0, Texture: 3, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_battle', Drawable: 1, Texture: 12, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 2, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_f_lowrider_01', Drawable: 1, Texture: 1, Palette: 0 },
+            },
+        },
     },
 };
 
 export const WhatIf2CraftingTables: Record<WhatIfGuild, Vector4[]> = {
-    raider: [[1752.97, 2504.42, 44.57, 206.94]],
-    warden: [],
+    raider: [
+        [1694.341, 2482.805, 44.6215134, -90],
+        [1694.39954, 2488.95679, 44.62016, -90],
+    ],
+    warden: [
+        [2567.8042, -360.990631, 92.075, -5],
+        [2573.85864, -361.520325, 92.075, -5],
+    ],
 };
 
 export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
