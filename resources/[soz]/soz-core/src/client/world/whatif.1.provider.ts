@@ -51,7 +51,7 @@ export class WhatIf1Provider {
         }
 
         if (inZone && !this.inZone) {
-            this.audio = this.audioService.playAudio('audio/whatif/geiger.mp3', 0.1, true);
+            this.audio = this.audioService.playAudio('audio/whatif/geiger.mp3', 0.05, true);
             AnimpostfxPlay('DMT_flight', 0, false);
         } else if (!inZone && this.inZone) {
             this.audioService.stopAudio(this.audio);

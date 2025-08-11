@@ -529,8 +529,11 @@ export class PlayerHealthProvider {
 
     private canDoExercise(): boolean {
         const player = this.playerService.getPlayer();
-
         if (!player) {
+            return false;
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return false;
         }
 
