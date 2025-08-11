@@ -67,10 +67,11 @@ export class LSMCDeathProvider {
             targetid = source;
         }
 
-        const inventory = await this.inventoryFactory.getPlayerInventory(source);
+        const inventory = await this.inventoryFactory.getPlayerInventory(targetid);
 
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+        if (uniteHU && this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             inventory.clear();
+            this.playerService.setPlayerMetadata(targetid, 'stress_level', 0);
         }
 
         if (!admin && !uniteHU) {
