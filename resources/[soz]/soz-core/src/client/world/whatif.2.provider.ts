@@ -50,12 +50,14 @@ import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
 import { PlayerWardrobe } from '../player/player.wardrobe';
-import { zombieModel } from '../story/zombie.provider';
+import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
 import { WeaponService } from '../weapon/weapon.service';
 
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
+
+const ZombieModelHash = ZombieModels.map(model => joaat(model));
 
 @Provider()
 export class WhatIf2Provider {
@@ -464,7 +466,7 @@ export class WhatIf2Provider {
 
         if (playerPed !== victim) return;
 
-        if (attackerModel !== joaat(zombieModel)) return;
+        if (ZombieModelHash.every(model => model !== attackerModel)) return;
         if (getRandomInt(0, 100) > 20) return;
 
         this.isInfected = true;
@@ -706,6 +708,13 @@ export class WhatIf2Provider {
             // GiveWeaponToPed(pedHandle, 'weapon_pistol', 1000, false, true);
             // SetCurrentPedWeapon(pedHandle, 'weapon_pistol', true);
             // SetPedDropsWeaponsWhenDead(pedHandle, false);
+
+            ApplyPedDamagePack(pedHandle, 'BigHitByVehicle', 1.0, 9.0);
+            ApplyPedDamagePack(pedHandle, 'SCR_Dumpster', 1.0, 9.0);
+            ApplyPedDamagePack(pedHandle, 'SCR_Torture', 1.0, 9.0);
+            ApplyPedDamagePack(pedHandle, 'Splashback_Face_0', 1.0, 9.0);
+            ApplyPedDamagePack(pedHandle, 'SCR_Cougar', 1.0, 9.0);
+            ApplyPedDamagePack(pedHandle, 'SCR_Shark', 1.0, 9.0);
 
             SetPedShootRate(pedHandle, 1000);
             SetPedInfiniteAmmoClip(pedHandle, true);

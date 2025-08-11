@@ -4,6 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { Feature } from '@public/shared/features';
 
+import { getRandomItem } from '../../shared/random';
 import { FeatureProvider } from '../feature/feature.provider';
 
 // For some reason populationPedCreating does not use int32 for model hash
@@ -52,7 +53,15 @@ const Animals = [
     2910340283, // A_C_Westy
 ];
 
-export const zombieModel = 'u_m_y_zombie_01';
+export const ZombieModels = [
+    'G_M_M_Zombie_01',
+    'U_M_Y_Zombie_01',
+    'G_M_M_Zombie_02',
+    'G_M_M_Zombie_03',
+    'G_M_M_Zombie_04',
+    'G_M_M_Zombie_05',
+    'IG_Zombie_DJ_01',
+];
 
 @Provider()
 export class ZombieProvider {
@@ -72,6 +81,8 @@ export class ZombieProvider {
         }
 
         if (!Animals.includes(model)) {
+            const zombieModel = getRandomItem(ZombieModels);
+
             await this.resourceLoader.loadModel(zombieModel);
 
             setters.setModel(zombieModel);

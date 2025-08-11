@@ -1,3 +1,4 @@
+import { ZombieModels } from '@public/client/story/zombie.provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
@@ -10,6 +11,7 @@ import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
 import { Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getRandomItem } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     WhatIf2DefaultItems,
@@ -26,8 +28,6 @@ import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
-
-const zombieModel = joaat('u_m_y_zombie_01');
 
 const Animals = [
     joaat('A_C_Boar'),
@@ -175,6 +175,7 @@ export class WhatIfProvider {
         const playerCoords = GetEntityCoords(ped) as Vector3;
 
         for (let i = 0; i < count; i++) {
+            const zombieModel = getRandomItem(ZombieModels);
             CreatePed(0, zombieModel, playerCoords[0], playerCoords[1], playerCoords[2], 0, true, false);
         }
     }
