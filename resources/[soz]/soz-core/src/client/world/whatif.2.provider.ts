@@ -732,9 +732,9 @@ export class WhatIf2Provider {
             SetPedInfiniteAmmoClip(pedHandle, true);
             SetPedCombatMovement(pedHandle, 2);
             SetPedCombatRange(pedHandle, 0);
-            SetPedCombatAbility(pedHandle, 2);
-            SetPedSeeingRange(pedHandle, 50);
-            SetPedHearingRange(pedHandle, 50);
+            SetPedCombatAbility(pedHandle, 1);
+            SetPedSeeingRange(pedHandle, 20);
+            SetPedHearingRange(pedHandle, 30);
 
             SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
         }

@@ -9,6 +9,7 @@ import { FeatureProvider } from '../feature/feature.provider';
 import { Notifier } from '../notifier';
 import { AudioService } from '../nui/audio.service';
 import { PlayerService } from '../player/player.service';
+import { NoClipProvider } from '../utils/noclip.provider';
 
 @Provider()
 export class WhatIf1Provider {
@@ -23,6 +24,9 @@ export class WhatIf1Provider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(NoClipProvider)
+    private noClipProvider: NoClipProvider;
 
     private inZone = false;
     private audio: string = null;
@@ -39,7 +43,13 @@ export class WhatIf1Provider {
         const coords = GetEntityCoords(PlayerPedId()) as Vector3;
         const inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
         const player = this.playerService.getPlayer();
-        if (!player) {
+        if (
+            !player ||
+            player.metadata.godmode ||
+            this.noClipProvider.IsNoClipMode() ||
+            player.metadata.isdead ||
+            player.metadata.hazmat
+        ) {
             return;
         }
 
@@ -75,7 +85,13 @@ export class WhatIf1Provider {
         }
 
         const player = this.playerService.getPlayer();
-        if (!player || player.metadata.godmode || player.metadata.isdead || player.metadata.hazmat) {
+        if (
+            !player ||
+            player.metadata.godmode ||
+            this.noClipProvider.IsNoClipMode() ||
+            player.metadata.isdead ||
+            player.metadata.hazmat
+        ) {
             return;
         }
 
