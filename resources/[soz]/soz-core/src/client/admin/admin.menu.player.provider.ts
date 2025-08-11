@@ -321,4 +321,9 @@ export class AdminMenuPlayerProvider {
     public async handleResetWhatIfClan(player: AdminPlayer): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_SET_METADATA, player, 'whatif_guild', '');
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerResetWhatIfInfection)
+    public async handleResetWhatIfInfection(player: AdminPlayer): Promise<void> {
+        TriggerServerEvent(ServerEvent.WHAT_IF_RESET_INFECTION, player.id);
+    }
 }

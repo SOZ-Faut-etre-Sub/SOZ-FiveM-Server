@@ -495,6 +495,13 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ permissio
                         >
                             Reset Clan
                         </MenuItemButton>
+                        <MenuItemButton
+                            onConfirm={async () => {
+                                await fetchNui(NuiEvent.AdminMenuPlayerResetWhatIfInfection, player);
+                            }}
+                        >
+                            Reset Infection
+                        </MenuItemButton>
                     </MenuContent>
                 </SubMenu>
             ))}

@@ -196,6 +196,15 @@ export class WhatIfProvider {
         });
     }
 
+    @On(ServerEvent.WHAT_IF_RESET_INFECTION)
+    async resetInfection(source: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM, source);
+    }
+
     @Rpc(RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID)
     async getCitizenId(source: number, target: number): Promise<string> {
         const player = this.playerService.getPlayer(target);
