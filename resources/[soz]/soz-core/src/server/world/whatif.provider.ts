@@ -323,16 +323,12 @@ export class WhatIfProvider {
 
         const model = GetEntityModel(handle);
 
-        if (
-            (GetEntityType(handle) === 2 && GetVehicleType(handle) !== 'bike') ||
-            GetEntityType(handle) === 3 ||
-            Animals.includes(model)
-        ) {
+        if (GetEntityType(handle) === 1 || Animals.includes(model)) {
             CancelEvent();
         }
 
         const position = GetEntityCoords(handle, false) as Vector3;
-        if (Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
+        if (GetEntityType(handle) !== 2 && Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
         }
     }
