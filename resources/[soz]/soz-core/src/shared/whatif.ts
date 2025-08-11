@@ -63,8 +63,8 @@ export const WhatIf2SpawnGuild: MapPickerLocation[] = [
         description: {
             title: 'Raiders',
             description:
-                'The raider guild is the most dangerous guild in the game. They are the most likely to be killed by the police.',
-            image: 'https://placehold.co/1280x720',
+                'Les Raiders sont un groupe de survivants impitoyables, retranchés dans le pénitencier de Bolingbroke. Violents et imprévisibles, ils survivent en pillant, intimidant et écrasant quiconque se met sur leur chemin.',
+            image: `/static/game/images/whatif/raider.webp`,
         },
     },
     {
@@ -74,8 +74,8 @@ export const WhatIf2SpawnGuild: MapPickerLocation[] = [
         description: {
             title: 'Wardens',
             description:
-                'The warden guild is the most dangerous guild in the game. They are the most likely to be killed by the police.',
-            image: 'https://placehold.co/1280x720',
+                'Les Wardens sont des survivants organisés et disciplinés, établis dans l’ancien quartier général du NOOSE. Ils incarnent l’ordre au milieu du chaos, protégeant leur zone fortifiée avec des patrouilles armées et des barricades solides.',
+            image: `/static/game/images/whatif/warden.webp`,
         },
     },
 ];
@@ -84,21 +84,19 @@ export const WhatIf2DefaultItems = [{ name: 'cheese9', quantity: 4 }];
 
 export const WhatIfSafeZones: Record<WhatIfGuild, PolygonZone> = {
     raider: new PolygonZone([
-        [1639.5460396886765, 2768.581216950348],
-        [1773.2215293346835, 2778.756540427393],
-        [1790.2141763235823, 2775.3647659350445],
-        [1857.0519211465862, 2710.921050580424],
-        [1862.7161368095522, 2693.9621781186815],
-        [1861.5832936769593, 2525.50404499871],
-        [1852.5205486162122, 2482.5415680956303],
-        [1816.269568373229, 2438.4484996951014],
-        [1772.0886862020907, 2397.747205786919],
-        [1666.7342748709161, 2379.6577418277284],
-        [1640.6788828212711, 2386.441290812425],
-        [1533.0587852249091, 2453.1461891619438],
-        [1526.205742902449, 2463.84608523535],
-        [1519.4086841068893, 2583.6887839649935],
-        [1549.9954486869074, 2676.3972867558505],
+        [1769.5147072494347, 2398.647976934594],
+        [1808.5661250783078, 2425.7904443488687],
+        [1849.0122364010704, 2483.5551826920655],
+        [1864.3538648338435, 2517.657257135641],
+        [1904.102629409661, 2530.8805104913126],
+        [1906.892016397438, 2713.918175361927],
+        [1789.737762910815, 2774.4667565168447],
+        [1642.5975993055927, 2770.9869530021942],
+        [1551.9425222028485, 2674.944375997842],
+        [1520.5619185903606, 2589.3412095374406],
+        [1528.2327328067458, 2456.412715277793],
+        [1646.084333040314, 2382.6408807672033],
+        [1669.7941224364158, 2379.857037955482],
     ]),
     warden: new PolygonZone([
         [2507.4819626008793, -497.68165070627947],
@@ -164,8 +162,28 @@ export const WhatIf2LootInventoryContent: Partial<Record<string, Record<string, 
 };
 
 export const WhatIf2RespawnPoints: Record<WhatIfGuild, Vector4[]> = {
-    raider: [[1663.61, 2519.21, 45.57, 352.21]],
-    warden: [[2505.71, -384.81, 94.12, 0]],
+    raider: [
+        [1863.13, 2584.33, 45.67, 234.68],
+        [1873.92, 2641.81, 45.67, 13.28],
+        [1703.04, 2529.76, 45.56, 277.15],
+        [1677.12, 2511.1, 45.56, 250.53],
+        [1749.52, 2509.75, 45.55, 18.82],
+        [1718.44, 2555.7, 45.56, 227.13],
+        [1763.89, 2560.23, 45.56, 136.58],
+        [1765.59, 2533.3, 45.56, 70.55],
+        [1856.62, 2610.18, 45.67, 267.25],
+    ],
+    warden: [
+        [2574.04, -373.64, 92.99, 0],
+        [2567.44, -384.16, 92.99, 156.91],
+        [2555.26, -404.91, 93.04, 70.07],
+        [2553.58, -439.94, 92.95, 127.07],
+        [2538.6, -461.17, 93.03, 142.17],
+        [2507.14, -469.54, 92.95, 286.83],
+        [2536.16, -424.12, 94.11, 343.88],
+        [2505.85, -391.94, 94.13, 316.56],
+        [2508.66, -370.29, 94.12, 274.57],
+    ],
 };
 
 export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
@@ -301,6 +319,51 @@ export const WhatIf2Cloakroom: WardrobeConfig = {
                 '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
                 '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_lowrider_01', Drawable: 1, Texture: 1, Palette: 0 },
+            },
+        },
+        'Tenue 6': {
+            Components: {
+                '1': { Collection: 'Female_Heist', Drawable: 1, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 35, Texture: 0, Palette: 0 },
+                '3': { Collection: 'Female_Heist', Drawable: 3, Texture: 0, Palette: 0 },
+                '4': { Collection: 'mp_f_christmas2018', Drawable: 1, Texture: 0, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_tuner', Drawable: 1, Texture: 10, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: '', Drawable: 14, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_f_2024_02', Drawable: 26, Texture: 16, Palette: 0 },
+            },
+        },
+        'Tenue 7': {
+            Components: {
+                '1': { Collection: 'Female_Heist', Drawable: 1, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 35, Texture: 0, Palette: 0 },
+                '3': { Collection: 'Female_Heist', Drawable: 6, Texture: 0, Palette: 0 },
+                '4': { Collection: '', Drawable: 1, Texture: 5, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_sum2', Drawable: 1, Texture: 0, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: 'Female_freemode_business', Drawable: 0, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: 'mp_f_2023_02', Drawable: 3, Texture: 0, Palette: 0 },
+            },
+        },
+        'Tenue 8': {
+            Components: {
+                '1': { Collection: 'Female_Heist', Drawable: 1, Texture: 0, Palette: 0 },
+                '2': { Collection: 'soz_custom', Drawable: 35, Texture: 0, Palette: 0 },
+                '3': { Collection: 'Female_Heist', Drawable: 5, Texture: 0, Palette: 0 },
+                '4': { Collection: 'mp_f_christmas2017', Drawable: 5, Texture: 0, Palette: 0 },
+                '5': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 0, Texture: 1, Palette: 0 },
+                '7': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '8': { Collection: 'mp_f_lowrider_01', Drawable: 3, Texture: 0, Palette: 0 },
+                '9': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
+                '11': { Collection: '', Drawable: 8, Texture: 2, Palette: 0 },
             },
         },
     },

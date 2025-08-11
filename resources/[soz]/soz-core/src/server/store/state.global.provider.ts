@@ -24,7 +24,6 @@ export class StateGlobalProvider {
         }
 
         this.store.dispatch.global.update({
-            blackout: true,
             blackoutLevel: 1,
         });
     }

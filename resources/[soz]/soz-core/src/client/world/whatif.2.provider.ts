@@ -398,7 +398,13 @@ export class WhatIf2Provider {
             return;
         }
 
-        const location = await this.mapPickerProvider.showGlobalLocationPicker(WhatIf2SpawnGuild);
+        const publicApiUrl = GetConvar('soz_public_endpoint', 'https://soz.zerator.com');
+        const location = await this.mapPickerProvider.showGlobalLocationPicker(
+            WhatIf2SpawnGuild.map(spawn => ({
+                ...spawn,
+                description: { ...spawn.description, image: publicApiUrl + spawn.description.image },
+            }))
+        );
         if (!location) return;
 
         await this.onSetGuild(location.id as WhatIfGuild);
