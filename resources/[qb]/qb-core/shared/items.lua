@@ -24776,6 +24776,17 @@ QBShared.Items = {
         ["illustrator"] = ".NariieL",
     },
     -- What IF 2
+    ["whatif_parts"] = {
+        ["name"] = "whatif_parts",
+        ["label"] = "Pièces utile",
+        ["weight"] = 200,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["shouldClose"] = false,
+        ["description"] = "",
+        ["illustrator"] = ".",
+    },
     ["whatif_hammer"] = {
         ["name"] = "whatif_hammer",
         ["label"] = "Le Marteau",
@@ -24785,7 +24796,6 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["unique"] = true,
         ["combinable"] = nil,
-        ["notGiveable"] = true,
         ["description"] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façonner le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
         ["illustrator"] = ".",
     },

@@ -261,7 +261,7 @@ export class WhatIf2Provider {
                                     })),
                                     'Vendeur',
                                     null,
-                                    'money'
+                                    'whatif_parts'
                                 );
                             },
                         },
@@ -717,6 +717,15 @@ export class WhatIf2Provider {
 
             SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
         }
+    }
+
+    @Tick()
+    async onMapTick() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        SetFakePausemapPlayerPositionThisFrame(0.0, 0.0);
     }
 
     private async openCloakroom(config: WardrobeConfig) {

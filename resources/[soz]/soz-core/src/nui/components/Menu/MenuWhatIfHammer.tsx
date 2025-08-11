@@ -6,7 +6,7 @@ import { MenuType } from '../../../shared/nui/menu';
 import { WHAT_IF_PROP_LIST, WhatIf2HammerZoneConfig } from '../../../shared/whatif';
 import { fetchNui } from '../../fetch';
 import { useBackspace } from '../../hook/control';
-import { usePlayer } from '../../hook/data';
+import { useItem, usePlayer } from '../../hook/data';
 import {
     MainMenu,
     Menu,
@@ -26,6 +26,8 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: { id: string; model: st
     const [currentSearch, setCurrentSearch] = useState<string>(null);
     const player = usePlayer();
 
+    const item = useItem('whatif_parts');
+
     useBackspace(() => fetchNui(NuiEvent.WhatIfHammerSelectPropToRemove));
 
     return (
@@ -33,7 +35,10 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: { id: string; model: st
             <MainMenu>
                 <MenuTitle title="Edition de zone" />
                 <MenuContent subtitle={player.charinfo.firstname + ' ' + player.charinfo.lastname}>
-                    <MenuItemSubMenuLink id={`zone_prop_choose`} description={WhatIf2HammerZoneConfig.price + '$'}>
+                    <MenuItemSubMenuLink
+                        id={`zone_prop_choose`}
+                        description={WhatIf2HammerZoneConfig.price + ' ' + item.label}
+                    >
                         ➕ Ajouter un prop
                     </MenuItemSubMenuLink>
                     <MenuItemText>

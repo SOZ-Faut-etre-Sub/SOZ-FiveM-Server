@@ -98,7 +98,7 @@ export const WhatIf2ShopItems = [{ name: 'tapas_777', price: 1 }];
 
 export const WhatIf2HammerZoneConfig = {
     prefix: 'whatif_',
-    item: 'water_bottle',
+    item: 'whatif_parts',
     price: 5,
 };
 
