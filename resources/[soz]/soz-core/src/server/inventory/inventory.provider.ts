@@ -4,10 +4,11 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { Tick } from '../../core/decorators/tick';
+import { Tick, TickInterval } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
 import { BankMoneyType } from '../../shared/bank';
+import { Feature } from '../../shared/features';
 import {
     ADD_ERROR_MESSAGE,
     INVENTORY_ITEM_CREATORS,
@@ -21,6 +22,7 @@ import { getDistance, Vector3 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { isErr, isOk } from '../../shared/result';
 import { RpcServerEvent } from '../../shared/rpc';
+import { FeatureProvider } from '../feature/feature.provider';
 import { ItemService } from '../item/item.service';
 import { LockBinService } from '../job/bluebird/lock.bin.service';
 import { Monitor } from '../monitor/monitor';
@@ -67,34 +69,108 @@ export class InventoryProvider {
     @Inject(Logger)
     private logger: Logger;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @Tick()
     public async populateInventories() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            const createConfig = INVENTORY_ITEM_CREATORS[inventory.type()];
-
-            if (!createConfig) {
-                continue;
-            }
-
-            for (const itemName of Object.keys(createConfig)) {
-                const creatorConfig = createConfig[itemName];
-                const shouldCreate = getRandomInt(0, 100) <= creatorConfig.chance;
-
-                if (!shouldCreate) {
-                    continue;
-                }
-
-                const amount = getRandomInt(creatorConfig.min, creatorConfig.max);
-
-                for (let i = 0; i < amount; i++) {
-                    inventory.add(itemName, 1);
-                }
-            }
-
-            await inventory.observe();
+            await this.regenerateInventory(inventory);
         }
 
         await wait(getRandomInt(1, 3) * 3600 * 1000);
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE * 20)
+    public async whatIfLootLowRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootLow) {
+                await wait(0);
+                continue;
+            }
+
+            await this.regenerateInventory(inventory);
+        }
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE * 30)
+    public async whatIfLootMediumRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootMedium) {
+                await wait(0);
+                continue;
+            }
+
+            await this.regenerateInventory(inventory);
+        }
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE * 45)
+    public async whatIfLootHighRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootHigh) {
+                await wait(0);
+                continue;
+            }
+
+            await this.regenerateInventory(inventory);
+        }
+    }
+
+    @Tick(TickInterval.EVERY_HOUR)
+    public async whatIfLootMilitaryRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootMilitary) {
+                await wait(0);
+                continue;
+            }
+
+            await this.regenerateInventory(inventory);
+        }
+    }
+
+    private async regenerateInventory(inventory: Inventory) {
+        const createConfig = INVENTORY_ITEM_CREATORS[inventory.type()];
+        if (!createConfig) {
+            return;
+        }
+
+        for (const itemName of Object.keys(createConfig)) {
+            const creatorConfig = createConfig[itemName];
+            const shouldCreate = getRandomInt(0, 100) <= creatorConfig.chance;
+
+            if (!shouldCreate) {
+                continue;
+            }
+
+            const amount = getRandomInt(creatorConfig.min, creatorConfig.max);
+
+            for (let i = 0; i < amount; i++) {
+                inventory.add(itemName, 1);
+            }
+        }
+
+        await inventory.observe();
     }
 
     @Rpc(RpcServerEvent.BIN_IS_NOT_LOCKED)

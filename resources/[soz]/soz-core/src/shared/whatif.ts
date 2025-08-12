@@ -134,10 +134,10 @@ export enum WhatIf2LootType {
 }
 
 export const WhatIf2LootInventoryType: Record<WhatIf2LootType, string> = {
-    [WhatIf2LootType.Low]: 'zombie',
-    [WhatIf2LootType.Medium]: 'huge_stash',
-    [WhatIf2LootType.High]: 'what_if_loot_low',
-    [WhatIf2LootType.Military]: 'what_if_loot_medium',
+    [WhatIf2LootType.Low]: 'what_if_loot_low',
+    [WhatIf2LootType.Medium]: 'what_if_loot_medium',
+    [WhatIf2LootType.High]: 'what_if_loot_high',
+    [WhatIf2LootType.Military]: 'what_if_loot_military',
 };
 
 export const WhatIf2LootModels: Record<WhatIf2LootType, string[]> = {
@@ -156,7 +156,13 @@ export const WhatIf2LootInventoryContent: Partial<Record<string, Record<string, 
         },
     },
     huge_stash: {},
-    what_if_loot_low: {},
+    what_if_loot_low: {
+        water_bottle: {
+            chance: 100,
+            min: 1,
+            max: 1,
+        },
+    },
     what_if_loot_medium: {},
     what_if_loot_high: {},
 };
