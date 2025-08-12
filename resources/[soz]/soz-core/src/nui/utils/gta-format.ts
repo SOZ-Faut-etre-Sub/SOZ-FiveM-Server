@@ -255,6 +255,7 @@ export const formatText = (text: string) => {
     text = text.replace(/~a~/g, '');
     text = text.replace(/~n~/g, '<br />');
     text = text.replace(/~h~/g, '<strong>');
+    text = text.replace(/~\/h~/g, '</strong>');
 
     Object.keys(HUDColors).forEach(tag => {
         text = text.replace(RegExp(`~${tag}~`, 'g'), `<span style="color: ${HUDColors[tag]}">`);
