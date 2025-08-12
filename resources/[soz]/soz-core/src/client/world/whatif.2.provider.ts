@@ -2,6 +2,8 @@ import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
 import { RpcServerEvent } from '@public/shared/rpc';
 
+import { DealershipType } from '../../config/dealership';
+import { GarageList } from '../../config/garage';
 import { On, Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
@@ -20,8 +22,9 @@ import { getLocationHash } from '../../shared/locationhash';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { ForbiddenPropModels } from '../../shared/object';
-import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
+import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
+import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
@@ -55,6 +58,7 @@ import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
+import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
 import { WeaponService } from '../weapon/weapon.service';
 
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
@@ -119,6 +123,9 @@ export class WhatIf2Provider {
 
     @Inject(MapPickerProvider)
     private mapPickerProvider: MapPickerProvider;
+
+    @Inject(VehicleGarageProvider)
+    private vehicleGarageProvider: VehicleGarageProvider;
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
@@ -247,7 +254,7 @@ export class WhatIf2Provider {
             });
         });
 
-        WhatIf2ShopPosition.forEach(shop => {
+        Object.entries(WhatIf2ShopPosition).forEach(([guild, shop]) => {
             this.targetFactory.createForPed({
                 model: 'ig_jimmyboston',
                 coords: toVector4Object(shop),
@@ -274,6 +281,27 @@ export class WhatIf2Provider {
                                     null,
                                     'whatif_parts'
                                 );
+                            },
+                        },
+                        {
+                            icon: 'dealership/list',
+                            label: 'Accéder au catalogue',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: () => {
+                                this.openDealership(DealershipType.WhatIf, shop);
+                            },
+                        },
+                        {
+                            label: 'Garage',
+                            icon: 'housing/garage',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: () => {
+                                this.vehicleGarageProvider.enterGarage(`whatif_garage_${guild}`, {
+                                    ...GarageList[`whatif_garage_${guild}`],
+                                    id: `whatif_garage_${guild}`,
+                                });
                             },
                         },
                     ],
@@ -384,6 +412,25 @@ export class WhatIf2Provider {
                 },
             },
         ]);
+    }
+
+    public async openDealership(dealershipType: DealershipType, position: Vector4) {
+        const vehicles = await emitRpc<Vehicle[]>(RpcServerEvent.WHAT_IF_VEHICLE_DEALERSHIP_GET_LIST);
+
+        this.nuiMenu.openMenu(
+            MenuType.VehicleDealership,
+            {
+                name: 'Concessionnaire',
+                dealershipId: dealershipType,
+                vehicles,
+            },
+            {
+                position: {
+                    position,
+                    distance: 3.0,
+                },
+            }
+        );
     }
 
     @Once(OnceStep.NuiLoaded)
@@ -702,6 +749,11 @@ export class WhatIf2Provider {
 
         for (const pedHandle of GetGamePool('CPed')) {
             if (IsPedAPlayer(pedHandle) || !NetworkHasControlOfEntity(pedHandle)) {
+                continue;
+            }
+
+            const model = GetEntityModel(pedHandle);
+            if (!ZombieModelHash.includes(model)) {
                 continue;
             }
 

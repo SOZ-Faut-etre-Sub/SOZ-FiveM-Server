@@ -3146,4 +3146,70 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
             }),
         ],
     },
+    whatif_garage_raider: {
+        legacyId: 'whatif_garage_raider',
+        name: 'Parking SafeZone',
+        type: GarageType.Public,
+        category: GarageCategory.All,
+        zone: new BoxZone([1875.16, 2537.82, 45.67], 3.2, 3.8, {
+            heading: 49.88,
+            minZ: 44.67,
+            maxZ: 46.67,
+        }),
+        parkingPlaces: [
+            new BoxZone([1870.02, 2553.42, 45.67], 5.4, 3.0, {
+                heading: 269.85,
+                minZ: 44.67,
+                maxZ: 46.67,
+            }),
+            new BoxZone([1870.1, 2556.89, 45.67], 5.4, 3.2, {
+                heading: 269.85,
+                minZ: 44.67,
+                maxZ: 46.67,
+            }),
+            new BoxZone([1876.84, 2553.27, 45.67], 5.6, 3.2, {
+                heading: 269.13,
+                minZ: 44.67,
+                maxZ: 46.67,
+            }),
+            new BoxZone([1876.81, 2556.79, 45.67], 5.6, 3.2, {
+                heading: 269.13,
+                minZ: 44.67,
+                maxZ: 46.67,
+            }),
+        ],
+    },
+    whatif_garage_warden: {
+        legacyId: 'whatif_garage_warden',
+        name: 'Parking SafeZone',
+        type: GarageType.Public,
+        category: GarageCategory.All,
+        zone: new BoxZone([2517.24, -375.68, 93.14], 5.8, 4.6, {
+            heading: 274.88,
+            minZ: 92.14,
+            maxZ: 94.14,
+        }),
+        parkingPlaces: [
+            new BoxZone([2537.07, -379.16, 93.04], 6.2, 3.4, {
+                heading: 167.93,
+                minZ: 92.04,
+                maxZ: 94.04,
+            }),
+            new BoxZone([2540.64, -379.22, 93.04], 6.0, 3.0, {
+                heading: 165.33,
+                minZ: 92.04,
+                maxZ: 94.04,
+            }),
+            new BoxZone([2538.56, -371.25, 92.99], 6.0, 3.4, {
+                heading: 345.72,
+                minZ: 91.99,
+                maxZ: 93.99,
+            }),
+            new BoxZone([2542.41, -371.59, 92.99], 4.8, 3.0, {
+                heading: 347.24,
+                minZ: 91.99,
+                maxZ: 93.99,
+            }),
+        ],
+    },
 };

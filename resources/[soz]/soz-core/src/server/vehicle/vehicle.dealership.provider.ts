@@ -1,5 +1,6 @@
 import { On, OnEvent } from '@public/core/decorators/event';
 import { Logger } from '@public/core/logger';
+import { InventoryFactory } from '@public/server/inventory/inventory.factory';
 import { ServerEvent } from '@public/shared/event';
 import { PlayerData } from '@public/shared/player';
 import { TaxType } from '@public/shared/tax';
@@ -75,6 +76,9 @@ export class VehicleDealershipProvider {
 
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(InventoryFactory)
+    private inventoryFactory: InventoryFactory;
 
     private auctions: Record<string, AuctionVehicle> = {};
 
@@ -460,13 +464,18 @@ export class VehicleDealershipProvider {
             return false;
         }
 
-        if (dealershipId !== DealershipType.Job && dealershipId !== DealershipType.Cycle) {
+        if (
+            dealershipId !== DealershipType.Job &&
+            dealershipId !== DealershipType.Cycle &&
+            dealershipId !== DealershipType.WhatIf
+        ) {
             if (!(await this.vehicleCountCheck(player))) {
                 return;
             }
         }
 
         if (
+            dealershipId !== DealershipType.WhatIf &&
             vehicle.requiredLicence &&
             (!player.metadata.licences[vehicle.requiredLicence] ||
                 player.metadata.licences[vehicle.requiredLicence] <= 0)
@@ -525,10 +534,20 @@ export class VehicleDealershipProvider {
 
                 const taxType = isVehicleModelElectric(vehicle.hash) ? TaxType.GREEN : TaxType.VEHICLE;
 
-                if (!(await this.playerMoneyService.buy(source, vehicle.price, taxType))) {
-                    this.notifier.notify(source, `Tu n'as pas assez d'argent.`, 'error');
+                if (dealershipId === DealershipType.WhatIf) {
+                    const inventory = await this.inventoryFactory.getPlayerInventory(source);
+                    if (!inventory) return;
 
-                    return false;
+                    if (!inventory.remove('whatif_parts', vehicle.price)) {
+                        this.notifier.error(source, `Tu n'as pas de quoi payer...`);
+                        return false;
+                    }
+                } else {
+                    if (!(await this.playerMoneyService.buy(source, vehicle.price, taxType))) {
+                        this.notifier.notify(source, `Tu n'as pas assez d'argent.`, 'error');
+
+                        return false;
+                    }
                 }
 
                 let livery = 0;
@@ -565,6 +584,10 @@ export class VehicleDealershipProvider {
                     garage = 'docks_boat';
                     state = PlayerVehicleState.InGarage;
                     configuration.color = null;
+                }
+
+                if (dealershipId === DealershipType.WhatIf) {
+                    garage = 'whatif_garage_' + player.metadata.whatif_guild;
                 }
 
                 const condition = getDefaultVehicleCondition();
@@ -611,7 +634,8 @@ export class VehicleDealershipProvider {
 
                 if (
                     dealershipId !== DealershipType.Job &&
-                    !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)
+                    !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+                    !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
                 ) {
                     await this.prismaService.vehicle.update({
                         where: {

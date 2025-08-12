@@ -2,7 +2,9 @@ import { TaxType } from '@public/shared/tax';
 import cn from 'classnames';
 import { FunctionComponent } from 'react';
 
+import { DealershipType } from '../../../config/dealership';
 import { NuiEvent } from '../../../shared/event';
+import { Item } from '../../../shared/item';
 import { MenuType } from '../../../shared/nui/menu';
 import {
     isVehicleModelElectric,
@@ -12,6 +14,7 @@ import {
 } from '../../../shared/vehicle/vehicle';
 import { fetchNui } from '../../fetch';
 import { useGetPrice } from '../../hook/price';
+import { ItemIcon } from '../Craft/ItemIcon';
 import {
     MainMenu,
     Menu,
@@ -83,7 +86,12 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
                             );
                         })}
                     {sortedCategories.length === 1 && (
-                        <MenuVehicleList vehicles={data.vehicles} onChange={onChange} onConfirm={onConfirm} />
+                        <MenuVehicleList
+                            dealershipId={data.dealershipId}
+                            vehicles={data.vehicles}
+                            onChange={onChange}
+                            onConfirm={onConfirm}
+                        />
                     )}
                 </MenuContent>
             </MainMenu>
@@ -94,6 +102,7 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
                             <MenuTitle title="Véhicule" />
                             <MenuContent subtitle={category.name}>
                                 <MenuVehicleList
+                                    dealershipId={data.dealershipId}
                                     vehicles={category.vehicles}
                                     onChange={onChange}
                                     onConfirm={onConfirm}
@@ -107,12 +116,13 @@ export const MenuVehicleDealership: FunctionComponent<MenuVehicleDealershipProps
 };
 
 type MenuVehicleListProps = {
+    dealershipId: DealershipType;
     vehicles: Vehicle[];
     onChange: (vehicle: Vehicle) => void;
     onConfirm: (vehicle: Vehicle) => void;
 };
 
-const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, onConfirm, onChange }) => {
+const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ dealershipId, vehicles, onConfirm, onChange }) => {
     const getPrice = useGetPrice();
 
     vehicles.sort((a, b) => {
@@ -158,13 +168,23 @@ const MenuVehicleList: FunctionComponent<MenuVehicleListProps> = ({ vehicles, on
                     >
                         <div className="pr-2 flex items-center justify-between">
                             <span className={classNameText}>{vehicle.name} </span>
-                            <span>
-                                💸 $
-                                {getPrice(
-                                    vehicle.price,
-                                    isVehicleModelElectric(vehicle.hash) ? TaxType.GREEN : TaxType.VEHICLE
-                                )}
-                            </span>
+                            {dealershipId === DealershipType.WhatIf ? (
+                                <span className="flex items-center gap-2">
+                                    {vehicle.price}
+                                    <ItemIcon
+                                        item={{ name: 'whatif_parts' } as Item}
+                                        className="h-6 object-contain"
+                                    />{' '}
+                                </span>
+                            ) : (
+                                <span>
+                                    💸 $
+                                    {getPrice(
+                                        vehicle.price,
+                                        isVehicleModelElectric(vehicle.hash) ? TaxType.GREEN : TaxType.VEHICLE
+                                    )}
+                                </span>
+                            )}
                         </div>
                     </MenuItemButton>
                 );

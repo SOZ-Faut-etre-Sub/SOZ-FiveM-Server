@@ -13,10 +13,12 @@ import { joaat } from '../../shared/joaat';
 import { Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomItem } from '../../shared/random';
 import { RpcServerEvent } from '../../shared/rpc';
+import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WhatIf2DefaultItems,
     WhatIf2HammerZoneConfig,
     WhatIf2RespawnPoints,
+    WhatIf2ShopVehicleList,
     WhatIfSafeZones,
 } from '../../shared/whatif';
 import { PrismaService } from '../database/prisma.service';
@@ -213,6 +215,29 @@ export class WhatIfProvider {
         }
 
         return player.citizenid;
+    }
+
+    @Rpc(RpcServerEvent.WHAT_IF_VEHICLE_DEALERSHIP_GET_LIST)
+    public async getDealershipListJob(): Promise<Vehicle[]> {
+        const vehicles = await this.prismaService.vehicle.findMany({
+            where: {
+                model: {
+                    in: Object.keys(WhatIf2ShopVehicleList),
+                },
+            },
+        });
+
+        return Object.entries(WhatIf2ShopVehicleList).map(([model, price]) => {
+            const vehicle = vehicles.find(vehicle => vehicle.model === model);
+
+            return {
+                ...vehicle,
+                stock: 1000,
+                price: price,
+                jobName: JSON.parse(vehicle.jobName),
+                handling: vehicle.handling ? JSON.parse(vehicle.handling) : null,
+            };
+        });
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS)
