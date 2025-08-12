@@ -1,27 +1,27 @@
-import { emitRpc } from '@public/core/rpc';
-import { Feature } from '@public/shared/features';
-import { RpcServerEvent } from '@public/shared/rpc';
+import {emitRpc} from '@public/core/rpc';
+import {Feature} from '@public/shared/features';
+import {RpcServerEvent} from '@public/shared/rpc';
 
-import { On, Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { Tick, TickInterval } from '../../core/decorators/tick';
-import { wait } from '../../core/utils';
-import { AnimationStopReason } from '../../shared/animation';
-import { WardrobeConfig } from '../../shared/cloth';
-import { CraftsList } from '../../shared/craft/craft';
-import { ClientEvent } from '../../shared/event/client';
-import { GameEvent } from '../../shared/event/game';
-import { NuiEvent } from '../../shared/event/nui';
-import { ServerEvent } from '../../shared/event/server';
-import { InventoryType } from '../../shared/inventory';
-import { joaat } from '../../shared/joaat';
-import { getLocationHash } from '../../shared/locationhash';
-import { NotEmptyStringValidator } from '../../shared/nui/input';
-import { MenuType } from '../../shared/nui/menu';
-import { ForbiddenPropModels } from '../../shared/object';
-import { toVector4Object, Vector3 } from '../../shared/polyzone/vector';
-import { getRandomInt, getRandomItem } from '../../shared/random';
+import {On, Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent} from '../../core/decorators/event';
+import {Inject} from '../../core/decorators/injectable';
+import {Provider} from '../../core/decorators/provider';
+import {Tick, TickInterval} from '../../core/decorators/tick';
+import {wait} from '../../core/utils';
+import {AnimationStopReason} from '../../shared/animation';
+import {WardrobeConfig} from '../../shared/cloth';
+import {CraftsList} from '../../shared/craft/craft';
+import {ClientEvent} from '../../shared/event/client';
+import {GameEvent} from '../../shared/event/game';
+import {NuiEvent} from '../../shared/event/nui';
+import {ServerEvent} from '../../shared/event/server';
+import {InventoryType} from '../../shared/inventory';
+import {joaat} from '../../shared/joaat';
+import {getLocationHash} from '../../shared/locationhash';
+import {NotEmptyStringValidator} from '../../shared/nui/input';
+import {MenuType} from '../../shared/nui/menu';
+import {ForbiddenPropModels} from '../../shared/object';
+import {toVector4Object, Vector3} from '../../shared/polyzone/vector';
+import {getRandomInt, getRandomItem} from '../../shared/random';
 import {
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
@@ -35,31 +35,31 @@ import {
     WhatIfGuild,
     WhatIfSafeZones,
 } from '../../shared/whatif';
-import { AnimationRunner } from '../animation/animation.factory';
-import { AnimationService } from '../animation/animation.service';
-import { FeatureProvider } from '../feature/feature.provider';
-import { InventoryManager } from '../inventory/inventory.manager';
-import { ItemService } from '../item/item.service';
-import { Notifier } from '../notifier';
-import { InputService } from '../nui/input.service';
-import { NuiDispatch } from '../nui/nui.dispatch';
-import { NuiMenu } from '../nui/nui.menu';
-import { ObjectEditorProvider } from '../object/object.editor.provider';
-import { ObjectProvider } from '../object/object.provider';
-import { PropHighlightService } from '../object/prop.highlight.service';
-import { MapPickerProvider } from '../picker/map.picker.provider';
-import { PlayerInOutService } from '../player/player.inout.service';
-import { PlayerListStateService } from '../player/player.list.state.service';
-import { PlayerService } from '../player/player.service';
-import { PlayerWardrobe } from '../player/player.wardrobe';
-import { ZombieModels } from '../story/zombie.provider';
-import { TargetFactory } from '../target/target.factory';
-import { BlurService } from '../utils/blur.service';
-import { WeaponService } from '../weapon/weapon.service';
+import {AnimationRunner} from '../animation/animation.factory';
+import {AnimationService} from '../animation/animation.service';
+import {FeatureProvider} from '../feature/feature.provider';
+import {InventoryManager} from '../inventory/inventory.manager';
+import {ItemService} from '../item/item.service';
+import {Notifier} from '../notifier';
+import {InputService} from '../nui/input.service';
+import {NuiDispatch} from '../nui/nui.dispatch';
+import {NuiMenu} from '../nui/nui.menu';
+import {ObjectEditorProvider} from '../object/object.editor.provider';
+import {ObjectProvider} from '../object/object.provider';
+import {PropHighlightService} from '../object/prop.highlight.service';
+import {MapPickerProvider} from '../picker/map.picker.provider';
+import {PlayerInOutService} from '../player/player.inout.service';
+import {PlayerListStateService} from '../player/player.list.state.service';
+import {PlayerService} from '../player/player.service';
+import {PlayerWardrobe} from '../player/player.wardrobe';
+import {ZombieModels} from '../story/zombie.provider';
+import {TargetFactory} from '../target/target.factory';
+import {BlurService} from '../utils/blur.service';
+import {WeaponService} from '../weapon/weapon.service';
 
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
 
-const ZombieModelHash = ZombieModels.map(model => joaat(model));
+const ZombieModelHash = ZombieModels.map((model) => joaat(model));
 
 @Provider()
 export class WhatIf2Provider {
@@ -157,7 +157,7 @@ export class WhatIf2Provider {
 
     private safeZoneSetup() {
         Object.entries(WhatIfSafeZones).forEach(([guild, zone]) => {
-            this.playerInOutService.add(`SafeZone-${guild}`, zone, isInside => {
+            this.playerInOutService.add(`SafeZone-${guild}`, zone, (isInside) => {
                 this.weapon.setDisabled('SafeZone', isInside);
                 this.inSafeZone = isInside;
 
@@ -169,7 +169,7 @@ export class WhatIf2Provider {
                             'Aucune créature, aucune arme, aucune trahison n’a sa place entre ces barrières.~n~' +
                             ' Reprenez votre souffle, échangez, préparez-vous… car au-delà de cette limite, c’est la survie, rien d’autre.',
                         'info',
-                        20000
+                        20000,
                     );
                 }
             });
@@ -208,11 +208,11 @@ export class WhatIf2Provider {
                                 this.inventoryManager.openInventory(
                                     InventoryType.HugeStash,
                                     `stash_${guild}_${player.citizenid}`,
-                                    coords as Vector3
+                                    coords as Vector3,
                                 );
                             },
                         },
-                    ]
+                    ],
                 );
             });
         });
@@ -238,12 +238,12 @@ export class WhatIf2Provider {
                                 this.nuiDispatch.dispatch('craft', 'ShowCraft', crafting);
                             },
                         },
-                    ]
+                    ],
                 );
             });
         });
 
-        WhatIf2ShopPosition.forEach(shop => {
+        WhatIf2ShopPosition.forEach((shop) => {
             this.targetFactory.createForPed({
                 model: 'ig_jimmyboston',
                 coords: toVector4Object(shop),
@@ -268,7 +268,7 @@ export class WhatIf2Provider {
                                     })),
                                     'Vendeur',
                                     null,
-                                    'whatif_parts'
+                                    'whatif_parts',
                                 );
                             },
                         },
@@ -304,7 +304,7 @@ export class WhatIf2Provider {
                     },
                     canInteract: async (entity: number) => {
                         const coords = GetEntityCoords(entity) as Vector3;
-                        return Object.values(WhatIfSafeZones).every(zone => !zone.isPointInside(coords));
+                        return Object.values(WhatIfSafeZones).every((zone) => !zone.isPointInside(coords));
                     },
                 },
             ]);
@@ -337,7 +337,7 @@ export class WhatIf2Provider {
                     },
                 },
             ],
-            10
+            10,
         );
 
         this.targetFactory.createForAllPlayer([
@@ -350,7 +350,7 @@ export class WhatIf2Provider {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
                     const targetCitizenId = await emitRpc<string>(
                         RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID,
-                        targetSource
+                        targetSource,
                     );
                     if (!targetCitizenId) return;
 
@@ -370,7 +370,7 @@ export class WhatIf2Provider {
                     this.inventoryManager.openInventory(
                         InventoryType.Player,
                         'player_' + targetCitizenId,
-                        coords as Vector3
+                        coords as Vector3,
                     );
                 },
                 canInteract: async (entity: number) => {
@@ -400,10 +400,10 @@ export class WhatIf2Provider {
 
         const publicApiUrl = GetConvar('soz_public_endpoint', 'https://soz.zerator.com');
         const location = await this.mapPickerProvider.showGlobalLocationPicker(
-            WhatIf2SpawnGuild.map(spawn => ({
+            WhatIf2SpawnGuild.map((spawn) => ({
                 ...spawn,
                 description: { ...spawn.description, image: publicApiUrl + spawn.description.image },
-            }))
+            })),
         );
         if (!location) return;
 
@@ -429,7 +429,7 @@ export class WhatIf2Provider {
 
         await emitRpc(
             RpcServerEvent.PLAYER_TELEPORT,
-            'UHU_WHAT_IF_REPAWN_' + guild + '_' + getRandomInt(0, WhatIf2RespawnPoints[guild].length - 1)
+            'UHU_WHAT_IF_REPAWN_' + guild + '_' + getRandomInt(0, WhatIf2RespawnPoints[guild].length - 1),
         );
 
         const outfit = getRandomItem(Object.values(WhatIf2Cloakroom[player.skin.Model.Hash]));
@@ -480,14 +480,14 @@ export class WhatIf2Provider {
 
         if (playerPed !== victim) return;
 
-        if (ZombieModelHash.every(model => model !== attackerModel)) return;
+        if (ZombieModelHash.every((model) => model !== attackerModel)) return;
         if (getRandomInt(0, 100) > 20) return;
 
         this.isInfected = true;
         this.isInfectedAt = Date.now();
 
         this.notifier.error(
-            `Vous avez été infecté ! Vous avez ~b~20 minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`
+            `Vous avez été infecté ! Vous avez ~b~20 minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`,
         );
     }
 
@@ -589,7 +589,7 @@ export class WhatIf2Provider {
                 {
                     title: 'Nom du modèle',
                 },
-                NotEmptyStringValidator
+                NotEmptyStringValidator,
             );
 
             if (!model) {
@@ -615,7 +615,7 @@ export class WhatIf2Provider {
                 model,
                 newObj.position,
                 newObj.matrix,
-                newObj.noCollision
+                newObj.noCollision,
             );
         }
 
@@ -639,7 +639,7 @@ export class WhatIf2Provider {
                 allowToggleCollision: true,
                 allowToggleSnap: true,
             },
-            obj
+            obj,
         );
 
         if (newObj) {
@@ -677,7 +677,7 @@ export class WhatIf2Provider {
                 },
                 {
                     cancellable: false,
-                }
+                },
             );
         }
 
@@ -701,15 +701,27 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            SetPedMovementClipset(pedHandle, 'move_m@drunk@moderatedrunk', 1.5);
+            if (GetIsTaskActive(pedHandle, 222) || IsPedInMeleeCombat(pedHandle)) {
+                continue;
+            }
+
+            const coords = GetEntityCoords(pedHandle) as Vector3;
+
+            SetPedIsDrunk(pedHandle, true);
 
             SetCanAttackFriendly(pedHandle, true, true);
             SetPedCanEvasiveDive(pedHandle, false);
             SetPedMoveRateOverride(pedHandle, 10.0);
             SetRunSprintMultiplierForPlayer(pedHandle, 1.49);
+            SetEntityMaxSpeed(pedHandle, 10.0);
 
             DisablePedPainAudio(pedHandle, true);
             StopPedSpeaking(pedHandle, true);
+
+            SetPedCombatRange(pedHandle, 2);
+            SetPedAlertness(pedHandle, 3);
+            SetPedTargetLossResponse(pedHandle, 2);
+            SetAmbientVoiceName(pedHandle, 'ALIENS');
 
             SetPedCombatAttributes(pedHandle, 0, false);
             SetPedCombatAttributes(pedHandle, 4, true);
@@ -738,12 +750,13 @@ export class WhatIf2Provider {
             SetPedShootRate(pedHandle, 1000);
             SetPedInfiniteAmmoClip(pedHandle, true);
             SetPedCombatMovement(pedHandle, 2);
-            SetPedCombatRange(pedHandle, 0);
             SetPedCombatAbility(pedHandle, 1);
             SetPedSeeingRange(pedHandle, 20);
             SetPedHearingRange(pedHandle, 30);
 
             SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
+
+            TaskWanderInArea(pedHandle, coords[0], coords[1], coords[2], 100.0, 2, 10.0);
         }
     }
 

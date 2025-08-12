@@ -346,6 +346,7 @@ export class UtilsNPCProvider {
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             this.density[PedDensityType.vehicle] = 0.0;
             this.density[PedDensityType.parked] = 0.0;
+            this.density[PedDensityType.scenario] = 0.0;
         }
     }
 
@@ -377,7 +378,6 @@ export class UtilsNPCProvider {
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) && !isDay) {
             SetPedDensityMultiplierThisFrame(3.0);
             SetAmbientPedRangeMultiplierThisFrame(3.0);
-            SetScenarioPedDensityMultiplierThisFrame(3.0, 3.0);
         }
     }
 
@@ -395,6 +395,7 @@ export class UtilsNPCProvider {
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             this.density[PedDensityType.vehicle] = 0.0;
             this.density[PedDensityType.parked] = 0.0;
+            this.density[PedDensityType.scenario] = 0.0;
         }
     }
 
