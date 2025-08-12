@@ -344,17 +344,16 @@ export class UtilsNPCProvider {
         }
 
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            this.density[PedDensityType.vehicle] = 0.0;
             this.density[PedDensityType.parked] = 0.0;
+            this.density[PedDensityType.vehicle] = 0.0;
+            this.density[PedDensityType.multiplier] = 0.0;
+            this.density[PedDensityType.peds] = 0.0;
             this.density[PedDensityType.scenario] = 0.0;
         }
     }
 
     @Tick()
     public onDensityTick() {
-        const hour = GetClockHours();
-        const isDay = hour >= 6 && hour < 21;
-
         if (this.density[PedDensityType.parked] != 1) {
             SetParkedVehicleDensityMultiplierThisFrame(this.density[PedDensityType.parked]);
         }
@@ -374,11 +373,6 @@ export class UtilsNPCProvider {
                 this.density[PedDensityType.scenario]
             );
         }
-
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) && !isDay) {
-            SetPedDensityMultiplierThisFrame(3.0);
-            SetAmbientPedRangeMultiplierThisFrame(3.0);
-        }
     }
 
     @Tick()
@@ -393,8 +387,10 @@ export class UtilsNPCProvider {
         }
 
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            this.density[PedDensityType.vehicle] = 0.0;
             this.density[PedDensityType.parked] = 0.0;
+            this.density[PedDensityType.vehicle] = 0.0;
+            this.density[PedDensityType.multiplier] = 0.0;
+            this.density[PedDensityType.peds] = 0.0;
             this.density[PedDensityType.scenario] = 0.0;
         }
     }

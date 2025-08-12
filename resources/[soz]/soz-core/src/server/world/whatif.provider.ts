@@ -1,4 +1,3 @@
-import { ZombieModels } from '@public/client/story/zombie.provider';
 import { Rpc } from '@public/core/decorators/rpc';
 import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
@@ -7,12 +6,13 @@ import { Command } from '../../core/decorators/command';
 import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
+import { Tick, TickInterval } from '../../core/decorators/tick';
+import { emitClientRpc } from '../../core/rpc';
 import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { joaat } from '../../shared/joaat';
-import { Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { getRandomItem } from '../../shared/random';
-import { RpcServerEvent } from '../../shared/rpc';
+import { getDistance, Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WhatIf2DefaultItems,
@@ -30,6 +30,7 @@ import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
+import { QBCore } from '../qbcore';
 
 const Animals = [
     joaat('A_C_Boar'),
@@ -75,8 +76,14 @@ const Animals = [
     joaat('A_C_Westy'),
 ];
 
+const MAX_ZOMBIE_AT_DAY = 50;
+const MAX_ZOMBIE_AT_NIGHT = 150;
+
 @Provider()
 export class WhatIfProvider {
+    @Inject(QBCore)
+    private readonly qbCore: QBCore;
+
     @Inject(FeatureProvider)
     private readonly featureProvider: FeatureProvider;
 
@@ -103,6 +110,8 @@ export class WhatIfProvider {
 
     @Inject(PrismaService)
     private prismaService: PrismaService;
+
+    private spawnedZombies: number[] = [];
 
     @Once()
     init() {
@@ -168,7 +177,7 @@ export class WhatIfProvider {
         arguments: [{ name: 'count', help: 'amount of zombies to spawn' }],
         role: ['admin'],
     })
-    public spawnZombie(source: number, count: number = 10) {
+    async spawnZombie(source: number, count: number = 10) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
@@ -176,10 +185,11 @@ export class WhatIfProvider {
         const ped = GetPlayerPed(source);
         const playerCoords = GetEntityCoords(ped) as Vector3;
 
-        for (let i = 0; i < count; i++) {
-            const zombieModel = getRandomItem(ZombieModels);
-            CreatePed(0, zombieModel, playerCoords[0], playerCoords[1], playerCoords[2], 0, true, false);
+        const handles = await emitClientRpc<number[]>(RpcClientEvent.WHAT_IF_SPAWN_PEDS, source, count, playerCoords);
+        if (!handles) {
+            return;
         }
+        this.spawnedZombies.push(...handles);
     }
 
     @On(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS)
@@ -365,5 +375,98 @@ export class WhatIfProvider {
         if (GetEntityType(handle) !== 2 && Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
         }
+    }
+
+    private async getGameTime() {
+        const players = this.qbCore.getPlayersSources();
+        if (!players || !players.length) return null;
+
+        return emitClientRpc<number>(RpcClientEvent.GET_CLOCK_HOURS, players[0]);
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE)
+    async onZombieSpawnTick() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        this.spawnedZombies.forEach(id => {
+            const ped = NetworkGetEntityFromNetworkId(id);
+            if (!ped) {
+                this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
+                return;
+            }
+
+            const pedCoords = GetEntityCoords(ped, false) as Vector3;
+            if (!this.hasClosestPlayer(pedCoords)) {
+                DeleteEntity(ped);
+                this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
+                return;
+            }
+
+            if (GetEntityHealth(ped) === 0) {
+                setTimeout(
+                    () => {
+                        if (!ped || !DoesEntityExist(ped)) return;
+
+                        DeleteEntity(ped);
+                    },
+                    5 * 60 * 1000
+                );
+            }
+        });
+
+        const hour = await this.getGameTime();
+        if (!hour) {
+            return;
+        }
+
+        const isDay = hour >= 6 && hour < 21;
+        const maxZombies = isDay ? MAX_ZOMBIE_AT_DAY : MAX_ZOMBIE_AT_NIGHT;
+
+        if (this.spawnedZombies.length >= maxZombies) {
+            return;
+        }
+
+        const zombieToSpawn = maxZombies - this.spawnedZombies.length;
+
+        const players = this.qbCore.getPlayersSources();
+        if (!players || !players.length) return;
+
+        const eligiblePlayers = players
+            .filter(player => {
+                const playerPosition = this.playerPositionProvider.getPlayerPosition(player);
+                if (!playerPosition) return false;
+                return Object.values(WhatIfSafeZones).every(zone => !zone.isPointInside(playerPosition));
+            })
+            .sort(() => Math.random() - 0.5);
+
+        if (!eligiblePlayers.length) return;
+
+        const perPlayer = Math.floor(zombieToSpawn / eligiblePlayers.length);
+
+        for (let i = 0; i < eligiblePlayers.length; i++) {
+            const handles = await emitClientRpc<number[]>(
+                RpcClientEvent.WHAT_IF_SPAWN_PEDS,
+                eligiblePlayers[i],
+                perPlayer
+            );
+            if (!handles) {
+                continue;
+            }
+            this.spawnedZombies.push(...handles);
+        }
+    }
+
+    private hasClosestPlayer(position: Vector3) {
+        for (const player of this.qbCore.getPlayersSources()) {
+            const playerPosition = this.playerPositionProvider.getPlayerPosition(player);
+            if (!playerPosition) continue;
+
+            if (getDistance(position, playerPosition) > 100) continue;
+
+            return true;
+        }
+        return false;
     }
 }

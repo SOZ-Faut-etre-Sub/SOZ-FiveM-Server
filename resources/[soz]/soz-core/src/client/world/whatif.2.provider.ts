@@ -1,6 +1,7 @@
+import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
-import { RpcServerEvent } from '@public/shared/rpc';
+import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { DealershipType } from '../../config/dealership';
 import { GarageList } from '../../config/garage';
@@ -22,7 +23,7 @@ import { getLocationHash } from '../../shared/locationhash';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { ForbiddenPropModels } from '../../shared/object';
-import { toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getDistance, toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
@@ -55,6 +56,7 @@ import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
 import { PlayerWardrobe } from '../player/player.wardrobe';
+import { ResourceLoader } from '../repository/resource.loader';
 import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
@@ -64,11 +66,24 @@ import { WeaponService } from '../weapon/weapon.service';
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
 
 const ZombieModelHash = ZombieModels.map(model => joaat(model));
+const ZombieWalks = [
+    'move_m@drunk@verydrunk',
+    'move_m@drunk@moderatedrunk',
+    'move_m@drunk@a',
+    'anim_group_move_ballistic',
+    'move_lester_CaneUp',
+];
+
+const MIN_SPAWN_DISTANCE = 30;
+const MAX_SPAWN_DISTANCE = 100;
 
 @Provider()
 export class WhatIf2Provider {
     @Inject(FeatureProvider)
     private featureProvider: FeatureProvider;
+
+    @Inject(ResourceLoader)
+    private readonly resourceLoader: ResourceLoader;
 
     @Inject(PlayerInOutService)
     private playerInOutService: PlayerInOutService;
@@ -701,6 +716,88 @@ export class WhatIf2Provider {
         this.nuiMenu.openMenu(MenuType.WhatIfHammer, props);
     }
 
+    @Rpc(RpcClientEvent.GET_CLOCK_HOURS)
+    async getClockHours() {
+        return GetClockHours();
+    }
+
+    @Rpc(RpcClientEvent.WHAT_IF_SPAWN_PEDS)
+    async spawnPeds(count: number, overriddenCoords?: Vector3): Promise<number[]> {
+        const spawnedPeds: number[] = [];
+
+        const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+
+        for (let i = 0; i < count; i++) {
+            const coords = this.getZombieSpawnCoords(playerCoords);
+            if (!coords && !overriddenCoords) {
+                continue;
+            }
+
+            const zombieModel = getRandomItem(ZombieModels);
+
+            await this.resourceLoader.loadModel(zombieModel);
+
+            const pedHandle = CreatePed(
+                0,
+                zombieModel,
+                overriddenCoords ? overriddenCoords[0] : coords[0],
+                overriddenCoords ? overriddenCoords[1] : coords[1],
+                overriddenCoords ? overriddenCoords[2] : coords[2],
+                0.0,
+                true,
+                false
+            );
+
+            await wait(1);
+
+            if (pedHandle === 0) {
+                continue;
+            }
+
+            const netPedHandle = PedToNet(pedHandle);
+            if (!netPedHandle) {
+                DeleteEntity(pedHandle);
+                continue;
+            }
+
+            this.configurePed(pedHandle);
+
+            spawnedPeds.push(netPedHandle);
+        }
+
+        return spawnedPeds;
+    }
+
+    private getZombieSpawnCoords(playerCoords: Vector3): Vector3 | null {
+        let iter = 0;
+        let canSpawn = false;
+
+        do {
+            const x = playerCoords[0] + getRandomInt(-MAX_SPAWN_DISTANCE, MAX_SPAWN_DISTANCE);
+            const y = playerCoords[1] + getRandomInt(-MAX_SPAWN_DISTANCE, MAX_SPAWN_DISTANCE);
+            const [valid, posZ] = GetGroundZFor_3dCoord(x, y, playerCoords[2], true);
+            if (!valid) {
+                continue;
+            }
+
+            if (
+                (x > playerCoords[0] - MIN_SPAWN_DISTANCE && x < playerCoords[0] + MIN_SPAWN_DISTANCE) ||
+                (y > playerCoords[1] - MIN_SPAWN_DISTANCE && y < playerCoords[1] + MIN_SPAWN_DISTANCE)
+            ) {
+                canSpawn = false;
+            } else if (
+                Object.values(WhatIfSafeZones).every(zone => !zone.isPointInside([x, y, posZ])) &&
+                Object.values(WhatIf2ShopPosition).every(pos => getDistance([x, y, posZ], pos) >= 500)
+            ) {
+                return [x, y, posZ];
+            }
+
+            iter++;
+        } while (!canSpawn && iter < 30);
+
+        return null;
+    }
+
     @Tick(TickInterval.EVERY_SECOND)
     async onInfectedCheck() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
@@ -748,7 +845,11 @@ export class WhatIf2Provider {
         }
 
         for (const pedHandle of GetGamePool('CPed')) {
-            if (IsPedAPlayer(pedHandle) || !NetworkHasControlOfEntity(pedHandle)) {
+            if (
+                IsPedAPlayer(pedHandle) ||
+                !NetworkGetEntityIsNetworked(pedHandle) ||
+                !NetworkHasControlOfEntity(pedHandle)
+            ) {
                 continue;
             }
 
@@ -761,59 +862,61 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            const coords = GetEntityCoords(pedHandle) as Vector3;
-
-            SetPedIsDrunk(pedHandle, true);
-
-            SetCanAttackFriendly(pedHandle, true, true);
-            SetPedCanEvasiveDive(pedHandle, false);
-            SetPedMoveRateOverride(pedHandle, 10.0);
-            SetRunSprintMultiplierForPlayer(pedHandle, 1.49);
-            SetEntityMaxSpeed(pedHandle, 10.0);
-
-            DisablePedPainAudio(pedHandle, true);
-            StopPedSpeaking(pedHandle, true);
-
-            SetPedCombatRange(pedHandle, 2);
-            SetPedAlertness(pedHandle, 3);
-            SetPedTargetLossResponse(pedHandle, 2);
-            SetAmbientVoiceName(pedHandle, 'ALIENS');
-
-            SetPedCombatAttributes(pedHandle, 0, false);
-            SetPedCombatAttributes(pedHandle, 4, true);
-            SetPedCombatAttributes(pedHandle, 5, true);
-            SetPedCombatAttributes(pedHandle, 9, false);
-            SetPedCombatAttributes(pedHandle, 13, true);
-            SetPedCombatAttributes(pedHandle, 14, true);
-            SetPedCombatAttributes(pedHandle, 21, true);
-            SetPedCombatAttributes(pedHandle, 38, true);
-            SetPedCombatAttributes(pedHandle, 42, true);
-            SetPedCombatAttributes(pedHandle, 46, true);
-            SetPedCombatAttributes(pedHandle, 50, true);
-            SetPedFleeAttributes(pedHandle, 0, false);
-
-            // GiveWeaponToPed(pedHandle, 'weapon_pistol', 1000, false, true);
-            // SetCurrentPedWeapon(pedHandle, 'weapon_pistol', true);
-            // SetPedDropsWeaponsWhenDead(pedHandle, false);
-
-            ApplyPedDamagePack(pedHandle, 'BigHitByVehicle', 1.0, 9.0);
-            ApplyPedDamagePack(pedHandle, 'SCR_Dumpster', 1.0, 9.0);
-            ApplyPedDamagePack(pedHandle, 'SCR_Torture', 1.0, 9.0);
-            ApplyPedDamagePack(pedHandle, 'Splashback_Face_0', 1.0, 9.0);
-            ApplyPedDamagePack(pedHandle, 'SCR_Cougar', 1.0, 9.0);
-            ApplyPedDamagePack(pedHandle, 'SCR_Shark', 1.0, 9.0);
-
-            SetPedShootRate(pedHandle, 1000);
-            SetPedInfiniteAmmoClip(pedHandle, true);
-            SetPedCombatMovement(pedHandle, 2);
-            SetPedCombatAbility(pedHandle, 1);
-            SetPedSeeingRange(pedHandle, 20);
-            SetPedHearingRange(pedHandle, 30);
-
-            SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
-
-            TaskWanderInArea(pedHandle, coords[0], coords[1], coords[2], 100.0, 2, 10.0);
+            this.configurePed(pedHandle);
         }
+    }
+
+    private configurePed(pedHandle: number) {
+        const coords = GetEntityCoords(pedHandle) as Vector3;
+
+        SetPedMovementClipset(pedHandle, getRandomItem(ZombieWalks), 1.5);
+
+        SetCanAttackFriendly(pedHandle, true, true);
+        SetPedCanEvasiveDive(pedHandle, false);
+        SetPedMoveRateOverride(pedHandle, 10.0);
+        SetRunSprintMultiplierForPlayer(pedHandle, 1.49);
+        SetEntityMaxSpeed(pedHandle, 10.0);
+
+        DisablePedPainAudio(pedHandle, true);
+        StopPedSpeaking(pedHandle, true);
+
+        SetPedCombatRange(pedHandle, 2);
+        SetPedAlertness(pedHandle, 3);
+        SetPedTargetLossResponse(pedHandle, 2);
+        SetAmbientVoiceName(pedHandle, 'ALIENS');
+
+        SetPedCombatAttributes(pedHandle, 0, false);
+        SetPedCombatAttributes(pedHandle, 4, true);
+        SetPedCombatAttributes(pedHandle, 5, true);
+        SetPedCombatAttributes(pedHandle, 9, false);
+        SetPedCombatAttributes(pedHandle, 13, true);
+        SetPedCombatAttributes(pedHandle, 14, true);
+        SetPedCombatAttributes(pedHandle, 21, true);
+        SetPedCombatAttributes(pedHandle, 38, true);
+        SetPedCombatAttributes(pedHandle, 42, true);
+        SetPedCombatAttributes(pedHandle, 46, true);
+        SetPedCombatAttributes(pedHandle, 50, true);
+        SetPedFleeAttributes(pedHandle, 0, false);
+
+        ApplyPedDamagePack(pedHandle, 'BigHitByVehicle', 1.0, 9.0);
+        ApplyPedDamagePack(pedHandle, 'SCR_Dumpster', 1.0, 9.0);
+        ApplyPedDamagePack(pedHandle, 'SCR_Torture', 1.0, 9.0);
+        ApplyPedDamagePack(pedHandle, 'Splashback_Face_0', 1.0, 9.0);
+        ApplyPedDamagePack(pedHandle, 'SCR_Cougar', 1.0, 9.0);
+        ApplyPedDamagePack(pedHandle, 'SCR_Shark', 1.0, 9.0);
+
+        SetPedShootRate(pedHandle, 1000);
+        SetPedInfiniteAmmoClip(pedHandle, true);
+        SetPedCombatMovement(pedHandle, 2);
+        SetPedCombatAbility(pedHandle, 1);
+        SetPedSeeingRange(pedHandle, 20);
+        SetPedHearingRange(pedHandle, 30);
+
+        SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
+
+        TaskWanderInArea(pedHandle, coords[0], coords[1], coords[2], 100.0, 2, 1.0);
+
+        SetEntityAsMissionEntity(pedHandle, true, true);
     }
 
     @Tick()
