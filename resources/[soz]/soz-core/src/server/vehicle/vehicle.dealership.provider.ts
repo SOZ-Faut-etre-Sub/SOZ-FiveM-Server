@@ -525,7 +525,7 @@ export class VehicleDealershipProvider {
                         },
                     });
 
-                    if (refreshedVehicle.stock <= 0) {
+                    if (dealershipId !== DealershipType.WhatIf && refreshedVehicle.stock <= 0) {
                         this.notifier.notify(source, "Ce véhicule n'est plus disponible.", 'error');
 
                         return false;

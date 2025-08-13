@@ -121,7 +121,14 @@ export const WhatIf2ShopPosition: Record<WhatIfGuild, Vector4> = {
 };
 
 export const WhatIf2ShopVehicleList: Record<string, number> = {
-    bmx: 5,
+    bmx: 1,
+    scorcher: 1,
+    cruiser: 1,
+    boxville5: 1,
+    wastelander: 1,
+    technical2: 1,
+    dune3: 1,
+    ratbike: 1,
 };
 
 export const WhatIf2HammerZoneConfig = {

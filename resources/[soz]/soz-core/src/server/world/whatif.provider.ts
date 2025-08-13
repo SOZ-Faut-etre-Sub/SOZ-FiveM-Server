@@ -2,6 +2,7 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 
+import { DealershipType } from '../../config/dealership';
 import { Command } from '../../core/decorators/command';
 import { On, Once, OnceStep } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -324,6 +325,25 @@ export class WhatIfProvider {
 
         return Object.entries(WhatIf2ShopVehicleList).map(([model, price]) => {
             const vehicle = vehicles.find(vehicle => vehicle.model === model);
+
+            if (!vehicle) {
+                return {
+                    model: model,
+                    hash: joaat(model),
+                    name: model,
+                    price: price,
+                    category: 'Utility',
+                    dealershipId: DealershipType.WhatIf,
+                    requiredLicence: null,
+                    size: 1,
+                    jobName: null,
+                    stock: 1000,
+                    radio: false,
+                    maxStock: 1000,
+                    handling: null,
+                    transferable: true,
+                };
+            }
 
             return {
                 ...vehicle,
