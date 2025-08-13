@@ -184,7 +184,7 @@ export class WhatIf2Provider {
         SetPedMeleeCombatLimits(10, 10, 10);
 
         AddRelationshipGroup(this.zombieRelation);
-        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(255, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
         SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
         SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
     }
@@ -835,7 +835,7 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            this.configurePed(pedHandle);
+            await this.configurePed(pedHandle);
 
             spawnedPeds.push(netPedHandle);
         }
@@ -937,14 +937,16 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            this.configurePed(pedHandle);
+            await this.configurePed(pedHandle);
         }
     }
 
-    private configurePed(pedHandle: number) {
-        const coords = GetEntityCoords(pedHandle) as Vector3;
+    private async configurePed(pedHandle: number) {
+        const walk = getRandomItem(ZombieWalks);
+        await this.resourceLoader.loadAnimationSet(walk);
 
-        SetPedMovementClipset(pedHandle, getRandomItem(ZombieWalks), 1.5);
+        SetPedMovementClipset(pedHandle, walk, 1.0);
+        SetPedIsDrunk(pedHandle, true);
 
         SetCanAttackFriendly(pedHandle, true, true);
         SetPedCanEvasiveDive(pedHandle, false);
@@ -966,11 +968,15 @@ export class WhatIf2Provider {
         SetPedCombatAttributes(pedHandle, 9, false);
         SetPedCombatAttributes(pedHandle, 13, true);
         SetPedCombatAttributes(pedHandle, 14, true);
+        SetPedCombatAttributes(pedHandle, 16, false);
+        SetPedCombatAttributes(pedHandle, 17, false);
         SetPedCombatAttributes(pedHandle, 21, true);
+        SetPedCombatAttributes(pedHandle, 31, true);
         SetPedCombatAttributes(pedHandle, 38, true);
         SetPedCombatAttributes(pedHandle, 42, true);
         SetPedCombatAttributes(pedHandle, 46, true);
         SetPedCombatAttributes(pedHandle, 50, true);
+        SetPedCombatAttributes(pedHandle, 52, true);
         SetPedFleeAttributes(pedHandle, 0, false);
 
         ApplyPedDamagePack(pedHandle, 'BigHitByVehicle', 1.0, 9.0);
@@ -989,7 +995,7 @@ export class WhatIf2Provider {
 
         SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
 
-        TaskWanderInArea(pedHandle, coords[0], coords[1], coords[2], 100.0, 2, 1.0);
+        TaskWanderStandard(pedHandle, 1.0, 10);
 
         SetEntityAsMissionEntity(pedHandle, true, true);
     }
