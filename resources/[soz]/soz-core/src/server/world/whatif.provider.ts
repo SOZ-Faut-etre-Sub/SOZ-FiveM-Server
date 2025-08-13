@@ -1,6 +1,7 @@
 import { Rpc } from '@public/core/decorators/rpc';
 import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
+import { Item } from '@public/shared/item';
 
 import { DealershipType } from '../../config/dealership';
 import { Command } from '../../core/decorators/command';
@@ -30,6 +31,7 @@ import {
 } from '../../shared/whatif';
 import { PrismaService } from '../database/prisma.service';
 import { FeatureProvider } from '../feature/feature.provider';
+import { Inventory } from '../inventory/inventory';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -153,10 +155,15 @@ export class WhatIfProvider {
         }
     }
 
-    private async useOutfit(source: number) {
+    private async useOutfit(source: number, it: Item, item: InventoryItem, inventory: Inventory) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
+
+        if (!inventory.removeAtSlot(item.slot, 1)) {
+            return;
+        }
+
         TriggerClientEvent(ClientEvent.WHAT_IF_USE_HAZMAT, source);
     }
 

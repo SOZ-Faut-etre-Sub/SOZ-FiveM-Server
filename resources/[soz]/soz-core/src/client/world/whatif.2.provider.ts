@@ -519,7 +519,7 @@ export class WhatIf2Provider {
         );
 
         const outfit = getRandomItem(Object.values(WhatIf2Cloakroom[player.skin.Model.Hash]));
-        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfit);
 
         TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS);
     }
@@ -972,7 +972,7 @@ export class WhatIf2Provider {
             return;
         }
 
-        const outfitSelection = await this.playerWardrobe.selectOutfit(config);
+        const outfitSelection = await this.playerWardrobe.selectOutfit(config, 'Tenue de survivant');
         if (outfitSelection.canceled) {
             return;
         }
@@ -982,11 +982,13 @@ export class WhatIf2Provider {
             return;
         }
 
-        if (outfitSelection.outfit) {
-            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfitSelection.outfit);
-        } else {
-            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+
+        if (!outfitSelection.outfit) {
+            return;
         }
+
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfitSelection.outfit);
     }
 
     computeInventoryId(prefix: string, entity: number) {
