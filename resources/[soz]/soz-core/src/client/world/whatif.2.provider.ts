@@ -763,13 +763,17 @@ export class WhatIf2Provider {
                 overriddenCoords ? overriddenCoords[1] : coords[1],
                 overriddenCoords ? overriddenCoords[2] : coords[2],
                 0.0,
-                true,
+                false,
                 false
             );
-
-            await wait(1);
-
             if (pedHandle === 0) {
+                continue;
+            }
+
+            NetworkRegisterEntityAsNetworked(pedHandle);
+
+            if (!NetworkGetEntityIsNetworked(pedHandle)) {
+                DeleteEntity(pedHandle);
                 continue;
             }
 

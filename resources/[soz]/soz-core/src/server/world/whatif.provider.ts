@@ -81,8 +81,9 @@ const Animals = [
     joaat('A_C_Westy'),
 ];
 
-const MAX_ZOMBIE_AT_DAY = 50;
-const MAX_ZOMBIE_AT_NIGHT = 150;
+const MAX_ZOMBIE_AT_DAY = 150;
+const MAX_ZOMBIE_AT_NIGHT = MAX_ZOMBIE_AT_DAY * 3;
+const EXPECTED_PLAYER_COUNT = 150;
 
 @Provider()
 export class WhatIfProvider {
@@ -499,10 +500,11 @@ export class WhatIfProvider {
             return;
         }
 
-        const zombieToSpawn = maxZombies - this.spawnedZombies.length;
-
         const players = this.qbCore.getPlayersSources();
         if (!players || !players.length) return;
+
+        const targetZombieAmount = this.lerp(20, maxZombies, players.length / EXPECTED_PLAYER_COUNT);
+        const zombieToSpawn = Math.floor(targetZombieAmount - this.spawnedZombies.length);
 
         const eligiblePlayers = players
             .filter(player => {
@@ -539,5 +541,9 @@ export class WhatIfProvider {
             return true;
         }
         return false;
+    }
+
+    private lerp(min: number, max: number, percentage: number): number {
+        return min * (1 - percentage) + max * percentage;
     }
 }
