@@ -1,3 +1,4 @@
+import { ShopBrand } from '@public/config/shops';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
@@ -59,6 +60,8 @@ import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
 import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ResourceLoader } from '../repository/resource.loader';
+import { ClothingShopRepository } from '../repository/shop.repository';
+import { UnderTypesShopRepository } from '../repository/under_types.shop.repository';
 import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
@@ -144,6 +147,12 @@ export class WhatIf2Provider {
     @Inject(VehicleGarageProvider)
     private vehicleGarageProvider: VehicleGarageProvider;
 
+    @Inject(ClothingShopRepository)
+    public clothingShopRepository: ClothingShopRepository;
+
+    @Inject(UnderTypesShopRepository)
+    private underTypesShopRepository: UnderTypesShopRepository;
+
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
 
@@ -212,6 +221,33 @@ export class WhatIf2Provider {
                         position: locker,
                     },
                     [
+                        {
+                            label: 'Customiser ses habits',
+                            icon: 'shop/store',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: async () => {
+                                const brand: ShopBrand = ShopBrand.Binco;
+
+                                const { shop: shop_content, content: shop_categories } =
+                                    await this.clothingShopRepository.getShopContent(brand);
+                                const under_types = this.underTypesShopRepository.getAllUnderTypes();
+
+                                this.nuiMenu.openMenu(
+                                    MenuType.ClothShop,
+                                    {
+                                        brand: brand,
+                                        shop_content,
+                                        shop_categories,
+                                        under_types,
+                                        isInCayo: true,
+                                    },
+                                    {
+                                        position: { position: locker, distance: 10 },
+                                    }
+                                );
+                            },
+                        },
                         {
                             label: 'Se changer',
                             icon: 'jobs/habiller',

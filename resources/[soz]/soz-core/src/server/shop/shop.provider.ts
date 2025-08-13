@@ -177,10 +177,7 @@ export class ShopProvider {
         });
 
         if (['money', 'marked_money'].includes(moneyType)) {
-            const price = await this.priceService.getPrice(
-                cartAmount,
-                taxType
-            )
+            const price = await this.priceService.getPrice(cartAmount, taxType);
             this.notifier.notify(
                 source,
                 `Votre achat a bien été validé ! Merci. Prix : ~g~$${price?.toLocaleString('fr-FR') ?? 0}`,
@@ -422,7 +419,10 @@ export class ShopProvider {
             item => item.id == product.id
         );
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             const stock = shopItem.stock;
             if (stock <= 0) {
                 this.notifier.notify(source, `Ce produit n'est plus en stock`, 'error');
@@ -450,7 +450,10 @@ export class ShopProvider {
         */
 
         // Update repository
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             shopItem.stock -= 1;
             await this.clothingShopRepository.set(repo);
         }
@@ -493,7 +496,7 @@ export class ShopProvider {
             const replacement = UndershirtCategoryNeedingReplacementTorso[playerModel][product.undershirtType];
             const baseTorsoDrawable =
                 ProperTorsos[playerModel][clothConfig.BaseClothSet.Components[Component.Tops].Collection][
-                clothConfig.BaseClothSet.Components[Component.Tops].Drawable
+                    clothConfig.BaseClothSet.Components[Component.Tops].Drawable
                 ];
             if (replacement && replacement[baseTorsoDrawable] != null) {
                 clothConfig.BaseClothSet.Components[Component.Torso] = {
@@ -626,7 +629,10 @@ export class ShopProvider {
         );
         const playerInventory = await this.inventoryFactory.getPlayerInventory(source);
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+        if (
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+            !this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+        ) {
             if (cabinetStorageInventory.getItemCount('cabinet_zkea') < 1) {
                 this.notifier.error(source, "Achat de meuble impossible car Zkea n'a pas assez de stock.");
 

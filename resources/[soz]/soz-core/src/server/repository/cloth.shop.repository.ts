@@ -135,7 +135,7 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                 shopId: item.shop_id,
                 categoryId: item.category_id,
                 label: item.label,
-                price: item.price,
+                price: this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) ? 0 : item.price,
                 modelHash: shopItemData.modelHash,
                 components: shopItemData.components,
                 props: shopItemData.props,
@@ -144,11 +144,23 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                 underTypes: shopItemData.underTypes,
                 modelLabel: shopItemData.modelLabel,
                 colorLabel: shopItemData.colorLabel,
-                stock: this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ? 1000 : getRandomInt(0, 10), //item.stock,
+                stock:
+                    this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
+                    this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+                        ? 1000
+                        : getRandomInt(0, 10), //item.stock,
             };
             if (!shopItem.modelLabel) {
                 continue;
             }
+
+            if (
+                this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) &&
+                shopItem.components[Component.Bag]
+            ) {
+                continue;
+            }
+
             const genderToAdd = shopItem.modelHash ? [shopItem.modelHash] : [PlayerPedHash.Male, PlayerPedHash.Female];
             for (const modelHash of genderToAdd) {
                 if (!repository.categories[modelHash][shopItem.shopId][item.category_id].content[shopItem.modelLabel]) {
