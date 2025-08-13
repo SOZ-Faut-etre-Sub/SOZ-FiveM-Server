@@ -37,6 +37,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { QBCore } from '../qbcore';
+import { ClothingProvider } from '../shop/clothing.provider';
 
 const Animals = [
     joaat('A_C_Boar'),
@@ -118,12 +119,16 @@ export class WhatIfProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    @Inject(ClothingProvider)
+    private clothingProvider: ClothingProvider;
+
     private spawnedZombies: number[] = [];
 
     @Once()
     init() {
         this.itemService.setItemUseCallback('zombie_serum', this.useZombieSerum.bind(this));
         this.itemService.setItemUseCallback('whatif_hammer', this.useHammer.bind(this));
+        this.itemService.setItemUseCallback('hazmat_outfit', this.useOutfit.bind(this));
 
         Object.entries(WhatIf2RespawnPoints).forEach(([key, positions]) => {
             positions.forEach((value, index) => {
@@ -145,6 +150,13 @@ export class WhatIfProvider {
                 placeOnGround: true,
             });
         }
+    }
+
+    private async useOutfit(source: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+        TriggerClientEvent(ClientEvent.WHAT_IF_USE_HAZMAT, source);
     }
 
     private async useZombieSerum(source: number) {

@@ -127,7 +127,7 @@ export const WhatIf2ShopVehicleList: Record<string, number> = {
 export const WhatIf2HammerZoneConfig = {
     prefix: 'whatif_',
     item: 'whatif_parts',
-    price: 5,
+    price: 1,
 };
 
 export enum WhatIf2LootType {

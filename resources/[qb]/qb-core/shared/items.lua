@@ -24810,4 +24810,15 @@ QBShared.Items = {
         ["description"] = "L'espoir de San Andreas !",
         ["illustrator"] = ".SuperPG",
     },
+    ["hazmat_outfit"] = {
+        ["name"] = "hazmat_outfit",
+        ["label"] = "Tenue Hazmat",
+        ["weight"] = 5000,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "",
+    },
 }

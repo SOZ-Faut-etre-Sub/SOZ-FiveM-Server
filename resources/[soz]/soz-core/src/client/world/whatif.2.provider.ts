@@ -19,6 +19,7 @@ import { NuiEvent } from '../../shared/event/nui';
 import { ServerEvent } from '../../shared/event/server';
 import { InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
+import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '../../shared/job/lsmc';
 import { getLocationHash } from '../../shared/locationhash';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
@@ -580,6 +581,21 @@ export class WhatIf2Provider {
     async clearIsInfected() {
         this.isInfected = false;
         this.blurService.remove('zombie-infected', 0);
+    }
+
+    @On(ClientEvent.WHAT_IF_USE_HAZMAT)
+    async onUseHazmat() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const model = GetEntityModel(PlayerPedId());
+
+        const outfit = LsmcCloakroom[model][HAZMAT_OUTFIT_NAME];
+        const progress = await this.playerWardrobe.waitProgress(false);
+        if (progress.completed) {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
+        }
     }
 
     @On(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)
