@@ -32,6 +32,8 @@ import {
     WhatIf2Lockers,
     WhatIf2LootInventoryType,
     WhatIf2LootModels,
+    WhatIf2LootType,
+    WhatIf2LootZones,
     WhatIf2RespawnPoints,
     WhatIf2ShopItems,
     WhatIf2ShopPosition,
@@ -347,7 +349,20 @@ export class WhatIf2Provider {
                         const playerPed = PlayerPedId();
                         const coords = GetEntityCoords(playerPed);
 
-                        this.inventoryManager.openInventory(WhatIf2LootInventoryType[lootType], id, coords as Vector3);
+                        const currentLootZone = this.getCurrentLootZone();
+                        if (Number(lootType) > currentLootZone) {
+                            this.inventoryManager.openInventory(
+                                WhatIf2LootInventoryType[currentLootZone] as InventoryType,
+                                id,
+                                coords as Vector3
+                            );
+                        } else {
+                            this.inventoryManager.openInventory(
+                                WhatIf2LootInventoryType[lootType],
+                                id,
+                                coords as Vector3
+                            );
+                        }
                     },
                     canInteract: async (entity: number) => {
                         const coords = GetEntityCoords(entity) as Vector3;
@@ -427,6 +442,24 @@ export class WhatIf2Provider {
                 },
             },
         ]);
+    }
+
+    private getCurrentLootZone(): WhatIf2LootType {
+        const coords = GetEntityCoords(PlayerPedId(), false) as Vector3;
+
+        if (WhatIf2LootZones[WhatIf2LootType.Military].some(zone => zone.isPointInside(coords))) {
+            return WhatIf2LootType.Military;
+        }
+
+        if (WhatIf2LootZones[WhatIf2LootType.High].some(zone => zone.isPointInside(coords))) {
+            return WhatIf2LootType.High;
+        }
+
+        if (WhatIf2LootZones[WhatIf2LootType.Medium].some(zone => zone.isPointInside(coords))) {
+            return WhatIf2LootType.Medium;
+        }
+
+        return WhatIf2LootType.Low;
     }
 
     public async openDealership(dealershipType: DealershipType, position: Vector4) {
