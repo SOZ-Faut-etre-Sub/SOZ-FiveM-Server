@@ -4,7 +4,7 @@ import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Rpc } from '../../core/decorators/rpc';
-import { Tick, TickInterval } from '../../core/decorators/tick';
+import { Tick } from '../../core/decorators/tick';
 import { Logger } from '../../core/logger';
 import { wait } from '../../core/utils';
 import { BankMoneyType } from '../../shared/bank';
@@ -83,70 +83,6 @@ export class InventoryProvider {
         }
 
         await wait(getRandomInt(1, 3) * 3600 * 1000);
-    }
-
-    @Tick(TickInterval.EVERY_MINUTE * 20)
-    public async whatIfLootLowRegen() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootLow) {
-                await wait(0);
-                continue;
-            }
-
-            await this.regenerateInventory(inventory);
-        }
-    }
-
-    @Tick(TickInterval.EVERY_MINUTE * 30)
-    public async whatIfLootMediumRegen() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootMedium) {
-                await wait(0);
-                continue;
-            }
-
-            await this.regenerateInventory(inventory);
-        }
-    }
-
-    @Tick(TickInterval.EVERY_MINUTE * 45)
-    public async whatIfLootHighRegen() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootHigh) {
-                await wait(0);
-                continue;
-            }
-
-            await this.regenerateInventory(inventory);
-        }
-    }
-
-    @Tick(TickInterval.EVERY_HOUR)
-    public async whatIfLootMilitaryRegen() {
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            return;
-        }
-
-        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootMilitary) {
-                await wait(0);
-                continue;
-            }
-
-            await this.regenerateInventory(inventory);
-        }
     }
 
     private async regenerateInventory(inventory: Inventory) {

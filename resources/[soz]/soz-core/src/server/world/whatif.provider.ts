@@ -8,10 +8,11 @@ import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitClientRpc } from '../../core/rpc';
-import { uuidv4 } from '../../core/utils';
+import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { DEFAULT_INVENTORY_CONFIGURATION, getItemsWeight, InventoryItem, InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
+import { getLocationHash } from '../../shared/locationhash';
 import { getDistance, Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt } from '../../shared/random';
 import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
@@ -456,23 +457,145 @@ export class WhatIfProvider {
         return emitClientRpc<number>(RpcClientEvent.GET_CLOCK_HOURS, players[0]);
     }
 
+    @Tick(TickInterval.EVERY_MINUTE * 20)
+    public async whatIfLootLowRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        let currentInv = 0;
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootLow) {
+                if (currentInv > 100) {
+                    await wait(0);
+                    currentInv = 0;
+                }
+
+                currentInv++;
+                continue;
+            }
+
+            try {
+                await this.inventoryFactory.delete(inventory.id);
+            } catch (e) {
+                // ignore
+            }
+        }
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE * 30)
+    public async whatIfLootMediumRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        let currentInv = 0;
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootMedium) {
+                if (currentInv > 100) {
+                    await wait(0);
+                    currentInv = 0;
+                }
+
+                currentInv++;
+                continue;
+            }
+
+            try {
+                await this.inventoryFactory.delete(inventory.id);
+            } catch (e) {
+                // ignore
+            }
+        }
+    }
+
+    @Tick(TickInterval.EVERY_MINUTE * 45)
+    public async whatIfLootHighRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        let currentInv = 0;
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootHigh) {
+                if (currentInv > 100) {
+                    await wait(0);
+                    currentInv = 0;
+                }
+
+                currentInv++;
+                continue;
+            }
+
+            try {
+                await this.inventoryFactory.delete(inventory.id);
+            } catch (e) {
+                // ignore
+            }
+        }
+    }
+
+    @Tick(TickInterval.EVERY_HOUR)
+    public async whatIfLootMilitaryRegen() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        let currentInv = 0;
+
+        for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
+            if (inventory.type() !== InventoryType.WhatIfLootMilitary) {
+                if (currentInv > 100) {
+                    await wait(0);
+                    currentInv = 0;
+                }
+
+                currentInv++;
+                continue;
+            }
+
+            try {
+                await this.inventoryFactory.delete(inventory.id);
+            } catch (e) {
+                // ignore
+            }
+        }
+    }
+
     @Tick(TickInterval.EVERY_MINUTE)
     async onZombieSpawnTick() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
+        const deleteZombie = async (id: number, pedCoords?: Vector3) => {
+            this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
+
+            if (!pedCoords) return;
+
+            const coordsHash = getLocationHash(pedCoords);
+
+            try {
+                await this.inventoryFactory.delete('zombie_' + coordsHash);
+            } catch (e) {
+                // ignore
+            }
+        };
+
         this.spawnedZombies.forEach(id => {
             const ped = NetworkGetEntityFromNetworkId(id);
             if (!ped) {
-                this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
+                deleteZombie(id);
                 return;
             }
 
             const pedCoords = GetEntityCoords(ped, false) as Vector3;
             if (!this.hasClosestPlayer(pedCoords)) {
+                deleteZombie(id, pedCoords);
                 DeleteEntity(ped);
-                this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
                 return;
             }
 
@@ -480,7 +603,9 @@ export class WhatIfProvider {
                 setTimeout(
                     () => {
                         if (!ped || !DoesEntityExist(ped)) return;
+                        const pedCoords = GetEntityCoords(ped, false) as Vector3;
 
+                        deleteZombie(id, pedCoords);
                         DeleteEntity(ped);
                     },
                     5 * 60 * 1000

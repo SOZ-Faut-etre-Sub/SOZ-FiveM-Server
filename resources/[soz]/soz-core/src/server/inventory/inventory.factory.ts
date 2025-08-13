@@ -383,10 +383,8 @@ export class InventoryFactory {
             this.inventories.delete(id);
         }
 
-        await this.database.inventories.delete({
-            where: {
-                id: id,
-            },
+        return this.database.inventories.deleteMany({
+            where: { id },
         });
     }
 }
