@@ -79,10 +79,7 @@ export const WhatIf2SpawnGuild: MapPickerLocation[] = [
     },
 ];
 
-export const WhatIf2DefaultItems = [
-    { name: 'sandwich', quantity: 4 },
-    { name: 'water_bottle', quantity: 4 },
-];
+export const WhatIf2DefaultItems = [{ name: 'whatif_parts', quantity: 25 }];
 
 export const WhatIfSafeZones: Record<WhatIfGuild, PolygonZone> = {
     raider: new PolygonZone([

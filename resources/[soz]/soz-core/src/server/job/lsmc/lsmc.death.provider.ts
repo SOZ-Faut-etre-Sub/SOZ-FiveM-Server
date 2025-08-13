@@ -17,6 +17,7 @@ import { Vector3 } from '@public/shared/polyzone/vector';
 import { Feature } from '../../../shared/features';
 import { FeatureProvider } from '../../feature/feature.provider';
 import { PlayerStateService } from '../../player/player.state.service';
+import { WhatIfProvider } from '../../world/whatif.provider';
 
 @Provider()
 export class LSMCDeathProvider {
@@ -47,6 +48,9 @@ export class LSMCDeathProvider {
     @Inject(FeatureProvider)
     private readonly featureProvider: FeatureProvider;
 
+    @Inject(WhatIfProvider)
+    private readonly whatIfProvider: WhatIfProvider;
+
     private occupiedBeds: Record<number, number> = {};
 
     // Map the source id of the player dead and everyone that has been notified so that we can
@@ -70,8 +74,8 @@ export class LSMCDeathProvider {
         const inventory = await this.inventoryFactory.getPlayerInventory(targetid);
 
         if (uniteHU && this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
-            inventory.clear();
             this.playerService.setPlayerMetadata(targetid, 'stress_level', 0);
+            this.whatIfProvider.giveDefaultItems(targetid);
         }
 
         if (!admin && !uniteHU) {
