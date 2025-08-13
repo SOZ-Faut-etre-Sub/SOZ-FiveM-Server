@@ -12,7 +12,6 @@ import { deepEqual } from '@public/shared/util';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 import { WeaponComponentType } from '@public/shared/weapons/attachment';
 import { WeaponMk2TintColor, WeaponTintColor } from '@public/shared/weapons/tint';
-import { WhatIf2LootInventoryContent } from '@public/shared/whatif';
 
 export enum InventoryType {
     Ammo = 'ammo',
@@ -1369,11 +1368,6 @@ export const INVENTORY_ITEM_CREATORS: Partial<Record<InventoryType, Record<strin
             max: 20,
         },
     },
-    [InventoryType.Zombie]: WhatIf2LootInventoryContent[InventoryType.Zombie],
-    [InventoryType.WhatIfLootLow]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootLow],
-    [InventoryType.WhatIfLootMedium]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootMedium],
-    [InventoryType.WhatIfLootHigh]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootHigh],
-    [InventoryType.WhatIfLootMilitary]: WhatIf2LootInventoryContent[InventoryType.WhatIfLootMilitary],
 };
 
 export type InventoryPosition = InventoryPositionFixed | InventoryPositionDynamic;

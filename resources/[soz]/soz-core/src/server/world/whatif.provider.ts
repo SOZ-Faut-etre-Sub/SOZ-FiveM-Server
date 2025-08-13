@@ -10,13 +10,18 @@ import { Tick, TickInterval } from '../../core/decorators/tick';
 import { emitClientRpc } from '../../core/rpc';
 import { uuidv4 } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
+import { DEFAULT_INVENTORY_CONFIGURATION, getItemsWeight, InventoryItem, InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
 import { getDistance, Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
+import { getRandomInt } from '../../shared/random';
 import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WhatIf2DefaultItems,
     WhatIf2HammerZoneConfig,
+    WhatIf2LootInventoryContent,
+    WhatIf2LootInventoryType,
+    WhatIf2LootType,
     WhatIf2RespawnPoints,
     WhatIf2ShopVehicleList,
     WhatIfSafeZones,
@@ -225,6 +230,72 @@ export class WhatIfProvider {
         }
 
         return player.citizenid;
+    }
+
+    @Rpc(RpcServerEvent.WHAT_IF_LOOT_INVENTORY)
+    async lootInventory(source: number, id: string, type: WhatIf2LootType, isZombie = false) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        const inventory = await this.inventoryFactory.getOrCreate(
+            id,
+            WhatIf2LootInventoryType[type] as InventoryType,
+            undefined,
+            () => {
+                const items: Record<string, InventoryItem> = {};
+                let slot = 1;
+
+                for (const [itemName, config] of Object.entries(WhatIf2LootInventoryContent[type])) {
+                    const item = this.itemService.getItem(itemName);
+                    if (!item) {
+                        continue;
+                    }
+
+                    if (isZombie && !config.zombie) {
+                        continue;
+                    }
+
+                    const shouldCreate = getRandomInt(0, 100) <= config.chance;
+                    if (!shouldCreate) {
+                        continue;
+                    }
+
+                    const max = getRandomInt(1, config.max);
+
+                    for (let amount = max; amount > 0; amount--) {
+                        const newItem: InventoryItem = {
+                            slot,
+                            name: itemName,
+                            amount,
+                            type: item.type,
+                            metadata: {},
+                        };
+
+                        const newItems = Object.values(items);
+                        newItems.push(newItem);
+
+                        if (
+                            getItemsWeight(newItems, this.itemService.getItem.bind(this.itemService)) >
+                            DEFAULT_INVENTORY_CONFIGURATION.maxWeight
+                        ) {
+                            continue;
+                        }
+
+                        items[slot] = newItem;
+                        slot++;
+
+                        break;
+                    }
+                }
+
+                return items;
+            }
+        );
+        if (!inventory) return;
+
+        return true;
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_VEHICLE_DEALERSHIP_GET_LIST)

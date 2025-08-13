@@ -405,6 +405,7 @@ export enum RpcServerEvent {
     WHAT_IF_HAMMER_CREATE = 'soz-core:server:what-if:hammer-create',
     WHAT_IF_HAMMER_UPDATE = 'soz-core:server:what-if:hammer-update',
     WHAT_IF_HAMMER_DELETE = 'soz-core:server:what-if:hammer-delete',
+    WHAT_IF_LOOT_INVENTORY = 'soz-core:server:what-if:loot-inventory',
     WHAT_IF_VEHICLE_DEALERSHIP_GET_LIST = 'soz-core:server:what-if:vehicle-dealership:get-list',
 }
 

@@ -332,12 +332,14 @@ export class WhatIf2Provider {
 
                         const currentLootZone = this.getCurrentLootZone();
                         if (Number(lootType) > currentLootZone) {
+                            await emitRpc(RpcServerEvent.WHAT_IF_LOOT_INVENTORY, id, currentLootZone);
                             this.inventoryManager.openInventory(
                                 WhatIf2LootInventoryType[currentLootZone] as InventoryType,
                                 id,
                                 coords as Vector3
                             );
                         } else {
+                            await emitRpc(RpcServerEvent.WHAT_IF_LOOT_INVENTORY, id, lootType);
                             this.inventoryManager.openInventory(
                                 WhatIf2LootInventoryType[lootType],
                                 id,
@@ -372,6 +374,9 @@ export class WhatIf2Provider {
 
                         const playerPed = PlayerPedId();
                         const coords = GetEntityCoords(playerPed);
+
+                        const currentLootZone = this.getCurrentLootZone();
+                        await emitRpc(RpcServerEvent.WHAT_IF_LOOT_INVENTORY, id, currentLootZone, true);
 
                         this.inventoryManager.openInventory(InventoryType.Zombie, id, coords as Vector3);
                     },
