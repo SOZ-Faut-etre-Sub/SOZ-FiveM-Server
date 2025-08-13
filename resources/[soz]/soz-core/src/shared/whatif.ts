@@ -122,7 +122,16 @@ export const WhatIf2ShopVehicleList: Record<string, number> = {
     bmx: 5,
 };
 
-export const WhatIf2ShopItems = [{ name: 'tapas_777', price: 1 }];
+export const WhatIf2ShopItems = [
+    { name: 'water_bottle', price: 1 },
+    { name: 'sandwich', price: 1 },
+    { name: 'zombie_serum', price: 1 },
+    { name: 'weapon_battleaxe', price: 1 },
+    // { name: 'Petit sac', price: 1 }
+    // { name: 'Moyen Sac', price: 1 }
+    // { name: 'Moyen Sac2', price: 1 }
+    // { name: 'Grand Sac', price: 1 }
+];
 
 export const WhatIf2HammerZoneConfig = {
     prefix: 'whatif_',
