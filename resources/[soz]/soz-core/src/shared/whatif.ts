@@ -125,17 +125,6 @@ export const WhatIf2ShopVehicleList: Record<string, number> = {
     bmx: 5,
 };
 
-export const WhatIf2ShopItems = [
-    { name: 'water_bottle', price: 1 },
-    { name: 'sandwich', price: 1 },
-    { name: 'zombie_serum', price: 1 },
-    { name: 'weapon_battleaxe', price: 1 },
-    // { name: 'Petit sac', price: 1 }
-    // { name: 'Moyen Sac', price: 1 }
-    // { name: 'Moyen Sac2', price: 1 }
-    // { name: 'Grand Sac', price: 1 }
-];
-
 export const WhatIf2HammerZoneConfig = {
     prefix: 'whatif_',
     item: 'whatif_parts',
@@ -1105,84 +1094,138 @@ export const WhatIf2CraftingTables: Record<WhatIfGuild, Vector4[]> = {
 };
 
 export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
-    'Caisses de Metaux': {
+    Divers: {
         animation: {
-            dictionary: 'melee@small_wpn@streamed_core_fps',
-            name: 'car_down_attack',
-            options: {
-                repeat: true,
-            },
-        },
-        duration: 30000,
-        icon: '📦',
-        event: 'job_dmc_craft',
-        recipes: {
-            resell_box_coal: {
-                inputs: {
-                    raw_coal: { count: 180 },
-                },
-                amount: 1,
-            },
-            resell_box_iron: {
-                inputs: {
-                    iron_ingot: { count: 12 },
-                },
-                amount: 1,
-            },
-            resell_box_aluminium: {
-                inputs: {
-                    aluminium_ingot: { count: 12 },
-                },
-                amount: 1,
-            },
-            resell_box_steel: {
-                inputs: {
-                    steel_ingot: { count: 12 },
-                },
-                amount: 1,
-            },
-        },
-    },
-    'Pièces de Véhicule': {
-        animation: {
-            dictionary: 'melee@small_wpn@streamed_core_fps',
-            name: 'car_down_attack',
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_b',
             options: {
                 repeat: true,
             },
         },
         duration: 10000,
-        icon: '🔧',
-        event: 'job_dmc_craft',
+        event: 'what_if_craft',
         recipes: {
-            repair_part_body: {
-                inputs: {
-                    iron_ingot: { count: 1 },
-                    aluminium_ingot: { count: 1 },
-                },
-                amount: 10,
+            water_bottle: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
             },
-            repair_part_motor: {
-                inputs: {
-                    iron_ingot: { count: 1 },
-                    steel_ingot: { count: 1 },
-                },
-                amount: 10,
+            sandwich: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
             },
-            repair_part_fuel_tank: {
-                inputs: {
-                    aluminium_ingot: { count: 1 },
-                    steel_ingot: { count: 1 },
-                },
-                amount: 10,
+            mre_zera: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
             },
-            ls_custom_upgrade_part: {
-                inputs: {
-                    aluminium_ingot: { count: 1 },
-                    iron_ingot: { count: 1 },
-                    steel_ingot: { count: 1 },
-                },
-                amount: 10,
+            mre_peach: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            cigarette_pack: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+        },
+    },
+    Armes: {
+        animation: {
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_b',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 10000,
+        event: 'what_if_craft',
+        recipes: {
+            weapon_flashlight: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_battleaxe: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_hammer: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_crowbar: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_flare: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_flaregun: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_pistol: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            ammo_01: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            weapon_dbshotgun: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            ammo_08: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+        },
+    },
+    Utilitaires: {
+        animation: {
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_b',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 10000,
+        event: 'what_if_craft',
+        recipes: {
+            zombie_serum: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            whatif_bag_small: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            whatif_bag_medium: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            whatif_bag_medium2: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            whatif_bag_huge: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            bulletproof_vest_low: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            bulletproof_vest_medium: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            radio: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
+            },
+            hazmat_outfit: {
+                inputs: { whatif_parts: { count: 1 } },
+                amount: 1,
             },
         },
     },

@@ -35,7 +35,6 @@ import {
     WhatIf2LootType,
     WhatIf2LootZones,
     WhatIf2RespawnPoints,
-    WhatIf2ShopItems,
     WhatIf2ShopPosition,
     WhatIf2SpawnGuild,
     WhatIfGuild,
@@ -282,24 +281,6 @@ export class WhatIf2Provider {
                 scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
                 target: {
                     options: [
-                        {
-                            icon: 'magasin/cart',
-                            label: 'Magasin',
-                            category: 'citizen',
-                            event: 'whatif:2',
-                            action: () => {
-                                this.inventoryManager.openShopInventory(
-                                    WhatIf2ShopItems.map((product, id) => ({
-                                        ...this.itemService.getItem(product.name),
-                                        ...product,
-                                        slot: id + 1,
-                                    })),
-                                    'Vendeur',
-                                    null,
-                                    'whatif_parts'
-                                );
-                            },
-                        },
                         {
                             icon: 'dealership/list',
                             label: 'Accéder au catalogue',
