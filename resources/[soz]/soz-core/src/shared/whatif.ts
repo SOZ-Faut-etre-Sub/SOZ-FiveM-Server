@@ -438,6 +438,9 @@ export const WhatIf2LootModels: Record<WhatIf2LootType, string[]> = {
         'prop_mil_crate_01',
         'prop_elecbox_09',
         'prop_trailer_01_new',
+        'prop_med_jet_01',
+        'prop_portacabin01',
+        'prop_elecbox_24b',
     ],
     [WhatIf2LootType.High]: [
         'prop_skid_trolley_2',
@@ -507,6 +510,7 @@ export const WhatIf2LootModels: Record<WhatIf2LootType, string[]> = {
         'xm_prop_crates_weapon_mix_01a',
         'hei_prop_carrier_cargo_04b',
         'sf_prop_sf_swift2_01a',
+        'prop_med_jet_01',
     ],
     [WhatIf2LootType.Military]: [
         'p_secret_weapon_02',
