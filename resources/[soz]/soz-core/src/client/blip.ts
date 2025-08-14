@@ -114,7 +114,7 @@ export class BlipFactory {
             return -1;
         }
 
-        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) && blip.group !== 'admin') {
             return -1;
         }
 

@@ -193,6 +193,7 @@ export class AdminMenuInteractiveProvider {
                         showHeading: true,
                         sprite: 1,
                         category: 7,
+                        group: 'admin',
                     });
 
                     this.playerBlips.set(player.citizenId, createdBlip);
