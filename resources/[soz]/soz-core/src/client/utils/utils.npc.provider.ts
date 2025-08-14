@@ -338,17 +338,17 @@ export class UtilsNPCProvider {
             ToggleUsePickupsForPlayer(playerId, hash, false);
         }
 
-        const densities = await emitRpc<Partial<Record<PedDensityType, number>>>(RpcServerEvent.GET_DISABLE_NPC);
-        for (const [type, value] of Object.entries(densities)) {
-            this.density[type] = value;
-        }
-
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             this.density[PedDensityType.parked] = 0.0;
             this.density[PedDensityType.vehicle] = 0.0;
             this.density[PedDensityType.multiplier] = 0.0;
             this.density[PedDensityType.peds] = 0.0;
             this.density[PedDensityType.scenario] = 0.0;
+        } else {
+            const densities = await emitRpc<Partial<Record<PedDensityType, number>>>(RpcServerEvent.GET_DISABLE_NPC);
+            for (const [type, value] of Object.entries(densities)) {
+                this.density[type] = value;
+            }
         }
     }
 
@@ -382,16 +382,18 @@ export class UtilsNPCProvider {
 
     @OnEvent(ClientEvent.NPC_DENSITY_UPDATE)
     public updateDensity(densities: Partial<Record<PedDensityType, number>>) {
-        for (const [type, value] of Object.entries(densities)) {
-            this.density[type] = value;
-        }
-
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             this.density[PedDensityType.parked] = 0.0;
             this.density[PedDensityType.vehicle] = 0.0;
             this.density[PedDensityType.multiplier] = 0.0;
             this.density[PedDensityType.peds] = 0.0;
             this.density[PedDensityType.scenario] = 0.0;
+
+            return;
+        }
+
+        for (const [type, value] of Object.entries(densities)) {
+            this.density[type] = value;
         }
     }
 

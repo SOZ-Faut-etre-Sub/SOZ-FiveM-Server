@@ -71,6 +71,7 @@ import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
 import { WeaponService } from '../weapon/weapon.service';
 
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
+const MAX_HAMMER_PROPS_DISTANCE = 100;
 
 const ZombieModelHash = ZombieModels.map(model => joaat(model));
 const ZombieWalks = [
@@ -177,7 +178,6 @@ export class WhatIf2Provider {
     private isInfectedAt = 0;
 
     private isMouseSelectionOn: boolean;
-    private isPipetteOn: boolean;
     private hammerDebugEntity = 0;
 
     private hubMessageDisplayed = false;
@@ -748,16 +748,6 @@ export class WhatIf2Provider {
         }
     }
 
-    @OnNuiEvent(NuiEvent.WhatIfHammerTogglePipette)
-    public async togglePipette(value: boolean) {
-        this.isPipetteOn = value;
-        if (value) {
-            EnterCursorMode();
-        } else {
-            LeaveCursorMode();
-        }
-    }
-
     @OnNuiEvent(NuiEvent.WhatIfHammerSelectPropToCreate)
     public async onSelectPropToCreate(model: string) {
         if (this.hammerDebugEntity) {
@@ -808,13 +798,18 @@ export class WhatIf2Provider {
         });
 
         if (newObj) {
-            await emitRpc(
-                RpcServerEvent.WHAT_IF_HAMMER_CREATE,
-                model,
-                newObj.position,
-                newObj.matrix,
-                newObj.noCollision
-            );
+            const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+            if (getDistance(playerCoords, newObj.position) <= MAX_HAMMER_PROPS_DISTANCE) {
+                await emitRpc(
+                    RpcServerEvent.WHAT_IF_HAMMER_CREATE,
+                    model,
+                    newObj.position,
+                    newObj.matrix,
+                    newObj.noCollision
+                );
+            } else {
+                this.notifier.error('~r~Le modèle est trop loin !');
+            }
         }
 
         const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);
@@ -841,7 +836,18 @@ export class WhatIf2Provider {
         );
 
         if (newObj) {
-            await emitRpc(RpcServerEvent.WHAT_IF_HAMMER_UPDATE, id, newObj.position, newObj.matrix, newObj.noCollision);
+            const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+            if (getDistance(playerCoords, newObj.position) <= MAX_HAMMER_PROPS_DISTANCE) {
+                await emitRpc(
+                    RpcServerEvent.WHAT_IF_HAMMER_UPDATE,
+                    id,
+                    newObj.position,
+                    newObj.matrix,
+                    newObj.noCollision
+                );
+            } else {
+                this.notifier.error('~r~Le modèle est trop loin !');
+            }
         }
 
         const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);

@@ -96,15 +96,6 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: { id: string; model: st
                 <MenuTitle title="Edition de zone" />
                 <MenuContent subtitle="Choisir un prop">
                     <MenuItemSubMenuLink id={`zone_prop_search`}>🔎 Rechercher un prop</MenuItemSubMenuLink>
-                    <MenuItemCheckbox
-                        checked={false}
-                        onChange={async value => {
-                            await fetchNui(NuiEvent.WhatIfHammerTogglePipette, { value: value });
-                        }}
-                        description="Copie un modèle déjà placé."
-                    >
-                        Pipette
-                    </MenuItemCheckbox>
                     <MenuSubTitle>Liste de props</MenuSubTitle>
                     {Object.keys(WHAT_IF_PROP_LIST)
                         .sort((a, b) => a.localeCompare(b))

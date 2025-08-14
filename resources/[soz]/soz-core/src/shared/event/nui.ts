@@ -791,7 +791,6 @@ export enum NuiEvent {
     WhatIfHammerSelectPropToRemove = 'soz-core:nui:what-if:hammer-select-prop-to-remove',
     WhatIfHammerSelectPlacedProp = 'soz-core:nui:what-if:hammer-select-placed-prop',
     WhatIfHammerToggleMouseSelection = 'soz-core:nui:what-if:hammer-toggle-mouse-selection',
-    WhatIfHammerTogglePipette = 'soz-core:nui:what-if:hammer-toggle-pipette',
     WhatIfHammerSelectPropToCreate = 'soz-core:nui:what-if:hammer-select-prop-to-create',
     WhatIfHammerChoosePlacedPropToEdit = 'soz-core:nui:what-if:hammer-choose-placed-prop-to-edit',
     WhatIfHammerRequestDeleteProp = 'soz-core:nui:what-if:hammer-request-delete-prop',

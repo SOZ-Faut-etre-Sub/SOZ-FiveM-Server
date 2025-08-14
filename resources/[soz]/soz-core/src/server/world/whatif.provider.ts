@@ -521,6 +521,17 @@ export class WhatIfProvider {
             return;
         }
 
+        const existing = await this.prismaService.whatif_props.findFirst({ where: { id } });
+
+        if (existing) {
+            const playerCoords = this.playerPositionProvider.getPlayerPosition(source);
+            const position = JSON.parse(existing.position);
+            if (getDistance(playerCoords, position) >= 100) {
+                this.notifier.error(source, '~r~Le modèle est trop loin !');
+                return;
+            }
+        }
+
         await this.prismaService.whatif_props.delete({ where: { id } });
 
         this.objectProvider.deleteObject(id);
