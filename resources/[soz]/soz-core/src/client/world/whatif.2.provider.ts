@@ -449,7 +449,7 @@ export class WhatIf2Provider {
                         this.inventoryManager.openInventory(InventoryType.Zombie, id, coords as Vector3);
                     },
                     canInteract: async (entity: number) => {
-                        return IsEntityDead(entity) && !IsPedAPlayer(entity);
+                        return IsEntityDead(entity) && !IsPedAPlayer(entity) && !GetPedDiesInWater(entity);
                     },
                 },
             ],
@@ -919,7 +919,7 @@ export class WhatIf2Provider {
         do {
             const x = playerCoords[0] + getRandomInt(-MAX_SPAWN_DISTANCE, MAX_SPAWN_DISTANCE);
             const y = playerCoords[1] + getRandomInt(-MAX_SPAWN_DISTANCE, MAX_SPAWN_DISTANCE);
-            const [valid, posZ] = GetGroundZFor_3dCoord(x, y, playerCoords[2], true);
+            const [valid, posZ] = GetGroundZFor_3dCoord(x, y, playerCoords[2], false);
             if (!valid) {
                 continue;
             }
@@ -991,6 +991,7 @@ export class WhatIf2Provider {
         for (const pedHandle of GetGamePool('CPed')) {
             if (
                 IsPedAPlayer(pedHandle) ||
+                IsEntityDead(pedHandle) ||
                 !NetworkGetEntityIsNetworked(pedHandle) ||
                 !NetworkHasControlOfEntity(pedHandle)
             ) {
@@ -1081,8 +1082,8 @@ export class WhatIf2Provider {
         SetPedInfiniteAmmoClip(pedHandle, true);
         SetPedCombatMovement(pedHandle, 2);
         SetPedCombatAbility(pedHandle, 1);
-        SetPedSeeingRange(pedHandle, 20);
-        SetPedHearingRange(pedHandle, 30);
+        SetPedSeeingRange(pedHandle, 30);
+        SetPedHearingRange(pedHandle, 50);
 
         SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
 
