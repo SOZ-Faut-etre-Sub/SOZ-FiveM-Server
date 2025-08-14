@@ -76,7 +76,6 @@ const ZombieWalks = [
     'move_m@drunk@moderatedrunk',
     'move_m@drunk@a',
     'anim_group_move_ballistic',
-    'move_lester_CaneUp',
 ];
 
 const MIN_SPAWN_DISTANCE = 30;
@@ -217,7 +216,7 @@ export class WhatIf2Provider {
                 this.objectProvider.createObject(
                     {
                         id: `whatif-lockers-${guild}-${index}`,
-                        model: joaat('ch_prop_ch_service_locker_02a'),
+                        model: joaat('bkr_prop_biker_garage_locker_01'),
                         position: locker,
                     },
                     [
@@ -785,6 +784,8 @@ export class WhatIf2Provider {
         const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
 
         for (let i = 0; i < count; i++) {
+            await wait(0);
+
             const coords = this.getZombieSpawnCoords(playerCoords);
             if (!coords && !overriddenCoords) {
                 continue;
