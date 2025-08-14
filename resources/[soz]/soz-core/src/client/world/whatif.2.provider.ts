@@ -62,6 +62,7 @@ import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ResourceLoader } from '../repository/resource.loader';
 import { ClothingShopRepository } from '../repository/shop.repository';
 import { UnderTypesShopRepository } from '../repository/under_types.shop.repository';
+import { SoundService } from '../sound.service';
 import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
@@ -77,6 +78,19 @@ const ZombieWalks = [
     'move_m@drunk@a',
     'anim_group_move_ballistic',
 ];
+const ZombieSound = [
+    'groan',
+    'groan2',
+    'groan3',
+    'groan4',
+    'lowgroan',
+    'lowgroan2',
+    'zmoan01',
+    'zmoan02',
+    'zmoan03',
+    'zmoan04',
+];
+const MAX_SOUND_DISTANCE = 50;
 
 const MIN_SPAWN_DISTANCE = 30;
 const MAX_SPAWN_DISTANCE = 100;
@@ -151,6 +165,9 @@ export class WhatIf2Provider {
 
     @Inject(UnderTypesShopRepository)
     private underTypesShopRepository: UnderTypesShopRepository;
+
+    @Inject(SoundService)
+    public soundService: SoundService;
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
@@ -920,7 +937,29 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            if (GetIsTaskActive(pedHandle, 222) || IsPedInMeleeCombat(pedHandle)) {
+            const shouldPlaySound = getRandomInt(0, 100) <= 20;
+
+            if (shouldPlaySound) {
+                const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+                setTimeout(
+                    () => {
+                        const pedCoords = GetEntityCoords(pedHandle) as Vector3;
+                        const playerDistance = getDistance(playerCoords, pedCoords);
+
+                        if (playerDistance > MAX_SOUND_DISTANCE) return;
+
+                        const volume = Math.min(
+                            (0.07 * (MAX_SOUND_DISTANCE - playerDistance)) / MAX_SOUND_DISTANCE,
+                            0.1
+                        );
+
+                        this.soundService.play('zombie/' + getRandomItem(ZombieSound), volume);
+                    },
+                    getRandomInt(0, 1000)
+                );
+            }
+
+            if (GetIsTaskActive(pedHandle, 221) || IsPedInMeleeCombat(pedHandle)) {
                 continue;
             }
 
