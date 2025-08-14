@@ -84,7 +84,7 @@ export const PlayerStats: FunctionComponent = () => {
                     value={healthPercent}
                     color={healthPercent > 20 ? gaugeColors.green_light : gaugeColors.red_light}
                     backgroundColor={healthPercent > 20 ? gaugeColors.green_dark : gaugeColors.red_dark}
-                    hideCondition={value => value > 80}
+                    hideCondition={value => value > (whatIf2Enabled ? 50 : 80)}
                 >
                     <img
                         style={{
@@ -219,13 +219,13 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             )}
 
-            {hasWatch && showStamina && showStats && (
+            {whatIf2Enabled || (hasWatch && showStamina && showStats) ? (
                 <StatusGauge
                     value={stamina}
                     max={whatIf2Enabled ? 50 : 100}
                     color={stamina <= 25 ? gaugeColors.orange_light : gaugeColors.blue_light}
                     backgroundColor={stamina <= 25 ? gaugeColors.orange_dark : gaugeColors.blue_dark}
-                    hideCondition={value => value >= (whatIf2Enabled ? 40 : 80)}
+                    hideCondition={value => value >= (whatIf2Enabled ? 25 : 80)}
                 >
                     <img
                         style={{
@@ -236,7 +236,7 @@ export const PlayerStats: FunctionComponent = () => {
                         alt="stamina"
                     />
                 </StatusGauge>
-            )}
+            ) : null}
 
             <StatusGauge
                 value={battery}
