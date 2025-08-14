@@ -11,6 +11,7 @@ type InventoryItemCreator = {
     chance: number;
     max: number;
     zombie: boolean;
+    withAmmo?: boolean;
 };
 
 export interface WhatIfMap {
@@ -117,15 +118,20 @@ export const WhatIf2ShopPosition: Record<WhatIfGuild, Vector4> = {
     warden: [2516.3, -375.49, 92.14, 285.01], // warden
 };
 
+export const WhatIfMedicPosition: Record<WhatIfGuild, Vector4> = {
+    raider: [1848.5, 2586.09, 44.67, 277.52], // raider
+    warden: [2521.6, -414.08, 93.12, 330.18], // warden
+};
+
 export const WhatIf2ShopVehicleList: Record<string, number> = {
-    bmx: 1,
-    scorcher: 1,
-    cruiser: 1,
-    boxville5: 1,
-    wastelander: 1,
-    technical2: 1,
-    dune3: 1,
-    ratbike: 1,
+    bmx: 999,
+    scorcher: 999,
+    cruiser: 999,
+    boxville5: 999,
+    wastelander: 999,
+    technical2: 999,
+    dune3: 999,
+    ratbike: 999,
 };
 
 export const WhatIf2HammerZoneConfig = {
@@ -878,7 +884,7 @@ export const WhatIf2LootInventoryContent: Record<WhatIf2LootType, Record<string,
         weapon_doubleaction: { chance: 5, max: 1, zombie: false },
         weapon_pistol: { chance: 5, max: 2, zombie: true },
         weapon_flaregun: { chance: 5, max: 1, zombie: false },
-        weapon_flare: { chance: 5, max: 1, zombie: false },
+        weapon_flare: { chance: 5, max: 1, zombie: false, withAmmo: true },
         weapon_musket: { chance: 5, max: 1, zombie: false },
         cigarette_pack: { chance: 2, max: 3, zombie: true },
         ammo_02: { chance: 5, max: 1, zombie: true },
@@ -899,7 +905,7 @@ export const WhatIf2LootInventoryContent: Record<WhatIf2LootType, Record<string,
         weapon_hatchet: { chance: 5, max: 1, zombie: false },
         weapon_stone_hatchet: { chance: 5, max: 1, zombie: false },
         weapon_marksmanpistol: { chance: 5, max: 1, zombie: false },
-        weapon_molotov: { chance: 5, max: 1, zombie: false },
+        weapon_molotov: { chance: 5, max: 1, zombie: false, withAmmo: true },
         weapon_bread: { chance: 5, max: 1, zombie: true },
         essence_jerrycan_low: { chance: 5, max: 1, zombie: false },
         kerozene_jerrycan_low: { chance: 5, max: 1, zombie: false },
@@ -927,7 +933,7 @@ export const WhatIf2LootInventoryContent: Record<WhatIf2LootType, Record<string,
         weapon_machete: { chance: 5, max: 1, zombie: true },
         weapon_switchblade: { chance: 5, max: 1, zombie: false },
         weapon_combatpistol: { chance: 5, max: 1, zombie: false },
-        weapon_pipebomb: { chance: 5, max: 1, zombie: false },
+        weapon_pipebomb: { chance: 5, max: 1, zombie: false, withAmmo: true },
         bulletproof_vest_medium: { chance: 5, max: 1, zombie: false },
         smuggling_zigarico_cigar: { chance: 5, max: 1, zombie: true },
         smuggling_zisama_zoublon: { chance: 5, max: 1, zombie: true },
@@ -955,8 +961,8 @@ export const WhatIf2LootInventoryContent: Record<WhatIf2LootType, Record<string,
         weapon_assaultrifle: { chance: 2, max: 1, zombie: false },
         weapon_tacticalrifle: { chance: 2, max: 1, zombie: false },
         weapon_carbinerifle: { chance: 2, max: 1, zombie: false },
-        weapon_grenade: { chance: 2, max: 1, zombie: true },
-        weapon_smokegrenade: { chance: 2, max: 1, zombie: false },
+        weapon_grenade: { chance: 2, max: 1, zombie: true, withAmmo: true },
+        weapon_smokegrenade: { chance: 2, max: 1, zombie: false, withAmmo: true },
         weapon_briefcase: { chance: 5, max: 1, zombie: false },
         mre_zera: { chance: 10, max: 4, zombie: true },
         mre_peach: { chance: 10, max: 4, zombie: true },
@@ -1232,15 +1238,15 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
                 amount: 1,
             },
             mre_zera: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 5 } },
                 amount: 1,
             },
             mre_peach: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 5 } },
                 amount: 1,
             },
             cigarette_pack: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 3 } },
                 amount: 1,
             },
         },
@@ -1257,43 +1263,43 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
         event: 'what_if_craft',
         recipes: {
             weapon_flashlight: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 20 } },
                 amount: 1,
             },
             weapon_battleaxe: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 5 } },
                 amount: 1,
             },
             weapon_hammer: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 5 } },
                 amount: 1,
             },
             weapon_crowbar: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 5 } },
                 amount: 1,
             },
             weapon_flare: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 30, metadata: { ammo: 1 } } },
                 amount: 1,
             },
             weapon_flaregun: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 50 } },
                 amount: 1,
             },
             weapon_pistol: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 100 } },
                 amount: 1,
             },
             ammo_01: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 10 } },
                 amount: 1,
             },
             weapon_dbshotgun: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 100 } },
                 amount: 1,
             },
             ammo_08: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 10 } },
                 amount: 1,
             },
         },
@@ -1314,35 +1320,35 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
                 amount: 1,
             },
             whatif_bag_small: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 25 } },
                 amount: 1,
             },
             whatif_bag_medium: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 50 } },
                 amount: 1,
             },
             whatif_bag_medium2: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 50 } },
                 amount: 1,
             },
             whatif_bag_huge: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 100 } },
                 amount: 1,
             },
             bulletproof_vest_low: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 200 } },
                 amount: 1,
             },
             bulletproof_vest_medium: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 300 } },
                 amount: 1,
             },
             radio: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 999 } },
                 amount: 1,
             },
             hazmat_outfit: {
-                inputs: { whatif_parts: { count: 1 } },
+                inputs: { whatif_parts: { count: 999 } },
                 amount: 1,
             },
         },

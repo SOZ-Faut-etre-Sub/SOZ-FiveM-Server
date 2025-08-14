@@ -40,6 +40,7 @@ import {
     WhatIf2ShopPosition,
     WhatIf2SpawnGuild,
     WhatIfGuild,
+    WhatIfMedicPosition,
     WhatIfSafeZones,
 } from '../../shared/whatif';
 import { AnimationRunner } from '../animation/animation.factory';
@@ -360,6 +361,34 @@ export class WhatIf2Provider {
                 },
             });
         });
+
+        Object.values(WhatIfMedicPosition).forEach(shop => {
+            this.targetFactory.createForPed({
+                model: 's_m_m_doctor_01',
+                coords: toVector4Object(shop),
+                invincible: true,
+                freeze: true,
+                spawnNow: true,
+                blockevents: true,
+                animDict: 'anim@amb@casino@valet_scenario@pose_d@',
+                anim: 'base_a_m_y_vinewood_01',
+                flag: 49,
+                target: {
+                    options: [
+                        {
+                            label: 'Soins médicaux',
+                            icon: 'ems/heal',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: () => {
+                                TriggerServerEvent(ServerEvent.LSMC_NPC_HEAL);
+                            },
+                        },
+                    ],
+                    distance: 2.5,
+                },
+            });
+        });
     }
 
     private lootingSetup() {
@@ -639,6 +668,10 @@ export class WhatIf2Provider {
     @On(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)
     async onUseSerum() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        if (!this.isInfected) {
             return;
         }
 
@@ -1033,6 +1066,7 @@ export class WhatIf2Provider {
         }
 
         SetFakePausemapPlayerPositionThisFrame(0.0, 0.0);
+        ClearGpsPlayerWaypoint();
     }
 
     private async openCloakroom(config: WardrobeConfig) {

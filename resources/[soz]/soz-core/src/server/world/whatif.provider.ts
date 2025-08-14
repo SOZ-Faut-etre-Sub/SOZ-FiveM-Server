@@ -295,6 +295,10 @@ export class WhatIfProvider {
                             metadata: {},
                         };
 
+                        if (config.withAmmo) {
+                            newItem.metadata.ammo = 1;
+                        }
+
                         const newItems = Object.values(items);
                         newItems.push(newItem);
 

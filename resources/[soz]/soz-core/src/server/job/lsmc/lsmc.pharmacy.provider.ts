@@ -8,12 +8,14 @@ import { Notifier } from '@public/server/notifier';
 import { PlayerMoneyService } from '@public/server/player/player.money.service';
 import { PlayerService } from '@public/server/player/player.service';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { JobType } from '@public/shared/job';
 import { PHARMACY_PRICES } from '@public/shared/job/lsmc';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { TaxType } from '@public/shared/tax';
 
 import { PriceService } from '../../bank/price.service';
+import { FeatureProvider } from '../../feature/feature.provider';
 
 @Provider()
 export class LSMCPharmacyProvider {
@@ -38,12 +40,22 @@ export class LSMCPharmacyProvider {
     @Inject(PriceService)
     private priceService: PriceService;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     @OnEvent(ServerEvent.LSMC_NPC_HEAL)
     public async onLsmcHeal(source: number) {
         const price = PHARMACY_PRICES.heal;
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
+            return;
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            this.playerService.setPlayerDisease(player.source, false);
+            TriggerClientEvent(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM, source);
+            TriggerClientEvent(ClientEvent.LSMC_HEAL, source, 100);
             return;
         }
 
