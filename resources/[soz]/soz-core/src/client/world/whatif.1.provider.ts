@@ -41,8 +41,9 @@ export class WhatIf1Provider {
         }
 
         const coords = GetEntityCoords(PlayerPedId()) as Vector3;
-        const inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
+        let inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
         const player = this.playerService.getPlayer();
+
         if (
             !player ||
             player.metadata.godmode ||
@@ -50,7 +51,7 @@ export class WhatIf1Provider {
             player.metadata.isdead ||
             player.metadata.hazmat
         ) {
-            return;
+            inZone = false;
         }
 
         if (inZone && !player.metadata.isdead) {
