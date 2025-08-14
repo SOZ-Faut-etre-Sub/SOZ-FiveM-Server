@@ -360,7 +360,7 @@ export class WhatIf2Provider {
 
                         PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
                         this.inventoryAnimationRunner = this.animationService.playScenario({
-                            name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+                            name: 'PROP_HUMAN_BUM_BIN',
                         });
 
                         const playerPed = PlayerPedId();
