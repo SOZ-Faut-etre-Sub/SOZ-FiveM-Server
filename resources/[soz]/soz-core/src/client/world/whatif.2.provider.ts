@@ -988,10 +988,13 @@ export class WhatIf2Provider {
             return;
         }
 
+        const playerPed = PlayerPedId();
+
         for (const pedHandle of GetGamePool('CPed')) {
             if (
                 IsPedAPlayer(pedHandle) ||
                 IsEntityDead(pedHandle) ||
+                !DoesEntityExist(pedHandle) ||
                 !NetworkGetEntityIsNetworked(pedHandle) ||
                 !NetworkHasControlOfEntity(pedHandle)
             ) {
@@ -1003,12 +1006,12 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            const shouldPlaySound = getRandomInt(0, 100) <= 20;
-
-            if (shouldPlaySound) {
-                const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
+            if (getRandomInt(0, 100) <= 20) {
+                const playerCoords = GetEntityCoords(playerPed) as Vector3;
                 setTimeout(
                     () => {
+                        if (!DoesEntityExist(pedHandle)) return;
+
                         const pedCoords = GetEntityCoords(pedHandle) as Vector3;
                         const playerDistance = getDistance(playerCoords, pedCoords);
 
@@ -1023,10 +1026,6 @@ export class WhatIf2Provider {
                     },
                     getRandomInt(0, 1000)
                 );
-            }
-
-            if (GetIsTaskActive(pedHandle, 221) || IsPedInMeleeCombat(pedHandle)) {
-                continue;
             }
 
             await this.configurePed(pedHandle);
