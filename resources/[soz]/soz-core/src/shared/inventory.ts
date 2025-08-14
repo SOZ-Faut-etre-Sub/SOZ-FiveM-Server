@@ -319,6 +319,8 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
             'smuggling_convoy_export',
             'smuggling_ore',
             'smuggling_electronic',
+            'weapon',
+            'weapon_ammo',
         ],
     },
     [InventoryType.Bin]: {
