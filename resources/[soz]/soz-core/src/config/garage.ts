@@ -3148,7 +3148,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
     },
     whatif_garage_raider: {
         legacyId: 'whatif_garage_raider',
-        name: 'Parking SafeZone',
+        name: 'Parking Raiders',
         type: GarageType.Public,
         category: GarageCategory.All,
         zone: new BoxZone([1875.16, 2537.82, 45.67], 3.2, 3.8, {
@@ -3181,7 +3181,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
     },
     whatif_garage_warden: {
         legacyId: 'whatif_garage_warden',
-        name: 'Parking SafeZone',
+        name: 'Parking Wardens',
         type: GarageType.Public,
         category: GarageCategory.All,
         zone: new BoxZone([2517.24, -375.68, 93.14], 5.8, 4.6, {
