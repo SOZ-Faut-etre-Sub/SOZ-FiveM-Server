@@ -20,6 +20,9 @@ import { getRandomInt } from '../../shared/random';
 import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
+    WHAT_IF_LARGE_WEIGHT,
+    WHAT_IF_SMALL_WEIGHT,
+    WhatIf2Bags,
     WhatIf2DefaultItems,
     WhatIf2HammerZoneConfig,
     WhatIf2LootInventoryContent,
@@ -132,6 +135,9 @@ export class WhatIfProvider {
         this.itemService.setItemUseCallback('zombie_serum', this.useZombieSerum.bind(this));
         this.itemService.setItemUseCallback('whatif_hammer', this.useHammer.bind(this));
         this.itemService.setItemUseCallback('hazmat_outfit', this.useOutfit.bind(this));
+        this.itemService.setItemUseCallback('whatif_bag_small', this.useBag.bind(this));
+        this.itemService.setItemUseCallback('whatif_bag_medium', this.useBag.bind(this));
+        this.itemService.setItemUseCallback('whatif_bag_huge', this.useBag.bind(this));
 
         Object.entries(WhatIf2RespawnPoints).forEach(([key, positions]) => {
             positions.forEach((value, index) => {
@@ -165,6 +171,53 @@ export class WhatIfProvider {
         }
 
         TriggerClientEvent(ClientEvent.WHAT_IF_USE_HAZMAT, source);
+    }
+
+    private async useBag(source: number, it: Item, item: InventoryItem, inventory: Inventory) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (!inventory.removeAtSlot(item.slot, 1)) {
+            return;
+        }
+
+        const bagId = Number(
+            Object.entries(WhatIf2Bags[player.skin.Model.Hash]).find(([, weigth]) => {
+                if (it.name === 'whatif_bag_small') {
+                    return weigth === WHAT_IF_SMALL_WEIGHT;
+                }
+                if (it.name === 'whatif_bag_medium') {
+                    return weigth === WHAT_IF_SMALL_WEIGHT;
+                }
+                if (it.name === 'whatif_bag_huge') {
+                    return weigth === WHAT_IF_LARGE_WEIGHT;
+                }
+
+                return false;
+            })[0]
+        );
+
+        if (bagId === 0 || isNaN(bagId)) {
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(source, 'wear_bag', '', 5000, {
+            dictionary: 'anim@mp_yacht@shower@male@',
+            name: 'male_shower_towel_dry_to_get_dressed',
+            flags: 15,
+        });
+
+        if (!completed) {
+            return;
+        }
+
+        TriggerClientEvent(ClientEvent.WHAT_IF_USE_BAG, source, bagId);
     }
 
     private async useZombieSerum(source: number) {

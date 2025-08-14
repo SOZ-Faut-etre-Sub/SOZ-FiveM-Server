@@ -12,7 +12,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
-import { WardrobeConfig } from '../../shared/cloth';
+import { Component, WardrobeConfig } from '../../shared/cloth';
 import { CraftsList } from '../../shared/craft/craft';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
@@ -591,6 +591,15 @@ export class WhatIf2Provider {
         TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS);
     }
 
+    @On(ClientEvent.WHAT_IF_UHU)
+    async onUhu() {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+    }
+
     @OnEvent(ClientEvent.INVENTORY_UNSUBSCRIBE)
     public closeInventory() {
         this.inventoryAnimationRunner?.cancel(AnimationStopReason.Finished);
@@ -663,6 +672,23 @@ export class WhatIf2Provider {
         if (progress.completed) {
             TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
         }
+    }
+
+    @On(ClientEvent.WHAT_IF_USE_BAG)
+    async onUseBag(bagId: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        TriggerServerEvent(
+            ServerEvent.CHARACTER_SET_JOB_CLOTHES,
+            {
+                Components: { [Component.Bag]: { Drawable: bagId, Texture: 0, Palette: 0 } },
+                Props: {},
+            },
+            true,
+            false
+        );
     }
 
     @On(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)

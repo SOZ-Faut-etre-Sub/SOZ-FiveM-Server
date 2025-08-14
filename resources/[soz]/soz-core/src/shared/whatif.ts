@@ -127,14 +127,14 @@ export const WhatIfMedicPosition: Record<WhatIfGuild, Vector4> = {
 };
 
 export const WhatIf2ShopVehicleList: Record<string, number> = {
-    bmx: 999,
-    scorcher: 999,
-    cruiser: 999,
-    boxville5: 999,
-    wastelander: 999,
-    technical2: 999,
-    dune3: 999,
-    ratbike: 999,
+    bmx: 999999,
+    scorcher: 999999,
+    cruiser: 999999,
+    boxville5: 999999,
+    wastelander: 999999,
+    technical2: 999999,
+    dune3: 999999,
+    ratbike: 999999,
 };
 
 export const WhatIf2HammerZoneConfig = {
@@ -1029,6 +1029,23 @@ export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
     ],
 };
 
+export const WHAT_IF_SMALL_WEIGHT = 25000;
+export const WHAT_IF_MEDIUM_WEIGHT = 50000;
+export const WHAT_IF_LARGE_WEIGHT = 100000;
+
+export const WhatIf2Bags = {
+    [PlayerPedHash.Male]: {
+        134: WHAT_IF_MEDIUM_WEIGHT,
+        136: WHAT_IF_SMALL_WEIGHT,
+        135: WHAT_IF_LARGE_WEIGHT,
+    },
+    [PlayerPedHash.Female]: {
+        133: WHAT_IF_MEDIUM_WEIGHT,
+        135: WHAT_IF_SMALL_WEIGHT,
+        134: WHAT_IF_LARGE_WEIGHT,
+    },
+};
+
 export const WhatIf2Cloakroom: WardrobeConfig = {
     [PlayerPedHash.Male]: {
         'Tenue 1': {
@@ -1330,10 +1347,6 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
                 inputs: { whatif_parts: { count: 50 } },
                 amount: 1,
             },
-            whatif_bag_medium2: {
-                inputs: { whatif_parts: { count: 50 } },
-                amount: 1,
-            },
             whatif_bag_huge: {
                 inputs: { whatif_parts: { count: 100 } },
                 amount: 1,
@@ -1347,11 +1360,11 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
                 amount: 1,
             },
             radio: {
-                inputs: { whatif_parts: { count: 999 } },
+                inputs: { whatif_parts: { count: 999999 } },
                 amount: 1,
             },
             hazmat_outfit: {
-                inputs: { whatif_parts: { count: 999 } },
+                inputs: { whatif_parts: { count: 999999 } },
                 amount: 1,
             },
         },

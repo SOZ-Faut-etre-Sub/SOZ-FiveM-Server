@@ -207,7 +207,7 @@ export const PlayerStats: FunctionComponent = () => {
                     value={player.metadata.stress_level}
                     color={gaugeColors.red_light}
                     backgroundColor={gaugeColors.red_dark}
-                    hideCondition={value => value >= (whatIf2Enabled ? 50 : 0)}
+                    hideCondition={value => value < (whatIf2Enabled ? 50 : 0)}
                 >
                     <img
                         style={{

@@ -2,6 +2,7 @@ import { PlayerSyringeProvider } from '@private/server/player/player.syringe.pro
 import { Talent } from '@private/shared/talent';
 import { Command } from '@public/core/decorators/command';
 import { BankMoneyType } from '@public/shared/bank';
+import { Feature } from '@public/shared/features';
 import axios from 'axios';
 
 import { On, Once, OnEvent } from '../../core/decorators/event';
@@ -20,6 +21,8 @@ import {
     PlayerServerState,
 } from '../../shared/player';
 import { RpcServerEvent } from '../../shared/rpc';
+import { WhatIf2Bags } from '../../shared/whatif';
+import { FeatureProvider } from '../feature/feature.provider';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { Notifier } from '../notifier';
 import { QBCore } from '../qbcore';
@@ -63,6 +66,9 @@ export class PlayerProvider {
 
     @Inject(PlayerSyringeProvider)
     private playerSyringeProvider: PlayerSyringeProvider;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private jwtTokenCache: Record<string, string> = {};
 
@@ -116,7 +122,15 @@ export class PlayerProvider {
             0;
 
         if ((baseBag !== 0 || jobBag !== 0) && !player.cloth_config.Config.HideBag) {
-            weight += 40000;
+            if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+                const bagDrawable = player.cloth_config.JobClothSet?.Components?.['5']?.Drawable || 0;
+                const extendedWeight = WhatIf2Bags[player.skin.Model.Hash]?.[bagDrawable];
+                if (extendedWeight) {
+                    weight += extendedWeight;
+                }
+            } else {
+                weight += 40000;
+            }
         }
 
         if (playerInventory.maxWeight() !== weight) {

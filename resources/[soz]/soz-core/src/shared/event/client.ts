@@ -524,4 +524,6 @@ export enum ClientEvent {
     WHAT_IF_USE_ZOMBIE_SERUM = 'soz-core:client:what-if:use-zombie-serum',
     WHAT_IF_OPEN_HAMMER = 'soz-core:client:what-if:open-hammer',
     WHAT_IF_USE_HAZMAT = 'soz-core:client:what-if:use-hazmat',
+    WHAT_IF_USE_BAG = 'soz-core:client:what-if:use-bag',
+    WHAT_IF_UHU = 'soz-core:client:what-if:uhu',
 }
