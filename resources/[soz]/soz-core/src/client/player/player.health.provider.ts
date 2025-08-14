@@ -696,7 +696,7 @@ export class PlayerHealthProvider {
             DisableControlAction(0, Control.Sprint, true); // disable sprint
         }
 
-        if (GetPlayerStamina(PlayerId()) <= 25 || this.disableJump) {
+        if (GetPlayerStamina(PlayerId()) <= 50 || this.disableJump) {
             DisableControlAction(0, Control.Jump, true); // disable jump
         }
     }

@@ -24796,6 +24796,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["unique"] = true,
         ["combinable"] = nil,
+        ["notGiveable"] = true,
         ["description"] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façonner le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
         ["illustrator"] = ".",
     },
