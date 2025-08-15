@@ -294,6 +294,8 @@ export class WhatIfProvider {
         WhatIf2DefaultItems.forEach(item => {
             inventory.add(item.name, item.quantity);
         });
+
+        await inventory.observe();
     }
 
     @On(ServerEvent.WHAT_IF_RESET_INFECTION)
