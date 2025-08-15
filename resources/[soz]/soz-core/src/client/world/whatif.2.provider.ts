@@ -1327,6 +1327,7 @@ export class WhatIf2Provider {
         SetPedCombatAbility(pedHandle, 1);
         SetPedSeeingRange(pedHandle, 30);
         SetPedHearingRange(pedHandle, 50);
+        SetCanAttackFriendly(pedHandle, false, false);
 
         if (IsPedInMeleeCombat(pedHandle) && !GetIsTaskActive(pedHandle, 160) && !GetIsTaskActive(pedHandle, 163)) {
             const target = Citizen.invokeNative('0x5C4AABA3E6CEBF7F', pedHandle) as number;
