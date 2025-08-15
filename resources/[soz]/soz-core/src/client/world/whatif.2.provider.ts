@@ -12,7 +12,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
-import { Component, Outfit, WardrobeConfig } from '../../shared/cloth';
+import { Component, Outfit, Prop, WardrobeConfig } from '../../shared/cloth';
 import { CraftsList } from '../../shared/craft/craft';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
@@ -32,7 +32,6 @@ import {
     HammerProp,
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
-    WhatIf2GuildIndicator,
     WhatIf2Lockers,
     WhatIf2LootInventoryType,
     WhatIf2LootModels,
@@ -776,10 +775,16 @@ export class WhatIf2Provider {
         );
 
         const outfit = getRandomItem(Object.values(WhatIf2Cloakroom[player.skin.Model.Hash]));
-        outfit.Components[Component.Accessories] =
-            WhatIf2GuildIndicator[player.skin.Model.Hash][player.metadata.whatif_guild];
-        TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfit);
 
+        outfit.Props = {
+            [Prop.Hat]: { Clear: true },
+            [Prop.Glasses]: { Clear: true },
+            [Prop.Ear]: { Clear: true },
+            [Prop.LeftHand]: { Clear: true },
+            [Prop.RightHand]: { Clear: true },
+        };
+
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfit);
         TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS);
     }
 
@@ -869,9 +874,6 @@ export class WhatIf2Provider {
         if (player.cloth_config.JobClothSet?.Components?.[Component.Bag]) {
             outfit.Components[Component.Bag] = player.cloth_config.JobClothSet?.Components?.[Component.Bag];
         }
-
-        outfit.Components[Component.Accessories] =
-            WhatIf2GuildIndicator[player.skin.Model.Hash][player.metadata.whatif_guild];
 
         const progress = await this.playerWardrobe.waitProgress(false);
         if (progress.completed) {
@@ -1394,9 +1396,6 @@ export class WhatIf2Provider {
         if (!outfitSelection.outfit) {
             return;
         }
-
-        outfitSelection.outfit.Components[Component.Accessories] =
-            WhatIf2GuildIndicator[player.skin.Model.Hash][player.metadata.whatif_guild];
 
         TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfitSelection.outfit);
     }

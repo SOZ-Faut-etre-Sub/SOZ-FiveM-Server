@@ -1052,17 +1052,6 @@ export const WhatIf2Bags = {
     },
 };
 
-export const WhatIf2GuildIndicator: Record<PlayerPedHash, Record<WhatIfGuild, Partial<OutfitItem>>> = {
-    [PlayerPedHash.Male]: {
-        raider: { Drawable: 214, Texture: 13 },
-        warden: { Drawable: 214, Texture: 10 },
-    },
-    [PlayerPedHash.Female]: {
-        raider: { Drawable: 183, Texture: 13 },
-        warden: { Drawable: 183, Texture: 10 },
-    },
-};
-
 export const WhatIf2Cloakroom: WardrobeConfig = {
     [PlayerPedHash.Male]: {
         'Tenue 1': {
