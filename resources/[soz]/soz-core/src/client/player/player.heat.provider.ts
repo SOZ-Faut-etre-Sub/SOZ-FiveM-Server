@@ -112,6 +112,9 @@ export class PlayerHeatProvider {
         if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
 
         const player = this.playerService.getPlayer();
         if (!player) {
@@ -202,6 +205,9 @@ export class PlayerHeatProvider {
         if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
         this.damage = false;
 
         const playerPed = PlayerPedId();
@@ -266,6 +272,9 @@ export class PlayerHeatProvider {
     @Tick(10_000)
     public onHeatTick() {
         if (!this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
+            return;
+        }
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 

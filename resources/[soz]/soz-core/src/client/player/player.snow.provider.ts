@@ -154,6 +154,9 @@ export class PlayerSnowProvider {
         if (this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
             return;
         }
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
 
         const player = this.playerService.getPlayer();
         if (!player) {
@@ -290,6 +293,9 @@ export class PlayerSnowProvider {
     @Tick(TickInterval.EVERY_SECOND)
     public onColdCheckTick() {
         if (this.featureProvider.isFeatureEnabled(Feature.SummerHeat)) {
+            return;
+        }
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
