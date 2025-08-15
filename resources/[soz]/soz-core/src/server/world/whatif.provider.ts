@@ -257,7 +257,7 @@ export class WhatIfProvider {
     @Command('spawn-zombie', {
         description: 'Spawn des zombies',
         arguments: [{ name: 'count', help: 'amount of zombies to spawn' }],
-        role: ['admin'],
+        role: ['admin', 'staff'],
     })
     async spawnZombie(source: number, count: number = 10) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
