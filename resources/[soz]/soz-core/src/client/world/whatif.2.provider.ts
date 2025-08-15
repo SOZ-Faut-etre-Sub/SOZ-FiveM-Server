@@ -740,6 +740,7 @@ export class WhatIf2Provider {
             return;
         }
 
+        exports['soz-loadscreen'].Shutdown();
         const publicApiUrl = GetConvar('soz_public_endpoint', 'https://soz.zerator.com');
         const location = await this.mapPickerProvider.showGlobalLocationPicker(
             WhatIf2SpawnGuild.map(spawn => ({

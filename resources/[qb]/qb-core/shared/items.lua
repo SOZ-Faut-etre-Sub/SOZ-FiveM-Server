@@ -24778,14 +24778,14 @@ QBShared.Items = {
     -- What IF 2
     ["whatif_parts"] = {
         ["name"] = "whatif_parts",
-        ["label"] = "Pièces utile",
+        ["label"] = "Pièces utiles",
         ["weight"] = 200,
         ["type"] = "item",
         ["unique"] = false,
         ["useable"] = false,
         ["shouldClose"] = false,
-        ["description"] = "",
-        ["illustrator"] = ".",
+        ["description"] = "Ressources précieuses permettant d’acheter, fabriquer et échanger tout ce qu’il faut pour survivre en pleine apocalypse.",
+        ["illustrator"] = ".Sniteur",
     },
     ["whatif_hammer"] = {
         ["name"] = "whatif_hammer",
@@ -24798,7 +24798,7 @@ QBShared.Items = {
         ["combinable"] = nil,
         ["notGiveable"] = true,
         ["description"] = "Il en émane une puissance incommensurable. Il est dit que celui qui le possède peut façonner le monde à sa guise. Vous ne vous sentez pas de le donner à quiconque.",
-        ["illustrator"] = ".",
+        ["illustrator"] = ".Druideca",
     },
     ["zombie_serum"] = {
         ["name"] = "zombie_serum",
@@ -24821,6 +24821,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Pour les zones compliquée.",
+        ["illustrator"] = ".Sniteur",
     },
     ["whatif_bag_small"] = {
         ["name"] = "whatif_bag_small",
@@ -24832,6 +24833,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Léger et discret, conçu pour emporter juste le nécessaire. Idéal pour les missions rapides.",
+        ["illustrator"] = ".Sniteur",
     },
     ["whatif_bag_medium"] = {
         ["name"] = "whatif_bag_medium",
@@ -24843,6 +24845,7 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Un sac résistant et compact avec plusieurs compartiments, offrant un bon équilibre entre espace et mobilité.",
+        ["illustrator"] = ".Sniteur",
     },
     ["whatif_bag_huge"] = {
         ["name"] = "whatif_bag_huge",
@@ -24854,5 +24857,6 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Conçu pour tenir plusieurs semaines dans les conditions les plus rudes de l’apocalypse, que ce soit pour explorer, défendre ou survivre loin de tout abri.",
+        ["illustrator"] = ".Sniteur",
     },
 }

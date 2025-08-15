@@ -187,6 +187,7 @@ export class AdminShopProvider {
             ret.push({
                 label: title,
                 category: 'citizen',
+                event: 'all',
                 canInteract: () => {
                     const player = this.playerService.getPlayer();
                     if (!player) {

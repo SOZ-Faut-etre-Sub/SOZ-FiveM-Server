@@ -131,7 +131,7 @@ export class PedFactory {
             this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) &&
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
-            !ped?.target?.options?.some(v => v.event === 'whatif:2')
+            !ped?.target?.options?.some(v => v.event === 'whatif:2' || v.event === 'all')
         ) {
             return;
         }
