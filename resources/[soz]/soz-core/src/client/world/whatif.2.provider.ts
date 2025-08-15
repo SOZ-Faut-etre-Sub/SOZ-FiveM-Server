@@ -311,6 +311,9 @@ export class WhatIf2Provider {
         AddRelationshipGroup(this.zombieRelation);
         AddRelationshipGroup(this.zombieVehicleRelation);
         SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieVehicleRelation), GetHashKey(this.zombieVehicleRelation));
+        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieVehicleRelation), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieVehicleRelation));
         SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
         SetRelationshipBetweenGroups(5, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
         SetRelationshipBetweenGroups(3, GetHashKey(this.zombieVehicleRelation), GetHashKey('PLAYER'));
@@ -1224,11 +1227,11 @@ export class WhatIf2Provider {
         SetEntityMaxSpeed(pedHandle, 10.0);
 
         DisablePedPainAudio(pedHandle, true);
-        //StopPedSpeaking(pedHandle, true);
+        StopPedSpeaking(pedHandle, true);
 
         SetPedAlertness(pedHandle, 3);
         SetPedTargetLossResponse(pedHandle, 2);
-        //SetAmbientVoiceName(pedHandle, 'ALIENS');
+        SetAmbientVoiceName(pedHandle, 'ALIENS');
 
         SetPedConfigFlag(pedHandle, 281, false);
         SetPedConfigFlag(pedHandle, 155, false);

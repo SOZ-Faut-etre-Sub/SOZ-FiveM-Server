@@ -696,7 +696,7 @@ export class PlayerHealthProvider {
             DisableControlAction(0, Control.Sprint, true); // disable sprint
         }
 
-        if (GetPlayerStamina(PlayerId()) <= 50 || this.disableJump) {
+        if (GetPlayerStamina(PlayerId()) <= 25 || this.disableJump) {
             DisableControlAction(0, Control.Jump, true); // disable jump
         }
     }
@@ -706,7 +706,7 @@ export class PlayerHealthProvider {
         const playerId = PlayerId();
         const stamina = GetPlayerStamina(playerId);
 
-        if (IsPedJumping(playerId)) {
+        if (IsPedJumping(PlayerPedId())) {
             SetPlayerStamina(playerId, stamina - 25);
             await wait(1000);
         }
