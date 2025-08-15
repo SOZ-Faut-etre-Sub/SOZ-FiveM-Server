@@ -61,6 +61,7 @@ import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerService } from '../player/player.service';
+import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
 import { PlayerWardrobe } from '../player/player.wardrobe';
 import { ResourceLoader } from '../repository/resource.loader';
 import { ClothingShopRepository } from '../repository/shop.repository';
@@ -73,6 +74,7 @@ import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
 import { WeaponService } from '../weapon/weapon.service';
 
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
+
 const MAX_HAMMER_PROPS_DISTANCE = 100;
 
 const ZombieModelHash = ZombieModels.map(model => joaat(model));
@@ -276,6 +278,9 @@ export class WhatIf2Provider {
     @Inject(UnderTypesShopRepository)
     private underTypesShopRepository: UnderTypesShopRepository;
 
+    @Inject(PlayerWalkstyleProvider)
+    private readonly playerWalkstyleProvider: PlayerWalkstyleProvider;
+
     @Inject(SoundService)
     public soundService: SoundService;
 
@@ -285,6 +290,7 @@ export class WhatIf2Provider {
 
     private isInfected = false;
     private isInfectedAt = 0;
+    private lastInfectionAnimation = 0;
 
     private isMouseSelectionOn: boolean;
     private hammerDebugEntity = 0;
@@ -817,10 +823,6 @@ export class WhatIf2Provider {
 
         this.isInfected = true;
         this.isInfectedAt = Date.now();
-
-        this.notifier.error(
-            `Vous avez été infecté ! Vous avez ~b~20 minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`
-        );
     }
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
@@ -1133,32 +1135,46 @@ export class WhatIf2Provider {
 
         if (!this.isInfected) return;
 
-        if (getRandomInt(0, 100) <= 10) {
-            this.blurService.add('zombie-infected', 500);
-        }
+        const infectionTime = Date.now() - this.isInfectedAt;
 
-        if (getRandomInt(0, 100) <= 5) {
-            await this.animationService.playAnimation(
-                {
-                    base: {
-                        dictionary: 'random@drunk_driver_1',
-                        name: 'vomit_outside',
-                        options: {
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                        duration: 2000,
-                    },
-                },
-                {
-                    cancellable: false,
+        if (this.lastInfectionAnimation < Date.now() - 60000) {
+            if (infectionTime < 10 * 60 * 1000) {
+                this.blurService.add('zombie-infected', 500);
+
+                await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@verydrunk');
+                await wait(1000);
+
+                this.blurService.remove('zombie-infected', 500);
+                this.lastInfectionAnimation = Date.now();
+            } else if (infectionTime < 5 * 60 * 1000) {
+                this.blurService.add('zombie-infected', 500);
+
+                await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@moderatedrunk');
+                await wait(1000);
+
+                this.blurService.remove('zombie-infected', 500);
+                this.lastInfectionAnimation = Date.now();
+            } else if (infectionTime < 60 * 1000) {
+                if (getRandomInt(0, 100) <= 5) {
+                    SetPedToRagdoll(PlayerPedId(), 1000, 1000, 0, false, false, false);
                 }
+
+                this.blurService.add('zombie-infected', 500);
+
+                await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', 'move_m@drunk@slightlydrunk');
+                await wait(1000);
+
+                this.blurService.remove('zombie-infected', 500);
+                this.lastInfectionAnimation = Date.now();
+            }
+
+            const remainingMinutes = 20 + Math.floor((this.isInfectedAt + 60000 - Date.now()) / 60000);
+            this.notifier.error(
+                `Vous avez été infecté ! Vous avez ~b~${remainingMinutes} minutes~s~ pour trouver et vous injecter un ~b~sérum~s~ avant que la fièvre ne vous consume.`
             );
         }
 
-        this.blurService.remove('zombie-infected', 500);
-
-        if (Date.now() - this.isInfectedAt < INFECTED_TIME_BEFORE_DEATH) return;
+        if (infectionTime < INFECTED_TIME_BEFORE_DEATH) return;
 
         this.notifier.error(`Vous avez succombé à vos blessures...`);
         SetEntityHealth(PlayerPedId(), 0);
