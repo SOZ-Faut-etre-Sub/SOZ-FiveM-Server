@@ -21,7 +21,7 @@ import { ServerEvent } from '../../shared/event/server';
 import { InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
 import { HAZMAT_OUTFIT_NAME, LsmcCloakroom } from '../../shared/job/lsmc';
-import { getExtendedLocationHash, getLocationHash } from '../../shared/locationhash';
+import { getExtendedLocationHash } from '../../shared/locationhash';
 import { NotEmptyStringValidator } from '../../shared/nui/input';
 import { MenuType } from '../../shared/nui/menu';
 import { ForbiddenPropModels } from '../../shared/object';

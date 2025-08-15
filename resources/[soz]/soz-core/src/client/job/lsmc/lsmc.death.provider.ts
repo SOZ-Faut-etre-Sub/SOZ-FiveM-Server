@@ -233,6 +233,8 @@ export class LSMCDeathProvider {
     @Once(OnceStep.PlayerLoaded)
     public init() {
         this.loginTime = Date.now();
+
+        AddRelationshipGroup('PLAYER_DEAD');
     }
 
     @Tick(10)
@@ -397,6 +399,7 @@ export class LSMCDeathProvider {
             SetEntityInvincible(player, true);
             SetBlockingOfNonTemporaryEvents(player, true);
             SetEntityHealth(player, GetEntityMaxHealth(player));
+            SetPedRelationshipGroupHash(player, GetHashKey('PLAYER_DEAD'));
 
             this.playerService.updateState({
                 isInventoryBusy: false,
@@ -504,6 +507,7 @@ export class LSMCDeathProvider {
         SetEntityHealth(player, 200);
         ClearPedBloodDamage(player);
         SetPlayerSprint(PlayerId(), true);
+        SetPedRelationshipGroupHash(player, GetHashKey('PLAYER'));
 
         this.playerWalkstyleProvider.updateWalkStyle('injury', null);
 
