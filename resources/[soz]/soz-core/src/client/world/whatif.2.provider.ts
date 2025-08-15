@@ -1128,6 +1128,7 @@ export class WhatIf2Provider {
             const y = playerCoords[1] + getRandomInt(-MAX_SPAWN_DISTANCE, MAX_SPAWN_DISTANCE);
             const [valid, posZ] = GetGroundZFor_3dCoord(x, y, playerCoords[2], false);
             if (!valid) {
+                iter++;
                 continue;
             }
 
