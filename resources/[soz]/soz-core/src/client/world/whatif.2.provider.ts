@@ -602,7 +602,7 @@ export class WhatIf2Provider {
                         this.inventoryManager.openInventory(InventoryType.Zombie, id, coords as Vector3);
                     },
                     canInteract: async (entity: number) => {
-                        return IsEntityDead(entity) && !IsPedAPlayer(entity) && !GetPedDiesInWater(entity);
+                        return IsEntityDead(entity) && !IsPedAPlayer(entity);
                     },
                 },
             ],
@@ -1229,6 +1229,7 @@ export class WhatIf2Provider {
         DisablePedPainAudio(pedHandle, true);
         StopPedSpeaking(pedHandle, true);
 
+        SetPedDiesInWater(pedHandle, false);
         SetPedAlertness(pedHandle, 3);
         SetPedTargetLossResponse(pedHandle, 2);
         SetAmbientVoiceName(pedHandle, 'ALIENS');
