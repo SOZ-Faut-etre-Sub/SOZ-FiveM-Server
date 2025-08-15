@@ -1,9 +1,11 @@
 import { Provider } from '@core/decorators/provider';
 import { Rpc } from '@core/decorators/rpc';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { Inject } from '@public/core/decorators/injectable';
 import { Notifier } from '@public/server/notifier';
 import { PlayerHealthProvider } from '@public/server/player/player.health.provider';
 import { PlayerService } from '@public/server/player/player.service';
+import { Feature } from '@public/shared/features';
 import { IntervalByStressLooseType, PointsByStressLooseType, StressLooseType } from '@public/shared/health';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -18,6 +20,9 @@ export class PlayerStressProvider {
     @Inject(PlayerHealthProvider)
     private playerHealthProvider: PlayerHealthProvider;
 
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
+
     private playerLastStressTypeUsedAt: Record<number, Partial<Record<StressLooseType, number>>> = {};
 
     @Rpc(RpcServerEvent.STRESS_UPDATE)
@@ -26,6 +31,10 @@ export class PlayerStressProvider {
 
         if (!player) {
             return null;
+        }
+
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
         }
 
         this.playerLastStressTypeUsedAt[player.citizenid] ??= {};

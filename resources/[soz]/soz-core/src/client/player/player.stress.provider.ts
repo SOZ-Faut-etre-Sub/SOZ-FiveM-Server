@@ -164,6 +164,10 @@ export class PlayerStressProvider {
             return;
         }
 
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         if (this.gamesProvider.areAnyGameRunning()) {
             return;
         }
@@ -189,6 +193,10 @@ export class PlayerStressProvider {
     @Tick(TickInterval.EVERY_SECOND)
     async checkStressfulEvent(): Promise<void> {
         if (!this.featureProvider.isFeatureEnabled(Feature.MyBodySummer)) {
+            return;
+        }
+
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
@@ -337,6 +345,10 @@ export class PlayerStressProvider {
         }
 
         if (this.gamesProvider.areAnyGameRunning()) {
+            return;
+        }
+
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
