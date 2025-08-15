@@ -336,6 +336,56 @@ export class WhatIf2Provider {
         if (!IsAudioSceneActive('DLC_24-1_YK_Mixer_Scene')) {
             StartAudioScene('DLC_24-1_YK_Mixer_Scene');
         }
+
+        const id1 = 'whatifstorage_raider';
+        this.objectProvider.createObject(
+            {
+                id: id1,
+                position: [1717.98, 2518.86, 45.66, 28.83],
+                placeOnGround: true,
+                model: GetHashKey('xm3_prop_xm3_whshelf_01a'),
+            },
+            [
+                {
+                    label: 'Ouvrir',
+                    icon: 'inventory/ouvrir_le_stockage',
+                    category: 'citizen',
+                    event: 'all',
+                    action: entity => {
+                        this.inventoryManager.openInventory(
+                            InventoryType.ObjectStorage,
+                            id1,
+                            GetEntityCoords(entity) as Vector3
+                        );
+                    },
+                },
+            ]
+        );
+
+        const id2 = 'whatifstorage_warden';
+        this.objectProvider.createObject(
+            {
+                id: id2,
+                position: [2572.76, -389.92, 93.2, 46.24],
+                placeOnGround: true,
+                model: GetHashKey('xm3_prop_xm3_whshelf_01a'),
+            },
+            [
+                {
+                    label: 'Ouvrir',
+                    icon: 'inventory/ouvrir_le_stockage',
+                    category: 'citizen',
+                    event: 'all',
+                    action: entity => {
+                        this.inventoryManager.openInventory(
+                            InventoryType.ObjectStorage,
+                            id2,
+                            GetEntityCoords(entity) as Vector3
+                        );
+                    },
+                },
+            ]
+        );
     }
 
     private safeZoneSetup() {
