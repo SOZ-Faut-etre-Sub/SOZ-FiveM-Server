@@ -21,6 +21,7 @@ import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WHAT_IF_LARGE_WEIGHT,
+    WHAT_IF_MEDIUM_WEIGHT,
     WHAT_IF_SMALL_WEIGHT,
     WhatIf2Bags,
     WhatIf2DefaultItems,
@@ -193,7 +194,7 @@ export class WhatIfProvider {
                     return weigth === WHAT_IF_SMALL_WEIGHT;
                 }
                 if (it.name === 'whatif_bag_medium') {
-                    return weigth === WHAT_IF_SMALL_WEIGHT;
+                    return weigth === WHAT_IF_MEDIUM_WEIGHT;
                 }
                 if (it.name === 'whatif_bag_huge') {
                     return weigth === WHAT_IF_LARGE_WEIGHT;

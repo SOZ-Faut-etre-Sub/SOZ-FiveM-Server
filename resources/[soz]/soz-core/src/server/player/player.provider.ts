@@ -104,6 +104,10 @@ export class PlayerProvider {
         const strengthMultiplier = player.metadata.strength / 100;
         let weight = 20000 * strengthMultiplier;
 
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            weight = 30000;
+        }
+
         if (player.metadata.criminal_talents.includes(Talent.UpgradeWeight)) {
             weight += 10000;
         }

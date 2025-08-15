@@ -1031,7 +1031,7 @@ export const WhatIf2Lockers: Record<WhatIfGuild, Vector4[]> = {
 
 export const WHAT_IF_SMALL_WEIGHT = 25000;
 export const WHAT_IF_MEDIUM_WEIGHT = 50000;
-export const WHAT_IF_LARGE_WEIGHT = 100000;
+export const WHAT_IF_LARGE_WEIGHT = 75000;
 
 export const WhatIf2Bags = {
     [PlayerPedHash.Male]: {
