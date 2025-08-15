@@ -75,25 +75,131 @@ const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
 const MAX_HAMMER_PROPS_DISTANCE = 100;
 
 const ZombieModelHash = ZombieModels.map(model => joaat(model));
-const ZombieWalks = [
-    'move_m@drunk@verydrunk',
-    'move_m@drunk@moderatedrunk',
-    'move_m@drunk@a',
-    'anim_group_move_ballistic',
-];
-const ZombieSound = [
-    'groan',
-    'groan2',
-    'groan3',
-    'groan4',
-    'lowgroan',
-    'lowgroan2',
-    'zmoan01',
-    'zmoan02',
-    'zmoan03',
-    'zmoan04',
-];
+
 const MAX_SOUND_DISTANCE = 50;
+
+const ZombieSound = [
+    {
+        dict: '',
+        name: 'groan',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'groan2',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'groan3',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'groan4',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'lowgroan',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'lowgroan2',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'zmoan01',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'zmoan02',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'zmoan03',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: '',
+        name: 'zmoan04',
+        native: false,
+        speech: false,
+    },
+    {
+        dict: 'DLC_24-1_YK_Survival_Sounds',
+        name: 'Undead_Death',
+        native: true,
+        speech: false,
+    },
+    {
+        dict: 'DLC_24-1_YK_Survival_Sounds',
+        name: 'Undead_Pain',
+        native: true,
+        speech: false,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_SPAWN',
+        native: true,
+        speech: true,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_IDLE',
+        native: true,
+        speech: true,
+    } /*,
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_SPAWN_FIRE',
+        native: true,
+        speech: true,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_SPAWN_PLAGUE',
+        native: true,
+        speech: true,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_SPAWN_SUCIDE',
+        native: true,
+        speech: true,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_SPAWN_HEAVY',
+        native: true,
+        speech: true,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_WAR_CRY',
+        native: true,
+        speech: true,
+    },
+    {
+        dict: 'DLC_24-YK_Survival_01',
+        name: 'UNDEAD_EXPLODER_SPRINT',
+        native: true,
+        speech: true,
+    }*/,
+];
 
 const MIN_SPAWN_DISTANCE = 30;
 const MAX_SPAWN_DISTANCE = 100;
@@ -174,6 +280,7 @@ export class WhatIf2Provider {
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
+    private zombieVehicleRelation = 'ZombieVehicleKnockOut';
 
     private isInfected = false;
     private isInfectedAt = 0;
@@ -202,9 +309,24 @@ export class WhatIf2Provider {
         SetPedMeleeCombatLimits(10, 10, 10);
 
         AddRelationshipGroup(this.zombieRelation);
-        SetRelationshipBetweenGroups(255, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
+        AddRelationshipGroup(this.zombieVehicleRelation);
+        SetRelationshipBetweenGroups(0, GetHashKey(this.zombieRelation), GetHashKey(this.zombieRelation));
         SetRelationshipBetweenGroups(5, GetHashKey(this.zombieRelation), GetHashKey('PLAYER'));
-        SetRelationshipBetweenGroups(3, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(5, GetHashKey('PLAYER'), GetHashKey(this.zombieRelation));
+        SetRelationshipBetweenGroups(3, GetHashKey(this.zombieVehicleRelation), GetHashKey('PLAYER'));
+
+        await this.resourceLoader.loadClipSet('clipset@anim@ingame@move_m@zombie@core');
+        await this.resourceLoader.loadClipSet('clipset@anim@ingame@move_m@zombie@strafe');
+        await this.resourceLoader.loadClipSet('clipset@anim@ingame@melee@unarmed@streamed_core_zombie');
+        await this.resourceLoader.loadClipSet('clipset@anim@ingame@melee@unarmed@streamed_variations_zombie');
+        await this.resourceLoader.loadClipSet('clipset@anim@ingame@melee@unarmed@streamed_taunts_zombie');
+
+        await this.resourceLoader.requestScriptAudioBank('DLC_24-1/YK_Survival');
+        await this.resourceLoader.requestScriptAudioBank('DLC_24-1/YK_Survival_02');
+
+        if (!IsAudioSceneActive('DLC_24-1_YK_Mixer_Scene')) {
+            StartAudioScene('DLC_24-1_YK_Mixer_Scene');
+        }
     }
 
     private safeZoneSetup() {
@@ -1012,20 +1134,35 @@ export class WhatIf2Provider {
             if (getRandomInt(0, 100) <= 20) {
                 const playerCoords = GetEntityCoords(playerPed) as Vector3;
                 setTimeout(
-                    () => {
+                    async () => {
                         if (!DoesEntityExist(pedHandle)) return;
 
-                        const pedCoords = GetEntityCoords(pedHandle) as Vector3;
-                        const playerDistance = getDistance(playerCoords, pedCoords);
+                        const sound = getRandomItem(ZombieSound);
+                        if (sound.native) {
+                            if (sound.speech) {
+                                PlayPedAmbientSpeechWithVoiceNative(
+                                    pedHandle,
+                                    sound.name,
+                                    sound.dict,
+                                    'SPEECH_PARAMS_FORCE_SHOUTED',
+                                    true
+                                );
+                            } else {
+                                PlaySoundFromEntity(-1, sound.name, pedHandle, sound.dict, true, MAX_SOUND_DISTANCE);
+                            }
+                        } else {
+                            const pedCoords = GetEntityCoords(pedHandle) as Vector3;
+                            const playerDistance = getDistance(playerCoords, pedCoords);
 
-                        if (playerDistance > MAX_SOUND_DISTANCE) return;
+                            if (playerDistance > MAX_SOUND_DISTANCE) return;
 
-                        const volume = Math.min(
-                            (0.07 * (MAX_SOUND_DISTANCE - playerDistance)) / MAX_SOUND_DISTANCE,
-                            0.1
-                        );
+                            const volume = Math.min(
+                                (0.07 * (MAX_SOUND_DISTANCE - playerDistance)) / MAX_SOUND_DISTANCE,
+                                0.1
+                            );
 
-                        this.soundService.play('zombie/' + getRandomItem(ZombieSound), volume);
+                            this.soundService.play('zombie/' + sound.name, volume);
+                        }
                     },
                     getRandomInt(0, 1000)
                 );
@@ -1036,26 +1173,27 @@ export class WhatIf2Provider {
     }
 
     private async configurePed(pedHandle: number) {
-        const walk = getRandomItem(ZombieWalks);
-        await this.resourceLoader.loadAnimationSet(walk);
+        SetPedMovementClipset(pedHandle, 'clipset@anim@ingame@move_m@zombie@core', 1.0);
+        SetPedUsingActionMode(pedHandle, true, -1, 'clipset@anim@ingame@move_m@zombie@core');
+        SetPedStrafeClipset(pedHandle, 'clipset@anim@ingame@move_m@zombie@strafe');
+        SetWeaponAnimationOverride(pedHandle, GetHashKey('ZOMBIE'));
 
-        SetPedMovementClipset(pedHandle, walk, 1.0);
-        SetPedIsDrunk(pedHandle, true);
-
-        SetCanAttackFriendly(pedHandle, true, true);
         SetPedCanEvasiveDive(pedHandle, false);
         SetPedMoveRateOverride(pedHandle, 10.0);
         SetRunSprintMultiplierForPlayer(pedHandle, 1.49);
         SetEntityMaxSpeed(pedHandle, 10.0);
 
         DisablePedPainAudio(pedHandle, true);
-        StopPedSpeaking(pedHandle, true);
+        //StopPedSpeaking(pedHandle, true);
 
-        SetPedCombatRange(pedHandle, 2);
         SetPedAlertness(pedHandle, 3);
         SetPedTargetLossResponse(pedHandle, 2);
-        SetAmbientVoiceName(pedHandle, 'ALIENS');
+        //SetAmbientVoiceName(pedHandle, 'ALIENS');
 
+        SetPedConfigFlag(pedHandle, 281, false);
+        SetPedConfigFlag(pedHandle, 155, false);
+        SetPedConfigFlag(pedHandle, 42, true);
+        SetPedConfigFlag(pedHandle, 301, true);
         SetPedCombatAttributes(pedHandle, 0, false);
         SetPedCombatAttributes(pedHandle, 4, true);
         SetPedCombatAttributes(pedHandle, 5, true);
@@ -1065,12 +1203,15 @@ export class WhatIf2Provider {
         SetPedCombatAttributes(pedHandle, 16, false);
         SetPedCombatAttributes(pedHandle, 17, false);
         SetPedCombatAttributes(pedHandle, 21, true);
+        SetPedCombatAttributes(pedHandle, 28, true);
         SetPedCombatAttributes(pedHandle, 31, true);
         SetPedCombatAttributes(pedHandle, 38, true);
         SetPedCombatAttributes(pedHandle, 42, true);
         SetPedCombatAttributes(pedHandle, 46, true);
         SetPedCombatAttributes(pedHandle, 50, true);
         SetPedCombatAttributes(pedHandle, 52, true);
+        SetPedCombatAttributes(pedHandle, 58, true);
+        SetPedCombatAttributes(pedHandle, 71, true);
         SetPedFleeAttributes(pedHandle, 0, false);
 
         ApplyPedDamagePack(pedHandle, 'BigHitByVehicle', 1.0, 9.0);
@@ -1083,14 +1224,33 @@ export class WhatIf2Provider {
         SetPedShootRate(pedHandle, 1000);
         SetPedInfiniteAmmoClip(pedHandle, true);
         SetPedCombatMovement(pedHandle, 2);
+        SetPedCombatRange(pedHandle, 0);
         SetPedCombatAbility(pedHandle, 1);
         SetPedSeeingRange(pedHandle, 30);
         SetPedHearingRange(pedHandle, 50);
 
-        SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
-
-        TaskWanderStandard(pedHandle, 1.0, 10);
-
+        if (IsPedInMeleeCombat(pedHandle) && !GetIsTaskActive(pedHandle, 160) && !GetIsTaskActive(pedHandle, 163)) {
+            const target = Citizen.invokeNative('0x5C4AABA3E6CEBF7F', pedHandle) as number;
+            const vehicle = GetVehiclePedIsIn(target, false);
+            if (vehicle) {
+                let seat = 0;
+                for (let i = -1; i < GetVehicleMaxNumberOfPassengers(vehicle); i++) {
+                    if (GetPedInVehicleSeat(vehicle, i) === target) {
+                        seat = i;
+                        break;
+                    }
+                }
+                SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieVehicleRelation));
+                TaskEnterVehicle(pedHandle, vehicle, 10_000, seat, 2.0, 524288 + 8, 0);
+            }
+        } else if (
+            !GetIsTaskActive(pedHandle, 241) &&
+            !GetIsTaskActive(pedHandle, 160) &&
+            !GetIsTaskActive(pedHandle, 163)
+        ) {
+            SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieRelation));
+            TaskWanderStandard(pedHandle, 1.0, 10);
+        }
         SetEntityAsMissionEntity(pedHandle, true, true);
     }
 

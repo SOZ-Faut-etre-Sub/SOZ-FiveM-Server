@@ -182,4 +182,14 @@ export class ResourceLoader {
     unloadWeaponAsset(name: number): void {
         RemoveWeaponAsset(name);
     }
+
+    async loadClipSet(name: string): Promise<void> {
+        if (!HasClipSetLoaded(name)) {
+            RequestClipSet(name);
+
+            while (!HasClipSetLoaded(name)) {
+                await wait(0);
+            }
+        }
+    }
 }

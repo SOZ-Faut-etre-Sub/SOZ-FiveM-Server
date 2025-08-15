@@ -1,6 +1,6 @@
 .chat-window {
     position: absolute;
-    top: 39vh;
+    top: 29vh;
     left: 0.8vw;
     width: 38vw;
     height: 22vh;
@@ -15,7 +15,7 @@
     font-size: 1.65vh;
     position: absolute;
 
-    top: 61vh;
+    top: 51vh;
     left: 0.8vw;
     width: 38vw;
     max-width: 1000px;
