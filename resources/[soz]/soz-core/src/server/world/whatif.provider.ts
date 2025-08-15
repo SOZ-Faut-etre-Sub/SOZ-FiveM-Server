@@ -16,7 +16,6 @@ import { uuidv4, wait } from '../../core/utils';
 import { ClientEvent } from '../../shared/event/client';
 import { DEFAULT_INVENTORY_CONFIGURATION, getItemsWeight, InventoryItem, InventoryType } from '../../shared/inventory';
 import { joaat } from '../../shared/joaat';
-import { getLocationHash } from '../../shared/locationhash';
 import { getDistance, Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
 import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
@@ -265,7 +264,7 @@ export class WhatIfProvider {
         arguments: [{ name: 'count', help: 'amount of zombies to spawn' }],
         role: ['admin', 'staff'],
     })
-    async spawnZombie(source: number, count: number = 10) {
+    async spawnZombieCmd(source: number, count: number = 10) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
@@ -278,6 +277,29 @@ export class WhatIfProvider {
             return;
         }
         this.spawnedZombies.push(...handles);
+    }
+
+    @Command('delete-zombie', {
+        description: 'Delete des zombies dans une zone',
+        arguments: [{ name: 'radius', help: 'radius of the zone' }],
+        role: ['admin', 'staff'],
+    })
+    async deleteZombieCmd(source: number, radius: number = 10) {
+        const ped = GetPlayerPed(source);
+        const playerCoords = GetEntityCoords(ped) as Vector3;
+
+        for (const handle of this.spawnedZombies) {
+            const ped = NetworkGetEntityFromNetworkId(handle);
+            if (!ped || !DoesEntityExist(ped)) continue;
+
+            const pedCoords = GetEntityCoords(ped, false) as Vector3;
+            if (getDistance(playerCoords, pedCoords) > radius) {
+                continue;
+            }
+
+            await this.deleteZombie(handle);
+            DeleteEntity(ped);
+        }
     }
 
     @On(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS)
@@ -731,36 +753,32 @@ export class WhatIfProvider {
         }
     }
 
+    private async deleteZombie(id: number) {
+        this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
+
+        try {
+            await this.inventoryFactory.delete('zombie_' + id);
+        } catch (e) {
+            // ignore
+        }
+    }
+
     @Tick(TickInterval.EVERY_MINUTE)
     async onZombieSpawnTick() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
-        const deleteZombie = async (id: number, pedCoords?: Vector3) => {
-            this.spawnedZombies = this.spawnedZombies.filter(zombieId => zombieId !== id);
-
-            if (!pedCoords) return;
-
-            const coordsHash = getLocationHash(pedCoords);
-
-            try {
-                await this.inventoryFactory.delete('zombie_' + coordsHash);
-            } catch (e) {
-                // ignore
-            }
-        };
-
         this.spawnedZombies.forEach(id => {
             const ped = NetworkGetEntityFromNetworkId(id);
             if (!ped) {
-                deleteZombie(id);
+                this.deleteZombie(id);
                 return;
             }
 
             const pedCoords = GetEntityCoords(ped, false) as Vector3;
             if (!this.hasClosestPlayer(pedCoords)) {
-                deleteZombie(id, pedCoords);
+                this.deleteZombie(id);
                 DeleteEntity(ped);
                 return;
             }
@@ -769,9 +787,8 @@ export class WhatIfProvider {
                 setTimeout(
                     () => {
                         if (!ped || !DoesEntityExist(ped)) return;
-                        const pedCoords = GetEntityCoords(ped, false) as Vector3;
 
-                        deleteZombie(id, pedCoords);
+                        this.deleteZombie(id);
                         DeleteEntity(ped);
                     },
                     5 * 60 * 1000
