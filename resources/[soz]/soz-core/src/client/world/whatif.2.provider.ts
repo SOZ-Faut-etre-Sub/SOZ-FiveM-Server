@@ -6,7 +6,7 @@ import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { DealershipType } from '../../config/dealership';
 import { GarageList } from '../../config/garage';
-import { On, Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -725,7 +725,7 @@ export class WhatIf2Provider {
     }
 
     @Once(OnceStep.NuiLoaded)
-    @On(ClientEvent.WHAT_IF_RELOAD_GUILD)
+    @OnEvent(ClientEvent.WHAT_IF_RELOAD_GUILD)
     async onPlayerLoaded(forceReload = false) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -782,7 +782,7 @@ export class WhatIf2Provider {
         TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS);
     }
 
-    @On(ClientEvent.WHAT_IF_UHU)
+    @OnEvent(ClientEvent.WHAT_IF_UHU)
     async onUhu() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -850,7 +850,7 @@ export class WhatIf2Provider {
         this.blurService.remove('zombie-infected', 0);
     }
 
-    @On(ClientEvent.WHAT_IF_USE_HAZMAT)
+    @OnEvent(ClientEvent.WHAT_IF_USE_HAZMAT)
     async onUseHazmat() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -878,7 +878,7 @@ export class WhatIf2Provider {
         }
     }
 
-    @On(ClientEvent.WHAT_IF_USE_BAG)
+    @OnEvent(ClientEvent.WHAT_IF_USE_BAG)
     async onUseBag(bagId: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -895,7 +895,7 @@ export class WhatIf2Provider {
         );
     }
 
-    @On(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)
+    @OnEvent(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM)
     async onUseSerum() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -910,7 +910,7 @@ export class WhatIf2Provider {
         this.blurService.remove('zombie-infected', 500);
     }
 
-    @On(ClientEvent.WHAT_IF_OPEN_HAMMER)
+    @OnEvent(ClientEvent.WHAT_IF_OPEN_HAMMER)
     async onOpenHammer() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -1337,7 +1337,7 @@ export class WhatIf2Provider {
                     }
                 }
                 SetPedRelationshipGroupHash(pedHandle, GetHashKey(this.zombieVehicleRelation));
-                TaskEnterVehicle(pedHandle, vehicle, 10_000, seat, 2.0, 524288 + 8, 0);
+                TaskEnterVehicle(pedHandle, vehicle, -1, seat, 2.0, 524288 + 8, 0);
             }
         } else if (
             !GetIsTaskActive(pedHandle, 241) &&
