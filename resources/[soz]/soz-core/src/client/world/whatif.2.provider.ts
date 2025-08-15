@@ -718,14 +718,7 @@ export class WhatIf2Provider {
 
                     await wait(4000);
 
-                    const playerPed = PlayerPedId();
-                    const coords = GetEntityCoords(playerPed);
-
-                    this.inventoryManager.openInventory(
-                        InventoryType.Player,
-                        'player_' + targetCitizenId,
-                        coords as Vector3
-                    );
+                    this.inventoryManager.openInventory(InventoryType.Player, 'player_' + targetCitizenId);
                 },
                 canInteract: async (entity: number) => {
                     const targetSource = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
