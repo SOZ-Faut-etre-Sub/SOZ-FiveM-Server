@@ -347,7 +347,7 @@ export class WhatIfProvider {
                         {}
                     );
 
-                    const max = Number(getRandomKeyWeighted(probability, 1));
+                    const max = Number(getRandomKeyWeighted(probability, '1'));
 
                     if (item.type === 'weapon') {
                         for (let amount = 0; amount < max; amount++) {
