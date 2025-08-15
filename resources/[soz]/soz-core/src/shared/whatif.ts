@@ -170,7 +170,7 @@ export const WhatIf2LootModels: Record<WhatIf2LootType, string[]> = {
         'prop_news_disp_02a',
         'prop_news_disp_01a',
         'prop_postbox_01a',
-        'prop_hobo_seat_01',
+        // 'prop_hobo_seat_01',
         'prop_news_disp_03a',
         'prop_dumpster_02a',
         'prop_phonebox_04',
