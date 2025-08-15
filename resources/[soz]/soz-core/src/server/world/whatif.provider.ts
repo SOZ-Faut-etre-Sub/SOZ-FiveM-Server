@@ -289,12 +289,13 @@ export class WhatIfProvider {
     }
 
     @On(ServerEvent.WHAT_IF_RESET_INFECTION)
-    async resetInfection(source: number) {
+    async resetInfection(source: number, target: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
-        TriggerClientEvent(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM, source);
+        TriggerClientEvent(ClientEvent.WHAT_IF_USE_ZOMBIE_SERUM, target);
+        this.notifier.notify(source, 'Infection réinitialisée', 'success');
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID)
