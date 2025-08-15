@@ -1,5 +1,7 @@
 import { POLICE_MINESWEEPER_ROBOT_CAR_MODEL } from '@private/shared/police';
+import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { PlayerUpdate } from '@public/core/decorators/player';
+import { Feature } from '@public/shared/features';
 import { PlayerData } from '@public/shared/player';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -24,6 +26,9 @@ export class HudMinimapProvider {
 
     @Inject(HudWatchProvider)
     private readonly hudWatchProvider: HudWatchProvider;
+
+    @Inject(FeatureProvider)
+    private readonly featureProvider: FeatureProvider;
 
     private minimapHandle: number;
 
@@ -133,6 +138,8 @@ export class HudMinimapProvider {
     }
 
     private get shouldDisplayRadar(): boolean {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) return false;
+
         if (!this._showHud) return false;
         if (this._hasAdminGps) return true;
         if (this._dead) return false;
