@@ -17,6 +17,7 @@ import {
     InteriorsLocation,
 } from '@public/shared/elevators';
 import { ServerEvent } from '@public/shared/event';
+import { Feature } from '@public/shared/features';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import {
     add2Vector3,
@@ -31,6 +32,7 @@ import { RepositoryType } from '@public/shared/repository';
 import { Provider } from '../../core/decorators/provider';
 import { TargetOption } from '../../shared/target';
 import { AnimationService } from '../animation/animation.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { ObjectService } from '../object/object.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
@@ -64,6 +66,9 @@ export class ElevatorProvider {
     @Inject(CasinoVipService)
     public casinoVipService: CasinoVipService;
 
+    @Inject(FeatureProvider)
+    public featureProvider: FeatureProvider;
+
     private elevators = new Map<DynamicElevator, number>();
     private closeElevator = new Map<DynamicElevator, boolean>();
     private elevatorDimentions = new Map<number, [number[], number[]]>();
@@ -84,6 +89,10 @@ export class ElevatorProvider {
 
     @Once()
     public onStart() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
         for (const [id, value] of Object.entries(Elevators)) {
             this.targetFactory.createForBoxZone('Elevator:' + id, value.button, this.createTargetOptions(value), 3.0);
         }
@@ -137,6 +146,9 @@ export class ElevatorProvider {
 
     @Once(OnceStep.RepositoriesLoaded)
     public async repoLoaded() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
         for (const interior of Object.values(Interior)) {
             const coords = InteriorsLocation[interior];
             this.interiorIds.set(interior, GetInteriorAtCoords(coords[0], coords[1], coords[2]));
@@ -250,6 +262,9 @@ export class ElevatorProvider {
 
     @Tick(10_000)
     public findCloseElevator() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
         const playerPed = PlayerPedId();
         const coords = GetEntityCoords(playerPed) as Vector3;
         for (const elevator of Object.values(DynamicElevator)) {
@@ -260,6 +275,9 @@ export class ElevatorProvider {
 
     @Tick()
     public elevatorTick() {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
         for (const elevator of Object.values(DynamicElevator)) {
             const obj = this.elevators.get(elevator);
             const state = this.elevatorRepository.find(elevator);
@@ -409,6 +427,9 @@ export class ElevatorProvider {
 
     @RepositoryUpdate(RepositoryType.Elevator)
     public async elevatorUpdate(elevator: DynamicElevatorState, prev: DynamicElevatorState) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
         if (elevator.doorState != prev.doorState) {
             const config = DynamicElevatorConfigs[elevator.id];
             const floor = config.floors[elevator.current];
