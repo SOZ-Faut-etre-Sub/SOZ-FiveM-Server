@@ -3,6 +3,7 @@ import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 import { Item } from '@public/shared/item';
 import { PlayerData } from '@public/shared/player';
+import { Gauge } from 'prom-client';
 
 import { DealershipType } from '../../config/dealership';
 import { Command } from '../../core/decorators/command';
@@ -129,6 +130,11 @@ export class WhatIfProvider {
 
     @Inject(ClothingProvider)
     private clothingProvider: ClothingProvider;
+
+    private spawnedZombiesGauge = new Gauge({
+        name: 'soz_whatif_zombie',
+        help: 'Number of spawned zombies',
+    });
 
     private spawnedZombies: number[] = [];
 
@@ -777,6 +783,8 @@ export class WhatIfProvider {
 
         const isDay = hour >= 6 && hour < 21;
         const maxZombies = isDay ? MAX_ZOMBIE_AT_DAY : MAX_ZOMBIE_AT_NIGHT;
+
+        this.spawnedZombiesGauge.set(this.spawnedZombies.length);
 
         if (this.spawnedZombies.length >= maxZombies) {
             return;
