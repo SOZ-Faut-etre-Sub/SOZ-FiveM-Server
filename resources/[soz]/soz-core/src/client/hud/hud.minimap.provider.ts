@@ -138,10 +138,10 @@ export class HudMinimapProvider {
     }
 
     private get shouldDisplayRadar(): boolean {
+        if (this._hasAdminGps) return true;
         if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) return false;
 
         if (!this._showHud) return false;
-        if (this._hasAdminGps) return true;
         if (this._dead) return false;
 
         if (this._forceGpsInVehicle) {
