@@ -1149,6 +1149,8 @@ export const VEHICLE_CONFIGURATION_BY_VEHICLE_MODEL: Record<number, Partial<Inve
 
     // Vehicule trailer
     [joaat('tr4')]: { maxWeight: 1000000 },
+
+    [joaat('wastelander')]: { maxWeight: 40000 },
 };
 
 /**
