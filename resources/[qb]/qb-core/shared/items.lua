@@ -24820,7 +24820,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "",
+        ["description"] = "Pour les zones compliquée.",
     },
     ["whatif_bag_small"] = {
         ["name"] = "whatif_bag_small",
@@ -24831,7 +24831,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "",
+        ["description"] = "Léger et discret, conçu pour emporter juste le nécessaire. Idéal pour les missions rapides.",
     },
     ["whatif_bag_medium"] = {
         ["name"] = "whatif_bag_medium",
@@ -24842,7 +24842,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "",
+        ["description"] = "Un sac résistant et compact avec plusieurs compartiments, offrant un bon équilibre entre espace et mobilité.",
     },
     ["whatif_bag_huge"] = {
         ["name"] = "whatif_bag_huge",
@@ -24853,6 +24853,6 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "",
+        ["description"] = "Conçu pour tenir plusieurs semaines dans les conditions les plus rudes de l’apocalypse, que ce soit pour explorer, défendre ou survivre loin de tout abri.",
     },
 }

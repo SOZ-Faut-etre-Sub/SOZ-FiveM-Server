@@ -1159,6 +1159,7 @@ export class WhatIf2Provider {
 
         if (Date.now() - this.isInfectedAt < INFECTED_TIME_BEFORE_DEATH) return;
 
+        this.notifier.error(`Vous avez succombé à vos blessures...`);
         SetEntityHealth(PlayerPedId(), 0);
 
         this.isInfected = false;
