@@ -339,33 +339,62 @@ export class WhatIfProvider {
 
                     const max = getRandomInt(1, config.max);
 
-                    for (let amount = max; amount > 0; amount--) {
-                        const newItem: InventoryItem = {
-                            slot,
-                            name: itemName,
-                            amount,
-                            type: item.type,
-                            metadata: {},
-                        };
+                    if (item.type === 'weapon') {
+                        for (let amount = 0; amount < max; amount++) {
+                            const newItem: InventoryItem = {
+                                slot,
+                                name: itemName,
+                                amount: 1,
+                                type: item.type,
+                                metadata: {},
+                            };
 
-                        if (config.withAmmo) {
-                            newItem.metadata.ammo = 1;
+                            if (config.withAmmo) {
+                                newItem.metadata.ammo = 1;
+                            }
+
+                            const newItems = Object.values(items);
+                            newItems.push(newItem);
+
+                            if (
+                                getItemsWeight(newItems, this.itemService.getItem.bind(this.itemService)) >
+                                DEFAULT_INVENTORY_CONFIGURATION.maxWeight
+                            ) {
+                                continue;
+                            }
+
+                            items[slot] = newItem;
+                            slot++;
                         }
+                    } else {
+                        for (let amount = max; amount > 0; amount--) {
+                            const newItem: InventoryItem = {
+                                slot,
+                                name: itemName,
+                                amount,
+                                type: item.type,
+                                metadata: {},
+                            };
 
-                        const newItems = Object.values(items);
-                        newItems.push(newItem);
+                            if (config.withAmmo) {
+                                newItem.metadata.ammo = 1;
+                            }
 
-                        if (
-                            getItemsWeight(newItems, this.itemService.getItem.bind(this.itemService)) >
-                            DEFAULT_INVENTORY_CONFIGURATION.maxWeight
-                        ) {
-                            continue;
+                            const newItems = Object.values(items);
+                            newItems.push(newItem);
+
+                            if (
+                                getItemsWeight(newItems, this.itemService.getItem.bind(this.itemService)) >
+                                DEFAULT_INVENTORY_CONFIGURATION.maxWeight
+                            ) {
+                                continue;
+                            }
+
+                            items[slot] = newItem;
+                            slot++;
+
+                            break;
                         }
-
-                        items[slot] = newItem;
-                        slot++;
-
-                        break;
                     }
                 }
 

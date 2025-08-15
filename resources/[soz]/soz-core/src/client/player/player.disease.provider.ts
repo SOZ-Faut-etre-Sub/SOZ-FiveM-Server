@@ -1,4 +1,5 @@
 import { GamesProvider } from '@public/client/games/games.provider';
+import { Feature } from '@public/shared/features';
 import { UpwPollution } from '@public/shared/job/upw';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
@@ -10,6 +11,7 @@ import { Disease } from '../../shared/disease';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { PlayerData } from '../../shared/player';
 import { AnimationService } from '../animation/animation.service';
+import { FeatureProvider } from '../feature/feature.provider';
 import { UpwPollutionProvider } from '../job/upw/upw.pollution.provider';
 import { Notifier } from '../notifier';
 import { BlurService } from '../utils/blur.service';
@@ -40,6 +42,9 @@ export class PlayerDiseaseProvider {
 
     @Inject(GamesProvider)
     private readonly gamesProvider: GamesProvider;
+
+    @Inject(FeatureProvider)
+    private featureProvider: FeatureProvider;
 
     private currentDisease: Disease = false;
 
@@ -213,6 +218,10 @@ export class PlayerDiseaseProvider {
         const player = this.playerService.getPlayer();
 
         if (this.gamesProvider.areAnyGameRunning()) {
+            return;
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
