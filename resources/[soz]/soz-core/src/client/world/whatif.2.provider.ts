@@ -151,7 +151,7 @@ const ZombieSound = [
         name: 'Undead_Pain',
         native: true,
         speech: false,
-    },
+    } /*,
     {
         dict: 'DLC_24-YK_Survival_01',
         name: 'UNDEAD_SPAWN',
@@ -163,7 +163,7 @@ const ZombieSound = [
         name: 'UNDEAD_IDLE',
         native: true,
         speech: true,
-    } /*,
+    },
     {
         dict: 'DLC_24-YK_Survival_01',
         name: 'UNDEAD_SPAWN_FIRE',
@@ -1244,6 +1244,7 @@ export class WhatIf2Provider {
 
         DisablePedPainAudio(pedHandle, true);
         StopPedSpeaking(pedHandle, true);
+        BlockAllSpeechFromPed(pedHandle, true, true);
 
         SetPedDiesInWater(pedHandle, false);
         SetPedAlertness(pedHandle, 3);
