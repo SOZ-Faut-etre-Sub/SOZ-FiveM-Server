@@ -1,4 +1,4 @@
-import { OutfitItem, WardrobeConfig } from '@public/shared/cloth';
+import { WardrobeConfig } from '@public/shared/cloth';
 import { CraftCategory } from '@public/shared/craft/craft';
 import { PlacementPropList } from '@public/shared/nui/prop_placement';
 import { MapPickerLocation } from '@public/shared/picker';
@@ -1115,6 +1115,7 @@ export const WhatIf2Cloakroom: WardrobeConfig = {
                 '4': { Collection: 'mp_f_bikerdlc_01', Index: 4, Palette: 0, Texture: 2, Drawable: 1 },
                 '5': { Collection: '', Index: 5, Palette: 0, Texture: 0, Drawable: 0 },
             },
+            GlovesID: 55000,
         },
         'Tenue 2': {
             Components: {
@@ -1130,6 +1131,7 @@ export const WhatIf2Cloakroom: WardrobeConfig = {
                 '10': { Collection: '', Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_importexport_01', Drawable: 18, Texture: 1, Palette: 0 },
             },
+            GlovesID: 55000,
         },
         'Tenue 3': {
             Components: {

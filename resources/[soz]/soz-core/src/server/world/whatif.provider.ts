@@ -592,17 +592,18 @@ export class WhatIfProvider {
         }
 
         const model = GetEntityModel(handle);
+        const objType = GetEntityType(handle);
 
-        if (GetEntityType(handle) === 1 && Animals.includes(model)) {
+        if (objType === 1 && Animals.includes(model)) {
             CancelEvent();
         }
 
-        if (GetEntityPopulationType(handle) !== 7) {
+        if (GetEntityPopulationType(handle) !== 7 && objType != 3) {
             CancelEvent();
         }
 
         const position = GetEntityCoords(handle, false) as Vector3;
-        if (GetEntityType(handle) !== 2 && Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
+        if (objType !== 2 && Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
         }
     }
