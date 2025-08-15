@@ -587,6 +587,8 @@ export class WhatIf2Provider {
         );
 
         const outfit = getRandomItem(Object.values(WhatIf2Cloakroom[player.skin.Model.Hash]));
+        outfit.Components[Component.Accessories] =
+            WhatIf2GuildIndicator[player.skin.Model.Hash][player.metadata.whatif_guild];
         TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfit);
 
         TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS);
