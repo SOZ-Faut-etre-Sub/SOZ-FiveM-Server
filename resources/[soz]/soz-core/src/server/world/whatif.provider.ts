@@ -94,7 +94,7 @@ const Animals = [
 
 const MAX_ZOMBIE_AT_DAY = 200;
 const MAX_ZOMBIE_AT_NIGHT = MAX_ZOMBIE_AT_DAY * 3;
-const EXPECTED_PLAYER_COUNT = 70;
+const EXPECTED_PLAYER_COUNT = 150;
 
 @Provider()
 export class WhatIfProvider {
@@ -629,7 +629,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootLow) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootLow) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -656,7 +656,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootMedium) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootMedium) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -683,7 +683,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootHigh) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootHigh) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -710,7 +710,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootMilitary) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootMilitary) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -793,7 +793,7 @@ export class WhatIfProvider {
         const players = this.qbCore.getPlayersSources();
         if (!players || !players.length) return;
 
-        const targetZombieAmount = this.lerp(20, maxZombies, Math.min(players.length, 20) / EXPECTED_PLAYER_COUNT);
+        const targetZombieAmount = this.lerp(20, maxZombies, Math.max(players.length, 20) / EXPECTED_PLAYER_COUNT);
         const zombieToSpawn = Math.floor(targetZombieAmount - this.spawnedZombies.length);
 
         const eligiblePlayers = players
