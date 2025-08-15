@@ -590,6 +590,10 @@ export class WhatIfProvider {
             CancelEvent();
         }
 
+        if (GetEntityPopulationType(handle) !== 7) {
+            CancelEvent();
+        }
+
         const position = GetEntityCoords(handle, false) as Vector3;
         if (GetEntityType(handle) !== 2 && Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
