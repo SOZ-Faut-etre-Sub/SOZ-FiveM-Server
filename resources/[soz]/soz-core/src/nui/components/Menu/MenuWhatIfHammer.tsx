@@ -1,9 +1,10 @@
+import { useNuiEvent } from '@public/nui/hook/nui';
 import { FunctionComponent, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event/nui';
 import { AskInput } from '../../../shared/nui/input';
 import { MenuType } from '../../../shared/nui/menu';
-import { WHAT_IF_PROP_LIST, WhatIf2HammerZoneConfig } from '../../../shared/whatif';
+import { HammerProp, WHAT_IF_PROP_LIST, WhatIf2HammerZoneConfig } from '../../../shared/whatif';
 import { fetchNui } from '../../fetch';
 import { useBackspace } from '../../hook/control';
 import { useItem, usePlayer } from '../../hook/data';
@@ -21,9 +22,12 @@ import {
     SubMenu,
 } from '../Styleguide/Menu';
 
-export const MenuWhatIfHammer: FunctionComponent<{ data: { id: string; model: string }[] }> = ({ data }) => {
+export const MenuWhatIfHammer: FunctionComponent<{ data: HammerProp[] }> = ({ data }) => {
     const [currentSearch, setCurrentSearch] = useState<string>(null);
     const player = usePlayer();
+    const [props, setProps] = useState<HammerProp[]>(data);
+
+    useNuiEvent('whatif', 'hammer_props', setProps);
 
     const item = useItem('whatif_parts');
 
@@ -47,7 +51,7 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: { id: string; model: st
                         </div>
                     </MenuItemText>
                     <MenuSubTitle>Liste des props</MenuSubTitle>
-                    {data.map(({ id, model }) => {
+                    {props.map(({ id, model }) => {
                         return (
                             <MenuItemSelect
                                 key={id}

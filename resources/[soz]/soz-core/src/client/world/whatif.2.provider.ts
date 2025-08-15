@@ -29,6 +29,7 @@ import { getDistance, toVector4Object, Vector3, Vector4 } from '../../shared/pol
 import { getRandomInt, getRandomItem } from '../../shared/random';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
+    HammerProp,
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
     WhatIf2GuildIndicator,
@@ -982,25 +983,28 @@ export class WhatIf2Provider {
         if (newObj) {
             const playerCoords = GetEntityCoords(PlayerPedId()) as Vector3;
             if (getDistance(playerCoords, newObj.position) <= MAX_HAMMER_PROPS_DISTANCE) {
-                await emitRpc(
+                const props = await emitRpc<HammerProp[]>(
                     RpcServerEvent.WHAT_IF_HAMMER_CREATE,
                     model,
                     newObj.position,
                     newObj.matrix,
                     newObj.noCollision
                 );
+                if (props) {
+                    this.nuiDispatch.dispatch('whatif', 'hammer_props', props);
+                }
             } else {
                 this.notifier.error('~r~Le modèle est trop loin !');
             }
         }
-
-        const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);
-        this.nuiMenu.openMenu(MenuType.WhatIfHammer, props);
     }
 
     @OnNuiEvent(NuiEvent.WhatIfHammerRequestDeleteProp)
     public async onDeleteProp(id: string) {
-        await emitRpc(RpcServerEvent.WHAT_IF_HAMMER_DELETE, id);
+        const props = await emitRpc<HammerProp[]>(RpcServerEvent.WHAT_IF_HAMMER_DELETE, id);
+        if (props) {
+            this.nuiDispatch.dispatch('whatif', 'hammer_props', props);
+        }
     }
 
     @OnNuiEvent(NuiEvent.WhatIfHammerChoosePlacedPropToEdit)
@@ -1031,9 +1035,6 @@ export class WhatIf2Provider {
                 this.notifier.error('~r~Le modèle est trop loin !');
             }
         }
-
-        const props = await emitRpc(RpcServerEvent.WHAT_IF_GET_HAMMER_PROPS);
-        this.nuiMenu.openMenu(MenuType.WhatIfHammer, props);
     }
 
     @Rpc(RpcClientEvent.GET_CLOCK_HOURS)

@@ -14,8 +14,14 @@ type InventoryItemCreator = {
     withAmmo?: boolean;
 };
 
+export type HammerProp = {
+    id: string;
+    model: string;
+};
+
 export interface WhatIfMap {
     OpenWelcomePage: boolean;
+    hammer_props: HammerProp[];
 }
 
 export type WhatIfGuild = 'raider' | 'warden';

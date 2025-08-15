@@ -2,6 +2,7 @@ import { Rpc } from '@public/core/decorators/rpc';
 import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 import { Item } from '@public/shared/item';
+import { PlayerData } from '@public/shared/player';
 
 import { DealershipType } from '../../config/dealership';
 import { Command } from '../../core/decorators/command';
@@ -469,6 +470,10 @@ export class WhatIfProvider {
             return [];
         }
 
+        return await this.getHammerPlayerProps(player);
+    }
+
+    private async getHammerPlayerProps(player: PlayerData) {
         const props = await this.prismaService.whatif_props.findMany({
             where: {
                 citizenid: player.citizenid,
@@ -518,6 +523,7 @@ export class WhatIfProvider {
         });
 
         this.notifier.notify(source, `Vous avez posé un objet.`, 'success');
+        return await this.getHammerPlayerProps(player);
     }
 
     @Rpc(RpcServerEvent.WHAT_IF_HAMMER_UPDATE)
@@ -576,6 +582,7 @@ export class WhatIfProvider {
         this.objectProvider.deleteObject(id);
 
         this.notifier.notify(source, `Vous avez supprimé un objet.`, 'success');
+        return await this.getHammerPlayerProps(player);
     }
 
     @On('entityCreating', false)
