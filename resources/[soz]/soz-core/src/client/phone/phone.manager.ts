@@ -209,6 +209,8 @@ export class PhoneManager {
             if (this.phoneState.isPhoneDisabled()) return;
 
             if (!this.hasPlayerPhone()) return;
+        } else {
+            this.nuiDispatch.dispatch('phone', 'SetAvailability', true);
         }
 
         return this.showPhone();

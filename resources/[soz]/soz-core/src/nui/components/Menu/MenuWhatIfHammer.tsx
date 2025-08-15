@@ -12,7 +12,6 @@ import {
     Menu,
     MenuContent,
     MenuItemButton,
-    MenuItemCheckbox,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuItemSubMenuLink,
@@ -48,18 +47,6 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: { id: string; model: st
                         </div>
                     </MenuItemText>
                     <MenuSubTitle>Liste des props</MenuSubTitle>
-                    <MenuItemCheckbox
-                        checked={false}
-                        onSelected={async () => {
-                            await fetchNui(NuiEvent.WhatIfHammerSelectPlacedProp, null);
-                        }}
-                        onChange={async value => {
-                            await fetchNui(NuiEvent.WhatIfHammerToggleMouseSelection, value);
-                        }}
-                        description="Selectionner un prop à la souris."
-                    >
-                        Selectionner à la souris
-                    </MenuItemCheckbox>
                     {data.map(({ id, model }) => {
                         return (
                             <MenuItemSelect
