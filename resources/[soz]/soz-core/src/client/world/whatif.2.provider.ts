@@ -12,7 +12,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
 import { wait } from '../../core/utils';
 import { AnimationStopReason } from '../../shared/animation';
-import { Component, WardrobeConfig } from '../../shared/cloth';
+import { Component, Outfit, WardrobeConfig } from '../../shared/cloth';
 import { CraftsList } from '../../shared/craft/craft';
 import { ClientEvent } from '../../shared/event/client';
 import { GameEvent } from '../../shared/event/game';
@@ -368,6 +368,33 @@ export class WhatIf2Provider {
                             event: 'whatif:2',
                             action: async () => {
                                 const brand: ShopBrand = ShopBrand.Binco;
+
+                                const { shop: shop_content, content: shop_categories } =
+                                    await this.clothingShopRepository.getShopContent(brand);
+                                const under_types = this.underTypesShopRepository.getAllUnderTypes();
+
+                                this.nuiMenu.openMenu(
+                                    MenuType.ClothShop,
+                                    {
+                                        brand: brand,
+                                        shop_content,
+                                        shop_categories,
+                                        under_types,
+                                        isInCayo: true,
+                                    },
+                                    {
+                                        position: { position: locker, distance: 10 },
+                                    }
+                                );
+                            },
+                        },
+                        {
+                            label: 'Customiser son masque',
+                            icon: 'shop/store',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: async () => {
+                                const brand: ShopBrand = ShopBrand.Mask;
 
                                 const { shop: shop_content, content: shop_categories } =
                                     await this.clothingShopRepository.getShopContent(brand);
@@ -790,12 +817,25 @@ export class WhatIf2Provider {
             return;
         }
 
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
         const model = GetEntityModel(PlayerPedId());
 
         const outfit = LsmcCloakroom[model][HAZMAT_OUTFIT_NAME];
+
+        if (player.cloth_config.JobClothSet?.Components?.[Component.Bag]) {
+            outfit.Components[Component.Bag] = player.cloth_config.JobClothSet?.Components?.[Component.Bag];
+        }
+
+        outfit.Components[Component.Accessories] =
+            WhatIf2GuildIndicator[player.skin.Model.Hash][player.metadata.whatif_guild];
+
         const progress = await this.playerWardrobe.waitProgress(false);
         if (progress.completed) {
-            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit);
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, outfit, true);
         }
     }
 
@@ -1284,7 +1324,15 @@ export class WhatIf2Provider {
             return;
         }
 
-        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+        if (player.cloth_config.JobClothSet?.Components?.[Component.Bag]) {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, {
+                Components: {
+                    [Component.Bag]: player.cloth_config.JobClothSet?.Components?.[Component.Bag],
+                },
+            } as Outfit);
+        } else {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+        }
 
         if (!outfitSelection.outfit) {
             return;
