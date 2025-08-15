@@ -188,7 +188,10 @@ export class LSMCInteractionProvider {
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
-                    if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+                    if (
+                        this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
+                        this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+                    ) {
                         return !this.playerListStateService.isDead(target);
                     }
 
