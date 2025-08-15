@@ -24,7 +24,7 @@ export const LocationPicker: FunctionComponent<LocationPickerProps> = ({
         }
 
         return fetchNui(NuiEvent.PickerSelect, id);
-    }, [id]);
+    }, [description, setDescription, id]);
 
     switch (icon) {
         case 'coffin':

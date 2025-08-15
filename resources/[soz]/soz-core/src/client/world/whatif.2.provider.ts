@@ -70,6 +70,7 @@ import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
 import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
+import { VoipService } from '../voip/voip.service';
 import { WeaponService } from '../weapon/weapon.service';
 
 const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
@@ -279,6 +280,9 @@ export class WhatIf2Provider {
 
     @Inject(PlayerWalkstyleProvider)
     private readonly playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(VoipService)
+    private voipService: VoipService;
 
     @Inject(SoundService)
     public soundService: SoundService;
@@ -783,6 +787,9 @@ export class WhatIf2Provider {
         }
 
         exports['soz-loadscreen'].Shutdown();
+
+        this.voipService.mutePlayer(true);
+
         const publicApiUrl = GetConvar('soz_public_endpoint', 'https://soz.zerator.com');
         const location = await this.mapPickerProvider.showGlobalLocationPicker(
             WhatIf2SpawnGuild.map(spawn => ({
@@ -792,6 +799,7 @@ export class WhatIf2Provider {
         );
         if (!location) return;
 
+        this.voipService.mutePlayer(false);
         await this.onSetGuild(location.id as WhatIfGuild);
     }
 
