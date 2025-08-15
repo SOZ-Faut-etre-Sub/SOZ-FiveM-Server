@@ -16,7 +16,7 @@ import { DEFAULT_INVENTORY_CONFIGURATION, getItemsWeight, InventoryItem, Invento
 import { joaat } from '../../shared/joaat';
 import { getLocationHash } from '../../shared/locationhash';
 import { getDistance, Point3D, Vector3, Vector4 } from '../../shared/polyzone/vector';
-import { getRandomInt } from '../../shared/random';
+import { getRandomInt, getRandomKeyWeighted } from '../../shared/random';
 import { RpcClientEvent, RpcServerEvent } from '../../shared/rpc';
 import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
@@ -338,7 +338,15 @@ export class WhatIfProvider {
                         continue;
                     }
 
-                    const max = getRandomInt(1, config.max);
+                    const probability = Array.from({ length: config.max }).reduce<Record<number, number>>(
+                        (acc, _, index) => ({
+                            ...acc,
+                            [index + 1]: Math.ceil(1000 / (index + 1)),
+                        }),
+                        {}
+                    );
+
+                    const max = Number(getRandomKeyWeighted(probability, 1));
 
                     if (item.type === 'weapon') {
                         for (let amount = 0; amount < max; amount++) {
