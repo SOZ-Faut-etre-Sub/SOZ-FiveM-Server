@@ -3,6 +3,7 @@ import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 import { Item } from '@public/shared/item';
 import { PlayerData } from '@public/shared/player';
+import { Gauge } from 'prom-client';
 
 import { DealershipType } from '../../config/dealership';
 import { Command } from '../../core/decorators/command';
@@ -93,7 +94,7 @@ const Animals = [
 
 const MAX_ZOMBIE_AT_DAY = 200;
 const MAX_ZOMBIE_AT_NIGHT = MAX_ZOMBIE_AT_DAY * 3;
-const EXPECTED_PLAYER_COUNT = 70;
+const EXPECTED_PLAYER_COUNT = 150;
 
 @Provider()
 export class WhatIfProvider {
@@ -129,6 +130,11 @@ export class WhatIfProvider {
 
     @Inject(ClothingProvider)
     private clothingProvider: ClothingProvider;
+
+    private spawnedZombiesGauge = new Gauge({
+        name: 'soz_whatif_zombie',
+        help: 'Number of spawned zombies',
+    });
 
     private spawnedZombies: number[] = [];
 
@@ -288,6 +294,8 @@ export class WhatIfProvider {
         WhatIf2DefaultItems.forEach(item => {
             inventory.add(item.name, item.quantity);
         });
+
+        await inventory.observe();
     }
 
     @On(ServerEvent.WHAT_IF_RESET_INFECTION)
@@ -624,7 +632,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootLow) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootLow) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -651,7 +659,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootMedium) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootMedium) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -678,7 +686,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootHigh) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootHigh) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -705,7 +713,7 @@ export class WhatIfProvider {
         let currentInv = 0;
 
         for (const [, inventory] of this.inventoryFactory.getLoadedInventories().entries()) {
-            if (inventory.type() !== InventoryType.WhatIfLootMilitary) {
+            if (inventory.id.startsWith('zombie_') || inventory.type() !== InventoryType.WhatIfLootMilitary) {
                 if (currentInv > 100) {
                     await wait(0);
                     currentInv = 0;
@@ -779,6 +787,8 @@ export class WhatIfProvider {
         const isDay = hour >= 6 && hour < 21;
         const maxZombies = isDay ? MAX_ZOMBIE_AT_DAY : MAX_ZOMBIE_AT_NIGHT;
 
+        this.spawnedZombiesGauge.set(this.spawnedZombies.length);
+
         if (this.spawnedZombies.length >= maxZombies) {
             return;
         }
@@ -786,7 +796,7 @@ export class WhatIfProvider {
         const players = this.qbCore.getPlayersSources();
         if (!players || !players.length) return;
 
-        const targetZombieAmount = this.lerp(20, maxZombies, Math.min(players.length, 20) / EXPECTED_PLAYER_COUNT);
+        const targetZombieAmount = this.lerp(20, maxZombies, Math.max(players.length, 20) / EXPECTED_PLAYER_COUNT);
         const zombieToSpawn = Math.floor(targetZombieAmount - this.spawnedZombies.length);
 
         const eligiblePlayers = players
