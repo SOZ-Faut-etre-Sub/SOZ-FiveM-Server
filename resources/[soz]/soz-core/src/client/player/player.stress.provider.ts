@@ -164,7 +164,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
@@ -196,7 +196,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
@@ -348,7 +348,7 @@ export class PlayerStressProvider {
             return;
         }
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
