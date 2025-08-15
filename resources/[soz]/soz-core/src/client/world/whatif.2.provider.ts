@@ -31,6 +31,7 @@ import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
+    WhatIf2GuildIndicator,
     WhatIf2Lockers,
     WhatIf2LootInventoryType,
     WhatIf2LootModels,
@@ -1102,6 +1103,11 @@ export class WhatIf2Provider {
     }
 
     private async openCloakroom(config: WardrobeConfig) {
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
         if (!config) {
             return;
         }
@@ -1121,6 +1127,9 @@ export class WhatIf2Provider {
         if (!outfitSelection.outfit) {
             return;
         }
+
+        outfitSelection.outfit.Components[Component.Accessories] =
+            WhatIf2GuildIndicator[player.skin.Model.Hash][player.metadata.whatif_guild];
 
         TriggerServerEvent(ServerEvent.CHARACTER_SET_CLOTHES, outfitSelection.outfit);
     }

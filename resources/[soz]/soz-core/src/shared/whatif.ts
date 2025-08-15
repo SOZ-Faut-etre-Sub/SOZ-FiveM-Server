@@ -1,4 +1,4 @@
-import { WardrobeConfig } from '@public/shared/cloth';
+import { OutfitItem, WardrobeConfig } from '@public/shared/cloth';
 import { CraftCategory } from '@public/shared/craft/craft';
 import { PlacementPropList } from '@public/shared/nui/prop_placement';
 import { MapPickerLocation } from '@public/shared/picker';
@@ -1043,6 +1043,17 @@ export const WhatIf2Bags = {
         133: WHAT_IF_MEDIUM_WEIGHT,
         135: WHAT_IF_SMALL_WEIGHT,
         134: WHAT_IF_LARGE_WEIGHT,
+    },
+};
+
+export const WhatIf2GuildIndicator: Record<PlayerPedHash, Record<WhatIfGuild, Partial<OutfitItem>>> = {
+    [PlayerPedHash.Male]: {
+        raider: { Drawable: 214, Texture: 13 },
+        warden: { Drawable: 214, Texture: 10 },
+    },
+    [PlayerPedHash.Female]: {
+        raider: { Drawable: 183, Texture: 13 },
+        warden: { Drawable: 183, Texture: 10 },
     },
 };
 
