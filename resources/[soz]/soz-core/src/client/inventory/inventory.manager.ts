@@ -303,7 +303,7 @@ export class InventoryManager {
         });
     }
 
-    public openInventory(type: InventoryType, inventoryIdentifier: string, inventoryPosition: Vector3 | Vector4) {
+    public openInventory(type: InventoryType, inventoryIdentifier: string, inventoryPosition?: Vector3 | Vector4) {
         TriggerServerEvent(ServerEvent.INVENTORY_OPEN, type, inventoryIdentifier, inventoryPosition);
     }
 
