@@ -37,6 +37,7 @@ export class InventorySmugglingBoxProvider {
                 label: 'Ouvrir',
                 icon: 'inventory/ouvrir_le_stockage',
                 category: 'citizen',
+                event: 'all',
                 canInteract: entity => {
                     return !!this.objectProvider.getIdFromEntity(entity);
                 },
