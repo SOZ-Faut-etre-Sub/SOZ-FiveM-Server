@@ -1167,7 +1167,6 @@ export class WhatIf2Provider {
                 await wait(1000);
 
                 this.blurService.remove('zombie-infected', 500);
-                this.lastInfectionAnimation = Date.now();
             } else if (infectionTime < 5 * 60 * 1000) {
                 this.blurService.add('zombie-infected', 500);
 
@@ -1175,7 +1174,6 @@ export class WhatIf2Provider {
                 await wait(1000);
 
                 this.blurService.remove('zombie-infected', 500);
-                this.lastInfectionAnimation = Date.now();
             } else if (infectionTime < 60 * 1000) {
                 if (getRandomInt(0, 100) <= 5) {
                     SetPedToRagdoll(PlayerPedId(), 1000, 1000, 0, false, false, false);
@@ -1187,8 +1185,10 @@ export class WhatIf2Provider {
                 await wait(1000);
 
                 this.blurService.remove('zombie-infected', 500);
-                this.lastInfectionAnimation = Date.now();
             }
+
+            await this.playerWalkstyleProvider.updateWalkStyle('drugAlcool', null);
+            this.lastInfectionAnimation = Date.now();
 
             const remainingMinutes = 20 + Math.floor((this.isInfectedAt + 60000 - Date.now()) / 60000);
             this.notifier.error(
