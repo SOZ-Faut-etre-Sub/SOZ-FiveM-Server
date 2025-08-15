@@ -184,6 +184,7 @@ export class LSMCInteractionProvider {
                 label: 'Soigner',
                 icon: 'ems/heal',
                 category: 'society',
+                event: 'whatif:2',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 
