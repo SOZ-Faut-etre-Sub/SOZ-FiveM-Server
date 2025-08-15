@@ -565,9 +565,14 @@ export class WhatIf2Provider {
                         await wait(800);
 
                         PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
-                        this.inventoryAnimationRunner = this.animationService.playScenario({
-                            name: 'PROP_HUMAN_BUM_BIN',
-                        });
+                        this.inventoryAnimationRunner = this.animationService.playScenario(
+                            {
+                                name: 'PROP_HUMAN_BUM_BIN',
+                            },
+                            {
+                                cancellable: true,
+                            }
+                        );
 
                         const playerPed = PlayerPedId();
                         const coords = GetEntityCoords(playerPed);
@@ -610,9 +615,14 @@ export class WhatIf2Provider {
                         await wait(800);
 
                         PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
-                        this.inventoryAnimationRunner = this.animationService.playScenario({
-                            name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
-                        });
+                        this.inventoryAnimationRunner = this.animationService.playScenario(
+                            {
+                                name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+                            },
+                            {
+                                cancellable: true,
+                            }
+                        );
 
                         const playerPed = PlayerPedId();
                         const coords = GetEntityCoords(playerPed);
@@ -648,9 +658,14 @@ export class WhatIf2Provider {
                     await wait(800);
 
                     PlaySoundFrontend(-1, 'Collect_Pickup', 'DLC_IE_PL_Player_Sounds', true);
-                    this.inventoryAnimationRunner = this.animationService.playScenario({
-                        name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
-                    });
+                    this.inventoryAnimationRunner = this.animationService.playScenario(
+                        {
+                            name: 'CODE_HUMAN_MEDIC_TEND_TO_DEAD',
+                        },
+                        {
+                            cancellable: true,
+                        }
+                    );
 
                     await wait(4000);
 
@@ -780,6 +795,7 @@ export class WhatIf2Provider {
     public closeInventory() {
         this.inventoryAnimationRunner?.cancel(AnimationStopReason.Finished);
         this.inventoryAnimationRunner = null;
+        setTimeout(() => ClearPedTasks(PlayerPedId()), 1000);
     }
 
     private async safeZoneLoop() {
@@ -819,6 +835,9 @@ export class WhatIf2Provider {
         if (playerPed !== victim) return;
 
         if (ZombieModelHash.every(model => model !== attackerModel)) return;
+
+        this.closeInventory();
+
         if (getRandomInt(0, 100) > 20) return;
 
         this.isInfected = true;
