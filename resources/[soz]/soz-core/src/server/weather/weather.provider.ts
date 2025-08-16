@@ -416,4 +416,8 @@ export class WeatherProvider {
 
         return ret;
     }
+
+    public getTime() {
+        return this.currentTime;
+    }
 }

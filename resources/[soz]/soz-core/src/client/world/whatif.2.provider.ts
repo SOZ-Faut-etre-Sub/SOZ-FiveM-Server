@@ -1112,11 +1112,6 @@ export class WhatIf2Provider {
         }
     }
 
-    @Rpc(RpcClientEvent.GET_CLOCK_HOURS)
-    async getClockHours() {
-        return GetClockHours();
-    }
-
     @Rpc(RpcClientEvent.WHAT_IF_SPAWN_PEDS)
     async spawnPeds(count: number, overriddenCoords?: Vector3): Promise<number[]> {
         const spawnedPeds: number[] = [];
