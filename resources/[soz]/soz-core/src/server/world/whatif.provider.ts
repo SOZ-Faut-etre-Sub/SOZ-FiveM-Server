@@ -881,6 +881,27 @@ export class WhatIfProvider {
             return;
         }
 
+        const { completed } = await this.progressService.progress(source, 'wear_bag', 'Vou vous soignez', 5000, {
+            name: 'miranda_shooting_up',
+            dictionary: 'rcmpaparazzo1ig_4',
+            options: {
+                onlyUpperBody: true,
+            },
+            playbackRate: 0.4,
+            props: [
+                {
+                    model: 'prop_syringe_01',
+                    bone: 28422,
+                    position: [0, 0, -0.045],
+                    rotation: [0, 0, 0],
+                },
+            ],
+        });
+
+        if (!completed) {
+            return;
+        }
+
         if (!inventory.removeAtSlot(item.slot, 1)) {
             return;
         }
