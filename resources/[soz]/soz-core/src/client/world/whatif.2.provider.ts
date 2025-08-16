@@ -47,6 +47,7 @@ import {
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
 import { FeatureProvider } from '../feature/feature.provider';
+import { InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
 import { Notifier } from '../notifier';
@@ -290,6 +291,9 @@ export class WhatIf2Provider {
 
     @Inject(SoundService)
     public soundService: SoundService;
+
+    @Inject(InventoryDragAndDropProvider)
+    public inventoryDragAndDropProvider: InventoryDragAndDropProvider;
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
@@ -562,6 +566,13 @@ export class WhatIf2Provider {
                     crafting.subtitle = 'Confection';
                     this.nuiDispatch.dispatch('craft', 'ShowCraft', crafting);
                 },
+            },
+        ]);
+
+        this.inventoryDragAndDropProvider.registerModelTarget(joaat('gr_prop_gr_bench_03a'), [
+            async item => {
+                TriggerServerEvent(ServerEvent.WHAT_IF_SALVAGE, item);
+                return true;
             },
         ]);
 
