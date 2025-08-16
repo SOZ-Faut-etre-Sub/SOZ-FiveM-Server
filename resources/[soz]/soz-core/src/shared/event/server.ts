@@ -841,4 +841,5 @@ export enum ServerEvent {
 
     WHAT_IF_GIVE_DEFAULT_ITEMS = 'soz-core:server:what-if:give-default-items',
     WHAT_IF_RESET_INFECTION = 'soz-core:server:what-if:reset-infection',
+    WHAT_IF_SALVAGE = 'soz-core:server:what-if:salvage',
 }

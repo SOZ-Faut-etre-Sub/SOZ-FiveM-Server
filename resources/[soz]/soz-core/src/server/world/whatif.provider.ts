@@ -920,4 +920,46 @@ export class WhatIfProvider {
 
         TriggerClientEvent(ClientEvent.LSMC_HEAL, player.source, healPerItem[item.name]);
     }
+
+    @OnEvent(ServerEvent.WHAT_IF_SALVAGE)
+    public async onSalvage(source: number, item: InventoryItem) {
+        const inv = await this.inventoryFactory.getPlayerInventory(source);
+        const itemDef = this.itemService.getItem(item.name);
+
+        if (['whatif_parts', 'whatif_hammer'].includes(item.name)) {
+            this.notifier.notify(source, `~r~Impossible~s~ de recycler cet objet`);
+            return;
+        }
+
+        const { completed } = await this.progressService.progress(
+            source,
+            'whatif_salvage',
+            `Recyclage de "${itemDef.label}"`,
+            5_000,
+            {
+                dictionary: 'mp_fm_intro_cut',
+                name: 'fixing_a_ped',
+                options: {
+                    repeat: true,
+                },
+            }
+        );
+
+        if (!completed) {
+            return;
+        }
+
+        if (!inv.removeAtSlot(item.slot, item.amount)) {
+            return;
+        }
+
+        const rewardItem = 'whatif_parts';
+        const rewardItemDef = this.itemService.getItem(rewardItem);
+        inv.add(rewardItem, item.amount);
+
+        this.notifier.notify(
+            source,
+            `Le recyclage vous a permis de récupérer ~g~${item.amount}~s~ ~b~${rewardItemDef.label}~s~`
+        );
+    }
 }
