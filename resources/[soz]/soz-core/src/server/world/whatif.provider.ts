@@ -23,6 +23,7 @@ import { Vehicle } from '../../shared/vehicle/vehicle';
 import {
     WHAT_IF_LARGE_WEIGHT,
     WHAT_IF_MEDIUM_WEIGHT,
+    WHAT_IF_PROP_SPECIAL_COST,
     WHAT_IF_SMALL_WEIGHT,
     WhatIf2Bags,
     WhatIf2DefaultItems,
@@ -528,7 +529,9 @@ export class WhatIfProvider {
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
         if (!inventory) return;
 
-        if (!inventory.remove(WhatIf2HammerZoneConfig.item, WhatIf2HammerZoneConfig.price)) {
+        const cost = WHAT_IF_PROP_SPECIAL_COST[model] ?? WhatIf2HammerZoneConfig.price;
+
+        if (!inventory.remove(WhatIf2HammerZoneConfig.item, cost)) {
             this.notifier.error(source, `Vous n'avez plus assez de ressources.`);
             return;
         }

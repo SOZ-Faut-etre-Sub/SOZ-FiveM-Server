@@ -537,6 +537,30 @@ export class WhatIf2Provider {
             });
         });
 
+        this.targetFactory.createForModel('gr_prop_gr_bench_03a', [
+            {
+                label: 'Confectionner',
+                icon: 'dmc/confection',
+                category: 'citizen',
+                event: 'whatif:2',
+                canInteract: entity => {
+                    const id = this.objectProvider.getIdFromEntity(entity);
+                    const obj = this.objectProvider.getObject(id);
+                    if (!obj) {
+                        return false;
+                    }
+
+                    return id && id.startsWith('whatif_');
+                },
+                action: async () => {
+                    const crafting = await emitRpc<CraftsList>(RpcServerEvent.CRAFT_GET_RECIPES, 'whatif2');
+                    crafting.title = 'Table de confection';
+                    crafting.subtitle = 'Confection';
+                    this.nuiDispatch.dispatch('craft', 'ShowCraft', crafting);
+                },
+            },
+        ]);
+
         Object.entries(WhatIf2ShopPosition).forEach(([guild, shop]) => {
             this.targetFactory.createForPed({
                 model: 'ig_jimmyboston',

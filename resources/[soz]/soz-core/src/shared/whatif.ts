@@ -1385,6 +1385,31 @@ export const WhatIf2CraftsLists: Record<string, CraftCategory> = {
             },
         },
     },
+    Coffres: {
+        animation: {
+            dictionary: 'amb@prop_human_bbq@male@idle_a',
+            name: 'idle_b',
+            options: {
+                repeat: true,
+            },
+        },
+        duration: 10000,
+        event: 'what_if_craft',
+        recipes: {
+            smuggling_secret_stash_small: {
+                inputs: { whatif_parts: { count: 100 } },
+                amount: 1,
+            },
+            smuggling_secret_stash_medium: {
+                inputs: { whatif_parts: { count: 300 } },
+                amount: 1,
+            },
+            smuggling_secret_stash_big: {
+                inputs: { whatif_parts: { count: 600 } },
+                amount: 1,
+            },
+        },
+    },
 };
 
 export const WHAT_IF_PROP_LIST: PlacementPropList = {
@@ -1545,4 +1570,9 @@ export const WHAT_IF_PROP_LIST: PlacementPropList = {
         { label: 'Lière 3', model: 'prop_bush_ivy_01_r' },
         { label: 'Lière 4', model: 'prop_bush_ivy_02_2m' },
     ],
+    ['Spécial']: [{ label: 'Table de confection', model: 'gr_prop_gr_bench_03a' }],
+};
+
+export const WHAT_IF_PROP_SPECIAL_COST = {
+    gr_prop_gr_bench_03a: 600,
 };

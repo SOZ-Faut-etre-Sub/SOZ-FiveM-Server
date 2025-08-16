@@ -4,7 +4,12 @@ import { FunctionComponent, useState } from 'react';
 import { NuiEvent } from '../../../shared/event/nui';
 import { AskInput } from '../../../shared/nui/input';
 import { MenuType } from '../../../shared/nui/menu';
-import { HammerProp, WHAT_IF_PROP_LIST, WhatIf2HammerZoneConfig } from '../../../shared/whatif';
+import {
+    HammerProp,
+    WHAT_IF_PROP_LIST,
+    WHAT_IF_PROP_SPECIAL_COST,
+    WhatIf2HammerZoneConfig,
+} from '../../../shared/whatif';
 import { fetchNui } from '../../fetch';
 import { useBackspace } from '../../hook/control';
 import { useItem, usePlayer } from '../../hook/data';
@@ -38,12 +43,7 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: HammerProp[] }> = ({ da
             <MainMenu>
                 <MenuTitle title="Edition de zone" />
                 <MenuContent subtitle={player.charinfo.firstname + ' ' + player.charinfo.lastname}>
-                    <MenuItemSubMenuLink
-                        id={`zone_prop_choose`}
-                        description={WhatIf2HammerZoneConfig.price + ' ' + item.label}
-                    >
-                        ➕ Ajouter un prop
-                    </MenuItemSubMenuLink>
+                    <MenuItemSubMenuLink id={`zone_prop_choose`}>➕ Ajouter un prop</MenuItemSubMenuLink>
                     <MenuItemText>
                         <div className="pr-2 flex items-center justify-between">
                             <span> Nombre de props </span>
@@ -122,6 +122,7 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: HammerProp[] }> = ({ da
                                         key={prop.model}
                                         onSelected={() => fetchNui(NuiEvent.WhatIfHammerSelectPropToCreate, prop.model)}
                                         onConfirm={() => fetchNui(NuiEvent.WhatIfHammerChoosePropToCreate, prop.model)}
+                                        description={`${WHAT_IF_PROP_SPECIAL_COST[prop.model] ?? WhatIf2HammerZoneConfig.price + ' ' + item.label}`}
                                     >
                                         {prop.label}
                                     </MenuItemButton>
@@ -141,6 +142,7 @@ export const MenuWhatIfHammer: FunctionComponent<{ data: HammerProp[] }> = ({ da
                                     key={prop.model}
                                     onSelected={() => fetchNui(NuiEvent.WhatIfHammerSelectPropToCreate, prop.model)}
                                     onConfirm={() => fetchNui(NuiEvent.WhatIfHammerChoosePropToCreate, prop.model)}
+                                    description={`${WHAT_IF_PROP_SPECIAL_COST[prop.model] ?? WhatIf2HammerZoneConfig.price} ${item.label}`}
                                 >
                                     {prop.label}
                                 </MenuItemButton>
