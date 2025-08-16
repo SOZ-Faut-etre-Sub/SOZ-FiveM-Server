@@ -93,8 +93,8 @@ const Animals = [
     joaat('A_C_Westy'),
 ];
 
-const MAX_ZOMBIE_AT_DAY = 400;
-const MAX_ZOMBIE_AT_NIGHT = 800;
+const MAX_ZOMBIE_AT_DAY = 300;
+const MAX_ZOMBIE_AT_NIGHT = 600;
 const EXPECTED_PLAYER_COUNT = 150;
 
 @Provider()
