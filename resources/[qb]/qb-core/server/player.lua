@@ -222,6 +222,8 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata["is_senator"] = PlayerData.metadata["is_senator"] or false
     PlayerData.metadata["plaster"] = PlayerData.metadata["plaster"] or {}
     PlayerData.metadata["gym_state"] = PlayerData.metadata["gym_state"] or nil
+    
+    PlayerData.metadata["hazmat_protection"] = PlayerData.metadata["hazmat_protection"] or 0
 
     if not PlayerData.metadata.lastBidTime then
         PlayerData.metadata.canBid = true

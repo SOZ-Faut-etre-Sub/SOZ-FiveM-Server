@@ -220,6 +220,24 @@ export const PlayerStats: FunctionComponent = () => {
                 </StatusGauge>
             ) : null}
 
+            {whatIf2Enabled ? (
+                <StatusGauge
+                    value={player.metadata.hazmat_protection}
+                    color={gaugeColors.blue_light}
+                    backgroundColor={gaugeColors.blue_dark}
+                    hideCondition={() => !player.metadata.hazmat}
+                >
+                    <img
+                        style={{
+                            width: iconSize,
+                            height: iconSize,
+                        }}
+                        src={getPath('images/hud/player/nuke.webp')}
+                        alt="hazmat"
+                    />
+                </StatusGauge>
+            ) : null}
+
             {whatIf2Enabled || (hasWatch && showStamina && showStats) ? (
                 <StatusGauge
                     value={stamina}
