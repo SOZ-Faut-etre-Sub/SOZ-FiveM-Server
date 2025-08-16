@@ -59,6 +59,7 @@ import { PropHighlightService } from '../object/prop.highlight.service';
 import { MapPickerProvider } from '../picker/map.picker.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
+import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
 import { PlayerWardrobe } from '../player/player.wardrobe';
@@ -280,6 +281,9 @@ export class WhatIf2Provider {
 
     @Inject(PlayerWalkstyleProvider)
     private readonly playerWalkstyleProvider: PlayerWalkstyleProvider;
+
+    @Inject(PlayerPositionProvider)
+    private readonly playerPositionProvider: PlayerPositionProvider;
 
     @Inject(VoipService)
     private voipService: VoipService;
@@ -1481,5 +1485,30 @@ export class WhatIf2Provider {
         const coords = GetEntityCoords(entity) as Vector3;
         const coordsHash = getExtendedLocationHash(coords);
         return prefix + '_' + coordsHash;
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuWhatIf2Retrieval)
+    public async onRetrieval() {
+        const validate = await this.inputService.askConfirm(
+            'Confimer le raptriement (oui), ⚠️Vous perdrez tout ce que vous avez pu récupérer excepter votre marteau'
+        );
+
+        if (!validate) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer();
+        if (!player || !player.metadata.whatif_guild) {
+            return;
+        }
+
+        this.playerPositionProvider.teleportPlayerToPosition(
+            'UHU_WHAT_IF_REPAWN_' +
+                player.metadata.whatif_guild +
+                '_' +
+                getRandomInt(0, WhatIf2RespawnPoints[player.metadata.whatif_guild].length - 1)
+        );
+
+        TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS, true);
     }
 }

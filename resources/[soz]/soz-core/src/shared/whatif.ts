@@ -95,7 +95,7 @@ export const WhatIf2SpawnGuild: MapPickerLocation[] = [
 ];
 
 export const WhatIf2DefaultItems = [
-    { name: 'whatif_parts', quantity: 25 },
+    { name: 'whatif_parts', quantity: 25, skipRetrieval: true },
     { name: 'whatif_hammer', quantity: 1 },
 ];
 

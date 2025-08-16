@@ -315,7 +315,7 @@ export class WhatIfProvider {
     }
 
     @OnEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS)
-    async giveDefaultItems(source: number) {
+    async giveDefaultItems(source: number, retrival: boolean) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
@@ -326,6 +326,9 @@ export class WhatIfProvider {
         inventory.clear();
 
         WhatIf2DefaultItems.forEach(item => {
+            if (retrival && item.skipRetrieval) {
+                return;
+            }
             inventory.add(item.name, item.quantity);
         });
 

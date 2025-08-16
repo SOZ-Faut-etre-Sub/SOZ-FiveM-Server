@@ -36,6 +36,7 @@ type MenuPlayerPersonalProps = {
 export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({ data }) => {
     const player = usePlayer();
     const isHalloween = useSelector((state: RootState) => state.features.Halloween);
+    const isWhatIf2 = useSelector((state: RootState) => state.features.WhatIfSecondEpisode);
 
     if (!player) {
         return null;
@@ -71,6 +72,14 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                         >
                             Mode arachnophobe
                         </MenuItemCheckbox>
+                    )}
+                    {isWhatIf2 && (
+                        <MenuItemButton
+                            description="⚠️Vous perdrez tout ce que vous avez pu récupérer excepter votre marteau"
+                            onConfirm={() => fetchNui(NuiEvent.PlayerMenuWhatIf2Retrieval)}
+                        >
+                            Demander un Rapatriement
+                        </MenuItemButton>
                     )}
                 </MenuContent>
             </MainMenu>
