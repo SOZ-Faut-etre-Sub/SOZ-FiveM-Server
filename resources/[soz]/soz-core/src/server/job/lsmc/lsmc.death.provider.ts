@@ -71,8 +71,6 @@ export class LSMCDeathProvider {
             targetid = source;
         }
 
-        const inventory = await this.inventoryFactory.getPlayerInventory(targetid);
-
         if (uniteHU && this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             this.playerService.setPlayerMetadata(targetid, 'stress_level', 0);
             this.whatIfProvider.giveDefaultItems(targetid);
@@ -80,6 +78,7 @@ export class LSMCDeathProvider {
         }
 
         if (!admin && !uniteHU) {
+            const inventory = await this.inventoryFactory.getPlayerInventory(source);
             if (!inventory.remove(bloodbag ? 'bloodbag' : 'defibrillator', 1, false)) {
                 return;
             }

@@ -779,7 +779,7 @@ export class WhatIfProvider {
             const pedCoords = GetEntityCoords(ped, false) as Vector3;
             if (
                 !this.hasClosestPlayer(pedCoords) ||
-                Object.values(WhatIfSafeZones).some(zone => !zone.isPointInside(pedCoords))
+                Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(pedCoords))
             ) {
                 this.deleteZombie(id);
                 DeleteEntity(ped);
