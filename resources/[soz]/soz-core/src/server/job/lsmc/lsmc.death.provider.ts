@@ -73,7 +73,7 @@ export class LSMCDeathProvider {
 
         if (uniteHU && this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             this.playerService.setPlayerMetadata(targetid, 'stress_level', 0);
-            this.whatIfProvider.giveDefaultItems(targetid);
+            this.whatIfProvider.giveDefaultItems(targetid, false);
             TriggerClientEvent(ClientEvent.WHAT_IF_UHU, targetid);
         }
 
