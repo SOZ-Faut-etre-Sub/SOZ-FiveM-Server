@@ -234,6 +234,7 @@ export class LSMCInteractionProvider {
                 icon: 'ems/revive',
                 job: JobType.LSMC,
                 category: 'society',
+                event: 'whatif:2',
                 canInteract: entity => {
                     const target = GetPlayerServerId(NetworkGetPlayerIndexFromPed(entity));
 

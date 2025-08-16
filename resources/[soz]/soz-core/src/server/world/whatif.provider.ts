@@ -40,13 +40,13 @@ import { FeatureProvider } from '../feature/feature.provider';
 import { Inventory } from '../inventory/inventory';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
+import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { QBCore } from '../qbcore';
-import { ClothingProvider } from '../shop/clothing.provider';
 import { WeatherProvider } from '../weather/weather.provider';
 
 const Animals = [
@@ -132,8 +132,8 @@ export class WhatIfProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
-    @Inject(ClothingProvider)
-    private clothingProvider: ClothingProvider;
+    @Inject(Monitor)
+    private monitor: Monitor;
 
     private spawnedZombiesGauge = new Gauge({
         name: 'soz_whatif_zombie',
@@ -154,6 +154,9 @@ export class WhatIfProvider {
         this.itemService.setItemUseCallback('whatif_bag_small', this.useBag.bind(this));
         this.itemService.setItemUseCallback('whatif_bag_medium', this.useBag.bind(this));
         this.itemService.setItemUseCallback('whatif_bag_huge', this.useBag.bind(this));
+        this.itemService.setItemUseCallback('whatif_bandage', this.useHeal.bind(this));
+        this.itemService.setItemUseCallback('whatif_surgical_kit', this.useHeal.bind(this));
+        this.itemService.setItemUseCallback('whatif_tactical_heal_kit', this.useHeal.bind(this));
 
         Object.entries(WhatIf2RespawnPoints).forEach(([key, positions]) => {
             positions.forEach((value, index) => {
@@ -863,5 +866,34 @@ export class WhatIfProvider {
 
     private lerp(min: number, max: number, percentage: number): number {
         return min * (1 - percentage) + max * percentage;
+    }
+
+    private async useHeal(source: number, it: Item, item: InventoryItem, inventory: Inventory) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (!inventory.removeAtSlot(item.slot, 1)) {
+            return;
+        }
+
+        const healPerItem = {
+            whatif_bandage: 20,
+            whatif_surgical_kit: 50,
+            whatif_tactical_heal_kit: 100,
+        };
+
+        this.monitor.traceEvent('whatif_heal', {
+            player_source: source,
+            item_id: item.name,
+            position: GetEntityCoords(GetPlayerPed(player.source)) as Vector3,
+        });
+
+        TriggerClientEvent(ClientEvent.LSMC_HEAL, player.source, healPerItem[item.name]);
     }
 }
