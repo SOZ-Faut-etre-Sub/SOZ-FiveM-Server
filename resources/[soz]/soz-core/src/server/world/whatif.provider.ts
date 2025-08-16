@@ -190,10 +190,6 @@ export class WhatIfProvider {
             return;
         }
 
-        if (!inventory.removeAtSlot(item.slot, 1)) {
-            return;
-        }
-
         const bagId = Number(
             Object.entries(WhatIf2Bags[player.skin.Model.Hash]).find(([, weigth]) => {
                 if (it.name === 'whatif_bag_small') {
@@ -221,6 +217,10 @@ export class WhatIfProvider {
         });
 
         if (!completed) {
+            return;
+        }
+
+        if (!inventory.removeAtSlot(item.slot, 1)) {
             return;
         }
 
