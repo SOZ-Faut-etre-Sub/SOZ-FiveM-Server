@@ -423,6 +423,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     casino_vip_point?: number;
     casino_diamond_frame?: boolean;
     whatif_guild?: WhatIfGuild;
+    hazmat_protection?: number;
 };
 
 export const isAdmin = (player: PlayerData) => {

@@ -1,4 +1,5 @@
 import { Tick, TickInterval } from '@public/core/decorators/tick';
+import { ServerEvent } from '@public/shared/event/server';
 import { Feature } from '@public/shared/features';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { WhatIfRadiationZone } from '@public/shared/whatif';
@@ -28,7 +29,7 @@ export class WhatIf1Provider {
     @Inject(NoClipProvider)
     private noClipProvider: NoClipProvider;
 
-    private inZone = false;
+    private isNotSafe = false;
     private audio: string = null;
 
     @Tick(5000)
@@ -41,35 +42,50 @@ export class WhatIf1Provider {
         }
 
         const coords = GetEntityCoords(PlayerPedId()) as Vector3;
-        let inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
+        const inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
         const player = this.playerService.getPlayer();
+        let isNotSafe = inZone;
 
         if (
             !player ||
             player.metadata.godmode ||
             this.noClipProvider.IsNoClipMode() ||
             player.metadata.isdead ||
-            player.metadata.hazmat
+            (player.metadata.hazmat && player.metadata.hazmat_protection > 0)
         ) {
-            inZone = false;
+            isNotSafe = false;
         }
 
-        if (inZone && !player.metadata.isdead) {
+        if (isNotSafe && !player?.metadata?.isdead) {
             this.notifier.notify(
                 '☠️ Cette zone est ~r~irradiée~s~, tu vas mourir définitivement si tu y restes. ~b~Éloigne-toi aussi vite que tu le peux !~s~',
                 'warning'
             );
         }
+        if (
+            inZone &&
+            player &&
+            player.metadata.hazmat &&
+            player.metadata.hazmat_protection > 0 &&
+            !player.metadata.godmode &&
+            !this.noClipProvider.IsNoClipMode()
+        ) {
+            TriggerServerEvent(
+                ServerEvent.QBCORE_SET_METADATA,
+                'hazmat_protection',
+                Math.max(0, player.metadata.hazmat_protection - 0.27)
+            );
+        }
 
-        if (inZone && !this.inZone) {
+        if (isNotSafe && !this.isNotSafe) {
             this.audio = this.audioService.playAudio('audio/whatif/geiger.mp3', 0.05, true);
             AnimpostfxPlay('DMT_flight', 0, false);
-        } else if (!inZone && this.inZone) {
+        } else if (!isNotSafe && this.isNotSafe) {
             this.audioService.stopAudio(this.audio);
             AnimpostfxStopAndDoUnk('DMT_flight');
         }
 
-        this.inZone = inZone;
+        this.isNotSafe = isNotSafe;
     }
 
     @Tick(TickInterval.EVERY_SECOND)
@@ -81,7 +97,7 @@ export class WhatIf1Provider {
             return;
         }
 
-        if (!this.inZone) {
+        if (!this.isNotSafe) {
             return;
         }
 
@@ -91,7 +107,7 @@ export class WhatIf1Provider {
             player.metadata.godmode ||
             this.noClipProvider.IsNoClipMode() ||
             player.metadata.isdead ||
-            player.metadata.hazmat
+            (player.metadata.hazmat && player.metadata.hazmat_protection > 0)
         ) {
             return;
         }

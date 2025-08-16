@@ -190,6 +190,19 @@ export class WhatIfProvider {
         }
 
         TriggerClientEvent(ClientEvent.WHAT_IF_USE_HAZMAT, source);
+
+        this.playerService.setPlayerMetadata(source, 'hazmat_protection', 100);
+    }
+
+    @Command('hazmat', {
+        role: ['admin', 'staff'],
+    })
+    async hazmat(source: number, value: number = 100) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        this.playerService.setPlayerMetadata(source, 'hazmat_protection', Number(value));
     }
 
     private async useBag(source: number, it: Item, item: InventoryItem, inventory: Inventory) {
