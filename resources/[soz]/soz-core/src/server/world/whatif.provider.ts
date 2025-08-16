@@ -7,7 +7,7 @@ import { Gauge } from 'prom-client';
 
 import { DealershipType } from '../../config/dealership';
 import { Command } from '../../core/decorators/command';
-import { On, Once, OnceStep } from '../../core/decorators/event';
+import { On, Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Tick, TickInterval } from '../../core/decorators/tick';
@@ -46,6 +46,7 @@ import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { QBCore } from '../qbcore';
 import { ClothingProvider } from '../shop/clothing.provider';
+import { WeatherProvider } from '../weather/weather.provider';
 
 const Animals = [
     joaat('A_C_Boar'),
@@ -91,8 +92,8 @@ const Animals = [
     joaat('A_C_Westy'),
 ];
 
-const MAX_ZOMBIE_AT_DAY = 200;
-const MAX_ZOMBIE_AT_NIGHT = MAX_ZOMBIE_AT_DAY * 3;
+const MAX_ZOMBIE_AT_DAY = 400;
+const MAX_ZOMBIE_AT_NIGHT = 800;
 const EXPECTED_PLAYER_COUNT = 150;
 
 @Provider()
@@ -121,6 +122,9 @@ export class WhatIfProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(WeatherProvider)
+    private weatherProvider: WeatherProvider;
+
     @Inject(ObjectProvider)
     private objectProvider: ObjectProvider;
 
@@ -133,6 +137,10 @@ export class WhatIfProvider {
     private spawnedZombiesGauge = new Gauge({
         name: 'soz_whatif_zombie',
         help: 'Number of spawned zombies',
+    });
+    private targetZombiesGauge = new Gauge({
+        name: 'soz_whatif_zombie_target',
+        help: 'Target number of zombies',
     });
 
     private spawnedZombies: number[] = [];
@@ -302,7 +310,7 @@ export class WhatIfProvider {
         }
     }
 
-    @On(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS)
+    @OnEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS)
     async giveDefaultItems(source: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -320,7 +328,7 @@ export class WhatIfProvider {
         await inventory.observe();
     }
 
-    @On(ServerEvent.WHAT_IF_RESET_INFECTION)
+    @OnEvent(ServerEvent.WHAT_IF_RESET_INFECTION)
     async resetInfection(source: number, target: number) {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
@@ -638,13 +646,6 @@ export class WhatIfProvider {
         }
     }
 
-    private async getGameTime() {
-        const players = this.qbCore.getPlayersSources();
-        if (!players || !players.length) return null;
-
-        return emitClientRpc<number>(RpcClientEvent.GET_CLOCK_HOURS, players[0]);
-    }
-
     @Tick(TickInterval.EVERY_MINUTE * 20)
     public async whatIfLootLowRegen() {
         if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
@@ -799,7 +800,7 @@ export class WhatIfProvider {
             }
         });
 
-        const hour = await this.getGameTime();
+        const hour = this.weatherProvider.getTime().hour;
         if (!hour) {
             return;
         }
@@ -817,6 +818,7 @@ export class WhatIfProvider {
         if (!players || !players.length) return;
 
         const targetZombieAmount = this.lerp(20, maxZombies, Math.max(players.length, 20) / EXPECTED_PLAYER_COUNT);
+        this.targetZombiesGauge.set(targetZombieAmount);
         const zombieToSpawn = Math.floor(targetZombieAmount - this.spawnedZombies.length);
 
         const eligiblePlayers = players

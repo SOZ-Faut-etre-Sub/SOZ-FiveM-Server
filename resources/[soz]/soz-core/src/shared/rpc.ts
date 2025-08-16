@@ -429,6 +429,5 @@ export enum RpcClientEvent {
     CLOTH_TEXTURE_COUNT = 'soz-core:clothing:texture-count',
     FIRE_GET_WIND_DATA = 'soz-core:fire:get-wind-data',
     FIRE_GET_Z = 'soz-core:fire:get-z',
-    GET_CLOCK_HOURS = 'soz-core:clock:get-hours',
     WHAT_IF_SPAWN_PEDS = 'soz-core:what-if:spawn-peds',
 }
