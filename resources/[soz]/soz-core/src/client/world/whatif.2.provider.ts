@@ -1489,6 +1489,12 @@ export class WhatIf2Provider {
 
     @OnNuiEvent(NuiEvent.PlayerMenuWhatIf2Retrieval)
     public async onRetrieval() {
+        const player = this.playerService.getPlayer();
+        if (!player || player.metadata.isdead) {
+            this.notifier.error('Rapatriement impossible en étant coma');
+            return;
+        }
+
         const validate = await this.inputService.askConfirm(
             'Confimer le raptriement (oui), ⚠️Vous perdrez tout ce que vous avez pu récupérer excepter votre marteau'
         );
@@ -1497,8 +1503,7 @@ export class WhatIf2Provider {
             return;
         }
 
-        const player = this.playerService.getPlayer();
-        if (!player || !player.metadata.whatif_guild) {
+        if (!player.metadata.whatif_guild) {
             return;
         }
 
