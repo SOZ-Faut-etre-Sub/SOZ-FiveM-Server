@@ -939,7 +939,17 @@ export class WhatIfProvider {
         const inv = await this.inventoryFactory.getPlayerInventory(source);
         const itemDef = this.itemService.getItem(item.name);
 
-        if (['whatif_parts', 'whatif_hammer'].includes(item.name)) {
+        if (
+            [
+                'whatif_parts',
+                'whatif_hammer',
+                'weapon_snowball',
+                'sandwich',
+                'zombie_serum',
+                'water_bottle',
+                'snikkel_candy',
+            ].includes(item.name)
+        ) {
             this.notifier.notify(source, `~r~Impossible~s~ de recycler cet objet`);
             return;
         }
