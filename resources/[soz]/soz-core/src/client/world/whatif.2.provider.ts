@@ -64,6 +64,7 @@ import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { PlayerWalkstyleProvider } from '../player/player.walkstyle.provider';
 import { PlayerWardrobe } from '../player/player.wardrobe';
+import { ProgressService } from '../progress.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { ClothingShopRepository } from '../repository/shop.repository';
 import { UnderTypesShopRepository } from '../repository/under_types.shop.repository';
@@ -249,6 +250,9 @@ export class WhatIf2Provider {
 
     @Inject(PlayerWardrobe)
     private playerWardrobe: PlayerWardrobe;
+
+    @Inject(ProgressService)
+    private progressService: ProgressService;
 
     @Inject(NuiDispatch)
     private nuiDispatch: NuiDispatch;
@@ -1526,5 +1530,19 @@ export class WhatIf2Provider {
         );
 
         TriggerServerEvent(ServerEvent.WHAT_IF_GIVE_DEFAULT_ITEMS, true);
+    }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuWhatIfRemoveHazmat)
+    public async onRemoveHazmat() {
+        const { completed } = await this.progressService.progress('remove_hazmat', '', 5000, {
+            dictionary: 'anim@mp_yacht@shower@male@',
+            name: 'male_shower_towel_dry_to_get_dressed',
+            flags: 15,
+        });
+
+        if (!completed) {
+            return;
+        }
+        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
     }
 }

@@ -73,6 +73,14 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                             Mode arachnophobe
                         </MenuItemCheckbox>
                     )}
+                    {isWhatIf2 && player.metadata.hazmat && (
+                        <MenuItemButton
+                            description="⚠️ Enlève aussi les gilets par balles si équipé"
+                            onConfirm={() => fetchNui(NuiEvent.PlayerMenuWhatIfRemoveHazmat)}
+                        >
+                            Retirer tenue Hazmat
+                        </MenuItemButton>
+                    )}
                     {isWhatIf2 && (
                         <MenuItemButton
                             description="⚠️Vous perdrez tout ce que vous avez pu récupérer excepter votre marteau"

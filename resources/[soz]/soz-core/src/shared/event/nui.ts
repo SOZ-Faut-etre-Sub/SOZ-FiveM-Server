@@ -272,6 +272,7 @@ export enum NuiEvent {
     PlayerMenuSetVideoVolume = 'soz-core:nui:player:menu:set-video-volume',
     PlayerMenuHudSetArachnophobe = 'soz-core:nui:player:menu:arachnophobe',
     PlayerMenuWhatIf2Retrieval = 'soz-core:nui:player:menu:whatif2-retrival',
+    PlayerMenuWhatIfRemoveHazmat = 'soz-core:nui:player:menu:whatif2-remove-hazmat',
     SetFocusInput = 'soz-core:nui:set-focus-input',
     SetShowCursor = 'soz-core:nui:set-show-cursor',
     SetWardrobeOutfit = 'soz-core:nui:set-wardrobe-outfit',
