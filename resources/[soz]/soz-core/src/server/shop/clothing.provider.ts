@@ -147,7 +147,8 @@ export class ClothingProvider {
             LsmcCloakroom[player.skin.Model.Hash][HAZMAT_OUTFIT_NAME].Components
         )) {
             const component = Number(componentkey) as Component;
-            if (!outfit.Components[component] || outfit.Components[component].Drawable != item.Drawable) {
+            if ((!outfit.Components[component] && !merge) || outfit.Components[component].Drawable != item.Drawable) {
+                console.log('NoHazmat', component);
                 hazmat = false;
                 break;
             }
@@ -155,7 +156,7 @@ export class ClothingProvider {
 
         for (const [componentkey, item] of Object.entries(ScubaOutfit[player.skin.Model.Hash].Components)) {
             const component = Number(componentkey) as Component;
-            if (!outfit.Components[component] || outfit.Components[component].Drawable != item.Drawable) {
+            if ((!outfit.Components[component] && !merge) || outfit.Components[component].Drawable != item.Drawable) {
                 scuba = false;
                 break;
             }
