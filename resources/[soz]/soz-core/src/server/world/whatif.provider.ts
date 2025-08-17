@@ -175,7 +175,7 @@ export class WhatIfProvider {
                 position: JSON.parse(propDB.position),
                 matrix: JSON.parse(propDB.matrix),
                 noCollision: propDB.noCollision,
-                placeOnGround: true,
+                placeOnGround: false,
             });
         }
     }
