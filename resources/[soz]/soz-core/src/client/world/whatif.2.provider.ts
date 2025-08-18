@@ -43,6 +43,7 @@ import {
     WhatIf2SpawnGuild,
     WhatIfGuild,
     WhatIfMedicPosition,
+    WhatIfPveZone,
     WhatIfSafeZones,
 } from '../../shared/whatif';
 import { AnimationRunner } from '../animation/animation.factory';
@@ -645,6 +646,11 @@ export class WhatIf2Provider {
                     distance: 2.5,
                 },
             });
+        });
+
+        this.playerInOutService.add('what-if-pve', WhatIfPveZone, isInside => {
+            SetCanAttackFriendly(PlayerPedId(), !isInside, false);
+            NetworkSetFriendlyFireOption(!isInside);
         });
     }
 
