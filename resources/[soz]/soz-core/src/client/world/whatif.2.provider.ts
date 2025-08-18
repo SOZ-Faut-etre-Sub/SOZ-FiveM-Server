@@ -1543,6 +1543,20 @@ export class WhatIf2Provider {
         if (!completed) {
             return;
         }
-        TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        if (player.cloth_config.JobClothSet?.Components?.[Component.Bag]) {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, {
+                Components: {
+                    [Component.Bag]: player.cloth_config.JobClothSet?.Components?.[Component.Bag],
+                },
+            } as Outfit);
+        } else {
+            TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+        }
     }
 }
