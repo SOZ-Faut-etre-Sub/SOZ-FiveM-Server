@@ -2,6 +2,7 @@ import { ShopBrand } from '@public/config/shops';
 import { Rpc } from '@public/core/decorators/rpc';
 import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
+import { Control } from '@public/shared/input';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
 
 import { DealershipType } from '../../config/dealership';
@@ -1544,5 +1545,22 @@ export class WhatIf2Provider {
             return;
         }
         TriggerServerEvent(ServerEvent.CHARACTER_SET_JOB_CLOTHES, null);
+    }
+
+    @OnEvent(ClientEvent.LSMC_REVIVE)
+    public async revive(skipanim: boolean, uniteHU: boolean) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        if (skipanim || uniteHU) {
+            return;
+        }
+
+        const end = Date.now() + 120_000;
+        while (Date.now() < end) {
+            DisableControlAction(0, Control.Sprint, true);
+            await wait(0);
+        }
     }
 }
