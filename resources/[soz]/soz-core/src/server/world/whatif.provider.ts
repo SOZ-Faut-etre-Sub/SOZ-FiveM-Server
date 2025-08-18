@@ -894,7 +894,7 @@ export class WhatIfProvider {
             return;
         }
 
-        const { completed } = await this.progressService.progress(source, 'wear_bag', 'Vou vous soignez', 5000, {
+        const { completed } = await this.progressService.progress(source, 'wear_bag', 'Vou vous soignez', 10_000, {
             name: 'miranda_shooting_up',
             dictionary: 'rcmpaparazzo1ig_4',
             options: {
