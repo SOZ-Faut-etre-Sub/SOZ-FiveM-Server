@@ -1230,7 +1230,9 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            const zombieModel = getRandomItem(Object.keys(ZombieModels));
+            const zombieModel = getRandomItem(
+                Object.keys(ZombieModels).filter(elem => ZombieModels[elem] || !overriddenCoords)
+            );
 
             await this.resourceLoader.loadModel(zombieModel);
 

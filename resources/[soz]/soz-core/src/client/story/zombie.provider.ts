@@ -63,8 +63,8 @@ export const ZombieModels = {
     IG_Zombie_DJ_01: true,
 
     A_C_Deer_02: false,
-    A_C_Coyote_02: false,
-    A_C_Pug_02: false,
+    //A_C_Coyote_02: false,
+    //A_C_Pug_02: false,
     A_C_Boar_02: false,
     A_C_MtLion_02: false,
 };
