@@ -201,6 +201,11 @@ export const WhatIf2ShopPosition: Record<WhatIfGuild, Vector4> = {
     warden: [2516.3, -375.49, 92.14, 285.01], // warden
 };
 
+export const WhatIf2TpPosition: Vector4[] = [
+    [1882.37, 2603.64, 44.67, 86.74], // raider
+    [2570.59, -302.4, 91.99, 177.6], // warden
+];
+
 export const WhatIfMedicPosition: Record<WhatIfGuild, Vector4> = {
     raider: [1848.5, 2586.09, 44.67, 277.52], // raider
     warden: [2521.6, -414.08, 93.12, 330.18], // warden

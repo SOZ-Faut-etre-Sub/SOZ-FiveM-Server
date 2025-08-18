@@ -41,6 +41,7 @@ import {
     WhatIf2RespawnPoints,
     WhatIf2ShopPosition,
     WhatIf2SpawnGuild,
+    WhatIf2TpPosition,
     WhatIfGuild,
     WhatIfMedicPosition,
     WhatIfPveZone,
@@ -616,6 +617,32 @@ export class WhatIf2Provider {
                                     ...GarageList[`whatif_garage_${guild}`],
                                     id: `whatif_garage_${guild}`,
                                 });
+                            },
+                        },
+                    ],
+                    distance: 2.5,
+                },
+            });
+        });
+
+        WhatIf2TpPosition.map(position => {
+            this.targetFactory.createForPed({
+                model: 'u_m_y_proldriver_01',
+                coords: toVector4Object(position),
+                invincible: true,
+                freeze: true,
+                spawnNow: true,
+                blockevents: true,
+                scenario: 'WORLD_HUMAN_STAND_IMPATIENT',
+                target: {
+                    options: [
+                        {
+                            icon: 'housing/enter',
+                            label: 'Aller en zone PVE',
+                            category: 'citizen',
+                            event: 'whatif:2',
+                            action: () => {
+                                TriggerServerEvent(ServerEvent.WHAT_IF_TELEPORT_PVE);
                             },
                         },
                     ],

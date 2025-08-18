@@ -358,6 +358,15 @@ export class WhatIfProvider {
         this.notifier.notify(source, 'Infection réinitialisée', 'success');
     }
 
+    @OnEvent(ServerEvent.WHAT_IF_TELEPORT_PVE)
+    async teleportToPve(source: number) {
+        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            return;
+        }
+
+        this.playerPositionProvider.teleportToCoords(source, [1465.35, 6554.38, 14.03, 89.22]);
+    }
+
     @Rpc(RpcServerEvent.WHAT_IF_PLAYER_GET_CITIZEN_ID)
     async getCitizenId(source: number, target: number): Promise<string> {
         const player = this.playerService.getPlayer(target);
