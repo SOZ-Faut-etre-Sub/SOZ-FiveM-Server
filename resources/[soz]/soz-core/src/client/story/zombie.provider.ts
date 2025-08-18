@@ -53,15 +53,21 @@ const Animals = [
     2910340283, // A_C_Westy
 ];
 
-export const ZombieModels = [
-    'G_M_M_Zombie_01',
-    'U_M_Y_Zombie_01',
-    'G_M_M_Zombie_02',
-    'G_M_M_Zombie_03',
-    'G_M_M_Zombie_04',
-    'G_M_M_Zombie_05',
-    'IG_Zombie_DJ_01',
-];
+export const ZombieModels = {
+    G_M_M_Zombie_01: true,
+    U_M_Y_Zombie_01: true,
+    G_M_M_Zombie_02: true,
+    G_M_M_Zombie_03: true,
+    G_M_M_Zombie_04: true,
+    G_M_M_Zombie_05: true,
+    IG_Zombie_DJ_01: true,
+
+    A_C_Deer_02: false,
+    A_C_Coyote_02: false,
+    A_C_Pug_02: false,
+    A_C_Boar_02: false,
+    A_C_MtLion_02: false,
+};
 
 @Provider()
 export class ZombieProvider {
@@ -81,7 +87,7 @@ export class ZombieProvider {
         }
 
         if (!Animals.includes(model)) {
-            const zombieModel = getRandomItem(ZombieModels);
+            const zombieModel = getRandomItem(Object.keys(ZombieModels).filter(elem => ZombieModels[elem]));
 
             await this.resourceLoader.loadModel(zombieModel);
 

@@ -83,7 +83,7 @@ const INFECTED_TIME_BEFORE_DEATH = 20 * 60 * 1000; // 20 minutes
 
 const MAX_HAMMER_PROPS_DISTANCE = 100;
 
-const ZombieModelHash = ZombieModels.map(model => joaat(model));
+const ZombieModelHash = Object.keys(ZombieModels).map(model => joaat(model));
 
 const MAX_SOUND_DISTANCE = 50;
 
@@ -360,7 +360,7 @@ export class WhatIf2Provider {
         this.objectProvider.createObject(
             {
                 id: id1,
-                position: [1717.98, 2518.86, 45.66, 28.83],
+                position: [1717.98, 2518.86, 44.567, 28.83],
                 placeOnGround: true,
                 model: GetHashKey('xm3_prop_xm3_whshelf_01a'),
             },
@@ -1230,7 +1230,7 @@ export class WhatIf2Provider {
                 continue;
             }
 
-            const zombieModel = getRandomItem(ZombieModels);
+            const zombieModel = getRandomItem(Object.keys(ZombieModels));
 
             await this.resourceLoader.loadModel(zombieModel);
 
@@ -1421,10 +1421,15 @@ export class WhatIf2Provider {
     }
 
     private async configurePed(pedHandle: number) {
-        SetPedMovementClipset(pedHandle, 'clipset@anim@ingame@move_m@zombie@core', 1.0);
-        SetPedUsingActionMode(pedHandle, true, -1, 'clipset@anim@ingame@move_m@zombie@core');
-        SetPedStrafeClipset(pedHandle, 'clipset@anim@ingame@move_m@zombie@strafe');
-        SetWeaponAnimationOverride(pedHandle, GetHashKey('ZOMBIE'));
+        const model = GetEntityModel(pedHandle);
+        const modelStr = Object.keys(ZombieModels).find(elem => joaat(elem) == model);
+
+        if (ZombieModels[modelStr]) {
+            SetPedMovementClipset(pedHandle, 'clipset@anim@ingame@move_m@zombie@core', 1.0);
+            SetPedUsingActionMode(pedHandle, true, -1, 'clipset@anim@ingame@move_m@zombie@core');
+            SetPedStrafeClipset(pedHandle, 'clipset@anim@ingame@move_m@zombie@strafe');
+            SetWeaponAnimationOverride(pedHandle, GetHashKey('ZOMBIE'));
+        }
 
         SetPedCanEvasiveDive(pedHandle, false);
         SetPedMoveRateOverride(pedHandle, 10.0);

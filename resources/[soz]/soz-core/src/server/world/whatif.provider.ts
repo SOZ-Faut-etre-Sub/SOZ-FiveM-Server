@@ -49,50 +49,6 @@ import { ProgressService } from '../player/progress.service';
 import { QBCore } from '../qbcore';
 import { WeatherProvider } from '../weather/weather.provider';
 
-const Animals = [
-    joaat('A_C_Boar'),
-    joaat('A_C_Boar_02'),
-    joaat('A_C_Cat_01'),
-    joaat('A_C_Chickenhawk'),
-    joaat('A_C_Chimp'),
-    joaat('A_C_Chimp_02'),
-    joaat('A_C_Chop'),
-    joaat('A_C_Chop_02'),
-    joaat('A_C_cormorant'),
-    joaat('A_C_Cow'),
-    joaat('A_C_Coyote'),
-    joaat('A_C_Coyote_02'),
-    joaat('A_C_Crow'),
-    joaat('A_C_Deer'),
-    joaat('A_C_Deer_02'),
-    joaat('A_C_Dolphin'),
-    joaat('A_C_Fish'),
-    joaat('A_C_Hen'),
-    joaat('A_C_HumpBack'),
-    joaat('A_C_Husky'),
-    joaat('A_C_KillerWhale'),
-    joaat('A_C_MtLion'),
-    joaat('A_C_MtLion_02'),
-    joaat('A_C_Panther'),
-    joaat('A_C_Pig'),
-    joaat('A_C_Pigeon'),
-    joaat('A_C_Poodle'),
-    joaat('A_C_Pug'),
-    joaat('A_C_Pug_02'),
-    joaat('A_C_Rabbit_01'),
-    joaat('A_C_Rabbit_02'),
-    joaat('A_C_Rat'),
-    joaat('A_C_Retriever'),
-    joaat('A_C_Rhesus'),
-    joaat('A_C_Rottweiler'),
-    joaat('A_C_Seagull'),
-    joaat('A_C_SharkHammer'),
-    joaat('A_C_SharkTiger'),
-    joaat('A_C_shepherd'),
-    joaat('A_C_Stingray'),
-    joaat('A_C_Westy'),
-];
-
 const MAX_ZOMBIE_AT_DAY = 300;
 const MAX_ZOMBIE_AT_NIGHT = 600;
 const EXPECTED_PLAYER_COUNT = 150;
@@ -660,19 +616,9 @@ export class WhatIfProvider {
             return;
         }
 
-        const model = GetEntityModel(handle);
         const objType = GetEntityType(handle);
 
-        if (objType === 1 && Animals.includes(model)) {
-            CancelEvent();
-        }
-
         if (GetEntityPopulationType(handle) !== 7 && objType != 3) {
-            CancelEvent();
-        }
-
-        const position = GetEntityCoords(handle, false) as Vector3;
-        if (objType !== 2 && Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(position))) {
             CancelEvent();
         }
     }
