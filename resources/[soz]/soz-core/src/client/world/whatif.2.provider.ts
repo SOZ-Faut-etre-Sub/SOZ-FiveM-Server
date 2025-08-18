@@ -963,7 +963,7 @@ export class WhatIf2Provider {
         const playerEntity = PlayerPedId();
 
         // remove damage for 3 minutes
-        SetEntityProofs(playerEntity, false, true, true, true, false, true, true, true);
+        SetEntityInvincible(playerEntity, true);
 
         // eslint-disable-next-line no-constant-condition
         while (true) {
@@ -973,7 +973,7 @@ export class WhatIf2Provider {
             // player goes back to safe zone make it not
             // or duration has exceeded 3 minutes
             if (this.inSafeZone || duration > 180) {
-                SetEntityProofs(playerEntity, true, true, true, true, true, true, true, true);
+                SetEntityInvincible(playerEntity, false);
 
                 return;
             }
