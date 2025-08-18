@@ -41,6 +41,9 @@ export class WhatIf1Provider {
             return;
         }
 
+        // disable radiation zone for now
+        return;
+
         const coords = GetEntityCoords(PlayerPedId()) as Vector3;
         const inZone = WhatIfRadiationZone.some(zone => zone.isPointInside(coords));
         const player = this.playerService.getPlayer();
