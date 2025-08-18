@@ -1630,10 +1630,12 @@ export class WhatIf2Provider {
             return;
         }
 
+        await this.playerWalkstyleProvider.updateWalkStyle('injury', 'move_injured_generic');
         const end = Date.now() + 120_000;
         while (Date.now() < end) {
             DisableControlAction(0, Control.Sprint, true);
             await wait(0);
         }
+        await this.playerWalkstyleProvider.updateWalkStyle('injury', null);
     }
 }
