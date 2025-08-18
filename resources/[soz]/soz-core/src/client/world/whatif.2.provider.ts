@@ -959,21 +959,22 @@ export class WhatIf2Provider {
     }
 
     private async getOutSafeZone() {
-        const start = GetGameTimer();
+        const start = Date.now();
         const playerEntity = PlayerPedId();
 
         // remove damage for 3 minutes
         SetEntityInvincible(playerEntity, true);
-
+        SetPlayerInvincible(PlayerId(), true);
         // eslint-disable-next-line no-constant-condition
         while (true) {
             await wait(0);
-            const duration = GetGameTimer() - start;
+            const duration = Date.now() - start;
 
             // player goes back to safe zone make it not
             // or duration has exceeded 3 minutes
-            if (this.inSafeZone || duration > 180) {
+            if (this.inSafeZone || duration > 180_000) {
                 SetEntityInvincible(playerEntity, false);
+                SetPlayerInvincible(PlayerId(), false);
 
                 return;
             }
