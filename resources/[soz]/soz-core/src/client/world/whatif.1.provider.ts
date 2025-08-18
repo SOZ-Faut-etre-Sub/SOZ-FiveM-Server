@@ -73,7 +73,7 @@ export class WhatIf1Provider {
             TriggerServerEvent(
                 ServerEvent.QBCORE_SET_METADATA,
                 'hazmat_protection',
-                Math.max(0, player.metadata.hazmat_protection - 0.27)
+                Math.max(0, player.metadata.hazmat_protection - 0.135)
             );
         }
 
