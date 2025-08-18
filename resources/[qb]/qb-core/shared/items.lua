@@ -24895,4 +24895,16 @@ QBShared.Items = {
         ["description"] = "Sac médical militaire usé contenant bandages, désinfectant et seringues. Efficace pour soigner les blessures modérées à graves.",
         ["illustrator"] = ".Nariiel",
     },
+    ["whatif-luciole-map"] = {
+        ["name"] = "whatif-luciole-map",
+        ["label"] = "Cartes des lucioles",
+        ["weight"] = 200,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Ancienne carte retrouvée au HUMAN LAB, qui a ensuite été dupliqué afin d'être partagé.",
+        ["illustrator"] = ".Nariiel",
+    },
 }

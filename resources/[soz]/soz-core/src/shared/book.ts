@@ -78,4 +78,8 @@ export const BOOK_LIST: Book[] = [
             'politic/politic-7.webp',
         ],
     },
+    {
+        item: 'whatif-luciole-map',
+        images: ['whatif-luciole/CarteLuciole.webp'],
+    },
 ];
