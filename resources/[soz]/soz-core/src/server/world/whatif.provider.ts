@@ -43,10 +43,12 @@ import { ItemService } from '../item/item.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
+import { PermissionService } from '../permission.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../player/progress.service';
 import { QBCore } from '../qbcore';
+import { SoundService } from '../sound/sound.service';
 import { WeatherProvider } from '../weather/weather.provider';
 
 const MAX_ZOMBIE_AT_DAY = 300;
@@ -88,6 +90,12 @@ export class WhatIfProvider {
     @Inject(PrismaService)
     private prismaService: PrismaService;
 
+    @Inject(PermissionService)
+    private permissionService: PermissionService;
+
+    @Inject(SoundService)
+    private soundService: SoundService;
+
     @Inject(Monitor)
     private monitor: Monitor;
 
@@ -100,6 +108,7 @@ export class WhatIfProvider {
         help: 'Target number of zombies',
     });
 
+    private cinematic = false;
     private spawnedZombies: number[] = [];
 
     @Once()
@@ -756,6 +765,7 @@ export class WhatIfProvider {
 
             const pedCoords = GetEntityCoords(ped, false) as Vector3;
             if (
+                this.cinematic ||
                 !this.hasClosestPlayer(pedCoords) ||
                 Object.values(WhatIfSafeZones).some(zone => zone.isPointInside(pedCoords))
             ) {
@@ -776,6 +786,8 @@ export class WhatIfProvider {
                 );
             }
         });
+
+        if (this.cinematic) return;
 
         const hour = this.weatherProvider.getTime().hour;
         if (!hour) {
@@ -939,5 +951,17 @@ export class WhatIfProvider {
             source,
             `Le recyclage vous a permis de récupérer ~g~${item.amount}~s~ ~b~${rewardItemDef.label}~s~`
         );
+    }
+
+    @OnEvent(ServerEvent.WHAT_IF_CINEMATIC)
+    public async onCinematic(source: number) {
+        if (!this.permissionService.isStaff(source)) {
+            return;
+        }
+
+        this.cinematic = true;
+
+        this.soundService.play(-1, 'https://cfx-nui-soz-sounds/whatif/obsession.mp3', 5 / 20);
+        TriggerClientEvent(ClientEvent.WHAT_IF_CINEMATIC, -1);
     }
 }

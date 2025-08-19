@@ -42,4 +42,9 @@ export class AdminMenuMeteorProvider {
     public async disableNPC(value: boolean): Promise<void> {
         TriggerServerEvent(ServerEvent.ADMIN_METEOR_DISABLE_NPC, value);
     }
+
+    @OnNuiEvent(NuiEvent.AdminMenuWhatIfCinematic)
+    public async whatIfCinematic(): Promise<void> {
+        TriggerServerEvent(ServerEvent.WHAT_IF_CINEMATIC);
+    }
 }

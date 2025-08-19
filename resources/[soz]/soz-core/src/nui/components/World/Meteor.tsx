@@ -15,6 +15,7 @@ export const Meteor: FunctionComponent = () => {
     const gainImpact = useRef<GainNode>(null);
     const gainDiesIrae = useRef<GainNode>(null);
     const gainDestruction = useRef<GainNode>(null);
+    const gainObsession = useRef<GainNode>(null);
     const [white, setWhite] = useState<boolean>(false);
 
     useNuiEvent(
@@ -141,6 +142,7 @@ export const Meteor: FunctionComponent = () => {
             handleVolume('#cinis', gainCinis, value[Music.Cinis]);
             handleVolume('#impact', gainImpact, value[Music.Impact]);
             handleVolume('#dies_irae', gainDiesIrae, value[Music.DiesIrae]);
+            handleVolume('#obsession', gainObsession, value[Music.Obsession]);
         },
         [audioCtx, gainMusic, gainSandstorm, gainChronos, gainSiren]
     );
@@ -173,6 +175,7 @@ export const Meteor: FunctionComponent = () => {
             <audio id="cinis" src="https://cfx-nui-soz-sounds/firestorm/cinis.mp3"></audio>
             <audio id="destruction" src="https://cfx-nui-soz-sounds/firestorm/destruction.mp3"></audio>
             <audio id="dies_irae" src="https://cfx-nui-soz-sounds/firestorm/dies_irae.mp3"></audio>
+            <audio id="obsession" src="https://cfx-nui-soz-sounds/whatif/obsession.mp3"></audio>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { emitRpc } from '@public/core/rpc';
 import { Feature } from '@public/shared/features';
 import { Control } from '@public/shared/input';
 import { RpcClientEvent, RpcServerEvent } from '@public/shared/rpc';
+import { Parade } from '@public/shared/story/parade';
 
 import { DealershipType } from '../../config/dealership';
 import { GarageList } from '../../config/garage';
@@ -28,9 +29,11 @@ import { MenuType } from '../../shared/nui/menu';
 import { ForbiddenPropModels } from '../../shared/object';
 import { getDistance, toVector4Object, Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { getRandomInt, getRandomItem } from '../../shared/random';
-import { Vehicle } from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleConfiguration } from '../../shared/vehicle/modification';
+import { Vehicle, VehicleSeat } from '../../shared/vehicle/vehicle';
 import {
     HammerProp,
+    WHAT_IF_HELIS,
     WhatIf2Cloakroom,
     WhatIf2CraftingTables,
     WhatIf2Lockers,
@@ -49,7 +52,10 @@ import {
 } from '../../shared/whatif';
 import { AnimationRunner } from '../animation/animation.factory';
 import { AnimationService } from '../animation/animation.service';
+import { CameraService } from '../camera';
+import { PedFactory } from '../factory/ped.factory';
 import { FeatureProvider } from '../feature/feature.provider';
+import { HudStateProvider } from '../hud/hud.state.provider';
 import { InventoryDragAndDropProvider } from '../inventory/inventory.draganddrop.provider';
 import { InventoryManager } from '../inventory/inventory.manager';
 import { ItemService } from '../item/item.service';
@@ -61,6 +67,7 @@ import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { PropHighlightService } from '../object/prop.highlight.service';
 import { MapPickerProvider } from '../picker/map.picker.provider';
+import { PlayerHealthProvider } from '../player/player.health.provider';
 import { PlayerInOutService } from '../player/player.inout.service';
 import { PlayerListStateService } from '../player/player.list.state.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
@@ -76,6 +83,7 @@ import { ZombieModels } from '../story/zombie.provider';
 import { TargetFactory } from '../target/target.factory';
 import { BlurService } from '../utils/blur.service';
 import { VehicleGarageProvider } from '../vehicle/vehicle.garage.provider';
+import { VehicleService } from '../vehicle/vehicle.service';
 import { VoipService } from '../voip/voip.service';
 import { WeaponService } from '../weapon/weapon.service';
 
@@ -301,6 +309,23 @@ export class WhatIf2Provider {
 
     @Inject(InventoryDragAndDropProvider)
     public inventoryDragAndDropProvider: InventoryDragAndDropProvider;
+
+    @Inject(CameraService)
+    private readonly cameraService: CameraService;
+
+    @Inject(HudStateProvider)
+    public hudStateProvider: HudStateProvider;
+
+    @Inject(PlayerHealthProvider)
+    public playerHealthProvider: PlayerHealthProvider;
+
+    @Inject(PedFactory)
+    private pedFactory: PedFactory;
+
+    @Inject(VehicleService)
+    private vehicleService: VehicleService;
+
+    private camera = null;
 
     private inSafeZone = false;
     private zombieRelation = 'ZombieAggressive';
@@ -1645,5 +1670,113 @@ export class WhatIf2Provider {
             await wait(0);
         }
         await this.playerWalkstyleProvider.updateWalkStyle('injury', null);
+    }
+
+    private peds = new Map<number, Vector4>();
+    private vehs = new Map<number, number>();
+
+    @OnEvent(ClientEvent.WHAT_IF_CINEMATIC)
+    private async onCinematic() {
+        DoScreenFadeOut(500);
+        await wait(500);
+
+        this.camera = this.cameraService.createCameraAtPosition([5080.76, -4735.67, 7.15], 60);
+        this.cameraService.setCameraActive(this.camera, true);
+        this.cameraService.setCameraPointAt(this.camera, [-553.84, -641.39, 35.27]);
+        this.cameraService.renderCamera(0);
+
+        DoScreenFadeIn(500);
+        await wait(500);
+
+        this.hudStateProvider.setCinematicMode(true, 5000);
+
+        this.cameraService.updateCameraPosition(this.camera, [4714.54, -4528.05, 30.42], [0, 0, 0], 10000);
+        this.cameraService.renderCamera();
+
+        this.playerHealthProvider.setNutritionDisabled(true);
+        this.hudStateProvider.setHudVisible(false);
+        await this.voipService.mutePlayer(true);
+
+        let midVehId = 0;
+
+        for (const coords of WHAT_IF_HELIS) {
+            const index = WHAT_IF_HELIS.indexOf(coords);
+
+            const ped = await this.pedFactory.createPed({
+                model: 'mp_m_freemode_01',
+                coords: toVector4Object(coords),
+                network: false,
+                blockevents: true,
+                invincible: true,
+                skin: {
+                    Model: {
+                        Hash: 0,
+                        Father: 0,
+                        Mother: 0,
+                        ShapeMix: 0,
+                        SkinMix: 0,
+                    },
+                    Hair: {
+                        HairColor: 61,
+                        HairSecondaryColor: 54,
+                    },
+                },
+            });
+            SetPedConfigFlag(ped, 35, false);
+            SetPedMovementClipset(ped, 'move_m@multiplayer', 0.0);
+
+            this.peds.set(ped, [...Parade.end, 0]);
+
+            const hash = GetHashKey('lazer');
+            await this.resourceLoader.loadModel(hash);
+            const vehicle = CreateVehicle(hash, coords[0], coords[1], coords[2], coords[3], false, false);
+            this.vehicleService.applyVehicleConfiguration(vehicle, getDefaultVehicleConfiguration());
+            SetVehicleEngineOn(vehicle, true, true, false);
+            this.vehs.set(ped, vehicle);
+            TaskWarpPedIntoVehicle(ped, vehicle, VehicleSeat.Driver);
+            SetPlaneTurbulenceMultiplier(vehicle, 0);
+            ControlLandingGear(vehicle, 3);
+
+            if (index === 10) {
+                midVehId = vehicle;
+            }
+
+            this.resourceLoader.unloadModel(hash);
+        }
+
+        for (const [ped, pedVehs] of this.vehs.entries()) {
+            ClearPedTasks(ped);
+            TaskWarpPedIntoVehicle(ped, pedVehs, VehicleSeat.Driver);
+        }
+
+        await wait(500);
+
+        for (const [ped, dest] of this.peds.entries()) {
+            const veh = this.vehs.get(ped);
+            if (veh) {
+                TaskVehicleDriveToCoord(ped, veh, dest[0], dest[1], dest[2], 60, 0, 0, 16777216, 1, -1.0);
+            }
+        }
+
+        await wait(10000);
+        this.cameraService.updateCameraPosition(this.camera, [3987.4, -3646.3, 124.0], [0, 0, 0], 5000);
+
+        AttachCamToEntity(this.camera, midVehId, 0.0, -60.0, 10.0, false);
+
+        await wait(20000);
+        DoScreenFadeOut(2000);
+    }
+
+    @Once(OnceStep.Stop)
+    private onStop() {
+        for (const [ped, veh] of this.vehs.entries()) {
+            DeleteVehicle(veh);
+            this.pedFactory.unspawnEntity(ped);
+        }
+
+        this.peds.clear();
+        this.vehs.clear();
+
+        this.cameraService.deleteAllCameras();
     }
 }

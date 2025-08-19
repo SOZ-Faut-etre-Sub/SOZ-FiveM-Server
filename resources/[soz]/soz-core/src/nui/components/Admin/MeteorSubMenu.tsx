@@ -311,6 +311,16 @@ export const MeteorSubMenu: FunctionComponent<MeteorSubMenuProps> = ({ permissio
                 >
                     Tornade
                 </MenuItemButton>
+
+                <MenuSubTitle>What if</MenuSubTitle>
+
+                <MenuItemButton
+                    onConfirm={async () => {
+                        await fetchNui(NuiEvent.AdminMenuWhatIfCinematic);
+                    }}
+                >
+                    Cinématique
+                </MenuItemButton>
             </MenuContent>
         </SubMenu>
     );

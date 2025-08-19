@@ -13,4 +13,5 @@ export enum Music {
     Impact = 'impact',
     DiesIrae = 'dies_irae',
     Cinis = 'cinis',
+    Obsession = 'obsession',
 }

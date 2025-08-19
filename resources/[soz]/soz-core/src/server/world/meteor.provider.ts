@@ -71,6 +71,7 @@ export class MeteorProvider {
         [Music.Impact]: 0,
         [Music.DiesIrae]: 0,
         [Music.Cinis]: 0,
+        [Music.Obsession]: 0,
     };
 
     @Once()
@@ -150,9 +151,31 @@ export class MeteorProvider {
             return;
         }
 
-        const message = this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)
-            ? " Suite à l'impact de la bombe nucléaire, San Andreas et ses habitants se sont évaporés, clôturant ainsi cette première édition du WHAT IF ! Merci à tous les joueurs pour leur participation. ❤️ "
-            : "L'impact de la météorite vous a assommé, vous pourrez vous réveiller dans quelques minutes...";
+        let message = "L'impact de la météorite vous a assommé, vous pourrez vous réveiller dans quelques minutes...";
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode)) {
+            message =
+                "Suite à l'impact de la bombe nucléaire, San Andreas et ses habitants se sont évaporés, clôturant ainsi cette première édition du WHAT IF ! Merci à tous les joueurs pour leur participation. ❤️";
+        }
+
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+            message =
+                '📜 Journal de Bord — Dernières Pages\n' +
+                '\n' +
+                '"Ils nous avaient promis le salut. Ils nous ont offert la mort."\n' +
+                '\n' +
+                'Les Lucioles nous ont trahis. Elles n’ont jamais eu l’intention de nous évacuer. Quand leur avant-garde a posé le pied sur San Andreas, nous pensions enfin voir la lumière au bout de l’enfer. Mais ce fut des balles, pas des promesses, qui ont jailli. Les mitrailleuses ont balayé les foules, fauchant survivants et clans confondus. Une scène d’horreur. Du sang sur le béton, des cris étouffés sous le fracas des armes. Quelques-uns ont fui, se cachant dans les décombres, mais la plupart… n’ont jamais eu cette chance.\n' +
+                '\n' +
+                'Et le répit n’a duré qu’un souffle. Peu après, le ciel s’est embrasé. Les avions ont bombardé l’île sans relâche, réduisant villes et forêts en cendres. Les camps n’existent plus. Les routes ne mènent plus nulle part. Partout, des cadavres — vivants ou morts, infectés ou non, tous mêlés dans le même charnier. San Andreas est devenue un cimetière à ciel ouvert, une plaie béante où même les corbeaux n’osent plus se poser.\n' +
+                '\n' +
+                'Cela fait des jours que le feu tombe du ciel. Mon bras est brisé, chaque mouvement m’arrache une douleur que je ne peux plus calmer. Je n’ai plus de médicaments, presque plus de nourriture. Tous les abris ont été rasés. Chaque nuit, je m’enfouis sous les ruines, priant que la prochaine vague de bombes m’oublie. Mais je sais qu’elle finira par me trouver.\n' +
+                '\n' +
+                'Je ne crois plus qu’il reste beaucoup de temps. Peut-être quelques heures, peut-être un jour de plus. Ce journal s’arrête ici, avec mes derniers mots, avant que le silence ne m’avale à mon tour.\n' +
+                '\n' +
+                'Adieu, San Andreas.\n' +
+                'Je t’aurai aimé… même dans ta laideur, même dans ta cruauté.';
+        }
+
         this.rebootProvider.kickAll(message);
     }
 
