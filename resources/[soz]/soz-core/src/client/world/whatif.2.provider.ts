@@ -1677,6 +1677,9 @@ export class WhatIf2Provider {
 
     @OnEvent(ClientEvent.WHAT_IF_CINEMATIC)
     private async onCinematic() {
+        this.blurService.remove('dead', 0);
+        StopScreenEffect('DeathFailOut');
+
         DoScreenFadeOut(500);
         await wait(500);
 
