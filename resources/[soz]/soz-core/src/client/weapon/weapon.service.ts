@@ -48,6 +48,9 @@ export class WeaponService {
     private disabledReasons = new Set<string>();
     private inAnimation = false;
 
+    private adminInfiniteAmmo = false;
+    private adminDisableRecoil = false;
+
     @Inject(InventoryManager)
     private inventoryManager: InventoryManager;
 
@@ -56,6 +59,22 @@ export class WeaponService {
 
     @Inject(WeaponHolsterProvider)
     private weaponHolsterProvider: WeaponHolsterProvider;
+
+    public getAdminDisableRecoilDisabled() {
+        return this.adminDisableRecoil;
+    }
+
+    public setAdminDisableRecoilDisabled(value: boolean) {
+        this.adminDisableRecoil = value;
+    }
+
+    public getAdminInfiniteAmmo() {
+        return this.adminInfiniteAmmo;
+    }
+
+    public setAdminInfiniteAmmo(value: boolean) {
+        this.adminInfiniteAmmo = value;
+    }
 
     getWeaponFromSlot(slot: number): InventoryItem | null {
         return this.inventoryManager.getItemAtSlot(slot);
@@ -98,6 +117,10 @@ export class WeaponService {
         }
 
         SetPedAmmo(player, weaponHash, ammo);
+        if (this.adminInfiniteAmmo) {
+            SetPedAmmo(player, weaponHash, 999);
+            SetPedInfiniteAmmo(player, true, weaponHash);
+        }
         SetCurrentPedWeapon(player, weaponHash, false);
     }
 
@@ -136,6 +159,10 @@ export class WeaponService {
             return 0;
         }
 
+        if (this.adminInfiniteAmmo) {
+            return 999;
+        }
+
         const player = PlayerPedId();
         const weaponHash = GetSelectedPedWeapon(player);
 
@@ -143,9 +170,8 @@ export class WeaponService {
     }
 
     async recoil() {
-        if (!this.currentWeapon) {
-            return;
-        }
+        if (this.adminDisableRecoil) return;
+        if (!this.currentWeapon) return;
 
         const ped = PlayerPedId();
         const veh = GetVehiclePedIsIn(ped, false);

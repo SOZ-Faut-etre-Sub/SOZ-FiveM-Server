@@ -23,6 +23,7 @@ export type GameMasterSubMenuProps = {
 export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ permission, state }) => {
     const isAdmin = permission === 'admin';
     const isAdminOrStaff = isAdmin || permission === 'staff';
+    const isAdminOrStaffOrHelper = isAdminOrStaff || permission === 'helper';
     const isAdminOrStaffOrGM = isAdminOrStaff || permission === 'gamemaster';
     const player = usePlayer();
 
@@ -143,6 +144,26 @@ export const GameMasterSubMenu: FunctionComponent<GameMasterSubMenuProps> = ({ p
                 >
                     𐂫 Armure
                 </MenuItemButton>
+                <MenuItemCheckbox
+                    checked={state.adminInfiniteAmmo}
+                    disabled={!isAdminOrStaffOrHelper}
+                    onChange={async value => {
+                        state.adminInfiniteAmmo = value;
+                        await fetchNui(NuiEvent.AdminSetAdminInfiniteAmmo, value);
+                    }}
+                >
+                    🔫 Munitions infinis
+                </MenuItemCheckbox>
+                <MenuItemCheckbox
+                    checked={state.adminNoRecoil}
+                    disabled={!isAdminOrStaffOrHelper}
+                    onChange={async value => {
+                        state.adminNoRecoil = value;
+                        await fetchNui(NuiEvent.AdminSetAdminNoRecoil, value);
+                    }}
+                >
+                    🔫 Pas de recul
+                </MenuItemCheckbox>
             </MenuContent>
         </SubMenu>
     );

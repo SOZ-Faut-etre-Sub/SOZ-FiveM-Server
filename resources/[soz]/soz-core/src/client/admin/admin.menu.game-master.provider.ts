@@ -9,6 +9,7 @@ import { InputService } from '../nui/input.service';
 import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
+import { WeaponService } from '../weapon/weapon.service';
 
 @Provider()
 export class AdminMenuGameMasterProvider {
@@ -29,6 +30,9 @@ export class AdminMenuGameMasterProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(WeaponService)
+    private weaponService: WeaponService;
 
     @OnNuiEvent(NuiEvent.AdminGiveMoney)
     public async giveMoney(amount: number): Promise<void> {
@@ -130,5 +134,15 @@ export class AdminMenuGameMasterProvider {
     @OnNuiEvent(NuiEvent.AdminMenuGameMasterArmor)
     public async armor(): Promise<void> {
         SetPedArmour(PlayerPedId(), 100);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetAdminNoRecoil)
+    public async setAdminNoRecoil(value: boolean): Promise<void> {
+        this.weaponService.setAdminDisableRecoilDisabled(value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetAdminInfiniteAmmo)
+    public async setAdminInfiniteAmmo(value: boolean): Promise<void> {
+        this.weaponService.setAdminInfiniteAmmo(value);
     }
 }

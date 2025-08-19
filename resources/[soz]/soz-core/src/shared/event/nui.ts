@@ -164,6 +164,8 @@ export enum NuiEvent {
     AdminMenuMeteorMusic = 'soz-core:nui:admin:meteor:music',
     AdminMenuPlayerResetWhatIfClan = 'soz-core:nui:admin:player:reset-whatif-clan',
     AdminMenuPlayerResetWhatIfInfection = 'soz-core:nui:admin:player:reset-whatif-infection',
+    AdminSetAdminInfiniteAmmo = 'soz-core:nui:admin:set-admin-infinite-ammo',
+    AdminSetAdminNoRecoil = 'soz-core:nui:admin:set-admin-no-recoil',
 
     BlipAction = 'soz-core:client:blip:action',
 

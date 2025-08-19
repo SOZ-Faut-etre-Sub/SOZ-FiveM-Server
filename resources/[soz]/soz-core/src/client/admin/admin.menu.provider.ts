@@ -22,6 +22,7 @@ import { TargetProvider } from '../target/target.provider';
 import { VehicleDamageProvider } from '../vehicle/vehicle.damage.provider';
 import { VehicleOffroadProvider } from '../vehicle/vehicle.offroad.provider';
 import { VehiclePoliceLocator } from '../vehicle/vehicle.police.locator.provider';
+import { WeaponService } from '../weapon/weapon.service';
 import { AdminMenuDeveloperProvider } from './admin.menu.developer.provider';
 import { AdminMenuInteractiveProvider } from './admin.menu.interactive.provider';
 import { AdminMenuVehicleProvider } from './admin.menu.vehicle.provider';
@@ -70,6 +71,9 @@ export class AdminMenuProvider {
     @Inject(XmasProvider)
     private xmasProvider: XmasProvider;
 
+    @Inject(WeaponService)
+    private weaponService: WeaponService;
+
     @OnEvent(ClientEvent.ADMIN_OPEN_MENU)
     @Command('admin', {
         keys: [
@@ -110,6 +114,8 @@ export class AdminMenuProvider {
                         moneyCase: this.playerService.getState().disableMoneyCase,
                         adminGPS: this.hudMinimapProvider.hasAdminGps,
                         adminPoliceLocator: this.vehiclePoliceLocator.getAdminEnabled(),
+                        adminNoRecoil: this.weaponService.getAdminDisableRecoilDisabled(),
+                        adminInfiniteAmmo: this.weaponService.getAdminInfiniteAmmo(),
                     },
                     interactive: {
                         displayOwners: this.adminMenuInteractiveProvider.intervalHandlers.displayOwners !== null,

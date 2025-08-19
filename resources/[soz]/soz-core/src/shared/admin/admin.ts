@@ -44,6 +44,8 @@ export type GameMasterSubMenuState = {
     invisible: boolean;
     adminGPS: boolean;
     adminPoliceLocator: boolean;
+    adminInfiniteAmmo: boolean;
+    adminNoRecoil: boolean;
 };
 
 export type InteractiveSubMenuState = {
