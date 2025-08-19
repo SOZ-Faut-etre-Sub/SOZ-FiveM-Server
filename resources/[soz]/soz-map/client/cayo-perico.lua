@@ -333,15 +333,15 @@ end)
 --- Island
 local islandLoaded = false
 
--- CreateThread(function()
---    while true do
---        if islandLoaded then
---            SetRadarAsExteriorThisFrame()
---            SetRadarAsInteriorThisFrame("h4_fake_islandx", vec(4700.0, -5145.0), 0, 0)
---        end
---        Wait(0)
---    end
--- end)
+CreateThread(function()
+    while true do
+        if islandLoaded then
+            SetRadarAsExteriorThisFrame()
+            SetRadarAsInteriorThisFrame("h4_fake_islandx", vec(4700.0, -5145.0), 0, 0)
+        end
+        Wait(0)
+    end
+end)
 
 CreateThread(function()
     SetZoneEnabled(GetZoneFromNameId("PrLog"), false) -- REMOVES SNOW FROM CP
@@ -361,7 +361,7 @@ CreateThread(function()
                 SetAudioFlag("PlayerOnDLCHeist4Island", 1)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 1, 1)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", 0, 1)
-                -- exports["ExtraMapTiles"]:deleteTile(1)
+                exports["ExtraMapTiles"]:deleteTile(1)
                 islandLoaded = true
             end
         else
@@ -373,7 +373,7 @@ CreateThread(function()
                 SetAudioFlag("PlayerOnDLCHeist4Island", 0)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Zones", 0, 0)
                 SetAmbientZoneListStatePersistent("AZL_DLC_Hei4_Island_Disabled_Zones", 1, 0)
-                -- exports["ExtraMapTiles"]:createTile(1)
+                exports["ExtraMapTiles"]:createTile(1)
             end
         end
 
