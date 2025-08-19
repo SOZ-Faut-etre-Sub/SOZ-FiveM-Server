@@ -157,8 +157,8 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: false,
     },
     [Feature.WhatIfSecondEpisode]: {
-        production: true,
-        development: true,
-        test: true,
+        production: false,
+        development: false,
+        test: false,
     },
 };
