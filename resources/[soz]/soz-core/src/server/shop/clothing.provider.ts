@@ -148,7 +148,6 @@ export class ClothingProvider {
         )) {
             const component = Number(componentkey) as Component;
             if ((!outfit.Components[component] && !merge) || outfit.Components[component].Drawable != item.Drawable) {
-                console.log('NoHazmat', component);
                 hazmat = false;
                 break;
             }

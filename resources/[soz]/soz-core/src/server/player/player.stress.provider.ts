@@ -33,7 +33,7 @@ export class PlayerStressProvider {
             return null;
         }
 
-        if (!this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
+        if (this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)) {
             return;
         }
 
