@@ -63,9 +63,8 @@ export class StreamScreen {
 
             if (this.playingUrl !== BLACK_SCREEN_URL) {
                 this.playingUrl = BLACK_SCREEN_URL;
+                SetDuiUrl(this.duiObject, this.playingUrl);
             }
-
-            SetDuiUrl(this.duiObject, this.playingUrl);
 
             return;
         }
