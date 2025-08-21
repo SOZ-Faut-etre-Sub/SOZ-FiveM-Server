@@ -49,6 +49,7 @@ import { ConfigurationRepository } from '../repository/configuration.repository'
 import { ServerStateService } from '../server.state.service';
 import { Store } from '../store/store';
 import { NpcProvider } from '../utils/npc.provider';
+import { XmasProvider } from './xmas.provider';
 
 const OBJECTIVE_Y_LIMITATION = [-3600, 1200];
 
@@ -100,6 +101,9 @@ export class VampireGameProvider {
 
     @Inject(ConfigurationRepository)
     private readonly configurationRepository: ConfigurationRepository;
+
+    @Inject(XmasProvider)
+    private readonly xmasProvider: XmasProvider;
 
     @Inject(ObjectProvider)
     private readonly objectProvider: ObjectProvider;
@@ -804,6 +808,10 @@ export class VampireGameProvider {
             mortalObjectivePart1: this.mortalObjectivePart1,
             mortalObjectivePart2: this.mortalObjectivePart2,
             mortalObjectivePart3: this.mortalObjectivePart3Duration,
+            ceremony: {
+                disableNpc: false,
+                scene: this.xmasProvider.sceneState,
+            },
         };
     }
 

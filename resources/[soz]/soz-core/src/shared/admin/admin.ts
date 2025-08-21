@@ -3,6 +3,7 @@ import { VampireGameCollection, VampireGameObjectiveTypePart2, VampireGameRole }
 import { PlayerCharInfo } from '@public/shared/player';
 import { EventInfo } from '@public/shared/scene';
 import { SenateParty, SenatePartyMember } from '@public/shared/senate';
+import { SenatSceneState } from '@public/shared/story/story';
 
 import { Music } from '../audio';
 import { Component, Outfit, Prop } from '../cloth';
@@ -90,6 +91,7 @@ export type MeteorSubMenuState = {
 
 export type CeremonySubMenuState = {
     disableNpc: boolean;
+    scene: SenatSceneState;
 };
 
 export type HalloweenSubMenuState = {
@@ -100,6 +102,7 @@ export type HalloweenSubMenuState = {
     mortalObjectivePart1: Record<Exclude<VampireGameCollection, 'player'>, number>;
     mortalObjectivePart2: Record<VampireGameObjectiveTypePart2, number>;
     mortalObjectivePart3: number;
+    ceremony: CeremonySubMenuState;
 };
 
 export type AdminMenuData = {
@@ -115,8 +118,7 @@ export type AdminMenuData = {
         vehicule: VehicleSubMenuState;
         meteor: MeteorSubMenuState;
         halloween: HalloweenSubMenuState;
-        // ceremony: CeremonySubMenuState;
-        // xmasSceneState: XmasSceneState;
+        ceremony: CeremonySubMenuState;
     };
 };
 
