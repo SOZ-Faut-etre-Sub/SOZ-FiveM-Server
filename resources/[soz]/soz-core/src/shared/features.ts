@@ -163,8 +163,8 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: false,
     },
     [Feature.Ceremony]: {
-        production: true,
-        development: true,
-        test: true,
+        production: false,
+        development: false,
+        test: false,
     },
 };
