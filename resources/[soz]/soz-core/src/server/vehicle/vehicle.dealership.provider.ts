@@ -525,7 +525,10 @@ export class VehicleDealershipProvider {
                         },
                     });
 
-                    if (dealershipId !== DealershipType.WhatIf && refreshedVehicle.stock <= 0) {
+                    if (
+                        ![DealershipType.WhatIf, DealershipType.Casino].includes(dealershipId) &&
+                        refreshedVehicle.stock <= 0
+                    ) {
                         this.notifier.notify(source, "Ce véhicule n'est plus disponible.", 'error');
 
                         return false;
