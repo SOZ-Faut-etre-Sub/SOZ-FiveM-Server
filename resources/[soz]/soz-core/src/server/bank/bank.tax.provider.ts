@@ -71,6 +71,10 @@ export class BankTaxProvider {
         const jobs = Object.values(this.jobService.getJobs());
 
         for (const job of jobs) {
+            if (job.id === 'casino') {
+                continue;
+            }
+
             const account = job.taxCollectAccounts || [];
 
             if (account.length === 0) {
