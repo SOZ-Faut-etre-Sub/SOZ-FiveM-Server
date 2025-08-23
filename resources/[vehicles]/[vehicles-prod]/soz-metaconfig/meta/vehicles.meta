@@ -3354,7 +3354,7 @@
         <Item>
             <modelName>maverick3</modelName>
             <txdName>maverick3</txdName>
-            <handlingId>MAVERICK</handlingId>
+            <handlingId>MAVERICK3</handlingId>
             <gameName>MAVERICK3</gameName>
             <vehicleMakeName>maverick</vehicleMakeName>
             <expressionDictName>null</expressionDictName>
