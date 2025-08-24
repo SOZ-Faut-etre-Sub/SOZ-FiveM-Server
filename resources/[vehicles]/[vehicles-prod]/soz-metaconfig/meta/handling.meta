@@ -2652,9 +2652,9 @@
             <AIHandling>AVERAGE</AIHandling>
             <SubHandlingData>
                 <Item type="CFlyingHandlingData">
-                    <fThrust value="0.572000" />
-                    <fThrustFallOff value="0.035000" />
-                    <fThrustVectoring value="0.400000" />
+                    <fThrust value="0.640000" />
+                    <fThrustFallOff value="0.032000" />
+                    <fThrustVectoring value="0.420000" />
                     <fYawMult value="-1.400000" />
                     <fYawStabilise value="0.001500" />
                     <fSideSlipMult value="0.004000" />
@@ -2668,7 +2668,7 @@
                     <fGearDownDragV value="0.100000" />
                     <fGearDownLiftMult value="1.000000" />
                     <fWindMult value="0.000500" />
-                    <fMoveRes value="0.040000" />
+                    <fMoveRes value="0.038000" />
                     <vecTurnRes x="0.800000" y="0.700000" z="0.800000" />
                     <vecSpeedRes x="0.500000" y="0.500000" z="0.700000" />
                     <fGearDoorFrontOpen value="90.000000" />
@@ -2693,37 +2693,37 @@
                         <Item />
                     </uWeaponHash>
                     <WeaponSeats content="int_array">
-                        0 
-                        0 
-                        0 
+                        0
+                        0
+                        0
                     </WeaponSeats>
                     <fTurretSpeed content="float_array">
-                        1.000000	
-                        0.000000	
+                        1.000000
+                        0.000000
                     </fTurretSpeed>
                     <fTurretPitchMin content="float_array">
-                        0.000000	
-                        0.000000	
+                        0.000000
+                        0.000000
                     </fTurretPitchMin>
                     <fTurretPitchMax content="float_array">
-                        0.000000	
-                        0.000000	
+                        0.000000
+                        0.000000
                     </fTurretPitchMax>
                     <fTurretCamPitchMin content="float_array">
-                        0.000000	
-                        0.000000	
+                        0.000000
+                        0.000000
                     </fTurretCamPitchMin>
                     <fTurretCamPitchMax content="float_array">
-                        0.000000	
-                        0.000000	
+                        0.000000
+                        0.000000
                     </fTurretCamPitchMax>
                     <fBulletVelocityForGravity content="float_array">
-                        0.000000	
-                        0.000000	
+                        0.000000
+                        0.000000
                     </fBulletVelocityForGravity>
                     <fTurretPitchForwardMin content="float_array">
-                        0.000000	
-                        0.000000	
+                        0.000000
+                        0.000000
                     </fTurretPitchForwardMin>
                     <fUvAnimationMult value="0.000000" />
                     <fMiscGadgetVar value="0.000000" />
