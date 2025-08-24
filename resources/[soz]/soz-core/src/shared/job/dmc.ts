@@ -613,6 +613,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 0, Palette: 0 },
                 '6': { Drawable: 39, Texture: 1, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 186, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -626,6 +627,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 0, Palette: 0 },
                 '6': { Drawable: 71, Texture: 3, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 251, Texture: 3, Palette: 0 },
             },
             Props: {
@@ -640,6 +642,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 16, Palette: 0 },
                 '6': { Drawable: 71, Texture: 22, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 248, Texture: 18, Palette: 0 },
             },
             Props: {
@@ -653,6 +656,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '4': { Drawable: 20, Texture: 2, Palette: 0 },
                 '6': { Drawable: 51, Texture: 0, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 322, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -666,6 +670,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 0, Palette: 0 },
                 '6': { Drawable: 2, Texture: 0, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 0, Texture: 2, Palette: 0 },
             },
             Props: {
@@ -682,6 +687,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 0, Palette: 0 },
                 '6': { Drawable: 25, Texture: 0, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 188, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -695,6 +701,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 0, Palette: 0 },
                 '6': { Drawable: 74, Texture: 3, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 259, Texture: 3, Palette: 0 },
             },
             Props: {
@@ -709,6 +716,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 16, Palette: 0 },
                 '6': { Drawable: 74, Texture: 2, Palette: 0 },
                 '8': { Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 256, Texture: 18, Palette: 0 },
             },
             Props: {
@@ -722,6 +730,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '4': { Drawable: 23, Texture: 10, Palette: 0 },
                 '6': { Drawable: 115, Texture: 0, Palette: 0 },
                 '8': { Drawable: 14, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 333, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -735,6 +744,7 @@ export const DmcCloakroom: WardrobeConfig = {
                 '5': { Drawable: 82, Texture: 0, Palette: 0 },
                 '6': { Drawable: 103, Texture: 3, Palette: 0 },
                 '8': { Drawable: 14, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Drawable: 118, Texture: 1, Palette: 0 },
             },
             Props: {

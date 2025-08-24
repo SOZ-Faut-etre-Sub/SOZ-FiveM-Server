@@ -14,6 +14,7 @@ const tshirt: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 44, Texture: 1, Palette: 0 },
             },
             Props: {},
@@ -22,6 +23,7 @@ const tshirt: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: {
                     Drawable: 0,
                     Texture: 0,
@@ -35,6 +37,7 @@ const tshirt: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: {
                     Drawable: 0,
                     Texture: 2,
@@ -50,6 +53,7 @@ const tshirt: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 335, Texture: 19, Palette: 0 },
             },
             Props: {},
@@ -58,6 +62,7 @@ const tshirt: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: {
                     Drawable: 10,
                     Texture: 0,
@@ -71,6 +76,7 @@ const tshirt: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 14, Texture: 0, Palette: 0 },
                 [8]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: {
                     Drawable: 10,
                     Texture: 2,

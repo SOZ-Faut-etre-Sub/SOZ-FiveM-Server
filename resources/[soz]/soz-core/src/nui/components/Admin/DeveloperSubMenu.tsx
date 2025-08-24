@@ -139,7 +139,7 @@ export const DeveloperSubMenu: FunctionComponent<DeveloperSubMenuProps> = ({ per
                         await fetchNui(NuiEvent.AdminMenuClothes, brand);
                     }}
                 >
-                    {[ShopBrand.Ponsonbys, ShopBrand.Binco, ShopBrand.Mask].map(option => (
+                    {[ShopBrand.Ponsonbys, ShopBrand.Binco, ShopBrand.Suburban, ShopBrand.Mask].map(option => (
                         <MenuItemSelectOption key={'cloth_shop' + option} value={option}>
                             {option}
                         </MenuItemSelectOption>

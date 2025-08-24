@@ -440,7 +440,7 @@ export const LsmcCloakroom: WardrobeConfig = {
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 151, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Decals]: { Drawable: 16, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 314, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -517,6 +517,7 @@ export const LsmcCloakroom: WardrobeConfig = {
                 [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 110, Texture: 3, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 11, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
             },
             Props: {
@@ -571,7 +572,7 @@ export const LsmcCloakroom: WardrobeConfig = {
                 [Component.Accessories]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 187, Texture: 0, Palette: 0 },
                 [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
-                [Component.Decals]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 325, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -658,6 +659,7 @@ export const LsmcCloakroom: WardrobeConfig = {
                 [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                 [Component.Shoes]: { Drawable: 115, Texture: 3, Palette: 0 },
                 [Component.Undershirt]: { Drawable: 14, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [Component.Tops]: { Drawable: 11, Texture: 2, Palette: 0, Collection: 'soz_bcso' },
             },
             Props: {
