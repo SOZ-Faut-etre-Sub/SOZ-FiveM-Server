@@ -958,7 +958,6 @@ export class WhatIf2Provider {
     public closeInventory() {
         this.inventoryAnimationRunner?.cancel(AnimationStopReason.Finished);
         this.inventoryAnimationRunner = null;
-        setTimeout(() => ClearPedTasks(PlayerPedId()), 1000);
     }
 
     private async safeZoneLoop() {
