@@ -263,6 +263,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 0, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 0, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -275,6 +276,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 6, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 6, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 6, Palette: 0 },
             },
             Props: {
@@ -287,6 +289,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 2, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 2, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 2, Palette: 0 },
             },
             Props: {
@@ -299,6 +302,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 4, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 4, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 4, Palette: 0 },
             },
             Props: {
@@ -311,6 +315,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 5, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 5, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 5, Palette: 0 },
             },
             Props: {
@@ -323,6 +328,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 1, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 1, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 1, Palette: 0 },
             },
             Props: {
@@ -335,6 +341,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 9, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 9, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 9, Palette: 0 },
             },
             Props: {
@@ -347,6 +354,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 3, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 3, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 3, Palette: 0 },
             },
             Props: {
@@ -359,6 +367,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 8, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 8, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 8, Palette: 0 },
             },
             Props: {
@@ -371,6 +380,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_m_bikerdlc_01', Drawable: 6, Texture: 7, Palette: 0 },
                 '6': { Collection: 'mp_m_bikerdlc_01', Drawable: 5, Texture: 7, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_m_bikerdlc_01', Drawable: 21, Texture: 7, Palette: 0 },
             },
             Props: {
@@ -385,6 +395,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 0, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 0, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 0, Palette: 0 },
             },
             Props: {
@@ -397,6 +408,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 6, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 6, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 6, Palette: 0 },
             },
             Props: {
@@ -409,6 +421,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 2, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 2, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 2, Palette: 0 },
             },
             Props: {
@@ -421,6 +434,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 4, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 4, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 4, Palette: 0 },
             },
             Props: {
@@ -433,6 +447,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 5, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 5, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 5, Palette: 0 },
             },
             Props: {
@@ -445,6 +460,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 1, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 1, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 1, Palette: 0 },
             },
             Props: {
@@ -457,6 +473,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 9, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 9, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 9, Palette: 0 },
             },
             Props: {
@@ -469,6 +486,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 3, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 3, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 3, Palette: 0 },
             },
             Props: {
@@ -481,6 +499,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 8, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 8, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 8, Palette: 0 },
             },
             Props: {
@@ -493,6 +512,7 @@ export const TeamColorClotheSet: Record<PlayerPedHash, Record<LaserGameColorEnum
                 '4': { Collection: 'mp_f_bikerdlc_01', Drawable: 6, Texture: 7, Palette: 0 },
                 '6': { Collection: 'mp_f_bikerdlc_01', Drawable: 7, Texture: 7, Palette: 0 },
                 '8': { Collection: '', Drawable: 15, Texture: 0, Palette: 0 },
+                '10': { Drawable: 0, Texture: 0, Palette: 0 },
                 '11': { Collection: 'mp_f_bikerdlc_01', Drawable: 26, Texture: 7, Palette: 0 },
             },
             Props: {
