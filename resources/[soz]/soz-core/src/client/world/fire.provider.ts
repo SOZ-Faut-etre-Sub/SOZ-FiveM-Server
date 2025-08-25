@@ -478,8 +478,11 @@ export class FireProvider {
 
             for (const offset of fireScriptOffsets[fire.type]) {
                 const firePosition = applyOffset(fire.position, offset);
+                const [valid, z] = await this.getZData(firePosition);
 
-                const fireNearPit = GetNumberOfFiresInRange(firePosition[0], firePosition[1], firePosition[2], 1);
+                if (!valid) continue;
+
+                const fireNearPit = GetNumberOfFiresInRange(firePosition[0], firePosition[1], z, 1);
                 if (fireNearPit === 0 && this.usedFireExtinguisherRecently) {
                     emitRpc(RpcServerEvent.FIRE_EXTINGUISHED, id);
                     await wait(5_000);
