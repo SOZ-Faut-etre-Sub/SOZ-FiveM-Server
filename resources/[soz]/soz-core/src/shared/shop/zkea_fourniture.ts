@@ -18709,6 +18709,14 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         collision: true,
         notBuyable: true,
     },
+    [ZkeaCasinoAliceFrame]: {
+        type: 'Exclusif',
+        name: 'Cadre "Alice Douce Casino"',
+        model: ZkeaCasinoAliceFrame,
+        price: 0,
+        collision: true,
+        notBuyable: true,
+    },
     soz_zevent_zplace: {
         type: 'Exclusif',
         name: 'Tableau ZPlace 2024',
