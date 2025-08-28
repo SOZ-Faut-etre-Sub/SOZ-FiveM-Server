@@ -25132,6 +25132,28 @@ QBShared.Items = {
         ["illustrator"] = ".Sniteur",
         ["description"] = "Forgé dans un argent rare qui capte la lumière des étoiles. Orné de gravures célestes et serti d'une pierre de lune qui palpite d'une lueur intérieure, son écho mélodieux est dit être un lien direct avec la magie nocturne.",
     },
+    ["whistle_bcso"] = {
+        ["name"] = "whistle_bcso",
+        ["label"] = "Sifflet K9 - BCSO",
+        ["weight"] = 150,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["illustrator"] = ".Kaemy",
+        ["description"] = "???",
+    },
+    ["whistle_lspd"] = {
+        ["name"] = "whistle_lspd",
+        ["label"] = "Sifflet K9 - LSPD",
+        ["weight"] = 150,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["illustrator"] = ".Kaemy",
+        ["description"] = "???",
+    },
 
     --- bangle
     ["bangle_eka"] = {

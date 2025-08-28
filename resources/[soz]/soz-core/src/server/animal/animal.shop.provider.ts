@@ -17,6 +17,7 @@ import {
     PlayerStressOnAbandon,
 } from '@public/shared/animal';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { JobType, PUBLIC_SERVICES } from '@public/shared/job';
 import { isErr } from '@public/shared/result';
 import { TaxType } from '@public/shared/tax';
 
@@ -44,32 +45,39 @@ export class AnimalShopProvider {
     private readonly notifier: Notifier;
 
     @OnEvent(ServerEvent.PET_SHOP_BUY_ANIMAL)
-    public async onPetShopBuyPet(source: number, pet: petInShop, petDrawables: PetDrawable[]) {
+    public async onPetShopBuyPet(source: number, pet: petInShop, petDrawables: PetDrawable[], job: JobType | null) {
         const player = this.playerService.getPlayer(source);
         if (!player) return;
 
-        const ownedPet = await this.prismaService.pet.findFirst({
-            where: {
-                owner_id: player.citizenid,
-            },
-        });
-        if (ownedPet) {
-            this.notifier.notify(
-                source,
-                `Vous possedez déjà ~b~${ownedPet.name || `un animal`}~s~. ~r~ABANDONNE~s~ le si tu en souhaites un autre (pauvre bête).`,
-                'info'
-            );
-            return;
+        if (job === null) {
+            const ownedPet = await this.prismaService.pet.findFirst({
+                where: {
+                    owner_id: player.citizenid,
+                },
+            });
+            if (ownedPet) {
+                this.notifier.notify(
+                    source,
+                    `Vous possedez déjà ~b~${ownedPet.name || `un animal`}~s~. ~r~ABANDONNE~s~ le si tu en souhaites un autre (pauvre bête).`,
+                    'info'
+                );
+                return;
+            }
         }
 
-        if (!(await this.playerMoneyService.buy(source, pet.price, TaxType.SUPPLY))) {
+        if (
+            !(await this.playerMoneyService.buy(
+                source,
+                pet.price,
+                PUBLIC_SERVICES.includes(job) ? null : TaxType.SERVICE
+            ))
+        ) {
             this.notifier.notify(source, "Vous n'avez pas assez d'argent.", 'error');
             return;
         }
 
         const [traitUp, traitDown] = this.getTraits();
-        const newPet = {
-            owner_id: player.citizenid,
+        const basePet = {
             model: pet.model,
             trait_up: traitUp,
             trait_down: traitDown,
@@ -81,23 +89,40 @@ export class AnimalShopProvider {
             perDays: JSON.stringify(this.animalProvider.getDefaultPerDaysMetaData()),
             components: JSON.stringify(petDrawables),
         };
-        await this.prismaService.pet.create({ data: newPet });
 
-        const inventory = await this.inventoryFactory.getPlayerInventory(source);
-        if (!inventory || isErr(inventory.add('whistle_basic', 1))) {
+        if (job) {
+            const newPet = {
+                ...basePet,
+                job: job,
+            };
+            await this.prismaService.job_pet.create({ data: newPet });
             this.notifier.notify(
                 source,
-                `Je n'ai pas pu te donner ~b~ton sifflet~s~ de dressage, passe à la boutique pour t'en ~y~acheter~s~ un.`,
-                'error'
+                "Tu as  ~g~acheté~s~ un animal pour ton entreprise ! Reviens me voir si tu souhaites l'emporter avec toi."
             );
-        }
+        } else {
+            const newPet = {
+                ...basePet,
+                owner_id: player.citizenid,
+            };
+            await this.prismaService.pet.create({ data: newPet });
+            const inventory = await this.inventoryFactory.getPlayerInventory(source);
+            if (!inventory || isErr(inventory.add('whistle_basic', 1))) {
+                this.notifier.notify(
+                    source,
+                    `Je n'ai pas pu te donner ~b~ton sifflet~s~ de dressage, passe à la boutique pour t'en ~y~acheter~s~ un.`,
+                    'error'
+                );
+            }
 
-        this.notifier.notify(
-            source,
-            "Vous avez ~g~acheté~s~ un animal, utilise ~b~ton sifflet~s~ pour l'appeler ! Reviens me voir pour lui donner un nom."
-        );
-        this.notifier.notify(source, "Tu peux donner des ordres à ton animal à l'aide du Menu ~g~O~s~ !", 'info');
-        TriggerClientEvent(ClientEvent.PET_SYNC_ANIMAL, source, true);
+            this.notifier.notify(
+                source,
+                "Tu as  ~g~acheté~s~ un animal, utilise ~b~ton sifflet~s~ pour l'appeler ! Reviens me voir pour lui donner un nom."
+            );
+
+            this.notifier.notify(source, "Tu peux donner des ordres à ton animal à l'aide du Menu ~g~O~s~ !", 'info');
+            TriggerClientEvent(ClientEvent.PET_SYNC_ANIMAL, source, true);
+        }
     }
 
     @OnEvent(ServerEvent.PET_SHOP_ABANDON_ANIMAL)

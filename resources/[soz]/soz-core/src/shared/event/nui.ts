@@ -403,6 +403,7 @@ export enum NuiEvent {
     PetShopShowAnimal = 'soz-core:client:pet:shop-show-animal',
     PetShopBuyAnimal = 'soz-core:client:pet:shop-buy-animal',
     PetShopChangeTexture = 'soz-core:client:pet:shop-change-texture',
+    PetKennelAction = 'soz-core:client:pet:kennel-action',
 
     IllegalShopBuyItem = 'soz-core:client:hubshop:buy',
 

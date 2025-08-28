@@ -4,22 +4,30 @@ import { CameraService } from '@public/client/camera';
 import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
+import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
+import { NoZoneShopBrand, NoZonesShopConfig } from '@public/config/shops';
 import { OnEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { emitRpc } from '@public/core/rpc';
 import {
+    JobFixPetVariation,
+    KennelJobPet,
     PetDrawable,
     petInShop,
     petShopCameraOffset,
     petShopCameraTargetOffset,
+    petShopContent,
     petShopSpawnPosition,
     PetVariation,
 } from '@public/shared/animal';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { JobType } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { Err, Ok } from '@public/shared/result';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 @Provider()
 export class AnimalShopProvider {
@@ -44,12 +52,50 @@ export class AnimalShopProvider {
     @Inject(Notifier)
     private notifier: Notifier;
 
+    @Inject(PlayerService)
+    private playerService: PlayerService;
+
     private lastPetShow: number;
 
     public async openShop() {
         await this.setupShop();
 
-        this.nuiMenu.openMenu(MenuType.PetShop);
+        this.nuiMenu.openMenu(MenuType.PetShop, {
+            job: null,
+            pets: Object.values(petShopContent)
+                .filter(petShop => !petShop?.jobs?.length)
+                .sort((a, b) => b.price - a.price),
+        });
+    }
+
+    public async openJobShop() {
+        await this.setupShop();
+        const player = this.playerService.getPlayer();
+
+        this.nuiMenu.openMenu(MenuType.PetShop, {
+            job: player.job.id,
+            pets: Object.values(petShopContent)
+                .filter(petShop => petShop.jobs && petShop.jobs.includes(player.job.id))
+                .sort((a, b) => b.price - a.price),
+        });
+    }
+
+    public async openKennelMenu() {
+        const pets = await emitRpc<Array<KennelJobPet>>(RpcServerEvent.PET_LIST_JOB_ANIMALS);
+        this.nuiMenu.openMenu(
+            MenuType.PetJobKennel,
+            { pets },
+            {
+                position: {
+                    position: [
+                        NoZonesShopConfig[NoZoneShopBrand.Pet].ped.coords.x,
+                        NoZonesShopConfig[NoZoneShopBrand.Pet].ped.coords.y,
+                        NoZonesShopConfig[NoZoneShopBrand.Pet].ped.coords.z,
+                    ],
+                    distance: 5.0,
+                },
+            }
+        );
     }
 
     private async setupShop() {
@@ -84,7 +130,14 @@ export class AnimalShopProvider {
 
     @OnEvent(ClientEvent.PET_SHOP_NAME_ANIMAL)
     public async onNameAnimal(): Promise<void> {
-        if (!this.animalProvider.isNamed()) {
+        const pet = this.animalProvider.getCurrentPet();
+        if (!pet) {
+            this.notifier.notify(
+                "~b~Montre moi~s~ l'animal que tu veux nommer ! Je ne vais pas deviner tout seul.",
+                'info'
+            );
+            return;
+        } else if (!this.animalProvider.isNamed(pet)) {
             this.notifier.notify(
                 "Tu veux ~b~nommer~s~ ton animal ? Je suis sur qu'il en sera ~g~très content~s~.",
                 'info'
@@ -110,7 +163,7 @@ export class AnimalShopProvider {
         );
         if (!input) return;
 
-        TriggerServerEvent(ServerEvent.PET_NAME_ANIMAL, input);
+        TriggerServerEvent(ServerEvent.PET_NAME_ANIMAL, input, pet.isPetJob);
     }
 
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
@@ -127,8 +180,8 @@ export class AnimalShopProvider {
         FreezeEntityPosition(PlayerPedId(), false);
     }
 
-    @OnNuiEvent<{ pet: petInShop }>(NuiEvent.PetShopShowAnimal)
-    public async showAnimal({ pet }): Promise<void> {
+    @OnNuiEvent<{ pet: petInShop; job: JobType }>(NuiEvent.PetShopShowAnimal)
+    public async showAnimal({ pet, job }): Promise<void> {
         if (!pet) return;
         if (this.lastPetShow) {
             if (GetEntityModel(this.lastPetShow) === GetHashKey(pet.model)) return;
@@ -156,6 +209,11 @@ export class AnimalShopProvider {
             const petDrawables: PetDrawable[] = Object.values(PetVariation[pet.model][type]);
             await this.onChangeTexture(petDrawables[0]);
         }
+        if (job && JobFixPetVariation?.[job]?.[pet.model]) {
+            for (const petDrawable of JobFixPetVariation[job][pet.model]) {
+                await this.onChangeTexture(petDrawable);
+            }
+        }
         this.resourceLoader.unloadModel(pedSpawned);
     }
 
@@ -164,8 +222,8 @@ export class AnimalShopProvider {
         SetPedComponentVariation(this.lastPetShow, component, drawable, texture, 0);
     }
 
-    @OnNuiEvent<{ pet: petInShop }>(NuiEvent.PetShopBuyAnimal)
-    public async onBuyAnimal({ pet }): Promise<void> {
+    @OnNuiEvent<{ pet: petInShop; job: JobType }>(NuiEvent.PetShopBuyAnimal)
+    public async onBuyAnimal({ pet, job }): Promise<void> {
         const petDrawables: PetDrawable[] = [];
         for (const type of Object.keys(PetVariation[pet.model])) {
             const allPetDrawables: PetDrawable[] = Object.values(PetVariation[pet.model][type]);
@@ -177,7 +235,22 @@ export class AnimalShopProvider {
                 texture: GetPedTextureVariation(this.lastPetShow, componentId),
             });
         }
-        TriggerServerEvent(ServerEvent.PET_SHOP_BUY_ANIMAL, pet, petDrawables);
+        if (job && JobFixPetVariation?.[job]?.[pet.model]) {
+            for (const petDrawable of JobFixPetVariation[job][pet.model]) {
+                petDrawables.push(petDrawable);
+            }
+        }
+        TriggerServerEvent(ServerEvent.PET_SHOP_BUY_ANIMAL, pet, petDrawables, job);
+        this.nuiMenu.closeMenu();
+    }
+
+    @OnNuiEvent<{ pet: KennelJobPet; action: string }>(NuiEvent.PetKennelAction)
+    public async onPetKennelAction({ pet, action }): Promise<void> {
+        if (action === 'take') {
+            TriggerServerEvent(ServerEvent.PET_KENNEL_TAKE, pet.id);
+        } else if (action === 'remove') {
+            TriggerServerEvent(ServerEvent.PET_KENNEL_REMOVE, pet.id);
+        }
         this.nuiMenu.closeMenu();
     }
 

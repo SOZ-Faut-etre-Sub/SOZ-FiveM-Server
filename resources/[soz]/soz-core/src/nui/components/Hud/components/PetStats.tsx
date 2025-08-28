@@ -22,7 +22,7 @@ export const PetStats: FunctionComponent = () => {
 
     useNuiEvent('hud', 'SetShowStats', setShowStats);
 
-    if (!petStats || !petStats.spawned || !hasWatch || !showAnimalStats || !showStats) return null;
+    if (!petStats || !hasWatch || !showAnimalStats || !showStats) return null;
 
     return (
         <>

@@ -7,6 +7,7 @@ import { BrandsConfig, NoZoneShopBrand, NoZonesShopConfig, ShopBrand, ShopsConfi
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { petShopContent } from '@public/shared/animal';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { isMotel } from '@public/shared/housing/housing';
 import { InventoryItem } from '@public/shared/inventory';
@@ -271,6 +272,34 @@ export class ShopProvider {
                     action: () => this.animalShopProvider.openShop(),
                 },
                 {
+                    icon: 'shop/pet',
+                    label: "Animalerie d'entreprise",
+                    category: 'citizen',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return Boolean(
+                            Object.values(petShopContent).filter(
+                                petShop => petShop.jobs && petShop.jobs.includes(player.job.id)
+                            ).length && player.job.onduty
+                        );
+                    },
+                    action: () => this.animalShopProvider.openJobShop(),
+                },
+                {
+                    icon: 'pet/kennel',
+                    label: "Chenil d'entreprise",
+                    category: 'citizen',
+                    canInteract: () => {
+                        const player = this.playerService.getPlayer();
+                        return Boolean(
+                            Object.values(petShopContent).filter(
+                                petShop => petShop.jobs && petShop.jobs.includes(player.job.id)
+                            ).length && player.job.onduty
+                        );
+                    },
+                    action: async () => await this.animalShopProvider.openKennelMenu(),
+                },
+                {
                     icon: 'global/comment',
                     label: 'Nommer son animal',
                     category: 'citizen',
@@ -286,10 +315,17 @@ export class ShopProvider {
                 },
                 {
                     icon: 'ems/heal',
-                    label: 'Soigner son animal',
+                    label: 'Soigner son animal de compagnie',
                     category: 'citizen',
                     canInteract: () => this.animalProvider.isDead(),
-                    action: () => TriggerServerEvent(ServerEvent.PET_SET_DEATH, false),
+                    action: () => TriggerServerEvent(ServerEvent.PET_SET_DEATH, false, false),
+                },
+                {
+                    icon: 'ems/heal',
+                    label: "Soigner son animal d'entreprise'",
+                    category: 'citizen',
+                    canInteract: () => this.animalProvider.isJobDead(),
+                    action: () => TriggerServerEvent(ServerEvent.PET_SET_DEATH, false, true),
                 },
             ],
         };

@@ -1,4 +1,4 @@
-import { /*FDO,*/ JobType } from '@public/shared/job';
+import { FDO, JobType } from '@public/shared/job';
 import { Vector3 } from '@public/shared/polyzone/vector';
 
 export const TENNIS_BALL_MODEL = 'prop_tennis_ball';
@@ -17,6 +17,21 @@ export type PetResetMeta = {
     lastTrainingGain: number;
 };
 
+export const whistles = [
+    'whistle_basic',
+    'whistle_steel',
+    'whistle_oak',
+    'whistle_carved',
+    'whistle_clay',
+    'whistle_tin',
+    'whistle_engraved',
+    'whistle_goldsmith',
+    'whistle_lunar',
+];
+
+export const k9_whistles = ['whistle_bcso', 'whistle_lspd'];
+export const k9_model = 'german_shepherd';
+
 export enum PetOrder {
     FOLLOW = 'FOLLOW',
     STOP = 'STOP',
@@ -25,8 +40,7 @@ export enum PetOrder {
     PET = 'PET',
     TRICK = 'TRICK',
     CATCH = 'CATCH',
-    // ATTACK = 'ATTACK',
-    // SEARCH = 'SEARCH',
+    SEARCH = 'SEARCH',
 }
 
 export const petOrderMeta: Record<PetOrder, { label: string; icon: any }> = {
@@ -37,10 +51,8 @@ export const petOrderMeta: Record<PetOrder, { label: string; icon: any }> = {
     [PetOrder.PET]: { label: 'Caresse', icon: 'pet' },
     [PetOrder.TRICK]: { label: 'Fais ton numéro', icon: 'trick' },
     [PetOrder.CATCH]: { label: 'Va chercher', icon: 'catch' },
-    // [PetOrder.ATTACK]: { label: 'Attaque', icon: 'attack' },
-    // [PetOrder.SEARCH]: { label: 'Cherche', icon: 'search' },
+    [PetOrder.SEARCH]: { label: 'Cherche', icon: 'search' },
 };
-
 export const orderJobRestriction: Record<PetOrder, Array<JobType>> = {
     [PetOrder.FOLLOW]: null,
     [PetOrder.STOP]: null,
@@ -49,11 +61,20 @@ export const orderJobRestriction: Record<PetOrder, Array<JobType>> = {
     [PetOrder.PET]: null,
     [PetOrder.TRICK]: null,
     [PetOrder.CATCH]: null,
-    // [PetOrder.ATTACK]: FDO,
-    // [PetOrder.SEARCH]: FDO,
+    [PetOrder.SEARCH]: FDO,
 };
 
-export type petAnimationType = 'retriever' | 'rottweiler' | 'pug' | 'cat' | 'boar' | 'cow' | 'pig' | 'rabbit' | 'hen';
+export type petAnimationType =
+    | 'retriever'
+    | 'rottweiler'
+    | 'pug'
+    | 'cat'
+    | 'boar'
+    | 'cow'
+    | 'pig'
+    | 'rabbit'
+    | 'hen'
+    | 'k9';
 
 export const petBreedToOrderType: Record<petBreed, petAnimationType> = {
     a_c_husky: 'retriever',
@@ -69,6 +90,7 @@ export const petBreedToOrderType: Record<petBreed, petAnimationType> = {
     a_c_pig: 'pig',
     a_c_rabbit_01: 'rabbit',
     a_c_hen: 'hen',
+    [k9_model]: 'k9',
 };
 
 export const PetOrderAnimationFlag: Partial<Record<PetOrder, number>> = {
@@ -77,8 +99,7 @@ export const PetOrderAnimationFlag: Partial<Record<PetOrder, number>> = {
     [PetOrder.PET]: 5,
     [PetOrder.TRICK]: 1,
     [PetOrder.CATCH]: null,
-    // [PetOrder.ATTACK]: 0,
-    // [PetOrder.SEARCH]: 1,
+    [PetOrder.SEARCH]: 8,
 };
 
 export const petOrderModelAnimation: Record<
@@ -95,6 +116,7 @@ export const petOrderModelAnimation: Record<
         pig: true,
         rabbit: true,
         hen: true,
+        k9: true,
     },
     [PetOrder.STOP]: {
         retriever: true,
@@ -106,6 +128,7 @@ export const petOrderModelAnimation: Record<
         pig: true,
         rabbit: true,
         hen: true,
+        k9: true,
     },
     [PetOrder.SIT]: {
         retriever: [
@@ -132,6 +155,12 @@ export const petOrderModelAnimation: Record<
         pig: false,
         rabbit: false,
         hen: false,
+        k9: [
+            { dictionary: 'creatures@rottweiler@amb@world_dog_sitting@idle_a', name: 'idle_a' },
+            { dictionary: 'creatures@rottweiler@amb@world_dog_sitting@idle_a', name: 'idle_b' },
+            { dictionary: 'creatures@rottweiler@amb@world_dog_sitting@idle_a', name: 'idle_c' },
+            { dictionary: 'creatures@rottweiler@amb@world_dog_sitting@base', name: 'base' },
+        ],
     },
     [PetOrder.LAY_DOWN]: {
         retriever: [{ dictionary: 'creatures@rottweiler@amb@sleep_in_kennel@', name: 'sleep_in_kennel' }],
@@ -151,6 +180,7 @@ export const petOrderModelAnimation: Record<
         pig: false,
         rabbit: false,
         hen: false,
+        k9: [{ dictionary: 'creatures@rottweiler@amb@sleep_in_kennel@', name: 'sleep_in_kennel' }],
     },
     [PetOrder.PET]: {
         retriever: [{ dictionary: 'creatures@rottweiler@tricks@', name: 'petting_chop' }],
@@ -162,6 +192,7 @@ export const petOrderModelAnimation: Record<
         pig: [{ dictionary: 'creatures@pig@amb@world_pig_grazing@idle_a', name: 'idle_b' }],
         rabbit: [{ dictionary: 'creatures@rabbit@amb@world_rabbit_eating@idle_a', name: 'idle_b' }],
         hen: [{ dictionary: 'creatures@hen@amb@world_hen_standing@idle_a', name: 'idle_b' }],
+        k9: [{ dictionary: 'creatures@rottweiler@tricks@', name: 'petting_chop' }],
     },
     [PetOrder.TRICK]: {
         retriever: [
@@ -196,6 +227,17 @@ export const petOrderModelAnimation: Record<
         pig: false,
         rabbit: false,
         hen: false,
+        k9: [
+            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_high' },
+            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_ahead' },
+            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
+            { dictionary: 'creatures@rottweiler@tricks@', name: 'beg_loop' },
+            { dictionary: 'creatures@rottweiler@tricks@', name: 'beg_loop_right' },
+            { dictionary: 'creatures@rottweiler@tricks@', name: 'beg_loop_left' },
+            { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop' },
+            { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop_right' },
+            { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop_left' },
+        ],
     },
     [PetOrder.CATCH]: {
         retriever: true,
@@ -207,40 +249,24 @@ export const petOrderModelAnimation: Record<
         pig: true,
         rabbit: true,
         hen: true,
+        k9: true,
     },
-    // [PetOrder.ATTACK]: {
-    //     retriever: true,
-    //     rottweiler: true,
-    //     pug: true,
-    //     cat: false,
-    //     boar: false,
-    //     cow: false,
-    //     pig: false,
-    //     rabbit: false,
-    //     hen: false,
-    // },
-    // [PetOrder.SEARCH]: {
-    //     retriever: [
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_high' },
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_ahead' },
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
-    //     ],
-    //     rottweiler: [
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_high' },
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_ahead' },
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
-    //     ],
-    //     pug: [
-    //         { dictionary: 'creatures@pug@amb@world_dog_barking@idle_a', name: 'idle_c' },
-    //         { dictionary: 'creatures@pug@amb@world_dog_barking@idle_a', name: 'idle_a' },
-    //     ],
-    //     cat: false,
-    //     boar: false,
-    //     cow: false,
-    //     pig: false,
-    //     rabbit: false,
-    //     hen: false,
-    // },
+    [PetOrder.SEARCH]: {
+        retriever: false,
+        rottweiler: false,
+        pug: false,
+        cat: false,
+        boar: false,
+        cow: false,
+        pig: false,
+        rabbit: false,
+        hen: false,
+        k9: [
+            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_high' },
+            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_ahead' },
+            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
+        ],
+    },
 };
 
 export const petOrderSitInCarAnimation: Record<petAnimationType, { dictionary: string; name: string }> = {
@@ -253,6 +279,7 @@ export const petOrderSitInCarAnimation: Record<petAnimationType, { dictionary: s
     pig: null,
     rabbit: { dictionary: 'creatures@rabbit@amb@world_rabbit_eating@idle_a', name: 'idle_c' },
     hen: { dictionary: 'creatures@hen@amb@world_hen_standing@base', name: 'base' },
+    k9: { dictionary: 'creatures@rottweiler@amb@world_dog_sitting@base', name: 'base' },
 };
 
 export type PetDrawable = {
@@ -311,14 +338,14 @@ export const PetTrainingTraitBonus = 0.2;
 export const PetTrainingMinimalExecOrderChance = 0.25;
 
 // Other
-export const PetDistanceOrderTargetDistance = 15;
+export const PetDistanceOrderTargetDistance = 12;
 export const PetDistanceReturnHome = 110;
 export const PetDistanceForceFollowPlayer = 70;
 export const PetDistanceOrderPedDeltaTrigger = 1.5;
 export const PetDistanceOrderVehicleDeltaTrigger = 3.5;
 export const PetDistanceUseFood = 3.0;
 export const PetDistanceFollow = 2.0;
-export const PetDistanceSearch = 3.0;
+export const PetDistanceSearch = 12;
 export const PetDistanceSearchOnTargetPed = 1.0;
 export const PetDistanceSearchOnTargetVehicle = 2.0;
 export const PetDistanceAttackOnTarget = 2.0;
@@ -405,15 +432,37 @@ export type Pet = {
     training: number;
     perDays: PetResetMeta;
     components: PetDrawable[];
+    isPetJob: boolean;
 };
 
 export type ServerPet = Pet & {
     id: number;
 };
 
+export type ServerJobPet = ServerPet & {
+    job: JobType;
+};
+
+export type AnyServerPet = ServerJobPet | ServerPet;
+
 export type ClientPet = Pet & {
     entity?: number;
 };
+
+export type ClientJobPet = ClientPet & {
+    entity?: number;
+    job: JobType;
+};
+
+export type KennelJobPet = {
+    id: number;
+    job: JobType;
+    name: string;
+    available: boolean;
+    withPlayer: boolean;
+};
+
+export type AnyClientPet = ClientJobPet | ClientPet;
 
 export const petShopSpawnPosition: Vector3 = [2401.08, 5026.29, 45.02];
 export const petShopCameraOffset = [1.0, -3.0, 1.5];
@@ -424,19 +473,8 @@ export type petInShop = {
     label: string;
     type: string;
     price: number;
+    jobs?: Array<JobType>;
 };
-
-export const whistles = [
-    'whistle_basic',
-    'whistle_steel',
-    'whistle_oak',
-    'whistle_carved',
-    'whistle_clay',
-    'whistle_tin',
-    'whistle_engraved',
-    'whistle_goldsmith',
-    'whistle_lunar',
-];
 
 type petFoodName = 'kibble_1' | 'kibble_2' | 'kibble_3' | 'pet_drink_1' | 'pet_drink_2' | 'pet_drink_3';
 export const petFood: Record<petFoodName, { hunger?: number; thirst?: number; affection?: number }> = {
@@ -461,7 +499,16 @@ type petBreed =
     | 'a_c_cow'
     | 'a_c_pig'
     | 'a_c_rabbit_01'
-    | 'a_c_hen';
+    | 'a_c_hen'
+    | 'german_shepherd';
+
+export type PetShopMenuData = {
+    job: JobType | null;
+    pets: Array<petInShop>;
+};
+export type PetJobKennelMenuData = {
+    pets: Array<KennelJobPet>;
+};
 
 export const petShopContent: Record<petBreed, petInShop> = {
     a_c_husky: {
@@ -541,6 +588,13 @@ export const petShopContent: Record<petBreed, petInShop> = {
         label: 'Poule',
         type: 'Ferme',
         price: 10_000,
+    },
+    [k9_model]: {
+        model: k9_model,
+        label: 'Berger Allemand',
+        type: 'Chien',
+        price: 150_000,
+        jobs: [JobType.BCSO, JobType.LSPD],
     },
 };
 
@@ -832,4 +886,60 @@ export const PetVariation: Record<petBreed, Record<string, Record<string, PetDra
         },
     },
     a_c_hen: {},
+    [k9_model]: {
+        Pelage: {
+            Classique: {
+                component: 0,
+                drawable: 0,
+                texture: 0,
+            },
+            Brun: {
+                component: 0,
+                drawable: 0,
+                texture: 1,
+            },
+            Sombre: {
+                component: 0,
+                drawable: 0,
+                texture: 2,
+            },
+            Noir: {
+                component: 0,
+                drawable: 0,
+                texture: 3,
+            },
+        },
+    },
+};
+
+export const JobFixPetVariation: Partial<Record<JobType, Partial<Record<petBreed, Array<PetDrawable>>>>> = {
+    [JobType.LSPD]: {
+        [k9_model]: [
+            {
+                component: 3,
+                drawable: 0,
+                texture: 3,
+            },
+            {
+                component: 8,
+                drawable: 0,
+                texture: 0,
+            },
+        ],
+    },
+
+    [JobType.BCSO]: {
+        [k9_model]: [
+            {
+                component: 3,
+                drawable: 0,
+                texture: 1,
+            },
+            {
+                component: 8,
+                drawable: 0,
+                texture: 1,
+            },
+        ],
+    },
 };

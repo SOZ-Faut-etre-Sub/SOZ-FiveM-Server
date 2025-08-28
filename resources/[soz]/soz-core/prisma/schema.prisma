@@ -194,6 +194,26 @@ model pet {
     created_at   DateTime    @default(now()) @db.Timestamp(0)
 }
 
+model job_pet {
+    id           Int         @id @default(autoincrement())
+    job          String      @db.VarChar(16)
+    owner_id     String?     @unique @db.VarChar(255)
+    owner        player?     @relation(fields: [owner_id], references: [citizenid], name: "job_pet")
+    model        String
+    name         String?     @db.VarChar(32)
+    trait_up     String      @db.VarChar(64)
+    trait_down   String      @db.VarChar(64)
+    dead         Boolean     @default(false)
+    hunger       Float       @default(100.00) @db.Float
+    thirst       Float       @default(100.00) @db.Float
+    energy       Float       @default(10.00)  @db.Float
+    affection    Float       @default(50.00)  @db.Float
+    training     Float       @default(5.00)   @db.Float
+    perDays      String      @db.Text
+    components   String      @db.Text
+    created_at   DateTime    @default(now()) @db.Timestamp(0)
+}
+
 model invoices {
     id            Int      @id @default(autoincrement())
     citizenid     String   @db.VarChar(50)
@@ -460,6 +480,7 @@ model player {
     scenes                  scene[]
     associatedScenes        scene[]                  @relation("scene_associates")
     pet                     pet?                     @relation("pet")
+    job_pet                 job_pet?                 @relation("job_pet")
 
     @@index([id], map: "id")
     @@index([last_updated], map: "last_updated")

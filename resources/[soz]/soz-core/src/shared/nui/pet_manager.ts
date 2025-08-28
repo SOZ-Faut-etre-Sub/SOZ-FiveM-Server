@@ -11,5 +11,4 @@ export interface PetStats {
     thirst: number;
     energy: number;
     maxEnergy: number;
-    spawned: boolean;
 }

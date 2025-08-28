@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CPedModelInfo__InitDataList>
+   <InitDatas>
+    <Item>
+      <Name>german_shepherd</Name>
+      <PropsName>null</PropsName>
+      <ClipDictionaryName>CREATURES@ROTTWEILER@MOVE</ClipDictionaryName>
+      <BlendShapeFileName>null</BlendShapeFileName>
+      <ExpressionSetName/>
+      <ExpressionDictionaryName>A_C_Rottweiler</ExpressionDictionaryName>
+      <ExpressionName>A_C_Rottweiler</ExpressionName>
+      <Pedtype>Animal</Pedtype>
+      <MovementClipSet>rottweiler@move</MovementClipSet>
+      <MovementClipSets/>
+      <StrafeClipSet>MOVE_PED_STRAFING</StrafeClipSet>
+      <MovementToStrafeClipSet>MOVE_PED_TO_STRAFE</MovementToStrafeClipSet>
+      <InjuredStrafeClipSet>MOVE_STRAFE_INJURED</InjuredStrafeClipSet>
+      <FullBodyDamageClipSet>DAM_KO</FullBodyDamageClipSet>
+      <AdditiveDamageClipSet>DAM_AD</AdditiveDamageClipSet>
+      <DefaultGestureClipSet>ANIM_GROUP_GESTURE_M_GENERIC</DefaultGestureClipSet>
+      <FacialClipsetGroupName>facial_clipset_group_gen_male</FacialClipsetGroupName>
+      <DefaultVisemeClipSet>ANIM_GROUP_VISEMES_M_LO</DefaultVisemeClipSet>
+      <SidestepClipSet>creatures@rottweiler@step</SidestepClipSet>
+      <PoseMatcherName>Rottweiler</PoseMatcherName>
+      <PoseMatcherProneName>null</PoseMatcherProneName>
+      <GetupSetHash>NMBS_ROTTWEILER_GETUPS</GetupSetHash>
+      <CreatureMetadataName>null</CreatureMetadataName>
+      <DecisionMakerName>DOG</DecisionMakerName>
+      <MotionTaskDataSetName>Rottweiler</MotionTaskDataSetName>
+      <DefaultTaskDataSetName>Animal</DefaultTaskDataSetName>
+      <PedCapsuleName>dog</PedCapsuleName>
+      <PedLayoutName/>
+      <PedComponentSetName/>
+      <PedComponentClothName/>
+      <PedIKSettingsName>STANDARD_DOG_IK</PedIKSettingsName>
+      <TaskDataName>DOG</TaskDataName>
+      <IsStreamedGfx value="true"/>
+      <AmbulanceShouldRespondTo value="false"/>
+      <CanRideBikeWithNoHelmet value="false"/>
+      <CanSpawnInCar value="true"/>
+      <IsHeadBlendPed value="false"/>
+      <bOnlyBulkyItemVariations value="false"/>
+      <RelationshipGroup>GUARD_DOG</RelationshipGroup>
+      <NavCapabilitiesName>STANDARD_QUADRUPED</NavCapabilitiesName>
+      <PerceptionInfo>DEFAULT_PERCEPTION</PerceptionInfo>
+      <DefaultBrawlingStyle>BS_DOG</DefaultBrawlingStyle>
+      <DefaultUnarmedWeapon>WEAPON_ANIMAL</DefaultUnarmedWeapon>
+      <Personality>ROTTWEILER</Personality>
+      <CombatInfo>ROTTWEILER</CombatInfo>
+      <VfxInfoName>VFXPEDINFO_DOG_CAT_GENERIC</VfxInfoName>
+      <AmbientClipsForFlee>FLEE</AmbientClipsForFlee>
+      <Radio1>RADIO_GENRE_PUNK</Radio1>
+      <Radio2>RADIO_GENRE_JAZZ</Radio2>
+      <FUpOffset value="0.00000000"/>
+      <RUpOffset value="0.00000000"/>
+      <FFrontOffset value="0.00000000"/>
+      <RFrontOffset value="0.14700000"/>
+      <MinActivationImpulse value="20.00000000"/>
+      <Stubble value="0.00000000"/>
+      <HDDist value="6.00000000"/>
+      <TargetingThreatModifier value="1.00000000"/>
+      <KilledPerceptionRangeModifer value="-1.00000000"/>
+      <Sexiness/>
+      <Age value="0"/>
+      <MaxPassengersInCar value="0"/>
+      <ExternallyDrivenDOFs/>
+      <PedVoiceGroup>SILENT_PVG</PedVoiceGroup>
+      <AnimalAudioObject>ANIMAL_PARAMS_DOG_ROTTWEILER</AnimalAudioObject>
+      <AbilityType>SAT_NONE</AbilityType>
+      <ThermalBehaviour>TB_COLD</ThermalBehaviour>
+      <SuperlodType>SLOD_KEEP_LOWEST</SuperlodType>
+      <ScenarioPopStreamingSlot>SCENARIO_POP_STREAMING_NORMAL</ScenarioPopStreamingSlot>
+      <DefaultSpawningPreference>DSP_NORMAL</DefaultSpawningPreference>
+      <DefaultRemoveRangeMultiplier value="1.00000000"/>
+      <AllowCloseSpawning value="false"/>
+    </Item>
+   </InitDatas>
+</CPedModelInfo__InitDataList>

@@ -412,7 +412,9 @@ export enum RpcServerEvent {
     WHAT_IF_VEHICLE_DEALERSHIP_GET_LIST = 'soz-core:server:what-if:vehicle-dealership:get-list',
 
     PET_GET_ANIMAL = 'soz-core:server:pet:get-animal',
+    PET_GET_JOB_ANIMAL = 'soz-core:server:pet:get-job-animal',
     PET_CONSUME_BALL = 'soz-core:server:pet:consume-ball',
+    PET_LIST_JOB_ANIMALS = 'soz-core:server:pet:list-job-animals',
 }
 
 export enum RpcClientEvent {

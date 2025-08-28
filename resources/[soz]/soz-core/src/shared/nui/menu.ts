@@ -3,6 +3,7 @@ import { BlackjackMenuData } from '@private/shared/casino.blackjack';
 import { PokerMenuData } from '@private/shared/casino.poker';
 import { RouletteMenuData } from '@private/shared/casino.roulette';
 import { SlotMachineMenuData } from '@private/shared/casino.slot';
+import { PetJobKennelMenuData, PetShopMenuData } from '@public/shared/animal';
 import { LaserGameAdminInfo, LaserGameData } from '@public/shared/games/laser';
 import { ApartmentMenuData, ApartmentSelectUpgradesMenuData } from '@public/shared/housing/housing';
 import { HudSettings } from '@public/shared/hud';
@@ -77,6 +78,7 @@ export enum MenuType {
     JewelryEngraveShop = 'jewelry_engrave_shop',
     BarberShop = 'barber_shop',
     PetShop = 'pet_shop',
+    PetJobKennel = 'pet_job_kennel',
     FightForStyleJobMenu = 'ffs_job',
     FoodJobMenu = 'food_job_menu',
     HousingUpgrades = 'housing_upgrades',
@@ -254,6 +256,8 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.CasinoBlackjack]: BlackjackMenuData;
     [MenuType.CasinoPoker]: PokerMenuData;
     [MenuType.CasinoRoulette]: RouletteMenuData;
+    [MenuType.PetShop]: PetShopMenuData;
+    [MenuType.PetJobKennel]: PetJobKennelMenuData;
 }
 
 export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];
