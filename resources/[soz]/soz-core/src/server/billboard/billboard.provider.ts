@@ -6,7 +6,7 @@ import { billboardOffsets, getScreenModel } from '@public/shared/billboard';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
-import { JobType } from '@public/shared/job';
+import { JobPermission, JobType } from '@public/shared/job';
 import { WorldObject } from '@public/shared/object';
 import {
     applyOffset,
@@ -20,6 +20,7 @@ import axios from 'axios';
 import { PrismaService } from '../database/prisma.service';
 import { InventoryFactory } from '../inventory/inventory.factory';
 import { ItemService } from '../item/item.service';
+import { JobService } from '../job.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
 import { ObjectProvider } from '../object/object.provider';
@@ -55,6 +56,9 @@ export class BillboardProvider {
 
     @Inject(PermissionService)
     private permissionService: PermissionService;
+
+    @Inject(JobService)
+    private jobService: JobService;
 
     private usedSlot = new Map<
         number,
@@ -139,6 +143,11 @@ export class BillboardProvider {
             return;
         }
 
+        if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.NewsCreateBillboard))) {
+            this.notifier.error(source, "Vous n'avez pas la permission d'utiliser cet objet.");
+            return;
+        }
+
         const slotsFormodel = this.getSlotsForModel(hashModel);
         if (slotsFormodel.filter(elem => elem.job === player.job.id).length >= conf.max[player.job.id]) {
             this.notifier.error(source, 'Tous les emplacements pour ce modèle sont utilisés');
@@ -172,6 +181,10 @@ export class BillboardProvider {
 
         const player = this.playerService.getPlayer(source);
         if (!player) {
+            return;
+        }
+
+        if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.NewsCreateBillboard))) {
             return;
         }
 
@@ -269,6 +282,15 @@ export class BillboardProvider {
             return;
         }
 
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.NewsUpdateBillboard))) {
+            return;
+        }
+
         if (textureUrl && source !== -1 && !this.permissionService.isStaff(source)) {
             try {
                 const resp = await axios.get(textureUrl);
@@ -302,6 +324,15 @@ export class BillboardProvider {
 
     @OnEvent(ServerEvent.BILLBOARD_DELETE_PROP)
     public async deleteBillboardProp(source: number, objectId: string): Promise<void> {
+        const player = this.playerService.getPlayer(source);
+        if (!player) {
+            return;
+        }
+
+        if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.NewsCreateBillboard))) {
+            return;
+        }
+
         this.objectProvider.deleteObject(objectId);
         this.objectProvider.deleteObject(objectId + '_image_0');
         const data = await this.prismaService.dynamic_prop_billboard.delete({ where: { id: objectId } });

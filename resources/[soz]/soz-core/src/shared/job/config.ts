@@ -52,6 +52,13 @@ const PolicePermissions: Partial<Record<JobPermission, JobPermissionData>> = {
     [JobPermission.FDOFedPound]: { label: 'Mise en fourrière fédérale' },
 };
 
+const NewsPermissions: Partial<Record<JobPermission, JobPermissionData>> = {
+    [JobPermission.NewsManageArticle]: { label: 'Gérer les articles sur le panel' },
+    [JobPermission.NewsManageBillboards]: { label: 'Gérer les panneaux sur le panel' },
+    [JobPermission.NewsCreateBillboard]: { label: 'Poser/Détruire les panneaux dynamiques' },
+    [JobPermission.NewsUpdateBillboard]: { label: 'Modifier les panneaux dynamiques' },
+};
+
 export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
     [JobType.Unemployed]: {
         label: 'Sans emploi',
@@ -275,8 +282,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
-            [JobPermission.NewsManageArticle]: { label: 'Gérer les articles sur le panel' },
-            [JobPermission.NewsManageBillboards]: { label: 'Gérer les panneaux sur le panel' },
+            ...NewsPermissions,
             ...CompanyPanelPermissions,
         },
         bossZones: [
@@ -299,8 +305,7 @@ export const JobRegistry: Record<JobType, Omit<Job, 'id'>> = {
         canInvoice: true,
         permissions: {
             ...BasePermissions,
-            [JobPermission.NewsManageArticle]: { label: 'Gérer les articles sur le panel' },
-            [JobPermission.NewsManageBillboards]: { label: 'Gérer les panneaux sur le panel' },
+            ...NewsPermissions,
             ...CompanyPanelPermissions,
         },
         bossZones: [

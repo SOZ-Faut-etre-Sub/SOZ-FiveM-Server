@@ -4,8 +4,10 @@ import { Provider } from '@public/core/decorators/provider';
 import { wait } from '@public/core/utils';
 import { billboardOffsets } from '@public/shared/billboard';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
+import { JobPermission } from '@public/shared/job';
 import { HttpLinkValidator } from '@public/shared/nui/input';
 
+import { JobService } from '../job/job.service';
 import { InputService } from '../nui/input.service';
 import { ObjectProvider } from '../object/object.provider';
 import { PlayerService } from '../player/player.service';
@@ -36,6 +38,9 @@ export class BillboardProvider {
 
     @Inject(ProgressService)
     public progressService: ProgressService;
+
+    @Inject(JobService)
+    public jobService: JobService;
 
     @Once(OnceStep.RepositoriesLoaded)
     public async onRepositoriesLoaded() {
@@ -101,7 +106,11 @@ export class BillboardProvider {
                         const player = this.playerService.getPlayer();
                         const objectId = this.objectProvider.getIdFromEntity(entity);
                         const object = this.objectProvider.getObject(objectId);
-                        return object.metadata?.job === player.job.id && player.job.onduty;
+                        return (
+                            object.metadata?.job === player.job.id &&
+                            player.job.onduty &&
+                            this.jobService.hasPermission(player.job.id, JobPermission.NewsCreateBillboard)
+                        );
                     },
                     action: async entity => {
                         const objectId = this.objectProvider.getIdFromEntity(entity);
@@ -131,7 +140,11 @@ export class BillboardProvider {
                         const player = this.playerService.getPlayer();
                         const objectId = this.objectProvider.getIdFromEntity(entity);
                         const object = this.objectProvider.getObject(objectId);
-                        return object.metadata?.job === player.job.id && player.job.onduty;
+                        return (
+                            object.metadata?.job === player.job.id &&
+                            player.job.onduty &&
+                            this.jobService.hasPermission(player.job.id, JobPermission.NewsUpdateBillboard)
+                        );
                     },
                     action: async entity => {
                         const objectId = this.objectProvider.getIdFromEntity(entity);
@@ -156,7 +169,11 @@ export class BillboardProvider {
                         const player = this.playerService.getPlayer();
                         const objectId = this.objectProvider.getIdFromEntity(entity);
                         const object = this.objectProvider.getObject(objectId);
-                        return object.metadata?.job === player.job.id && player.job.onduty;
+                        return (
+                            object.metadata?.job === player.job.id &&
+                            player.job.onduty &&
+                            this.jobService.hasPermission(player.job.id, JobPermission.NewsUpdateBillboard)
+                        );
                     },
                     action: async entity => {
                         const objectId = this.objectProvider.getIdFromEntity(entity);

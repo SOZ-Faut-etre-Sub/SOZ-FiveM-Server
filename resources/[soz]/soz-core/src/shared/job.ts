@@ -72,6 +72,8 @@ export enum JobPermission {
     PricingManage = 'pricing-manage',
     NewsManageArticle = 'manage-article',
     NewsManageBillboards = 'manage-billboards',
+    NewsCreateBillboard = 'create-billboard',
+    NewsUpdateBillboard = 'update-billboard',
     CashTransfer_CollectBags = 'collect-bags',
     CashTransfer_CollectSecure = 'collect-secure',
     CashTransfer_ResaleBags = 'resale-bags',
