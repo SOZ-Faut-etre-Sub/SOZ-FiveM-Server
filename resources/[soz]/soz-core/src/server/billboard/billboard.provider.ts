@@ -151,7 +151,8 @@ export class BillboardProvider {
             ServerEvent.BILLBOARD_PLACE_PROP,
             item.name,
             inventoryItem,
-            false
+            false,
+            'soz_news_billboard_03' == item.name
         );
     }
 

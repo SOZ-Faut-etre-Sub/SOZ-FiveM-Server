@@ -393,7 +393,13 @@ export class ObjectEditorProvider {
     }
 
     @OnEvent(ClientEvent.OBJECT_PLACE_ITEM)
-    public async placeItem(serverEvent: ServerEvent, model: string, inventoryItem: InventoryItem, snapToGround = true) {
+    public async placeItem(
+        serverEvent: ServerEvent,
+        model: string,
+        inventoryItem: InventoryItem,
+        snapToGround = true,
+        noCheck = false
+    ) {
         const object = await this.createOrUpdateObject(GetHashKey(model), {
             snapToGround: snapToGround,
             allowScale: false,
@@ -403,34 +409,41 @@ export class ObjectEditorProvider {
             return;
         }
 
-        const [ret] = GetGroundZFor_3dCoord(object.position[0], object.position[1], object.position[2] + 0.1, false);
-        if (!ret) {
-            this.notifier.error('Position invalide');
-            return;
-        }
+        if (!noCheck) {
+            const [ret] = GetGroundZFor_3dCoord(
+                object.position[0],
+                object.position[1],
+                object.position[2] + 0.1,
+                false
+            );
+            if (!ret) {
+                this.notifier.error('Position invalide');
+                return;
+            }
 
-        const coords = GetEntityCoords(PlayerPedId());
-        const handle = StartShapeTestLosProbe(
-            coords[0],
-            coords[1],
-            coords[2],
-            object.position[0],
-            object.position[1],
-            object.position[2] + 0.2,
-            49,
-            0,
-            4
-        );
+            const coords = GetEntityCoords(PlayerPedId());
+            const handle = StartShapeTestLosProbe(
+                coords[0],
+                coords[1],
+                coords[2],
+                object.position[0],
+                object.position[1],
+                object.position[2] + 0.2,
+                49,
+                0,
+                4
+            );
 
-        let result: [number, any, number[], number[], number];
-        do {
-            result = GetShapeTestResult(handle);
-            await wait(0);
-        } while (result[0] == 1);
+            let result: [number, any, number[], number[], number];
+            do {
+                result = GetShapeTestResult(handle);
+                await wait(0);
+            } while (result[0] == 1);
 
-        if (result[1]) {
-            this.notifier.error('Position incorrecte');
-            return;
+            if (result[1]) {
+                this.notifier.error('Position incorrecte');
+                return;
+            }
         }
 
         TriggerServerEvent(serverEvent, object.position, inventoryItem);
