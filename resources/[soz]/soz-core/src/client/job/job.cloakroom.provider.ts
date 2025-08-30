@@ -140,6 +140,12 @@ export class JobCloakroomProvider {
                                 Palette: 0,
                                 Collection: 'soz_bcso',
                             };
+                        } else {
+                            outfit.Components[Component.Decals] = {
+                                Drawable: 0,
+                                Texture: 0,
+                                Palette: 0,
+                            };
                         }
                     }
                 }
