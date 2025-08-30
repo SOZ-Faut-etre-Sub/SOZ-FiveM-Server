@@ -2776,7 +2776,7 @@ export const GarageList: Record<string, Omit<Garage, 'id'>> = {
         }),
         parkingPlaces: [
             new BoxZone([1146.26, -433.55, 80.87], 1.0, 1.0, {
-                heading: 81.02,
+                heading: 257.67,
                 minZ: 79.87,
                 maxZ: 81.87,
                 data: {
