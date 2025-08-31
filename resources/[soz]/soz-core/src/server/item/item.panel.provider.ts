@@ -47,7 +47,7 @@ export class ItemPanelProvider {
         const endpointUrl = new URL(GetConvar('soz_public_endpoint', 'https://soz.zerator.com'));
         const targetUrl = new URL(url);
 
-        if (targetUrl.hostname !== endpointUrl.hostname) {
+        if (targetUrl.hostname !== endpointUrl.hostname || targetUrl.pathname.startsWith('/zkea')) {
             return;
         }
 
