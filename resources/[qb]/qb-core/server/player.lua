@@ -490,7 +490,11 @@ function QBCore.Player.CreatePlayer(PlayerData)
 
     self.Functions.UpdateArmour = function()
         local jobClothSet = self.PlayerData.cloth_config["JobClothSet"]
-        if jobClothSet and jobClothSet.Components["9"] and (jobClothSet.Components["9"].Drawable ~= 0 or jobClothSet.Components["9"].Collection) then
+        local saspModel = self.PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") and 8 or 10
+        if jobClothSet and 
+            jobClothSet.Components["9"] and 
+            (jobClothSet.Components["9"].Drawable ~= 0 or jobClothSet.Components["9"].Collection) and 
+            (jobClothSet.Components["9"].Collection ~= 'soz_bcso' or jobClothSet.Components["9"].Drawable ~= saspModel) then
             self.Functions.SetArmour(true)
         else
             self.Functions.SetArmour(false)
