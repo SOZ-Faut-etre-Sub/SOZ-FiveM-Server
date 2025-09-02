@@ -146,7 +146,8 @@ export class ClothingShopRepository extends RepositoryLegacy<ClothingShopReposit
                 colorLabel: shopItemData.colorLabel,
                 stock:
                     this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) ||
-                    this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode)
+                    this.featureProvider.isFeatureEnabled(Feature.WhatIfSecondEpisode) ||
+                    item.stock == -1
                         ? 1000
                         : getRandomInt(0, 10), //item.stock,
             };

@@ -54,7 +54,7 @@ export class FightForStyleRestockProvider {
         await this.prismaService.$queryRaw(
             Prisma.sql`UPDATE shop_content
                        SET shop_content.stock = CEIL(shop_content.stock * 0.95)
-                       WHERE shop_content.shop_id IN (1, 2, 3)`
+                       WHERE shop_content.shop_id IN (1, 2, 3) and shop_content.stock > 0`
         );
     }
 
