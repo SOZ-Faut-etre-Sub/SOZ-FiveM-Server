@@ -282,13 +282,15 @@ export class BillboardProvider {
             return;
         }
 
-        const player = this.playerService.getPlayer(source);
-        if (!player) {
-            return;
-        }
+        if (source !== -1) {
+            const player = this.playerService.getPlayer(source);
+            if (!player) {
+                return;
+            }
 
-        if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.NewsUpdateBillboard))) {
-            return;
+            if (!(await this.jobService.hasPermission(player, player.job.id, JobPermission.NewsUpdateBillboard))) {
+                return;
+            }
         }
 
         if (textureUrl && source !== -1 && !this.permissionService.isStaff(source)) {
