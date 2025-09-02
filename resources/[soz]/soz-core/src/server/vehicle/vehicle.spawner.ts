@@ -136,6 +136,8 @@ const VEHICLE_HAS_RADIO = [
 const DISALLOWED_VEHICLE_MODELS = {
     [GetHashKey('dune2')]: true,
     [GetHashKey('besra')]: true,
+    [GetHashKey('blimp')]: true,
+    [GetHashKey('duster')]: true,
 };
 
 const frontBCSO = new BoxZone([1844.67, 3688.55, 33.75], 44.4, 93.2, {
