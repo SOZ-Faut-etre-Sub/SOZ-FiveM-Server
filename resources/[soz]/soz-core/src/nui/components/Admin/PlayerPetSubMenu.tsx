@@ -5,7 +5,7 @@ import {
     PetResetMetaLabel,
     ServerPet,
 } from '@public/shared/animal';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 
 import { SozRole } from '../../../core/permissions';
 import { AdminPlayer } from '../../../shared/admin/admin';
@@ -32,13 +32,35 @@ export type PlayerPetSubMenuProps = {
 export const PlayerPetSubMenu: FunctionComponent<PlayerPetSubMenuProps> = ({ permission, disabled, player }) => {
     const [pet, setPet] = useState<ServerPet>();
 
-    useEffect(() => {
-        fetchNui<string, Result<ServerPet, never>>(NuiEvent.AdminGetPlayerPet, player.citizenId).then(result => {
-            if (isOk(result)) {
-                setPet(result.ok);
-            }
-        });
-    }, [pet]);
+    if (!pet) {
+        return (
+            <SubMenu id={`player-pet-${player.citizenId}`}>
+                <MenuTitle title={permission} />
+                <MenuContent subtitle={`Animal de ${player.name}`}>
+                    <MenuItemText
+                        onSelected={() => {
+                            fetchNui<string, Result<ServerPet, never>>(
+                                NuiEvent.AdminGetPlayerPet,
+                                player.citizenId
+                            ).then(result => {
+                                if (isOk(result)) {
+                                    if (result.ok) {
+                                        setPet(result.ok);
+                                    } else {
+                                        setPet({
+                                            id: 0,
+                                        } as ServerPet);
+                                    }
+                                }
+                            });
+                        }}
+                    >
+                        Chargement ...
+                    </MenuItemText>
+                </MenuContent>
+            </SubMenu>
+        );
+    }
 
     return (
         <>
@@ -46,8 +68,8 @@ export const PlayerPetSubMenu: FunctionComponent<PlayerPetSubMenuProps> = ({ per
                 <MenuTitle title={permission} />
                 <MenuContent subtitle={`Animal de ${player.name}`}>
                     {disabled && <MenuItemText>Pas de permission pour voir ce menu</MenuItemText>}
-                    {!disabled && !pet && <MenuItemText>Aucun animal de disponible</MenuItemText>}
-                    {!disabled && pet && (
+                    {!disabled && !pet.id && <MenuItemText>Aucun animal de disponible</MenuItemText>}
+                    {!disabled && !!pet.id && (
                         <>
                             <MenuItemSelect
                                 title={`État de l'animal : ${pet.dead ? `Mort` : `En vie`}`}
@@ -87,6 +109,7 @@ export const PlayerPetSubMenu: FunctionComponent<PlayerPetSubMenuProps> = ({ per
                             <MenuSubTitle>Statistique</MenuSubTitle>
                             {[...increamentalPetMeta].map(meta => (
                                 <MenuItemButton
+                                    key={meta.toString()}
                                     onConfirm={async () => {
                                         await fetchNui(NuiEvent.AdminSetPlayerPetMeta, {
                                             citizenId: player.citizenId,
@@ -110,6 +133,7 @@ export const PlayerPetSubMenu: FunctionComponent<PlayerPetSubMenuProps> = ({ per
                             </MenuItemButton>
                             {[...incrementalPetResetMetadata].map(resetMeta => (
                                 <MenuItemButton
+                                    key={resetMeta.toString()}
                                     onConfirm={async () => {
                                         await fetchNui(NuiEvent.AdminSetPlayerPetResetMeta, {
                                             citizenId: player.citizenId,
