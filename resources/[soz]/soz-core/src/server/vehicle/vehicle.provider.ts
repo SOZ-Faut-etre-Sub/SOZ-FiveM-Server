@@ -1,5 +1,7 @@
 import { GarageList } from '@public/config/garage';
+import { Rpc } from '@public/core/decorators/rpc';
 import { InventoryFactory } from '@public/server/inventory/inventory.factory';
+import { RpcServerEvent } from '@public/shared/rpc';
 import { VehicleHandlingType } from '@public/shared/vehicle/modification';
 import { VehicleClass } from '@public/shared/vehicle/vehicle';
 
@@ -134,6 +136,16 @@ export class VehicleProvider {
         this.vehicleStateService.updateVehicleVolatileState(vehicleNetworkId, {
             lastDrugTrace: null,
         });
+    }
+
+    @Rpc(RpcServerEvent.POLICE_K9_FIND_DRUG_ON_CAR)
+    public async onPoliceK9GetDrugOnCar(source: number, vehicleNetworkId: number) {
+        const drugTypes = this.vehicleStateService.getVehicleState(vehicleNetworkId).volatile.lastDrugTrace;
+        if (!drugTypes || drugTypes.length == 0) {
+            return false;
+        }
+
+        return true;
     }
 
     @OnEvent(ServerEvent.VEHICLE_HANDLING_BASE_SAVE)

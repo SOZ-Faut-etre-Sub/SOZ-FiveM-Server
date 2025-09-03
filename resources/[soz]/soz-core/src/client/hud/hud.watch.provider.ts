@@ -36,6 +36,7 @@ export class HudWatchProvider {
     private _zoom = this.zoomFromKvp;
     private _inventorySize = this.inventorySizeFromKvp;
     private _hideDateTime = GetResourceKvpInt('soz_hud_datetime_hide') === 1;
+    private _hideAnimalStats = GetResourceKvpInt('soz_hud_animal_stats_hide') === 1;
     private _hideWeather = GetResourceKvpInt('soz_hud_weather_hide') === 1;
     private _hideStreetName = GetResourceKvpInt('soz_hud_street_name_hide') === 1;
     private _hideCompass = GetResourceKvpInt('soz_hud_compass_hide') === 1;
@@ -180,6 +181,7 @@ export class HudWatchProvider {
             zoom: this._zoom,
             inventorySize: this._inventorySize,
             showDateTime: true,
+            showAnimalStats: true,
             showWeather: true,
             showStreetName: true,
             showCompass: true,
@@ -219,6 +221,11 @@ export class HudWatchProvider {
     @OnNuiEvent(NuiEvent.WatchMenuSetShowDateTime)
     public async setDateTime(value: boolean) {
         this.dateTime = value;
+    }
+
+    @OnNuiEvent(NuiEvent.WatchMenuSetShowAnimalStats)
+    public async setAnimalStats(value: boolean) {
+        this.animalStats = value;
     }
 
     @OnNuiEvent(NuiEvent.WatchMenuSetShowWeather)
@@ -278,6 +285,7 @@ export class HudWatchProvider {
             zoom: this._zoom,
             inventorySize: this._inventorySize,
             showDateTime: !this._hideDateTime,
+            showAnimalStats: !this._hideAnimalStats,
             showWeather: !this._hideWeather,
             showStreetName: !this._hideStreetName,
             showCompass: !this._hideCompass,
@@ -313,6 +321,12 @@ export class HudWatchProvider {
         this._hideDateTime = !value;
         SetResourceKvpInt('soz_hud_datetime_hide', this._hideDateTime ? 1 : 0);
         this.nuiDispatch.dispatch('hud', 'SetShowDateTime', value);
+    }
+
+    public set animalStats(value: boolean) {
+        this._hideAnimalStats = !value;
+        SetResourceKvpInt('soz_hud_animal_stats_hide', this._hideAnimalStats ? 1 : 0);
+        this.nuiDispatch.dispatch('hud', 'SetShowAnimalStats', value);
     }
 
     public set weather(value: boolean) {

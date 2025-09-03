@@ -2,6 +2,7 @@ import { NoZoneShopBrand, ShopBrand } from '@public/config/shops';
 import { InventoryItem, InventoryItemMetadata } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
 
+import { PET_BALL_OBJECT } from '../animal';
 import { PlayerLicenceType } from '../player';
 import { ShopProduct } from '../shop';
 
@@ -177,6 +178,25 @@ const SouvenirFIBContent: ShopContent = [
     // { id: 'wrapping_zt', type: 'item', price: 250 },
 ];
 
+const PetContent: ShopContent = [
+    { id: 'kibble_1', type: 'item', price: 140 },
+    { id: 'kibble_2', type: 'item', price: 200 },
+    { id: 'kibble_3', type: 'item', price: 300 },
+    { id: 'pet_drink_1', type: 'item', price: 140 },
+    { id: 'pet_drink_2', type: 'item', price: 200 },
+    { id: 'pet_drink_3', type: 'item', price: 300 },
+    { id: PET_BALL_OBJECT, type: 'item', price: 10_000 },
+    { id: 'whistle_basic', type: 'item', price: 1_000 },
+    { id: 'whistle_steel', type: 'item', price: 5_000 },
+    { id: 'whistle_tin', type: 'item', price: 10_000 },
+    { id: 'whistle_carved', type: 'item', price: 20_000 },
+    { id: 'whistle_clay', type: 'item', price: 50_000 },
+    { id: 'whistle_oak', type: 'item', price: 120_000 },
+    { id: 'whistle_engraved', type: 'item', price: 200_000 },
+    { id: 'whistle_goldsmith', type: 'item', price: 350_000 },
+    { id: 'whistle_lunar', type: 'item', price: 500_000 },
+];
+
 export const ShopsContent: Partial<Record<ShopBrand | NoZoneShopBrand, ShopContent>> = {
     [ShopBrand.LtdGasolineNorth]: SuperetteContent,
     [ShopBrand.LtdGasolineSouth]: SuperetteContent,
@@ -191,5 +211,6 @@ export const ShopsContent: Partial<Record<ShopBrand | NoZoneShopBrand, ShopConte
     [ShopBrand.SouvenirMemory]: SouvenirMemoryContent,
     [ShopBrand.SouvenirJewel]: SouvenirJewelContent,
     [NoZoneShopBrand.SouvenirFIB]: SouvenirFIBContent,
+    [NoZoneShopBrand.Pet]: PetContent,
     [ShopBrand.Ammunation]: AmmunationContent,
 };

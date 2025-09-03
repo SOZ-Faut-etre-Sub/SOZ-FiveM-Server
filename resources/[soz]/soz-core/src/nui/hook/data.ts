@@ -2,6 +2,7 @@ import { DrugNuiZone } from '@private/shared/drugs';
 import { HudState, HudTheme } from '@public/shared/hud';
 import { InventoryConfiguration, InventoryItem } from '@public/shared/inventory';
 import { Item } from '@public/shared/item';
+import { PetStats } from '@public/shared/nui/pet_manager';
 import { Vector3 } from '@public/shared/polyzone/vector';
 import { VehicleHud } from '@public/shared/vehicle/vehicle';
 import { useMemo } from 'react';
@@ -96,4 +97,8 @@ export const useHudHasStreetNames = (): boolean => {
     const showStreetName = useSelector((state: RootState) => state.hud.settings.showStreetName);
 
     return hasWatch && showStreetName;
+};
+
+export const usePetStats = (): PetStats | null => {
+    return useSelector((state: RootState) => state.petStats);
 };

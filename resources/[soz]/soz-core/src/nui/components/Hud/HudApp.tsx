@@ -5,6 +5,7 @@ import { DebugVoip } from './DebugVoip';
 import { InstructionalOverlay } from './InstructionalOverlay';
 import { NewsBanner } from './NewsBanner';
 import { Notifications } from './Notifications';
+import { PetManagement } from './PetManagement';
 import { TwitchNewsOverlay } from './TwitchNewsOverlay';
 import { VehicleInterface } from './VehicleInterface';
 import { WatchInterface } from './WatchInterface';
@@ -25,6 +26,7 @@ export const HudApp: FunctionComponent = () => {
             <Notifications />
             <NewsBanner />
             <TwitchNewsOverlay />
+            <PetManagement />
 
             <ZombieOverlay />
             <WeatherOverlay />

@@ -527,4 +527,9 @@ export enum ClientEvent {
     WHAT_IF_USE_BAG = 'soz-core:client:what-if:use-bag',
     WHAT_IF_UHU = 'soz-core:client:what-if:uhu',
     WHAT_IF_CINEMATIC = 'soz-core:client:what-if:cinematic',
+
+    PET_USE_WHISTLE = 'soz-core:client:pet:use-whistle',
+    PET_SYNC_ANIMAL = 'soz-core:client:pet:sync-animal',
+    PET_RESET_FOOD_NOTIF = 'soz-core:client:pet:reset-food-notif',
+    PET_SHOP_ABANDON_ANIMAL = 'soz-core:client:pet:shop-abandon-animal',
 }

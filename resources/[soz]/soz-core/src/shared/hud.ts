@@ -100,6 +100,7 @@ export type HudSettings = {
     zoom: number;
     inventorySize: number;
     showDateTime: boolean;
+    showAnimalStats: boolean;
     showWeather: boolean;
     showStreetName: boolean;
     showCompass: boolean;

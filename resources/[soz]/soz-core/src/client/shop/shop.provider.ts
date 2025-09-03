@@ -1,3 +1,4 @@
+import { AnimalProvider } from '@public/client/animal/animal.provider';
 import { InventoryDragAndDropProvider } from '@public/client/inventory/inventory.draganddrop.provider';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { ItemService } from '@public/client/item/item.service';
@@ -16,6 +17,7 @@ import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { TargetOption } from '@public/shared/target';
 
+import { AnimalShopProvider } from '../animal/animal.shop.provider';
 import { BlipFactory } from '../blip';
 import { FeatureProvider } from '../feature/feature.provider';
 import { FightForStyleRestockService } from '../job/ffs/ffs.restock.service';
@@ -63,6 +65,9 @@ export class ShopProvider {
     @Inject(ZkeaFournitureShopProvider)
     private zkeaFournitureShopProvider: ZkeaFournitureShopProvider;
 
+    @Inject(AnimalShopProvider)
+    private animalShopProvider: AnimalShopProvider;
+
     @Inject(PlayerService)
     private playerService: PlayerService;
 
@@ -91,6 +96,9 @@ export class ShopProvider {
 
     @Inject(HousingRepository)
     private housingRepository: HousingRepository;
+
+    @Inject(AnimalProvider)
+    private animalProvider: AnimalProvider;
 
     public getShopActions(): TargetOption[] {
         return [
@@ -253,6 +261,34 @@ export class ShopProvider {
         ];
     }
 
+    public getNoZoneShopAdditionalsActions(brand: NoZoneShopBrand): TargetOption[] {
+        const noZoneShopAdditionalsActions: Partial<Record<NoZoneShopBrand, TargetOption[]>> = {
+            [NoZoneShopBrand.Pet]: [
+                {
+                    icon: 'shop/pet',
+                    label: 'Animalerie',
+                    category: 'citizen',
+                    action: () => this.animalShopProvider.openShop(),
+                },
+                {
+                    icon: 'crimi/force-consume',
+                    label: 'Abandonner son animal',
+                    category: 'citizen',
+                    canInteract: () => this.animalProvider.isOwningPet(),
+                    action: () => TriggerEvent(ClientEvent.PET_SHOP_ABANDON_ANIMAL),
+                },
+                {
+                    icon: 'ems/heal',
+                    label: 'Soigner son animal',
+                    category: 'citizen',
+                    canInteract: () => this.animalProvider.isDead(),
+                    action: () => TriggerServerEvent(ServerEvent.PET_SET_DEATH, false),
+                },
+            ],
+        };
+        return noZoneShopAdditionalsActions[brand] || [];
+    }
+
     @Once(OnceStep.PlayerLoaded)
     public async setupShopConfig() {
         for (const shop in ShopsConfig) {
@@ -318,7 +354,7 @@ export class ShopProvider {
             }
         }
 
-        for (const shop of NoZonesShopConfig) {
+        for (const [brand, shop] of Object.entries(NoZonesShopConfig)) {
             if (shop.feature && !this.featureProvider.isFeatureEnabled(shop.feature)) {
                 continue;
             }
@@ -335,13 +371,14 @@ export class ShopProvider {
                 ...shop.ped,
                 target: {
                     options: [
+                        ...this.getNoZoneShopAdditionalsActions(brand as NoZoneShopBrand),
                         {
                             icon: shop.targetIcon || 'magasin/cart',
                             label: shop.targetLabel || 'Accéder au magasin',
                             category: 'citizen',
                             blackoutGlobal: true,
                             action: () => {
-                                this.openNoZoneShop(shop.brand, shop.shopLabel);
+                                this.openNoZoneShop(brand as NoZoneShopBrand, shop.shopLabel);
                             },
                         },
                     ],
@@ -436,11 +473,7 @@ export class ShopProvider {
         }
     }
 
-    public async openNoZoneShop(brand: string, shopLabel: string) {
-        switch (brand) {
-            case NoZoneShopBrand.SouvenirFIB:
-                this.superetteShopProvider.openShop(brand, brand, shopLabel);
-                break;
-        }
+    public async openNoZoneShop(brand: NoZoneShopBrand, shopLabel: string) {
+        this.superetteShopProvider.openShop(brand, brand, shopLabel);
     }
 }

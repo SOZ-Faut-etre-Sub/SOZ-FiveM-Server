@@ -7,6 +7,7 @@ import { api } from './api';
 import { hud } from './hud';
 import { item } from './item';
 import { outside } from './outside';
+import { petStats } from './pet';
 import { player, playerInventory, playerPosition, playerStats } from './player';
 import { taxi } from './taxi';
 import { vehicle, vehicleSpeed } from './vehicle';
@@ -26,6 +27,7 @@ export interface RootModel extends Models<RootModel> {
     api: typeof api;
     repository: typeof repository;
     features: typeof features;
+    petStats: typeof petStats;
 }
 
 export const models: RootModel = {
@@ -43,4 +45,5 @@ export const models: RootModel = {
     api,
     repository,
     features,
+    petStats,
 };

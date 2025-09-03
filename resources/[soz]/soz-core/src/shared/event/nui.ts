@@ -168,6 +168,12 @@ export enum NuiEvent {
     AdminSetAdminNoRecoil = 'soz-core:nui:admin:set-admin-no-recoil',
     AdminMenuWhatIfCinematic = 'soz-core:nui:admin:whatif:cinematic',
 
+    AdminGetPlayerPet = 'soz-core:client:admin:get-player-pet',
+    AdminSetPlayerPetMeta = 'soz-core:client:admin:set-player-pet-meta',
+    AdminSetPlayerPetSeath = 'soz-core:client:admin:set-player-pet-death',
+    AdminSetPlayerPetResetMeta = 'soz-core:client:admin:set-player-pet-reset-meta',
+    AdminResetPlayerPetResetMeta = 'soz-core:client:admin:reset-player-pet-reset-meta',
+
     BlipAction = 'soz-core:client:blip:action',
 
     GetAPIConfig = 'soz-core:nui:get-api-config',
@@ -251,6 +257,7 @@ export enum NuiEvent {
     WatchMenuSetZoom = 'soz-core:nui:player:menu:hud-set-zoom',
     WatchMenuSetInventorySize = 'soz-core:nui:player:menu:hud-set-inventory-size',
     WatchMenuSetShowDateTime = 'soz-core:nui:player:menu:hud-set-show-date-time',
+    WatchMenuSetShowAnimalStats = 'soz-core:nui:player:menu:hud-set-show-animal-stats',
     WatchMenuSetShowWeather = 'soz-core:nui:player:menu:hud-set-show-weather',
     WatchMenuSetShowStreetName = 'soz-core:nui:player:menu:hud-set-show-street-name',
     WatchMenuSetShowCompass = 'soz-core:nui:player:menu:hud-set-show-compass',
@@ -389,6 +396,13 @@ export enum NuiEvent {
     PoliceSaveDetectiveBoard = 'soz-core:client:police:save-detective-board',
     PoliceSendNotification = 'soz-core:client:police:send-notification',
     PoliceSelectSwatCase = 'soz-core:client:police:select-swat-case',
+
+    PetAnimalOrder = 'soz-core:client:pet:animal-order',
+    PetDisplayState = 'soz-core:client:pet:displayState',
+
+    PetShopShowAnimal = 'soz-core:client:pet:shop-show-animal',
+    PetShopBuyAnimal = 'soz-core:client:pet:shop-buy-animal',
+    PetShopChangeTexture = 'soz-core:client:pet:shop-change-texture',
 
     IllegalShopBuyItem = 'soz-core:client:hubshop:buy',
 

@@ -11,6 +11,7 @@ import { GlassMorphismBox } from '../Styleguide/GlassMorphismBox';
 import { Compass } from './components/Compass';
 import { DateTime } from './components/DateTime';
 import { Location } from './components/Location';
+import { PetStats } from './components/PetStats';
 import { PlayerStats } from './components/PlayerStats';
 import { VoiceIcon } from './components/VoiceIcon';
 import { Weather } from './components/Weather';
@@ -132,6 +133,7 @@ export const WatchInterface: FunctionComponent = () => {
                 <Location />
                 <Compass />
                 <PlayerStats />
+                <PetStats />
             </animated.div>
         </>
     );

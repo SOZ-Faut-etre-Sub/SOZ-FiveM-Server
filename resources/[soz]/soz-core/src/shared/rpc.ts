@@ -1,5 +1,6 @@
 export enum RpcServerEvent {
     ADMIN_GET_PLAYERS = 'soz-core:admin:get-players',
+    ADMIN_GET_PLAYER_PET = 'soz-core:admin:get-player-pet',
     ADMIN_GET_CHARACTERS = 'soz-core:admin:get-characters',
     ADMIN_GET_FULL_PLAYERS = 'soz-core:admin:get-full-players',
     ADMIN_GET_LIGHT_PLAYERS = 'soz-core:admin:get-light-players',
@@ -165,6 +166,8 @@ export enum RpcServerEvent {
 
     POLICE_ALCOOLLEVEL = 'soz-core:server:police:alcool-level',
     POLICE_DRUGLEVEL_AND_TYPE = 'soz-core:server:police:drug-level',
+    POLICE_K9_FIND_DRUG_ON_PLAYER = 'soz-core:server:police:k9-find-drug-on-player',
+    POLICE_K9_FIND_DRUG_ON_CAR = 'soz-core:server:police:k9-find-drug-on-car',
     POLICE_GET_WANTED_PLAYERS = 'soz-core:server:police:get-wanted-players',
     POLICE_DELETE_WANTED_PLAYER = 'soz-core:server:police:delete-wanted-player',
     POLICE_GET_MARKED_MONEY = 'soz-core:server:police:get-marked-money',
@@ -407,6 +410,9 @@ export enum RpcServerEvent {
     WHAT_IF_HAMMER_DELETE = 'soz-core:server:what-if:hammer-delete',
     WHAT_IF_LOOT_INVENTORY = 'soz-core:server:what-if:loot-inventory',
     WHAT_IF_VEHICLE_DEALERSHIP_GET_LIST = 'soz-core:server:what-if:vehicle-dealership:get-list',
+
+    PET_GET_ANIMAL = 'soz-core:server:pet:get-animal',
+    PET_CONSUME_BALL = 'soz-core:server:pet:consume-ball',
 }
 
 export enum RpcClientEvent {
