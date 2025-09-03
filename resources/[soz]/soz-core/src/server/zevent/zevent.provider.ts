@@ -34,5 +34,7 @@ export class ZEventProvider {
         this.itemService.setItemUseCallback('zevent2022_tshirt', this.useTShirt.bind(this));
         this.itemService.setItemUseCallback('zevent2024_tshirt', this.useTShirt.bind(this));
         this.itemService.setItemUseCallback('zevent2024_tshirt_collector', this.useTShirt.bind(this));
+        this.itemService.setItemUseCallback('zevent2025_tshirt', this.useTShirt.bind(this));
+        this.itemService.setItemUseCallback('zevent2025_tshirt_collector', this.useTShirt.bind(this));
     }
 }

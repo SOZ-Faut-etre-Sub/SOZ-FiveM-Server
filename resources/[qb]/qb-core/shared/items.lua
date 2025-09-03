@@ -6960,7 +6960,7 @@ QBShared.Items = {
     ["zevent2024_tshirt"] = {
         ["name"] = "zevent2024_tshirt",
         ["label"] = "T-Shirt - ZEvent 2024",
-        ["pluralLabel"] = "T-Shirts - ZEvent 2022",
+        ["pluralLabel"] = "T-Shirts - ZEvent 2024",
         ["weight"] = 100,
         ["type"] = "item",
         ["unique"] = false,
@@ -6972,7 +6972,7 @@ QBShared.Items = {
     ["zevent2024_tshirt_collector"] = {
         ["name"] = "zevent2024_tshirt_collector",
         ["label"] = "T-Shirt Collector - ZEvent 2024",
-        ["pluralLabel"] = "T-Shirts - ZEvent 2022",
+        ["pluralLabel"] = "T-Shirts - ZEvent 2024",
         ["weight"] = 100,
         ["type"] = "item",
         ["unique"] = false,
@@ -6980,6 +6980,30 @@ QBShared.Items = {
         ["shouldClose"] = true,
         ["combinable"] = nil,
         ["description"] = "Un T-Shirt Collector en hommage au ZEvent 2024.",
+    },
+    ["zevent2025_tshirt"] = {
+        ["name"] = "zevent2025_tshirt",
+        ["label"] = "T-Shirt - ZEvent 2025",
+        ["pluralLabel"] = "T-Shirts - ZEvent 2025",
+        ["weight"] = 100,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Un T-Shirt en hommage au ZEvent 2025.",
+    },
+    ["zevent2025_tshirt_collector"] = {
+        ["name"] = "zevent2025_tshirt_collector",
+        ["label"] = "T-Shirt Collector - ZEvent 2025",
+        ["pluralLabel"] = "T-Shirts - ZEvent 2025",
+        ["weight"] = 100,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["combinable"] = nil,
+        ["description"] = "Un T-Shirt Collector en hommage au ZEvent 2025.",
     },
     --- STONK
     ["moneybag"] = {
@@ -25030,7 +25054,6 @@ QBShared.Items = {
     },
     ["whistle_tin"] = {
         ["name"] = "whistle_tin",
-        ["illustrator"] = ".Sniteur",
         ["label"] = "Sifflet en Étain",
         ["weight"] = 250,
         ["type"] = "item",
