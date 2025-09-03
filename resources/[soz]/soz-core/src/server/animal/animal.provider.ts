@@ -113,7 +113,10 @@ export class AnimalProvider {
         if (!player) return;
 
         const serverPet = await this.getPet(player.citizenid, force);
-        if (!serverPet) return null;
+        if (!serverPet) {
+            delete this.playerPets[player.citizenid];
+            return null;
+        }
 
         let needPetUpdate = null;
         if (
@@ -167,7 +170,7 @@ export class AnimalProvider {
         return inventory.remove(PET_BALL_OBJECT);
     }
 
-    private async getPet(citizenId: string, force: boolean): Promise<ServerPet> {
+    private async getPet(citizenId: string, force: boolean): Promise<ServerPet | null> {
         let serverPet = null;
         if (!this.playerPets[citizenId] || force) {
             const petDb = await this.prismaService.pet.findFirst({
@@ -358,7 +361,7 @@ export class AnimalProvider {
         if (data.training) {
             this.notifier.notify(
                 source,
-                `Le dressage de ton animal progresse, passant de ~g~${pet.training.toFixed(2)}~s~ à ~g~${(pet.training + dataIncrement.training).toFixed(2)}~s~.`,
+                `Le dressage de ton animal progresse, passant de ~g~${(pet.training - dataIncrement.training).toFixed(2)}~s~ à ~g~${pet.training.toFixed(2)}~s~.`,
                 'info'
             );
         }
