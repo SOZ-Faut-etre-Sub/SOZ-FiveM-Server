@@ -467,90 +467,84 @@ type petBreed =
     | 'a_c_rabbit_01'
     | 'a_c_hen';
 
-export const petShopContent: Record<petBreed, petInShop> = {
+export const petShopContent: Partial<Record<petBreed, petInShop>> = {
     a_c_husky: {
         model: 'a_c_husky',
         label: 'Husky',
         type: 'Chien',
-        price: 100_000,
-    },
-    a_c_chop: {
-        model: 'a_c_chop',
-        label: 'Chop',
-        type: 'Chien',
-        price: 100_000,
+        price: 60_000,
     },
     a_c_retriever: {
         model: 'a_c_retriever',
         label: 'Retriever',
         type: 'Chien',
-        price: 100_000,
+        price: 75_000,
     },
     a_c_westy: {
         model: 'a_c_westy',
         label: 'Westie',
         type: 'Chien',
-        price: 100_000,
+        price: 25_000,
     },
     a_c_rottweiler: {
         model: 'a_c_rottweiler',
         label: 'Rottweiler',
         type: 'Chien',
-        price: 100_000,
+        price: 67_500,
     },
     a_c_shepherd: {
         model: 'a_c_shepherd',
         label: 'Border Collie',
         type: 'Chien',
-        price: 100_000,
+        price: 45_000,
     },
     a_c_pug: {
         model: 'a_c_pug',
         label: 'Carlin',
         type: 'Chien',
-        price: 100_000,
+        price: 35_000,
     },
     a_c_poodle: {
         model: 'a_c_poodle',
         label: 'Caniche',
         type: 'Chien',
-        price: 100_000,
+        price: 52_500,
     },
     a_c_cat_01: {
         model: 'a_c_cat_01',
         label: 'Chat de rue',
         type: 'Chat',
-        price: 100_000,
+        price: 20_000,
     },
     a_c_boar: {
         model: 'a_c_boar',
         label: 'Sanglier',
         type: 'Ferme',
-        price: 100_000,
+        price: 20_000,
     },
     a_c_cow: {
         model: 'a_c_cow',
         label: 'Vache',
         type: 'Ferme',
-        price: 100_000,
+        price: 20_000,
     },
     a_c_pig: {
         model: 'a_c_pig',
         label: 'Cochon',
         type: 'Ferme',
-        price: 100_000,
+        price: 20_000,
     },
     a_c_rabbit_01: {
         model: 'a_c_rabbit_01',
         label: 'Lapin',
         type: 'Ferme',
-        price: 100_000,
+        price: 10_000,
     },
     a_c_hen: {
         model: 'a_c_hen',
         label: 'Poule',
         type: 'Ferme',
-        price: 100_000,
+        price: 10_000,
     },
 };
 
