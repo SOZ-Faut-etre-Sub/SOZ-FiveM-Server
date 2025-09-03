@@ -118,7 +118,12 @@ export class AnimalProvider {
 
         if (!pet) {
             this.pet = null;
-            this.nuiDispatch.dispatch('pet_manager', 'Update', null);
+            this.currentOrder = null;
+            this.forceOrder = null;
+            this.isUsingWhistle = false;
+            this.warningDistanceNotif = false;
+            this.ready = false;
+            this.syncWithUI();
             return;
         }
 

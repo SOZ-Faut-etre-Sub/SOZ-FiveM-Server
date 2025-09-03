@@ -56,7 +56,6 @@ export type petAnimationType = 'retriever' | 'rottweiler' | 'pug' | 'cat' | 'boa
 
 export const petBreedToOrderType: Record<petBreed, petAnimationType> = {
     a_c_husky: 'retriever',
-    a_c_chop: 'rottweiler',
     a_c_retriever: 'retriever',
     a_c_westy: 'pug',
     a_c_rottweiler: 'rottweiler',
@@ -453,7 +452,6 @@ export const petFood: Record<petFoodName, { hunger?: number; thirst?: number; af
 
 type petBreed =
     | 'a_c_husky'
-    | 'a_c_chop'
     | 'a_c_retriever'
     | 'a_c_westy'
     | 'a_c_rottweiler'
@@ -467,7 +465,7 @@ type petBreed =
     | 'a_c_rabbit_01'
     | 'a_c_hen';
 
-export const petShopContent: Partial<Record<petBreed, petInShop>> = {
+export const petShopContent: Record<petBreed, petInShop> = {
     a_c_husky: {
         model: 'a_c_husky',
         label: 'Husky',
@@ -563,25 +561,6 @@ export const PetVariation: Record<petBreed, Record<string, Record<string, PetDra
             },
             Blanc: {
                 component: 0,
-                drawable: 0,
-                texture: 2,
-            },
-        },
-    },
-    a_c_chop: {
-        Collier: {
-            Brun: {
-                component: 3,
-                drawable: 0,
-                texture: 0,
-            },
-            'Noir à clou': {
-                component: 3,
-                drawable: 0,
-                texture: 1,
-            },
-            Blanc: {
-                component: 3,
                 drawable: 0,
                 texture: 2,
             },
