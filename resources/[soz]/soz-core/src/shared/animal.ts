@@ -135,7 +135,10 @@ export const petOrderModelAnimation: Record<
     [PetOrder.LAY_DOWN]: {
         retriever: [{ dictionary: 'creatures@rottweiler@amb@sleep_in_kennel@', name: 'sleep_in_kennel' }],
         rottweiler: [{ dictionary: 'creatures@rottweiler@amb@sleep_in_kennel@', name: 'sleep_in_kennel' }],
-        pug: [{ dictionary: 'creatures@rottweiler@amb@sleep_in_kennel@', name: 'sleep_in_kennel' }],
+        pug: [
+            { dictionary: 'creatures@pug@move', name: 'dead_right' },
+            { dictionary: 'creatures@pug@move', name: 'dead_left' },
+        ],
         cat: [
             { dictionary: 'creatures@cat@amb@world_cat_sleeping_ground@base', name: 'base' },
             { dictionary: 'creatures@cat@amb@world_cat_sleeping_ground@idle_a', name: 'idle_a' },
@@ -151,7 +154,7 @@ export const petOrderModelAnimation: Record<
     [PetOrder.PET]: {
         retriever: [{ dictionary: 'creatures@rottweiler@tricks@', name: 'petting_chop' }],
         rottweiler: [{ dictionary: 'creatures@rottweiler@tricks@', name: 'petting_chop' }],
-        pug: [{ dictionary: 'creatures@rottweiler@tricks@', name: 'petting_chop' }],
+        pug: [{ dictionary: 'creatures@pug@amb@world_dog_barking@idle_a', name: 'idle_a' }],
         cat: [{ dictionary: 'creatures@cat@move', name: 'idle' }],
         boar: [{ dictionary: 'creatures@boar@amb@world_boar_grazing@idle_a', name: 'idle_b' }],
         cow: [{ dictionary: 'creatures@cow@amb@world_cow_grazing@idle_a', name: 'idle_b' }],
@@ -183,15 +186,8 @@ export const petOrderModelAnimation: Record<
             { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop_left' },
         ],
         pug: [
-            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_high' },
-            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_ahead' },
-            { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
-            { dictionary: 'creatures@rottweiler@tricks@', name: 'beg_loop' },
-            { dictionary: 'creatures@rottweiler@tricks@', name: 'beg_loop_right' },
-            { dictionary: 'creatures@rottweiler@tricks@', name: 'beg_loop_left' },
-            { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop' },
-            { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop_right' },
-            { dictionary: 'creatures@rottweiler@tricks@', name: 'paw_right_loop_left' },
+            { dictionary: 'creatures@pug@move', name: 'idle_turn_r' },
+            { dictionary: 'creatures@pug@move', name: 'idle_turn_l' },
         ],
         cat: false,
         boar: false,
@@ -234,9 +230,8 @@ export const petOrderModelAnimation: Record<
     //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
     //     ],
     //     pug: [
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_high' },
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_ahead' },
-    //         { dictionary: 'creatures@rottweiler@indication@', name: 'indicate_low' },
+    //         { dictionary: 'creatures@pug@amb@world_dog_barking@idle_a', name: 'idle_c' },
+    //         { dictionary: 'creatures@pug@amb@world_dog_barking@idle_a', name: 'idle_a' },
     //     ],
     //     cat: false,
     //     boar: false,
@@ -255,7 +250,7 @@ export const petOrderSitInCarAnimation: Record<petAnimationType, { dictionary: s
     boar: null,
     cow: null,
     pig: null,
-    rabbit: null, // { dictionary: 'creatures@rabbit@amb@world_rabbit_eating@idle_a', name: 'idle_c' },
+    rabbit: { dictionary: 'creatures@rabbit@amb@world_rabbit_eating@idle_a', name: 'idle_c' },
     hen: { dictionary: 'creatures@hen@amb@world_hen_standing@base', name: 'base' },
 };
 
