@@ -340,10 +340,10 @@ export class AnimalProvider {
             [
                 {
                     label: 'Caresser',
-                    icon: 'crimi/grab',
+                    icon: 'pet/cuddle',
                     category: 'citizen',
                     canInteract: entity => {
-                        return this.pet?.entity !== entity;
+                        return this.pet?.entity !== entity && !IsEntityDead(entity);
                     },
                     action: async () => {
                         await this.animationService.playAnimation({
@@ -385,6 +385,7 @@ export class AnimalProvider {
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
     public async onDead() {
+        await wait(10_000);
         await this.despawnAnimal();
     }
 
@@ -612,7 +613,7 @@ export class AnimalProvider {
                     const maxSeats = GetVehicleMaxNumberOfPassengers(veh);
                     const seats = [];
                     for (let i = maxSeats - 1; i >= 0; i--) {
-                        if (IsVehicleSeatFree(veh, i)) seats.push(i);
+                        if (IsVehicleSeatFree(veh, i) && i !== -1) seats.push(i);
                     }
 
                     if (seats.length) {
@@ -626,11 +627,13 @@ export class AnimalProvider {
                                 GetEntityCoords(this.pet.entity) as Vector3
                             );
 
-                            isCanceled = distance > PetDistanceReturnHome || !IsPedInAnyVehicle(ped, false);
+                            isCanceled = distance > PetDistanceReturnHome || !IsVehicleSeatFree(veh, seat);
                             return isCanceled;
                         });
                         if (!isCanceled) {
                             await this.startAnimationSync(animation, 10);
+                        } else {
+                            await this.stopAnimationSync();
                         }
                     }
                 } else {
@@ -645,9 +648,12 @@ export class AnimalProvider {
             } else if (!IsPedInAnyVehicle(ped, false) && IsPedInAnyVehicle(this.pet.entity, false)) {
                 const veh = GetVehiclePedIsIn(this.pet.entity, false);
                 SetEntityInvincible(this.pet.entity, true);
+                SetBlockingOfNonTemporaryEvents(this.pet.entity, true);
+                SetEntityCanBeDamaged(this.pet.entity, false);
+                await wait(0);
+                await waitUntil(async () => !GetEntityCanBeDamaged(this.pet.entity));
 
-                const flag = [GetHashKey('a_c_cat_01')].includes(GetEntityModel(this.pet.entity)) ? 16.0 : 1.0;
-                TaskLeaveVehicle(this.pet.entity, veh, flag);
+                TaskLeaveVehicle(this.pet.entity, veh, 1.0);
                 await waitUntil(async () => {
                     if (GetScriptTaskStatus(this.pet.entity, 'SCRIPT_TASK_LEAVE_VEHICLE') === 7) return true;
                     const distance = getDistance(
@@ -657,7 +663,13 @@ export class AnimalProvider {
 
                     return distance > PetDistanceReturnHome;
                 });
-                setTimeout(() => SetEntityInvincible(this.pet.entity, false), 5_000);
+                await wait(2_000);
+                await waitUntil(async () => !IsPedRagdoll(this.pet.entity));
+                await wait(0);
+
+                SetEntityInvincible(this.pet.entity, false);
+                SetBlockingOfNonTemporaryEvents(this.pet.entity, false);
+                SetEntityCanBeDamaged(this.pet.entity, true);
             } else if (
                 !IsPedInAnyVehicle(ped, false) &&
                 (this.forceOrder ||
@@ -748,22 +760,18 @@ export class AnimalProvider {
                 1.0
             );
             NetworkAddPedToSynchronisedScene(ped, scene, dictionary, 'petting_franklin', 10.0, 10.0, flag, 0, 0, 0);
-            if (orderAnimation.dictionary !== dictionary) {
-                await this.startAnimationSyncForOrder(PetOrder.PET);
-            } else {
-                NetworkAddPedToSynchronisedScene(
-                    this.pet.entity,
-                    scene,
-                    orderAnimation.dictionary,
-                    orderAnimation.name,
-                    10.0,
-                    10.0,
-                    flag,
-                    0,
-                    0,
-                    0
-                );
-            }
+            NetworkAddPedToSynchronisedScene(
+                this.pet.entity,
+                scene,
+                orderAnimation.dictionary,
+                orderAnimation.name,
+                10.0,
+                10.0,
+                flag,
+                0,
+                0,
+                0
+            );
             NetworkStartSynchronisedScene(scene);
 
             let localScene = -1;
@@ -791,6 +799,7 @@ export class AnimalProvider {
                 false
             );
 
+            await this.startAnimationSyncForOrder(PetOrder.PET);
             await this.animationService.playAnimation(
                 {
                     base: {
@@ -810,6 +819,7 @@ export class AnimalProvider {
 
         this.resourceLoader.unloadAnimationDictionary(dictionary);
         TriggerServerEvent(ServerEvent.PET_AFFECTION_GAIN_PET);
+        this.currentOrder = PetOrder.FOLLOW;
     }
 
     private async catchTheBall() {
@@ -1016,7 +1026,7 @@ export class AnimalProvider {
             await this.throwBall();
         }
 
-        if (this.pet.energy <= 0) {
+        if (this.pet.energy <= 0 && order !== PetOrder.FOLLOW) {
             this.notifier.notify('Ton animal est ~b~trop épuisé~s~ pour réaliser ton ordre.', 'info');
             return;
         }
