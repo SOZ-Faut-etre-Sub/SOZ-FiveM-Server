@@ -19172,6 +19172,27 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 1500,
         collision: true,
     },
+	    soz_politic_afsa: {
+        type: 'Drapeau & Logo',
+        name: 'Logo du parti AFSA',
+        model: 'soz_politic_afsa',
+        price: 1000,
+        collision: true,
+    },
+	    soz_politic_rebirth: {
+        type: 'Drapeau & Logo',
+        name: 'Logo du parti REBIRTH',
+        model: 'soz_politic_rebirth',
+        price: 1000,
+        collision: true,
+    },
+	    soz_politic_udsa: {
+        type: 'Drapeau & Logo',
+        name: 'Logo du parti UDSA',
+        model: 'soz_politic_udsa',
+        price: 1000,
+        collision: true,
+    },
 };
 
 export const ZkeaFournitureModelTranslate: Record<string, string> = {};
