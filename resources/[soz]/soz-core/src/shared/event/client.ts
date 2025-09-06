@@ -532,4 +532,5 @@ export enum ClientEvent {
     PET_SYNC_ANIMAL = 'soz-core:client:pet:sync-animal',
     PET_RESET_FOOD_NOTIF = 'soz-core:client:pet:reset-food-notif',
     PET_SHOP_ABANDON_ANIMAL = 'soz-core:client:pet:shop-abandon-animal',
+    PET_SHOP_NAME_ANIMAL = 'soz-core:client:pet:shop-name-animal',
 }

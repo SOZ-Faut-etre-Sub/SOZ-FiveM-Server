@@ -39,6 +39,7 @@ import {
     PetFoodTraitBonus,
     PetHealPrice,
     PetHungerRatePerMinute,
+    PetNamePrice,
     PetResetMeta,
     PetThirstRatePerMinute,
     PetTrainingGainPerDay,
@@ -272,7 +273,7 @@ export class AnimalProvider {
             if (!(await this.playerMoneyService.buy(source, PetHealPrice, TaxType.SERVICE))) {
                 this.notifier.notify(
                     source,
-                    `Tu n'as pas assez d'argent, pauvre animal.. Reviens avec $~b~${await this.priceService.getPrice(PetHealPrice, TaxType.SERVICE)}~s~.`,
+                    `Tu n'as pas assez d'argent, pauvre ${pet.name || `animal`}.. Reviens avec $~b~${await this.priceService.getPrice(PetHealPrice, TaxType.SERVICE)}~s~.`,
                     'info'
                 );
                 return;
@@ -285,7 +286,7 @@ export class AnimalProvider {
 
             this.notifier.notify(
                 source,
-                `Merci pour tes $~b~${await this.priceService.getPrice(PetHealPrice, TaxType.SERVICE)}~s~. J'ai ~g~soigné~s~ ton animal ! Prend en bien plus soin à l'avenir, car il risque de ~y~s'enfuir~s~ si tu ne fais pas attention à lui.`,
+                `Merci pour tes $~b~${await this.priceService.getPrice(PetHealPrice, TaxType.SERVICE)}~s~. J'ai ~g~soigné~s~ ${pet.name || `ton animal`} ! Prend en bien plus soin à l'avenir, car il risque de ~y~s'enfuir~s~ si tu ne fais pas attention à lui.`,
                 'info'
             );
         }
@@ -300,6 +301,43 @@ export class AnimalProvider {
             data.perDays = JSON.stringify(pet.perDays);
         }
         await this.udpatePetDb(player, data);
+    }
+
+    @OnEvent(ServerEvent.PET_NAME_ANIMAL)
+    async nameAnimal(source: number, name: string) {
+        const player = this.playerService.getPlayer(source);
+        if (!player) return;
+
+        const pet = this.playerPets[player.citizenid];
+        if (!pet) return;
+
+        if (!(await this.playerMoneyService.buy(source, PetNamePrice, TaxType.SERVICE))) {
+            this.notifier.notify(
+                source,
+                `Tu n'as pas assez d'argent.. Reviens avec $~b~${await this.priceService.getPrice(PetNamePrice, TaxType.SERVICE)}~s~.`,
+                'info'
+            );
+            return;
+        }
+
+        let data: Record<string, any>;
+        if (pet.name) {
+            if (!pet.perDays.renamed) {
+                data = this.processIncrementData(pet, { training: -10 });
+                data ??= {};
+                pet.perDays.renamed = true;
+                data.perDays = JSON.stringify(pet.perDays);
+            } else {
+                data = {};
+            }
+        } else {
+            data = this.processIncrementData(pet, { affection: 5 });
+        }
+        data['name'] = name;
+        pet.name = name;
+
+        await this.udpatePetDb(player, data);
+        this.notifier.notify(source, `Tu as ~b~nommer~s~ votre animal ~g~${name}~s~, son regard s'illumine !`);
     }
 
     @OnEvent(ServerEvent.PET_AFFECTION_LOSS_DISTANCE)
@@ -361,7 +399,7 @@ export class AnimalProvider {
         if (data.training) {
             this.notifier.notify(
                 source,
-                `Le dressage de ton animal progresse, passant de ~g~${(pet.training - dataIncrement.training).toFixed(2)}~s~ à ~g~${pet.training.toFixed(2)}~s~.`,
+                `Le dressage de ${pet.name || `ton animal`} progresse, passant de ~g~${(pet.training - dataIncrement.training).toFixed(2)}~s~ à ~g~${pet.training.toFixed(2)}~s~.`,
                 'info'
             );
         }
@@ -491,13 +529,20 @@ export class AnimalProvider {
                     }
                 }
             } else if (meta === 'training') {
-                const trainingIncr = Math.max(0, Math.min(incr, PetTrainingGainPerDay - pet.perDays.training));
-                const newValue = Math.max(0, Math.min(pet.training + trainingIncr, PetTrainingLimit));
+                let trainingIncr = 0;
+                if (incr >= 0) {
+                    trainingIncr = Math.max(0, Math.min(incr, PetTrainingGainPerDay - pet.perDays.training));
+                } else {
+                    trainingIncr = incr;
+                }
+                const newValue = Math.max(5, Math.min(pet.training + trainingIncr, PetTrainingLimit));
                 const realIncr = newValue - pet.training;
 
                 if (realIncr) {
                     data ??= {};
-                    pet.perDays.training += realIncr;
+                    if (realIncr >= 0) {
+                        pet.perDays.training += realIncr;
+                    }
                     data['training'] = { increment: realIncr };
                     pet.training += realIncr;
                 }
@@ -511,6 +556,7 @@ export class AnimalProvider {
         return {
             owner_id: pet.owner_id,
             model: pet.model,
+            name: pet.name,
             trait_up: pet.trait_up as PetTraits,
             trait_down: pet.trait_down as PetTraits,
             dead: pet.dead,
@@ -528,6 +574,7 @@ export class AnimalProvider {
         id: number;
         owner_id: string;
         model: string;
+        name: string | null;
         trait_up: string;
         trait_down: string;
         dead: boolean;
@@ -544,6 +591,7 @@ export class AnimalProvider {
             id: pet.id,
             owner_id: pet.owner_id,
             model: pet.model,
+            name: pet.name,
             trait_up: pet.trait_up as PetTraits,
             trait_down: pet.trait_down as PetTraits,
             dead: pet.dead,
@@ -560,6 +608,7 @@ export class AnimalProvider {
     public getDefaultPerDaysMetaData(): PetResetMeta {
         return {
             escape: false,
+            renamed: false,
             affectionGain: 0,
             affectionLoss: 0,
             training: 0,
@@ -592,10 +641,18 @@ export class AnimalProvider {
         if (!foodMeta) return;
 
         if (inventoryItem.name.startsWith('kibble') && pet.hunger >= PetFoodGiveLimit) {
-            this.notifier.notify(source, "Ton animal n'a pas faim, tu essayes de le ~y~gaver~s~ ?", 'info');
+            this.notifier.notify(
+                source,
+                `${pet.name || `Ton animal`} n'a pas faim, tu essayes de le ~y~gaver~s~ ?`,
+                'info'
+            );
             return;
         } else if (!inventoryItem.name.startsWith('kibble') && pet.thirst >= PetFoodGiveLimit) {
-            this.notifier.notify(source, "Ton animal n'a pas soif, il va finir ~y~malade~s~ si tu le forces !", 'info');
+            this.notifier.notify(
+                source,
+                `${pet.name || `Ton animal`} n'a pas soif, il va finir ~y~malade~s~ si tu le forces !`,
+                'info'
+            );
             return;
         }
 
@@ -607,7 +664,7 @@ export class AnimalProvider {
         if (inventoryItem.name.startsWith('kibble')) {
             this.notifier.notify(
                 source,
-                "Tu as ~g~nourris~s~ ton animal de compagnie. Il a l'air de se sentir ~b~mieux~s~ !",
+                `Tu as ~g~nourris~s~ ${pet.name || `ton animal`}. Il a l'air de se sentir ~b~mieux~s~ !`,
                 'info'
             );
             petDataIncrement = { hunger: foodMeta.hunger };
@@ -622,7 +679,7 @@ export class AnimalProvider {
         } else {
             this.notifier.notify(
                 source,
-                'Tu as ~g~donné à boire~s~ à ton animal de compagnie. Il a en a plein ~b~les babines~s~ !',
+                `Tu as ~g~donné à boire~s~ à ${pet.name || `ton animal`}. Il a en a plein ~b~les babines~s~ !`,
                 'info'
             );
             petDataIncrement = { thirst: foodMeta.thirst };
@@ -658,14 +715,14 @@ export class AnimalProvider {
             const hungerTimeDiff = now - pet.perDays.lastAffectionLossHunger;
             let affectionsLoss = 0;
             if (hungerTimeDiff > PetAffectLostFoodTimeDiff && pet.hunger <= PetAffectionFoodLimit) {
-                this.notifier.notify(player.source, 'Ton animal est ~r~affamé~s~ !', 'info');
+                this.notifier.notify(player.source, `${pet.name || `Ton animal`} est ~r~affamé~s~ !`, 'info');
                 affectionsLoss += PetAffectionLostFood;
                 pet.perDays.lastAffectionLossHunger = now;
             }
 
             const thirstTimeDiff = now - pet.perDays.lastAffectionLossThirst;
             if (thirstTimeDiff > PetAffectLostFoodTimeDiff && pet.thirst <= PetAffectionFoodLimit) {
-                this.notifier.notify(player.source, 'Ton animal est ~r~assoifé~s~ !', 'info');
+                this.notifier.notify(player.source, `${pet.name || `Ton animal`} est ~r~assoifé~s~ !`, 'info');
                 affectionsLoss += PetAffectionLostFood;
                 pet.perDays.lastAffectionLossThirst = now;
             }

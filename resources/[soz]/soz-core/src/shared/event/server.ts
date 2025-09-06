@@ -850,6 +850,7 @@ export enum ServerEvent {
 
     PET_SHOP_BUY_ANIMAL = 'soz-core:server:pet:shop-buy-animal',
     PET_SHOP_ABANDON_ANIMAL = 'soz-core:server:pet:shop-abandon-animal',
+    PET_NAME_ANIMAL = 'soz-core:server:pet:name-animal',
     PET_SET_DEATH = 'soz-core:server:pet:set-death',
     PET_USE_FOOD = 'soz-core:server:pet:use-food',
     PET_AFFECTION_LOSS_DISTANCE = 'soz-core:server:pet:affection-loss-distance',

@@ -5,6 +5,7 @@ export const TENNIS_BALL_MODEL = 'prop_tennis_ball';
 export const PET_BALL_OBJECT = 'pet_ball';
 export type PetResetMeta = {
     escape: boolean;
+    renamed: boolean;
     affectionGain: number;
     affectionLoss: number;
     training: number;
@@ -324,6 +325,7 @@ export const PetDistanceAttackOnTarget = 2.0;
 export const PetDistanceCatchTheBall = 1.0;
 export const PetHealPrice = 5_000;
 export const PetFoodOnHeal = 40;
+export const PetNamePrice = 10_000;
 
 export type IncrementalPetData = 'hunger' | 'thirst' | 'energy' | 'affection' | 'training';
 export const increamentalPetMeta: Set<IncrementalPetData> = new Set([
@@ -374,24 +376,25 @@ export const negativeTraitLabel: Record<PetTraits, string> = {
 };
 
 export const getAffectionLabel = (affection: number) => {
-    if (affection >= 100) return 'Obéissance totale';
+    if (affection >= 100) return 'Harmonie totale';
     if (affection >= 75) return 'Dévotion';
     if (affection >= 50) return 'Attachement';
     if (affection >= 25) return 'Curiosité';
     return 'Méfiance';
 };
 
-export const getTrainingLabel = (affection: number) => {
-    if (affection >= 100) return 'Harmonie totale';
-    if (affection >= 75) return 'Maîtrise';
-    if (affection >= 50) return 'Discipline';
-    if (affection >= 25) return 'Apprentissage';
+export const getTrainingLabel = (training: number) => {
+    if (training >= 100) return 'Obéissance totale';
+    if (training >= 75) return 'Maîtrise';
+    if (training >= 50) return 'Discipline';
+    if (training >= 25) return 'Apprentissage';
     return 'Sauvage';
 };
 
 export type Pet = {
     owner_id: string;
     model: string;
+    name: string | null;
     trait_up: PetTraits;
     trait_down: PetTraits;
     dead: boolean;
