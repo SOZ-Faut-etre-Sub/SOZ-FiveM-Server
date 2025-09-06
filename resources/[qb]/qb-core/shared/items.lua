@@ -24966,7 +24966,7 @@ QBShared.Items = {
         ["illustrator"] = ".Nariiel",
     },
 
-    
+
     -- PET
     ["pet_ball"] = {
         ["name"] = "pet_ball",
@@ -25131,5 +25131,40 @@ QBShared.Items = {
         ["canEngrave"] = true,
         ["illustrator"] = ".Sniteur",
         ["description"] = "Forgé dans un argent rare qui capte la lumière des étoiles. Orné de gravures célestes et serti d'une pierre de lune qui palpite d'une lueur intérieure, son écho mélodieux est dit être un lien direct avec la magie nocturne.",
+    },
+
+    --- bangle
+    ["bangle_eka"] = {
+        ["name"] = "bangle_eka",
+        ["label"] = "Bracelet EKA",
+        ["weight"] = 100,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["shouldClose"] = false,
+        ["illustrator"] = ".Kutz",
+        ["description"] = "Ce bracelet n’est pas un simple souvenir : c’est un sceau, un talisman. Celui d’EKA, Reine de la Nuit aux reflets flamboyants. Sur fond noir, ses lettres roses s’imposent comme un cri, annonçant son règne : un royaume où la techno et la trance deviennent armes du présent et rêves de demain.",
+    },
+    ["bangle_ln"] = {
+        ["name"] = "bangle_ln",
+        ["label"] = "Bracelet LN",
+        ["weight"] = 100,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["shouldClose"] = false,
+        ["illustrator"] = ".Arisnoe",
+        ["description"] = "Dans la nuit, un éclat fend l’ombre : le bleu électrique de LN, Clair de Lune des cœurs et Reine de la Nuit. Ce bracelet est un étendard dont chaque fibre porte la force du hardstyle. Le porter, c’est accepter de vibrer jusqu’à l’os, transcender l'atmosphère quand elle renverse le silence à coups de basses sismiques.",
+    },
+    ["water_bottle_bpm"] = {
+        ["name"] = "water_bottle_bpm",
+        ["label"] = "Gourde BPM",
+        ["weight"] = 200,
+        ["type"] = "item",
+        ["unique"] = false,
+        ["useable"] = false,
+        ["shouldClose"] = false,
+        ["illustrator"] = ".Kutz & Arisnoe",
+        ["description"] = "La gourde bpm n’est pas qu’un accessoire : c’est une promesse de tenir le rythme jusqu’au bout sans risquer la déshydratation. Une alliée fidèle pour accompagner, jusqu'à l'aube, les Reines de la Nuit dans leurs batailles de sons et de lumières.",
     },
 }
