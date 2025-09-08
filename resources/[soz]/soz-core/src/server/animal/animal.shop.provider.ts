@@ -56,7 +56,7 @@ export class AnimalShopProvider {
         if (ownedPet) {
             this.notifier.notify(
                 source,
-                'Vous possedez déjà ~b~un animal~s~. ~r~ABANDONNEZ~s~ le si vous en souhaitez un autre (pauvre bête).',
+                `Vous possedez déjà ~b~${ownedPet.name || `un animal`}~s~. ~r~ABANDONNE~s~ le si tu en souhaites un autre (pauvre bête).`,
                 'info'
             );
             return;
@@ -92,7 +92,10 @@ export class AnimalShopProvider {
             );
         }
 
-        this.notifier.notify(source, "Vous avez ~g~acheté~s~ un animal, utilise ~b~ton sifflet~s~ pour l'appeler !");
+        this.notifier.notify(
+            source,
+            "Vous avez ~g~acheté~s~ un animal, utilise ~b~ton sifflet~s~ pour l'appeler ! Reviens me voir pour lui donner un nom."
+        );
         this.notifier.notify(source, "Tu peux donner des ordres à ton animal à l'aide du Menu ~g~O~s~ !", 'info');
         TriggerClientEvent(ClientEvent.PET_SYNC_ANIMAL, source, true);
     }

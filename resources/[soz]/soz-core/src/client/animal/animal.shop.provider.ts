@@ -1,6 +1,7 @@
 import { AnimalProvider } from '@public/client/animal/animal.provider';
 import { AnimationService } from '@public/client/animation/animation.service';
 import { CameraService } from '@public/client/camera';
+import { Notifier } from '@public/client/notifier';
 import { InputService } from '@public/client/nui/input.service';
 import { NuiMenu } from '@public/client/nui/nui.menu';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
@@ -18,6 +19,7 @@ import {
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { MenuType } from '@public/shared/nui/menu';
 import { Vector3 } from '@public/shared/polyzone/vector';
+import { Err, Ok } from '@public/shared/result';
 
 @Provider()
 export class AnimalShopProvider {
@@ -38,6 +40,9 @@ export class AnimalShopProvider {
 
     @Inject(AnimalProvider)
     private animalProvider: AnimalProvider;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private lastPetShow: number;
 
@@ -75,6 +80,37 @@ export class AnimalShopProvider {
             return;
         }
         TriggerServerEvent(ServerEvent.PET_SHOP_ABANDON_ANIMAL);
+    }
+
+    @OnEvent(ClientEvent.PET_SHOP_NAME_ANIMAL)
+    public async onNameAnimal(): Promise<void> {
+        if (!this.animalProvider.isNamed()) {
+            this.notifier.notify(
+                "Tu veux ~b~nommer~s~ ton animal ? Je suis sur qu'il en sera ~g~très content~s~.",
+                'info'
+            );
+        } else {
+            this.notifier.notify(
+                "Tu veux ~b~re-nommer~s~ ton animal ? Il risque de prendre ~y~un peu de temps~s~ avant de s'habituer à son nouveau nom.",
+                'info'
+            );
+        }
+
+        const input = await this.inputService.askInput(
+            {
+                title: `Nom de l'animal`,
+                maxCharacters: 32,
+            },
+            name => {
+                if (!name || (name.length >= 2 && name.length <= 32)) {
+                    return Ok(name);
+                }
+                return Err(`Le nom n'est pas valide.`);
+            }
+        );
+        if (!input) return;
+
+        TriggerServerEvent(ServerEvent.PET_NAME_ANIMAL, input);
     }
 
     @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)

@@ -141,7 +141,7 @@ export class AnimalProvider {
         } else if (this.pet.energy <= maxEnergy / 2 && !this.energyNotif) {
             this.energyNotif = true;
             this.notifier.notify(
-                "Ton animal commence à ~r~s'épuiser~s~, tu ne pourras bientôt plus lui donner d'ordre.",
+                `${this.pet.name || `Ton animal`} commence à ~r~s'épuiser~s~, tu ne pourras bientôt plus lui donner d'ordre.`,
                 'info'
             );
         }
@@ -196,7 +196,7 @@ export class AnimalProvider {
         //                         await this.startAnimationSyncForOrder(PetOrder.SEARCH);
 
         //                         this.notifier.notify(
-        //                             'Ton animal a ~b~marqué~s~ la personne ! Des drogues ont été trouvés sur elle.',
+        //                             `${this.pet.name || `Ton animal`} a ~b~marqué~s~ la personne ! Des drogues ont été trouvés sur elle.`,
         //                             'info'
         //                         );
         //                         return;
@@ -228,7 +228,7 @@ export class AnimalProvider {
         //                 await this.resourceLoader.loadAnimationDictionary(dictionary);
         //                 await this.ensurePetInControl();
 
-        //                 this.notifier.notify("Ton animal ~b~s'élance~s~ sur la cible et ~b~l'attaque~s~ !", 'info');
+        //                 this.notifier.notify(`${this.pet.name || `Ton animal`} ~b~s'élance~s~ sur la cible et ~b~l'attaque~s~ !`, 'info');
         //                 TaskGoToEntity(this.pet.entity, entity, -1, 0.0, 100, 100, 0);
 
         //                 let success = false;
@@ -284,7 +284,7 @@ export class AnimalProvider {
         //                     await this.startAnimationSyncForOrder(PetOrder.SEARCH);
 
         //                     this.notifier.notify(
-        //                         'Ton animal a ~b~marqué~s~ le vehicule ! Des drogues ont été trouvés dans son coffre.',
+        //                         `${this.pet.name || `Ton animal`} ~b~s'élance~s~ sur la cible et ~b~l'attaque~s~ ! a ~b~marqué~s~ le vehicule ! Des drogues ont été trouvés dans son coffre.`,
         //                         'info'
         //                     );
         //                     return;
@@ -372,11 +372,11 @@ export class AnimalProvider {
         }
 
         if (!this.isOwningPet()) {
-            this.notifier.notify("Vous ne possédez pas d'animal.", 'error');
+            this.notifier.notify("Tu ne possédes pas d'animal.", 'error');
             return;
         }
         if (!this.pet.entity) {
-            this.notifier.notify('Votre animal se repose.', 'info');
+            this.notifier.notify(`${this.pet.name || `Ton animal`} se repose.`, 'info');
             return;
         }
         const actions = this.petOrderAvailable();
@@ -392,7 +392,7 @@ export class AnimalProvider {
     @OnEvent(ClientEvent.PET_USE_WHISTLE)
     async onUseWhistle() {
         if (!this.isOwningPet()) {
-            this.notifier.notify("Vous ne possédez pas d'animal.", 'error');
+            this.notifier.notify("Tu ne possédes pas d'animal.", 'error');
             return;
         }
         if (this.isUsingWhistle) return;
@@ -407,20 +407,23 @@ export class AnimalProvider {
         if (this.pet.entity) {
             const distance = getDistance(GetEntityCoords(ped) as Vector3, GetEntityCoords(this.pet.entity) as Vector3);
             if (distance >= PetDistanceForceFollowPlayer) {
-                this.notifier.notify('Ton animal est ~y~trop éloigné~s~ de toi pour entendre le sifflet.', 'info');
+                this.notifier.notify(
+                    `${this.pet.name || `Ton animal`} est ~y~trop éloigné~s~ de toi pour entendre le sifflet.`,
+                    'info'
+                );
                 this.isUsingWhistle = false;
                 return;
             }
             await this.playWhistleAnimation();
             await this.despawnAnimal();
-            this.notifier.notify('Ton animal est parti ~g~se reposer~s~.', 'info');
+            this.notifier.notify(`${this.pet.name || `Ton animal`} est parti ~g~se reposer~s~.`, 'info');
             this.isUsingWhistle = false;
             return;
         }
 
         if (this.pet.dead) {
             this.notifier.notify(
-                'Ton animal est à ~r~bout de force~s~, rend toi au ~b~vétérinaire~s~ au plus vite !',
+                `${this.pet.name || `Ton animal`} est à ~r~bout de force~s~, rend toi au ~b~vétérinaire~s~ au plus vite !`,
                 'info'
             );
             this.isUsingWhistle = false;
@@ -429,7 +432,7 @@ export class AnimalProvider {
 
         await this.playWhistleAnimation();
         await this.spawnAnimal();
-        this.notifier.notify('Ton animal commence à ~g~te suivre~s~.', 'info');
+        this.notifier.notify(`${this.pet.name || `Ton animal`} commence à ~g~te suivre~s~.`, 'info');
         this.isUsingWhistle = false;
     }
 
@@ -444,17 +447,22 @@ export class AnimalProvider {
             GetEntityHeading(playerPed),
             0,
             2,
-            -0.5
+            0
         );
 
         const model = this.getPetModel();
         await this.resourceLoader.loadModel(model);
 
         this.pet.entity = CreatePed(0, model, spawnCoord[0], spawnCoord[1], spawnCoord[2], head + 180, true, true);
+        SetEntityInvincible(this.pet.entity, true);
+        SetEntityMaxHealth(this.pet.entity, 1000);
+        SetEntityHealth(this.pet.entity, 1000);
         SetEntityVisible(this.pet.entity, false, false);
         FreezeEntityPosition(this.pet.entity, true);
+        PlaceObjectOnGroundProperly_2(this.pet.entity);
         SetEntityCompletelyDisableCollision(this.pet.entity, false, true);
         SetEntityCollision(this.pet.entity, true, true);
+        SetRagdollBlockingFlags(this.pet.entity, 66048);
 
         if (!IsPedAnAnimal(this.pet.entity)) {
             await this.despawnAnimal();
@@ -546,7 +554,7 @@ export class AnimalProvider {
         if (IsEntityDead(this.pet.entity)) {
             this.pet.dead = true;
             this.notifier.notify(
-                'Ton animal vient de ~r~perdre connaissance~s~, rend toi au ~b~vétérinaire~s~ au plus vite !',
+                `${this.pet.name || `Ton animal`} vient de ~r~perdre connaissance~s~, rend toi au ~b~vétérinaire~s~ au plus vite !`,
                 'info'
             );
 
@@ -569,7 +577,7 @@ export class AnimalProvider {
 
         if (distance > PetDistanceReturnHome) {
             this.notifier.notify(
-                "Ton animal était complètement ~r~perdu~s~ et est ~r~parti~s~ se reposer, avec un ~b~air triste~s~. Il risque de ~y~s'enfuir~s~ si tu ne fais pas attention à lui",
+                `${this.pet.name || `Ton animal`} était complètement ~r~perdu~s~ et est ~r~parti~s~ se reposer, avec un ~b~air triste~s~. Il risque de ~y~s'enfuir~s~ si tu ne fais pas attention à lui !`,
                 'info'
             );
             this.warningDistanceNotif = false;
@@ -581,7 +589,7 @@ export class AnimalProvider {
         if (distance >= PetDistanceForceFollowPlayer) {
             if (!this.warningDistanceNotif) {
                 this.notifier.notify(
-                    'Ton animal est ~y~trop éloigné~s~ de toi et commence à te ~b~chercher~s~.',
+                    `${this.pet.name || `Ton animal`} est ~y~trop éloigné~s~ de toi et commence à te ~b~chercher~s~.`,
                     'info'
                 );
             }
@@ -627,9 +635,12 @@ export class AnimalProvider {
                                 GetEntityCoords(this.pet.entity) as Vector3
                             );
 
-                            isCanceled = distance > PetDistanceReturnHome || !IsVehicleSeatFree(veh, seat);
+                            isCanceled =
+                                distance > PetDistanceReturnHome ||
+                                (!IsVehicleSeatFree(veh, seat) && GetPedInVehicleSeat(veh, seat) !== this.pet.entity);
                             return isCanceled;
                         });
+
                         if (!isCanceled) {
                             await this.startAnimationSync(animation, 10);
                         } else {
@@ -699,7 +710,7 @@ export class AnimalProvider {
         //     if (this.forceOrder) {
         //         this.ready = true;
         //         this.notifier.notify(
-        //             "L'animal est prêt à attaquer ! ~b~Cibler~s~ la ~y~personne~s~ à maîtriser.",
+        //             `${this.pet.name || `Ton animal`} est prêt à attaquer ! ~b~Cibler~s~ la ~y~personne~s~ à maîtriser.`,
         //             'info'
         //         );
         //     }
@@ -710,7 +721,7 @@ export class AnimalProvider {
         //         if (!cancelled) {
         //             this.ready = true;
         //             this.notifier.notify(
-        //                 "L'animal est prêt à chercher des traces de drogue ! ~b~Cibler~s~ la ~y~personne~s~ ou le ~y~véhicule~s~ à marquer.",
+        //                 `${this.pet.name || `Ton animal`} est prêt à chercher des traces de drogue ! ~b~Cibler~s~ la ~y~personne~s~ ou le ~y~véhicule~s~ à marquer.`,
         //                 'info'
         //             );
         //         }
@@ -955,6 +966,10 @@ export class AnimalProvider {
         return Boolean(this.pet);
     }
 
+    public isNamed(): boolean {
+        return Boolean(this.pet && this.pet.name);
+    }
+
     public isDead(): boolean {
         return Boolean(this.pet?.dead);
     }
@@ -968,7 +983,7 @@ export class AnimalProvider {
             getDistance(GetEntityCoords(PlayerPedId()) as Vector3, GetEntityCoords(this.pet.entity) as Vector3) >
             PetDistanceUseFood
         ) {
-            this.notifier.notify('Ton animal est ~b~trop loin~s~ pour être nourris.', 'info');
+            this.notifier.notify(`${this.pet.name || `Ton animal`} est ~b~trop loin~s~ pour être nourris.`, 'info');
             return;
         }
         TriggerServerEvent(ServerEvent.PET_USE_FOOD, inventoryItem);
@@ -982,7 +997,7 @@ export class AnimalProvider {
     public async onPetDisplayState() {
         if (!this.pet) return;
         this.notifier.notify(
-            `~h~État de l'animal~/h~~n~
+            `~h~État de ${this.pet.name || `ton animal`}~/h~~n~
             ~b~Personnalité~s~ : ~g~${positiveTraitLabel[this.pet.trait_up]}~s~ - ~y~${negativeTraitLabel[this.pet.trait_down]}~s~~n~
             ~b~Affection~s~ : ${getAffectionLabel(this.pet.affection)} (${this.pet.affection.toFixed(2)})~n~
             ~b~Entrainement~s~ : ${getTrainingLabel(this.pet.training)} (${this.pet.training.toFixed(2)})`,
@@ -999,7 +1014,10 @@ export class AnimalProvider {
         const ped = PlayerPedId();
         const distance = getDistance(GetEntityCoords(ped) as Vector3, GetEntityCoords(this.pet.entity) as Vector3);
         if (distance >= PetDistanceForceFollowPlayer) {
-            this.notifier.notify('Ton animal est ~b~trop loin~s~ pour entendre ton ordre.', 'info');
+            this.notifier.notify(
+                `${this.pet.name || `Ton animal`} est ~b~trop loin~s~ pour entendre ton ordre.`,
+                'info'
+            );
             return;
         }
 
@@ -1020,14 +1038,17 @@ export class AnimalProvider {
             );
         } else {
             if (!(await emitRpc<boolean>(RpcServerEvent.PET_CONSUME_BALL))) {
-                this.notifier.notify("Tu n'as pas de balle à lancer", 'error');
+                this.notifier.notify("Tu n'as pas de balle à lancer !", 'error');
                 return;
             }
             await this.throwBall();
         }
 
         if (this.pet.energy <= 0 && order !== PetOrder.FOLLOW) {
-            this.notifier.notify('Ton animal est ~b~trop épuisé~s~ pour réaliser ton ordre.', 'info');
+            this.notifier.notify(
+                `${this.pet.name || `Ton animal`} est ~b~trop épuisé~s~ pour réaliser ton ordre.`,
+                'info'
+            );
             return;
         }
 
@@ -1041,11 +1062,14 @@ export class AnimalProvider {
 
         if (!success) {
             this.notifier.notify(
-                'Ton animal te regarde ~y~sans comprendre~s~ ce que tu lui demandes ! Malheureusement, il va falloir le ~b~dresser~s~ petit à petit.',
+                `${this.pet.name || `Ton animal`} te regarde ~y~sans comprendre~s~ ce que tu lui demandes ! Malheureusement, il va falloir le ~b~dresser~s~ petit à petit.`,
                 'info'
             );
         } else {
-            this.notifier.notify(`Ton animal exécute l'ordre ~g~${petOrderMeta[order].label}~s~ !`, 'info');
+            this.notifier.notify(
+                `${this.pet.name || `Ton animal`} exécute l'ordre ~g~${petOrderMeta[order].label}~s~ !`,
+                'info'
+            );
             await this.execOrder(order);
         }
     }

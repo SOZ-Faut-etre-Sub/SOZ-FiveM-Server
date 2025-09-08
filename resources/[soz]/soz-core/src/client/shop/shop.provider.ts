@@ -271,6 +271,13 @@ export class ShopProvider {
                     action: () => this.animalShopProvider.openShop(),
                 },
                 {
+                    icon: 'global/comment',
+                    label: 'Nommer son animal',
+                    category: 'citizen',
+                    canInteract: () => this.animalProvider.isOwningPet(),
+                    action: () => TriggerEvent(ClientEvent.PET_SHOP_NAME_ANIMAL),
+                },
+                {
                     icon: 'crimi/force-consume',
                     label: 'Abandonner son animal',
                     category: 'citizen',

@@ -180,6 +180,7 @@ model pet {
     owner_id     String      @unique @db.VarChar(255)
     owner        player      @relation(fields: [owner_id], references: [citizenid], name: "pet")
     model        String
+    name         String?     @db.VarChar(32)
     trait_up     String      @db.VarChar(64)
     trait_down   String      @db.VarChar(64)
     dead         Boolean     @default(false)
