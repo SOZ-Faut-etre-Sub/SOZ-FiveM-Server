@@ -123,9 +123,9 @@ export const DefaultFeatureConfig: FeaturesConfig = {
         test: true,
     },
     [Feature.SummerDisabling]: {
-        production: true,
-        development: true,
-        test: true,
+        production: false,
+        development: false,
+        test: false,
     },
     [Feature.Summer]: {
         production: false,

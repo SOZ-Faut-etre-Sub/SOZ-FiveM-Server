@@ -937,7 +937,7 @@ export class HousingProvider {
         this.monitor.traceEvent('house_upgrade', {
             player_source: player.source,
             house_id: apartment.identifier,
-            ...apartmentTier,
+            message: apartmentTier.toString(),
             amount: priceWithTaxes,
         });
 
