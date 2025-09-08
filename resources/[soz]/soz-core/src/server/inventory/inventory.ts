@@ -485,7 +485,11 @@ export class Inventory {
         }
 
         // Case 5: Drug pot to target
-        if (existingItem.type === 'drug_pot') {
+        if (
+            existingItem.type === 'drug_pot' &&
+            !isInventoryItemExpired(existingItem) &&
+            !isInventoryItemExpired(inventoryItem)
+        ) {
             const existingItemObject = this._itemService.getItem<DrugPotItem>(existingItem.name);
             const targetItemObject = this._itemService.getItem(existingItemObject.drug_pot.target);
 
@@ -493,7 +497,32 @@ export class Inventory {
                 existingItemObject.drug_pot.ingredient === inventoryItem.name &&
                 amount >= existingItemObject.drug_pot.nbIngredient
             ) {
-                this.removeAtSlot(existingItem.slot, 1);
+                const inItems = [
+                    {
+                        name: existingItemObject.drug_pot.target,
+                        amount: 1,
+                    },
+                ];
+                const out = [
+                    {
+                        name: existingItem.name,
+                        amount: 1,
+                    },
+                ];
+                if (isSameInventory) {
+                    out.push({
+                        name: existingItem.name,
+                        amount: existingItemObject.drug_pot.nbIngredient,
+                    });
+                }
+
+                if (!this.canSwapItems(out, inItems)) {
+                    return Err('not_enough_space');
+                }
+
+                if (!this.removeAtSlot(existingItem.slot, 1)) {
+                    return Err('item_not_found');
+                }
 
                 if (this.doGetItemAtSlot(existingItem.slot)) {
                     this.doAddItem(targetItemObject, 1, {});
