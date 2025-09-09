@@ -327,12 +327,11 @@ export class AnimalProvider {
                 data ??= {};
                 pet.perDays.renamed = true;
                 data.perDays = JSON.stringify(pet.perDays);
-            } else {
-                data = {};
             }
         } else {
             data = this.processIncrementData(pet, { affection: 5 });
         }
+        data ??= {};
         data['name'] = name;
         pet.name = name;
 
@@ -348,9 +347,10 @@ export class AnimalProvider {
         const pet = this.playerPets[player.citizenid];
         if (!pet) return;
 
-        const data = this.processIncrementData(pet, {
-            affection: this.getPetAffectionIncreament(pet, PetAffectionLostDistance),
-        });
+        const data =
+            this.processIncrementData(pet, {
+                affection: this.getPetAffectionIncreament(pet, PetAffectionLostDistance),
+            }) || {};
         data.perDays = JSON.stringify(pet.perDays);
         await this.udpatePetDb(player, data);
     }
@@ -370,9 +370,10 @@ export class AnimalProvider {
         }
 
         pet.perDays.lastAffectionGainOnPet = now;
-        const data = this.processIncrementData(pet, {
-            affection: this.getPetAffectionIncreament(pet, PetAffectionGainOnPet),
-        });
+        const data =
+            this.processIncrementData(pet, {
+                affection: this.getPetAffectionIncreament(pet, PetAffectionGainOnPet),
+            }) || {};
         data.perDays = JSON.stringify(pet.perDays);
         await this.udpatePetDb(player, data);
     }
@@ -395,7 +396,7 @@ export class AnimalProvider {
             }
         }
 
-        const data = this.processIncrementData(pet, dataIncrement);
+        const data = this.processIncrementData(pet, dataIncrement) || {};
         if (data.training) {
             this.notifier.notify(
                 source,
