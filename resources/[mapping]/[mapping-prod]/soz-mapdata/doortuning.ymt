@@ -1481,6 +1481,10 @@
       <TuningName>MichaelGarageCustomBox2</TuningName>
     </Item>
     <Item>
+      <ModelName>soz_hc_garages_hall07_garagedoor</ModelName>
+      <TuningName>MichaelGarageCustomBox2</TuningName>
+    </Item>
+    <Item>
         <ModelName>cube_mppd_ext_bollards</ModelName>
         <TuningName>CubeMppdBollards</TuningName>
     </Item>
