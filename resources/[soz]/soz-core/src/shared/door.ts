@@ -900,6 +900,8 @@ export const DoorModels = [
     -439135882,
     GetHashKey('soz_hc_garages_hall05_garagedoor'),
     GetHashKey('soz_hc_garages_hall06_garagedoor'),
+    GetHashKey('soz_hc_garages_hall07_garagedoor'),
+
     //OilRig
     -128179940,
 
