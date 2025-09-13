@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2016",
+        "target": "es2021",
         "types": ["@citizenfx/server", "@citizenfx/client", "@types/node", "reflect-metadata"],
         "moduleResolution": "node",
         "module": "CommonJS",

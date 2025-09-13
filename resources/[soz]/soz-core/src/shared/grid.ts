@@ -1,6 +1,6 @@
 import { Vector2, Vector3, Vector4 } from './polyzone/vector';
 
-const ZONE_RADIUS = 256;
+const ZONE_RADIUS = 512;
 
 const DELTAS = [
     [-1, -1],

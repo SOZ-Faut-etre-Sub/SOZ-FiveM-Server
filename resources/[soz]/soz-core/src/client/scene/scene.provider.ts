@@ -1,4 +1,5 @@
 import { MinigameProvider } from '@private/client/minigames/minigames.provider';
+import { Command } from '@public/core/decorators/command';
 import { toVector4Object } from '@public/shared/polyzone/vector';
 import { WeaponName } from '@public/shared/weapons/weapon';
 
@@ -43,6 +44,7 @@ import { ObjectEditorProvider } from '../object/object.editor.provider';
 import { ObjectProvider } from '../object/object.provider';
 import { ObjectService } from '../object/object.service';
 import { PlayerPositionProvider } from '../player/player.position.provider';
+import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { SceneRepository } from '../repository/scene.repository';
@@ -108,6 +110,9 @@ export class SceneProvider {
 
     @Inject(ObjectService)
     private objectService: ObjectService;
+
+    @Inject(PlayerService)
+    private playerService: PlayerService;
 
     private highlightedObjectId: string = null;
 
@@ -1549,5 +1554,60 @@ export class SceneProvider {
                 return Ok(input);
             }
         );
+    }
+
+    public applyEntityNormalizedMatrix(entity: number, matrix: number[]) {
+        const norm_R = Math.sqrt(matrix[0] ** 2 + matrix[1] ** 2 + matrix[2] ** 2);
+        const norm_F = Math.sqrt(matrix[4] ** 2 + matrix[5] ** 2 + matrix[6] ** 2);
+        const norm_U = Math.sqrt(matrix[8] ** 2 + matrix[9] ** 2 + matrix[10] ** 2);
+        SetEntityMatrix(
+            entity,
+            matrix[4] / norm_R,
+            matrix[5] / norm_R,
+            matrix[6] / norm_R,
+            matrix[0] / norm_F,
+            matrix[1] / norm_F,
+            matrix[2] / norm_F,
+            matrix[8] / norm_U,
+            matrix[9] / norm_U,
+            matrix[10] / norm_U,
+            matrix[12],
+            matrix[13],
+            matrix[14] // Position
+        );
+    }
+
+    @Command('collection')
+    public async collec(source: number, name: string) {
+        const player = this.playerService.getPlayer();
+        if (player.role !== 'admin') {
+            return;
+        }
+
+        const scene = this.sceneRepository.find(name);
+        const ret = [];
+
+        for (const prop of Object.values(scene.entities)) {
+            const entity = this.objectProvider.getEntityFromId(prop.object.id);
+            if (!entity) {
+                console.log('Unknown', prop.object.id, prop.model);
+                continue;
+            }
+
+            const coords = GetEntityCoords(entity);
+            this.applyEntityNormalizedMatrix(entity, prop.object.matrix);
+            const quaternion = GetEntityQuaternion(entity);
+
+            ret.push({
+                model: prop.model,
+                quaternion,
+                coords,
+                scaleX: 1.0,
+                scaleZ: 1.0,
+                noCollision: prop.object.noCollision,
+            });
+        }
+
+        TriggerServerEvent(ServerEvent.PROP_DUMP_COLLECTION, scene.name, ret);
     }
 }

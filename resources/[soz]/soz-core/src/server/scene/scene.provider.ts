@@ -663,4 +663,88 @@ export class SceneProvider {
         this.loadedScenes.delete(sceneId);
         TriggerClientEvent(ClientEvent.SCENE_UNLOAD, -1, sceneId);
     }
+
+    @OnEvent(ServerEvent.PROP_DUMP_COLLECTION)
+    public ondump(source: number, name: string, data) {
+        name = name.replaceAll(' ', '_').replaceAll('é', 'e').replaceAll('ë', 'e').toLowerCase();
+        let str = `<?xml version="1.0" encoding="UTF-8"?>
+<CMapData>
+ <name>${name}</name>
+ <parent></parent>
+ <streamingExtentsMin x="0" y="0" z="0" />
+ <streamingExtentsMax x="0" y="0" z="0" />
+ <entitiesExtentsMin x="0" y="0" z="0" />
+ <entitiesExtentsMax x="0" y="0" z="0" />
+ <entities>`;
+
+        for (const datum of data) {
+            let flag = 33;
+            if (datum.noCollision) {
+                flag += 4;
+            }
+            str += `<Item type="CEntityDef">
+   <archetypeName>${datum.model}</archetypeName>
+   <flags value="${flag}" />
+   <guid value="0" />
+   <position x="${datum.coords[0]}" y="${datum.coords[1]}" z="${datum.coords[2]}" />
+   <rotation x="${datum.quaternion[0]}" y="${datum.quaternion[1]}" z="${datum.quaternion[2]}" w="${-datum.quaternion[3]}" />
+   <scaleXY value="${datum.scaleX}" />
+   <scaleZ value="${datum.scaleZ}" />
+   <parentIndex value="-1" />
+   <lodDist value="200" />
+   <childLodDist value="0" />
+   <lodLevel>LODTYPES_DEPTH_ORPHANHD</lodLevel>
+   <numChildren value="0" />
+   <priorityLevel>PRI_REQUIRED</priorityLevel>
+   <extensions />
+   <ambientOcclusionMultiplier value="255" />
+   <artificialAmbientOcclusion value="255" />
+   <tintValue value="0" />
+</Item>
+`;
+        }
+
+        str += ` </entities>
+    <containerLods itemType="rage__fwContainerLodDef" />
+    <boxOccluders itemType="BoxOccluder" />
+    <occludeModels itemType="OccludeModel" />
+    <physicsDictionaries />
+    <instancedData>
+        <ImapLink />
+        <PropInstanceList itemType="rage__fwPropInstanceListDef" />
+        <GrassInstanceList itemType="rage__fwGrassInstanceListDef" />
+    </instancedData>
+    <timeCycleModifiers itemType="CTimeCycleModifier">
+    </timeCycleModifiers>
+    <carGenerators itemType="CCarGen" />
+    <LODLightsSOA>
+        <direction itemType="FloatXYZ" />
+        <falloff />
+        <falloffExponent />
+        <timeAndStateFlags />
+        <hash />
+        <coneInnerAngle />
+        <coneOuterAngleOrCapExt />
+        <coronaIntensity />
+    </LODLightsSOA>
+    <DistantLODLightsSOA>
+        <position itemType="FloatXYZ" />
+        <RGBI />
+        <numStreetLights value="0" />
+        <category value="0" />
+    </DistantLODLightsSOA>
+    <block>
+        <version value="0" />
+        <flags value="0" />
+        <name>hei_dt1_02</name>
+        <exportedBy>laikker</exportedBy>
+        <owner></owner>
+        <time>02 December 2024 10:48</time>
+    </block>
+ </CMapData>
+ `;
+
+        SaveResourceFile('soz-core', name + '.ymap.xml', str, -1);
+        this.notifier.notify(source, 'Dump ' + name);
+    }
 }
