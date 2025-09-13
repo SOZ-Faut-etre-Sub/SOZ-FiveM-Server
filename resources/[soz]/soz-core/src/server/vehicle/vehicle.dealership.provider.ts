@@ -23,9 +23,9 @@ import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shar
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
 import {
     getDefaultVehicleCondition,
+    getVehicleMaxFuelStorage,
     isVehicleModelElectric,
     Vehicle,
-    VehicleClassFuelStorageMultiplier,
 } from '../../shared/vehicle/vehicle';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
@@ -143,8 +143,7 @@ export class VehicleDealershipProvider {
             };
 
             const condition = getDefaultVehicleCondition();
-            condition.fuelLevel =
-                condition.fuelLevel * (VehicleClassFuelStorageMultiplier[vehicle?.requiredLicence] || 1.0);
+            condition.fuelLevel = getVehicleMaxFuelStorage(vehicle);
 
             await this.prismaService.playerVehicle.upsert({
                 create: {
@@ -331,8 +330,7 @@ export class VehicleDealershipProvider {
 
             const condition = getDefaultVehicleCondition();
             const vehicle = await this.vehicleRepository.findByModel(auction.vehicle.model);
-            condition.fuelLevel =
-                condition.fuelLevel * (VehicleClassFuelStorageMultiplier[vehicle?.requiredLicence] || 1.0);
+            condition.fuelLevel = getVehicleMaxFuelStorage(vehicle);
 
             await this.prismaService.playerVehicle.create({
                 data: {
@@ -594,8 +592,7 @@ export class VehicleDealershipProvider {
                 }
 
                 const condition = getDefaultVehicleCondition();
-                condition.fuelLevel =
-                    condition.fuelLevel * (VehicleClassFuelStorageMultiplier[vehicle?.requiredLicence] || 1.0);
+                condition.fuelLevel = condition.fuelLevel * getVehicleMaxFuelStorage(vehicle);
 
                 const playerVehicle = await this.prismaService.playerVehicle.create({
                     data: {

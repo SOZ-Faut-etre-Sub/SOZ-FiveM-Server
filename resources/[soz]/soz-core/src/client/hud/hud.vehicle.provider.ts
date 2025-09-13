@@ -5,6 +5,7 @@ import { Provider } from '../../core/decorators/provider';
 import { Tick } from '../../core/decorators/tick';
 import {
     getDefaultVehicleCondition,
+    getVehicleMaxFuelStorage,
     isVehicleModelElectric,
     VehicleClass,
     VehicleLightState,
@@ -99,8 +100,9 @@ export class HudVehicleProvider {
             return;
         }
 
-        const condition = NetworkGetEntityIsNetworked(vehicle)
-            ? this.vehicleConditionProvider.getVehicleCondition(NetworkGetNetworkIdFromEntity(vehicle))
+        const netId = NetworkGetEntityIsNetworked(vehicle) ? NetworkGetNetworkIdFromEntity(vehicle) : 0;
+        const condition = netId
+            ? this.vehicleConditionProvider.getVehicleCondition(netId)
             : getDefaultVehicleCondition();
 
         if (null === condition) {
@@ -134,7 +136,7 @@ export class HudVehicleProvider {
                     : null,
             oilLevel: condition.oilLevel,
             lockStatus: GetVehicleDoorLockStatus(vehicle) as VehicleLockStatus,
-            vehCategory: vehDef?.requiredLicence,
+            maxFuel: getVehicleMaxFuelStorage(vehDef),
             useRpm,
             lightState: hasLight
                 ? hasHighBeam
@@ -143,7 +145,8 @@ export class HudVehicleProvider {
                       ? VehicleLightState.LowBeam
                       : VehicleLightState.Off
                 : VehicleLightState.Off,
-            nosLevel: !condition.nitro ? null : this.nosLevel,
+            nosLevel: this.nosLevel,
+            nosCount: condition.nitro,
         });
     }
 

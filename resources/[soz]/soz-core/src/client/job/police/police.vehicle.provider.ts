@@ -37,7 +37,6 @@ export class PoliceVehicleProvider {
                     label: 'Immatriculation',
                     icon: 'police/immatriculation',
                     job: ALL_FDO_JOB_TARGETS,
-                    blackoutJob: true,
                     blackoutGlobal: true,
                     category: 'society',
                     canInteract: vehicle => {

@@ -16,6 +16,7 @@ export enum DealershipType {
     Cartel = 'cartel',
     Casino = 'casino',
     WhatIf = 'whatif',
+    Drift = 'drift',
 }
 
 export type DealershipConfigItem = {

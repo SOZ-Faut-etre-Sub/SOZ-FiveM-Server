@@ -4,6 +4,7 @@ import { PhoneService } from '@public/client/phone/phone.service';
 import { VampireGameStateProvider } from '@public/client/story/vampire.game.state.provider';
 import { Feature } from '@public/shared/features';
 import { Interaction } from '@public/shared/interaction';
+import { JobType } from '@public/shared/job';
 
 import { TargetOption } from '../../shared/target';
 import { InventoryManager } from '../inventory/inventory.manager';
@@ -45,7 +46,7 @@ export class TargetService {
 
         if (target.job && !this.jobCheck(target.job)) return false;
         if (target.item && !this.itemCheck(target.item)) return false;
-        if (target.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
+        if (target.blackoutGlobal && !this.blackoutGlobalCheck(target.blackoutJob)) return false;
         if (target.blackoutJob && !this.blackoutJobCheck()) return false;
         if (target.canInteract) {
             const result = await target.canInteract(entity);
@@ -62,7 +63,7 @@ export class TargetService {
 
         if (interaction.job && !this.jobCheck(interaction.job)) return false;
         if (interaction.item && !this.itemCheck(interaction.item)) return false;
-        if (interaction.blackoutGlobal && !this.blackoutGlobalCheck()) return false;
+        if (interaction.blackoutGlobal && !this.blackoutGlobalCheck(interaction.blackoutJob)) return false;
         if (interaction.blackoutJob && !this.blackoutJobCheck()) return false;
         if (interaction.canInteract) {
             const result = await interaction.canInteract(entity);
@@ -130,8 +131,9 @@ export class TargetService {
         return inventoryItem.amount >= 1;
     }
 
-    protected blackoutGlobalCheck(): boolean {
-        return this.stateGlobalProvider.getGlobalState().blackoutLevel <= 3;
+    protected blackoutGlobalCheck(blackoutJob: JobType): boolean {
+        const limit = [JobType.LSMC, JobType.BCSO, JobType.LSPD].includes(blackoutJob) ? 4 : 3;
+        return this.stateGlobalProvider.getGlobalState().blackoutLevel <= limit;
     }
 
     protected blackoutJobCheck(): boolean {

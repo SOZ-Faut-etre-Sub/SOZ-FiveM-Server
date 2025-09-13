@@ -200,7 +200,7 @@ export class LSMCSurgeryProvider {
                 icon: 'ems/greffer',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
-                blackoutJob: 'lsmc',
+                blackoutJob: JobType.LSMC,
                 category: 'society',
                 canInteract: entity => {
                     return (

@@ -2,7 +2,6 @@ import { useAssetPath } from '@public/nui/hook/assets';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
-import { getDefaultVehicleCondition, VehicleClassFuelStorageMultiplier } from '../../../../shared/vehicle/vehicle';
 import { RootState } from '../../../store';
 import { useHudColor } from '../hooks/useHudColor';
 import { useZoom } from '../hooks/useZoom';
@@ -11,13 +10,11 @@ import { StatusGauge } from './StatusGauge';
 export const FuelGauge: FunctionComponent = () => {
     const fuelType = useSelector((state: RootState) => state.vehicle.fuelType);
     const fuelLevel = useSelector((state: RootState) => state.vehicle.fuelLevel);
-    const vehCategory = useSelector((state: RootState) => state.vehicle.vehCategory);
+    const maxFuel = useSelector((state: RootState) => state.vehicle.maxFuel);
 
     const { getPath } = useAssetPath();
     const { gaugeColors } = useHudColor();
     const { iconSize } = useZoom();
-
-    const maxFuel = getDefaultVehicleCondition().fuelLevel * (VehicleClassFuelStorageMultiplier[vehCategory] || 1.0);
 
     let gaugeColor = [gaugeColors.orange_light, gaugeColors.orange_dark];
 

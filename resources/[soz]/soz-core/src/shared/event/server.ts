@@ -635,7 +635,9 @@ export enum ServerEvent {
     GANG_VEHBIZ_UNIQUE_SPAWN = 'soz-core:server:gang:veh:unique-spawn',
     GANG_VEHBIZ_NPC_REGISTER = 'soz-core:server:gang:veh:npc-register',
     GANG_VEHBIZ_PLATE_CHANGE = 'soz-core:server:gang:veh:plate-change',
+    GANG_VEHBIZ_PLATE_CHANGE_TEMP = 'soz-core:server:gang:veh:temp-plate-change',
     GANG_VEHBIZ_REFRESH_LIST = 'soz-core:server:gang:vehbiz:refresh-list',
+    GANG_VEHBIZ_PERSONNAL_EXPORT = 'soz-core:server:gang:vehbiz:personnal-export',
     GANG_VEHBIZ_COMMAND = 'soz-core:server:gang:veh:command',
     GANG_VEHBIZ_MAPPING_APPLY = 'soz-core:server:gang:veh:mapping-apply',
     GANG_VEHBIZ_GARAGE_UPGRADE = 'soz-core:server:gang:veh:garage-upgrade',
@@ -647,6 +649,7 @@ export enum ServerEvent {
     GANG_VEHBIZ_FULL = 'soz-core:server:gang:veh:full',
 
     GANG_SMUGGLING_BLACK_MARKET_BOX_USE = 'soz-core:server:gang:smuggling:black-market-box-use',
+    GANG_SMUGGLING_DISTILLERY_USE = 'soz-core:server:gang:smuggling:distillery-use',
     GANG_SMUGGLING_GREENHOUSE_USE = 'soz-core:server:gang:smuggling:greenhouse-use',
     GANG_SMUGGLING_GREENHOUSE_START = 'soz-core:server:gang:smuggling:greenhouse-start',
     GANG_SMUGGLING_GREENHOUSE_STIR = 'soz-core:server:gang:smuggling:greenhouse-stir',
@@ -722,6 +725,7 @@ export enum ServerEvent {
     GANG_CYBER_COMPUTER_DETECTOR = 'soz-core:server:gang:cyber:detector',
     GANG_CYBER_COMPUTER_DETECTOR_TRIGGER = 'soz-core:server:gang:cyber:detector-trigger',
     GANG_CYBER_COMPUTER_WEBCAM = 'soz-core:server:gang:cyber:webcam',
+    GANG_CYBER_ALERT_INJECTOR_USE = 'soz-core:server:gang:alert-injector',
 
     DOOR_ADD_UPDATE = 'soz-core:server:door:add-update',
     DOOR_DELETE = 'soz-core:server:door:delete',

@@ -1,4 +1,4 @@
-import { getDefaultVehicleCondition, VehicleClassFuelStorageMultiplier } from '@public/shared/vehicle/vehicle';
+import { getVehicleMaxFuelStorage } from '@public/shared/vehicle/vehicle';
 
 import { OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -58,10 +58,7 @@ export class VehicleElectricProvider {
         const vehicleState = this.vehicleStateService.getVehicleState(vehicleNetworkId);
 
         const vehDef = await this.vehicleRepository.findByHash(GetEntityModel(vehicle));
-        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehDef?.requiredLicence] || 1.0;
-        const energyToFill = Math.floor(
-            (getDefaultVehicleCondition().fuelLevel * storageMultiplier - vehicleState.condition.fuelLevel) * 0.6
-        ); // 100L <=> 60kWh
+        const energyToFill = Math.floor((getVehicleMaxFuelStorage(vehDef) - vehicleState.condition.fuelLevel) * 0.6); // 100L <=> 60kWh
 
         if (this.currentCharging.has(vehicleNetworkId)) {
             this.notifier.notify(source, 'Le véhicule est déjà en train de charger.', 'error');

@@ -332,8 +332,8 @@ export class VehicleSpawnProvider {
             TaskWarpPedIntoVehicle(ped, vehicle, -1);
         }
 
-        if (volatile.plate) {
-            SetVehicleNumberPlateText(vehicle, volatile.plate);
+        if (volatile.fakeplate || volatile.plate) {
+            SetVehicleNumberPlateText(vehicle, volatile.fakeplate ?? volatile.plate);
         }
 
         this.vehicleStateService.setVehicleState(vehicle, volatile, true);

@@ -411,4 +411,44 @@ export class PlayerService {
 
         return playerInfo[0].citizenId;
     }
+
+    public async findCitizenIdFromPhone(phone: string) {
+        const playerInfo = await this.prismaService.$queryRaw<
+            any[]
+        >`SELECT citizenId FROM player WHERE JSON_EXTRACT(charinfo, "$.phone") = ${phone} AND is_default=1`;
+
+        if (playerInfo.length == 0) {
+            return null;
+        }
+
+        return playerInfo[0].citizenId;
+    }
+
+    public async findCitizenIdFromPlate(plate: string) {
+        const playerInfo = await this.prismaService.playerVehicle.findMany({
+            where: {
+                plate,
+            },
+        });
+
+        if (playerInfo.length == 0) {
+            return null;
+        }
+
+        return playerInfo[0].citizenid;
+    }
+
+    public async findCitizenIdFromAddress(address: string) {
+        const playerInfo = await this.prismaService.housing_apartment.findMany({
+            where: {
+                label: address,
+            },
+        });
+
+        if (playerInfo.length == 0) {
+            return null;
+        }
+
+        return playerInfo[0].tenant;
+    }
 }

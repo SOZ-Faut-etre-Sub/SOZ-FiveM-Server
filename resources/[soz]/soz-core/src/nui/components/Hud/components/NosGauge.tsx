@@ -10,7 +10,7 @@ export const NosGauge: FunctionComponent = () => {
     const vehicle = useVehicle();
     const { nosPaddingTopSize, nosPaddingLeftSize, speedometerSize } = useZoom();
 
-    if (!vehicle.nosLevel) {
+    if (vehicle.nosCount <= 0) {
         return null;
     }
 
@@ -45,6 +45,9 @@ export const NosGauge: FunctionComponent = () => {
             </svg>
 
             <NosIcon className="text-white size-6 -ml-1" />
+            <span className="text-white/80 [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)] font-prompt font-semibold size-6 ml-1">
+                {vehicle.nosCount}
+            </span>
         </div>
     );
 };

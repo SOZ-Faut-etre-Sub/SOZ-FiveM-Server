@@ -878,7 +878,9 @@ export class VehicleGarageProvider {
 
                 if (
                     garage.type === GarageType.Depot &&
-                    (vehicleState.configuration.extraStorage || vehicleState.configuration.handling)
+                    (vehicleState.configuration.extraStorage ||
+                        vehicleState.configuration.handling ||
+                        vehicleState.volatile.fakeplate)
                 ) {
                     vehicleState.configuration.extraStorage = false;
                     delete vehicleState.configuration.handling;
@@ -888,6 +890,7 @@ export class VehicleGarageProvider {
                         },
                         data: {
                             mods: JSON.stringify(vehicleState.configuration),
+                            fakeplate: null,
                         },
                     });
                 }

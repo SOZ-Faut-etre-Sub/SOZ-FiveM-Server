@@ -150,6 +150,7 @@ export enum MenuType {
     DoorAdmin = 'door_admin',
     GangMember = 'gang_member',
     SafeStorage = 'safe_storage',
+    CyberAlertInjector = 'cyber_alert_injector',
     SmugglingBlackMarketPrices = 'smuggling_blackMarket_prices',
     SmugglingBlackMarketOwners = 'smuggling_blackMarket_owners',
     SmugglingContainerOrderMenu = 'smuggling_container_order',

@@ -17,7 +17,7 @@ import { BennysConfig } from '../../shared/job/bennys';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     getDefaultVehicleCondition,
-    VehicleClassFuelStorageMultiplier,
+    getVehicleMaxFuelStorage,
     VehicleCondition,
     VehicleOrder,
     VehicleOrderConfig,
@@ -203,10 +203,10 @@ export class VehicleOrderProvider {
                 waitTime = VehicleBusinessImportWhatIfConf.VehicleBusinessImportDuration;
             }
 
-            if (VehicleOrderMode.Crimi == mode) {
-                garage = 'garage_gang_' + player.gang.id;
-            } else if (VehicleOrderMode.Cartel == mode) {
+            if (['Planes', 'Helicopters'].includes(vehicle.category)) {
                 garage = 'sandy_shores_air';
+            } else {
+                garage = 'garage_gang_' + player.gang.id;
             }
         }
 
@@ -256,11 +256,7 @@ export class VehicleOrderProvider {
     }
 
     private async addVehicle(order: VehicleOrder) {
-        const vehicle = await this.prismaService.vehicle.findFirst({
-            where: {
-                model: order.model,
-            },
-        });
+        const vehicle = await this.vehicleRepository.findByModel(order.model);
         let category = 'car';
         if (vehicle.requiredLicence === 'heli') {
             category = 'air';
@@ -268,9 +264,7 @@ export class VehicleOrderProvider {
             category = 'boat';
         }
 
-        const fuel =
-            getDefaultVehicleCondition().fuelLevel *
-            (VehicleClassFuelStorageMultiplier[vehicle?.requiredLicence] || 1.0);
+        const fuel = getVehicleMaxFuelStorage(vehicle);
         const condition: VehicleCondition = {
             ...getDefaultVehicleCondition(),
             fuelLevel: fuel,

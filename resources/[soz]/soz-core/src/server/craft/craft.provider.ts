@@ -195,15 +195,16 @@ export class CraftProvider {
             metadata.label = rewardName;
         }
 
-        inventory.add(itemId, recipe.amount, metadata);
+        const amount = recipe.amount;
+        inventory.add(itemId, amount, metadata);
 
-        this.notifier.notify(source, `Vous avez confectionné ~y~${recipe.amount}~s~ ~g~${item.label}~s~.`, 'success');
+        this.notifier.notify(source, `Vous avez confectionné ~y~${amount}~s~ ~g~${item.label}~s~.`, 'success');
 
         this.monitor.traceEvent(crafts[category].event, {
             item_id: itemId,
             player_source: source,
             item_label: item.label,
-            amount: recipe.amount,
+            amount: amount,
             position: toVector3Object(GetEntityCoords(GetPlayerPed(source)) as Vector3),
             type: type,
             category: category,

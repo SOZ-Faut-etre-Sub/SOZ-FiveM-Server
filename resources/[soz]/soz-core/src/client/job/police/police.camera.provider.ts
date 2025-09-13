@@ -12,7 +12,7 @@ import { wait } from '@public/core/utils';
 import { Blip } from '@public/shared/blip';
 import { CameraDef, CameraLocations, CameraOffsets } from '@public/shared/camera';
 import { Control } from '@public/shared/input';
-import { ALL_FDO_JOB_TARGETS } from '@public/shared/job';
+import { ALL_FDO_JOB_TARGETS, JobType } from '@public/shared/job';
 import { getLocationHash } from '@public/shared/locationhash';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { applyOffset, Vector3 } from '@public/shared/polyzone/vector';
@@ -60,7 +60,7 @@ export class PoliceCameraProvider {
                 label: 'Caméra',
                 icon: 'heist/camera',
                 category: 'society',
-                blackoutJob: true,
+                blackoutJob: JobType.LSPD,
                 blackoutGlobal: true,
                 job: ALL_FDO_JOB_TARGETS,
                 action: () => this.showCameras(),

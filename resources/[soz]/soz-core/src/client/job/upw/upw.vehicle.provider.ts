@@ -46,7 +46,7 @@ export class UpwVehicleProvider {
                 label: 'Changer la batterie',
                 action: this.changerVehicleBattery.bind(this),
                 blackoutGlobal: true,
-                blackoutJob: 'upw',
+                blackoutJob: JobType.Upw,
                 item: 'lithium_battery',
                 category: 'society',
                 canInteract: entity => !IsEntityDead(entity) && isVehicleModelElectric(GetEntityModel(entity)),

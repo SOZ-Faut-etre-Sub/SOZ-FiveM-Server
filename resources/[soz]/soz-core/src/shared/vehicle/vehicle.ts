@@ -35,9 +35,10 @@ export type VehicleHud = {
     lightState: number;
     fuelType: 'essence' | 'electric' | 'none';
     fuelLevel: number;
-    vehCategory: string;
+    maxFuel: number;
     useRpm: boolean;
-    nosLevel: number | null;
+    nosLevel: number;
+    nosCount: number;
 };
 
 export type VehicleHudSpeed = {
@@ -264,6 +265,7 @@ export type VehicleVolatileState = {
     forced: boolean;
     open: boolean;
     plate: string | null;
+    fakeplate: string | null;
     owner: string | null;
     speedLimit: number | null;
     isPlayerVehicle: boolean;
@@ -293,6 +295,7 @@ export type VehicleVolatileState = {
     stolenLocator: boolean;
     exportBiz: boolean;
     nitroReloadStart: number;
+    nitroRemaining: number;
     isCrimiImport: boolean;
     gyro: number;
 };
@@ -365,6 +368,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     open: false,
     owner: null,
     plate: null,
+    fakeplate: null,
     speedLimit: null,
     dead: false,
     isPlayerVehicle: false,
@@ -394,6 +398,7 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     stolenLocator: false,
     exportBiz: false,
     nitroReloadStart: 0,
+    nitroRemaining: 0,
     isCrimiImport: false,
     gyro: null,
 });
@@ -663,9 +668,18 @@ export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
 //update MissiveVehicleModelList when toggle
 export const DisableNPCBike = false;
 
-export const VehicleClassFuelStorageMultiplier: Record<string, number> = {
-    [PlayerLicenceType.Moto]: 0.75,
-};
+export function getVehicleMaxFuelStorage(vehDef: Vehicle): number {
+    let coef = 1.0;
+    if (vehDef?.dealershipId == PlayerLicenceType.Moto) {
+        coef = 0.75;
+    }
+
+    if (vehDef?.dealershipId == DealershipType.Armored) {
+        coef = 0.5;
+    }
+
+    return Math.round(getDefaultVehicleCondition().fuelLevel * coef);
+}
 
 export const VEHICLE_TRUNK_TYPES = {
     [joaat('tanker')]: 'tanker',

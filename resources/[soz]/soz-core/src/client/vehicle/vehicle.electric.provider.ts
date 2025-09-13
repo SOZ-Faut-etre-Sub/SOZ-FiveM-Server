@@ -5,7 +5,7 @@ import { UpwStation } from '@public/shared/fuel';
 import { JobType } from '@public/shared/job';
 import { getDistance, Vector3 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
-import { isVehicleModelElectric, VehicleClassFuelStorageMultiplier, VehicleSeat } from '@public/shared/vehicle/vehicle';
+import { getVehicleMaxFuelStorage, isVehicleModelElectric, VehicleSeat } from '@public/shared/vehicle/vehicle';
 
 import { Once, OnceStep, OnEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -403,10 +403,9 @@ export class VehicleElectricProvider {
         }
 
         const vehDef = this.vehicleRepository.getByModelHash(GetEntityModel(vehicle));
-        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehDef?.requiredLicence] || 1.0;
         const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
 
-        if (condition.fuelLevel > 97.0 * storageMultiplier) {
+        if (condition.fuelLevel > 0.97 * getVehicleMaxFuelStorage(vehDef)) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPlug();
 

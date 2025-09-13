@@ -1,6 +1,6 @@
 import { createModel } from '@rematch/core';
 
-import { VehicleHud, VehicleHudSpeed } from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleCondition, VehicleHud, VehicleHudSpeed } from '../../shared/vehicle/vehicle';
 import type { RootModel } from './';
 
 export const vehicle = createModel<RootModel>()({
@@ -15,9 +15,10 @@ export const vehicle = createModel<RootModel>()({
         fuelType: 'essence',
         fuelLevel: 0,
         rpm: 0,
-        vehCategory: null,
+        maxFuel: getDefaultVehicleCondition().fuelLevel,
         useRpm: true,
         nosLevel: null,
+        nosCount: 0,
         gear: 0,
     } as VehicleHud,
     reducers: {

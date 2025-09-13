@@ -50,7 +50,7 @@ export const DarkChatMessages = memo(() => {
                 message.phoneNumber === number &&
                 message.conversation_id === parseInt(conversationId)
         ) as DarkwebMessage[];
-        return myMessages.sort((a, b) => a.createdAt - b.createdAt).reverse()[0]?.createdAt + 60_000;
+        return myMessages.sort((a, b) => a.createdAt - b.createdAt).reverse()[0]?.createdAt + 30_000;
     }, [messages, number, conversationId]);
 
     useAppTitleGetBackUpdater(() => navigate(-1), undefined, 'text-teal-500');

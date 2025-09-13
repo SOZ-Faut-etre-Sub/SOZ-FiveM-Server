@@ -534,6 +534,7 @@ export enum NuiEvent {
     GangAdminGarage = 'soz-core:client:gang:admin-garage',
     GangAdminUpdatePedToPlayer = 'soz-core:client:gang:admin-ped-to-player',
     GangAdminUpdatePlayerToPed = 'soz-core:client:gang:admin-player-to-ped',
+    GangAdminUpdateWorkshop = 'soz-core:client:gang:admin-workshop',
     GangAdminUpdatePropLocation = 'soz-core:client:gang:admin-update-prop-location',
     GangAdminUpdateZone = 'soz-core:client:gang:admin-update-zone',
     GangAdminUpdateCryptoCoef = 'soz-core:client:gang:admin-update-crypto-coef',
@@ -560,6 +561,7 @@ export enum NuiEvent {
 
     BusinessVehicleOrder = 'soz-core:client:business:vehicle:order',
     BusinessVehicleResetList = 'soz-core:client:business:vehicle:list-reset',
+    BusinessVehiclePersonnalExport = 'soz-core:client:business:vehicle:personnal-export',
     BusinessVehiclePosition = 'soz-core:client:business:vehicle:position',
     BusinessVehicleHandling = 'soz-core:client:business:vehicle:handling',
     BusinessVehicleUniqueAdd = 'soz-core:client:business:vehicle:unique-add',
@@ -630,6 +632,7 @@ export enum NuiEvent {
     BusinessCyberShowWebcams = 'soz-core:client:;business:cyber:show-webcams',
     BusinessCyberHeistLocation = 'soz-core:client:;business:cyber:heist-location',
     BusinessCyberHeistStart = 'soz-core:client:;business:cyber:heist-start',
+    BusinessCyberAlertInjector = 'soz-core:client:;business:cyber:alert-injector',
 
     AdminDoorSetState = 'soz-core:client:door:set-state',
     AdminDoorAddSub = 'soz-core:client:door:add-subdoor',

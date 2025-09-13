@@ -82,7 +82,7 @@ export class LSMCInteractionProvider {
                 icon: 'ems/Rehabiliter',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
-                blackoutJob: 'lsmc',
+                blackoutJob: JobType.LSMC,
                 category: 'society',
                 canInteract: async entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {
@@ -105,7 +105,7 @@ export class LSMCInteractionProvider {
                 icon: 'ems/Deshabiliter',
                 job: JobType.LSMC,
                 blackoutGlobal: true,
-                blackoutJob: 'lsmc',
+                blackoutJob: JobType.LSMC,
                 category: 'society',
                 canInteract: async entity => {
                     if (!hopital.isPointInside(GetEntityCoords(PlayerPedId()) as Vector3)) {

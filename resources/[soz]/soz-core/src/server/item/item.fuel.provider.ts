@@ -1,8 +1,4 @@
-import {
-    getDefaultVehicleCondition,
-    isVehicleModelElectric,
-    VehicleClassFuelStorageMultiplier,
-} from '@public/shared/vehicle/vehicle';
+import { getVehicleMaxFuelStorage, isVehicleModelElectric } from '@public/shared/vehicle/vehicle';
 
 import { Once } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -80,8 +76,7 @@ export class ItemFuelProvider {
             return;
         }
 
-        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehModel?.requiredLicence] || 1.0;
-        const maxFuel = Math.floor(getDefaultVehicleCondition().fuelLevel * storageMultiplier);
+        const maxFuel = getVehicleMaxFuelStorage(vehModel);
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
@@ -153,8 +148,7 @@ export class ItemFuelProvider {
         }
 
         const vehModel = await this.vehicleRepository.findByHash(GetEntityModel(closestVehicle.vehicleEntityId));
-        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehModel?.requiredLicence] || 1.0;
-        const maxFuel = Math.floor(getDefaultVehicleCondition().fuelLevel * storageMultiplier);
+        const maxFuel = getVehicleMaxFuelStorage(vehModel);
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 
@@ -265,8 +259,7 @@ export class ItemFuelProvider {
         }
 
         const vehModel = await this.vehicleRepository.findByHash(GetEntityModel(closestVehicle.vehicleEntityId));
-        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehModel?.requiredLicence] || 1.0;
-        const maxFuel = Math.floor(getDefaultVehicleCondition().fuelLevel * storageMultiplier);
+        const maxFuel = getVehicleMaxFuelStorage(vehModel);
 
         const vehicleState = this.vehicleStateService.getVehicleState(closestVehicle.vehicleNetworkId);
 

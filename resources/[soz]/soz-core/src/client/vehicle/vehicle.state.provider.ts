@@ -110,6 +110,14 @@ export class VehicleStateProvider {
                 }
             }, false)
         );
+        this.vehicleStateService.addVehicleStateSelector(
+            [(state: VehicleVolatileState) => state.fakeplate],
+            createVehicleChangeCallback((vehicle: number, fakeplate: string) => {
+                if (fakeplate) {
+                    SetVehicleNumberPlateText(vehicle, fakeplate);
+                }
+            }, false)
+        );
     }
 
     @OnEvent(ClientEvent.VEHICLE_UPDATE_STATE)

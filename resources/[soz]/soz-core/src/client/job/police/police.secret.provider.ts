@@ -6,7 +6,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { emitRpc } from '@public/core/rpc';
 import { ServerEvent } from '@public/shared/event';
-import { ALL_FDO_JOB_TARGETS } from '@public/shared/job';
+import { ALL_FDO_JOB_TARGETS, JobType } from '@public/shared/job';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { RpcServerEvent } from '@public/shared/rpc';
 
@@ -37,7 +37,7 @@ export class PoliceSecretProvider {
                     label: 'Ordinateur',
                     icon: 'vehbiz/hacking',
                     job: ALL_FDO_JOB_TARGETS,
-                    blackoutJob: true,
+                    blackoutJob: JobType.LSPD,
                     blackoutGlobal: true,
                     category: 'society',
                     action: async () => {

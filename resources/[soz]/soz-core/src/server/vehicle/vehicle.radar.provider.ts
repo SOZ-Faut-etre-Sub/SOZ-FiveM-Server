@@ -62,7 +62,7 @@ export class VehicleRadarProvider {
         const vehicle = NetworkGetEntityFromNetworkId(vehicleID);
         const vehicleSpeed = Math.round(GetEntitySpeed(vehicle) * 3.6);
         const state = this.vehicleStateService.getVehicleState(vehicleID);
-        const vehiclePlate = state.volatile.plate || GetVehicleNumberPlateText(vehicle);
+        const vehiclePlate = GetVehicleNumberPlateText(vehicle);
         const vehicleModel = GetEntityModel(vehicle);
         let fine: number = 0;
         if (state.volatile.isPlayerVehicle) {
@@ -71,6 +71,10 @@ export class VehicleRadarProvider {
         const vehicleType = GetVehicleType(vehicle);
 
         if (!player || !radar) {
+            return;
+        }
+
+        if (state.volatile.fakeplate) {
             return;
         }
 

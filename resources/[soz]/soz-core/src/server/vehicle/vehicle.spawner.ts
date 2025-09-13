@@ -20,12 +20,14 @@ import {
     DisableNPCBike,
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
+    getVehicleMaxFuelStorage,
     VehicleCondition,
     VehicleSpawn,
     VehicleType,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
 import { PlayerService } from '../player/player.service';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleStateService } from './vehicle.state.service';
 
 type ClosestVehicle = {
@@ -187,6 +189,9 @@ export class VehicleSpawner {
 
     @Inject(GarageRepository)
     private garageRepository: GarageRepository;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     private closestVehicleResolver: Record<string, (closestVehicle: null | ClosestVehicle) => void> = {};
 
@@ -381,6 +386,7 @@ export class VehicleSpawner {
         const volatile: Partial<VehicleVolatileState> = {
             isPlayerVehicle: true,
             plate: vehicle.plate,
+            fakeplate: vehicle.fakeplate,
             id: vehicle.id,
             open: false,
             owner: player.citizenid,
@@ -432,6 +438,7 @@ export class VehicleSpawner {
             position[3] = GetEntityHeading(GetPlayerPed(source));
         }
 
+        const vehDef = await this.vehicleRepository.findByModel(model);
         const modelHash = GetHashKey(model);
         const volatileState: VehicleVolatileState = {
             ...getDefaultVehicleVolatileState(),
@@ -441,6 +448,7 @@ export class VehicleSpawner {
             model: model,
         };
         const condition = getDefaultVehicleCondition();
+        condition.fuelLevel = getVehicleMaxFuelStorage(vehDef);
         return this.spawn(
             source,
             {

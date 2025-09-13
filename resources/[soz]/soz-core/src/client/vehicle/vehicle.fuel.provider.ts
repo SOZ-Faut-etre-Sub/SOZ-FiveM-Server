@@ -16,9 +16,9 @@ import { JobType } from '../../shared/job';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
+    getVehicleMaxFuelStorage,
     isVehicleModelElectric,
     VehicleClass,
-    VehicleClassFuelStorageMultiplier,
     VehicleCondition,
     VehicleSeat,
 } from '../../shared/vehicle/vehicle';
@@ -474,10 +474,9 @@ export class VehicleFuelProvider {
         }
 
         const vehDef = this.vehicleRepository.getByModelHash(GetEntityModel(vehicle));
-        const storageMultiplier = VehicleClassFuelStorageMultiplier[vehDef?.requiredLicence] || 1.0;
         const condition = await this.vehicleStateService.getVehicleCondition(vehicle);
 
-        if (condition.fuelLevel > 99.0 * storageMultiplier) {
+        if (condition.fuelLevel > 0.99 * getVehicleMaxFuelStorage(vehDef)) {
             this.notifier.notify('Le véhicule est déjà plein.', 'error');
             await this.disableStationPistol();
 

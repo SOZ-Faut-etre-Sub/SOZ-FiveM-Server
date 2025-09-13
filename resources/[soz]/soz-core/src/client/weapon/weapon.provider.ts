@@ -4,6 +4,7 @@ import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
 import { emitRpc } from '@core/rpc';
 import { PhoneAppSocietyProvider } from '@public/client/phone/apps/phone.app.society.provider';
+import { DealershipType } from '@public/config/dealership';
 import { wait } from '@public/core/utils';
 import { Feature } from '@public/shared/features';
 import { FuelStationType } from '@public/shared/fuel';
@@ -33,6 +34,7 @@ import { PhoneService } from '../phone/phone.service';
 import { PlayerService } from '../player/player.service';
 import { ProgressService } from '../progress.service';
 import { FuelStationRepository } from '../repository/fuel.station.repository';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { ZoneRepository } from '../repository/zone.repository';
 import { VoipRadioProvider } from '../voip/voip.radio.provider';
 import { WeaponDrawingProvider } from './weapon.drawing.provider';
@@ -107,6 +109,9 @@ export class WeaponProvider {
 
     @Inject(AudioService)
     private audioService: AudioService;
+
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
 
     private lastPoliceCall = 0;
 
@@ -258,21 +263,34 @@ export class WeaponProvider {
             return;
         }
 
-        if (IsPedArmed(player, 7) && IsPedRagdoll(player)) {
-            DisableControlAction(0, 24, true);
-            return;
-        }
+        if (IsPedArmed(player, 7)) {
+            if (IsPedRagdoll(player)) {
+                DisableControlAction(0, Control.Attack, true);
+                return;
+            }
 
-        if (
-            !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
-            IsPedArmed(player, 7) &&
-            GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === player &&
-            GetEntitySpeed(vehicle) * 3.6 > 50
-        ) {
-            DisableControlAction(0, 24, true);
-            await this.weapon.clear();
+            if (vehicle) {
+                if (
+                    !this.featureProvider.isFeatureEnabled(Feature.WhatIfFirstEpisode) &&
+                    GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) === player &&
+                    GetEntitySpeed(vehicle) * 3.6 > 50
+                ) {
+                    DisableControlAction(0, Control.Attack, true);
+                    await this.weapon.clear();
 
-            return;
+                    return;
+                }
+
+                const vehModel = GetEntityModel(vehicle);
+                const vehDef = this.vehicleRepository.getByModelHash(vehModel);
+                if (vehDef.dealershipId === DealershipType.Armored) {
+                    DisablePlayerFiring(PlayerId(), true);
+                    DisableControlAction(0, Control.Attack, true);
+                    DisableControlAction(0, Control.Attack2, true);
+                    DisableControlAction(0, Control.VehiclePassengerAttack, true);
+                    return;
+                }
+            }
         }
 
         if (!IsPedShooting(player)) {
