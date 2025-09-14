@@ -255,6 +255,7 @@ export enum ServerEvent {
     PLAYER_OPEN_WALLET = 'soz-core:server:player:open-wallet',
 
     PROGRESS_FINISH = 'soz-core:server:progress:finish',
+    PROP_DUMP_COLLECTION = 'soz-core:server:prop:dump-collection',
 
     SCENE_CREATE = 'soz-core:server:scene:create',
     SCENE_DELETE = 'soz-core:server:scene:delete',
