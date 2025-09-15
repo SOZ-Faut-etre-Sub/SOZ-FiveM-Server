@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 import { Logger } from '@core/logger';
-import { uuidv4, wait } from '@core/utils';
+import { wait } from '@core/utils';
 import { FeatureProvider } from '@public/client/feature/feature.provider';
 import { billboardOffsets, getScreenModel } from '@public/shared/billboard';
 import { BLACK_SCREEN_URL } from '@public/shared/global';
@@ -196,6 +196,7 @@ export class ObjectService {
             SetObjectTextureVariation(entity, object.textureVariation);
         }
 
+        /*
         if (object.dynamicTexture && object.dynamicTexture.url) {
             const conf = billboardOffsets[object.dynamicTexture.baseModel];
             if (conf) {
@@ -230,6 +231,7 @@ export class ObjectService {
                 }
             }
         }
+        */
     }
 
     public deleteObject(entity: number, object: WorldObject) {
