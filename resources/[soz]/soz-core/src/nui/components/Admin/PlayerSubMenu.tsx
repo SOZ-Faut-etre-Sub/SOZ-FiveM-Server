@@ -416,6 +416,16 @@ export const PlayerSubMenu: FunctionComponent<PlayerSubMenuProps> = ({ permissio
                             >
                                 Changer la réputation
                             </MenuItemButton>
+                            <MenuItemCheckbox
+                                disabled={!isAdminOrStaff}
+                                checked={player.canCraftMissive}
+                                onChange={async value => {
+                                    await fetchNui(NuiEvent.AdminMenuPlayerHandleSetCanCraftMissive, { player, value });
+                                    player.canCraftMissive = value;
+                                }}
+                            >
+                                Représentant de Corbin
+                            </MenuItemCheckbox>
                             <MenuItemButton
                                 disabled={!isAdminOrStaff}
                                 onConfirm={async () => {

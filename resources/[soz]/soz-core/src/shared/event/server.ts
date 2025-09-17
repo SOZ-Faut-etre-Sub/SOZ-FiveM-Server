@@ -73,6 +73,7 @@ export enum ServerEvent {
     ADMIN_CEREMONY_TIME = 'soz-core:server:admin:ceremony:time',
     ADMIN_PARADE_START = 'soz-core:server:admin:parade:start',
     ADMIN_PARADE_SOUND = 'soz-core:server:admin:parade:sound',
+    ADMIN_SET_CAN_CRAFT_MISSIVE = 'soz-core:server:admin:set-can-craft-missive',
 
     ADMIN_XMAS_UPDATE_SCENE = 'soz-core:server:admin:xmas:update-scene',
 
@@ -196,7 +197,6 @@ export enum ServerEvent {
 
     LSC_CHECK_STOCK = 'soz-core:server:job:lsc:check-stock',
 
-    MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
     MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
 

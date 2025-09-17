@@ -393,6 +393,7 @@ export type PlayerMetadata = PlayerHealthBook & {
     criminal_reputation: number;
     criminal_talents: Talent[];
     criminal_lastaction: number;
+    criminal_can_craft_missive: boolean;
     drugs_skills: DrugSkill[];
     drugs_heavy_contract_date: number;
     vehiclelimit: number;

@@ -210,6 +210,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata["criminal_state"] = PlayerData.metadata["criminal_state"] or 0
     PlayerData.metadata["criminal_reputation"] = PlayerData.metadata["criminal_reputation"] or 0
     PlayerData.metadata["criminal_lastaction"] = PlayerData.metadata["criminal_lastaction"] or 0
+    PlayerData.metadata["criminal_can_craft_missive"] = PlayerData.metadata["criminal_can_craft_missive"] or false
     PlayerData.metadata["drugs_skills"] = PlayerData.metadata["drugs_skills"] or {}
     PlayerData.metadata["drugs_heavy_contract_date"] = PlayerData.metadata["drugs_heavy_contract_date"] or 0
 
@@ -222,7 +223,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.metadata["is_senator"] = PlayerData.metadata["is_senator"] or false
     PlayerData.metadata["plaster"] = PlayerData.metadata["plaster"] or {}
     PlayerData.metadata["gym_state"] = PlayerData.metadata["gym_state"] or nil
-    
+
     PlayerData.metadata["hazmat_protection"] = PlayerData.metadata["hazmat_protection"] or 0
 
     if not PlayerData.metadata.lastBidTime then
@@ -491,9 +492,9 @@ function QBCore.Player.CreatePlayer(PlayerData)
     self.Functions.UpdateArmour = function()
         local jobClothSet = self.PlayerData.cloth_config["JobClothSet"]
         local saspModel = self.PlayerData.skin.Model.Hash == GetHashKey("mp_m_freemode_01") and 8 or 10
-        if jobClothSet and 
-            jobClothSet.Components["9"] and 
-            (jobClothSet.Components["9"].Drawable ~= 0 or jobClothSet.Components["9"].Collection) and 
+        if jobClothSet and
+            jobClothSet.Components["9"] and
+            (jobClothSet.Components["9"].Drawable ~= 0 or jobClothSet.Components["9"].Collection) and
             (jobClothSet.Components["9"].Collection ~= 'soz_bcso' or jobClothSet.Components["9"].Drawable ~= saspModel) then
             self.Functions.SetArmour(true)
         else

@@ -51,6 +51,7 @@ export class AdminMenuInteractiveProvider {
             specialPlate: playerData.metadata.special_plate,
             vampireGameExcluded: this.vampireGameStateProvider.excludedPlayers.has(playerData.citizenid),
             armorPlates: state.nbArmorPlates,
+            canCraftMissive: playerData.metadata.criminal_can_craft_missive,
         };
     }
 
@@ -80,6 +81,7 @@ export class AdminMenuInteractiveProvider {
                 plate: playerData.metadata.plate,
                 specialPlate: playerData.metadata.special_plate,
                 armorPlates: state.nbArmorPlates,
+                canCraftMissive: playerData.metadata.criminal_can_craft_missive,
             });
         }
         return players;

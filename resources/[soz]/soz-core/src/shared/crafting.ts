@@ -1,5 +1,6 @@
 import { Talent } from '@private/shared/talent';
 import { InventoryItem, InventoryItemMetadata } from '@public/shared/inventory';
+import { PlayerMetadata } from '@public/shared/player';
 
 import { Feature } from './features';
 
@@ -11,6 +12,8 @@ export type CriminalCraftingRequirements = {
     outputCount?: number;
     resell: number;
     feature?: Feature;
+    corbin?: boolean;
+    metadataRequired?: keyof PlayerMetadata;
 };
 
 export type CriminalCraftingCheckItem = {

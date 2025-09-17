@@ -258,6 +258,11 @@ export class AdminMenuPlayerProvider {
         TriggerServerEvent(ServerEvent.ADMIN_SET_REPUTATION, player.id, value);
     }
 
+    @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSetCanCraftMissive)
+    public async handleSetCanCraftMissive({ player, value }: { player: AdminPlayer; value: boolean }) {
+        TriggerServerEvent(ServerEvent.ADMIN_SET_CAN_CRAFT_MISSIVE, player.id, value);
+    }
+
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleResetCrimi)
     public async handleResetCrimi(player: AdminPlayer): Promise<void> {
         const value = await this.inputService.askInput({

@@ -58,6 +58,7 @@ export enum NuiEvent {
     AdminMenuPlayerHandleOpenGunSmith = 'soz-core:client:admin:handle-open-gunsmith',
     AdminMenuPlayerHandleInjuriesUpdate = 'soz-core:client:admin:handle-injuries-update',
     AdminMenuPlayerHandleSetReputation = 'soz-core:client:admin:set-reputation',
+    AdminMenuPlayerHandleSetCanCraftMissive = 'soz-core:client:admin:set-can-craft-missive',
     AdminMenuPlayerHandleResetCrimi = 'soz-core:client:admin:reset-crimi',
     AdminMenuPlayerHandleResetClientState = 'soz-core:client:admin:reset-client-state',
     AdminMenuPlayerSearch = 'soz-core:client:admin:search',

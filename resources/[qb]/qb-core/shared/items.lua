@@ -9157,6 +9157,16 @@ QBShared.Items = {
         ["description"] = "Fait attention à ce que tu fais avec pour ne pas avoir de problème...",
         ["illustrator"] = ".Sniteur",
     },
+    ["missive_closed"] = {
+        ["name"] = "missive_closed",
+        ["label"] = "Contrat",
+        ["weight"] = 200,
+        ["type"] = "item_illegal",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["description"] = "Une enveloppe bien mystérieuse...",
+        ["illustrator"] = ".Frozennide",
+    },
     ["suspicious_package"] = {
         ["name"] = "suspicious_package",
         ["label"] = "Colis suspect",

@@ -138,6 +138,7 @@ export type AdminPlayer = {
     specialPlate: boolean | null;
     vampireGameExcluded?: boolean;
     armorPlates: number;
+    canCraftMissive: boolean;
 };
 
 export type FullAdminPlayer = AdminPlayer & {
