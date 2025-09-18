@@ -1,5 +1,5 @@
-fx_version 'cerulean'
-games { 'gta5' }
+fx_version "cerulean"
+game "gta5"
 
 author 'Player1'
 description 'German Shepherd'
@@ -10,5 +10,3 @@ files {
 }
 
 data_file 'PED_METADATA_FILE' 'peds.meta'
-
-lua54 'yes'

@@ -25141,7 +25141,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["illustrator"] = ".Kaemy",
-        ["description"] = "???",
+        ["description"] = "Un sifflet spécialement conçu pour l'unité K9 du BCSO.",
     },
     ["whistle_lspd"] = {
         ["name"] = "whistle_lspd",
@@ -25152,7 +25152,18 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["illustrator"] = ".Kaemy",
-        ["description"] = "???",
+        ["description"] = "Un sifflet spécialement conçu pour l'unité K9 du LSPD.",
+    },
+    ["whistle_sasp"] = {
+        ["name"] = "whistle_sasp",
+        ["label"] = "Sifflet K9 - SASP",
+        ["weight"] = 150,
+        ["type"] = "item",
+        ["unique"] = true,
+        ["useable"] = true,
+        ["shouldClose"] = true,
+        ["illustrator"] = ".Kaemy",
+        ["description"] = "Un sifflet spécialement conçu pour l'unité K9 de la SASP.",
     },
 
     --- bangle

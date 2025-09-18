@@ -594,7 +594,7 @@ export const petShopContent: Record<petBreed, petInShop> = {
         label: 'Berger Allemand',
         type: 'Chien',
         price: 150_000,
-        jobs: [JobType.BCSO, JobType.LSPD],
+        jobs: [JobType.BCSO, JobType.LSPD, JobType.SASP],
     },
 };
 
@@ -918,7 +918,7 @@ export const JobFixPetVariation: Partial<Record<JobType, Partial<Record<petBreed
             {
                 component: 3,
                 drawable: 0,
-                texture: 3,
+                texture: 0,
             },
             {
                 component: 8,
@@ -927,7 +927,6 @@ export const JobFixPetVariation: Partial<Record<JobType, Partial<Record<petBreed
             },
         ],
     },
-
     [JobType.BCSO]: {
         [k9_model]: [
             {
@@ -939,6 +938,20 @@ export const JobFixPetVariation: Partial<Record<JobType, Partial<Record<petBreed
                 component: 8,
                 drawable: 0,
                 texture: 1,
+            },
+        ],
+    },
+    [JobType.SASP]: {
+        [k9_model]: [
+            {
+                component: 3,
+                drawable: 0,
+                texture: 4,
+            },
+            {
+                component: 8,
+                drawable: 0,
+                texture: 8,
             },
         ],
     },

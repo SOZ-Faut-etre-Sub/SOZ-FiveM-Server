@@ -24,6 +24,7 @@ import {
     IncrementalPetData,
     incrementalPetResetMetadata,
     IncrementalPetResetMetadataType,
+    JobFixPetVariation,
     k9_model,
     negativeTraitLabel,
     orderJobRestriction,
@@ -451,6 +452,9 @@ export class AnimalProvider {
     }
 
     async spawnAnimal(pet: AnyClientPet) {
+        const player = this.playerService.getPlayer();
+        if (!player) return;
+
         const playerPed = PlayerPedId();
         const coords = GetEntityCoords(playerPed);
         const head = GetEntityHeading(playerPed);
@@ -484,6 +488,11 @@ export class AnimalProvider {
 
         for (const component of pet.components) {
             SetPedComponentVariation(pet.entity, component.component, component.drawable, component.texture, 0);
+        }
+        if (pet.isPetJob && JobFixPetVariation?.[player.job.id]?.[pet.model]) {
+            for (const component of JobFixPetVariation[player.job.id][pet.model]) {
+                SetPedComponentVariation(pet.entity, component.component, component.drawable, component.texture, 0);
+            }
         }
 
         SetEntityVisible(pet.entity, true, false);
