@@ -19193,6 +19193,13 @@ export const ZkeaFourniture: ZkeaFournitureItemList = {
         price: 1000,
         collision: true,
     },
+	    soz_zevent_zplace: {
+        type: 'Exclusif',
+        name: 'Tableau ZPlace 2025',
+        model: 'soz_zevent_zplace_25',
+        price: 2500,
+        collision: true,
+    },
 };
 
 export const ZkeaFournitureModelTranslate: Record<string, string> = {};
