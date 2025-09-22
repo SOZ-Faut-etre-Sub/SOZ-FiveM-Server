@@ -331,8 +331,8 @@ export class AnimalProvider {
         }
 
         const pet = this.getCurrentPet();
-        if (!pet.entity) {
-            this.notifier.notify(`${pet.name || `Ton animal`} se repose.`, 'info');
+        if (!pet) {
+            this.notifier.notify('Ton animal se repose.', 'info');
             return;
         }
         const actions = this.petOrderAvailable(pet);
@@ -573,7 +573,15 @@ export class AnimalProvider {
     @Tick(TickInterval.EVERY_FRAME * 100)
     async animalStateLoop() {
         const pet = this.getCurrentPet();
-        if (!pet?.entity || !DoesEntityExist(pet.entity) || pet.dead) return;
+        if (!pet?.entity) return;
+
+        if (!DoesEntityExist(pet.entity)) {
+            pet.entity = null;
+            this.resetAll();
+            return;
+        }
+
+        if (pet.dead) return;
 
         if (IsEntityDead(pet.entity)) {
             pet.dead = true;
@@ -793,12 +801,12 @@ export class AnimalProvider {
 
         const flag = PetOrderAnimationFlag[PetOrder.PET];
 
-        const coords = GetEntityCoords(ped) as Vector3;
         if (orderAnimation.dictionary === dictionary && orderAnimation.name === 'petting_chop') {
+            const coords = GetOffsetFromEntityInWorldCoords(ped, 0, 1.3, -1.0) as Vector3;
             const scene = NetworkCreateSynchronisedScene(
                 coords[0],
                 coords[1],
-                coords[2] - 1,
+                coords[2],
                 0,
                 0,
                 GetEntityHeading(ped),

@@ -29,7 +29,7 @@ export const whistles = [
     'whistle_lunar',
 ];
 
-export const k9_whistles = ['whistle_bcso', 'whistle_lspd'];
+export const k9_whistles = ['whistle_bcso', 'whistle_lspd', 'whistle_sasp'];
 export const k9_model = 'german_shepherd';
 
 export enum PetOrder {
