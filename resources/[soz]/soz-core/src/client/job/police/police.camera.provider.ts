@@ -1,21 +1,26 @@
-import { BlipFactory } from '@public/client/blip';
+import { BlipAction, BlipFactory } from '@public/client/blip';
 import { HudWatchProvider } from '@public/client/hud/hud.watch.provider';
+import { Notifier } from '@public/client/notifier';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { PlayerService } from '@public/client/player/player.service';
+import { HackedCamRepository } from '@public/client/repository/hacked.cam.repository';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { TargetProvider } from '@public/client/target/target.provider';
 import { Once } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { RepositoryInsert, RepositoryUpdate } from '@public/core/decorators/repository';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
 import { Blip } from '@public/shared/blip';
 import { CameraDef, CameraLocations, CameraOffsets } from '@public/shared/camera';
 import { Control } from '@public/shared/input';
 import { ALL_FDO_JOB_TARGETS, JobType } from '@public/shared/job';
+import { HackedCam } from '@public/shared/job/police';
 import { getLocationHash } from '@public/shared/locationhash';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { applyOffset, Vector3 } from '@public/shared/polyzone/vector';
+import { RepositoryType } from '@public/shared/repository';
 
 const FOV_MAX = 70.0;
 const FOV_MIN = 5.0;
@@ -49,9 +54,16 @@ export class PoliceCameraProvider {
     @Inject(PlayerService)
     private readonly playerService: PlayerService;
 
+    @Inject(HackedCamRepository)
+    private readonly hackedCamRepository: HackedCamRepository;
+
+    @Inject(Notifier)
+    private readonly notifier: Notifier;
+
     private fov = (FOV_MAX + FOV_MIN) * 0.5;
     private camera: number = null;
     private entity = 0;
+    private coords: Vector3 = null;
 
     @Once()
     public init() {
@@ -87,8 +99,11 @@ export class PoliceCameraProvider {
         this.handleZoom(this.camera);
 
         if (IsDisabledControlJustPressed(0, Control.FrontendCancel)) {
+            const saveCoords = this.coords;
+            const inter = setInterval(() => SetFakePausemapPlayerPositionThisFrame(saveCoords[0], saveCoords[1]), 0);
             this.deleteCamera();
-            this.showCameras();
+            await this.showCameras();
+            clearInterval(inter);
         }
 
         DisableAllControlActions(0);
@@ -159,6 +174,7 @@ export class PoliceCameraProvider {
     }
 
     private async createWebcam(data: CameraDef) {
+        this.coords = data.position;
         const position = applyOffset(
             [data.position[0], data.position[1], data.position[2], data.heading],
             CameraOffsets[data.model]
@@ -211,6 +227,21 @@ export class PoliceCameraProvider {
         }
     }
 
+    @RepositoryInsert(RepositoryType.HackedCam)
+    @RepositoryUpdate(RepositoryType.HackedCam)
+    public async onHacked(hackedCam: HackedCam) {
+        if (!this.coords || getLocationHash(this.coords) !== hackedCam.hash) {
+            return;
+        }
+
+        if (hackedCam.date < Date.now()) {
+            return;
+        }
+
+        this.notifier.notify('Cette caméra est temporairement désactivée.', 'warning');
+        this.deleteCamera();
+    }
+
     private deleteCamera() {
         RenderScriptCams(false, true, 100, true, false);
         DestroyCam(this.camera, false);
@@ -224,6 +255,7 @@ export class PoliceCameraProvider {
 
         this.camera = null;
         this.entity = null;
+        this.coords = null;
         this.fov = (FOV_MAX + FOV_MIN) * 0.5;
 
         ClearTimecycleModifier();
@@ -246,8 +278,27 @@ export class PoliceCameraProvider {
                 continue;
             }
 
+            const hash = getLocationHash(camInfo.position);
+            const hackedCam = this.hackedCamRepository.find(hash);
+            const hacked = hackedCam && hackedCam.date >= Date.now();
+
             const id = 'policeccam_' + getLocationHash(camInfo.position);
             blips.push(id);
+
+            const actions: Omit<BlipAction<CameraDef>, 'id'>[] = [];
+            if (!hacked) {
+                actions.push({
+                    label: 'Caméra',
+                    action: async (blip: Blip, data: CameraDef) => {
+                        await this.cleanBlips(blips, savedBlips);
+                        blips = [];
+                        savedBlips = {};
+                        SetFrontendActive(false);
+                        this.createWebcam(data);
+                    },
+                    data: camInfo,
+                });
+            }
 
             this.blipFactory.create(
                 id,
@@ -256,21 +307,9 @@ export class PoliceCameraProvider {
                     name: 'Caméra',
                     sprite: 629,
                     rotation: -90,
-                    color: 39,
+                    color: hacked ? 1 : 39,
                 },
-                [
-                    {
-                        label: 'Caméra',
-                        action: async (blip: Blip, data: CameraDef) => {
-                            await this.cleanBlips(blips, savedBlips);
-                            blips = [];
-                            savedBlips = {};
-                            SetFrontendActive(false);
-                            this.createWebcam(data);
-                        },
-                        data: camInfo,
-                    },
-                ]
+                actions
             );
             if (i++ % 50 == 0) {
                 await wait(0);

@@ -9956,3 +9956,8 @@ export const GyroOffset = {
     [joaat('youga')]: 0.0,
     [joaat('habanero')]: -0.05,
 };
+
+export type HackedCam = {
+    hash: number;
+    date: number;
+};

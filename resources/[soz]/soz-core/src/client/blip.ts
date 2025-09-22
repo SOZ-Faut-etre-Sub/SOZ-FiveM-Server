@@ -21,7 +21,7 @@ type GameBlip = {
     actions?: BlipAction<any>[];
 };
 
-type BlipAction<T = undefined> = {
+export type BlipAction<T = undefined> = {
     id: string;
     label: string;
     action: (blip: Blip, data: T) => void | Promise<void>;

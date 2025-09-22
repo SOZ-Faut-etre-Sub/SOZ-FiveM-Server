@@ -155,7 +155,7 @@ export enum MenuType {
     SmugglingBlackMarketOwners = 'smuggling_blackMarket_owners',
     SmugglingContainerOrderMenu = 'smuggling_container_order',
     SmugglingMenu = 'smuggling',
-    SmugglingZoneEditMenu = 'smuggling_zone_edit',
+    GangZoneEditMenu = 'gang_zone_edit',
     GangMenu = 'gang',
     GangVehiculeMenu = 'gang_vehicule_menu',
     WatchMenu = 'watch_menu',
@@ -259,6 +259,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.CasinoRoulette]: RouletteMenuData;
     [MenuType.PetShop]: PetShopMenuData;
     [MenuType.PetJobKennel]: PetJobKennelMenuData;
+    [MenuType.GangZoneEditMenu]: string;
 }
 
 export const ALLOWED_MENU_NAVIGATE: MenuType[] = [MenuType.AdminMenu, MenuType.PropPlacementMenu];

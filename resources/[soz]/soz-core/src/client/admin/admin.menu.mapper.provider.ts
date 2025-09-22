@@ -1,7 +1,6 @@
 import {
     SmugglingBusinessExportContainerConfig,
     SmugglingBusinessImportContainerConfig,
-    SmugglingBusinessNetworkBox,
 } from '@private/shared/business.smuggling';
 import { VehicleBusinessExportContainerProp, VehicleBusinessExportCoveredProp } from '@private/shared/business.vehicle';
 import { RepositoryDelete, RepositoryUpdate } from '@public/core/decorators/repository';
@@ -50,7 +49,6 @@ const COLOR_BY_TYPE: Record<string, RGBAColor> = {
 const ZoneProps: Partial<Record<ZoneType, number>> = {
     [ZoneType.VehBizSpawn]: VehicleBusinessExportCoveredProp,
     [ZoneType.VehBizDelivery]: VehicleBusinessExportContainerProp,
-    [ZoneType.SmugglingBizStorage]: SmugglingBusinessNetworkBox,
     [ZoneType.SmugglingBizContainer]: SmugglingBusinessImportContainerConfig.props.container,
     [ZoneType.SmugglingBizExport]: SmugglingBusinessExportContainerConfig.prop,
 };

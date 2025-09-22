@@ -8,7 +8,7 @@ import { Gang } from '@private/shared/gang';
 import { BankAccount, Invoice } from '@public/shared/bank';
 import { Configuration } from '@public/shared/configuration';
 import { Field } from '@public/shared/field';
-import { Fine } from '@public/shared/job/police';
+import { Fine, HackedCam } from '@public/shared/job/police';
 import { LeaderboardInterface } from '@public/shared/phone/apps/game';
 import { ZoneTyped } from '@public/shared/polyzone/box.zone';
 import { Scene, SceneLiveElement, WorldEvent } from '@public/shared/scene';
@@ -77,6 +77,7 @@ export enum RepositoryType {
     VehicleSiren = 'vehicleSiren',
     Traveling = 'traveling',
     ModelSwap = 'modelSwap',
+    HackedCam = 'hackedCam',
 }
 
 export type RepositoryMapping = {
@@ -124,6 +125,7 @@ export type RepositoryMapping = {
     [RepositoryType.VehicleSiren]: boolean;
     [RepositoryType.Traveling]: TravelingCamera;
     [RepositoryType.ModelSwap]: ModelSwap;
+    [RepositoryType.HackedCam]: HackedCam;
 };
 
 export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
@@ -158,6 +160,7 @@ export interface RepositoryConfig extends Record<keyof RepositoryMapping, any> {
     [RepositoryType.VehicleSiren]: Record<number, boolean>;
     [RepositoryType.Traveling]: Record<number, TravelingCamera>;
     [RepositoryType.ModelSwap]: Record<number, ModelSwap>;
+    [RepositoryType.HackedCam]: Record<number, HackedCam>;
     // Not implemented
     [RepositoryType.Billboard]: Record<number, Billboard>;
     [RepositoryType.ChargerUpw]: Record<number, UpwCharger>;

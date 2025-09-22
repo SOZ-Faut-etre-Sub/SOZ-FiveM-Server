@@ -48,7 +48,7 @@ export const ZoneTypeLabel: Record<ZoneType, string> = {
     VehBizDelivery: 'VehBiz Conteneur de livraison',
     VehBizResell: 'VehBiz Revente de caisse',
     VehBizGarage: 'VehBiz Garage',
-    SmugglingBizStorage: 'Coffre contrebande connecté',
+    SmugglingBizStorage: "Entrée d'entrepot de contrebande",
     SmugglingBizContainer: 'Contrebande import',
     SmugglingBizExport: 'Contrebande Export',
     SmugglingBizConvoy: 'Contrebande Convoi',

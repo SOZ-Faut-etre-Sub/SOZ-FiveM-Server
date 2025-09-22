@@ -620,6 +620,10 @@ export enum ServerEvent {
     GANG_UPGRADE = 'soz-core:server:gang:upgrade',
     GANG_PARKING_UPDATE = 'soz-core:server:gang:parking-update',
 
+    GANG_ZONE_EDIT_CREATE = 'soz-core:server:gang:zone-edit:create',
+    GANG_ZONE_EDIT_DELETE = 'soz-core:server:gang:zone-edit:delete',
+    GANG_ZONE_EDIT_UPDATE = 'soz-core:server:gang:zone-edit:update',
+
     GANG_VEHBIZ_GET_POSITION = 'soz-core:server:gang:veh:position',
     GANG_VEHBIZ_UNLOCK = 'soz-core:server:gang:veh:unlock',
     GANG_VEHBIZ_RESELL = 'soz-core:server:gang:veh:resell',
@@ -686,9 +690,6 @@ export enum ServerEvent {
     GANG_SMUGGLING_PRINTER_REMOVE = 'soz-core:server:gang:smuggling:printer-remove',
     GANG_SMUGGLING_MINE_PUT_C4 = 'soz-core:server:gang:smuggling:mine-putting-c4',
     GANG_SMUGGLING_GETTING_ORE = 'soz-core:server:gang:smuggling:mine-getting-ore',
-    GANG_SMUGGLING_ZONE_EDIT_CREATE = 'soz-core:server:gang:smuggling:zone-edit:create',
-    GANG_SMUGGLING_ZONE_EDIT_DELETE = 'soz-core:server:gang:smuggling:zone-edit:delete',
-    GANG_SMUGGLING_ZONE_EDIT_UPDATE = 'soz-core:server:gang:smuggling:zone-edit:update',
     GANG_SMUGGLING_CONVOY_START = 'soz-core:server:gang:smuggling:convoy:start',
     GANG_SMUGGLING_MINE_ESTIMATION = 'soz-core:server:gang:smuggling:mine-estimation',
     GANG_SMUGGLING_MINE_ESTIMATION_FAILED = 'soz-core:server:gang:smuggling:mine-estimation-failed',
@@ -701,7 +702,11 @@ export enum ServerEvent {
     GANG_SMUGGLING_GETTING_ELECTRONIC_PARTS = 'soz-core:server:gang:smuggling:getting-electronic-parts',
     GANG_SMUGGLING_CONTAINER_SIGNAL = 'soz-core:server:gang:smuggling:container-signal',
     GANG_SMUGGLING_IMPORT_DELETE = 'soz-core:server:gang:smuggling:container-delete',
+    GANG_SMUGGLING_WAREHOUSE_EXIT = 'soz-core:server:gang:smuggling:warehouse-exit',
+    GANG_SMUGGLING_WAREHOUSE_LOCK = 'soz-core:server:gang:smuggling:warehouse-lock',
 
+    GANG_CYBER_HACK_CAM = 'soz-core:server:gang:cyber:hack-cam',
+    GANG_CYBER_HACK_PHONE = 'soz-core:server:gang:cyber:hack-phone',
     GANG_CYBER_HACK_VEHICLE = 'soz-core:server:gang:cyber:hack-vehicle',
     GANG_CYBER_HACK_PED = 'soz-core:server:gang:cyber:hack-ped',
     GANG_CYBER_HACK_RADAR = 'soz-core:server:gang:cyber:hack-radar',

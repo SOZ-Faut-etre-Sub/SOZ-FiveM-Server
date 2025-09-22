@@ -12,11 +12,11 @@ import { ContainerOrderMenu } from '@private/nui/gang/BusinessSmuggling/MenuCont
 import { SmugglingMenu } from '@private/nui/gang/BusinessSmuggling/MenuSmuggling';
 import { MenuSmugglingOwners } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingOwners';
 import { MenuSmugglingPrices } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingPrice';
-import { MenuSmugglingEditZone } from '@private/nui/gang/BusinessSmuggling/MenuSmugglingZoneEdit';
 import { MenuGangVehicule } from '@private/nui/gang/BusinessVehicle/MenuGangVehicule';
 import { MenuGang } from '@private/nui/gang/MenuGang';
 import { MenuGangAdmin } from '@private/nui/gang/MenuGangAdmin';
 import { MenuGangMember } from '@private/nui/gang/MenuGangMember';
+import { MenuGangZoneEdit } from '@private/nui/gang/MenuGangZoneEdit';
 import { MenuHubEntryAdmin } from '@private/nui/hub/MenuHubEntryAdmin';
 import { MenuIllegalShop } from '@private/nui/illegalshop/MenuIllegalShop';
 import { AdminMenu } from '@public/nui/components/Admin/AdminMenu';
@@ -347,7 +347,7 @@ const MenuRouter: FunctionComponent = () => {
             />
             <Route path={`/${MenuType.SmugglingContainerOrderMenu}/*`} element={<ContainerOrderMenu />} />
             <Route path={`/${MenuType.SmugglingMenu}/*`} element={<SmugglingMenu />} />
-            <Route path={`/${MenuType.SmugglingZoneEditMenu}/*`} element={<MenuSmugglingEditZone />} />
+            <Route path={`/${MenuType.GangZoneEditMenu}/*`} element={<MenuGangZoneEdit data={menuData} />} />
             <Route path={`/${MenuType.GangMenu}/*`} element={<MenuGang />} />
             <Route path={`/${MenuType.GangVehiculeMenu}/*`} element={<MenuGangVehicule />} />
             <Route path={`/${MenuType.WatchMenu}/*`} element={<MenuWatch data={menuData} />} />

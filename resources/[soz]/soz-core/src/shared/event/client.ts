@@ -412,13 +412,13 @@ export enum ClientEvent {
     GANG_VEHBIZ_NPC_CHASE = 'soz-core:client:gang:veh:npc-chase',
     GANG_VEHBIZ_BOX_RESELL_ZONE_HIGHLIGHT = 'soz-core:client:gang:veh:resell-hightlight',
 
-    GANG_SMUGGLING_CONNECTED_REFRESH = 'soz-core:client:gang:smuggling:connected-refresh',
     GANG_SMUGGLING_EXPORT_POSITION = 'soz-core:client:gang:smuggling:export-position',
     GANG_SMUGGLING_MINE_DETONATION = 'soz-core:client:gang:smuggling:mine-c4-detonation',
     GANG_SMUGGLING_ELECTRONIC_DETONATION = 'soz-core:client:gang:smuggling:electronic-c4-detonation',
     GANG_SMUGGLING_CONVOY_TASK = 'soz-core:client:gang:smuggling:convoy-task',
     GANG_SMUGGLING_UPDATE_OPENED_RESALERS = 'soz-core:client:gang:smuggling:update-resalers',
     GANG_SMUGGLING_SPAWN_GUARD_RESALER = 'soz-core:client:gang:smuggling:spawn-guard-resalers',
+    GANG_SMUGGLING_WAREHOUSE_PROP = 'soz-core:client:gang:smuggling:warehouse-prop',
 
     GANG_CYBER_HACK_VEHICLE = 'soz-core:client:gang:cyber:hack-vehicle',
     GANG_CYBER_ALERT_INJECTOR_USE = 'soz-core:client:gang:cyber:use-alert-injector',
@@ -428,6 +428,7 @@ export enum ClientEvent {
     GANG_CYBER_REPORT_USE = 'soz-core:client:gang:cyber:report-use',
     GANG_CYBER_ALERT = 'soz-core:client:gang:cyber:alert',
     GANG_CYBER_ENTRER_HEIST_INIT_PED = 'soz-core:client:gang:cyber:heist-init-ped',
+    GANG_CYBER_HACK_PHONE = 'soz-core:client:gang:cyber:hack-phone',
 
     GANG_CARTEL_CONTAINER_USE = 'soz-core:client:gang:container-use',
 

@@ -22,6 +22,7 @@ import { ItemIcon } from './ItemIcon';
 export type Selected = {
     id: string;
     category: string;
+    outputItem: string;
 };
 
 export const CraftApp: FunctionComponent = () => {
@@ -40,6 +41,7 @@ export const CraftApp: FunctionComponent = () => {
         setSelected({
             id: firstItem,
             category: Object.keys(data.categories)[0],
+            outputItem: data.categories[firstCategory].recipes[firstItem].outputItem ?? firstItem,
         });
         setCraftList(data);
         setTitle(data.title);
@@ -62,7 +64,7 @@ export const CraftApp: FunctionComponent = () => {
 
             for (let i = 0; i < amount; i++) {
                 list = await fetchNui<any, CraftsList>(NuiEvent.CraftDoRecipe, {
-                    itemId: selected.id,
+                    craftId: selected.id,
                     category: selected.category,
                     type: craftList.type,
                 });
@@ -172,11 +174,12 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
             <div className="flex flex-wrap gap-5">
                 {Object.entries(craftList.categories[category].recipes)
                     .sort((a, b) => a[0].localeCompare(b[0]))
-                    .map(([itemId, recipe]) => (
+                    .map(([crafId, recipe]) => (
                         <ItemTier
-                            key={itemId}
+                            key={crafId}
                             category={category}
-                            itemId={itemId}
+                            crafId={crafId}
+                            item={recipe.outputItem ?? crafId}
                             canCraft={recipe.canCraft}
                             selected={selected}
                             setSelected={setSelected}
@@ -191,7 +194,8 @@ const ItemTierList: FunctionComponent<ItemTierListProps> = ({
 interface ItemTierProps {
     category: string;
 
-    itemId: string;
+    crafId: string;
+    item: string;
     canCraft: boolean;
 
     selected: Selected;
@@ -202,16 +206,17 @@ interface ItemTierProps {
 
 const ItemTier: FunctionComponent<ItemTierProps> = ({
     category,
-    itemId,
+    crafId,
+    item,
     canCraft,
     selected,
     setSelected,
     showUnavailable,
 }) => {
-    const item = useItem(itemId);
-    const isSelected = selected.id === itemId && selected.category === category;
+    const itemDef = useItem(item);
+    const isSelected = selected.id === crafId && selected.category === category;
 
-    if (!item) {
+    if (!itemDef) {
         return null;
     }
 
@@ -224,14 +229,15 @@ const ItemTier: FunctionComponent<ItemTierProps> = ({
             className="size-40 rounded-xl cursor-pointer"
             onClick={() =>
                 setSelected({
-                    id: itemId,
+                    id: crafId,
                     category: category,
+                    outputItem: item,
                 })
             }
         >
             <GlassMorphismContainer disableGameClone={true} borderClassName="rounded-xl" disableBorder={!isSelected}>
                 <ItemIcon
-                    item={item}
+                    item={itemDef}
                     className={cn('size-40', {
                         grayscale: !canCraft,
                     })}
@@ -257,7 +263,7 @@ const SelectedItem: FunctionComponent<SelectedItemProps> = ({ selected, craftLis
 
     const { glassmorphismColors, isDaltonism, card } = useHudColor();
 
-    const selectedItem = items.find(i => i.name === selected.id);
+    const selectedItem = items.find(i => i.name === (selected.outputItem ?? selected.id));
     const recipe = craftList.categories[selected.category].recipes[selected.id];
 
     const canCraft = Object.values(recipe.inputs).every(

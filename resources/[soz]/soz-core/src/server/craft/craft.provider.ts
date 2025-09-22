@@ -133,10 +133,10 @@ export class CraftProvider {
     }
 
     @Rpc(RpcServerEvent.CRAFT_DO_RECIPES)
-    public async doCraft(source: number, itemId: string, type: string, category: string): Promise<CraftsList> {
+    public async doCraft(source: number, craftId: string, type: string, category: string): Promise<CraftsList> {
         const crafts = await this.getCrafts(source, type);
-        const recipe = crafts[category].recipes[itemId];
-        const item = this.itemService.getItem(itemId);
+        const recipe = crafts[category].recipes[craftId];
+        const item = this.itemService.getItem(recipe.outputItem ?? craftId);
         const player = this.playerService.getPlayer(source);
 
         if (!player) {
@@ -150,7 +150,7 @@ export class CraftProvider {
 
         const inventory = await this.inventoryFactory.getPlayerInventory(source);
 
-        if (!(await this.checkCraft(source, inventory, itemId, recipe))) {
+        if (!(await this.checkCraft(source, inventory, item.name, recipe))) {
             return await this.getTransformRecipes(source, type, true);
         }
 
@@ -173,7 +173,7 @@ export class CraftProvider {
             return await this.getTransformRecipes(source, type, true);
         }
 
-        if (!(await this.checkCraft(source, inventory, itemId, recipe))) {
+        if (!(await this.checkCraft(source, inventory, item.name, recipe))) {
             return await this.getTransformRecipes(source, type, true);
         }
 
@@ -196,12 +196,12 @@ export class CraftProvider {
         }
 
         const amount = recipe.amount;
-        inventory.add(itemId, amount, metadata);
+        inventory.add(item.name, amount, metadata);
 
         this.notifier.notify(source, `Vous avez confectionné ~y~${amount}~s~ ~g~${item.label}~s~.`, 'success');
 
         this.monitor.traceEvent(crafts[category].event, {
-            item_id: itemId,
+            item_id: item.name,
             player_source: source,
             item_label: item.label,
             amount: amount,

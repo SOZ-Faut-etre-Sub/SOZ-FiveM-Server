@@ -27,11 +27,11 @@ export class CraftProvider {
 
     @OnNuiEvent(NuiEvent.CraftDoRecipe)
     public async onDoCraft({
-        itemId,
+        craftId,
         category,
         type,
     }: {
-        itemId: string;
+        craftId: string;
         category: string;
         type: string;
     }): Promise<CraftsList> {
@@ -40,7 +40,7 @@ export class CraftProvider {
         return await emitRpcTimeout<CraftsList>(
             RpcServerEvent.CRAFT_DO_RECIPES,
             categoryList.duration + 2000,
-            itemId,
+            craftId,
             type,
             category
         );

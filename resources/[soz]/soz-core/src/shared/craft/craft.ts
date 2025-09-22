@@ -22,6 +22,7 @@ export type CraftCategory = {
 
 export type CraftRecipe = {
     inputs: Record<string, CraftInput>;
+    outputItem?: string;
     amount: number;
     canCraft?: boolean;
     rewardTier?: Record<string, CraftRewardTier>;
