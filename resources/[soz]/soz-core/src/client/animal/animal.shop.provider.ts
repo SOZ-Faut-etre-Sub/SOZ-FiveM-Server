@@ -235,11 +235,6 @@ export class AnimalShopProvider {
                 texture: GetPedTextureVariation(this.lastPetShow, componentId),
             });
         }
-        if (job && JobFixPetVariation?.[job]?.[pet.model]) {
-            for (const petDrawable of JobFixPetVariation[job][pet.model]) {
-                petDrawables.push(petDrawable);
-            }
-        }
         TriggerServerEvent(ServerEvent.PET_SHOP_BUY_ANIMAL, pet, petDrawables, job);
         this.nuiMenu.closeMenu();
     }
