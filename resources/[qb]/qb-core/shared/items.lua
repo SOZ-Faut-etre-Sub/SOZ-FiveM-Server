@@ -11487,7 +11487,7 @@ QBShared.Items = {
         ["shouldClose"] = false,
         ["unique"] = false,
         ["combinable"] = nil,
-        ["description"] = "Brouiller les pistes n'a jamais été aussi facile.",
+        ["description"] = "Une plaque en un instant, sans laisser de traces. Le Kit parfait pour disparaître aussi vite qu’on est arrivé.",
         ["illustrator"] = ".Sniteur",
     },
     ["veh_mapping_box"] = {
@@ -12215,12 +12215,12 @@ QBShared.Items = {
     },
     ["smuggling_electronic_export"] = {
         ["name"] = "smuggling_electronic_export",
-        ["label"] = "Caisse d’exportation de Composant électronic",
+        ["label"] = "Caisse d’exportation de Composant électronique",
         ["weight"] = 5000,
         ["useable"] = false,
         ["type"] = "smuggling_export",
         ["storageItemType"] = "smuggling_electronic",
-        ["openStorageLabel"] = "Stockage de Composant électronic",
+        ["openStorageLabel"] = "Stockage de Composant électronique",
         ["storageItemMandatoryMetadata"] = "value",
         ["storageItemWeight"] = 40000,
         ["shouldClose"] = false,
@@ -12231,7 +12231,7 @@ QBShared.Items = {
     },
     ["smuggling_common_electronic"] = {
         ["name"] = "smuggling_common_electronic",
-        ["label"] = "Composant électronic commun",
+        ["label"] = "Composant électronique commun",
         ["weight"] = 300,
         ["useable"] = false,
         ["type"] = "smuggling_electronic",
@@ -12243,7 +12243,7 @@ QBShared.Items = {
     },
     ["smuggling_rare_electronic"] = {
         ["name"] = "smuggling_rare_electronic",
-        ["label"] = "Composant électronic rare",
+        ["label"] = "Composant électronique rare",
         ["weight"] = 500,
         ["useable"] = false,
         ["type"] = "smuggling_electronic",
@@ -12255,7 +12255,7 @@ QBShared.Items = {
     },
     ["smuggling_precious_electronic"] = {
         ["name"] = "smuggling_precious_electronic",
-        ["label"] = "Composant électronic precieux",
+        ["label"] = "Composant électronique precieux",
         ["weight"] = 800,
         ["useable"] = false,
         ["type"] = "smuggling_electronic",
@@ -12267,7 +12267,7 @@ QBShared.Items = {
     },
     ["smuggling_unique_electronic"] = {
         ["name"] = "smuggling_unique_electronic",
-        ["label"] = "Composant électronic unique",
+        ["label"] = "Composant électronique unique",
         ["weight"] = 1000,
         ["useable"] = false,
         ["type"] = "smuggling_electronic",
@@ -12631,14 +12631,14 @@ QBShared.Items = {
     ["cyber_crypto_repair"] = {
         ["name"] = "cyber_crypto_repair",
         ["label"] = "Kit de réparation de serveurs",
-        ["weight"] = 1000,
+        ["weight"] = 5000,
         ["useable"] = false,
         ["type"] = "item_illegal",
         ["shouldClose"] = false,
         ["unique"] = false,
         ["combinable"] = nil,
-        ["description"] = "",
-        ["illustrator"] = ".",
+        ["description"] = "La trousse de secours pour rigs épuisés. Parce que même les machines ont parfois besoin d’un docteur.",
+        ["illustrator"] = ".Sniteur",
     },
     ["cyber_crypto_station"] = {
         ["name"] = "cyber_crypto_station",
