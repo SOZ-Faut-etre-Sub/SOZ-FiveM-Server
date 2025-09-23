@@ -463,13 +463,13 @@ export const FoodCloakroom: WardrobeConfig = {
             Components: {
                 [3]: { Drawable: 11, Texture: 0, Palette: 0 },
                 [4]: { Drawable: 187, Texture: 0, Palette: 0 },
-                [6]: { Drawable: 10, Texture: 0, Palette: 0 },
+                [6]: { Drawable: 104, Texture: 3, Palette: 0 },
                 [8]: { Drawable: 6, Texture: 0, Palette: 0 },
                 [10]: { Drawable: 0, Texture: 0, Palette: 0 },
                 [11]: { Drawable: 40, Texture: 1, Palette: 0 },
             },
             Props: {},
-            GlovesID: 56002,
+            GlovesID: 56011,
         },
         ['Tenue Direction']: {
             Components: {
