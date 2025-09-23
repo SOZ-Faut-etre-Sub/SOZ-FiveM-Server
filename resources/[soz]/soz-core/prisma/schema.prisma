@@ -616,12 +616,20 @@ model field {
     @@unique(fields: [identifier, owner], name: "fieldOwner")
 }
 
+model investigation_category {
+    id            Int             @id @default(autoincrement())
+    label         String          @db.VarChar(255)
+    service       String?         @db.VarChar(50)
+
+    investigation investigation[]
+}
+
 model investigation {
     id                     Int                      @id @unique(map: "investigation_id_uindex") @default(autoincrement())
     citizenid              String                   @db.VarChar(255)
     service                String                   @db.VarChar(255)
     title                  String                   @db.VarChar(128)
-    type                   report_type              @default(investigation)
+    category_id            Int
     isTemplate             Boolean?                 @default(false)
     closed                 Boolean?                 @default(false)
     granted                String?                  @db.LongText
@@ -633,8 +641,12 @@ model investigation {
     in_charge              String?                  @db.LongText
     created_at             DateTime?                @default(now()) @db.Timestamp(0)
     updated_at             DateTime?                @default(now()) @db.Timestamp(0)
+
+    category               investigation_category @relation(fields: [category_id], references: [id])
     investigation_revision investigation_revision[]
     investigation_favori   investigation_favori[]
+
+    @@index([category_id])
 }
 
 model investigation_revision {
@@ -756,19 +768,6 @@ model easter_hunt {
     hunted_at DateTime @default(now()) @db.Timestamp(0)
 
     @@index([citizenid], map: "citizenid")
-}
-
-enum report_type {
-    appeal
-    investigation
-    report
-    common_report
-    operation
-    certification
-    sentence
-    criminal_record
-    complaint
-    document
 }
 
 model drugs_seedling {
