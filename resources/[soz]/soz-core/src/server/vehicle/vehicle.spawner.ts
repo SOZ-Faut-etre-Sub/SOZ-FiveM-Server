@@ -131,6 +131,9 @@ const VEHICLE_HAS_RADIO = [
     'openwheel2',
     'formula',
     'formula2',
+    'dinghy3',
+    'volatus',
+    'volatus2',
 ];
 
 const DISALLOWED_VEHICLE_MODELS = {
