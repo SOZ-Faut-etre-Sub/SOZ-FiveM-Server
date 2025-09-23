@@ -229,6 +229,19 @@ export const StonkCloakroom: WardrobeConfig = {
             GlovesID: 56000,
             Props: {},
         },
+        ['Tenue VIP Hiver']: {
+            Components: {
+                [1]: { Drawable: 121, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 12, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 25, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 15, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 29, Texture: 2, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 31, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0 },
+            },
+        },
         ["Tenue VIP d'été"]: {
             Components: {
                 [1]: { Drawable: 121, Texture: 0, Palette: 0 },
@@ -345,6 +358,20 @@ export const StonkCloakroom: WardrobeConfig = {
                 [Component.Tops]: { Drawable: 333, Texture: 0, Palette: 0 },
             },
             GlovesID: 55000,
+            Props: {},
+        },
+        ["Tenue VIP d'hiver"]: {
+            Components: {
+                [1]: { Drawable: 121, Texture: 0, Palette: 0 },
+                [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                [Component.Legs]: { Drawable: 133, Texture: 0, Palette: 0 },
+                [Component.Shoes]: { Drawable: 29, Texture: 0, Palette: 0 },
+                [Component.Accessories]: { Drawable: 22, Texture: 0, Palette: 0 },
+                [Component.Undershirt]: { Drawable: 38, Texture: 0, Palette: 0 },
+                [Component.BodyArmor]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Decals]: { Drawable: 0, Texture: 0, Palette: 0 },
+                [Component.Tops]: { Drawable: 339, Texture: 0, Palette: 0 },
+            },
             Props: {},
         },
         ["Tenue VIP d'été"]: {
