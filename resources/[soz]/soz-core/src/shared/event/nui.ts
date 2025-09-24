@@ -815,4 +815,6 @@ export enum NuiEvent {
     WhatIfHammerChoosePlacedPropToEdit = 'soz-core:nui:what-if:hammer-choose-placed-prop-to-edit',
     WhatIfHammerRequestDeleteProp = 'soz-core:nui:what-if:hammer-request-delete-prop',
     WhatIfHammerChoosePropToCreate = 'soz-core:nui:what-if:hammer-choose-prop-to-create',
+
+    TextureReplacerChunk = 'soz-core:nui:texture:replacer-chunk',
 }
