@@ -23,6 +23,7 @@ import { WhatIfMap } from '@public/shared/whatif';
 
 import { NuiAdminPlayerSubMenuMethodMap } from '../../nui/components/Admin/PlayerSubMenu';
 import { NuiAdminSkinSubMenuMethodMap } from '../../nui/components/Admin/SkinSubMenu';
+import { NuiImageLoaderMethodMap } from '../image.loader';
 import { NuiScreenshotMethodMap } from '../screenshot';
 import { NuiFlashMap } from '../weapons/weapon';
 import { NuiAudioMethodMap } from './audio';
@@ -121,6 +122,7 @@ export interface NuiMethodMap {
     flash: NuiFlashMap;
     whatif: WhatIfMap;
     pet_manager: NuiPetManagerMethodMap;
+    texture: NuiImageLoaderMethodMap;
 }
 
 export const eventNameFactory = <App extends keyof NuiMethodMap, Method extends keyof NuiMethodMap[App]>(

@@ -72,6 +72,7 @@ import { StateApp } from './StateApp';
 import { GlassMorphism } from './Styleguide/GlassMorphism';
 import { TargetOverlay } from './Target/TargetOverlay';
 import { TaxiHorodateurApp } from './Taxi/TaxiHorodateurApp';
+import { TextureLoaderApp } from './TextureLoader/TextureLoaderApp';
 import { WhatIfApp } from './WhatIf/WhatIfApp';
 import { Election } from './World/Election';
 import { Meteor } from './World/Meteor';
@@ -170,6 +171,7 @@ export const App: FunctionComponent = () => {
                 <HoodApp />
                 <FlashApp />
                 <ScientistCamera />
+                <TextureLoaderApp />
                 <div className={menuClasses}>
                     <InputApp />
                     <PhoneApp />

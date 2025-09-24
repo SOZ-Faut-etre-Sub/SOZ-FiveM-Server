@@ -4,8 +4,16 @@ import { ObjectEditorProvider } from './object.editor.provider';
 import { ObjectProvider } from './object.provider';
 import { GizmoControlProvider } from './prop.gizmo.provider';
 import { PropImageProvider } from './prop.image.provider';
+import { TextureReplacerProvider } from './texture.replacer.provider';
 
 @Module({
-    providers: [ObjectProvider, ObjectEditorProvider, CircularCameraProvider, GizmoControlProvider, PropImageProvider],
+    providers: [
+        ObjectProvider,
+        ObjectEditorProvider,
+        CircularCameraProvider,
+        GizmoControlProvider,
+        PropImageProvider,
+        TextureReplacerProvider,
+    ],
 })
 export class ObjectModule {}

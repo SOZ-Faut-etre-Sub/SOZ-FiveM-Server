@@ -11,6 +11,7 @@ import { joaat } from '../../shared/joaat';
 import { WorldObject } from '../../shared/object';
 import { ModelSwapRepository } from '../repository/modelswap.repository';
 import { ResourceLoader } from '../repository/resource.loader';
+import { TextureReplacerProvider } from './texture.replacer.provider';
 
 const HalloweenMapping: Record<number, number> = {
     [GetHashKey('soz_prop_bb_bin')]: GetHashKey('soz_hw_bin_1'),
@@ -33,6 +34,9 @@ export class ObjectService {
 
     @Inject(ModelSwapRepository)
     private modelSwapRepository: ModelSwapRepository;
+
+    @Inject(TextureReplacerProvider)
+    private textureReplacerProvider: TextureReplacerProvider;
 
     private duiObjects: Map<string, { dui: number; textureId: string }> = new Map();
     private textureDict = 0;
@@ -196,42 +200,19 @@ export class ObjectService {
             SetObjectTextureVariation(entity, object.textureVariation);
         }
 
-        /*
         if (object.dynamicTexture && object.dynamicTexture.url) {
             const conf = billboardOffsets[object.dynamicTexture.baseModel];
             if (conf) {
-                if (!this.textureDict) {
-                    this.textureDict = CreateRuntimeTxd(`dynamic_prop_textures`);
-                }
-
-                let duiObject = this.duiObjects.get(object.id);
-                if (!duiObject) {
-                    const textureWidth = conf.width;
-                    const textureHeight = conf.height;
-
-                    const dui = CreateDui(object.dynamicTexture.url, textureWidth, textureHeight);
-                    const duiHandle = GetDuiHandle(dui);
-                    const uuid = uuidv4();
-                    CreateRuntimeTextureFromDuiHandle(this.textureDict, uuid, duiHandle);
-
-                    duiObject = {
-                        dui,
-                        textureId: uuid,
-                    };
-
-                    this.duiObjects.set(object.id, duiObject);
-                } else {
-                    SetDuiUrl(duiObject.dui, object.dynamicTexture.url);
-                }
-
                 const oriTxd = getScreenModel(object.dynamicTexture.baseModel, object.dynamicTexture.index);
                 for (const texture of conf.textures) {
-                    RemoveReplaceTexture(oriTxd, texture);
-                    AddReplaceTexture(oriTxd, texture, `dynamic_prop_textures`, duiObject.textureId);
+                    this.textureReplacerProvider.replaceTexture({
+                        baseDict: oriTxd,
+                        baseTexture: texture,
+                        url: object.dynamicTexture.url,
+                    });
                 }
             }
         }
-        */
     }
 
     public deleteObject(entity: number, object: WorldObject) {

@@ -56,10 +56,7 @@ export class BillboardProvider {
             this.billboardService.loadBillboard(
                 billboard.imageUrl,
                 billboard.originDictName,
-                billboard.originTextureName,
-                billboard.width,
-                billboard.height,
-                billboard.name
+                billboard.originTextureName
             );
             await wait(0);
         }
@@ -74,14 +71,7 @@ export class BillboardProvider {
             return;
         }
 
-        this.billboardService.loadBillboard(
-            billboard.imageUrl,
-            billboard.originDictName,
-            billboard.originTextureName,
-            billboard.width,
-            billboard.height,
-            billboard.name
-        );
+        this.billboardService.loadBillboard(billboard.imageUrl, billboard.originDictName, billboard.originTextureName);
     }
 
     @OnEvent(ClientEvent.BILLBOARD_DELETE)
