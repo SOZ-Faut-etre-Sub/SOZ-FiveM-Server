@@ -1,6 +1,7 @@
 import { On, Once } from '@public/core/decorators/event';
 import { UpwPollution } from '@public/shared/job/upw';
 import { getRandomInt, getRandomKeyWeighted } from '@public/shared/random';
+import { deepCopy } from '@public/shared/utils/array';
 import axios from 'axios';
 import { addMinutes, addSeconds, differenceInSeconds, format } from 'date-fns';
 
@@ -373,7 +374,7 @@ export class WeatherProvider {
     }
 
     private getNextWeather(currentWeather: Weather): Weather {
-        let currentForecast = this.forecast;
+        let currentForecast = deepCopy(this.forecast);
         const pollutionLevel = this.pollution.getPollutionLevel();
 
         if (pollutionLevel === UpwPollution.High) {
