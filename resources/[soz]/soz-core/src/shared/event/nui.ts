@@ -625,6 +625,7 @@ export enum NuiEvent {
     BusinessCyberDBSearchDelete = 'soz-core:client:business:cyber:db-search-delete',
     BusinessCyberDBSearchPrint = 'soz-core:client:business:cyber:db-search-print',
     BusinessCyberDBRecordErase = 'soz-core:client:business:cyber:db-record-erase',
+    BusinessCyberDBRecordRemove = 'soz-core:client:business:cyber:db-record-remove',
     BusinessCyberBlackOut = 'soz-core:client:business:cyber:blackout',
     BusinessCyberReportExit = 'soz-core:client:business:cyber:report-exit',
     BusinessCyberServiceManagement = 'soz-core:client:business:cyber:activate-service',
