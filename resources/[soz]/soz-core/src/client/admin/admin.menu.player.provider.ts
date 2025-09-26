@@ -1,4 +1,4 @@
-import { ServerPet } from '@public/shared/animal';
+import { ServerJobPet, ServerPet } from '@public/shared/animal';
 
 import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
@@ -48,6 +48,13 @@ export class AdminMenuPlayerProvider {
         const pet = await emitRpc<ServerPet>(RpcServerEvent.ADMIN_GET_PLAYER_PET, citizenId);
 
         return Ok(pet);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminGetJobPets)
+    public async onGetJobPets(job: string) {
+        const pets = await emitRpc<Array<ServerJobPet>>(RpcServerEvent.ADMIN_GET_JOB_PETS, job);
+
+        return Ok(pets);
     }
 
     @OnNuiEvent(NuiEvent.AdminMenuPlayerHandleSearchPlayer)

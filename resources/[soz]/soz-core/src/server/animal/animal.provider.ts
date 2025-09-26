@@ -58,7 +58,7 @@ import {
     whistles,
 } from '@public/shared/animal';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
-import { ADD_ERROR_MESSAGE, InventoryItem } from '@public/shared/inventory';
+import { ADD_ERROR_MESSAGE, InventoryItem, InventoryType } from '@public/shared/inventory';
 import { FDO, JobType } from '@public/shared/job';
 import { PlayerData } from '@public/shared/player';
 import { isErr } from '@public/shared/result';
@@ -133,6 +133,22 @@ export class AnimalProvider {
         }
 
         return await this.getPet(citizenId, false);
+    }
+
+    @Rpc(RpcServerEvent.ADMIN_GET_JOB_PETS)
+    public async onAdminGetJobPets(source: number, job: string): Promise<Array<ServerJobPet>> {
+        if (!this.permissionService.isStaff(source)) {
+            return null;
+        }
+
+        const pets =
+            (await this.prismaService.job_pet.findMany({
+                where: {
+                    job: job,
+                },
+            })) || [];
+
+        return pets.map(pet => this.formatServerJobPet(pet));
     }
 
     @Rpc(RpcServerEvent.PET_GET_ANIMAL)
@@ -314,6 +330,18 @@ export class AnimalProvider {
         if (sync) TriggerClientEvent(ClientEvent.PET_SYNC_JOB_ANIMAL, player.source);
     }
 
+    private async udpateJobPetDbById(id: number, data: Record<string, any>, sync: boolean = true) {
+        const pet = await this.prismaService.job_pet.update({
+            where: { id: id },
+            data: data,
+        });
+
+        if (pet && pet.owner_id && sync) {
+            const player = this.playerService.getPlayerByCitizenId(pet.owner_id);
+            if (player) TriggerClientEvent(ClientEvent.PET_SYNC_JOB_ANIMAL, player.source);
+        }
+    }
+
     public async incrementPetData(
         source: number,
         isPetJob: boolean,
@@ -436,6 +464,72 @@ export class AnimalProvider {
         inventory.remove(`whistle_${player.job.id}`, 1);
         this.notifier.notify(source, `Tu as ~g~deposé~s~ ${pet.name ? pet.name : `un animal d'entreprise`} au chenil.`);
         TriggerClientEvent(ClientEvent.PET_SYNC_JOB_ANIMAL, source, true);
+    }
+
+    @OnEvent(ServerEvent.PET_KENNEL_ABANDON)
+    public async onPetKennelAbandon(source: number, petId: number) {
+        if (
+            await this.prismaService.job_pet.findFirst({
+                where: {
+                    id: petId,
+                    owner_id: { not: null },
+                },
+            })
+        ) {
+            this.notifier.notify(source, `Tu ne peux pas ~r~abandonner~s~ un animal qui est avec un employé.`);
+            return;
+        }
+
+        const serverPet = await this.prismaService.job_pet.delete({
+            where: {
+                id: petId,
+            },
+        });
+
+        if (serverPet)
+            this.notifier.notify(
+                source,
+                `Tu as ~r~abandonné~s~ ${serverPet.name ? serverPet.name : `cet animal d'entreprise`}.`
+            );
+    }
+
+    @OnEvent(ServerEvent.PET_KENNEL_RECALL)
+    public async onPetKennelRecall(source: number, petId: number) {
+        const pet = await this.prismaService.job_pet.findFirst({
+            where: {
+                id: petId,
+                owner_id: { not: null },
+            },
+        });
+
+        if (!pet) return;
+
+        const player = this.playerService.getPlayerByCitizenId(pet.owner_id);
+        if (player) {
+            this.notifier.notify(source, `Tu ne peux pas ~r~rappeler~s~ un animal qui est avec un employé en ville.`);
+            return;
+        }
+
+        const inventoryId = `player_${pet.owner_id}`;
+        const inventory = await this.inventoryFactory.getOrCreate(inventoryId, InventoryType.Player, {
+            owner: pet.owner_id,
+            persistent: true,
+        });
+
+        await this.prismaService.job_pet.update({
+            where: {
+                id: petId,
+            },
+            data: {
+                owner_id: null,
+            },
+        });
+        inventory.remove(`whistle_${pet.job}`, 1);
+
+        this.notifier.notify(
+            source,
+            `Tu as ~g~rappelé~s~ ${pet.name ? pet.name : `un animal d'entreprise`} au chenil.`
+        );
     }
 
     @On('playerDropped')
@@ -652,6 +746,7 @@ export class AnimalProvider {
 
         pet.dead = death;
         await this.udpatePetDb(player, { dead: death });
+        this.notifier.notify(source, `L'animal a été ${death ? `~r~tué~s~` : `~g~soigné~s~`}.`, 'info');
     }
 
     @OnEvent(ServerEvent.PET_ADMIN_RESET_PER_DAYS)
@@ -698,6 +793,53 @@ export class AnimalProvider {
             ...resetMetadata,
         };
         await this.udpatePetDb(player, { perDays: JSON.stringify(pet.perDays) });
+    }
+
+    @OnEvent(ServerEvent.PET_ADMIN_JOB_SET_DEATH)
+    public async adminJobSetPetDeath(source: number, id: number, death: boolean) {
+        const pet = Object.values(this.playerJobPets).find(pet => pet.id === id);
+        if (pet) pet.dead = death;
+
+        await this.udpateJobPetDbById(id, { dead: death });
+        this.notifier.notify(source, `L'animal a été ${death ? `~r~tué~s~` : `~g~soigné~s~`}.`, 'info');
+    }
+
+    @OnEvent(ServerEvent.PET_ADMIN_JOB_RESET_PER_DAYS)
+    public async onJobPetResetPerDays(source: number, id: number) {
+        const pet = Object.values(this.playerJobPets).find(pet => pet.id === id);
+        if (pet) pet.perDays = this.getDefaultPerDaysMetaData();
+
+        await this.udpateJobPetDbById(id, { perDays: JSON.stringify(pet.perDays) });
+    }
+
+    @OnEvent(ServerEvent.PET_ADMIN_JOB_SET_DATA)
+    public async onJobSetData(source: number, id: number, data: Partial<Record<IncrementalPetData, number>>) {
+        const pet = Object.values(this.playerJobPets).find(pet => pet.id === id);
+        if (pet) {
+            this.playerJobPets[pet.owner_id] = {
+                ...pet,
+                ...data,
+            };
+        }
+
+        await this.udpateJobPetDbById(id, data);
+    }
+
+    @OnEvent(ServerEvent.PET_ADMIN_JOB_SET_PER_DAYS)
+    public async onJobSetResetMetadata(
+        source: number,
+        id: number,
+        resetMetadata: Partial<Record<IncrementalPetData, number>>
+    ) {
+        const pet = Object.values(this.playerJobPets).find(pet => pet.id === id);
+        if (pet) {
+            pet.perDays = {
+                ...pet.perDays,
+                ...resetMetadata,
+            };
+        }
+
+        await this.udpateJobPetDbById(id, { perDays: JSON.stringify(pet.perDays) });
     }
 
     private processIncrementData(

@@ -863,6 +863,8 @@ export enum ServerEvent {
     PET_SHOP_ABANDON_ANIMAL = 'soz-core:server:pet:shop-abandon-animal',
     PET_KENNEL_TAKE = 'soz-core:server:pet:kennel-take',
     PET_KENNEL_REMOVE = 'soz-core:server:pet:kennel-remove',
+    PET_KENNEL_ABANDON = 'soz-core:server:pet:kennel-abandon',
+    PET_KENNEL_RECALL = 'soz-core:server:pet:kennel-recall',
 
     PET_NAME_ANIMAL = 'soz-core:server:pet:name-animal',
     PET_SET_DEATH = 'soz-core:server:pet:set-death',
@@ -872,8 +874,13 @@ export enum ServerEvent {
     PET_EXECUTED_ORDER = 'soz-core:server:pet:executed-order',
     PET_PICK_UP_BALL = 'soz-core:server:pet:pick-up-ball',
 
-    PET_ADMIN_SET_DEATH = 'soz-core:server:pet:admin-set-death', // PAS OK
-    PET_ADMIN_SET_DATA = 'soz-core:server:pet:admin-set-data', // PAS OK
-    PET_ADMIN_SET_PER_DAYS = 'soz-core:server:pet:admin-set-set-per-days', // PAS OK
-    PET_ADMIN_RESET_PER_DAYS = 'soz-core:server:pet:admin-reset-per-days', // PAS OK
+    PET_ADMIN_SET_DEATH = 'soz-core:server:pet:admin-set-death',
+    PET_ADMIN_SET_DATA = 'soz-core:server:pet:admin-set-data',
+    PET_ADMIN_SET_PER_DAYS = 'soz-core:server:pet:admin-set-set-per-days',
+    PET_ADMIN_RESET_PER_DAYS = 'soz-core:server:pet:admin-reset-per-days',
+
+    PET_ADMIN_JOB_SET_DEATH = 'soz-core:server:pet:admin-job-set-death',
+    PET_ADMIN_JOB_SET_DATA = 'soz-core:server:pet:admin-job-set-data',
+    PET_ADMIN_JOB_SET_PER_DAYS = 'soz-core:server:pet:admin-job-set-per-days',
+    PET_ADMIN_JOB_RESET_PER_DAYS = 'soz-core:server:pet:admin-job-reset-per-days',
 }

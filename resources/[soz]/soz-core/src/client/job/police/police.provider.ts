@@ -10,6 +10,8 @@ import { VehicleRadarProvider } from '@public/client/vehicle/vehicle.radar.provi
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
+import { SozRole } from '@public/core/permissions';
+import { emitRpc } from '@public/core/rpc';
 import { wait } from '@public/core/utils';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { Feature } from '@public/shared/features';
@@ -17,6 +19,7 @@ import { FDO } from '@public/shared/job';
 import { MenuType } from '@public/shared/nui/menu';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
 import { rad, Vector3 } from '@public/shared/polyzone/vector';
+import { RpcServerEvent } from '@public/shared/rpc';
 
 import { AnimationStopReason } from '../../../shared/animation';
 import { AnimationService } from '../../animation/animation.service';
@@ -307,13 +310,15 @@ export class PoliceProvider {
     }
 
     @OnEvent(ClientEvent.JOBS_POLICE_OPEN_SOCIETY_MENU)
-    public onOpenSocietyMenu() {
+    public async onOpenSocietyMenu() {
         if (this.nuiMenu.getOpened() === MenuType.PoliceJobMenu) {
             this.nuiMenu.closeMenu();
             return;
         }
 
+        const [isAllowed, permission] = await emitRpc<[boolean, string]>(RpcServerEvent.ADMIN_IS_ALLOWED);
         this.nuiMenu.openMenu(MenuType.PoliceJobMenu, {
+            permission: isAllowed ? (permission as SozRole) : null,
             displayRadar: this.vehicleRadarProvider.displayRadar,
         });
     }

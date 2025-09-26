@@ -175,6 +175,12 @@ export enum NuiEvent {
     AdminSetPlayerPetResetMeta = 'soz-core:client:admin:set-player-pet-reset-meta',
     AdminResetPlayerPetResetMeta = 'soz-core:client:admin:reset-player-pet-reset-meta',
 
+    AdminGetJobPets = 'soz-core:client:admin:get-ob-pets', //PAS OK
+    AdminSetJobPetMeta = 'soz-core:client:admin:set-job-pet-meta',
+    AdminSetJobPetSeath = 'soz-core:client:admin:set-job-pet-death',
+    AdminSetJobPetResetMeta = 'soz-core:client:admin:set-job-pet-reset-meta',
+    AdminResetJobPetResetMeta = 'soz-core:client:admin:reset-job-pet-reset-meta',
+
     BlipAction = 'soz-core:client:blip:action',
 
     GetAPIConfig = 'soz-core:nui:get-api-config',
