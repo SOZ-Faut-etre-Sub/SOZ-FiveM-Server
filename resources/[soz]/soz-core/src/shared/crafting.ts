@@ -8,6 +8,7 @@ export type CriminalCraftingRequirements = {
     items: Record<string, number>;
     talent: Talent;
     expire: boolean;
+    noExtendExpiration?: boolean;
     metadata?: InventoryItemMetadata;
     outputCount?: number;
     resell: number;

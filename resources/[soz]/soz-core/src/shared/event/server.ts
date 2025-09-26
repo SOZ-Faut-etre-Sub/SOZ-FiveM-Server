@@ -554,6 +554,7 @@ export enum ServerEvent {
     DRUGS_ZONE_DELETE = 'soz-core:server:drugs:zone-delete',
     DRUGS_ZONE_UPDATE = 'soz-core:server:drugs:zone-update',
     DRUGS_SEARCH_FINGERPRINT = 'soz-core:server:drugs:search-fingerprint',
+    DRUGS_SEEDLING_USE = 'soz-core:server:drugs:seedling-use',
 
     RACE_ADD = 'soz-core:server:race:add',
     RACE_UPDATE = 'soz-core:server:race:update',

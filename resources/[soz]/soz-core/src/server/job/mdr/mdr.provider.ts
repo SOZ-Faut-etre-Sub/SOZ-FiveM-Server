@@ -79,7 +79,7 @@ export class MdrProvider {
                     player_source: source,
                 });
 
-                this.notifier.notify(source, `Vous avez réhabilité ~r~1000$~s~ en ~g~$400~s~.`);
+                this.notifier.notify(source, `Vous avez réhabilité ~r~1000$~s~ en ~g~$200~s~.`);
             } else {
                 this.notifier.notify(source, 'Vous avez ~r~arrêté~s~ de réhabiliter.');
                 return;
@@ -122,7 +122,7 @@ export class MdrProvider {
         }
 
         this.playerMoneyService.remove(source, 1000, 'marked_money');
-        this.playerMoneyService.add(source, 400, 'money');
+        this.playerMoneyService.add(source, 200, 'money');
 
         return true;
     }

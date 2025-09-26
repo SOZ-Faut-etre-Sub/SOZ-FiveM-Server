@@ -46,7 +46,7 @@ export class BankInvoiceService {
             return;
         }
 
-        const invoices = [];
+        const invoices: Invoice[] = [];
 
         for (const invoice of Object.values(
             await this.bankInvoiceRepository.get(invoice => !invoice.payed && !invoice.refused)
