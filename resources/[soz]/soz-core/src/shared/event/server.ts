@@ -197,6 +197,7 @@ export enum ServerEvent {
 
     LSC_CHECK_STOCK = 'soz-core:server:job:lsc:check-stock',
 
+    MISSIVE_CREATE_ITEM = 'soz-core:server:missive:create-item',
     MISSIVE_DELETE_ITEM = 'soz-core:server:missive:delete-item',
     MISSIVE_COMPLETE = 'soz-core:server:missive:complete',
 
