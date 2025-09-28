@@ -9816,7 +9816,7 @@ QBShared.Items = {
         ["useable"] = true,
         ["shouldClose"] = true,
         ["combinable"] = nil,
-        ["description"] = "Fabriquée à partir de plusieurs matériaux, cette carte bancaire assure à n'importe qui de pouvoir payer une seule transaction, que ça soit amende ou facture, à l'aide d'argent sale.",
+        ["description"] = "Fabriquée à partir de plusieurs matériaux, cette carte bancaire assure à n'importe qui de pouvoir payer ses factures, à l'aide d'argent sale.",
         ["illustrator"] = ".Poulpito",
     },
     ["empty_lunchbox"] = {
