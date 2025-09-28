@@ -83,14 +83,16 @@ export class WeatherProvider {
             this.store.dispatch.global.update({ snow: true });
         }
 
-        try {
-            const res = await axios.get('http://worldtimeapi.org/api/timezone/America/Los_Angeles');
-            const offset = res.data.utc_offset as string;
-            const offsetDate = offset.split(':');
-            const localOffset = new Date().getTimezoneOffset() * 60;
-            this.timeWeatherDelta = parseInt(offsetDate[0]) * 3600 + parseInt(offsetDate[1]) * 60 + localOffset;
-        } catch (e) {
-            this.logger.error(e);
+        if (this.weatherSyncWithLA) {
+            try {
+                const res = await axios.get('https://worldtimeapi.org/api/timezone/America/Los_Angeles');
+                const offset = res.data.utc_offset as string;
+                const offsetDate = offset.split(':');
+                const localOffset = new Date().getTimezoneOffset() * 60;
+                this.timeWeatherDelta = parseInt(offsetDate[0]) * 3600 + parseInt(offsetDate[1]) * 60 + localOffset;
+            } catch (e) {
+                this.logger.error(e);
+            }
         }
 
         this.syncTime();
