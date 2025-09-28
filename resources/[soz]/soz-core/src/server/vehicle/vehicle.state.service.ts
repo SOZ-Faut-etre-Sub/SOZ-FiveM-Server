@@ -39,6 +39,7 @@ const VehicleConditionSyncStrategy: Record<keyof VehicleCondition, VehicleSyncSt
     tireTemporaryRepairDistance: VehicleSyncStrategy.None,
     mileage: VehicleSyncStrategy.None,
     nitro: VehicleSyncStrategy.Copilot,
+    nitroRemaining: VehicleSyncStrategy.None,
 };
 
 @Injectable()

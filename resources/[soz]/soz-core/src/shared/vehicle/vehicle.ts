@@ -249,6 +249,7 @@ export type VehicleCondition = {
     windowStatus: { [key: number]: boolean };
     mileage: number;
     nitro: number;
+    nitroRemaining: number;
 };
 
 export type VehiculeInformation = {
@@ -295,7 +296,6 @@ export type VehicleVolatileState = {
     stolenLocator: boolean;
     exportBiz: boolean;
     nitroReloadStart: number;
-    nitroRemaining: number;
     isCrimiImport: boolean;
     gyro: number;
 };
@@ -360,6 +360,7 @@ export const getDefaultVehicleCondition = (): VehicleCondition => ({
     windowStatus: {},
     mileage: 0,
     nitro: 0,
+    nitroRemaining: 0,
 });
 
 export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
@@ -398,7 +399,6 @@ export const getDefaultVehicleVolatileState = (): VehicleVolatileState => ({
     stolenLocator: false,
     exportBiz: false,
     nitroReloadStart: 0,
-    nitroRemaining: 0,
     isCrimiImport: false,
     gyro: null,
 });
