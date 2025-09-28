@@ -1,3 +1,5 @@
+import { SozRole } from '@public/core/permissions';
+
 import { Component, CustomWardrobe, OutfitItem, Prop, WardrobeConfig, WardRobeElements } from '../cloth';
 import { joaat } from '../joaat';
 import { JobType } from '../job';
@@ -9843,6 +9845,7 @@ export type PoliceJobFineMenuData = {
 
 export type PoliceJobMenuData = {
     displayRadar: boolean;
+    permission: SozRole;
 };
 
 export const LicencesWithPoints = {

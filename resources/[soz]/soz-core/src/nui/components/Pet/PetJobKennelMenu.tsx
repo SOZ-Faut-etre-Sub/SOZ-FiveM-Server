@@ -2,7 +2,6 @@ import {
     MainMenu,
     Menu,
     MenuContent,
-    MenuItemButton,
     MenuItemSelect,
     MenuItemSelectOption,
     MenuTitle,
@@ -43,13 +42,30 @@ export const PetJobKennelMenu: FunctionComponent<PetJobKennelMenuProps> = ({ dat
                                             Déposer l'animal
                                         </MenuItemSelectOption>
                                     )}
+                                    {pet.available && (
+                                        <MenuItemSelectOption key={'action_abondon'} value="abandon">
+                                            Abandonner l'animal
+                                        </MenuItemSelectOption>
+                                    )}
                                 </MenuItemSelect>
                             )
                     )}
                     {data.pets.map(
                         pet =>
                             !pet.available &&
-                            !pet.withPlayer && <MenuItemButton>{pet.name || `Animal sans nom`}</MenuItemButton>
+                            !pet.withPlayer && (
+                                <MenuItemSelect
+                                    title={pet.name || `Animal sans nom`}
+                                    onConfirm={async (_, value) => {
+                                        if (!value) return;
+                                        await fetchNui(NuiEvent.PetKennelAction, { pet, action: value });
+                                    }}
+                                >
+                                    <MenuItemSelectOption key={'action_recall'} value="recall">
+                                        Rappeler l'animal
+                                    </MenuItemSelectOption>
+                                </MenuItemSelect>
+                            )
                     )}
                 </MenuContent>
             </MainMenu>

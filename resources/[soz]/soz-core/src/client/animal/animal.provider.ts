@@ -692,7 +692,6 @@ export class AnimalProvider {
             } else if (!IsPedInAnyVehicle(ped, false) && IsPedInAnyVehicle(pet.entity, false)) {
                 const veh = GetVehiclePedIsIn(pet.entity, false);
                 SetEntityInvincible(pet.entity, true);
-                SetBlockingOfNonTemporaryEvents(pet.entity, true);
                 SetEntityCanBeDamaged(pet.entity, false);
                 await wait(0);
                 await waitUntil(async () => !GetEntityCanBeDamaged(pet.entity));
@@ -712,7 +711,6 @@ export class AnimalProvider {
                 await wait(0);
 
                 SetEntityInvincible(pet.entity, false);
-                SetBlockingOfNonTemporaryEvents(pet.entity, false);
                 SetEntityCanBeDamaged(pet.entity, true);
             } else if (
                 !IsPedInAnyVehicle(ped, false) &&
@@ -1302,7 +1300,6 @@ export class AnimalProvider {
         this.forceOrder = true;
     }
 
-    // Prob need to duplicate all following or a new admin menu ?
     @OnNuiEvent(NuiEvent.AdminSetPlayerPetSeath)
     public async onAdminSetPlayerPetDeath({ citizenId, value }: { citizenId: string; value: boolean }) {
         TriggerServerEvent(ServerEvent.PET_ADMIN_SET_DEATH, citizenId, value);
@@ -1353,7 +1350,61 @@ export class AnimalProvider {
     }
 
     @OnNuiEvent(NuiEvent.AdminResetPlayerPetResetMeta)
-    public async onResetPerDaysCommand(citizenId: string) {
+    public async onResetPerDays(citizenId: string) {
         TriggerServerEvent(ServerEvent.PET_ADMIN_RESET_PER_DAYS, citizenId);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetJobPetSeath)
+    public async onAdminSetJobPetDeath({ id, value }: { id: number; value: boolean }) {
+        TriggerServerEvent(ServerEvent.PET_ADMIN_JOB_SET_DEATH, id, value);
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetJobPetMeta)
+    public async onAdminSetJobPetMeta({ id, meta }: { id: number; meta: IncrementalPetData }) {
+        if (!increamentalPetMeta.has(meta)) return;
+
+        const value = await this.inputService.askInput<number>(
+            {
+                title: `${PetMetaLabel[meta]}`,
+                defaultValue: '',
+            },
+            PositiveNumberValidator
+        );
+
+        if (value === null) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.PET_ADMIN_JOB_SET_DATA, id, { [meta]: value });
+    }
+
+    @OnNuiEvent(NuiEvent.AdminSetJobPetResetMeta)
+    public async onAdminSetJobPetResetMeta({
+        id,
+        resetMeta,
+    }: {
+        id: number;
+        resetMeta: IncrementalPetResetMetadataType;
+    }) {
+        if (!incrementalPetResetMetadata.has(resetMeta)) return;
+
+        const value = await this.inputService.askInput<number>(
+            {
+                title: `${PetResetMetaLabel[resetMeta].label}`,
+                defaultValue: '',
+            },
+            PositiveNumberValidator
+        );
+
+        if (value === null) {
+            return;
+        }
+
+        TriggerServerEvent(ServerEvent.PET_ADMIN_JOB_SET_PER_DAYS, id, { [resetMeta]: value });
+    }
+
+    @OnNuiEvent(NuiEvent.AdminResetJobPetResetMeta)
+    public async onResetJobPerDays(id: number) {
+        TriggerServerEvent(ServerEvent.PET_ADMIN_JOB_RESET_PER_DAYS, id);
     }
 }

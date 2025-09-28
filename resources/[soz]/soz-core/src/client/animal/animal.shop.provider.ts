@@ -245,6 +245,17 @@ export class AnimalShopProvider {
             TriggerServerEvent(ServerEvent.PET_KENNEL_TAKE, pet.id);
         } else if (action === 'remove') {
             TriggerServerEvent(ServerEvent.PET_KENNEL_REMOVE, pet.id);
+        } else if (action === 'abandon') {
+            const confirm = await this.inputService.askConfirm(
+                `Êtes vous sur de vouloir abandon ${pet.name ? pet.name : `cet animal`} ? Entrez OUI pour confirmer`
+            );
+
+            if (!confirm) {
+                return;
+            }
+            TriggerServerEvent(ServerEvent.PET_KENNEL_ABANDON, pet.id);
+        } else if (action === 'recall') {
+            TriggerServerEvent(ServerEvent.PET_KENNEL_RECALL, pet.id);
         }
         this.nuiMenu.closeMenu();
     }

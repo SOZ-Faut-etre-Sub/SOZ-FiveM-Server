@@ -6,6 +6,7 @@ import { PoliceJobMenuData } from '@public/shared/job/police';
 import { MenuType } from '@public/shared/nui/menu';
 import { FunctionComponent, useEffect, useState } from 'react';
 
+import { JobPetsSubMenu } from '../Admin/JobPetSubMenu';
 import {
     MainMenu,
     Menu,
@@ -26,6 +27,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
     const player = usePlayer();
 
     const [wantedPlayers, setWantedPlayers] = useState(null);
+    const isStaffOrAdmin = ['staff', 'admin'].includes(data.permission);
 
     useEffect(() => {
         if (player.job.onduty && wantedPlayers == null) {
@@ -104,6 +106,11 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                     >
                         Afficher les radars sur le GPS
                     </MenuItemCheckbox>
+                    {isStaffOrAdmin && (
+                        <MenuItemSubMenuLink id={`pet-management-${player.job.id}`}>
+                            🐕 | Gérer les animaux
+                        </MenuItemSubMenuLink>
+                    )}
                 </MenuContent>
             </MainMenu>
             <SubMenu id="persons_searched">
@@ -138,6 +145,7 @@ export const PoliceJobMenu: FunctionComponent<PoliceJobStateProps> = ({ data }) 
                         ))}
                 </MenuContent>
             </SubMenu>
+            <JobPetsSubMenu job={player.job.id} />
         </Menu>
     );
 };
