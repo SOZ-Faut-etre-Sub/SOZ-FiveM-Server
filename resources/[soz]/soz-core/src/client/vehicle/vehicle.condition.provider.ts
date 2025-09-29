@@ -10,7 +10,6 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { VehicleConfiguration } from '../../shared/vehicle/modification';
 import {
     getDefaultVehicleCondition,
-    getVehicleMaxFuelStorage,
     LSCustomMode,
     VehicleCondition,
     VehicleVolatileState,
@@ -79,12 +78,13 @@ export class VehicleConditionProvider {
             const state = await this.vehicleStateService.getVehicleState(entityId);
             const vehDef = this.vehicleRepository.getByModelHash(GetEntityModel(entityId));
             const currentVehicleCondition: VehicleCondition = {
-                ...getDefaultVehicleCondition(),
+                ...getDefaultVehicleCondition(vehDef),
                 ...this.vehicleService.getClientVehicleCondition(entityId, state),
-                oilLevel: getRandomFloat(30, getDefaultVehicleCondition().oilLevel),
-                fuelLevel: getRandomFloat(10, getVehicleMaxFuelStorage(vehDef)),
-                mileage: getRandomFloat(1000000, 25000000),
             };
+            currentVehicleCondition.oilLevel = getRandomFloat(30, currentVehicleCondition.oilLevel);
+            currentVehicleCondition.fuelLevel = getRandomFloat(30, currentVehicleCondition.fuelLevel);
+            currentVehicleCondition.mileage = getRandomFloat(1000000, 25000000);
+
             const currentVehicleConfiguration = this.vehicleService.getClientVehicleConfiguration(entityId);
 
             this.currentVehicleCondition.set(vehicleNetworkId, currentVehicleCondition);

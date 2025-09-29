@@ -345,12 +345,12 @@ export enum VehicleType {
     Train = 'train',
 }
 
-export const getDefaultVehicleCondition = (): VehicleCondition => ({
+export const getDefaultVehicleCondition = (vehDef: Vehicle): VehicleCondition => ({
     bodyHealth: 1000,
     doorStatus: {},
     dirtLevel: 0,
     engineHealth: 1000,
-    fuelLevel: 100,
+    fuelLevel: getVehicleMaxFuelStorage(vehDef),
     oilLevel: 100,
     tireTemporaryRepairDistance: {},
     tireBurstCompletely: {},
@@ -669,16 +669,15 @@ export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
 export const DisableNPCBike = false;
 
 export function getVehicleMaxFuelStorage(vehDef: Vehicle): number {
-    let coef = 1.0;
     if (vehDef?.dealershipId == PlayerLicenceType.Moto) {
-        coef = 0.75;
+        return 75;
     }
 
     if (vehDef?.dealershipId == DealershipType.Armored) {
-        coef = 0.5;
+        return 50;
     }
 
-    return Math.round(getDefaultVehicleCondition().fuelLevel * coef);
+    return 100;
 }
 
 export const VEHICLE_TRUNK_TYPES = {

@@ -17,7 +17,6 @@ import { BennysConfig } from '../../shared/job/bennys';
 import { RpcServerEvent } from '../../shared/rpc';
 import {
     getDefaultVehicleCondition,
-    getVehicleMaxFuelStorage,
     VehicleCondition,
     VehicleOrder,
     VehicleOrderConfig,
@@ -264,11 +263,7 @@ export class VehicleOrderProvider {
             category = 'boat';
         }
 
-        const fuel = getVehicleMaxFuelStorage(vehicle);
-        const condition: VehicleCondition = {
-            ...getDefaultVehicleCondition(),
-            fuelLevel: fuel,
-        };
+        const condition: VehicleCondition = getDefaultVehicleCondition(vehicle);
 
         const plate = order.job != null ? 'ESSAI N' + this.orderedVehicle++ : await this.vehicleService.generatePlate();
         const mods: VehicleConfiguration =

@@ -548,24 +548,11 @@ export class VehicleGarageProvider {
             where,
         });
 
-        const vehicles = await this.prismaService.vehicle.findMany({
-            where: {
-                model: {
-                    in: playerVehicles.map(v => v.vehicle),
-                },
-            },
-        });
-
-        const vehiclesByModel = {};
-
-        for (const vehicle of vehicles) {
-            vehiclesByModel[vehicle.model] = vehicle;
-        }
-
         const timestamp = Math.floor(Date.now() / 1000);
         const playerVehiclesMapped = [];
 
         for (const vehicle of playerVehicles) {
+            const vehicleDef = await this.vehicleRepository.findByModel(vehicle.vehicle);
             const playerVehicle = {
                 id: vehicle.id,
                 label: vehicle.label,
@@ -574,7 +561,7 @@ export class VehicleGarageProvider {
                 model: parseInt(vehicle.hash || '0', 10),
                 modelName: vehicle.vehicle,
                 modification: vehicle.mods ? JSON.parse(vehicle.mods) : getDefaultVehicleConfiguration(),
-                condition: vehicle.condition ? JSON.parse(vehicle.condition) : getDefaultVehicleCondition(),
+                condition: vehicle.condition ? JSON.parse(vehicle.condition) : getDefaultVehicleCondition(vehicleDef),
                 plate: vehicle.plate,
                 garage: vehicle.garage,
                 job: vehicle.job as JobType,
@@ -612,7 +599,7 @@ export class VehicleGarageProvider {
                 vehicle: playerVehicle,
                 price,
                 weight,
-                name: vehiclesByModel[playerVehicle.modelName]?.name || null,
+                name: vehicleDef?.name,
             } as GarageVehicle);
         }
 

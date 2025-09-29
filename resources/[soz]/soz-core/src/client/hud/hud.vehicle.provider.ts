@@ -100,10 +100,12 @@ export class HudVehicleProvider {
             return;
         }
 
+        const model = GetEntityModel(vehicle);
+        const vehDef = this.vehicleRepository.getByModelHash(model);
         const netId = NetworkGetEntityIsNetworked(vehicle) ? NetworkGetNetworkIdFromEntity(vehicle) : 0;
         const condition = netId
             ? this.vehicleConditionProvider.getVehicleCondition(netId)
-            : getDefaultVehicleCondition();
+            : getDefaultVehicleCondition(vehDef);
 
         if (null === condition) {
             this.nuiDispatch.dispatch('hud', 'UpdateVehicle', {
@@ -117,8 +119,6 @@ export class HudVehicleProvider {
             return;
         }
 
-        const model = GetEntityModel(vehicle);
-        const vehDef = this.vehicleRepository.getByModelHash(model);
         const useRpm = !IsThisModelAHeli(model) && !IsThisModelAPlane(model);
         const [hasLight, lightOn, hasHighBeam] = GetVehicleLightsState(vehicle);
         const hash = GetEntityModel(vehicle);

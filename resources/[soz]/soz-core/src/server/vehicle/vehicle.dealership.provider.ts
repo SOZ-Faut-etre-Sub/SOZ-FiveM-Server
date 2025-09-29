@@ -21,12 +21,7 @@ import { RpcServerEvent } from '../../shared/rpc';
 import { AuctionVehicle } from '../../shared/vehicle/auction';
 import { getDefaultVehicleConfiguration, VehicleConfiguration } from '../../shared/vehicle/modification';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
-import {
-    getDefaultVehicleCondition,
-    getVehicleMaxFuelStorage,
-    isVehicleModelElectric,
-    Vehicle,
-} from '../../shared/vehicle/vehicle';
+import { getDefaultVehicleCondition, isVehicleModelElectric, Vehicle } from '../../shared/vehicle/vehicle';
 import { BankService } from '../bank/bank.service';
 import { PrismaService } from '../database/prisma.service';
 import { FeatureProvider } from '../feature/feature.provider';
@@ -142,8 +137,7 @@ export class VehicleDealershipProvider {
                 turbo: true,
             };
 
-            const condition = getDefaultVehicleCondition();
-            condition.fuelLevel = getVehicleMaxFuelStorage(vehicle);
+            const condition = getDefaultVehicleCondition(vehicle);
 
             await this.prismaService.playerVehicle.upsert({
                 create: {
@@ -168,7 +162,7 @@ export class VehicleDealershipProvider {
                     garage: 'bennys_luxury',
                     state: PlayerVehicleState.InGarage,
                     mods: JSON.stringify(configuration),
-                    condition: JSON.stringify(getDefaultVehicleCondition()),
+                    condition: JSON.stringify(condition),
                 },
                 where: {
                     plate,
@@ -328,9 +322,8 @@ export class VehicleDealershipProvider {
             const plate = await this.vehicleService.generatePlate();
             const nowInSeconds = Math.round(Date.now() / 1000);
 
-            const condition = getDefaultVehicleCondition();
             const vehicle = await this.vehicleRepository.findByModel(auction.vehicle.model);
-            condition.fuelLevel = getVehicleMaxFuelStorage(vehicle);
+            const condition = getDefaultVehicleCondition(vehicle);
 
             await this.prismaService.playerVehicle.create({
                 data: {
@@ -591,8 +584,7 @@ export class VehicleDealershipProvider {
                     garage = 'whatif_garage_' + player.metadata.whatif_guild;
                 }
 
-                const condition = getDefaultVehicleCondition();
-                condition.fuelLevel = condition.fuelLevel * getVehicleMaxFuelStorage(vehicle);
+                const condition = getDefaultVehicleCondition(vehicle);
 
                 const playerVehicle = await this.prismaService.playerVehicle.create({
                     data: {

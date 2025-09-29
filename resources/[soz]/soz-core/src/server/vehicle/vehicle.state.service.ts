@@ -13,6 +13,7 @@ import {
     VehicleSyncStrategy,
     VehicleVolatileState,
 } from '../../shared/vehicle/vehicle';
+import { VehicleRepository } from '../repository/vehicle.repository';
 import { VehicleSirenRepository } from '../repository/vehicle.siren.repository';
 import { VehicleTowProvider } from './vehicle.tow.provider';
 
@@ -50,6 +51,9 @@ export class VehicleStateService {
     @Inject(VehicleSirenRepository)
     private vehicleSirenRepository: VehicleSirenRepository;
 
+    @Inject(VehicleRepository)
+    private vehicleRepository: VehicleRepository;
+
     private state: Map<number, VehicleState> = new Map<number, VehicleState>();
 
     private vehicleKeys: Record<string, Set<string>> = {};
@@ -71,7 +75,7 @@ export class VehicleStateService {
 
         return {
             volatile: getDefaultVehicleVolatileState(),
-            condition: getDefaultVehicleCondition(),
+            condition: getDefaultVehicleCondition(null),
             configuration: getDefaultVehicleConfiguration(),
             owner: null,
             position: null,

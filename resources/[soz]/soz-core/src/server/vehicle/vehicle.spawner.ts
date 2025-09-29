@@ -20,7 +20,6 @@ import {
     DisableNPCBike,
     getDefaultVehicleCondition,
     getDefaultVehicleVolatileState,
-    getVehicleMaxFuelStorage,
     VehicleCondition,
     VehicleSpawn,
     VehicleType,
@@ -266,6 +265,7 @@ export class VehicleSpawner {
             return null;
         }
 
+        const vehicle = await this.vehicleRepository.findByModel(model);
         const vehicleNetId = await this.spawn(
             source,
             {
@@ -280,7 +280,7 @@ export class VehicleSpawner {
                 open: true,
                 model: model,
             },
-            getDefaultVehicleCondition()
+            getDefaultVehicleCondition(vehicle)
         );
 
         if (!vehicleNetId) {
@@ -300,6 +300,7 @@ export class VehicleSpawner {
             return null;
         }
 
+        const vehicle = await this.vehicleRepository.findByModel(model);
         const vehicleNetId = await this.spawn(
             source,
             {
@@ -314,7 +315,7 @@ export class VehicleSpawner {
                 open: false,
                 model: model,
             },
-            getDefaultVehicleCondition()
+            getDefaultVehicleCondition(vehicle)
         );
 
         if (!vehicleNetId) {
@@ -378,8 +379,9 @@ export class VehicleSpawner {
             return null;
         }
 
+        const vehDef = await this.vehicleRepository.findByModel(vehicle.vehicle);
         const condition = {
-            ...getDefaultVehicleCondition(),
+            ...vehDef,
             ...JSON.parse(vehicle.condition || '{}'),
         };
 
@@ -447,8 +449,7 @@ export class VehicleSpawner {
             open: true,
             model: model,
         };
-        const condition = getDefaultVehicleCondition();
-        condition.fuelLevel = getVehicleMaxFuelStorage(vehDef);
+        const condition = getDefaultVehicleCondition(vehDef);
         return this.spawn(
             source,
             {
@@ -496,7 +497,8 @@ export class VehicleSpawner {
             rentOwner: player.citizenid,
             model: model,
         };
-        const condition = getDefaultVehicleCondition();
+        const vehDef = await this.vehicleRepository.findByModel(model);
+        const condition = getDefaultVehicleCondition(vehDef);
         return this.spawn(
             source,
             {
