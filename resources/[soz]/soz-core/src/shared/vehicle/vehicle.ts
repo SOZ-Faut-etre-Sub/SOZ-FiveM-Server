@@ -669,7 +669,7 @@ export const ALLOWED_AIR_CONTROL: Partial<Record<VehicleClass, true>> = {
 export const DisableNPCBike = false;
 
 export function getVehicleMaxFuelStorage(vehDef: Vehicle): number {
-    if (vehDef?.dealershipId == PlayerLicenceType.Moto) {
+    if (vehDef?.requiredLicence == PlayerLicenceType.Moto) {
         return 75;
     }
 

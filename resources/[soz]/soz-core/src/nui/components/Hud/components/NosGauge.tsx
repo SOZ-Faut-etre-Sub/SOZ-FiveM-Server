@@ -44,10 +44,11 @@ export const NosGauge: FunctionComponent = () => {
                 />
             </svg>
 
-            <NosIcon className="text-white size-6 -ml-1" />
-            <span className="text-white/80 [text-shadow:_0px_0px_4px_rgb(0_0_0_/_40%)] font-prompt font-semibold size-6 ml-1">
-                {vehicle.nosCount}
-            </span>
+            <div className="flex flex-row-reverse absolute w-10 -ml-7">
+                {new Array(vehicle.nosCount).fill(0).map(() => {
+                    return <NosIcon className="text-white h-[1.5rem]" />;
+                })}
+            </div>
         </div>
     );
 };

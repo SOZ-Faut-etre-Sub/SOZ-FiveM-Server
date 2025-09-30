@@ -381,7 +381,7 @@ export class VehicleSpawner {
 
         const vehDef = await this.vehicleRepository.findByModel(vehicle.vehicle);
         const condition = {
-            ...vehDef,
+            ...getDefaultVehicleCondition(vehDef),
             ...JSON.parse(vehicle.condition || '{}'),
         };
 
