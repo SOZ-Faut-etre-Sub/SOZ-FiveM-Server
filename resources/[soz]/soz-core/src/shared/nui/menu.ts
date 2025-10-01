@@ -253,6 +253,7 @@ export interface MenuTypeMap extends Record<MenuType, any> {
     [MenuType.LaserGameCreate]: null;
     [MenuType.LaserGameManage]: LaserGameData;
     [MenuType.LaserGameAdmin]: Record<string, LaserGameAdminInfo>;
+    [MenuType.CasinoSubscription]: number[];
     [MenuType.CasinoSlotMachine]: SlotMachineMenuData;
     [MenuType.CasinoBlackjack]: BlackjackMenuData;
     [MenuType.CasinoPoker]: PokerMenuData;

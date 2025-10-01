@@ -360,7 +360,7 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.LaserGameManage}/*`} element={<MenuLaserGameManage data={menuData} />} />
             <Route path={`/${MenuType.LaserGameAdmin}/*`} element={<MenuLaserGameAdmin data={menuData} />} />
             <Route path={`/${MenuType.Traveling}/*`} element={<MenuTraveling />} />
-            <Route path={`/${MenuType.CasinoSubscription}/*`} element={<MenuCasinoSubscription />} />
+            <Route path={`/${MenuType.CasinoSubscription}/*`} element={<MenuCasinoSubscription data={menuData} />} />
             <Route path={`/${MenuType.CasinoSlotMachine}/*`} element={<MenuSlotMachine data={menuData} />} />
             <Route path={`/${MenuType.CasinoPoker}/*`} element={<MenuPoker data={menuData} />} />
             <Route path={`/${MenuType.CasinoBlackjack}/*`} element={<MenuBlackjack data={menuData} />} />
