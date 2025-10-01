@@ -68,6 +68,7 @@ import { RadioApp } from './Radio/RadioApp';
 import { RadioVehicleApp } from './Radio/RadioVehicleApp';
 import { SceneSearchPropApp } from './Scene/SceneSearchPropApp';
 import { ScreenshotApp } from './Screenshot/ScreenshotApp';
+import { ClothShopMenu } from './Shop/ClothShopMenu';
 import { StateApp } from './StateApp';
 import { GlassMorphism } from './Styleguide/GlassMorphism';
 import { TargetOverlay } from './Target/TargetOverlay';
@@ -125,6 +126,7 @@ export const App: FunctionComponent = () => {
                     <ShopCartApp />
                 </div>
                 <div className={classes}>
+                    <ClothShopMenu />
                     <PanelApp />
                     <SceneSearchPropApp />
                     <RepairApp />

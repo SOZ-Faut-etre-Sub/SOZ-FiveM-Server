@@ -17,6 +17,7 @@ import { DrawService } from '../draw.service';
 import { GetObjectList, GetPedList, GetPickupList, GetVehicleList } from '../enumerate';
 import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
+import { NuiDispatch } from '../nui/nui.dispatch';
 import { NuiMenu } from '../nui/nui.menu';
 import { NuiZoneProvider } from '../nui/nui.zone.provider';
 import { ObjectProvider } from '../object/object.provider';
@@ -65,6 +66,9 @@ export class AdminMenuDeveloperProvider {
 
     @Inject(NuiMenu)
     public nuiMenu: NuiMenu;
+
+    @Inject(NuiDispatch)
+    public nuiDispatch: NuiDispatch;
 
     @Inject(ClothingShopRepository)
     public clothingShopRepository: ClothingShopRepository;
@@ -380,7 +384,7 @@ export class AdminMenuDeveloperProvider {
             await this.clothingShopRepository.getShopContent(brand);
         const under_types = this.underTypesShopRepository.getAllUnderTypes();
 
-        this.nuiMenu.openMenu(MenuType.ClothShop, {
+        this.nuiDispatch.dispatch('cloth_shop', 'SetCatalog', {
             brand: brand,
             shop_content,
             shop_categories,

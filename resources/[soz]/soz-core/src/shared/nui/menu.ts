@@ -71,7 +71,6 @@ export enum MenuType {
     Demo = 'demo',
     DrivingSchool = 'driving_school',
     BossShop = 'boss_shop',
-    ClothShop = 'cloth_shop',
     SuperetteShop = 'superette_shop',
     TattooShop = 'tattoo_shop',
     JewelryShop = 'jewelry_shop',

@@ -480,19 +480,13 @@ export class WhatIf2Provider {
                                     await this.clothingShopRepository.getShopContent(brand);
                                 const under_types = this.underTypesShopRepository.getAllUnderTypes();
 
-                                this.nuiMenu.openMenu(
-                                    MenuType.ClothShop,
-                                    {
-                                        brand: brand,
-                                        shop_content,
-                                        shop_categories,
-                                        under_types,
-                                        isInCayo: true,
-                                    },
-                                    {
-                                        position: { position: locker, distance: 10 },
-                                    }
-                                );
+                                this.nuiDispatch.dispatch('cloth_shop', 'SetCatalog', {
+                                    brand: brand,
+                                    shop_content,
+                                    shop_categories,
+                                    under_types,
+                                    isInCayo: true,
+                                });
                             },
                         },
                         {
@@ -507,19 +501,13 @@ export class WhatIf2Provider {
                                     await this.clothingShopRepository.getShopContent(brand);
                                 const under_types = this.underTypesShopRepository.getAllUnderTypes();
 
-                                this.nuiMenu.openMenu(
-                                    MenuType.ClothShop,
-                                    {
-                                        brand: brand,
-                                        shop_content,
-                                        shop_categories,
-                                        under_types,
-                                        isInCayo: true,
-                                    },
-                                    {
-                                        position: { position: locker, distance: 10 },
-                                    }
-                                );
+                                this.nuiDispatch.dispatch('cloth_shop', 'SetCatalog', {
+                                    brand: brand,
+                                    shop_content,
+                                    shop_categories,
+                                    under_types,
+                                    isInCayo: true,
+                                });
                             },
                         },
                         {

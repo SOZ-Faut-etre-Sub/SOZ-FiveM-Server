@@ -10,7 +10,6 @@ import { Provider } from '@public/core/decorators/provider';
 import { CAYO } from '@public/shared/cayo';
 import { Component, GlovesItem } from '@public/shared/cloth';
 import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
-import { MenuType } from '@public/shared/nui/menu';
 import { Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { ClothingShopID, ClothingShopItem } from '@public/shared/shop';
 
@@ -18,7 +17,6 @@ import { AnimationService } from '../animation/animation.service';
 import { CameraService } from '../camera';
 import { ClothingService } from '../clothing/clothing.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
-import { NuiMenu } from '../nui/nui.menu';
 import { PlayerService } from '../player/player.service';
 import { ResourceLoader } from '../repository/resource.loader';
 import { ClothingShopRepository } from '../repository/shop.repository';
@@ -36,9 +34,6 @@ export class ClothingShopProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
-
-    @Inject(NuiMenu)
-    private nuiMenu: NuiMenu;
 
     @Inject(CameraService)
     private cameraService: CameraService;
@@ -94,7 +89,7 @@ export class ClothingShopProvider {
         const under_types = this.underTypesShopRepository.getAllUnderTypes();
         this.currentShop = shop;
         await this.setupShop();
-        this.nuiMenu.openMenu(MenuType.ClothShop, {
+        this.nuiDispatch.dispatch('cloth_shop', 'SetCatalog', {
             brand,
             shop_content,
             shop_categories,
@@ -250,11 +245,10 @@ export class ClothingShopProvider {
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
     }
 
-    @OnNuiEvent<{ menuType: MenuType }>(NuiEvent.MenuClosed)
-    public async onMenuClose({ menuType }) {
-        if (menuType !== MenuType.ClothShop) {
-            return;
-        }
+    @OnNuiEvent(NuiEvent.ClothingShopClose)
+    public async onMenuClose() {
+        this.nuiDispatch.dispatch('cloth_shop', 'SetCatalog', undefined);
+
         TriggerEvent('soz-character:Client:ApplyCurrentSkin');
         TriggerEvent('soz-character:Client:ApplyCurrentClothConfig');
         await this.cameraService.deleteAllCameras();

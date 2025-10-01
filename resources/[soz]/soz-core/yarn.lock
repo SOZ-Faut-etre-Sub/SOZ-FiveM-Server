@@ -7469,6 +7469,11 @@ synckit@^0.8.6:
     "@pkgr/core" "^0.1.0"
     tslib "^2.6.2"
 
+tailwind-merge@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-3.3.1.tgz#a7e7db7c714f6020319e626ecfb7e7dac8393a4b"
+  integrity sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==
+
 tailwind-scrollbar@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/tailwind-scrollbar/-/tailwind-scrollbar-3.1.0.tgz#ff7596407b6da5209261d8ff03860ab9206a59e3"

@@ -90,7 +90,6 @@ import { PoliceSwatPickCaseMenu } from '@public/nui/components/Police/PoliceSwat
 import { MenuRaceAdmin } from '@public/nui/components/Race/MenuRaceAdmin';
 import { MenuRaceRank } from '@public/nui/components/Race/MenuRaceRanking';
 import { BarberShopMenu } from '@public/nui/components/Shop/BarberShopMenu';
-import { ClothShopMenu } from '@public/nui/components/Shop/ClothShopMenu';
 import { EasterShopMenu } from '@public/nui/components/Shop/EasterShopMenu';
 import { JewelryEngraveShopMenu } from '@public/nui/components/Shop/JewelryEngraveShopMenu';
 import { JewelryShopMenu } from '@public/nui/components/Shop/JewelryShopMenu';
@@ -235,7 +234,6 @@ const MenuRouter: FunctionComponent = () => {
             <Route path={`/${MenuType.FightForStyleJobMenu}/*`} element={<FightForStyleJobMenu data={menuData} />} />
             <Route path={`/${MenuType.StonkJobMenu}/*`} element={<StonkJobMenu data={menuData} />} />
             <Route path={`/${MenuType.FoodJobMenu}/*`} element={<FoodJobMenu data={menuData} />} />
-            <Route path={`/${MenuType.ClothShop}/*`} element={<ClothShopMenu catalog={menuData} />} />
             <Route path={`/${MenuType.SuperetteShop}/*`} element={<SuperetteShopMenu data={menuData} />} />
             <Route path={`/${MenuType.TattooShop}/*`} element={<TattooShopMenu data={menuData} />} />
             <Route path={`/${MenuType.JewelryShop}/*`} element={<JewelryShopMenu catalog={menuData} />} />

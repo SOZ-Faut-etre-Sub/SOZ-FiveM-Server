@@ -306,6 +306,7 @@ export enum NuiEvent {
     ClothingShopPreview = 'soz-core:client:shop:clothing:preview',
     ClothingShopBuy = 'soz-core:client:shop:clothing:buy',
     ClothingShopBackspace = 'soz-core:client:shop:clothing:backspace',
+    ClothingShopClose = 'soz-core:client:shop:clothing:close',
     ClothShopToggleCamera = 'soz-core:client:shop:clothing:toggle-camera',
     JewelryShopPreview = 'soz-core:client:shop:jewelry:preview',
     JewelryShopBuy = 'soz-core:client:shop:jewelry:buy',

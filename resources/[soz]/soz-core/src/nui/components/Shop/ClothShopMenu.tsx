@@ -1,262 +1,74 @@
-import { BrandsConfig, ShopBrand } from '@public/config/shops';
-import { usePlayer } from '@public/nui/hook/data';
 import { useNuiEvent } from '@public/nui/hook/nui';
-import { ClothingCategoryID, ClothingShop, ClothingShopCategory } from '@public/shared/shop';
-import { TaxType } from '@public/shared/tax';
-import { FunctionComponent, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { ShopCatalog } from '@public/shared/nui/cloth_shop';
+import { FunctionComponent, KeyboardEvent, useEffect, useState } from 'react';
 
 import { NuiEvent } from '../../../shared/event';
-import { MenuType } from '../../../shared/nui/menu';
 import { fetchNui } from '../../fetch';
-import { useGetPrice } from '../../hook/price';
-import {
-    MainMenu,
-    Menu,
-    MenuContent,
-    MenuItemButton,
-    MenuItemCheckbox,
-    MenuItemSelect,
-    MenuItemSelectOption,
-    MenuTitle,
-    SubMenu,
-} from '../Styleguide/Menu';
+import { useNuiFocus } from '../../hook/nui';
+import { ClotheCategories } from './components/Clothes/ClotheCategories';
+import { ClotheItems } from './components/Clothes/ClotheItems';
+import { ClothesApplication } from './components/Clothes/ClothesApplication';
+import { MainCategories } from './components/Clothes/MainCategories';
 
-type MenuClothShopStateProps = {
-    catalog: {
-        brand: ShopBrand;
-        shop_content: ClothingShop;
-        shop_categories: Record<number, ClothingShopCategory>;
-        under_types: Record<number, number[]>;
-        isInCayo: boolean;
-    };
-};
+export const ClothShopMenu: FunctionComponent = () => {
+    const [catalog, setCatalog] = useState<ShopCatalog>();
 
-export const ClothShopMenu: FunctionComponent<MenuClothShopStateProps> = ({
-    catalog: { brand, shop_content, shop_categories, under_types, isInCayo },
-}: MenuClothShopStateProps) => {
-    const getPrice = useGetPrice();
-    const [shopCategories, setShopCategories] = useState<Record<number, ClothingShopCategory>>(shop_categories);
-    const playerData = usePlayer();
+    const [selectedCategory, setSelectedCategory] = useState<number>();
 
-    const shopName = BrandsConfig[brand]?.label || 'Magasin';
-    const navigate = useNavigate();
-    const location = useLocation();
-    const state = location.state as { activeIndex: number } | undefined;
+    useNuiFocus(!!catalog, !!catalog, false);
 
-    const selectCategory = (categoryId: number) => {
-        navigate(`/${MenuType.ClothShop}/${categoryId}`, {
-            state: {
-                ...(state || {}),
-                activeIndex: 0,
-            },
-        });
+    useNuiEvent('cloth_shop', 'SetCatalog', setCatalog);
+
+    const onKeyUpReceived = (event: KeyboardEvent) => {
+        if (event.key !== 'Escape') return;
+
+        setSelectedCategory(undefined);
+        fetchNui(NuiEvent.ClothingShopClose);
     };
 
-    useNuiEvent('menu', 'Backspace', () => {
-        fetchNui(NuiEvent.ClothingShopBackspace);
-    });
+    useEffect(() => {
+        window.addEventListener('keyup', onKeyUpReceived);
 
-    const buyItem = async (_, item) => {
-        fetchNui(NuiEvent.ClothingShopBuy, item).then(() => {
-            if (item.stock == 0) {
-                return;
-            }
+        return () => {
+            window.removeEventListener('keyup', onKeyUpReceived);
+        };
+    }, [onKeyUpReceived]);
 
-            if (playerData.money.money < getPrice(item.price, isInCayo ? null : TaxType.SUPPLY)) {
-                return;
-            }
-            // Visual update the stock.
-            // We don't need to wait the backend to update the stock.
-            // It will be updated on the next shop opening.
-            const newShopCategories = { ...shopCategories };
-            newShopCategories[item.categoryId].content[item.modelLabel].find(i => i.id === item.id).stock--;
-            setShopCategories(newShopCategories);
-        });
-    };
-
-    const GetRootCategories = Object.values(shop_content.categories)
-        .filter(category => {
-            if (category.parentId) {
-                return false;
-            }
-
-            // Check if the category is not empty
-
-            if (
-                Object.values(shopCategories[category.id].content).length == 0 &&
-                Object.values(shopCategories).filter(childCat => childCat.parentId == category.id).length == 0
-            ) {
-                return false;
-            }
-            // Check if the category is not an undershirt or if it is, check if the player can where undershirts with his top
-
-            if (category.id != ClothingCategoryID.UNDERSHIRTS) {
-                return true;
-            }
-
-            return (
-                playerData.cloth_config.BaseClothSet.TopID != null &&
-                under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                under_types[playerData.cloth_config.BaseClothSet.TopID].length > 0
-            );
-        })
-        .sort((a, b) => a.name.localeCompare(b.name));
-
-    const GetChildrenCategoriesNotEmpty = cat => {
-        return Object.values(shopCategories)
-            .filter(childCat => {
-                // is child
-                if (!childCat.parentId) {
-                    return false;
-                }
-
-                return (
-                    childCat.parentId == cat.id &&
-                    // has sub category
-                    (Object.values(shopCategories).filter(childchildCat => childchildCat.parentId == childCat.id)
-                        .length > 0 || // or has items
-                        Object.values(childCat.content).filter(
-                            product =>
-                                !product[0].undershirtType ||
-                                (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                    under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                    !!product.find(item =>
-                                        under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
-                                            item.undershirtType
-                                        )
-                                    ))
-                        ).length > 0)
-                );
-            })
-            .sort((a, b) => a.name.localeCompare(b.name));
-    };
+    if (!catalog) {
+        return null;
+    }
 
     return (
-        <Menu type={MenuType.ClothShop}>
-            <MainMenu>
-                <MenuTitle title={shopName} />
-                <MenuContent>
-                    <MenuItemCheckbox
-                        onChange={check => {
-                            fetchNui(NuiEvent.ClothShopToggleCamera, check);
-                        }}
-                    >
-                        Libérer la caméra
-                    </MenuItemCheckbox>
-                    {GetRootCategories.map(category => (
-                        <MenuItemButton
-                            key={category.id}
-                            onConfirm={async () => {
-                                selectCategory(category.id);
-                            }}
-                        >
-                            {category.name}
-                        </MenuItemButton>
-                    ))}
-                </MenuContent>
-            </MainMenu>
-            {Object.values(shopCategories).map(cat => {
-                return (
-                    <SubMenu key={cat.id} id={String(cat.id)}>
-                        <MenuTitle title={shopName} />
-                        <MenuContent subtitle={cat.name}>
-                            {GetChildrenCategoriesNotEmpty(cat).map(childCat => (
-                                <MenuItemButton
-                                    key={childCat.id}
-                                    onConfirm={async () => {
-                                        selectCategory(childCat.id);
-                                        fetchNui(NuiEvent.ClothingShopBackspace);
-                                    }}
-                                >
-                                    {childCat.name}
-                                </MenuItemButton>
-                            ))}
-                            {Object.entries(cat.content)
-                                .filter(
-                                    ([, items]) =>
-                                        !items[0].undershirtType ||
-                                        (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                            under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                            !!items.find(item =>
-                                                under_types[playerData.cloth_config.BaseClothSet.TopID]?.includes(
-                                                    item.undershirtType
-                                                )
-                                            ))
-                                )
-                                .sort((a, b) => a[0].localeCompare(b[0]))
-                                .map(([modelLabel, items]) => (
-                                    <MenuItemSelect
-                                        keyDescendant={modelLabel}
-                                        key={items[0].id}
-                                        title={modelLabel}
-                                        titleWidth={50}
-                                        value={items[0]}
-                                        onConfirm={buyItem}
-                                        onSelectedValue={async (_, item) =>
-                                            await fetchNui(NuiEvent.ClothingShopPreview, item)
-                                        }
-                                        descriptionValue={item => {
-                                            return (
-                                                <>
-                                                    <div>{modelLabel}</div>
-                                                    <div>
-                                                        {
-                                                            items.filter(
-                                                                item =>
-                                                                    !item.undershirtType ||
-                                                                    (playerData.cloth_config.BaseClothSet.TopID !=
-                                                                        null &&
-                                                                        under_types[
-                                                                            playerData.cloth_config.BaseClothSet.TopID
-                                                                        ] &&
-                                                                        under_types[
-                                                                            playerData.cloth_config.BaseClothSet.TopID
-                                                                        ]?.includes(item.undershirtType))
-                                                            ).length
-                                                        }{' '}
-                                                        Coloris - Prix : $
-                                                        {getPrice(item.price, isInCayo ? null : TaxType.SUPPLY)} - 📦
-                                                        Stock : {item.stock}
-                                                    </div>
-                                                </>
-                                            );
-                                        }}
-                                    >
-                                        {items
-                                            .filter(
-                                                item =>
-                                                    !item.undershirtType ||
-                                                    (playerData.cloth_config.BaseClothSet.TopID != null &&
-                                                        under_types[playerData.cloth_config.BaseClothSet.TopID] &&
-                                                        under_types[
-                                                            playerData.cloth_config.BaseClothSet.TopID
-                                                        ]?.includes(item.undershirtType))
-                                            )
-                                            .sort((a, b) => a.colorLabel.localeCompare(b.colorLabel))
-                                            .map(item => (
-                                                <MenuItemSelectOption
-                                                    key={item.id}
-                                                    value={item}
-                                                    description={`💸 Prix : $${getPrice(
-                                                        item.price,
-                                                        isInCayo ? null : TaxType.SUPPLY
-                                                    )} - 📦 Stock : ${item.stock}`}
-                                                    disabled={item.stock == 0}
-                                                    onSelected={async () =>
-                                                        await fetchNui(NuiEvent.ClothingShopPreview, item)
-                                                    }
-                                                    helper={item.colorLabel}
-                                                >
-                                                    <span className="capitalize">{item.colorLabel}</span>
-                                                </MenuItemSelectOption>
-                                            ))}
-                                    </MenuItemSelect>
-                                ))}
-                        </MenuContent>
-                    </SubMenu>
-                );
-            })}
-        </Menu>
+        <ClothesApplication
+            shopBrand={catalog.brand}
+            shopCategories={catalog.shop_categories}
+            selectedCategory={selectedCategory}
+            onNavigate={setSelectedCategory}
+        >
+            {selectedCategory ? (
+                <>
+                    <ClotheCategories
+                        shopCategories={catalog.shop_categories}
+                        underTypes={catalog.under_types}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                    />
+                    <ClotheItems
+                        shopCategories={catalog.shop_categories}
+                        underTypes={catalog.under_types}
+                        selectedCategory={selectedCategory}
+                        onSelectedItem={item => fetchNui(NuiEvent.ClothingShopPreview, item)}
+                        isInCayo={catalog.isInCayo}
+                    />
+                </>
+            ) : (
+                <MainCategories
+                    categories={catalog.shop_categories}
+                    shopCategories={catalog.shop_content.categories}
+                    underTypes={catalog.under_types}
+                    setSelectedCategory={setSelectedCategory}
+                />
+            )}
+        </ClothesApplication>
     );
 };
