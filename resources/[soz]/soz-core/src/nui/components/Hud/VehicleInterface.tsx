@@ -57,7 +57,7 @@ export const VehicleInterface: FunctionComponent = () => {
             >
                 {isPilot ? (
                     <>
-                        <div className="flex justify-end items-end gap-1 w-32">
+                        <div className="flex justify-end items-end gap-1 w-32 mr-3">
                             <SeatbeltIndicator />
                             <LockIndicator />
                         </div>

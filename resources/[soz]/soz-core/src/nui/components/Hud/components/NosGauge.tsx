@@ -45,9 +45,19 @@ export const NosGauge: FunctionComponent = () => {
             </svg>
 
             <div className="flex flex-row-reverse absolute w-10 -ml-7">
-                {new Array(vehicle.nosCount).fill(0).map(() => {
-                    return <NosIcon className="text-white h-[1.5rem]" />;
-                })}
+                <div className="relative">
+                    {new Array(vehicle.nosCount).fill(0).map((_value, index) => {
+                        return (
+                            <NosIcon
+                                className="absolute text-white h-[1.5rem]"
+                                style={{
+                                    right: 5 * index,
+                                    opacity: 1.0 - (30 * index) / 100,
+                                }}
+                            />
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
