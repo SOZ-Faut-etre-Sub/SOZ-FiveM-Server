@@ -397,6 +397,7 @@ export enum RpcServerEvent {
     CASINO_INSIDE_TRACK_BET = 'soz-core:server:casino:inside-track-bet',
     CASINO_INSIDE_TRACK_LEAVE = 'soz-core:server:casino:inside-track-leave',
     CASINO_INSIDE_TRACK_HAS_PENDING_GAINS = 'soz-core:server:casino:inside-track-has-pending-gains',
+    CASINO_VIP_REWARD_TAKEN = 'soz-core:server:casino:vip-reward-taken',
 
     FIRE_GET_FIRE_PIT_PROPAGATION = 'soz-core:server:fire:get-fire-pit-propagation',
     FIRE_GET_ALL_PITS = 'soz-core:server:fire:get-all-pits',
