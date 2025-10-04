@@ -238,6 +238,7 @@ export class PoliceProvider {
             allDetectableItems.push(DrugConfigs[drugType].bagItem);
             allDetectableItems.push(DrugConfigs[drugType].boxItem);
             allDetectableItems.push(DrugConfigs[drugType].seedling);
+            allDetectableItems.push(DrugConfigs[drugType].harvestBase.item);
 
             console.log(allDetectableItems);
             if (allDetectableItems.some(itemName => targetInventory.findItem(item => item.name === itemName))) {
