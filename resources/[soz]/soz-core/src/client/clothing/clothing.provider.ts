@@ -22,7 +22,6 @@ export class ClothingProvider {
     private resourceLoader: ResourceLoader;
 
     private buoyancy = false;
-    private buoyancyForce = 0;
 
     @Rpc(RpcClientEvent.CHECK_WEARING_GLOVES)
     public async checkWearingGloves(): Promise<boolean> {
@@ -95,11 +94,16 @@ export class ClothingProvider {
     public lifeJacket() {
         const playerPed = PlayerPedId();
         if (this.buoyancy && !IsPedInAnyVehicle(playerPed, false) && IsPedSwimmingUnderWater(playerPed)) {
-            this.buoyancyForce = Math.min(this.buoyancyForce + 0.01, 1.0);
+            const coords = GetEntityCoords(playerPed);
+            const [ret, h] = GetGroundZFor_3dCoord(coords[0], coords[1], coords[2], true);
+            if (!ret) {
+                return;
+            }
+            const buoyancyForce = Math.min(h - coords[2], 1.0);
             const vel = GetEntityVelocity(playerPed);
-            SetEntityVelocity(playerPed, vel[0], vel[1], vel[2] + this.buoyancyForce);
-        } else {
-            this.buoyancyForce = 0;
+            if (vel[2] < 3) {
+                SetEntityVelocity(playerPed, vel[0], vel[1], vel[2] + buoyancyForce);
+            }
         }
     }
 }
