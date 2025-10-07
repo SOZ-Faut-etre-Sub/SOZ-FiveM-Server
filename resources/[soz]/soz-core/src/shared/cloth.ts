@@ -1,5 +1,7 @@
 import { PlayerPedHash } from '@public/shared/player';
 
+import { Vector4 } from './polyzone/vector';
+
 export enum Component {
     Mask = 1,
     Hair = 2,
@@ -323,86 +325,190 @@ export const ScubaOutfit: Record<PlayerPedHash, Outfit> = {
     },
 };
 
-export const ClothingFields: { label: string; componentId?: number; propId?: number; type: 'comp' | 'prop' }[] = [
+export const ClothingFields: {
+    label: string;
+    componentId?: number;
+    propId?: number;
+    type: 'comp' | 'prop';
+    reset: Record<PlayerPedHash, number>;
+    camOffset: Vector4;
+    fov: number;
+}[] = [
     {
         componentId: 1,
         label: 'Masque',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.65, 0],
+        fov: 10,
     },
     {
         componentId: 2,
         label: 'Coupe de cheveux',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: -1,
+            [PlayerPedHash.Female]: -1,
+        },
+        camOffset: [0, 4, 3.7, 180],
+        fov: 10,
     },
     {
         componentId: 3,
         label: 'Torse',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: -1,
+            [PlayerPedHash.Female]: -1,
+        },
+        camOffset: [0, 4, 3.2, 0],
+        fov: 20,
     },
     {
         componentId: 4,
         label: 'Jambes',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: -1,
+            [PlayerPedHash.Female]: -1,
+        },
+        camOffset: [0, 4, 2.6, 0],
+        fov: 18,
     },
     {
         componentId: 5,
         label: 'Sac',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.2, 180],
+        fov: 20,
     },
     {
         componentId: 6,
         label: 'Chaussures',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: -1,
+            [PlayerPedHash.Female]: -1,
+        },
+        camOffset: [0, 4, 2.2, 0],
+        fov: 10,
     },
     {
         componentId: 7,
         label: 'Accessoires',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.2, 0],
+        fov: 15,
     },
     {
         componentId: 8,
         label: 'Undershirt',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: -1,
+            [PlayerPedHash.Female]: -1,
+        },
+        camOffset: [0, 4, 3.2, 0],
+        fov: 20,
     },
     {
         componentId: 9,
         label: 'Armure',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.2, 0],
+        fov: 20,
     },
     {
         componentId: 10,
         label: 'Décalques',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.2, 0],
+        fov: 20,
     },
     {
         componentId: 11,
         label: 'Hauts',
         type: 'comp',
+        reset: {
+            [PlayerPedHash.Male]: 15,
+            [PlayerPedHash.Female]: -1,
+        },
+        camOffset: [0, 4, 3.2, 0],
+        fov: 20,
     },
     {
         propId: 0,
         label: 'Chapeau',
         type: 'prop',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.7, 0],
+        fov: 10,
     },
     {
         propId: 1,
         label: 'Lunettes',
         type: 'prop',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.7, 0],
+        fov: 7,
     },
     {
         propId: 2,
         label: 'oreilles',
         type: 'prop',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0, 4, 3.7, 0],
+        fov: 7,
     },
     {
         propId: 6,
         label: 'Bras gauche',
         type: 'prop',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [-0.3, 4, 2.9, 0],
+        fov: 7,
     },
     {
         propId: 7,
         label: 'Bras droit',
         type: 'prop',
+        reset: {
+            [PlayerPedHash.Male]: 0,
+            [PlayerPedHash.Female]: 0,
+        },
+        camOffset: [0.3, 4, 2.9, 0],
+        fov: 7,
     },
 ];
 

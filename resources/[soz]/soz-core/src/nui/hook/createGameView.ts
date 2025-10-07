@@ -102,7 +102,7 @@ export type GameView = {
     resize: (width: number, height: number) => void;
     startRender: () => void;
     stopRender: () => void;
-    takeScreenshot: (watermark?: boolean) => Promise<Blob>;
+    takeScreenshot: (watermark?: boolean, greenScreen?: boolean) => Promise<Blob>;
 };
 
 export const createGameView = (canvas: HTMLCanvasElement): GameView => {
@@ -161,7 +161,7 @@ export const createGameView = (canvas: HTMLCanvasElement): GameView => {
         stopRender: () => {
             cancelAnimationFrame(gameView.animationFrame);
         },
-        takeScreenshot: async (watermark = true): Promise<Blob> => {
+        takeScreenshot: async (watermark = true, greenScreen = false): Promise<Blob> => {
             // create a temporary canvas to generate the wartermark
             const imageCanvas = document.createElement('canvas');
             imageCanvas.width = gl.canvas.width;
@@ -197,6 +197,27 @@ export const createGameView = (canvas: HTMLCanvasElement): GameView => {
                 ctx.rotate(-Math.PI / 2);
                 ctx.fillText(`${date} - ${hashString(date)}`, 0, 18 / 2);
                 ctx.restore();
+            }
+
+            if (greenScreen) {
+                const imgData = ctx.getImageData(0, 0, gl.canvas.width, gl.canvas.height);
+                const pixels = imgData.data;
+
+                for (let i = 0; i < pixels.length; i += 4) {
+                    const r = pixels[i];
+                    const g = pixels[i + 1];
+                    const b = pixels[i + 2];
+
+                    // Improved green detection
+                    if (g > 120 && r < 100 && b < 100) {
+                        pixels[i + 0] = 0;
+                        pixels[i + 1] = 0;
+                        pixels[i + 2] = 0;
+                        pixels[i + 3] = 0; // Make transparent
+                    }
+                }
+
+                ctx.putImageData(imgData, 0, 0);
             }
 
             return new Promise<Blob>(resolve => {

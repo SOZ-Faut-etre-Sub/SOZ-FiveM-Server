@@ -2,7 +2,7 @@ import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { ServerEvent } from '@public/shared/event';
-import { writeFile } from 'fs/promises';
+import fs from 'fs';
 
 import { PlayerService } from '../player/player.service';
 
@@ -21,6 +21,13 @@ export class PropImageProvider {
         data = data.replace('data:image/webp;base64,', '');
         const image = Buffer.from(data, 'base64');
 
-        await writeFile(name + '.webp', image);
+        fs.mkdirSync(name.substring(0, name.lastIndexOf('/')), { recursive: true });
+        fs.writeFile(name + '.webp', image, { flag: 'a+' }, err => {
+            if (err) {
+                console.error(err);
+            } else {
+                // done!
+            }
+        });
     }
 }

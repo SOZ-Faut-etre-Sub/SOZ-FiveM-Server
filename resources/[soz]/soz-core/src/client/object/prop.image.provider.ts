@@ -4,6 +4,7 @@ import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick } from '@public/core/decorators/tick';
 import { wait } from '@public/core/utils';
+import { ClothingFields } from '@public/shared/cloth';
 import { NuiEvent, ServerEvent } from '@public/shared/event';
 import { joaat } from '@public/shared/joaat';
 import { BoxZone } from '@public/shared/polyzone/box.zone';
@@ -253,11 +254,138 @@ export class PropImageProvider {
         this.circle = null;
     }
 
+    @Command('vet')
+    public async vet() {
+        //in F8
+        //allowEmptyHeadDrawable true
+        const player = this.playerService.getPlayer();
+
+        if (player.role != 'admin') {
+            return;
+        }
+
+        this.nuiDispatch.dispatch('screenshot', 'ready', true);
+        this.ready = true;
+
+        const target = [-1264.03, -2978.03, -49.49];
+        SetEntityCoords(PlayerPedId(), target[0], target[1], target[2], false, false, false, false);
+
+        const camera = CreateCam('DEFAULT_SCRIPTED_CAMERA', true);
+        SetCamParams(camera, target[0], target[1], target[2] + 4, 0, 0, 180, 10, 0, 1, 3, 0);
+        RenderScriptCams(true, false, 0, false, false);
+        await wait(0);
+
+        const light = await this.objectService.createObject({
+            id: 'light',
+            model: joaat('prop_spot_01'),
+            position: [-1264.03 - 1, -2974.03, -47.49 + 1, 20],
+        });
+
+        for (const model of [/*'mp_m_freemode_01',*/ 'mp_f_freemode_01']) {
+            await this.resourceLoader.loadModel(model);
+            SetPlayerModel(PlayerId(), model);
+            await wait(1000);
+            const ped = PlayerPedId();
+            FreezeEntityPosition(ped, true);
+            SetEntityCoords(ped, target[0], target[1], target[2] + 2, false, false, false, false);
+            SetEntityHeading(ped, 0);
+
+            await wait(1000);
+
+            const nbCollection = GetPedCollectionsCount(ped);
+
+            for (const field of ClothingFields) {
+                SetPedComponentVariation(ped, 0, -1, 0, 0);
+                for (const resetfield of ClothingFields) {
+                    if (resetfield.type == 'comp') {
+                        SetPedComponentVariation(ped, resetfield.componentId, resetfield.reset[joaat(model)], 0, 0);
+                    } else {
+                        ClearPedProp(ped, resetfield.propId);
+                    }
+                }
+                console.log('After reset');
+                SetEntityHeading(ped, field.camOffset[3]);
+                SetCamParams(
+                    camera,
+                    target[0] + field.camOffset[0],
+                    target[1] + field.camOffset[1],
+                    target[2] + field.camOffset[2],
+                    0,
+                    0,
+                    180,
+                    field.fov,
+                    0,
+                    1,
+                    3,
+                    0
+                );
+                await wait(1000);
+
+                for (let dlcIndex = 0; dlcIndex < nbCollection; dlcIndex++) {
+                    const dlcname = GetPedCollectionName(ped, dlcIndex);
+                    const max =
+                        field.type == 'comp'
+                            ? GetNumberOfPedCollectionDrawableVariations(ped, field.componentId, dlcname)
+                            : GetNumberOfPedCollectionPropDrawableVariations(ped, field.propId, dlcname);
+                    for (let drawable = 0; drawable < max; drawable++) {
+                        const isGen9 =
+                            field.type == 'comp' &&
+                            IsPedCollectionComponentVariationGen9Exclusive(ped, field.componentId, dlcname, drawable);
+                        if (isGen9) {
+                            continue;
+                        }
+
+                        const numTexture =
+                            field.type == 'comp'
+                                ? GetNumberOfPedCollectionTextureVariations(ped, field.componentId, dlcname, drawable)
+                                : GetNumberOfPedCollectionPropTextureVariations(ped, field.propId, dlcname, drawable);
+
+                        for (let texture = 0; texture < numTexture; texture++) {
+                            if (field.type == 'comp') {
+                                SetPedCollectionComponentVariation(
+                                    ped,
+                                    field.componentId,
+                                    dlcname,
+                                    drawable,
+                                    texture,
+                                    0
+                                );
+                            } else {
+                                SetPedCollectionPropIndex(ped, field.propId, dlcname, drawable, texture, true);
+                            }
+
+                            this.send = false;
+                            const name = `${model}/${field.type}_${field.type == 'comp' ? field.componentId : field.propId}/${dlcname === '' ? 'base' : dlcname}/${drawable}/${texture}`;
+                            console.log(name);
+                            await wait(100);
+                            this.nuiDispatch.dispatch('screenshot', 'screenshot', name);
+                            while (!this.send) {
+                                await wait(0);
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        }
+
+        RenderScriptCams(false, false, 0, false, false);
+        DestroyCam(camera, true);
+        DeleteEntity(light);
+        FreezeEntityPosition(PlayerPedId(), false);
+
+        this.nuiDispatch.dispatch('screenshot', 'ready', false);
+        this.ready = false;
+    }
+
     @Tick()
     public screenshotTick() {
         if (this.ready) {
             DrawPoly(-1268.03, -2979.03, -51, -1268.03, -2979.03, -36, -1260.03, -2979.03, -51, 0, 255, 0, 255);
             DrawPoly(-1268.03, -2979.03, -36, -1260.03, -2979.03, -36, -1260.03, -2979.03, -51, 0, 255, 0, 255);
+
+            SetIkTarget(PlayerPedId(), 1, PlayerPedId(), 12844, 0.0, 0.0, 0.0, 0, -1, -1); // Kill head to cam heading movement
+            ForcePedMotionState(PlayerPedId(), `MotionState_None`, false, 1, true);
         }
         /*
         if (this.box) {

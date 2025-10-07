@@ -13,14 +13,15 @@ export const ScreenshotApp: FunctionComponent = () => {
     });
 
     useNuiEvent('screenshot', 'screenshot', async name => {
-        const blob = await gameView.takeScreenshot(false);
+        const blob = await gameView.takeScreenshot(false, true);
         const reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = function () {
-            const base64data = reader.result;
+            const base64data = reader.result.toString();
+            console.log('a', name, blob.size, base64data.length);
             fetchNui(NuiEvent.Screenshot, {
                 name,
-                data: base64data,
+                data: base64data.toString(),
             });
         };
     });

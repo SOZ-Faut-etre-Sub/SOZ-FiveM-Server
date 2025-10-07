@@ -2,6 +2,7 @@ import { OnNuiEvent } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { AnimationService } from '@public/client/animation/animation.service';
+import { Command } from '@public/core/decorators/command';
 import { Animation } from '@public/shared/animation';
 import { RankOutfit } from '@public/shared/job/police';
 
@@ -17,6 +18,9 @@ import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
 import { Vector3 } from '../../shared/polyzone/vector';
 import { ProgressResult } from '../../shared/progress';
+import { ClipboardService } from '../clipboard.service';
+import { ClothingService } from '../clothing/clothing.service';
+import { Notifier } from '../notifier';
 import { NuiMenu } from '../nui/nui.menu';
 import { ProgressService } from '../progress.service';
 import { PlayerService } from './player.service';
@@ -39,6 +43,15 @@ export class PlayerWardrobe {
 
     @Inject(AnimationService)
     private animationService: AnimationService;
+
+    @Inject(ClothingService)
+    private clothingService: ClothingService;
+
+    @Inject(ClipboardService)
+    private clipboard: ClipboardService;
+
+    @Inject(Notifier)
+    private notifier: Notifier;
 
     private customOutfit: Outfit;
 
@@ -285,5 +298,11 @@ export class PlayerWardrobe {
         this.currentOutfitResolve = null;
 
         return;
+    }
+
+    @Command('dump_vet')
+    public dump_vet() {
+        this.clipboard.copy(this.clothingService.getClothSet());
+        this.notifier.notify('Tenue copiée dans le presse-papier');
     }
 }
