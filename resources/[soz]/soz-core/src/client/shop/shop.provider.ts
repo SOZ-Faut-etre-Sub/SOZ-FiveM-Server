@@ -322,7 +322,7 @@ export class ShopProvider {
                 },
                 {
                     icon: 'ems/heal',
-                    label: "Soigner son animal d'entreprise'",
+                    label: "Soigner son animal d'entreprise",
                     category: 'citizen',
                     canInteract: () => this.animalProvider.isJobDead(),
                     action: () => TriggerServerEvent(ServerEvent.PET_SET_DEATH, false, true),

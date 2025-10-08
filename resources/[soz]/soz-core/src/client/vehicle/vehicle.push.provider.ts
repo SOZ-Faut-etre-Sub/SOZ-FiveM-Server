@@ -64,7 +64,7 @@ export class VehiclePushProvider {
     private positionType = ['bonnet', 'door', 'trunk'];
     private attachedVeh: number;
     private attachedPosition: string;
-    private isAttaching: boolean;
+    public isAttaching: boolean;
     private remotePush: {
         veh: number;
         pushingPed: number;
@@ -431,23 +431,18 @@ export class VehiclePushProvider {
 
         ClearPedTasks(ped);
         await this.resourceLoader.loadAnimationDictionary(this.animDict);
-        TaskPlayAnimAdvanced(
+        TaskPlayAnim(
             ped,
             this.animDict,
             this.boneToAnimation[this.attachedPosition].anim,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
             1.5,
             1.5,
             -1,
             2,
             1,
-            0,
-            0
+            false,
+            false,
+            false
         );
         await waitUntil(async () => this.isPlayingAnim(ped));
     }

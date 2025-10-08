@@ -17,6 +17,12 @@ export type PetResetMeta = {
     lastTrainingGain: number;
 };
 
+export enum PetBehavior {
+    PASSIVE = 'PASSIVE',
+    DEFENSIVE = 'DEFENSIVE',
+    AGGRESIVE = 'AGGRESIVE',
+}
+
 export const whistles = [
     'whistle_basic',
     'whistle_steel',
@@ -341,6 +347,7 @@ export const PetTrainingMinimalExecOrderChance = 0.25;
 export const PetDistanceOrderTargetDistance = 12;
 export const PetDistanceReturnHome = 110;
 export const PetDistanceForceFollowPlayer = 70;
+export const PetDistancePetAttackOnShooting = 40;
 export const PetDistanceOrderPedDeltaTrigger = 1.5;
 export const PetDistanceOrderVehicleDeltaTrigger = 3.5;
 export const PetDistanceUseFood = 3.0;

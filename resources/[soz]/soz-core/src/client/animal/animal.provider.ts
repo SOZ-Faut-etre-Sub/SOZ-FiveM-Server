@@ -6,8 +6,9 @@ import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { TargetFactory } from '@public/client/target/target.factory';
 import { NoClipProvider } from '@public/client/utils/noclip.provider';
+import { VehiclePushProvider } from '@public/client/vehicle/vehicle.push.provider';
 import { Command } from '@public/core/decorators/command';
-import { Once, OnceStep, OnEvent, OnNuiEvent } from '@public/core/decorators/event';
+import { On, Once, OnceStep, OnEvent, OnGameEvent, OnNuiEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
 import { Tick, TickInterval } from '@public/core/decorators/tick';
@@ -28,6 +29,7 @@ import {
     k9_model,
     negativeTraitLabel,
     orderJobRestriction,
+    PetBehavior,
     petBreedToOrderType,
     PetDistanceAttackOnTarget,
     PetDistanceCatchTheBall,
@@ -36,6 +38,7 @@ import {
     PetDistanceOrderPedDeltaTrigger,
     PetDistanceOrderTargetDistance,
     PetDistanceOrderVehicleDeltaTrigger,
+    PetDistancePetAttackOnShooting,
     PetDistanceReturnHome,
     PetDistanceSearch,
     PetDistanceSearchOnTargetPed,
@@ -53,7 +56,7 @@ import {
     TENNIS_BALL_MODEL,
 } from '@public/shared/animal';
 import { AnimationStopReason } from '@public/shared/animation';
-import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
+import { ClientEvent, GameEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { InventoryItem } from '@public/shared/inventory';
 import { FDO, JobType } from '@public/shared/job';
 import { PositiveNumberValidator } from '@public/shared/nui/input';
@@ -88,6 +91,9 @@ export class AnimalProvider {
     @Inject(NoClipProvider)
     private noClipProvider: NoClipProvider;
 
+    @Inject(VehiclePushProvider)
+    private vehiclePushProvider: VehiclePushProvider;
+
     private pet: ClientPet;
     private job_pet: ClientJobPet;
 
@@ -97,6 +103,9 @@ export class AnimalProvider {
     private warningDistanceNotif: boolean = false;
     private ballEntityNetId: number;
     private energyNotif: boolean = true;
+    private behavior: PetBehavior = PetBehavior.PASSIVE;
+    private isAttacking = false;
+    private lastGunShotTrigger: number;
 
     @OnEvent(ClientEvent.ADMIN_SWITCH_CHARACTER)
     public async onCharacterSwitch() {
@@ -175,6 +184,8 @@ export class AnimalProvider {
         this.forceOrder = null;
         this.isUsingWhistle = false;
         this.warningDistanceNotif = false;
+        this.behavior = PetBehavior.PASSIVE;
+        this.isAttacking = false;
         this.syncWithUI(null);
     }
 
@@ -228,7 +239,7 @@ export class AnimalProvider {
                         return pet?.model === k9_model;
                     },
                     action: async (entity: number) => {
-                        await this.attackTheTarget(entity);
+                        await this.attackExcecutionOrder(entity);
                     },
                 },
             ],
@@ -246,7 +257,7 @@ export class AnimalProvider {
                         return pet?.model === k9_model;
                     },
                     action: async (entity: number) => {
-                        await this.attackTheTarget(entity);
+                        await this.attackExcecutionOrder(entity);
                     },
                 },
             ],
@@ -312,6 +323,62 @@ export class AnimalProvider {
             ],
             1.5
         );
+
+        this.targetFactory.createForModel(
+            k9_model,
+            [
+                {
+                    label: 'Passif',
+                    icon: 'shop/pet',
+                    category: 'society',
+                    canInteract: entity => {
+                        const pet = this.getCurrentPet();
+                        return pet?.entity === entity && !IsEntityDead(entity) && this.behavior !== PetBehavior.PASSIVE;
+                    },
+                    action: () => {
+                        this.behavior = PetBehavior.PASSIVE;
+                        const pet = this.getCurrentPet();
+                        this.notifier.notify(`${pet.name || `Ton animal`} est ~g~passif~s~.`, 'info');
+                    },
+                },
+                {
+                    label: 'Défensif',
+                    icon: 'crimi/grab',
+                    category: 'society',
+                    canInteract: entity => {
+                        const pet = this.getCurrentPet();
+                        return (
+                            pet?.entity === entity && !IsEntityDead(entity) && this.behavior !== PetBehavior.DEFENSIVE
+                        );
+                    },
+                    action: () => {
+                        this.behavior = PetBehavior.DEFENSIVE;
+                        const pet = this.getCurrentPet();
+                        this.notifier.notify(`${pet.name || `Ton animal`} est sur la ~g~défensive~s~.`, 'info');
+                    },
+                },
+                {
+                    label: 'Aggresif',
+                    icon: 'crimi/force-consume',
+                    category: 'society',
+                    canInteract: entity => {
+                        const pet = this.getCurrentPet();
+                        return (
+                            pet?.entity === entity && !IsEntityDead(entity) && this.behavior !== PetBehavior.AGGRESIVE
+                        );
+                    },
+                    action: () => {
+                        this.behavior = PetBehavior.AGGRESIVE;
+                        const pet = this.getCurrentPet();
+                        this.notifier.notify(
+                            `${pet.name || `Ton animal`} est prêt à répondre  ~g~à tout agression~s~.`,
+                            'info'
+                        );
+                    },
+                },
+            ],
+            1.5
+        );
     }
 
     @Command('openanimalui', {
@@ -337,6 +404,92 @@ export class AnimalProvider {
         }
         const actions = this.petOrderAvailable(pet);
         this.nuiDispatch.dispatch('pet_manager', 'ShowPetManager', { open: true, actions });
+    }
+
+    @On('CEventGunShot', false)
+    public async onCEventGunShot(entities, eventEntity): Promise<void> {
+        if (this.isAttacking) return;
+        if (this.lastGunShotTrigger && new Date().getTime() <= this.lastGunShotTrigger + 500) return;
+
+        const ped = PlayerPedId();
+        const player = this.playerService.getPlayer();
+
+        const pet = this.getCurrentPet();
+        if (!pet?.entity || !pet.isPetJob || pet.model !== k9_model) return;
+
+        if (
+            !eventEntity ||
+            !player ||
+            player.metadata.isdead ||
+            this.behavior !== PetBehavior.AGGRESIVE ||
+            ped === eventEntity ||
+            !DoesEntityExist(eventEntity) ||
+            !IsEntityAPed(eventEntity) ||
+            IsPedAnAnimal(eventEntity) ||
+            this.playerService.getState()?.isInGame
+        )
+            return;
+
+        const playerPosition = GetEntityCoords(PlayerPedId()) as Vector3;
+        const distance = getDistance(GetEntityCoords(eventEntity) as Vector3, playerPosition);
+
+        if (distance > PetDistancePetAttackOnShooting) return;
+        if (!this.shouldOrderSucess(pet)) return;
+        if (
+            IsPedAPlayer(eventEntity) &&
+            !(await emitRpc<boolean>(
+                RpcServerEvent.PET_SHOULD_PLAYER_BE_ATTACKED,
+                GetPlayerServerId(NetworkGetPlayerIndexFromPed(eventEntity))
+            ))
+        )
+            return;
+
+        const now = new Date().getTime();
+        if (this.lastGunShotTrigger && now <= this.lastGunShotTrigger + 7500) return;
+        this.lastGunShotTrigger = now;
+
+        this.currentOrder = null;
+        await this.attackTheTarget(pet, eventEntity);
+    }
+
+    @OnGameEvent(GameEvent.CEventNetworkEntityDamage)
+    async onEntityGetDamaged(
+        victim: number,
+        attacker: number,
+        unkInt1: number,
+        unkBool1: number,
+        unkBool2: number,
+        isFatal: boolean,
+        weaponHash: number
+    ) {
+        if (this.isAttacking) return;
+
+        const playerPed = PlayerPedId();
+        if (playerPed !== victim || this.playerService.getState()?.isInGame || this.behavior === PetBehavior.PASSIVE)
+            return;
+        if (playerPed === attacker || !IsEntityAPed(attacker) || IsPedAnAnimal(attacker) || isFatal) return;
+
+        const player = this.playerService.getPlayer();
+        if (!player || player.metadata.isdead) return;
+
+        const pet = this.getCurrentPet();
+        if (!pet?.entity || !pet.isPetJob || pet.model !== k9_model) return;
+
+        const damageType = GetWeaponDamageType(weaponHash);
+
+        if (![2, 3].includes(damageType)) return;
+        if (!this.shouldOrderSucess(pet)) return;
+        if (
+            IsPedAPlayer(attacker) &&
+            !(await emitRpc<boolean>(
+                RpcServerEvent.PET_SHOULD_PLAYER_BE_ATTACKED,
+                GetPlayerServerId(NetworkGetPlayerIndexFromPed(attacker))
+            ))
+        )
+            return;
+
+        this.currentOrder = null;
+        await this.attackTheTarget(pet, attacker);
     }
 
     @OnEvent(ClientEvent.PLAYER_ON_DEATH)
@@ -921,7 +1074,7 @@ export class AnimalProvider {
         this.notifier.notify("~g~Aucune~s~ trace de drogue n'a été trouvée dans cette ~y~voiture~s~.", 'info');
     }
 
-    private async attackTheTarget(entity: number) {
+    private async attackExcecutionOrder(entity: number) {
         const pet = this.getCurrentPet();
         const previousOrder = this.currentOrder;
 
@@ -935,9 +1088,6 @@ export class AnimalProvider {
             this.currentOrder = previousOrder;
             return;
         }
-
-        const dictionary = 'creatures@rottweiler@melee@streamed_core@';
-        await this.resourceLoader.loadAnimationDictionary(dictionary);
 
         this.animationService.playAnimation(
             {
@@ -955,7 +1105,7 @@ export class AnimalProvider {
             }
         );
 
-        const successOrder = Math.random() <= Math.max(pet.training / 100, PetTrainingMinimalExecOrderChance);
+        const successOrder = this.shouldOrderSucess(pet);
         TriggerServerEvent(ServerEvent.PET_EXECUTED_ORDER, successOrder, pet.isPetJob);
 
         if (!successOrder) {
@@ -966,6 +1116,20 @@ export class AnimalProvider {
             this.currentOrder = previousOrder;
             return;
         }
+
+        await this.attackTheTarget(pet, entity);
+    }
+
+    private shouldOrderSucess(pet: AnyClientPet): boolean {
+        return Math.random() <= Math.max(pet.training / 100, PetTrainingMinimalExecOrderChance);
+    }
+
+    private async attackTheTarget(pet: AnyClientPet, entity: number) {
+        if (this.isAttacking) return;
+        this.isAttacking = true;
+
+        const dictionary = 'creatures@rottweiler@melee@streamed_core@';
+        await this.resourceLoader.loadAnimationDictionary(dictionary);
 
         this.notifier.notify(`${pet.name || `Ton animal`} ~b~s'élance~s~ sur la cible et ~b~l'attaque~s~ !`, 'info');
         TaskGoToEntity(pet.entity, entity, -1, 0.0, 100, 100, 0);
@@ -991,8 +1155,10 @@ export class AnimalProvider {
                 SetPedToRagdoll(entity, 10000, 10000, 0, false, false, false);
             }
         }
+
         this.resourceLoader.unloadAnimationDictionary(dictionary);
         this.currentOrder = PetOrder.FOLLOW;
+        this.isAttacking = false;
     }
 
     private async catchTheBall(pet: AnyClientPet) {
@@ -1213,7 +1379,7 @@ export class AnimalProvider {
         if (order === PetOrder.FOLLOW) {
             success = true;
         } else {
-            success = Math.random() <= Math.max(pet.training / 100, PetTrainingMinimalExecOrderChance);
+            success = this.shouldOrderSucess(pet);
             TriggerServerEvent(ServerEvent.PET_EXECUTED_ORDER, success, pet.isPetJob);
         }
 

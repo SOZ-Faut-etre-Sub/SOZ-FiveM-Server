@@ -1,6 +1,7 @@
 import { Provider } from '@core/decorators/provider';
 import { Tick } from '@core/decorators/tick';
 import { wait } from '@core/utils';
+import { AnimalProvider } from '@public/client/animal/animal.provider';
 import { NuiDispatch } from '@public/client/nui/nui.dispatch';
 import { OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
@@ -40,6 +41,9 @@ export class PlayerPositionProvider {
 
     @Inject(ItemProvider)
     private itemProvider: ItemProvider;
+
+    @Inject(AnimalProvider)
+    private animalProvider: AnimalProvider;
 
     @Tick(1000)
     updatePosition() {
@@ -85,6 +89,7 @@ export class PlayerPositionProvider {
         DoScreenFadeOut(this.fadeDelay);
         await wait(this.fadeDelay);
 
+        await this.animalProvider.despawnAnimal(this.animalProvider.getCurrentPet());
         await this.removeProps();
 
         await this.LSMCStretcherProvider.startTp();

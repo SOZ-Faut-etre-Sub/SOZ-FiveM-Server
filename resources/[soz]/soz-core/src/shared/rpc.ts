@@ -419,6 +419,7 @@ export enum RpcServerEvent {
     PET_GET_JOB_ANIMAL = 'soz-core:server:pet:get-job-animal',
     PET_CONSUME_BALL = 'soz-core:server:pet:consume-ball',
     PET_LIST_JOB_ANIMALS = 'soz-core:server:pet:list-job-animals',
+    PET_SHOULD_PLAYER_BE_ATTACKED = 'soz-core:server:pet:should-player-be-attacked',
 }
 
 export enum RpcClientEvent {

@@ -59,7 +59,7 @@ import {
 } from '@public/shared/animal';
 import { ClientEvent, ServerEvent } from '@public/shared/event';
 import { ADD_ERROR_MESSAGE, InventoryItem, InventoryType } from '@public/shared/inventory';
-import { FDO, JobType } from '@public/shared/job';
+import { FDO, JobType, PUBLIC_SERVICES } from '@public/shared/job';
 import { PlayerData } from '@public/shared/player';
 import { isErr } from '@public/shared/result';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -276,6 +276,14 @@ export class AnimalProvider {
         if (!inventory) return false;
 
         return inventory.remove(PET_BALL_OBJECT);
+    }
+
+    @Rpc(RpcServerEvent.PET_SHOULD_PLAYER_BE_ATTACKED)
+    public async onPetShouldPlayerBeAttacked(source: number, playerNetworkId: number): Promise<boolean> {
+        const target = this.playerService.getPlayer(playerNetworkId);
+        if (!target || (PUBLIC_SERVICES.includes(target.job.id) && target.job.onduty)) return false;
+
+        return true;
     }
 
     private async getPet(citizenId: string, force: boolean): Promise<ServerPet | null> {
