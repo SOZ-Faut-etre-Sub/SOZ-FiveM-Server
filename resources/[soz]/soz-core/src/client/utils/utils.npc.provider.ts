@@ -328,6 +328,9 @@ export class UtilsNPCProvider {
 
         //mhc tower
         AddScenarioBlockingArea(-235.63, -1122.33, 20.0, -58.7, -961.62, 270.0, false, true, true, true);
+		
+		//Mirror Park 2
+        AddScenarioBlockingArea(1278.91, -680.21, 62.0, 1428.12, -796.53, 78.0, false, true, true, true);
 
         for (let i = 1; i <= 15; i++) {
             EnableDispatchService(i, false);
