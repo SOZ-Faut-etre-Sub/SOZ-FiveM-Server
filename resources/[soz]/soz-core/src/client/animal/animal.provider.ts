@@ -1065,7 +1065,7 @@ export class AnimalProvider {
             await this.startAnimationSyncForOrder(pet, PetOrder.SEARCH);
 
             this.notifier.notify(
-                `${pet.name || `Ton animal`} a ~b~marqué~s~ le vehicule ! Des drogues ont été trouvés dans son coffre.`,
+                `${pet.name || `Ton animal`} a ~b~marqué~s~ le vehicule ! Des traces de drogues ont été trouvés dans son coffre.`,
                 'info'
             );
             return;

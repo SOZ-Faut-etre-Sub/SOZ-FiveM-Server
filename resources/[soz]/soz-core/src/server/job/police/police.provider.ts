@@ -1,4 +1,4 @@
-import { DrugConfigs, DrugType } from '@private/shared/drugs';
+import { additionalDetectableDrugs, DrugConfigs, DrugType } from '@private/shared/drugs';
 import { Once, OnceStep, OnEvent } from '@public/core/decorators/event';
 import { Inject } from '@public/core/decorators/injectable';
 import { Provider } from '@public/core/decorators/provider';
@@ -239,8 +239,8 @@ export class PoliceProvider {
             allDetectableItems.push(DrugConfigs[drugType].boxItem);
             allDetectableItems.push(DrugConfigs[drugType].seedling);
             allDetectableItems.push(DrugConfigs[drugType].harvestBase.item);
+            allDetectableItems.push(...additionalDetectableDrugs);
 
-            console.log(allDetectableItems);
             if (allDetectableItems.some(itemName => targetInventory.findItem(item => item.name === itemName))) {
                 return true;
             }
