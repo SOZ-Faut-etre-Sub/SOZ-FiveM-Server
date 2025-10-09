@@ -17,22 +17,54 @@
 15 M Swat 2 | F Swat 1
 16 M Veste cérémonie, bcso sombre / lspd clair / bcso clair / lspd sombre | F Swat 2
 17 M Manteau ouvert, bcso/lspd each, EOD / criminal / vice / | F Veste cérémonie, bcso/lspd each,
-18 M Shirts, bcso/lspd each, patrol / supervisor / K9 / Air / Traffic / Moto / Training / SWAT / SWAT / vice / marine / wildlife / crimi | F Shirts, bcso/lspd each, EOD
-19 M Shirts, bcso/lspd each, cadet / detention | F Shirts, bcso/lspd each, patrol / K9 / air unit / traffic / moto / training / swat / swat / vice / dive / marine / wildlife / criminal
-20 M CF F 21 | F Shirts, bcso/lspd each, cadet / detention 
-21 M CF F 22 | F Polo, bcso/lspd each, swat / EOD / detention / criminal / Supervisor / wildlife / cadet / traffic / dive / vice / marine / patrol / K9
-22 M CF F 23 | F Polo, bcso/lspd each, training
-23 M CF F 24 | F Polo manchon, bcso/lspd each, swat / EOD / detention / criminal / Supervisor / wildlife / cadet / traffic / dive / vice / marine / patrol / K9
-24 M CF F 25 | F Polo manchon, bcso/lspd each, training
-25 M CF F 26 | F Polo manche, bcso/lspd each, swat / EOD / detention / criminal / Supervisor / wildlife / cadet / traffic / dive / vice / marine / patrol / K9
-26 M ?? | F Polo manche, bcso/lspd each, training
-27 M Blouson, bcso/lspd each, patrol / supervisor / K9 / Vice / criminal / detention / EOD /  | F Chemise, bcso/lspd each, blanche, bleu marine, bleu marine 2, bleu marine 3, vert, doré, moins doré, 
-28 M Sweat, bcso/lspd | F Chemise cravate, bcso/lspd each, blanche, vert, doré, moins doré, 
-29 M CF F 18 | F Imperméable capuche, bcso/lspd each, 
-30 M Pilot, bcso/lspd | F Imperméable, bcso/lspd each, 
-31 M Chemise, bcso/lspd each, blanche, bleu marine, bleu marine, bleu, vert, doré, bleu foncé | F Hiver, bcso/lspd each, 
-32 M Chemise manche courte, bcso/lspd each, patrol / K9 / traffic / swat / cadet / detention / EOD | F Blouson, bcso/lspd each, EOD, detention, cadet, criminal, vice, K9, Supervisor, patrol |
-33 M Pull bcso/lspd each, patrol / patrol 2 / supervisor / K9 / traffic / training / swat / vice | F Manteau, bcso/lspd each, patrol, vice,supervisor, K9, criminal, detention, EOD |
+18 
+    M Shirts, bcso/lspd each, patrol / supervisor / K9 / Air / Traffic / Moto / Training / SWAT / SWAT / vice / marine / wildlife / crimi
+    F Shirts, bcso/lspd each, EOD
+19 
+    M Shirts, bcso/lspd each, cadet / detention
+    F Shirts, bcso/lspd each, patrol / K9 / air unit / traffic / moto / training / swat / swat / vice / dive / marine / wildlife / criminal
+20 
+    M CF F 21
+    F Shirts, bcso/lspd each, cadet / detention 
+21 
+    M CF F 22
+    F Polo, bcso/lspd each, swat / EOD / detention / criminal / Supervisor / wildlife / cadet / traffic / dive / vice / marine / patrol / K9
+22 
+    M CF F 23
+    F Polo, bcso/lspd each, training
+23 
+    M CF F 24
+    F Polo manchon, bcso/lspd each, swat / EOD / detention / criminal / Supervisor / wildlife / cadet / traffic / dive / vice / marine / patrol / K9
+24 
+    M CF F 25
+    F Polo manchon, bcso/lspd each, training
+25 
+    M CF F 26
+    F Polo manche, bcso/lspd each, swat / EOD / detention / criminal / Supervisor / wildlife / cadet / traffic / dive / vice / marine / patrol / K9
+26 
+    M ??
+    F Polo manche, bcso/lspd each, training
+27 
+    M Blouson, bcso/lspd each, patrol / supervisor / K9 / Vice / criminal / detention / EOD / 
+    F Chemise, bcso/lspd each, blanche, bleu marine, bleu marine 2, bleu marine 3, vert, doré, moins doré, 
+28 
+    M Sweat, bcso/lspd 
+    F Chemise cravate, bcso/lspd each, blanche, vert, doré, moins doré, 
+29 
+    M CF F 18
+    F Imperméable capuche, bcso/lspd each, 
+30 
+    M Pilot, bcso/lspd
+    F Imperméable, bcso/lspd each, 
+31 
+    M Chemise, bcso/lspd each, blanche, bleu marine, bleu marine, bleu, vert, doré, bleu foncé
+    F Hiver, bcso/lspd each, 
+32 
+    M Chemise manche courte, bcso/lspd each, patrol / K9 / traffic / swat / cadet / detention / EOD
+    F Blouson, bcso/lspd each, EOD, detention, cadet, criminal, vice, K9, Supervisor, patrol |
+33 
+    M Pull bcso/lspd each, patrol / patrol 2 / supervisor / K9 / traffic / training / swat / vice
+    F Manteau, bcso/lspd each, patrol, vice,supervisor, K9, criminal, detention, EOD |
 34 M Pull bcso/lspd each, EOD / detention / cadet / criminal / wildlife / marine / dive |
 35 M CF F 30 |
 36 M CF F 29 |
@@ -198,7 +230,7 @@
 10 SWAT
 11 SWAT
 12 SWAT
-13 chapeau BCSO Cérémonie
+13 chapeau BCSO Cérémonie / LSCS
 14 casque BCSO
 15 SWAT | casque pilote new BCSO/LSPD
 16 SWAT | chapeau LSPD Cérémonie

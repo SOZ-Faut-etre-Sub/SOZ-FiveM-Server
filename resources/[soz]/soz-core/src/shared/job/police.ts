@@ -9154,9 +9154,9 @@ export const RankOutfit: Partial<
                 [38]: [34, 5], // Sheriff
             },
             [BLOUSON_SANSCOL]: {
-                [71]: [17, 0], // Junior
-                [70]: [17, 1], // Senior
-                [69]: [17, 2], // Major
+                [71]: [17, 3], // Junior
+                [70]: [17, 4], // Senior
+                [69]: [17, 5], // Major
                 [282]: [39, 0], // Second Brigadier
                 [68]: [39, 1], // Premier Brigadier
                 [283]: [39, 2], // supervisor
