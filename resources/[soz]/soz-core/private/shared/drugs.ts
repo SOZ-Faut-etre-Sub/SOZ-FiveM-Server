@@ -16,3 +16,4 @@ type DrugConfigType = any;
 export const DrugConfigs: Record<DrugType, DrugConfigType> = {
     [DrugType.Any]: {},
 };
+export const additionalDetectableDrugs: string[] = [];
