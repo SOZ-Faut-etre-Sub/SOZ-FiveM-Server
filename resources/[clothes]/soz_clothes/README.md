@@ -3,7 +3,7 @@
 1  pilote LSPD/BCSO
 2  moto LSPD/BCSO/SASP
 3  service LSMC
-4  service LSPD/BCSO/noir
+4  service LSPD/BCSO/noir, bcso/lspd each, blanche, bleu marine, bleu marine 2, bleu marine 3, vert, doré, moins doré, lscs
 5  service Stonks
 6  hiver LSMC
 7  patient
@@ -15,8 +15,10 @@
 13 M Bomb | F Swimsuit LSMC
 14 M Swat 1 | F Bomb
 15 M Swat 2 | F Swat 1
-16 M Veste cérémonie, bcso sombre / lspd clair / bcso clair / lspd sombre | F Swat 2
-17 M Manteau ouvert, bcso/lspd each, EOD / criminal / vice / | F Veste cérémonie, bcso/lspd each,
+16 M Veste cérémonie, bcso sombre / lspd clair / bcso clair / lspd sombre / LSCS | F Swat 2
+17 
+    M Manteau ouvert, bcso/lspd each, EOD / criminal / vice /
+    F Veste cérémonie, bcso/lspd/lscs
 18 
     M Shirts, bcso/lspd each, patrol / supervisor / K9 / Air / Traffic / Moto / Training / SWAT / SWAT / vice / marine / wildlife / crimi
     F Shirts, bcso/lspd each, EOD
@@ -46,10 +48,10 @@
     F Polo manche, bcso/lspd each, training
 27 
     M Blouson, bcso/lspd each, patrol / supervisor / K9 / Vice / criminal / detention / EOD / 
-    F Chemise, bcso/lspd each, blanche, bleu marine, bleu marine 2, bleu marine 3, vert, doré, moins doré, 
+    F Chemise, bcso/lspd each, blanche, bleu marine, bleu marine 2, bleu marine 3, vert, doré, moins doré, lscs
 28 
     M Sweat, bcso/lspd 
-    F Chemise cravate, bcso/lspd each, blanche, vert, doré, moins doré, 
+    F Chemise cravate, bcso/lspd each, blanche, vert, doré, moins doré, lscs
 29 
     M CF F 18
     F Imperméable capuche, bcso/lspd each, 
@@ -57,25 +59,29 @@
     M Pilot, bcso/lspd
     F Imperméable, bcso/lspd each, 
 31 
-    M Chemise, bcso/lspd each, blanche, bleu marine, bleu marine, bleu, vert, doré, bleu foncé
+    M Chemise, bcso/lspd each, blanche, bleu marine, bleu marine, bleu, vert, doré, bleu foncé, lscs
     F Hiver, bcso/lspd each, 
 32 
-    M Chemise manche courte, bcso/lspd each, patrol / K9 / traffic / swat / cadet / detention / EOD
+    M Chemise manche courte, bcso/lspd each, patrol / K9 / traffic / swat / cadet / detention / EOD, lscs
     F Blouson, bcso/lspd each, EOD, detention, cadet, criminal, vice, K9, Supervisor, patrol |
 33 
     M Pull bcso/lspd each, patrol / patrol 2 / supervisor / K9 / traffic / training / swat / vice
     F Manteau, bcso/lspd each, patrol, vice,supervisor, K9, criminal, detention, EOD |
-34 M Pull bcso/lspd each, EOD / detention / cadet / criminal / wildlife / marine / dive |
-35 M CF F 30 |
+34 
+    M Pull bcso/lspd each, EOD / detention / cadet / criminal / wildlife / marine / dive
+    F Chemise manche courte cravate, bcso/lspd each, blanc, bleu, bleu 2, gris, vert, noir-doré, bleu-doré, lscs
+35 
+    M CF F 30
 36 M CF F 29 |
 37 M Hiver, bcso/lspd each, patrol / supervisor / traffic / K9 |
 38 M Hiver chemise, bcso/lspd each, patrol / supervisor / traffic / K9 |
 39 M CF F 32 |
 40 M CF F 33 |
-41 M Chemise epaulette, bcso/lspd each, blanche / bleu marine / bleu marine bouton doré / bleu / vert / noir-doré / bleu-doré |
-42 M Chemise longue epaulette, bcso/lspd each, blanche / bleu marine / bleu marine bouton doré / bleu / vert / noir-doré / bleu-doré |
+41 M Chemise epaulette, bcso/lspd each, blanche / bleu marine / bleu marine bouton doré / bleu / vert / noir-doré / bleu-doré, lscs |
+42 M Chemise longue epaulette, bcso/lspd each, blanche / bleu marine / bleu marine bouton doré / bleu / vert / noir-doré / bleu-doré, lscs |
 43 M Chemise longue epaulette hiver, bcso/lspd each, noir-doré / blanche / vert /  noir-doré cadet / EOD
 44 M Chemise longue epaulette cravate, bcso/lspd each, blanche / vert /  noir-doré / bleu marine
+45 M Chemise courte cravate, bcso/lspd each, blanc, bleu, bleu, gris, vert, noir-doré, bleu, lscs
 
     Decalque
 0  chevron BCSO 0-3  bleu
@@ -166,7 +172,7 @@
     Accessories
 0  stétho    //same as vanilla?
 1  pistol
-2  badge LSPD/BCSO  -- no longer used IG
+2  badge LSPD/BCSO/LSCS  -- no longer used IG
 3  harnais holster
 4  holster ceinture
 5  gilets Life Guard
@@ -188,23 +194,25 @@
 10 M duplicate 6 | BCSO collier badge
 11 BCSO new juste badge
 12 BCSO badge ceinture | FIB
-13 | Police sérré
-14 | Police large
-15 | Police sérré
-16 | Police large K9 gauche
-17 | Police large gauche
-18 | Police large K9
+13 LSPD badge pectoraux ceremonie | Police sérré
+14 LSPD badge pectoraux ceremonie 2 | Police large
+15 LSPD badge Or | Police sérré
+16 LSPD badge Argent | Police large K9 gauche
+17 LSPD badge Or pectoraux | Police large gauche
+18 LSPD badge Argent pectoraux K9 | Police large K9
+19 LSPD badge Argent pectoraux K9 2
+20 LSCS
 
     pantalon
 0  patient  //don"t use, cause tatoo duplication between legs
 1  service LSPD/BCSO/SASP
-2  stonk
+2  stonk,LSCS
 3  motard LSPD/BCSO
 4  lsmc
 5  pilote LSPD/BCSO
 6  intervention LSPD/BCSO
 7  antiemeute LSPD/BCSO
-8  SASP Sombre
+8  SASP Sombre, LSCS
 9  SASP Moto ? not used
 10 Sport LSPD/BCSO
 11 Bomb   | F Swimsuit LSMC

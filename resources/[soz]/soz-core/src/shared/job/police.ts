@@ -1649,6 +1649,66 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Modern',
                 rankType: MOTO,
             },
+            ['Chemise courte cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate gris']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
         },
         [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
@@ -2661,6 +2721,186 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 category: 'Modern',
                 rankType: COAT,
+            },
+            ['Chemise courte blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 4, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte bleue']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 4, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte bleue 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 4, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte gris']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 4, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 4, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte bleue-dorée']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 4, Texture: 16, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 34, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate bleu']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 34, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate bleu 2']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 34, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate gris']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 34, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 34, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate bleue-dorée']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 39, Texture: 2, Palette: 0 },
+                    [Component.Tops]: { Drawable: 34, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 0, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
         },
     },
@@ -4169,6 +4409,51 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 category: 'Modern',
                 rankType: MOTO,
             },
+            ['Chemise courte cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate gris']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 45, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
         },
         [PlayerPedHash.Female]: {
             [DUTY_OUTFIT_NAME]: {
@@ -5121,6 +5406,96 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
                 },
                 category: 'Modern',
                 rankType: COAT,
+            },
+            ['Chemise courte blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 4, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte verte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 4, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 4, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate blanche']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate verte']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
+            },
+            ['Chemise courte cravate noir-doré']: {
+                Components: {
+                    [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                    [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
+                    [Component.Undershirt]: { Drawable: 3, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    [Component.Tops]: { Drawable: 34, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                },
+                Props: {
+                    [Prop.Hat]: { Drawable: 2, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                },
+                category: 'Modern',
+                rankType: DUTY_OUTFIT_NAME,
             },
         },
     },
@@ -6217,6 +6592,45 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                     },
                     rankType: MOTO,
                 },
+                ['Chemise courte cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate gris']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Shoes]: { Drawable: 51, Texture: 0, Palette: 0 },
+                        [Component.Undershirt]: { Drawable: 4, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 3, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    category: 'Modern',
+                    rankType: DUTY_OUTFIT_NAME,
+                },
             },
             [WardRobeElements.Accessory]: {
                 ['Aucun']: {
@@ -6889,6 +7303,102 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Tops]: { Drawable: 33, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: COAT,
+                },
+                ['Chemise courte blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 4, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte bleue']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte bleue 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte gris']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 14, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte bleue-dorée']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 16, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate bleu']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate bleu 2']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 5, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate gris']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 7, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate bleue-dorée']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 0, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
                 },
             },
             [WardRobeElements.Accessory]: {
@@ -7868,6 +8378,30 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                     },
                     rankType: MOTO,
                 },
+                ['Chemise courte cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate gris']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 11, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 45, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
             },
             [WardRobeElements.Accessory]: {
                 ['Aucun']: {
@@ -8510,6 +9044,54 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                         [Component.Tops]: { Drawable: 33, Texture: 6, Palette: 0, Collection: 'soz_bcso' },
                     },
                     rankType: COAT,
+                },
+                ['Chemise courte blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 3, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte verte']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 11, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 4, Texture: 13, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate blanche']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate verte']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 8, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
+                },
+                ['Chemise courte cravate noir-doré']: {
+                    Components: {
+                        [Component.Torso]: { Drawable: 9, Texture: 0, Palette: 0 },
+                        [Component.Bag]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
+                        [Component.Tops]: { Drawable: 34, Texture: 10, Palette: 0, Collection: 'soz_bcso' },
+                    },
+                    rankType: DUTY_OUTFIT_NAME,
                 },
             },
             [WardRobeElements.Accessory]: {
