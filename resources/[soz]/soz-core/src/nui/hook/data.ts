@@ -27,7 +27,15 @@ export const usePlayerInventoryConfiguration = (): InventoryConfiguration => {
     return useSelector((state: RootState) => state.playerInventory.configuration);
 };
 
+export const usePlayerClothingInventoryConfiguration = (): InventoryConfiguration => {
+    return useSelector((state: RootState) => state.playerClothingInventory.configuration);
+};
+
 export const usePlayerInventoryItems = (): Record<number, InventoryItem> => {
+    return useSelector((state: RootState) => state.playerInventory.items);
+};
+
+export const usePlayerClothingInventoryItems = (): Record<number, InventoryItem> => {
     return useSelector((state: RootState) => state.playerInventory.items);
 };
 

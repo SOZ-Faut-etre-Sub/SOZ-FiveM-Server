@@ -58,3 +58,21 @@ export const playerInventory = createModel<RootModel>()({
     },
     effects: () => ({}),
 });
+
+export const playerClothingInventory = createModel<RootModel>()({
+    state: {
+        configuration: {
+            maxWeight: 1000,
+        },
+        items: {},
+    } as {
+        configuration: InventoryConfiguration;
+        items: Record<number, InventoryItem>;
+    },
+    reducers: {
+        update(state, configuration: InventoryConfiguration, items: Record<number, InventoryItem>) {
+            return { configuration, items };
+        },
+    },
+    effects: () => ({}),
+});

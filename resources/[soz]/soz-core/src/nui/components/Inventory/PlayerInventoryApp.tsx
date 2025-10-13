@@ -19,19 +19,30 @@ import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
 import { useAssetPath } from '../../hook/assets';
 import { useKeyPress } from '../../hook/control';
-import { useItemResolver, usePlayer, usePlayerInventoryConfiguration, usePlayerInventoryItems } from '../../hook/data';
+import {
+    useItemResolver,
+    usePlayer,
+    usePlayerClothingInventoryConfiguration,
+    usePlayerClothingInventoryItems,
+    usePlayerInventoryConfiguration,
+    usePlayerInventoryItems,
+} from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { BorderBox } from '../Styleguide/BorderBox';
 import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
 import { createHandleDragAndDrop } from './Actions';
 import { Inventory } from './Inventory';
 import { getItemIcon, getItemSlotClassnames } from './ItemSlot';
+import { PlayerClothingPanel } from './PlayerClothingPanel';
 import { useInventorySize, useItemSize } from './size';
 
 export const PlayerInventoryApp: FunctionComponent = () => {
     const [open, setOpen] = useState(false);
+    const [isPlayerClothingInventoryOpened, setIsPlayerClothingInventoryOpened] = useState(false);
     const inventoryItems = usePlayerInventoryItems();
+    const clothingItems = usePlayerClothingInventoryItems();
     const configuration = usePlayerInventoryConfiguration();
+    const clothingConfiguration = usePlayerClothingInventoryConfiguration();
     const player = usePlayer();
     const inventorySize = useInventorySize(6);
 
@@ -42,10 +53,12 @@ export const PlayerInventoryApp: FunctionComponent = () => {
     useNuiFocus(open, open, open, null, open);
     useKeyPress('Escape', () => {
         setOpen(false);
+        setIsPlayerClothingInventoryOpened(false);
     });
 
     useKeyPress('Backspace', () => {
         setOpen(false);
+        setIsPlayerClothingInventoryOpened(false);
     });
 
     useEffect(() => {
@@ -107,9 +120,9 @@ export const PlayerInventoryApp: FunctionComponent = () => {
             onDragEnd={createHandleDragAndDrop(true)}
             sensors={sensors}
         >
-            <div className="z-10 absolute h-full w-full font-prompt">
+            <div className="z-10 absolute h-full w-full font-prompt flex">
                 <main
-                    className="m-8 wide:ml-[94vh]"
+                    className="m-8 wide:ml-[94vh] flex flex-col"
                     style={{
                         width: `${inventorySize.width + 10}px`,
                     }}
@@ -122,6 +135,8 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         player
                         onDoubleClick={onDoubleClick}
                         itemDescriptionPosition="right"
+                        headerRightTitle="Vêtements 👕"
+                        headerRightClick={() => setIsPlayerClothingInventoryOpened(prev => !prev)}
                     />
                     <div className="relative w-full mt-4">
                         <header className="w-full">
@@ -159,6 +174,22 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         </GameCanvasBox>
                     </div>
                 </main>
+                {isPlayerClothingInventoryOpened && (
+                    <main
+                        className="m-8 flex flex-col"
+                        style={{
+                            width: `${inventorySize.width + 10}px`,
+                        }}
+                    >
+                        <PlayerClothingPanel
+                            title="Vêtements"
+                            configuration={clothingConfiguration}
+                            inventoryItems={inventoryItems}
+                            inventoryId={`player_${player?.citizenid}`}
+                            onDoubleClick={onDoubleClick}
+                        />
+                    </main>
+                )}
             </div>
         </DndContext>
     );

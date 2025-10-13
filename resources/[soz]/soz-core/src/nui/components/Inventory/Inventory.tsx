@@ -37,6 +37,8 @@ export type InventoryProps = {
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
     itemDescriptionPosition: 'left' | 'right';
     targetMoney?: number | null;
+    headerRightTitle?: string;
+    headerRightClick?: () => void;
 };
 
 export const Inventory: FunctionComponent<InventoryProps> = ({
@@ -53,6 +55,8 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
     allDisabled = false,
     itemDescriptionPosition = 'right',
     targetMoney = null,
+    headerRightTitle,
+    headerRightClick,
 }) => {
     const [currentInventoryItem, setCurrentInventoryItem] = useState<InventoryItem | null>(null);
     const resolver = useItemResolver();
@@ -84,6 +88,8 @@ export const Inventory: FunctionComponent<InventoryProps> = ({
                 max: configuration.maxWeight,
             }}
             description={<ItemDescription inventoryItem={currentInventoryItem} position={itemDescriptionPosition} />}
+            headerRightTitle={headerRightTitle}
+            headerRightClick={headerRightClick}
         >
             <FixedSizeGrid
                 columnCount={5}
@@ -272,6 +278,9 @@ type InventoryDivProps = {
     };
     price?: number;
     moneyType?: string | BankMoneyType;
+    isSoloTitle?: boolean;
+    headerRightTitle?: string;
+    headerRightClick?: () => void;
 };
 
 export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps>> = ({
@@ -284,6 +293,9 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
     isCart = false,
     price = 0,
     moneyType = null,
+    isSoloTitle = false,
+    headerRightTitle,
+    headerRightClick,
 }) => {
     const [showSort, setShowSort] = useState(false);
     const inventorySize = useInventorySize(6);
@@ -315,9 +327,12 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
             )}
             {!isCart && (
                 <header className="relative w-full">
-                    <div className="drop-shadow-bg h-[40px] flex w-full justify-between items-center">
+                    <div
+                        className="drop-shadow-bg h-[40px] flex w-full justify-between items-center"
+                        style={isSoloTitle ? { flexDirection: 'row-reverse', marginBottom: '32px' } : {}}
+                    >
                         <h1 className="font-semibold uppercase text-white text-2xl">{title}</h1>
-                        {weight && (
+                        {weight && !isSoloTitle && (
                             <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
                                 <span className="flex items-end">
                                     <span className="font-semibold text-xl">
@@ -329,72 +344,89 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                             </h2>
                         )}
                     </div>
-                    {giveKeysCallback && (
-                        <div className="cursor-pointer relative inline-block">
-                            <div
-                                className="cursor-pointer inline-block justify-center relative"
-                                onClick={() => giveKeysCallback('vehicle')}
-                            >
-                                <GlassMorphismContainer
-                                    duration="duration-0"
-                                    borderClassName="rounded"
-                                    showBorderOnHover
-                                >
-                                    <img
-                                        className="h-6 px-4"
-                                        src={getPath('images/inventory/icon/car.webp')}
-                                        alt="Vehicle keys"
-                                    />
-                                </GlassMorphismContainer>
-                            </div>
-                            <div
-                                className="ml-1 cursor-pointer inline-block justify-center relative"
-                                onClick={() => giveKeysCallback('apartment')}
-                            >
-                                <GlassMorphismContainer
-                                    duration="duration-0"
-                                    borderClassName="rounded"
-                                    showBorderOnHover
-                                >
-                                    <img
-                                        className="h-6 px-4"
-                                        src={getPath('images/inventory/icon/key.webp')}
-                                        alt="Apartment keys"
-                                    />
-                                </GlassMorphismContainer>
-                            </div>
-                        </div>
-                    )}
-                    {sortCallback && (
-                        <div className="text-white" onClick={() => setShowSort(!showSort)}>
-                            <div className="cursor-pointer relative inline-block">
-                                <GlassMorphismContainer
-                                    duration="duration-0"
-                                    borderClassName="rounded"
-                                    showBorderOnHover
-                                >
-                                    <div className="text-white px-2 py-1">Trier ↑↓</div>
-                                </GlassMorphismContainer>
-                            </div>
-                            {showSort && (
-                                <div className="absolute w-40 rounded z-50 bg-black/75">
-                                    {Object.keys(INVENTORY_SORT_LABELS).map(key => {
-                                        return (
-                                            <div
-                                                className="p-2 w-40 hover:bg-black cursor-pointer rounded"
-                                                key={key}
-                                                onClick={() => {
-                                                    sortCallback(key as InventorySort);
-                                                }}
-                                            >
-                                                {INVENTORY_SORT_LABELS[key]}
-                                            </div>
-                                        );
-                                    })}
+                    <div className="flex justify-between">
+                        <div className="flex">
+                            {giveKeysCallback && (
+                                <div className="cursor-pointer relative inline-block">
+                                    <div
+                                        className="cursor-pointer inline-block justify-center relative"
+                                        onClick={() => giveKeysCallback('vehicle')}
+                                    >
+                                        <GlassMorphismContainer
+                                            duration="duration-0"
+                                            borderClassName="rounded"
+                                            showBorderOnHover
+                                        >
+                                            <img
+                                                className="h-6 px-4"
+                                                src={getPath('images/inventory/icon/car.webp')}
+                                                alt="Vehicle keys"
+                                            />
+                                        </GlassMorphismContainer>
+                                    </div>
+                                    <div
+                                        className="ml-1 cursor-pointer inline-block justify-center relative"
+                                        onClick={() => giveKeysCallback('apartment')}
+                                    >
+                                        <GlassMorphismContainer
+                                            duration="duration-0"
+                                            borderClassName="rounded"
+                                            showBorderOnHover
+                                        >
+                                            <img
+                                                className="h-6 px-4"
+                                                src={getPath('images/inventory/icon/key.webp')}
+                                                alt="Apartment keys"
+                                            />
+                                        </GlassMorphismContainer>
+                                    </div>
+                                </div>
+                            )}
+                            {sortCallback && (
+                                <div className="text-white" onClick={() => setShowSort(!showSort)}>
+                                    <div className="cursor-pointer relative inline-block">
+                                        <GlassMorphismContainer
+                                            duration="duration-0"
+                                            borderClassName="rounded"
+                                            showBorderOnHover
+                                        >
+                                            <div className="text-white px-2 py-1">Trier ↑↓</div>
+                                        </GlassMorphismContainer>
+                                    </div>
+                                    {showSort && (
+                                        <div className="absolute w-40 rounded z-50 bg-black/75">
+                                            {Object.keys(INVENTORY_SORT_LABELS).map(key => {
+                                                return (
+                                                    <div
+                                                        className="p-2 w-40 hover:bg-black cursor-pointer rounded"
+                                                        key={key}
+                                                        onClick={() => {
+                                                            sortCallback(key as InventorySort);
+                                                        }}
+                                                    >
+                                                        {INVENTORY_SORT_LABELS[key]}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>
-                    )}
+                        {headerRightTitle && headerRightClick && (
+                            <div className="text-white" onClick={() => headerRightClick()}>
+                                <div className="cursor-pointer relative">
+                                    <GlassMorphismContainer
+                                        duration="duration-0"
+                                        borderClassName="rounded"
+                                        showBorderOnHover
+                                    >
+                                        <div className="text-white px-2 py-1">{headerRightTitle}</div>
+                                    </GlassMorphismContainer>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </header>
             )}
             <div className="relative w-full">

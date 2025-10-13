@@ -265,6 +265,8 @@ const getInventoryTitle = (type: InventoryType): string => {
 
         case InventoryType.Player:
             return 'Fouille';
+        case InventoryType.PlayerClothing:
+            return 'Vêtements';
 
         default:
             return 'Stockage';

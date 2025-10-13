@@ -40,6 +40,7 @@ export enum InventoryType {
     ObjectStorage = 'object_storage',
     Organ = 'organ',
     Player = 'player',
+    PlayerClothing = 'player_clothing',
     PlankStorage = 'plank_storage',
     RecyclerProcessing = 'recycler_processing',
     SawdustStorage = 'sawdust_storage',
@@ -155,6 +156,9 @@ export const HOUSE_FRIDGE_TIER_WEIGHTS = {
 export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<InventoryConfiguration>>> = {
     [InventoryType.Player]: {
         maxWeight: 25000,
+    },
+    [InventoryType.PlayerClothing]: {
+        maxWeight: 10000,
     },
     [InventoryType.Ammo]: {
         maxWeight: 10000000,
