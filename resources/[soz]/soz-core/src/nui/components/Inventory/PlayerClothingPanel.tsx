@@ -25,7 +25,7 @@ type PlayerClothingPanelProps = {
     headerRight?: ReactNode;
 };
 
-export const PlayerClothingPanel: FunctionComponent<PlayerClothingPanelProps> = ({
+const PlayerClothingPanel: FunctionComponent<PlayerClothingPanelProps> = ({
     title = 'Vêtements',
     inventoryId,
     inventoryItems,
@@ -46,7 +46,7 @@ export const PlayerClothingPanel: FunctionComponent<PlayerClothingPanelProps> = 
     const player = usePlayer();
 
     /** TODO :  SLOT COMPUTE */
-    const SLOT_COUNT = 7;
+    const SLOT_COUNT = 6;
     const leftSlots = useMemo(() => Array.from({ length: SLOT_COUNT }, (_, i) => i + 1), [SLOT_COUNT]);
     const rightSlots = useMemo(() => Array.from({ length: SLOT_COUNT }, (_, i) => i + 1 + SLOT_COUNT), [SLOT_COUNT]);
 
@@ -101,7 +101,7 @@ export const PlayerClothingPanel: FunctionComponent<PlayerClothingPanelProps> = 
                     current: 0,
                     max: configuration.maxWeight,
                 }}
-                isSoloTitle
+                isClothingVariant
             >
                 <GameCanvasBox blur={false} cantBeHidden>
                     <div
@@ -145,3 +145,4 @@ export const PlayerClothingPanel: FunctionComponent<PlayerClothingPanelProps> = 
         </div>
     );
 };
+export default PlayerClothingPanel;

@@ -1,5 +1,6 @@
 import { ShoppingBagIcon } from '@heroicons/react/outline';
 import { BankMoneyType } from '@public/shared/bank';
+import clsx from 'clsx';
 import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useState } from 'react';
 import { FixedSizeGrid } from 'react-window';
 
@@ -278,7 +279,7 @@ type InventoryDivProps = {
     };
     price?: number;
     moneyType?: string | BankMoneyType;
-    isSoloTitle?: boolean;
+    isClothingVariant?: boolean;
     headerRightTitle?: string;
     headerRightClick?: () => void;
 };
@@ -293,7 +294,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
     isCart = false,
     price = 0,
     moneyType = null,
-    isSoloTitle = false,
+    isClothingVariant = false,
     headerRightTitle,
     headerRightClick,
 }) => {
@@ -328,11 +329,12 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
             {!isCart && (
                 <header className="relative w-full">
                     <div
-                        className="drop-shadow-bg h-[40px] flex w-full justify-between items-center"
-                        style={isSoloTitle ? { flexDirection: 'row-reverse', marginBottom: '32px' } : {}}
+                        className={clsx('drop-shadow-bg h-[40px] flex w-full justify-between items-center', {
+                            'mt-[32px]': isClothingVariant,
+                        })}
                     >
                         <h1 className="font-semibold uppercase text-white text-2xl">{title}</h1>
-                        {weight && !isSoloTitle && (
+                        {weight && !isClothingVariant && (
                             <h2 className="flex z-100 text-white bottom-0 right-0 py-1 px-2 items-center">
                                 <span className="flex items-end">
                                     <span className="font-semibold text-xl">
@@ -344,7 +346,7 @@ export const InventoryDiv: FunctionComponent<PropsWithChildren<InventoryDivProps
                             </h2>
                         )}
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between mr-2">
                         <div className="flex">
                             {giveKeysCallback && (
                                 <div className="cursor-pointer relative inline-block">

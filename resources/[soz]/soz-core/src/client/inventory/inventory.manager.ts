@@ -3,6 +3,7 @@ import { Exportable } from '@core/decorators/exports';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { Tick, TickInterval } from '@core/decorators/tick';
+import { PlayerInventoryClothesLoader } from '@core/loader/player.inventory.clothes.loader';
 import { PlayerInventoryLoader } from '@core/loader/player.inventory.loader';
 import { emitRpc } from '@core/rpc';
 import { Notifier } from '@public/client/notifier';
@@ -42,8 +43,10 @@ export class InventoryManager {
     private nuiDispatch: NuiDispatch;
 
     private _playerInventoryId: string;
+    private _playerClothingInventoryId: string;
 
     private _playerInventory: Record<number, InventoryItem> = {};
+    private _playerClothingInventory: Record<number, InventoryItem> = {};
 
     private _playerInventoryConfiguration: InventoryConfiguration;
 
@@ -102,22 +105,29 @@ export class InventoryManager {
     @Inject(PlayerInventoryLoader)
     private playerInventoryLoader: PlayerInventoryLoader;
 
+    @Inject(PlayerInventoryClothesLoader)
+    private playerInventoryClothesLoader: PlayerInventoryClothesLoader;
+
     @Once(OnceStep.PlayerLoaded, true)
     public async loadPlayerInventory(player: PlayerData) {
         this._playerInventoryId = 'player_' + player.citizenid;
+        this._playerClothingInventoryId = 'player_clothing_' + player.citizenid;
 
-        const [configuration, items] = await emitRpc<[InventoryConfiguration, Record<number, InventoryItem>]>(
-            RpcServerEvent.INVENTORY_SELF_FETCH
-        );
+        const [configuration, items, clothes] = await emitRpc<
+            [InventoryConfiguration, Record<number, InventoryItem>, Record<number, InventoryItem>]
+        >(RpcServerEvent.INVENTORY_SELF_FETCH);
 
         this._playerInventory = items;
         this._playerInventoryConfiguration = configuration;
+        this._playerClothingInventory = clothes;
 
         this.playerInventoryLoader.trigger(this._playerInventory, this._playerInventoryConfiguration);
+        this.playerInventoryClothesLoader.trigger(this._playerClothingInventory);
 
         this.nuiDispatch.dispatch('player', 'UpdateInventory', {
             configuration: this._playerInventoryConfiguration,
             items: this._playerInventory,
+            clothing: this._playerClothingInventory,
         });
     }
 
@@ -127,6 +137,7 @@ export class InventoryManager {
             this.nuiDispatch.dispatch('player', 'UpdateInventory', {
                 configuration: this._playerInventoryConfiguration,
                 items: this._playerInventory,
+                clothing: this._playerClothingInventory,
             });
         }
     }
@@ -226,9 +237,31 @@ export class InventoryManager {
             this.nuiDispatch.dispatch('player', 'UpdateInventory', {
                 configuration: this._playerInventoryConfiguration,
                 items: this._playerInventory,
+                clothing: this._playerClothingInventory,
             });
 
             await this.playerInventoryLoader.trigger(this._playerInventory, this._playerInventoryConfiguration);
+
+            return;
+        }
+
+        if (id === this._playerClothingInventoryId) {
+            applyPatch(this._playerClothingInventory, changes);
+            this._playerClothingInventory = Object.values(this._playerClothingInventory).reduce((acc, item) => {
+                if (item) {
+                    acc[item.slot] = item;
+                }
+
+                return acc;
+            }, {});
+
+            this.nuiDispatch.dispatch('player', 'UpdateInventory', {
+                configuration: this._playerInventoryConfiguration,
+                items: this._playerInventory,
+                clothing: this._playerClothingInventory,
+            });
+
+            await this.playerInventoryClothesLoader.trigger(this._playerClothingInventory);
 
             return;
         }

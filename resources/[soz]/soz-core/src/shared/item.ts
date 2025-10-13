@@ -35,7 +35,8 @@ export type ItemType =
     | 'smuggling_ore'
     | 'smuggling_electronic'
     | 'zkea_crate'
-    | 'card';
+    | 'card'
+    | 'apparel';
 
 type BaseItem = {
     name: string;
@@ -200,6 +201,10 @@ export type SmugglingElectronic = BaseItem & {
     type: 'smuggling_electronic';
 };
 
+export type Apparel = BaseItem & {
+    type: 'apparel';
+};
+
 type AnimationItem = {
     name: string;
     dictionary: string;
@@ -277,4 +282,5 @@ export type Item =
     | DrugPotItem
     | CardItem
     | EvidenceItem
-    | SmugglingElectronic;
+    | SmugglingElectronic
+    | Apparel;

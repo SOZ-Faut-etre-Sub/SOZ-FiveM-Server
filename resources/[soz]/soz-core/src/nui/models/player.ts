@@ -41,37 +41,23 @@ export const playerPosition = createModel<RootModel>()({
     effects: () => ({}),
 });
 
+type playerInventoryState = {
+    configuration: InventoryConfiguration;
+    items: Record<number, InventoryItem>;
+    clothing: Record<number, InventoryItem>;
+};
+
 export const playerInventory = createModel<RootModel>()({
     state: {
         configuration: {
             maxWeight: 1000,
         },
         items: {},
-    } as {
-        configuration: InventoryConfiguration;
-        items: Record<number, InventoryItem>;
-    },
+        clothing: {},
+    } as playerInventoryState,
     reducers: {
-        update(state, configuration: InventoryConfiguration, items: Record<number, InventoryItem>) {
-            return { configuration, items };
-        },
-    },
-    effects: () => ({}),
-});
-
-export const playerClothingInventory = createModel<RootModel>()({
-    state: {
-        configuration: {
-            maxWeight: 1000,
-        },
-        items: {},
-    } as {
-        configuration: InventoryConfiguration;
-        items: Record<number, InventoryItem>;
-    },
-    reducers: {
-        update(state, configuration: InventoryConfiguration, items: Record<number, InventoryItem>) {
-            return { configuration, items };
+        update(state, data: playerInventoryState) {
+            return data;
         },
     },
     effects: () => ({}),

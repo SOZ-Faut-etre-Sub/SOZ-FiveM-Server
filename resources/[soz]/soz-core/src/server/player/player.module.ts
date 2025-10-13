@@ -1,5 +1,6 @@
 import { Module } from '../../core/decorators/module';
 import { PlayerAppearanceService } from './player.appearance.service';
+import { PlayerClothesProvider } from './player.clothes.provider';
 import { PlayerDiseaseProvider } from './player.disease.provider';
 import { PlayerHealthProvider } from './player.health.provider';
 import { PlayerIdentityProvider } from './player.identity.provider';
@@ -22,6 +23,7 @@ import { ProgressService } from './progress.service';
         PlayerZombieProvider,
         PlayerStressProvider,
         PlayerPositionProvider,
+        PlayerClothesProvider,
     ],
 })
 export class PlayerModule {}

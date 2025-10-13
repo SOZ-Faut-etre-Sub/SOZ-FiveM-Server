@@ -25,6 +25,29 @@ export enum Prop {
     Helmet = 'Helmet',
 }
 
+export const ApparelComponentToItem: Record<Component, string | null> = {
+    [Component.Mask]: 'apparel_mask',
+    [Component.Hair]: null,
+    [Component.Torso]: null,
+    [Component.Legs]: 'apparel_legs',
+    [Component.Bag]: 'apparel_bag',
+    [Component.Shoes]: 'apparel_shoes',
+    [Component.Accessories]: 'apparel_accessories',
+    [Component.Undershirt]: null,
+    [Component.BodyArmor]: null,
+    [Component.Decals]: null,
+    [Component.Tops]: 'apparel_tops',
+};
+
+export const ApparelPropToItem: Record<Prop, string | null> = {
+    [Prop.Hat]: 'apparel_hat',
+    [Prop.Glasses]: 'apparel_glasses',
+    [Prop.Ear]: 'apparel_ear',
+    [Prop.LeftHand]: 'apparel_lefthand',
+    [Prop.RightHand]: 'apparel_righthand',
+    [Prop.Helmet]: null,
+};
+
 export type OutfitItem = {
     Index?: number;
     Drawable?: number;

@@ -9,6 +9,7 @@ import {
     useSensors,
 } from '@dnd-kit/core';
 import { DrugSkill } from '@private/shared/drugs';
+import { animated, useTransition } from '@react-spring/web';
 import classNames from 'classnames';
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -22,7 +23,6 @@ import { useKeyPress } from '../../hook/control';
 import {
     useItemResolver,
     usePlayer,
-    usePlayerClothingInventoryConfiguration,
     usePlayerClothingInventoryItems,
     usePlayerInventoryConfiguration,
     usePlayerInventoryItems,
@@ -33,7 +33,7 @@ import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
 import { createHandleDragAndDrop } from './Actions';
 import { Inventory } from './Inventory';
 import { getItemIcon, getItemSlotClassnames } from './ItemSlot';
-import { PlayerClothingPanel } from './PlayerClothingPanel';
+import PlayerClothingPanel from './PlayerClothingPanel';
 import { useInventorySize, useItemSize } from './size';
 
 export const PlayerInventoryApp: FunctionComponent = () => {
@@ -42,12 +42,14 @@ export const PlayerInventoryApp: FunctionComponent = () => {
     const inventoryItems = usePlayerInventoryItems();
     const clothingItems = usePlayerClothingInventoryItems();
     const configuration = usePlayerInventoryConfiguration();
-    const clothingConfiguration = usePlayerClothingInventoryConfiguration();
     const player = usePlayer();
     const inventorySize = useInventorySize(6);
 
     useNuiEvent('inventory', 'SetOpen', open => {
         setOpen(open);
+        if (!open) {
+            setIsPlayerClothingInventoryOpened(false);
+        }
     });
 
     useNuiFocus(open, open, open, null, open);
@@ -106,6 +108,12 @@ export const PlayerInventoryApp: FunctionComponent = () => {
         },
         [player]
     );
+
+    const transitions = useTransition(isPlayerClothingInventoryOpened, {
+        from: { transform: 'translateX(-50%) rotateY(90deg)', opacity: 0 },
+        enter: { transform: 'translateX(0%) rotateY(0deg)', opacity: 1 },
+        leave: { transform: 'translateX(-50%) rotateY(90deg)', opacity: 0 },
+    });
 
     if (!open || !player) {
         return null;
@@ -174,22 +182,28 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         </GameCanvasBox>
                     </div>
                 </main>
-                {isPlayerClothingInventoryOpened && (
-                    <main
-                        className="m-8 flex flex-col"
-                        style={{
-                            width: `${inventorySize.width + 10}px`,
-                        }}
-                    >
-                        <PlayerClothingPanel
-                            title="Vêtements"
-                            configuration={clothingConfiguration}
-                            inventoryItems={inventoryItems}
-                            inventoryId={`player_${player?.citizenid}`}
-                            onDoubleClick={onDoubleClick}
-                        />
-                    </main>
-                )}
+
+                {transitions((styles, item) => {
+                    if (!item) return null;
+
+                    return (
+                        <animated.main
+                            className="m-8 flex flex-col"
+                            style={{
+                                ...styles,
+                                width: `${inventorySize.width + 10}px`,
+                            }}
+                        >
+                            <PlayerClothingPanel
+                                title="Vêtements"
+                                configuration={configuration}
+                                inventoryItems={clothingItems}
+                                inventoryId={`player_clothing_${player?.citizenid}`}
+                                onDoubleClick={onDoubleClick}
+                            />
+                        </animated.main>
+                    );
+                })}
             </div>
         </DndContext>
     );

@@ -1,6 +1,7 @@
 import { DBSearch } from '@private/shared/business.cyber';
 import { DrugContractInfo } from '@private/shared/drugs';
 import { MissiveType } from '@private/shared/missive';
+import { Component, OutfitItem, Prop } from '@public/shared/cloth';
 import { Item, ItemType } from '@public/shared/item';
 import { joaat } from '@public/shared/joaat';
 import { DamageServerData } from '@public/shared/job/lsmc';
@@ -159,6 +160,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
     },
     [InventoryType.PlayerClothing]: {
         maxWeight: 10000,
+        allowedItemTypes: ['apparel'],
     },
     [InventoryType.Ammo]: {
         maxWeight: 10000000,
@@ -203,6 +205,7 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
             'smuggling_convoy_export',
             'smuggling_ore',
             'smuggling_electronic',
+            'apparel',
         ],
     },
     [InventoryType.Storage]: {
@@ -891,6 +894,9 @@ export type InventoryItemMetadata = {
     cyberDBSearch?: DBSearch;
     url?: string;
     extraLabel?: string;
+    // apparel
+    components?: Partial<Record<Component, OutfitItem>>;
+    props?: Partial<Record<Prop, OutfitItem>>;
 };
 
 export const isInventoryItemExpired = (item: InventoryItem): boolean => {

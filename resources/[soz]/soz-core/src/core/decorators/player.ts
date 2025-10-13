@@ -5,6 +5,7 @@ import { addMethodMetadata } from './reflect';
 
 export const PlayerListenerMetadataKey = 'soz_core.decorator.player';
 export const PlayerInventoryListenerMetadataKey = 'soz_core.decorator.player_inventory';
+export const PlayerClothesInventoryListenerMetadataKey = 'soz_core.decorator.player_clothes_inventory';
 
 export const PlayerUpdate = () => {
     return (
@@ -27,6 +28,18 @@ export const PlayerInventoryUpdate = () => {
         >
     ) => {
         addMethodMetadata(PlayerInventoryListenerMetadataKey, {}, target, propertyKey);
+
+        return descriptor;
+    };
+};
+
+export const PlayerClothesInventoryUpdate = () => {
+    return (
+        target: any,
+        propertyKey: string | symbol,
+        descriptor: TypedPropertyDescriptor<(items?: Record<number, InventoryItem>) => any>
+    ) => {
+        addMethodMetadata(PlayerClothesInventoryListenerMetadataKey, {}, target, propertyKey);
 
         return descriptor;
     };

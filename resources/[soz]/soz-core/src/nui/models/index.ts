@@ -8,7 +8,7 @@ import { hud } from './hud';
 import { item } from './item';
 import { outside } from './outside';
 import { petStats } from './pet';
-import { player, playerClothingInventory, playerInventory, playerPosition, playerStats } from './player';
+import { player, playerInventory, playerPosition, playerStats } from './player';
 import { taxi } from './taxi';
 import { vehicle, vehicleSpeed } from './vehicle';
 
@@ -18,7 +18,6 @@ export interface RootModel extends Models<RootModel> {
     playerPosition: typeof playerPosition;
     playerStats: typeof playerStats;
     playerInventory: typeof playerInventory;
-    playerClothingInventory: typeof playerClothingInventory;
     item: typeof item;
     taxi: typeof taxi;
     outside: typeof outside;
@@ -37,7 +36,6 @@ export const models: RootModel = {
     playerPosition,
     playerStats,
     playerInventory,
-    playerClothingInventory,
     item,
     taxi,
     outside,

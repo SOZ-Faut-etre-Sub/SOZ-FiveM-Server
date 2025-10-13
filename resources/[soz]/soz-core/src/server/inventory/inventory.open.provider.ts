@@ -87,15 +87,18 @@ export class InventoryOpenProvider {
         }
 
         const storageId = `player_${player.citizenid}`;
+        const clotheStorageId = `player_clothing_${player.citizenid}`;
         const inventory = await this.inventoryFactory.getOrCreate(storageId, InventoryType.Player);
+        const clothesInventory = await this.inventoryFactory.getOrCreate(clotheStorageId, InventoryType.PlayerClothing);
 
-        if (!inventory) {
-            return [null, null];
+        if (!inventory || !clothesInventory) {
+            return [null, null, null];
         }
 
         this.doSubscribe(source, inventory);
+        this.doSubscribe(source, clothesInventory);
 
-        return [inventory.configuration(), inventory.items()];
+        return [inventory.configuration(), inventory.items(), clothesInventory.items()];
     }
 
     @OnEvent(ServerEvent.INVENTORY_OPEN)

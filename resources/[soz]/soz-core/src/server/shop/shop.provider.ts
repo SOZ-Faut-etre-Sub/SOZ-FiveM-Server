@@ -38,6 +38,7 @@ import { Rpc } from '../../core/decorators/rpc';
 import { Logger } from '../../core/logger';
 import { BankMoneyType } from '../../shared/bank';
 import { CAYO } from '../../shared/cayo';
+import { ApparelComponentToItem, ApparelPropToItem, OutfitItem } from '../../shared/cloth';
 import { ClientEvent, ServerEvent } from '../../shared/event';
 import { Feature } from '../../shared/features';
 import { ADD_ERROR_MESSAGE, InventoryItemMetadata, InventoryType } from '../../shared/inventory';
@@ -458,13 +459,22 @@ export class ShopProvider {
             await this.clothingShopRepository.set(repo);
         }
 
+        const playerInventory = await this.inventoryFactory.getPlayerInventory(source);
+        if (!playerInventory) return;
+
         const clothSet = product.categoryId == ClothingCategoryID.UNDERWEARS ? 'NakedClothSet' : 'BaseClothSet';
 
         // Update player cloth config
         const clothConfig = this.playerService.getPlayer(source).cloth_config;
         if (product.components && product.correspondingDrawables == null) {
+            const item = this.convertComponentsToApparel(product.components);
+            if (item) {
+                playerInventory.add(item.name, 1, item.metadata);
+            }
+
             for (const componentId of Object.keys(product.components)) {
-                clothConfig[clothSet].Components[componentId] = product.components[componentId];
+                // clothConfig[clothSet].Components[componentId] = product.components[componentId];
+
                 const HideToReset = TenueIdToHide.Components[componentId];
                 if (HideToReset) {
                     clothConfig.Config[HideToReset] = false;
@@ -472,8 +482,14 @@ export class ShopProvider {
             }
         }
         if (product.props && product.correspondingDrawables == null) {
+            const item = this.convertPropsToApparel(product.props);
+            if (item) {
+                playerInventory.add(item.name, 1, item.metadata);
+            }
+
             for (const propId of Object.keys(product.props)) {
-                clothConfig[clothSet].Props[propId] = product.props[propId];
+                // clothConfig[clothSet].Props[propId] = product.props[propId];
+
                 const HideToReset = TenueIdToHide.Props[propId];
                 if (HideToReset) {
                     clothConfig.Config[HideToReset] = false;
@@ -762,5 +778,49 @@ export class ShopProvider {
         } else {
             this.notifier.notify(source, 'Ce camion ne vous appartient pas.', 'error');
         }
+    }
+
+    private convertComponentsToApparel(
+        components: Partial<Record<Component, OutfitItem>>
+    ): { name: string; metadata: InventoryItemMetadata } | null {
+        const apparelItemComponent = Object.keys(components)
+            .sort((a, b) => Number(a) - Number(b))
+            .find(key => ApparelComponentToItem[key]);
+
+        if (!apparelItemComponent) {
+            return null;
+        }
+
+        const apparelItem = ApparelComponentToItem[apparelItemComponent];
+        if (!apparelItem) {
+            return null;
+        }
+
+        return {
+            name: apparelItem,
+            metadata: { components },
+        };
+    }
+
+    private convertPropsToApparel(
+        components: Partial<Record<Prop, OutfitItem>>
+    ): { name: string; metadata: InventoryItemMetadata } | null {
+        const apparelItemComponent = Object.keys(components)
+            .sort((a, b) => Number(a) - Number(b))
+            .find(key => ApparelPropToItem[key]);
+
+        if (!apparelItemComponent) {
+            return null;
+        }
+
+        const apparelItem = ApparelPropToItem[apparelItemComponent];
+        if (!apparelItem) {
+            return null;
+        }
+
+        return {
+            name: apparelItem,
+            metadata: { components },
+        };
     }
 }

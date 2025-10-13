@@ -24,6 +24,7 @@ export interface NuiPLayerMethodMap {
     UpdateInventory: {
         configuration: InventoryConfiguration;
         items: Record<number, InventoryItem>;
+        clothing: Record<number, InventoryItem>;
     };
 }
 

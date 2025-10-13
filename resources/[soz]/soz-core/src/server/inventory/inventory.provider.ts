@@ -348,6 +348,7 @@ export class InventoryProvider {
         }
 
         const playerInventoryId = `player_${player.citizenid}`;
+        const playerClothingInventoryId = `player_clothing_${player.citizenid}`;
         const sourceInventory = await this.inventoryFactory.get(sourceInventoryId);
         const targetInventory = await this.inventoryFactory.get(targetInventoryId);
 
@@ -379,7 +380,11 @@ export class InventoryProvider {
             return;
         }
 
-        if (sourceInventory.id != targetInventory.id || sourceInventory.id != playerInventoryId) {
+        if (
+            sourceInventory.id != targetInventory.id ||
+            sourceInventory.id != playerInventoryId ||
+            sourceInventory.id != playerClothingInventoryId
+        ) {
             TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
         }
 
