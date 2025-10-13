@@ -2664,7 +2664,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
@@ -5349,7 +5349,7 @@ export const POLICE_CLOAKROOM: Partial<Record<JobType, WardrobeConfig>> = {
             },
             ['Hiver']: {
                 Components: {
-                    [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                    [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
                     [Component.Legs]: { Drawable: 1, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                     [Component.Shoes]: { Drawable: 52, Texture: 0, Palette: 0 },
@@ -7282,7 +7282,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 31, Texture: 1, Palette: 0, Collection: 'soz_bcso' },
                     },
@@ -9023,7 +9023,7 @@ export const POLICE_CUSTOM_CLOAKROOM: Partial<Record<JobType, Record<PlayerPedHa
                 },
                 ['Hiver']: {
                     Components: {
-                        [Component.Torso]: { Drawable: 5, Texture: 0, Palette: 0 },
+                        [Component.Torso]: { Drawable: 1, Texture: 0, Palette: 0 },
                         [Component.Bag]: { Drawable: 9, Texture: 0, Palette: 0 },
                         [Component.Tops]: { Drawable: 31, Texture: 0, Palette: 0, Collection: 'soz_bcso' },
                     },
