@@ -415,7 +415,7 @@ export class AnimalProvider {
         const player = this.playerService.getPlayer();
 
         const pet = this.getCurrentPet();
-        if (!pet?.entity || !pet.isPetJob || pet.model !== k9_model) return;
+        if (!pet?.entity || !pet.isPetJob || pet.model !== k9_model || this.currentOrder === PetOrder.SEARCH) return;
 
         if (
             !eventEntity ||
@@ -473,7 +473,7 @@ export class AnimalProvider {
         if (!player || player.metadata.isdead) return;
 
         const pet = this.getCurrentPet();
-        if (!pet?.entity || !pet.isPetJob || pet.model !== k9_model) return;
+        if (!pet?.entity || !pet.isPetJob || pet.model !== k9_model || this.currentOrder === PetOrder.SEARCH) return;
 
         const damageType = GetWeaponDamageType(weaponHash);
 
@@ -824,13 +824,12 @@ export class AnimalProvider {
                             isCanceled =
                                 distance > PetDistanceReturnHome ||
                                 (!IsVehicleSeatFree(veh, seat) && GetPedInVehicleSeat(veh, seat) !== pet.entity);
+                            if (!isCanceled) await wait(100);
                             return isCanceled;
                         });
 
-                        if (!isCanceled) {
+                        if (!isCanceled && IsPedInAnyVehicle(pet.entity, false)) {
                             await this.startAnimationSync(pet, animation, 10);
-                        } else {
-                            await this.stopAnimationSync(pet);
                         }
                     }
                 } else {
@@ -930,12 +929,14 @@ export class AnimalProvider {
     }
 
     private async ensurePetInControl(pet: AnyClientPet) {
-        NetworkRequestControlOfEntity(pet.entity);
-        for (let i = 0; i < 20; i++) {
-            if (NetworkHasControlOfEntity(pet.entity)) {
-                break;
+        if (!NetworkHasControlOfEntity(pet.entity)) {
+            NetworkRequestControlOfEntity(pet.entity);
+            for (let i = 0; i < 20; i++) {
+                if (NetworkHasControlOfEntity(pet.entity)) {
+                    break;
+                }
+                await wait(50);
             }
-            await wait(50);
         }
     }
 
@@ -1245,6 +1246,8 @@ export class AnimalProvider {
             isCanceled =
                 distance > PetDistanceReturnHome ||
                 (this.currentOrder === PetOrder.FOLLOW && IsPedInAnyVehicle(ped, false));
+
+            if (!isCanceled) await wait(100);
             return isCanceled;
         });
         if (forceHeading && !isCanceled) {
