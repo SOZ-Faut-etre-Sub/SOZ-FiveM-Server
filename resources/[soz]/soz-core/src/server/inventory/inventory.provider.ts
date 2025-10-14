@@ -381,9 +381,8 @@ export class InventoryProvider {
         }
 
         if (
-            sourceInventory.id != targetInventory.id ||
-            sourceInventory.id != playerInventoryId ||
-            sourceInventory.id != playerClothingInventoryId
+            sourceInventory.id !== playerClothingInventoryId &&
+            (sourceInventory.id !== targetInventory.id || sourceInventory.id !== playerInventoryId)
         ) {
             TriggerClientEvent(ClientEvent.ANIMATION_GIVE, source);
         }

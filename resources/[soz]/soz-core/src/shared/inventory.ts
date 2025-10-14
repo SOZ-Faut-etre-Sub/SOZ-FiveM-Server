@@ -848,6 +848,7 @@ export type ZkeaFournitureMetadata = {
 
 export type InventoryItemMetadata = {
     label?: string;
+    description?: string;
     type?: string;
     expiration?: string;
     creation?: string;

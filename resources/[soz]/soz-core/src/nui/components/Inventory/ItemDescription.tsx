@@ -151,7 +151,9 @@ export const ItemDescription: FunctionComponent<ItemDescriptionProps> = ({
                             {inventoryItem.metadata?.printed && <span>[Réplique]</span>}
                         </div>
                     </div>
-                    <div className="flex mt-1 justify-between align-items-center w-full">{itemDescription}</div>
+                    <div className="flex mt-1 justify-between align-items-center w-full">
+                        {inventoryItem.metadata?.description ?? itemDescription}
+                    </div>
                     {item.canEngrave && (
                         <div className="flex mt-1 justify-between align-items-center w-full">
                             <span></span>

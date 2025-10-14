@@ -467,7 +467,7 @@ export class ShopProvider {
         // Update player cloth config
         const clothConfig = this.playerService.getPlayer(source).cloth_config;
         if (product.components && product.correspondingDrawables == null) {
-            const item = this.convertComponentsToApparel(product.components);
+            const item = this.convertComponentsToApparel(product.modelLabel, product.colorLabel, product.components);
             if (item) {
                 playerInventory.add(item.name, 1, item.metadata);
             }
@@ -482,7 +482,7 @@ export class ShopProvider {
             }
         }
         if (product.props && product.correspondingDrawables == null) {
-            const item = this.convertPropsToApparel(product.props);
+            const item = this.convertPropsToApparel(product.modelLabel, product.colorLabel, product.props);
             if (item) {
                 playerInventory.add(item.name, 1, item.metadata);
             }
@@ -781,6 +781,8 @@ export class ShopProvider {
     }
 
     private convertComponentsToApparel(
+        label: string,
+        description: string,
         components: Partial<Record<Component, OutfitItem>>
     ): { name: string; metadata: InventoryItemMetadata } | null {
         const apparelItemComponent = Object.keys(components)
@@ -798,11 +800,13 @@ export class ShopProvider {
 
         return {
             name: apparelItem,
-            metadata: { components },
+            metadata: { components, label, description },
         };
     }
 
     private convertPropsToApparel(
+        label: string,
+        description: string,
         components: Partial<Record<Prop, OutfitItem>>
     ): { name: string; metadata: InventoryItemMetadata } | null {
         const apparelItemComponent = Object.keys(components)
@@ -820,7 +824,7 @@ export class ShopProvider {
 
         return {
             name: apparelItem,
-            metadata: { components },
+            metadata: { components, label, description },
         };
     }
 }
