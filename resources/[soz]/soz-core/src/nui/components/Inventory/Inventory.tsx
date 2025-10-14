@@ -38,7 +38,7 @@ export type InventoryProps = {
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
     itemDescriptionPosition: 'left' | 'right';
     targetMoney?: number | null;
-    headerRightTitle?: string;
+    headerRightTitle?: ReactNode;
     headerRightClick?: () => void;
 };
 
@@ -280,7 +280,7 @@ type InventoryDivProps = {
     price?: number;
     moneyType?: string | BankMoneyType;
     isClothingVariant?: boolean;
-    headerRightTitle?: string;
+    headerRightTitle?: ReactNode;
     headerRightClick?: () => void;
 };
 

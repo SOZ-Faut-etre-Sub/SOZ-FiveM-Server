@@ -44,6 +44,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
     const configuration = usePlayerInventoryConfiguration();
     const player = usePlayer();
     const inventorySize = useInventorySize(6);
+    const { getPath } = useAssetPath();
 
     useNuiEvent('inventory', 'SetOpen', open => {
         setOpen(open);
@@ -143,7 +144,12 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         player
                         onDoubleClick={onDoubleClick}
                         itemDescriptionPosition="right"
-                        headerRightTitle="Vêtements 👕"
+                        headerRightTitle={
+                            <div className="flex items-center">
+                                <span>Vêtements</span>
+                                <img className="h-6 pl-2" src={getPath('images/inventory/icon/cloth.webp')} />
+                            </div>
+                        }
                         headerRightClick={() => setIsPlayerClothingInventoryOpened(prev => !prev)}
                     />
                     <div className="relative w-full mt-4">
