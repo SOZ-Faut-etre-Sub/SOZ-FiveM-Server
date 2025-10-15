@@ -1,6 +1,6 @@
 import { DragOverlay, useDraggable, useDroppable } from '@dnd-kit/core';
 import classNames from 'classnames';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { Component, OutfitItem, Prop } from '../../../shared/cloth';
@@ -34,6 +34,7 @@ type ItemSlotProps = {
     onDoubleClick?: (inventoryItem: InventoryItem | 'money' | 'wallet' | 'keychain' | null, item?: Item | null) => void;
     setCurrentInventoryItem: (item: InventoryItem) => void;
     money?: number;
+    emptyOverlay?: ReactNode;
 };
 
 export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
@@ -52,6 +53,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     allDisabled = false,
     onDoubleClick,
     money = null,
+    emptyOverlay,
 }) => {
     const hidden =
         allowHidden &&
@@ -142,7 +144,9 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
                             width: `${itemSize}px`,
                             height: `${itemSize}px`,
                         }}
-                    ></div>
+                    >
+                        {emptyOverlay}
+                    </div>
                 </BorderBox>
             </div>
         );

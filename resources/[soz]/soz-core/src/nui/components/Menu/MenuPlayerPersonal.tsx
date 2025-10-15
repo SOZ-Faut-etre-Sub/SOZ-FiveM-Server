@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 import { Animations, Moods, Walks } from '../../../config/animation';
 import { AnimationConfigItem, AnimationConfigList, WalkConfigItem } from '../../../shared/animation';
-import { ClothConfig } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event';
 import { JobPermission } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
@@ -57,9 +56,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                             Se rhabiller
                         </MenuItemButton>
                     )}
-                    {!data.naked && !data.deguisement && (
-                        <MenuItemSubMenuLink id="clothing">Gestion de la tenue</MenuItemSubMenuLink>
-                    )}
 
                     <MenuItemSubMenuLink id="animations">Animations</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="hud">HUD</MenuItemSubMenuLink>
@@ -91,7 +87,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     )}
                 </MenuContent>
             </MainMenu>
-            <MenuClothing />
             <MenuAnimation shortcuts={data.shortcuts} favorites={data.favorites} combatMode={data.combatMode} />
             <SubMenu id="hud">
                 <MenuTitle title="Personnel" />
@@ -182,112 +177,6 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                 </MenuContent>
             </SubMenu>
         </Menu>
-    );
-};
-
-const MenuClothing: FunctionComponent = () => {
-    const player = usePlayer();
-
-    const createUpdateClothConfig = (key: keyof ClothConfig['Config'], inverted = false) => {
-        return value => {
-            if (!inverted) {
-                value = !value;
-            }
-
-            fetchNui(NuiEvent.PlayerMenuClothConfigUpdate, { key, value });
-        };
-    };
-
-    return (
-        <SubMenu id="clothing">
-            <MenuTitle title="Personnel" />
-            <MenuContent subtitle="Gestion de la tenue">
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('ShowHelmet', true)}
-                    checked={player.cloth_config.Config['ShowHelmet']}
-                >
-                    Casque
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideHead')}
-                    checked={!player.cloth_config.Config['HideHead']}
-                >
-                    Chapeau
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideMask')}
-                    checked={!player.cloth_config.Config['HideMask']}
-                >
-                    Masque
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideGlasses')}
-                    checked={!player.cloth_config.Config['HideGlasses']}
-                >
-                    Lunettes
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideEar')}
-                    checked={!player.cloth_config.Config['HideEar']}
-                >
-                    Boucles
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideChain')}
-                    checked={!player.cloth_config.Config['HideChain']}
-                >
-                    Collier
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideBulletproof')}
-                    checked={!player.cloth_config.Config['HideBulletproof']}
-                >
-                    Gilet
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideTop')}
-                    checked={!player.cloth_config.Config['HideTop']}
-                >
-                    Haut
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideLeftHand')}
-                    checked={!player.cloth_config.Config['HideLeftHand']}
-                >
-                    Montre
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideRightHand')}
-                    checked={!player.cloth_config.Config['HideRightHand']}
-                >
-                    Bracelet
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideGloves')}
-                    checked={!player.cloth_config.Config['HideGloves']}
-                >
-                    Gants
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideBag')}
-                    checked={!player.cloth_config.Config['HideBag']}
-                >
-                    Sac
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HidePants')}
-                    checked={!player.cloth_config.Config['HidePants']}
-                >
-                    Pantalon
-                </MenuItemCheckbox>
-                <MenuItemCheckbox
-                    onChange={createUpdateClothConfig('HideShoes')}
-                    checked={!player.cloth_config.Config['HideShoes']}
-                >
-                    Chaussures
-                </MenuItemCheckbox>
-            </MenuContent>
-        </SubMenu>
     );
 };
 
