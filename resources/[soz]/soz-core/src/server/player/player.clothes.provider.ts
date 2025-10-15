@@ -15,6 +15,6 @@ export class PlayerClothesProvider {
         const player = this.playerService.getPlayer(source);
         if (!player) return;
 
-        this.playerService.updateClothConfig(source, 'BaseClothSet', outfit, true);
+        this.playerService.updateClothConfig(source, 'BaseClothSet', outfit, false);
     }
 }

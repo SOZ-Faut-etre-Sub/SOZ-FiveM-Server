@@ -869,6 +869,15 @@ export class InventoryProvider {
         const itemObject = this.itemService.getItem(sourceItem.name);
 
         if (
+            targetInventory.type() === InventoryType.PlayerClothing &&
+            targetInventory.hasEnoughItem(sourceItem.name, 1, false)
+        ) {
+            this.notifier.error(source, "Vous ne pouvez porter ~r~qu'un seul exemplaire~s~ de cet objet.");
+
+            return 0;
+        }
+
+        if (
             itemObject?.onlyone &&
             sourceInventory.id !== targetInventory.id &&
             targetInventory.hasEnoughItem(sourceItem.name, 1, false) &&

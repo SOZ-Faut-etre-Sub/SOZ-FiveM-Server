@@ -52,7 +52,5 @@ export class PlayerClothesProvider {
             },
         });
         await emitRpc(RpcServerEvent.PLAYER_CLOTHES_UPDATE, outfit);
-
-        this.playerService.resetClothConfig();
     }
 }

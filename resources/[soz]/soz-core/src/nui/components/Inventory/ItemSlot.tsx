@@ -4,7 +4,7 @@ import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { getItemWeight, InventoryConfiguration, InventoryItem, isItemAllowed } from '../../../shared/inventory';
-import { Item } from '../../../shared/item';
+import { Item, ItemType } from '../../../shared/item';
 import { useAssetPath } from '../../hook/assets';
 import { usePlayer } from '../../hook/data';
 import { BorderBox } from '../Styleguide/BorderBox';
@@ -373,6 +373,7 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
 
 type ItemIconProps = {
     name: string;
+    type: ItemType;
     metadata?: {
         type?: string;
         tier?: number;
@@ -411,6 +412,10 @@ export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' 
     }
     if (inventoryItem.name === 'bank') {
         return `images/inventory/icon/bank.webp`;
+    }
+
+    if (inventoryItem.type === 'apparel') {
+        return `images/shop/ponsonbys/placeholder.webp`;
     }
 
     // if inventoryItem is an InventoryItem
