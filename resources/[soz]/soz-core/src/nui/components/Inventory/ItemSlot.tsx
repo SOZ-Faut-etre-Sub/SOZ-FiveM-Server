@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import { Component, OutfitItem, Prop } from '../../../shared/cloth';
 import { getItemWeight, InventoryConfiguration, InventoryItem, isItemAllowed } from '../../../shared/inventory';
 import { Item, ItemType } from '../../../shared/item';
 import { useAssetPath } from '../../hook/assets';
@@ -373,10 +374,12 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
 
 type ItemIconProps = {
     name: string;
-    type: ItemType;
+    type?: ItemType;
     metadata?: {
         type?: string;
         tier?: number;
+        components?: Partial<Record<Component, OutfitItem>>;
+        props?: Partial<Record<Prop, OutfitItem>>;
     };
 };
 
@@ -415,7 +418,12 @@ export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' 
     }
 
     if (inventoryItem.type === 'apparel') {
-        return `images/shop/ponsonbys/placeholder.webp`;
+        if (inventoryItem.metadata.components) {
+            return `images/shop/ponsonbys/placeholder.webp`;
+        }
+        if (inventoryItem.metadata.props) {
+            return `images/shop/ponsonbys/placeholder.webp`;
+        }
     }
 
     // if inventoryItem is an InventoryItem

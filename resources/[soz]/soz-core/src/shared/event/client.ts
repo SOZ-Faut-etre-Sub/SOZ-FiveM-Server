@@ -268,8 +268,6 @@ export enum ClientEvent {
 
     RADAR_TOGGLE_BLIP = 'soz-core:client:radar:toggle-blip',
 
-    ZEVENT_TOGGLE_TSHIRT = 'soz-core:client:zevent:toggle-tshirt',
-
     WEAPON_USE_WEAPON = 'soz-core:client:weapon:use-weapon',
     WEAPON_USE_WEAPON_NAME = 'soz-core:client:weapon:use-weapon-name',
     WEAPON_USE_AMMO = 'soz-core:client:weapon:use-ammo',

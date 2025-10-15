@@ -1,14 +1,7 @@
-import { WardrobeConfig } from '@public/shared/cloth';
-import { PlayerPedHash } from '@public/shared/player';
+import { WardrobeConfig } from '../../shared/cloth';
+import { PlayerPedHash } from '../../shared/player';
 
-import { OnEvent } from '../../core/decorators/event';
-import { Inject } from '../../core/decorators/injectable';
-import { Provider } from '../../core/decorators/provider';
-import { ClientEvent } from '../../shared/event';
-import { PlayerService } from '../player/player.service';
-
-//zevent2022_tshirt
-const tshirt: WardrobeConfig = {
+export const ZEventClothes: WardrobeConfig = {
     [PlayerPedHash.Male]: {
         zevent2022_tshirt: {
             Components: {
@@ -144,26 +137,3 @@ const tshirt: WardrobeConfig = {
         },
     },
 };
-
-@Provider()
-export class ZEventProvider {
-    @Inject(PlayerService)
-    private playerService: PlayerService;
-
-    private isWearingTShirt = false;
-
-    @OnEvent(ClientEvent.ZEVENT_TOGGLE_TSHIRT)
-    public onToggleTShirt(item: string) {
-        const player = this.playerService.getPlayer();
-        if (this.isWearingTShirt && player.metadata.isWearingItem == item) {
-            player.metadata.isWearingItem = null;
-            this.playerService.setTempClothes(null);
-        } else {
-            player.metadata.isWearingItem = item;
-            if (tshirt[player.skin.Model.Hash][item]) {
-                this.playerService.setTempClothes(tshirt[player.skin.Model.Hash][item]);
-            }
-        }
-        this.isWearingTShirt = !this.isWearingTShirt;
-    }
-}

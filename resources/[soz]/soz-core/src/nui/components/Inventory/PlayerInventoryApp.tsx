@@ -147,7 +147,7 @@ export const PlayerInventoryApp: FunctionComponent = () => {
                         headerRightTitle={
                             <div className="flex items-center">
                                 <span>Vêtements</span>
-                                <img className="h-6 pl-2" src={getPath('images/inventory/icon/cloth.webp')} />
+                                <img className="h-5 pl-2" src={getPath('images/inventory/icon/cloth.webp')} />
                             </div>
                         }
                         headerRightClick={() => setIsPlayerClothingInventoryOpened(prev => !prev)}

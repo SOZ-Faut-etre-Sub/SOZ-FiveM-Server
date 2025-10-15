@@ -65,7 +65,6 @@ import { VoipModule } from './client/voip/voip.module';
 import { WeaponModule } from './client/weapon/weapon.module';
 import { WeatherModule } from './client/weather/weather.module';
 import { WorldModule } from './client/world/world.module';
-import { ZEventModule } from './client/zevent/zevent.module';
 import { Application } from './core/application';
 import { setService, setServiceInstance, unloadContainer } from './core/container';
 import { ProviderClientLoader } from './core/loader/provider.client.loader';
@@ -104,7 +103,6 @@ async function bootstrap() {
         FightForStyleModule,
         BaunModule,
         StreamModule,
-        ZEventModule,
         AdminModule,
         BennysModule,
         StonkModule,

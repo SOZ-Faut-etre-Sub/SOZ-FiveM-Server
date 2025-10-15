@@ -66,7 +66,6 @@ import { VoipModule } from './server/voip/voip.module';
 import { WeaponModule } from './server/weapon/weapon.module';
 import { WeatherModule } from './server/weather/weather.module';
 import { WorldModule } from './server/world/world.module';
-import { ZEventModule } from './server/zevent/zevent.module';
 
 async function bootstrap() {
     setServiceInstance('Store', store);
@@ -99,7 +98,6 @@ async function bootstrap() {
         FoodModule,
         BaunModule,
         StreamModule,
-        ZEventModule,
         AdminModule,
         VoipModule,
         JobModule,
