@@ -50,6 +50,7 @@ export type PlayerData = {
         | {
               id: number;
               property_id: number;
+              identifier: string;
               tier: number;
               cloth_tier: number;
               money_tier: number;

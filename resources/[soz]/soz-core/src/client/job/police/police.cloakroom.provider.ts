@@ -1,4 +1,3 @@
-import { HousingApartmentZoneProvider } from '@public/client/housing/housing.apartment.zone.provider';
 import { ItemService } from '@public/client/item/item.service';
 import { PlayerHealthProvider } from '@public/client/player/player.health.provider';
 import { PlayerService } from '@public/client/player/player.service';
@@ -12,6 +11,11 @@ import { ClientEvent, NuiEvent, ServerEvent } from '@public/shared/event';
 import { JobType } from '@public/shared/job';
 import { Armors, DUTY_OUTFIT_NAME, ObjectOutFits, PrisonerClothes, RankOutfit } from '@public/shared/job/police';
 import { Zone } from '@public/shared/polyzone/box.zone';
+
+import { InventoryType } from '../../../shared/inventory';
+import { Vector3 } from '../../../shared/polyzone/vector';
+import { InventoryManager } from '../../inventory/inventory.manager';
+import { NuiMenu } from '../../nui/nui.menu';
 
 const prisonerCloakroomInfos: Zone<string>[] = [
     {
@@ -87,8 +91,11 @@ export class PoliceCloakRoomProvider {
     @Inject(PlayerHealthProvider)
     private playerHealthProvider: PlayerHealthProvider;
 
-    @Inject(HousingApartmentZoneProvider)
-    private housingApartmentZoneProvider: HousingApartmentZoneProvider;
+    @Inject(NuiMenu)
+    private nuiMenu: NuiMenu;
+
+    @Inject(InventoryManager)
+    private inventoryManager: InventoryManager;
 
     @Once(OnceStep.Start)
     public onStart() {
@@ -200,6 +207,23 @@ export class PoliceCloakRoomProvider {
 
     @OnNuiEvent(NuiEvent.PersonnalCloakroom)
     public async onPersonnalCloakroom() {
-        this.housingApartmentZoneProvider.openApartmentCloakroom('Tenues Personnelles');
+        this.nuiMenu.closeAll();
+
+        const player = this.playerService.getPlayer();
+        if (!player) {
+            return;
+        }
+
+        if (!player.apartment || !player.apartment.identifier) {
+            return;
+        }
+
+        const position = GetEntityCoords(PlayerPedId()) as Vector3;
+
+        this.inventoryManager.openInventory(
+            InventoryType.HouseCloakroom,
+            'house_cloakroom_' + player.apartment.identifier,
+            position
+        );
     }
 }

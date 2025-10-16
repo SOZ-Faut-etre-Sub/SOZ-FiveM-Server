@@ -257,6 +257,9 @@ const getInventoryTitle = (type: InventoryType): string => {
         case InventoryType.HouseFridge:
             return 'Frigo';
 
+        case InventoryType.HouseCloakroom:
+            return 'Penderie';
+
         case InventoryType.IceMachine:
             return 'Glaçons';
 

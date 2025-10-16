@@ -2,7 +2,6 @@ import { Once, OnceStep } from '@core/decorators/event';
 import { Inject } from '@core/decorators/injectable';
 import { Provider } from '@core/decorators/provider';
 import { RepositoryDelete, RepositoryInsert, RepositoryUpdate } from '@core/decorators/repository';
-import { emitQBRpc } from '@core/rpc';
 import { BankService } from '@public/client/bank/bank.service';
 import { InventoryManager } from '@public/client/inventory/inventory.manager';
 import { NuiMenu } from '@public/client/nui/nui.menu';
@@ -19,7 +18,6 @@ import {
     isPlayerInsideApartment,
     Property,
 } from '@public/shared/housing/housing';
-import { MenuType } from '@public/shared/nui/menu';
 import { RepositoryType } from '@public/shared/repository';
 
 import { InventoryType } from '../../shared/inventory';
@@ -226,31 +224,14 @@ export class HousingApartmentZoneProvider {
                         return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
-                        this.openApartmentCloakroom();
+                        this.inventoryManager.openInventory(
+                            InventoryType.HouseCloakroom,
+                            `house_cloakroom_${apartment.identifier}`,
+                            GetEntityCoords(PlayerPedId()) as Vector3
+                        );
                     },
                 },
             ]);
         }
-    }
-
-    public async openApartmentCloakroom(title = 'Habitation') {
-        const player = this.playerService.getPlayer();
-
-        if (!player) {
-            return;
-        }
-
-        const playerCloakroom = await emitQBRpc<PlayerCloakroom>('soz-character:server:GetPlayerCloakroom');
-
-        if (!playerCloakroom) {
-            return;
-        }
-
-        const cloakroomItems = Object.values(playerCloakroom);
-
-        this.nuiMenu.openMenu(MenuType.HousingCloakroomMenu, {
-            items: cloakroomItems,
-            title,
-        });
     }
 }

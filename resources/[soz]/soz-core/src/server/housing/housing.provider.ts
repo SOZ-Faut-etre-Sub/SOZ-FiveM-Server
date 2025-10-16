@@ -33,7 +33,12 @@ import {
     Property,
 } from '@public/shared/housing/housing';
 import { HousingTiers, TYPE_LABEL } from '@public/shared/housing/upgrades';
-import { HOUSE_FRIDGE_TIER_WEIGHTS, HOUSE_STORAGE_TIER_WEIGHTS, InventoryType } from '@public/shared/inventory';
+import {
+    HOUSE_CLOAKROOM_TIER_WEIGHTS,
+    HOUSE_FRIDGE_TIER_WEIGHTS,
+    HOUSE_STORAGE_TIER_WEIGHTS,
+    InventoryType,
+} from '@public/shared/inventory';
 import { PlayerData } from '@public/shared/player';
 import { getDistance, Vector3, Vector4 } from '@public/shared/polyzone/vector';
 import { RpcServerEvent } from '@public/shared/rpc';
@@ -717,14 +722,20 @@ export class HousingProvider {
     public async clearApartment(property: Property, apartment: Apartment, notify = true) {
         const apartmentInventory = await this.inventoryFactory.get(`house_stash_${apartment.identifier}`);
         const apartmentFridge = await this.inventoryFactory.get(`house_fridge_${apartment.identifier}`);
+        const apartmentCloakroom = await this.inventoryFactory.get(`house_cloakroom_${apartment.identifier}`);
+
         apartmentInventory?.clear();
         apartmentFridge?.clear();
+        apartmentCloakroom?.clear();
 
         apartmentInventory?.updateConfiguration({
             maxWeight: HOUSE_STORAGE_TIER_WEIGHTS[0],
         });
         apartmentFridge?.updateConfiguration({
             maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[0],
+        });
+        apartmentCloakroom?.updateConfiguration({
+            maxWeight: HOUSE_CLOAKROOM_TIER_WEIGHTS[0],
         });
 
         await this.bankService.clearAccount(apartment.identifier);
@@ -895,6 +906,10 @@ export class HousingProvider {
             `house_fridge_${apartment.identifier}`,
             InventoryType.HouseFridge
         );
+        const apartmentCloakroom = await this.inventoryFactory.getOrCreate(
+            `house_cloakroom_${apartment.identifier}`,
+            InventoryType.HouseCloakroom
+        );
 
         if (inventory.getItemCount('cabinet_zkea') < zkeaAmount) {
             this.notifier.error(player.source, "Amélioration de palier impossible car Zkea n'a pas assez de stock.");
@@ -916,6 +931,9 @@ export class HousingProvider {
             });
             apartmentFridge?.updateConfiguration({
                 maxWeight: HOUSE_FRIDGE_TIER_WEIGHTS[apartmentTier.tier] || HOUSE_FRIDGE_TIER_WEIGHTS[0],
+            });
+            apartmentCloakroom?.updateConfiguration({
+                maxWeight: HOUSE_CLOAKROOM_TIER_WEIGHTS[apartmentTier.tier] || HOUSE_CLOAKROOM_TIER_WEIGHTS[0],
             });
         }
 

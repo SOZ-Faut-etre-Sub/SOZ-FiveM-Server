@@ -31,6 +31,7 @@ export enum InventoryType {
     Inverter = 'inverter',
     HouseFridge = 'house_fridge',
     HouseStash = 'house_stash',
+    HouseCloakroom = 'house_cloakroom',
     LiquorStorage = 'liquor_storage',
     LogProcessing = 'log_processing',
     LogStorage = 'log_storage',
@@ -152,6 +153,19 @@ export const HOUSE_FRIDGE_TIER_WEIGHTS = {
     7: 2000000,
     8: 3000000,
     9: 4000000,
+};
+export const HOUSE_CLOAKROOM_TIER_WEIGHTS = {
+    [-2]: 1000000000,
+    0: 20000,
+    1: 40000,
+    2: 60000,
+    3: 80000,
+    4: 100000,
+    5: 140000,
+    6: 180000,
+    7: 200000,
+    8: 300000,
+    9: 400000,
 };
 
 export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<InventoryConfiguration>>> = {
@@ -396,6 +410,10 @@ export const INVENTORY_CONFIGURATIONS: Partial<Record<InventoryType, Partial<Inv
             'smuggling_ore',
             'smuggling_electronic',
         ],
+    },
+    [InventoryType.HouseCloakroom]: {
+        maxWeight: HOUSE_CLOAKROOM_TIER_WEIGHTS[0],
+        allowedItemTypes: ['apparel'],
     },
     [InventoryType.LogStorage]: {
         maxWeight: 40000000,

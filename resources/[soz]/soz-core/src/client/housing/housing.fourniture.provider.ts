@@ -387,7 +387,11 @@ export class HousingFournitureProvider {
                         return this.housingService.canAccessTargetInApartment(player, apartment);
                     },
                     action: () => {
-                        this.housingApartmentZoneProvider.openApartmentCloakroom();
+                        this.inventoryManager.openInventory(
+                            InventoryType.HouseCloakroom,
+                            `house_cloakroom_${apartment.identifier}`,
+                            GetEntityCoords(PlayerPedId()) as Vector3
+                        );
                     },
                 },
             ]);
@@ -613,6 +617,12 @@ export class HousingFournitureProvider {
             this.inventoryManager.openInventory(
                 InventoryType.HouseFridge,
                 `house_fridge_${this.lastApartment.identifier}`,
+                null
+            );
+        } else if (type === 'cloakroom') {
+            this.inventoryManager.openInventory(
+                InventoryType.HouseCloakroom,
+                `house_cloakroom_${this.lastApartment.identifier}`,
                 null
             );
         }

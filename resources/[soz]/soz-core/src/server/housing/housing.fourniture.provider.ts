@@ -253,7 +253,10 @@ export class HousingFournitureProvider {
         if (aliceFrames.length < frameTarget) {
             await this.addFourntiureForApartement(
                 apartmentId,
-                Array(frameTarget - aliceFrames.length).fill({ apartment_id: apartmentId, model: ZkeaCasinoAliceFrame })
+                Array(frameTarget - aliceFrames.length).fill({
+                    apartment_id: apartmentId,
+                    model: ZkeaCasinoAliceFrame,
+                })
             );
             this.notifier.notify(
                 source,
@@ -475,7 +478,7 @@ export class HousingFournitureProvider {
         if (currentFourniture.storageType !== storageType) {
             let message = null;
 
-            if (currentFourniture.storageType !== null || currentFourniture.storageType !== 'cloth_stock') {
+            if (currentFourniture.storageType !== null) {
                 if (currentFourniture.storageType === 'stock') {
                     const inventory = await this.inventoryFactory.get(`house_stash_${apartement.identifier}`);
 
@@ -492,6 +495,12 @@ export class HousingFournitureProvider {
                     const money = await this.bankService.getAccountMoney(apartement.identifier, 'marked_money');
                     if (money !== 0) {
                         message = `Attention, tu essaies de ~r~supprimer~s~ un coffre avec de l'argent à l'intérieur ! Si tu souhaites faire cela, il est nécessaire de vider ton ~p~${ZkeaFourniture[currentFourniture.model].name}~s~.`;
+                    }
+                } else if (currentFourniture.storageType === 'cloth_stock') {
+                    const inventory = await this.inventoryFactory.get(`house_cloakroom_${apartement.identifier}`);
+
+                    if (Object.values(inventory.items()).length) {
+                        message = `Attention, tu essaies de ~r~supprimer~s~ un coffre avec des objets à l'intérieur ! Si tu souhaites faire cela, il est nécessaire de vider ton ~p~${ZkeaFourniture[currentFourniture.model].name}~s~.`;
                     }
                 }
             }
