@@ -9,6 +9,8 @@ import { fetchNui } from '../../../../fetch';
 import { useAssetPath } from '../../../../hook/assets';
 import { useGetPrice } from '../../../../hook/price';
 import { CategoryItemsHookProps, useCategoryItems } from '../../hooks/useCategoryItems';
+import { getApparelIcon } from '../../utils/getApparelItemIcon';
+import { getBestClothesPartId } from '../../utils/getBestPartId';
 import { CategoryButton } from './CategoryButton';
 import { ContentGridWrapper } from './ContentWrapper';
 
@@ -78,23 +80,50 @@ export const ClotheItems: FunctionComponent<ClothesMainCategoriesProps> = ({
         });
     };
 
+    const getCategoryPreview = (items: ClothingShopItem[]) => {
+        if (items.length === 0) return '';
+
+        const selectedItem = items[0];
+
+        const type = selectedItem.components ? 'components' : 'props';
+        const id = getBestClothesPartId(selectedItem[type]);
+        const outfit = selectedItem[type][id];
+
+        return getApparelIcon(playerData, type, Number(id), outfit.Collection, outfit.Drawable, outfit.Texture);
+    };
+
+    const getPreviewItem = (items: ClothingShopItem[]) => {
+        if (!selectedItem) return getCategoryPreview(items);
+
+        const type = selectedItem.components ? 'components' : 'props';
+        const id = getBestClothesPartId(selectedItem[type]);
+        const outfit = selectedItem[type][id];
+
+        return getApparelIcon(playerData, type, Number(id), outfit.Collection, outfit.Drawable, outfit.Texture);
+    };
+
     if (!availableItems.length) {
         return null;
     }
 
     return (
         <ContentGridWrapper>
-            {availableItems.map(([model], index) => (
+            {availableItems.map(([model, items], index) => (
                 <Fragment key={model}>
                     <CategoryButton
                         className={clsx({ 'scale-105 hover:cursor-default': selectedModel === model })}
                         disabled={selectedModel === model}
                         onClick={() => handleSelectModel(index, model)}
                     >
-                        <div className="flex flex-col gap-2 min-w-0" title={model}>
+                        <div className="flex flex-col gap-2 min-w-0 h-full w-full" title={model}>
                             <span className="truncate font-medium">{model}</span>
 
-                            <img src={getPath(`images/shop/ponsonbys/placeholder.webp`)} alt={model} />
+                            <div
+                                className="bg-no-repeat bg-contain bg-center w-full aspect-square"
+                                style={{
+                                    backgroundImage: `url(${getPath(getCategoryPreview(items))})`,
+                                }}
+                            />
                         </div>
                     </CategoryButton>
 
@@ -104,12 +133,8 @@ export const ClotheItems: FunctionComponent<ClothesMainCategoriesProps> = ({
                             className="col-start-1 col-span-3 max-h-[30vh] hover:cursor-default flex items-center justify-center bg-gradient-to-tr from-white/40 to-white/20 border border-white/20 rounded-lg p-4 text-white transition-all duration-200"
                         >
                             <div className="flex gap-4 h-full">
-                                <div className="basis-1/3">
-                                    <img
-                                        className="h-full"
-                                        src={getPath(`images/shop/ponsonbys/placeholder.webp`)}
-                                        alt={selectedModel}
-                                    />
+                                <div className="flex justify-center basis-1/3">
+                                    <img className="h-full" src={getPath(getPreviewItem(items))} alt={selectedModel} />
                                 </div>
 
                                 <div className="flex flex-col gap-2 grow">
@@ -138,7 +163,7 @@ export const ClotheItems: FunctionComponent<ClothesMainCategoriesProps> = ({
                                                 Sélectionnez une variante
                                             </option>
                                             {selectedModelItems.map(item => (
-                                                <option value={item.id} className="text-black">
+                                                <option key={index + item.id} value={item.id} className="text-black">
                                                     {item.colorLabel}
                                                 </option>
                                             ))}

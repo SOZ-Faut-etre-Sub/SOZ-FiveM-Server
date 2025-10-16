@@ -54,7 +54,7 @@ export const ClothesApplication: FunctionComponent<ClothesApplicationProps> = ({
         <div className="absolute font-prompt flex justify-end items-center h-full w-full z-10 overflow-hidden">
             <animated.div style={contentStyles} className="relative">
                 <GlassMorphismContainer borderClassName="rounded-lg" className="flex flex-col  h-[800px] w-[600px]">
-                    <header className="h-40 flex flex-col justify-between">
+                    <header className="h-32 flex flex-col justify-between">
                         <div
                             className="bg-no-repeat bg-contain bg-center grow m-4"
                             style={{ backgroundImage: `url(${getPath(`images/shop/${shopBrand}/logo.webp`)})` }}

@@ -24,7 +24,7 @@ import { CartElement, ShopItem } from '../../../shared/shop/superette';
 import { fetchNui } from '../../fetch';
 import { useAssetPath } from '../../hook/assets';
 import { useKeyPress } from '../../hook/control';
-import { useItem } from '../../hook/data';
+import { useItem, usePlayer } from '../../hook/data';
 import { useNuiEvent, useNuiFocus } from '../../hook/nui';
 import { useGetPrice } from '../../hook/price';
 import { BorderBox } from '../Styleguide/BorderBox';
@@ -290,6 +290,7 @@ const ShopItem: FunctionComponent<{
     const getPrice = useGetPrice();
     const itemSize = useItemSize();
     const { getPath } = useAssetPath();
+    const player = usePlayer();
 
     const moneyItem = useItem(moneyType);
 
@@ -342,7 +343,7 @@ const ShopItem: FunctionComponent<{
                             >
                                 <img
                                     className="h-full w-full object-contain"
-                                    src={getPath(getItemIcon(itemForIcon))}
+                                    src={getPath(getItemIcon(player, itemForIcon))}
                                     alt={item.name}
                                 />
                                 <div
@@ -379,7 +380,11 @@ const ShopItem: FunctionComponent<{
             {createPortal(
                 <DragOverlay dropAnimation={null}>
                     {isDragging && (
-                        <img className="absolute z-50" src={getPath(getItemIcon(itemForIcon))} alt={item.name} />
+                        <img
+                            className="absolute z-50"
+                            src={getPath(getItemIcon(player, itemForIcon))}
+                            alt={item.name}
+                        />
                     )}
                 </DragOverlay>,
                 document.body
@@ -516,6 +521,7 @@ const CartItem: FunctionComponent<{
     });
     const itemSize = useItemSize();
     const { getPath } = useAssetPath();
+    const player = usePlayer();
 
     return (
         <>
@@ -549,7 +555,7 @@ const CartItem: FunctionComponent<{
                         >
                             <img
                                 className="h-full w-full object-contain"
-                                src={getPath(getItemIcon(cartItem))}
+                                src={getPath(getItemIcon(player, cartItem))}
                                 alt={cartItem.name}
                             />
                             <div
@@ -569,7 +575,11 @@ const CartItem: FunctionComponent<{
             {createPortal(
                 <DragOverlay dropAnimation={null}>
                     {isDragging && (
-                        <img className="absolute z-50" src={getPath(getItemIcon(cartItem))} alt={cartItem.name} />
+                        <img
+                            className="absolute z-50"
+                            src={getPath(getItemIcon(player, cartItem))}
+                            alt={cartItem.name}
+                        />
                     )}
                 </DragOverlay>,
                 document.body

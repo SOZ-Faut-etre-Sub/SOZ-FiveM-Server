@@ -1,4 +1,5 @@
 import { DragOverlay, useDraggable, useDroppable } from '@dnd-kit/core';
+import { PlayerData } from '@public/shared/player';
 import classNames from 'classnames';
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -8,6 +9,7 @@ import { getItemWeight, InventoryConfiguration, InventoryItem, isItemAllowed } f
 import { Item, ItemType } from '../../../shared/item';
 import { useAssetPath } from '../../hook/assets';
 import { usePlayer } from '../../hook/data';
+import { getApparelItemIcon } from '../Shop/utils/getApparelItemIcon';
 import { BorderBox } from '../Styleguide/BorderBox';
 import { ActionItem, getActions } from './Actions';
 import { useItemSize } from './size';
@@ -68,7 +70,9 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
     const [contextData, setContextData] = useState({ visible: false, posX: 0, posY: 0 });
     const playerData = usePlayer();
     const { getPath } = useAssetPath();
-    const [imageSrc, setImageSrc] = useState<string | null>(inventoryItem ? getPath(getItemIcon(inventoryItem)) : null);
+    const [imageSrc, setImageSrc] = useState<string | null>(
+        inventoryItem ? getPath(getItemIcon(playerData, inventoryItem)) : null
+    );
     const [previousInventoryItem, setPreviousInventoryItem] = useState<
         InventoryItem | 'money' | 'wallet' | 'keychain' | null
     >(inventoryItem);
@@ -112,7 +116,7 @@ export const ItemSlot: FunctionComponent<ItemSlotProps> = ({
 
     useEffect(() => {
         if (inventoryItem) {
-            setImageSrc(getPath(getItemIcon(inventoryItem)));
+            setImageSrc(getPath(getItemIcon(playerData, inventoryItem)));
         }
     }, [previousInventoryItem]);
 
@@ -376,7 +380,7 @@ export const EmptySlot: FunctionComponent<EmptySlotProps> = ({
     );
 };
 
-type ItemIconProps = {
+export type ItemIconProps = {
     name: string;
     type?: ItemType;
     metadata?: {
@@ -387,7 +391,10 @@ type ItemIconProps = {
     };
 };
 
-export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' | 'wallet'): string => {
+export const getItemIcon = (
+    playerData: PlayerData,
+    inventoryItem: ItemIconProps | 'money' | 'keychain' | 'wallet'
+): string => {
     if (inventoryItem === 'money') {
         return `images/inventory/icon/money.webp`;
     }
@@ -422,11 +429,9 @@ export const getItemIcon = (inventoryItem: ItemIconProps | 'money' | 'keychain' 
     }
 
     if (inventoryItem.type === 'apparel') {
-        if (inventoryItem.metadata.components) {
-            return `images/shop/ponsonbys/placeholder.webp`;
-        }
-        if (inventoryItem.metadata.props) {
-            return `images/shop/ponsonbys/placeholder.webp`;
+        const apparelIcon = getApparelItemIcon(playerData, inventoryItem);
+        if (apparelIcon) {
+            return apparelIcon;
         }
     }
 

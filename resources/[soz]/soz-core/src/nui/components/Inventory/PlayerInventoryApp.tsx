@@ -256,11 +256,13 @@ const ShortcutSlot: FunctionComponent<ShortcutSlotProps> = ({ shortcut, inventor
         },
     });
 
-    const [imageSrc, setImageSrc] = useState<string | null>(shortcutData ? getPath(getItemIcon(shortcutData)) : null);
+    const [imageSrc, setImageSrc] = useState<string | null>(
+        shortcutData ? getPath(getItemIcon(player, shortcutData)) : null
+    );
 
     useEffect(() => {
         if (shortcutData) {
-            setImageSrc(getPath(getItemIcon(shortcutData)));
+            setImageSrc(getPath(getItemIcon(player, shortcutData)));
         }
     }, [shortcutData]);
     const itemSize = useItemSize();
