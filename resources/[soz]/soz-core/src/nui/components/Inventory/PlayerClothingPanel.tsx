@@ -16,52 +16,61 @@ import { ItemSlot } from './ItemSlot';
 import { useInventorySize, useItemSize } from './size';
 
 const SLOT_TO_CONFIG: Record<number, keyof ClothConfig['Config']> = {
+    // Colonne gauche
     1: 'ShowHelmet',
-    2: 'HideHead',
-    3: 'HideMask',
-    4: 'HideGlasses',
-    5: 'HideEar',
-    6: 'HideChain',
-    7: 'HideBulletproof',
-    8: 'HideTop',
-    9: 'HideLeftHand',
-    10: 'HideRightHand',
-    11: 'HideGloves',
-    12: 'HideBag',
+    2: 'HideGlasses',
+    3: 'HideEar',
+    4: 'HideTop',
+    5: 'HideLeftHand',
+    6: 'HideGloves',
+    7: 'HideBag',
+
+    // Colonne droite
+    8: 'HideHead',
+    9: 'HideMask',
+    10: 'HideChain',
+    11: 'HideBulletproof',
+    12: 'HideRightHand',
     13: 'HidePants',
     14: 'HideShoes',
 };
 
 const SLOT_TO_ICON: Record<number, string> = {
+    // Colonne gauche
     1: 'Casque',
-    2: 'Chapeau',
-    3: 'Masque',
-    4: 'Lunettes',
-    5: 'Boucles',
-    6: 'Collier',
-    7: 'Gilet',
-    8: 'Haut',
-    9: 'Montre',
-    10: 'Bracelet',
-    11: 'Gants',
-    12: 'Sac',
+    2: 'Lunettes',
+    3: 'Boucles',
+    4: 'Haut',
+    5: 'Montre',
+    6: 'Gants',
+    7: 'Sac',
+
+    // Colonne droite
+    8: 'Chapeau',
+    9: 'Masque',
+    10: 'Collier',
+    11: 'Gilet',
+    12: 'Bracelet',
     13: 'Pantalon',
     14: 'Chaussures',
 };
 
 const SlotPlaceholder: FunctionComponent<{ slot: number }> = ({ slot }) => {
     const player = usePlayer();
-
+    const { getPath } = useAssetPath();
+    const bgUrl = getPath(`images/inventory/clothes/${SLOT_TO_ICON[slot]}.webp`);
     return (
         <div className="flex items-center justify-center">
             {player.cloth_config.JobClothSet ? (
-                <div className="size-10 flex justify-center items-center bg-red-300 rounded-full">
-                    {SLOT_TO_ICON[slot]}
-                </div>
+                <div
+                    className=" size-16 flex justify-center items-end"
+                    style={{ backgroundImage: `url(${bgUrl})`, backgroundSize: 'contain', opacity: 0.2 }}
+                ></div>
             ) : (
-                <div className="size-10 flex justify-center items-center bg-gray-300 rounded-full">
-                    {SLOT_TO_ICON[slot]}
-                </div>
+                <div
+                    className=" size-16 flex justify-center items-end"
+                    style={{ backgroundImage: `url(${bgUrl})`, backgroundSize: 'contain', opacity: 0.5 }}
+                ></div>
             )}
         </div>
     );
@@ -76,7 +85,7 @@ const SlotOverlay: FunctionComponent<PropsWithChildren<{ slot: number }>> = ({ s
     if (player.cloth_config.JobClothSet) {
         return (
             <div className="relative">
-                <div className="absolute top-1 right-1 z-20 text-white">
+                <div className="absolute top-1 right-1 z-20 text-white cursor-pointer">
                     {isConfigEnabled ? <EyeIcon className="size-5" /> : <EyeOffIcon className="size-5" />}
                 </div>
 
@@ -138,7 +147,7 @@ const PlayerClothingPanel: FunctionComponent<PlayerClothingPanelProps> = ({
     }, [inventoryItems, currentInventoryItem]);
 
     const renderSlot = (slot: number) => {
-        const inventoryItem = inventoryItems[slot] || null;
+        const inventoryItem = inventoryItems?.[slot] || null;
         const item = inventoryItem ? resolver(inventoryItem.name) : null;
 
         const handleOnClick = () => {
