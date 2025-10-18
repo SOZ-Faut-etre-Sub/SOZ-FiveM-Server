@@ -96,6 +96,14 @@ export const createHandleDragAndDrop = (allowOver = true) => {
             if (droppableData.type === 'inventoryItem') {
                 const { inventoryId: targetInventoryId, slot: targetSlot } = droppableData;
 
+                if (
+                    targetInventoryId.startsWith('player_clothing_') &&
+                    draggableData.item.type === 'apparel' &&
+                    draggableData.item.slot !== targetSlot
+                ) {
+                    return;
+                }
+
                 if (sourceInventoryId === targetInventoryId && sourceSlot === targetSlot) {
                     return;
                 }

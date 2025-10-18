@@ -203,6 +203,7 @@ export type SmugglingElectronic = BaseItem & {
 
 export type Apparel = BaseItem & {
     type: 'apparel';
+    slot: number;
 };
 
 type AnimationItem = {
