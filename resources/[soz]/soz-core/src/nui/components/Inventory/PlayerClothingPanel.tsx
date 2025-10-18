@@ -2,13 +2,15 @@ import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 import { PlayerPedHash } from '@public/shared/player';
 import { FunctionComponent, PropsWithChildren, ReactNode, useEffect, useMemo, useState } from 'react';
 
-import { ClothConfig } from '../../../shared/cloth';
+import { ClothConfig, Component, Prop } from '../../../shared/cloth';
 import { NuiEvent } from '../../../shared/event/nui';
 import { InventoryConfiguration, InventoryItem } from '../../../shared/inventory';
 import { Item } from '../../../shared/item';
 import { fetchNui } from '../../fetch';
 import { useAssetPath } from '../../hook/assets';
 import { useItemResolver, usePlayer } from '../../hook/data';
+import { getApparelIcon } from '../Shop/utils/getApparelItemIcon';
+import { BorderBox } from '../Styleguide/BorderBox';
 import { GameCanvasBox } from '../Styleguide/GameCanvasBox';
 import { InventoryDiv } from './Inventory';
 import { ItemDescription } from './ItemDescription';
@@ -55,46 +57,99 @@ const SLOT_TO_ICON: Record<number, string> = {
     14: 'Chaussures',
 };
 
+const SLOT_TO_JOB_CLOTH: Record<number, { type: 'components' | 'props'; id: number }> = {
+    // Colonne gauche
+    1: { type: 'props', id: -1 },
+    2: { type: 'props', id: Prop.Glasses.valueOf() },
+    3: { type: 'props', id: Prop.Ear.valueOf() },
+    4: { type: 'components', id: Component.Tops.valueOf() },
+    5: { type: 'props', id: Prop.LeftHand.valueOf() },
+    6: { type: 'components', id: Component.Torso.valueOf() },
+    7: { type: 'components', id: Component.Bag.valueOf() },
+
+    // Colonne droite
+    8: { type: 'props', id: Prop.Hat.valueOf() },
+    9: { type: 'components', id: Component.Mask.valueOf() },
+    10: { type: 'components', id: Component.Accessories.valueOf() },
+    11: { type: 'components', id: Component.BodyArmor.valueOf() },
+    12: { type: 'props', id: Prop.RightHand.valueOf() },
+    13: { type: 'components', id: Component.Legs.valueOf() },
+    14: { type: 'components', id: Component.Shoes.valueOf() },
+};
+
 const SlotPlaceholder: FunctionComponent<{ slot: number }> = ({ slot }) => {
-    const player = usePlayer();
     const { getPath } = useAssetPath();
-    const bgUrl = getPath(`images/inventory/clothes/${SLOT_TO_ICON[slot]}.webp`);
+
     return (
         <div className="flex items-center justify-center">
-            {player.cloth_config.JobClothSet ? (
-                <div
-                    className=" size-16 flex justify-center items-end"
-                    style={{ backgroundImage: `url(${bgUrl})`, backgroundSize: 'contain', opacity: 0.2 }}
-                ></div>
-            ) : (
-                <div
-                    className=" size-16 flex justify-center items-end"
-                    style={{ backgroundImage: `url(${bgUrl})`, backgroundSize: 'contain', opacity: 0.5 }}
-                ></div>
-            )}
+            <div
+                className="bg-no-repeat bg-center bg-contain opacity-50 size-16 flex justify-center items-end"
+                style={{
+                    backgroundImage: `url(${getPath(`images/inventory/clothes/${SLOT_TO_ICON[slot]}.webp`)})`,
+                }}
+            />
         </div>
     );
 };
 
 const SlotOverlay: FunctionComponent<PropsWithChildren<{ slot: number }>> = ({ slot, children }) => {
     const player = usePlayer();
+    const itemSize = useItemSize();
+    const { getPath } = useAssetPath();
 
     const configKey = SLOT_TO_CONFIG[slot];
     const isConfigEnabled = slot === 1 ? player.cloth_config.Config[configKey] : !player.cloth_config.Config[configKey];
 
-    if (player.cloth_config.JobClothSet) {
-        return (
-            <div className="relative">
-                <div className="absolute top-1 right-1 z-20 text-white cursor-pointer">
-                    {isConfigEnabled ? <EyeIcon className="size-5" /> : <EyeOffIcon className="size-5" />}
-                </div>
-
-                {children}
-            </div>
-        );
+    if (!player.cloth_config.JobClothSet) {
+        return children;
     }
 
-    return children;
+    const slotConfig = SLOT_TO_JOB_CLOTH[slot];
+    const configType = slotConfig.type === 'components' ? 'Components' : 'Props';
+    const clothSetConfig = player.cloth_config.JobClothSet?.[configType]?.[slotConfig.id];
+
+    return (
+        <div className="relative">
+            <div className="absolute top-1 right-1 z-20 text-white cursor-pointer">
+                {isConfigEnabled ? <EyeIcon className="size-5" /> : <EyeOffIcon className="size-5" />}
+            </div>
+
+            <BorderBox duration="duration-0" borderClassName="rounded-xl" showBorderOnHover>
+                <div
+                    className="cursor-pointer flex justify-center items-center text-white hover:bg-white/10"
+                    style={{
+                        width: `${itemSize}px`,
+                        height: `${itemSize}px`,
+                    }}
+                >
+                    {clothSetConfig ? (
+                        <div
+                            className="bg-no-repeat bg-center bg-contain size-16 flex justify-center items-end"
+                            style={{
+                                backgroundImage: `url(${getPath(
+                                    getApparelIcon(
+                                        player,
+                                        slotConfig.type,
+                                        slotConfig.id,
+                                        clothSetConfig.Collection,
+                                        clothSetConfig.Drawable,
+                                        clothSetConfig.Texture
+                                    )
+                                )})`,
+                            }}
+                        />
+                    ) : (
+                        <div
+                            className="bg-no-repeat bg-center bg-contain opacity-20 size-16 flex justify-center items-end"
+                            style={{
+                                backgroundImage: `url(${getPath(`images/inventory/clothes/${SLOT_TO_ICON[slot]}.webp`)})`,
+                            }}
+                        />
+                    )}
+                </div>
+            </BorderBox>
+        </div>
+    );
 };
 
 type PlayerClothingPanelProps = {
