@@ -20,7 +20,7 @@ import { AnimationStopReason } from '../../../shared/animation';
 import { AnimationService } from '../../animation/animation.service';
 
 export const WEAPON_DIGISCANNER = -38085395;
-const RadarRange = 40;
+const RadarRange = 100;
 const stations = {
     LSPD: { label: 'Los Santos Police Department', blip: { sprite: 60 }, coords: [632.76, 7.31, 82.63] },
     BCSO: {
@@ -236,14 +236,21 @@ export class PoliceProvider {
             }
 
             const coords = GetEntityCoords(playerPed);
-            const target = GetOffsetFromEntityInWorldCoords(playerPed, 0.0, RadarRange, 0.0);
+
+            const camRotation = GetGameplayCamRot(2);
+            const camPitch = camRotation[0] * (Math.PI / 180.0);
+            const camHeading = camRotation[2] * (Math.PI / 180.0);
+
+            const targetX = coords[0] + RadarRange * -Math.sin(camHeading) * Math.cos(camPitch);
+            const targetY = coords[1] + RadarRange * Math.cos(camHeading) * Math.cos(camPitch);
+            const targetZ = coords[2] + RadarRange * Math.sin(camPitch);
             const rayHandle = StartShapeTestCapsule(
                 coords[0],
                 coords[1],
                 coords[2],
-                target[0],
-                target[1],
-                target[2],
+                targetX,
+                targetY,
+                targetZ,
                 1.5,
                 2,
                 playerPed,
@@ -258,7 +265,7 @@ export class PoliceProvider {
             if (result[0] == 2) {
                 let speedMessage = '';
                 if (result[1]) {
-                    speedMessage = (GetEntitySpeed(result[4]) * 3.6).toFixed(2) + ' KM/H';
+                    speedMessage = (GetEntitySpeed(result[4]) * 3.6).toFixed(2) + ' km/h';
                 }
                 this.dispatcher.dispatch('police', 'UpdateRadar', speedMessage);
 
