@@ -355,6 +355,10 @@ export enum RpcServerEvent {
     PHONE_APP_NEWS_CREATE = 'soz-core:server:phone:app:news:create',
     PHONE_APP_TETRIS_ADD_SCORE = 'soz-core:server:phone:app:tetris:add-score',
     PHONE_APP_SNAKE_ADD_SCORE = 'soz-core:server:phone:app:snake:add-score',
+	
+	PHONE_APP_TCG_GET_DAILY_STATUS = 'soz-core:server:phone:app:tcg:get-daily-status',
+	PHONE_APP_TCG_CLAIM_DAILY_CARDS = 'soz-core:server:phone:app:tcg:claim-daily-cards',
+	PHONE_APP_TCG_GET_COLLECTION = 'soz-core:server:phone:app:tcg:get-collection',
 
     LASER_GAME_GET_INFO_AS_STAFF = 'soz-core:server:phone:app:laser-game:get-info-as-staff',
     LASER_GAME_CREATE = 'soz-core:server:phone:app:laser-game:create',

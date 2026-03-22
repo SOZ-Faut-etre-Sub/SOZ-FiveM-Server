@@ -1176,3 +1176,32 @@ model whatif_props {
     noCollision Boolean? @default(false)
     citizenid   String   @db.VarChar(50)
 }
+
+model tcg_card {
+  id         Int              @id @default(autoincrement())
+  name       String           @db.VarChar(128)
+  image      String           @db.VarChar(512)
+  prompt     String?          @db.Text
+  active     Boolean          @default(true)
+  created_at DateTime         @default(now())
+  user_cards tcg_user_card[]
+}
+
+model tcg_user_card {
+  id          Int      @id @default(autoincrement())
+  citizenid   String   @db.VarChar(50)
+  card_id     Int
+  obtained_at DateTime @default(now())
+  tcg_card    tcg_card @relation(fields: [card_id], references: [id])
+
+  @@index([citizenid])
+}
+
+model tcg_daily_claim {
+  id            Int    @id @default(autoincrement())
+  citizenid     String @db.VarChar(50)
+  claim_date    String @db.VarChar(10)
+  claimed_count Int    @default(0)
+
+  @@unique([citizenid, claim_date])
+}

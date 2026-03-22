@@ -763,6 +763,10 @@ export enum NuiEvent {
     PhoneAppTetrisAddScore = 'soz-core:nui:phone:app-tetris-add-score',
     PhoneAppSnakeAddScore = 'soz-core:nui:phone:app-snake-add-score',
     PhoneAppWeatherFetchData = 'soz-core:nui:phone:app-weather-fetch-data',
+	
+	PhoneAppTcgGetDailyStatus = 'soz-core:nui:phone:app-tcg-get-daily-status',
+	PhoneAppTcgClaimDailyCards = 'soz-core:nui:phone:app-tcg-claim-daily-cards',
+	PhoneAppTcgGetCollection = 'soz-core:nui:phone:app-tcg-get-collection',
 
     GetPlayerPosition = 'soz-core:nui:get-player-position',
     GetStreetName = 'soz-core:nui:get-street-name',
