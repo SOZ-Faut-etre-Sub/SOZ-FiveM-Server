@@ -1178,19 +1178,23 @@ model whatif_props {
 }
 
 model tcg_card {
-  id         Int              @id @default(autoincrement())
-  name       String           @db.VarChar(128)
-  image      String           @db.VarChar(512)
-  prompt     String?          @db.Text
-  active     Boolean          @default(true)
-  created_at DateTime         @default(now())
-  user_cards tcg_user_card[]
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(128)
+  image             String              @db.VarChar(512)
+  prompt            String?             @db.Text
+  active            Boolean             @default(true)
+  created_at        DateTime            @default(now())
+  tcg_user_card     tcg_user_card?
+  tcg_wallpaper     tcg_wallpaper[]
+  trade_requested   tcg_trade_request[] @relation("requested_card")
+  trade_offered     tcg_trade_request[] @relation("offered_card")
+  tcg_showcase      tcg_showcase?
 }
 
 model tcg_user_card {
   id          Int      @id @default(autoincrement())
   citizenid   String   @db.VarChar(50)
-  card_id     Int
+  card_id     Int      @unique
   obtained_at DateTime @default(now())
   tcg_card    tcg_card @relation(fields: [card_id], references: [id])
 
@@ -1204,4 +1208,58 @@ model tcg_daily_claim {
   claimed_count Int    @default(0)
 
   @@unique([citizenid, claim_date])
+}
+
+model tcg_wallpaper {
+  citizenid String   @id @db.VarChar(50)
+  card_id   Int
+  tcg_card  tcg_card @relation(fields: [card_id], references: [id], onDelete: Cascade)
+}
+
+model tcg_contact {
+  id         Int      @id @default(autoincrement())
+  citizenid  String   @db.VarChar(50)
+  target_id  String   @db.VarChar(50)
+  status     String   @default("pending") @db.VarChar(20)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([citizenid, target_id])
+  @@index([target_id])
+}
+
+model tcg_profile {
+  citizenid  String   @id @db.VarChar(50)
+  username   String   @unique @db.VarChar(20)
+  created_at DateTime @default(now())
+}
+
+model tcg_trade_request {
+  id                Int       @id @default(autoincrement())
+  sender_id         String    @db.VarChar(50)
+  receiver_id       String    @db.VarChar(50)
+  requested_card_id Int
+  offer_type        String    @default("money") @db.VarChar(10)
+  offer_card_id     Int?
+  offer_amount      Int?      @default(0)
+  status            String    @default("pending") @db.VarChar(20)
+  message           String?   @db.Text
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  requested_card    tcg_card  @relation("requested_card", fields: [requested_card_id], references: [id], onDelete: Cascade)
+  offered_card      tcg_card? @relation("offered_card", fields: [offer_card_id], references: [id], onDelete: SetNull)
+
+  @@index([receiver_id])
+  @@index([sender_id])
+}
+
+model tcg_showcase {
+  id          Int      @id @default(autoincrement())
+  citizenid   String   @db.VarChar(50)
+  card_id     Int      @unique
+  description String   @default("") @db.VarChar(30)
+  created_at  DateTime @default(now())
+  tcg_card    tcg_card @relation(fields: [card_id], references: [id], onDelete: Cascade)
+
+  @@index([citizenid])
 }

@@ -42,6 +42,8 @@ import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 import { useUnreadConversationsCount } from '../../sim-card/sim.card.atom';
 import TcgApp from '../../../apps/tcg/TcgApp';
 import TcgIcon from '../../../apps/tcg/icon';
+// import IaLegalApp from '../../../apps/ia-legal/IaLegalApp';
+// import IaLegalIcon from '../../../apps/ia-legal/icon';
 
 export const useApps = () => {
     const player = usePlayer();
@@ -180,6 +182,13 @@ export const useApps = () => {
 			component: <TcgApp />,
 			position: 5,
 		},
+        // {id: 'ia-legal',
+       // nameLocale: 'IA Legal',
+       // path: '/ia-legal',
+       // icon: IaLegalIcon,
+       // component: <IaLegalApp />,
+      // position: 6,
+      //  },
         {
             id: 'taxes',
             nameLocale: 'APPS_TAX',

@@ -9,16 +9,11 @@ export const TcgCollection: React.FC = () => {
     const navigate = useNavigate();
     const { collection, loading, refresh } = useTcgCollection();
 
-    useEffect(() => {
-        refresh();
-    }, []);
+    useEffect(() => { refresh(); }, []);
 
     return (
         <>
-            <AppTitle
-                title={`Ma Collection (${collection.length})`}
-                onBackAction={() => navigate('/tcg')}
-            />
+            <AppTitle title={`Ma Collection (${collection.length})`} onBackAction={() => navigate('/tcg')} />
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-hidden">
                     {loading ? (
@@ -33,18 +28,28 @@ export const TcgCollection: React.FC = () => {
                             {collection.map(card => (
                                 <div
                                     key={card.userCardId}
-                                    className="flex flex-col items-center gap-1 cursor-pointer active:scale-95 transition-transform"
-                                    onClick={() => navigate(`/tcg/view/${card.userCardId}`, { state: card })}
+                                    className="relative flex flex-col items-center gap-1 cursor-pointer active:scale-95 transition-transform"
+                                    onClick={() => navigate(`/tcg/view/${card.userCardId}`, { state: { card, fromContact: false } })}
                                 >
+                                    {/* Showcase icon — orange, top left */}
+                                    {card.isShowcase && (
+                                        <div className="absolute top-1 left-1 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center z-10 text-[10px]">
+                                            ⭐
+                                        </div>
+                                    )}
+                                    {/* Wallpaper icon — purple, top right */}
+                                    {card.isWallpaper && (
+                                        <div className="absolute top-1 right-1 w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center z-10 text-[10px]">
+                                            🖼
+                                        </div>
+                                    )}
                                     <img
                                         src={card.image}
                                         alt={card.name}
                                         className="w-full rounded-md border border-white/10"
                                         style={{ aspectRatio: '2 / 3', objectFit: 'cover' }}
                                     />
-                                    <span className="text-[10px] text-gray-400 text-center truncate w-full">
-                                        {card.name}
-                                    </span>
+                                    <span className="text-[9px] text-gray-400 text-center truncate w-full leading-tight">{card.name}</span>
                                 </div>
                             ))}
                         </div>
