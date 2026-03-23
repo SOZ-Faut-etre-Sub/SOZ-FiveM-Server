@@ -379,9 +379,6 @@ export enum RpcServerEvent {
     PHONE_APP_TCG_REMOVE_SHOWCASE = 'soz-core:server:phone:app:tcg:remove-showcase',
 	PHONE_APP_TCG_SHOWCASE_RELAX = 'soz-core:server:phone:app:tcg:showcase-relax',
 
-	
-	PHONE_APP_IA_LEGAL_ASK_QUESTION = 'soz-core:server:phone:app:ia-legal:ask-question',
-
     LASER_GAME_GET_INFO_AS_STAFF = 'soz-core:server:phone:app:laser-game:get-info-as-staff',
     LASER_GAME_CREATE = 'soz-core:server:phone:app:laser-game:create',
     LASER_GAME_GET_DATA = 'soz-core:server:phone:app:laser-game:get-data',

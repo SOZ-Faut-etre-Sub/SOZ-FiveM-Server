@@ -17,7 +17,6 @@ import { PhoneSimCardContacts } from './phone.simcard.contacts';
 import { PhoneSimCardMessages } from './phone.simcard.messages';
 import { PhoneState } from './phone.state';
 import { PhoneAppTcgProvider } from './apps/phone.app.tcg.provider';
-import { PhoneAppIaLegalProvider } from './apps/phone.app.ia-legal.provider';    
 
 @Module({
     providers: [

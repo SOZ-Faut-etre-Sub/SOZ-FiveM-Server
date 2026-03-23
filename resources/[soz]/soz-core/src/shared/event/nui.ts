@@ -786,8 +786,6 @@ export enum NuiEvent {
     PhoneAppTcgAddShowcase = 'soz-core:nui:phone:app-tcg-add-showcase',
     PhoneAppTcgRemoveShowcase = 'soz-core:nui:phone:app-tcg-remove-showcase',
 	PhoneAppTcgShowcaseRelax = 'soz-core:nui:phone:app-tcg-showcase-relax',
-		
-	PhoneAppIaLegalAskQuestion = 'soz-core:nui:phone:app-ia-legal-ask-question',
 
     GetPlayerPosition = 'soz-core:nui:get-player-position',
     GetStreetName = 'soz-core:nui:get-street-name',
