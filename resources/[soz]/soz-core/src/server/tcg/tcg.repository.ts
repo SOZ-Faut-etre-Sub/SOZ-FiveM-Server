@@ -314,4 +314,17 @@ export class TcgRepository {
             where: { card_id: cardId },
         });
     }
+	async getPlayerCharinfo(citizenid: string): Promise<{ account: string; phone: string } | null> {
+        const player = await this.prismaService.player.findFirst({
+            where: { citizenid },
+            select: { charinfo: true },
+        });
+        if (!player?.charinfo) return null;
+        try {
+            const info = JSON.parse(player.charinfo as string);
+            return { account: info.account, phone: info.phone };
+        } catch {
+            return null;
+        }
+    }
 }

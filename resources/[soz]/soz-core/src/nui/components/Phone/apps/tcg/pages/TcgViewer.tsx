@@ -62,7 +62,7 @@ export const TcgViewer: React.FC = () => {
     };
 
     return (
-        <div className="absolute inset-0 flex flex-col items-center bg-black/92 z-50" onClick={handleBack}>
+        <div className="absolute inset-0 flex flex-col items-center bg-transparent z-50" onClick={handleBack}>
             {/* Top bar */}
             <div className="w-full flex items-center justify-between px-4 pt-12 pb-2 z-50" onClick={e => e.stopPropagation()}>
                 {!fromContact ? (
@@ -95,8 +95,7 @@ export const TcgViewer: React.FC = () => {
                 <img
                     src={card.image}
                     alt={card.name}
-                    className="max-w-full max-h-[75vh] rounded-xl"
-                    style={{ objectFit: 'contain', boxShadow: '0 0 40px rgba(185, 103, 255, 0.2), 0 0 80px rgba(0, 240, 255, 0.1)' }}
+                    className="max-w-full max-h-[75vh]"
                 />
                 <span className="mt-2 text-sm font-bold text-white text-center">{card.name}</span>
                 {message && <span className="mt-1 text-[10px] text-gray-300">{message}</span>}

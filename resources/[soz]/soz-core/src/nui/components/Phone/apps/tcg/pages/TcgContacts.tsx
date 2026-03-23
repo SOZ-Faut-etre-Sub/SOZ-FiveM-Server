@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AppContent } from '../../../components/system/AppContent';
-import { AppTitle } from '../../../components/system/AppTitle';
 import { useTcgContacts } from '../hooks/useTcg';
 
 export const TcgContacts: React.FC = () => {
@@ -27,20 +26,14 @@ export const TcgContacts: React.FC = () => {
 
     return (
         <>
-            <AppTitle title="Contacts TCG" onBackAction={() => navigate('/tcg')} />
+            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Contacts TCG</h2>
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-y-auto gap-4">
                     <div className="flex flex-col gap-2">
                         <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Ajouter un contact</span>
                         <div className="flex gap-2">
-                            <input
-                                type="text"
-                                value={targetUsername}
-                                onChange={e => setTargetUsername(e.target.value)}
-                                placeholder="Pseudo du joueur..."
-                                className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 outline-none"
-                                data-phone-input="true"
-                            />
+                            <input type="text" value={targetUsername} onChange={e => setTargetUsername(e.target.value)} placeholder="Pseudo du joueur..."
+                                className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 outline-none" data-phone-input="true" />
                             <button className="px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-semibold" onClick={handleSendRequest}>Envoyer</button>
                         </div>
                         {message && <p className="text-xs text-gray-300">{message}</p>}

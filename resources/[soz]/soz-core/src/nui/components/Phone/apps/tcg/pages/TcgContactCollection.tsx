@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { TcgContactCollectionCard, TcgCreateTradeInput } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
-import { AppTitle } from '../../../components/system/AppTitle';
 import { useTcgCollection, useTcgContactCollection, useTcgTrades } from '../hooks/useTcg';
 
 export const TcgContactCollection: React.FC = () => {
@@ -38,7 +37,7 @@ export const TcgContactCollection: React.FC = () => {
 
     return (
         <>
-            <AppTitle title="Collection" onBackAction={() => navigate('/tcg/contacts')} />
+            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Collection</h2>
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-hidden relative">
                     {loading ? (

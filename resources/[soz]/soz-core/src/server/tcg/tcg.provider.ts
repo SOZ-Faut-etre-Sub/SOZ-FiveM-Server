@@ -168,4 +168,11 @@ export class TcgProvider {
         if (!cid) return { success: false, message: 'Joueur introuvable.' };
         return this.tcgService.removeShowcase(cid, cardId);
     }
+	
+	@Rpc(RpcServerEvent.PHONE_APP_TCG_SHOWCASE_RELAX)
+    async showcaseRelax(source: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false };
+        return this.tcgService.showcaseRelax(source, cid);
+    }
 }

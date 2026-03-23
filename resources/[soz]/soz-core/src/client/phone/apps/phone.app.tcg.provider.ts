@@ -134,4 +134,10 @@ export class PhoneAppTcgProvider {
     async removeShowcase({ cardId }: { cardId: number }): Promise<TcgShowcaseResult> {
         return await emitRpc<TcgShowcaseResult>(RpcServerEvent.PHONE_APP_TCG_REMOVE_SHOWCASE, cardId);
     }
+	
+	@OnNuiEvent(NuiEvent.PhoneAppTcgShowcaseRelax)
+    async showcaseRelax(): Promise<void> {
+        await emitRpc(RpcServerEvent.PHONE_APP_TCG_SHOWCASE_RELAX);
+    }
 }
+

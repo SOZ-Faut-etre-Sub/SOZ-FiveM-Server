@@ -23,9 +23,14 @@ import {
     TcgShowcaseItem,
     TcgShowcaseResult,
 } from '../../shared/tcg/tcg.types';
+import { ClientEvent } from '../../shared/event/client';
 import { BankService } from '../bank/bank.service';
+import { PrismaService } from '../database/prisma.service';
+import { PlayerHealthProvider } from '../player/player.health.provider';
 import { PlayerService } from '../player/player.service';
 import { TcgRepository } from './tcg.repository';
+
+const TCG_PHONE_NUMBER = 'TCG-SRV';
 
 function getTodayDate(): string {
     return new Date().toISOString().slice(0, 10);
@@ -42,6 +47,92 @@ export class TcgService {
     @Inject(PlayerService)
     private playerService: PlayerService;
 
+    @Inject(PrismaService)
+    private prismaService: PrismaService;
+
+    @Inject(PlayerHealthProvider)
+    private playerHealthProvider: PlayerHealthProvider;
+
+    private showcaseRelaxCooldown: Record<string, number> = {};
+
+    private async getBankAccount(citizenid: string): Promise<string | null> {
+        const player = this.playerService.getPlayerByCitizenId(citizenid);
+        if (player) return player.charinfo.account;
+        const dbInfo = await this.repository.getPlayerCharinfo(citizenid);
+        return dbInfo?.account ?? null;
+    }
+
+    private async getPlayerPhone(citizenid: string): Promise<string | null> {
+        const player = this.playerService.getPlayerByCitizenId(citizenid);
+        if (player) return player.charinfo.phone;
+        const dbInfo = await this.repository.getPlayerCharinfo(citizenid);
+        return dbInfo?.phone ?? null;
+    }
+
+    private async sendTcgSms(citizenid: string, message: string): Promise<void> {
+        const targetPhone = await this.getPlayerPhone(citizenid);
+        if (!targetPhone) return;
+
+        const conversationId = [TCG_PHONE_NUMBER, targetPhone].sort().join('+');
+
+        // Ensure conversation exists for the recipient
+        const existingConv = await this.prismaService.phone_messages_conversations.findFirst({
+            where: {
+                conversation_id: conversationId,
+                user_identifier: targetPhone,
+            },
+        });
+
+        if (!existingConv) {
+            // Create both sides of the conversation
+            await this.prismaService.phone_messages_conversations.create({
+                data: {
+                    conversation_id: conversationId,
+                    user_identifier: targetPhone,
+                    participant_identifier: TCG_PHONE_NUMBER,
+                },
+            });
+            await this.prismaService.phone_messages_conversations.create({
+                data: {
+                    conversation_id: conversationId,
+                    user_identifier: TCG_PHONE_NUMBER,
+                    participant_identifier: targetPhone,
+                },
+            });
+        }
+
+        // Create the message
+        const createdMessage = await this.prismaService.phone_messages.create({
+            data: {
+                user_identifier: TCG_PHONE_NUMBER,
+                author: TCG_PHONE_NUMBER,
+                conversation_id: conversationId,
+                message,
+            },
+        });
+
+        // Update conversation: increment unread, unmask, update timestamp
+        await this.prismaService.phone_messages_conversations.updateMany({
+            where: {
+                conversation_id: conversationId,
+                user_identifier: targetPhone,
+            },
+            data: {
+                unread: { increment: 1 },
+                masked: false,
+                updatedAt: new Date(),
+            },
+        });
+
+        // Notify online player to refresh messages
+        const targetPlayer = this.playerService.getPlayerByCitizenId(citizenid);
+        if (targetPlayer) {
+            const messageData = { ...createdMessage, createdAt: Number(createdMessage.createdAt) };
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_MESSAGES_MESSAGE_NEW, targetPlayer.source, messageData);
+            TriggerClientEvent(ClientEvent.PHONE_SIMCARD_MESSAGES_CONVERSATION_RELOAD, targetPlayer.source);
+        }
+    }
+
     // ---- Profile ----
 
     async getProfile(citizenid: string): Promise<TcgProfileResult> {
@@ -53,7 +144,6 @@ export class TcgService {
     }
 
     async setUsername(citizenid: string, username: string): Promise<TcgProfileResult> {
-        // Validate
         if (username.length < TCG_USERNAME_MIN || username.length > TCG_USERNAME_MAX) {
             return { success: false, message: `Le pseudo doit faire entre ${TCG_USERNAME_MIN} et ${TCG_USERNAME_MAX} caractères.` };
         }
@@ -61,13 +151,11 @@ export class TcgService {
             return { success: false, message: 'Le pseudo ne peut contenir que des lettres et des chiffres.' };
         }
 
-        // Check already has profile
         const existing = await this.repository.getProfile(citizenid);
         if (existing) {
             return { success: false, message: 'Tu as déjà choisi ton pseudo.' };
         }
 
-        // Check unique
         const taken = await this.repository.getProfileByUsername(username);
         if (taken) {
             return { success: false, message: 'Ce pseudo est déjà pris.' };
@@ -124,6 +212,14 @@ export class TcgService {
 
         const newCount = claimedToday + obtainedCards.length;
         await this.repository.upsertDailyClaim(citizenid, today, newCount);
+
+        // Reduce stress on successful claim
+        if (obtainedCards.length > 0) {
+            const player = this.playerService.getPlayerByCitizenId(citizenid);
+            if (player) {
+                this.playerHealthProvider.increaseStress(player.source, -2);
+            }
+        }
 
         return {
             success: obtainedCards.length > 0,
@@ -183,7 +279,6 @@ export class TcgService {
     async getContacts(citizenid: string): Promise<TcgContact[]> {
         const contacts = await this.repository.getContacts(citizenid);
 
-        // Resolve usernames
         const allCitizenIds = new Set<string>();
         for (const c of contacts) {
             allCitizenIds.add(c.citizenid);
@@ -207,7 +302,6 @@ export class TcgService {
     }
 
     async sendContactRequest(citizenid: string, targetUsername: string): Promise<TcgContactRequest> {
-        // Resolve username to citizenid
         const targetProfile = await this.repository.getProfileByUsername(targetUsername);
         if (!targetProfile) {
             return { success: false, message: 'Joueur introuvable.' };
@@ -273,21 +367,25 @@ export class TcgService {
     // ---- Trade ----
 
     async createTrade(citizenid: string, input: TcgCreateTradeInput): Promise<TcgTradeResult> {
-        // Verify contact
         const isContact = await this.repository.isAcceptedContact(citizenid, input.receiverId);
         if (!isContact) return { success: false, message: 'Vous devez être contacts pour échanger.' };
 
-        // Verify receiver owns requested card
         const owner = await this.repository.getCardOwner(input.requestedCardId);
         if (owner !== input.receiverId) return { success: false, message: 'Ce joueur ne possède pas cette carte.' };
 
-        // Verify offer
         if (input.offerType === 'card') {
             if (!input.offerCardId) return { success: false, message: 'Aucune carte proposée.' };
             const ownsOffer = await this.repository.ownsCard(citizenid, input.offerCardId);
             if (!ownsOffer) return { success: false, message: 'Tu ne possèdes pas la carte proposée.' };
         } else if (input.offerType === 'money') {
             if (!input.offerAmount || input.offerAmount <= 0) return { success: false, message: 'Montant invalide.' };
+            const senderAccount = await this.getBankAccount(citizenid);
+            if (senderAccount) {
+                const balance = await this.bankService.getAccountMoney(senderAccount);
+                if (balance < input.offerAmount) {
+                    return { success: false, message: `Fonds insuffisants (solde : $${balance}).` };
+                }
+            }
         }
 
         await this.repository.createTradeRequest(
@@ -344,6 +442,7 @@ export class TcgService {
         }
 
         // Accept — execute the trade
+
         // 1. Verify both sides still own their cards
         const receiverOwns = await this.repository.ownsCard(trade.receiver_id, trade.requested_card_id);
         if (!receiverOwns) return { success: false, message: 'Tu ne possèdes plus cette carte.' };
@@ -353,18 +452,32 @@ export class TcgService {
             if (!senderOwns) return { success: false, message: 'L\'autre joueur ne possède plus la carte proposée.' };
         }
 
+        // Resolve usernames for SMS
+        const usernames = await this.repository.getUsernamesByCitizenIds([trade.sender_id, trade.receiver_id]);
+        const senderName = usernames[trade.sender_id] ?? trade.sender_id;
+        const receiverName = usernames[trade.receiver_id] ?? trade.receiver_id;
+
         // 2. Execute transfer
         if (trade.offer_type === 'money') {
-            // Get sender's bank account
-            const senderPlayer = this.playerService.getPlayerByCitizenId(trade.sender_id);
-            const receiverPlayer = this.playerService.getPlayerByCitizenId(trade.receiver_id);
+            const senderAccount = await this.getBankAccount(trade.sender_id);
+            const receiverAccount = await this.getBankAccount(trade.receiver_id);
 
-            if (!senderPlayer || !receiverPlayer) {
-                return { success: false, message: 'Les deux joueurs doivent être en ligne pour l\'échange.' };
+            if (!senderAccount || !receiverAccount) {
+                return { success: false, message: 'Impossible de trouver les comptes bancaires.' };
             }
 
-            const senderAccount = senderPlayer.charinfo.account;
-            const receiverAccount = receiverPlayer.charinfo.account;
+            // Check balance before transfer
+            const balance = await this.bankService.getAccountMoney(senderAccount);
+            if (balance < trade.offer_amount) {
+                await this.repository.updateTradeStatus(trade.id, 'cancelled');
+
+                await this.sendTcgSms(
+                    trade.sender_id,
+                    `Votre demande d'échange pour la carte ${trade.requested_card.name} détenue par ${receiverName} a été annulée pour provision insuffisante.`
+                );
+
+                return { success: false, message: 'L\'échange a été annulé : le demandeur n\'a plus les fonds suffisants.' };
+            }
 
             // Transfer money sender → receiver
             const transferred = await this.bankService.transferBankMoney(
@@ -373,27 +486,58 @@ export class TcgService {
                 'money',
                 trade.offer_amount,
                 false,
-                `Échange TCG - Carte ${trade.requested_card.name}`
+                `TCG Service - Carte ${trade.requested_card.name}`
             );
 
             if (!transferred) {
-                return { success: false, message: 'Fonds insuffisants pour l\'échange.' };
+                await this.repository.updateTradeStatus(trade.id, 'cancelled');
+
+                await this.sendTcgSms(
+                    trade.sender_id,
+                    `Votre demande d'échange pour la carte ${trade.requested_card.name} détenue par ${receiverName} a été annulée pour provision insuffisante.`
+                );
+
+                return { success: false, message: 'L\'échange a été annulé : le demandeur n\'a plus les fonds suffisants.' };
             }
 
             // Transfer card receiver → sender
             await this.repository.transferCard(trade.requested_card_id, trade.receiver_id, trade.sender_id);
 
-            // Invalidate wallpapers if needed
+            // Invalidate wallpapers
             await this.invalidateWallpaperIfNeeded(trade.receiver_id, trade.requested_card_id);
+
+            // SMS sender — trade accepted
+            await this.sendTcgSms(
+                trade.sender_id,
+                `Votre demande d'échange pour la carte ${trade.requested_card.name} détenue par ${receiverName} a été acceptée.`
+            );
+
+            // SMS receiver — money received
+            await this.sendTcgSms(
+                trade.receiver_id,
+                `L'échange de votre carte ${trade.requested_card.name} à ${senderName} vous a rapporté $${trade.offer_amount}.`
+            );
 
         } else if (trade.offer_type === 'card') {
             // Swap cards
             await this.repository.transferCard(trade.requested_card_id, trade.receiver_id, trade.sender_id);
             await this.repository.transferCard(trade.offer_card_id, trade.sender_id, trade.receiver_id);
 
-            // Invalidate wallpapers if needed
+            // Invalidate wallpapers
             await this.invalidateWallpaperIfNeeded(trade.receiver_id, trade.requested_card_id);
             await this.invalidateWallpaperIfNeeded(trade.sender_id, trade.offer_card_id);
+
+            // SMS sender — trade accepted
+            await this.sendTcgSms(
+                trade.sender_id,
+                `Votre demande d'échange pour la carte ${trade.requested_card.name} détenue par ${receiverName} a été acceptée.`
+            );
+
+            // SMS receiver — card received
+            await this.sendTcgSms(
+                trade.receiver_id,
+                `L'échange de votre carte ${trade.requested_card.name} à ${senderName} vous a rapporté la carte ${trade.offered_card?.name ?? 'inconnue'}.`
+            );
         }
 
         // 3. Remove showcase entries for traded cards
@@ -423,6 +567,7 @@ export class TcgService {
 
         return items.map(item => ({
             id: item.id,
+            citizenid: item.citizenid,
             cardId: item.card_id,
             cardName: item.tcg_card.name,
             cardImage: item.tcg_card.image,
@@ -433,7 +578,6 @@ export class TcgService {
     }
 
     async addShowcase(citizenid: string, cardId: number, description: string): Promise<TcgShowcaseResult> {
-        // Validate description
         if (description.length > TCG_SHOWCASE_DESC_MAX) {
             return { success: false, message: `Maximum ${TCG_SHOWCASE_DESC_MAX} caractères.` };
         }
@@ -441,17 +585,14 @@ export class TcgService {
             return { success: false, message: 'Lettres, chiffres et espaces uniquement.' };
         }
 
-        // Check ownership
         const owns = await this.repository.ownsCard(citizenid, cardId);
         if (!owns) return { success: false, message: 'Tu ne possèdes pas cette carte.' };
 
-        // Check limit
         const count = await this.repository.getShowcaseCountByPlayer(citizenid);
         if (count >= TCG_SHOWCASE_MAX) {
             return { success: false, message: `Maximum ${TCG_SHOWCASE_MAX} cartes en vitrine.` };
         }
 
-        // Check not already in showcase
         const already = await this.repository.isCardInShowcase(cardId);
         if (already) return { success: false, message: 'Cette carte est déjà en vitrine.' };
 
@@ -462,5 +603,21 @@ export class TcgService {
     async removeShowcase(citizenid: string, cardId: number): Promise<TcgShowcaseResult> {
         await this.repository.removeShowcase(citizenid, cardId);
         return { success: true, message: 'Carte retirée de la vitrine.' };
+    }
+
+    // ---- Stress relief ----
+
+    async showcaseRelax(source: number, citizenid: string): Promise<{ success: boolean }> {
+        const now = Date.now();
+        const lastUsed = this.showcaseRelaxCooldown[citizenid] ?? 0;
+        const ONE_HOUR = 60 * 60 * 1000;
+
+        if (now - lastUsed < ONE_HOUR) {
+            return { success: false };
+        }
+
+        this.showcaseRelaxCooldown[citizenid] = now;
+        this.playerHealthProvider.increaseStress(source, -2);
+        return { success: true };
     }
 }

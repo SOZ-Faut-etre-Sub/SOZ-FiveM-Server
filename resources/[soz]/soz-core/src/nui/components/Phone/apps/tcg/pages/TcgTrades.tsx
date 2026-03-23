@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { TcgTradeOffer } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
-import { AppTitle } from '../../../components/system/AppTitle';
 import { useTcgTrades } from '../hooks/useTcg';
 
 export const TcgTrades: React.FC = () => {
@@ -40,7 +39,7 @@ export const TcgTrades: React.FC = () => {
 
     return (
         <>
-            <AppTitle title="Échanges" onBackAction={() => navigate('/tcg')} />
+            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Échanges</h2>
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-y-auto gap-4">
                     {loading ? <p className="text-sm text-gray-400 text-center mt-10">Chargement...</p>

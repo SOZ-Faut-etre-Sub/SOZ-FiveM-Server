@@ -133,6 +133,7 @@ export interface TcgRespondTradeInput {
 
 export interface TcgShowcaseItem {
     id: number;
+	citizenid: string;
     cardId: number;
     cardName: string;
     cardImage: string;
