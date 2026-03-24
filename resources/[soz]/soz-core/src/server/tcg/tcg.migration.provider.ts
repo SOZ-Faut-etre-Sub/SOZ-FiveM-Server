@@ -9,7 +9,7 @@ import { PrismaService } from '../database/prisma.service';
 // Chemin vers le dossier des images TCG sur le serveur de jeu
 // À adapter si le chemin est différent sur ton environnement
 const TCG_ASSETS_DIR = path.resolve(__dirname, '../../../../../citizen/static/game/images/phone/tcg');
-const TCG_IMAGE_BASE_URL = 'http://localhost:8080/static/game/images/phone/tcg';
+const TCG_IMAGE_BASE_PATH = 'game/images/phone/tcg';
 
 @Provider()
 export class TcgMigrationProvider {
@@ -63,7 +63,7 @@ export class TcgMigrationProvider {
         const newCards: { name: string; image: string }[] = [];
 
         for (const file of files) {
-            const imageUrl = `${TCG_IMAGE_BASE_URL}/${file}`;
+            const imageUrl = `${TCG_IMAGE_BASE_PATH}/${file}`;
             if (existingImages.has(imageUrl)) continue;
 
             // Dériver le nom depuis le nom de fichier

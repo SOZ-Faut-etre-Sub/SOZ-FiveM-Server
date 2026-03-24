@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useAssetPath } from '../../../../../../hook/assets';
 import { useNavigate } from 'react-router-dom';
 
 import { NuiEvent } from '../../../../../../shared/event/nui';
@@ -11,6 +12,7 @@ export const TcgShowcase: React.FC = () => {
     const navigate = useNavigate();
     const { items, loading, refresh } = useTcgShowcase();
     const { contacts, refresh: refreshContacts, sendRequest } = useTcgContacts();
+    const { getPath } = useAssetPath();
 
     const [popup, setPopup] = useState<{ item: TcgShowcaseItem; type: 'ask' | 'message' | 'sent' | 'contact' } | null>(null);
     const [message, setMessage] = useState('');
@@ -82,7 +84,7 @@ export const TcgShowcase: React.FC = () => {
                             {items.map(item => (
                                 <div key={item.id} className="flex flex-col items-center">
                                     <img
-                                        src={item.cardImage}
+                                        src={getPath(item.cardImage)}
                                         alt={item.cardName}
                                         className="w-full rounded-xl border border-white/10"
                                         style={{ maxHeight: '55vh', objectFit: 'contain', boxShadow: '0 0 30px rgba(255, 140, 50, 0.15), 0 0 60px rgba(255, 80, 150, 0.1)' }}

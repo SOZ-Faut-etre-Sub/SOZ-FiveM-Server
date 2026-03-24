@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import { AppContainer } from '../../components/system/AppContainer';
+import { useAssetPath } from '../../../../hook/assets';
 import { useTcgContacts, useTcgProfile } from './hooks/useTcg';
 import { TcgCollection } from './pages/TcgCollection';
 import { TcgContactCollection } from './pages/TcgContactCollection';
@@ -12,12 +13,11 @@ import { TcgShowcase } from './pages/TcgShowcase';
 import { TcgTrades } from './pages/TcgTrades';
 import { TcgViewer } from './pages/TcgViewer';
 
-const TCG_LOGO = 'http://localhost:8080/static/game/images/society/tcg.webp';
-
 const TcgHeader: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { contacts, refresh } = useTcgContacts();
+    const { getPath } = useAssetPath();
 
     useEffect(() => { refresh(); }, []);
 
@@ -33,7 +33,7 @@ const TcgHeader: React.FC = () => {
     return (
         <div className="flex items-center justify-between px-4 pt-1 pb-1">
             {/* Logo TCG — left */}
-            <img src={TCG_LOGO} alt="TCG" className="h-14 object-contain" />
+            <img src={getPath('images/society/tcg.webp')} alt="TCG" className="h-14 object-contain" />
 
             {/* Center — back button on sub-pages, empty on home */}
             {isHome ? (

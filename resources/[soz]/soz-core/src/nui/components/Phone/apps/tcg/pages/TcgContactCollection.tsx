@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAssetPath } from '../../../../../../hook/assets';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { TcgContactCollectionCard, TcgCreateTradeInput } from '../../../../../../shared/tcg/tcg.types';
@@ -12,6 +13,7 @@ export const TcgContactCollection: React.FC = () => {
     const { collection: contactCards, loading, fetch } = useTcgContactCollection();
     const { collection: myCards, refresh: refreshMyCards } = useTcgCollection();
     const { createTrade } = useTcgTrades();
+    const { getPath } = useAssetPath();
 
     const [tradeCard, setTradeCard] = useState<TcgContactCollectionCard | null>(null);
     const [offerType, setOfferType] = useState<'money' | 'card'>('money');
@@ -95,7 +97,7 @@ export const TcgContactCollection: React.FC = () => {
                         <div className="grid grid-cols-2 gap-3 overflow-y-auto flex-1 pb-4">
                             {contactCards.map(card => (
                                 <div key={card.cardId} className="flex flex-col items-center gap-1">
-                                    <img src={card.image} alt={card.name} className="w-full rounded-md border border-white/10 cursor-pointer active:scale-95 transition-transform" style={{ aspectRatio: '936 / 2000', objectFit: 'cover' }}
+                                    <img src={getPath(card.image)} alt={card.name} className="w-full rounded-md border border-white/10 cursor-pointer active:scale-95 transition-transform" style={{ aspectRatio: '936 / 2000', objectFit: 'cover' }}
                                         onClick={() => navigate(`/tcg/view/${card.cardId}`, { state: { card: { userCardId: 0, cardId: card.cardId, name: card.name, image: card.image, obtainedAt: card.obtainedAt, isWallpaper: false, isShowcase: false }, fromContact: true } })} />
                                     <span className="text-[9px] text-gray-400 text-center truncate w-full">{card.name}</span>
                                     <button className="w-full py-1.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-semibold"
@@ -136,7 +138,7 @@ export const TcgContactCollection: React.FC = () => {
                                                         return (
                                                             <button key={c.cardId} className={`flex items-center gap-2 p-2 rounded-lg border text-left transition-colors ${selected ? 'bg-purple-500/20 border-purple-500/40' : 'bg-white/5 border-white/10'}`} onClick={() => toggleCardSelection(c.cardId)}>
                                                                 <div className="relative flex-shrink-0">
-                                                                    <img src={c.image} alt={c.name} className="w-8 rounded object-cover" style={{ aspectRatio: '936 / 2000' }} />
+                                                                    <img src={getPath(c.image)} alt={c.name} className="w-8 rounded object-cover" style={{ aspectRatio: '936 / 2000' }} />
                                                                     {selected && (
                                                                         <div className="absolute inset-0 flex items-center justify-center bg-purple-500/40 rounded">
                                                                             <span className="text-white text-xs font-bold">✓</span>

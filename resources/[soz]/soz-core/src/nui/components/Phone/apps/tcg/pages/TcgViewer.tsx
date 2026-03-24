@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAssetPath } from '../../../../../../hook/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TCG_SHOWCASE_DESC_MAX, TcgCollectionCard } from '../../../../../../shared/tcg/tcg.types';
@@ -16,6 +17,7 @@ export const TcgViewer: React.FC = () => {
     const { addShowcase, removeShowcase } = useTcgShowcase();
     const { handleSettingChange } = useSettingsChange();
     const [message, setMessage] = useState<string | null>(null);
+    const { getPath } = useAssetPath();
 
     // Showcase popup
     const [showExposePopup, setShowExposePopup] = useState(false);
@@ -93,7 +95,7 @@ export const TcgViewer: React.FC = () => {
             {/* Card image + name */}
             <div className="flex-1 flex flex-col items-center justify-center px-4" onClick={e => e.stopPropagation()}>
                 <img
-                    src={card.image}
+                    src={getPath(card.image)}
                     alt={card.name}
                     className="max-w-full max-h-[75vh]"
                 />

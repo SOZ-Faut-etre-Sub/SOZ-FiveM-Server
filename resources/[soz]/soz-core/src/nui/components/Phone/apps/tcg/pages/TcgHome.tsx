@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useAssetPath } from '../../../../../../hook/assets';
 import { useNavigate } from 'react-router-dom';
 
 import { TcgCardData } from '../../../../../../shared/tcg/tcg.types';
@@ -14,6 +15,7 @@ export const TcgHome: React.FC<Props> = ({ username }) => {
     const { status, loading: statusLoading, refresh } = useTcgDailyStatus();
     const { loading: claimLoading, claim } = useTcgClaim();
     const { trades, refresh: refreshTrades } = useTcgTrades();
+    const { getPath } = useAssetPath();
     const [obtained, setObtained] = useState<TcgCardData[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -77,7 +79,7 @@ export const TcgHome: React.FC<Props> = ({ username }) => {
                         <div className="flex justify-center gap-3 flex-wrap">
                             {obtained.map((card, i) => (
                                 <div key={i} className="flex flex-col items-center gap-1">
-                                    <img src={card.image} alt={card.name} className="w-[110px] object-cover rounded-lg border-2 border-purple-400/50" style={{ aspectRatio: '936 / 2000', boxShadow: '0 4px 20px rgba(185, 103, 255, 0.3)' }} />
+                                    <img src={getPath(card.image)} alt={card.name} className="w-[110px] object-cover rounded-lg border-2 border-purple-400/50" style={{ aspectRatio: '936 / 2000', boxShadow: '0 4px 20px rgba(185, 103, 255, 0.3)' }} />
                                     <span className="text-[11px] text-gray-300">{card.name}</span>
                                 </div>
                             ))}

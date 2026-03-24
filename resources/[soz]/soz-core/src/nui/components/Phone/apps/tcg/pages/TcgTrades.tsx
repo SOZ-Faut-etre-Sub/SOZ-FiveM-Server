@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useAssetPath } from '../../../../../../hook/assets';
 import { useNavigate } from 'react-router-dom';
 
 import { TcgTradeOffer } from '../../../../../../shared/tcg/tcg.types';
@@ -19,6 +20,7 @@ const GROUP_COLORS = [
 export const TcgTrades: React.FC = () => {
     const navigate = useNavigate();
     const { trades, loading, refresh, respondTrade, cancelTrade } = useTcgTrades();
+    const { getPath } = useAssetPath();
     const [refuseTarget, setRefuseTarget] = useState<number | null>(null);
     const [refuseMessage, setRefuseMessage] = useState('');
     const [actionMessage, setActionMessage] = useState<Record<number, string>>({});
@@ -81,7 +83,7 @@ export const TcgTrades: React.FC = () => {
         if (trade.offerCardName) return (
             <div className="flex flex-col items-center cursor-pointer active:scale-95 transition-transform"
                 onClick={() => openViewer(trade.offerCardId!, trade.offerCardName!, trade.offerCardImage!)}>
-                {trade.offerCardImage && <img src={trade.offerCardImage} alt="" className="w-12 rounded object-cover border border-purple-500/30" style={{ aspectRatio: '936 / 2000' }} />}
+                {trade.offerCardImage && <img src={getPath(trade.offerCardImage)} alt="" className="w-12 rounded object-cover border border-purple-500/30" style={{ aspectRatio: '936 / 2000' }} />}
                 <span className="text-purple-300 text-[8px] mt-0.5 truncate max-w-[60px]">{trade.offerCardName}</span>
                 <span className="text-[8px] text-gray-500">offert</span>
             </div>
@@ -119,7 +121,7 @@ export const TcgTrades: React.FC = () => {
                                     {/* Carte demandée — cliquable */}
                                     <div className="flex flex-col items-center cursor-pointer active:scale-95 transition-transform"
                                         onClick={() => openViewer(trade.requestedCardId, trade.requestedCardName, trade.requestedCardImage)}>
-                                        <img src={trade.requestedCardImage} alt="" className="w-12 rounded object-cover border border-amber-500/30" style={{ aspectRatio: '936 / 2000' }} />
+                                        <img src={getPath(trade.requestedCardImage)} alt="" className="w-12 rounded object-cover border border-amber-500/30" style={{ aspectRatio: '936 / 2000' }} />
                                         <span className="text-[8px] text-amber-300 mt-0.5 truncate max-w-[60px]">{trade.requestedCardName}</span>
                                         <span className="text-[8px] text-gray-500">demandée</span>
                                     </div>
