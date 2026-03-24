@@ -140,4 +140,10 @@ export const societyContacts: SocietyContact[] = [
         avatar: 'casino.webp',
         type: 'private',
     },
+	{
+        display: 'TCG Service',
+        number: '555-TCG',
+        avatar: 'tcg.webp',
+        type: 'private',
+    },
 ];

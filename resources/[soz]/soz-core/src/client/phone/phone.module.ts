@@ -16,6 +16,7 @@ import { PhoneSimCardCalls } from './phone.simcard.calls';
 import { PhoneSimCardContacts } from './phone.simcard.contacts';
 import { PhoneSimCardMessages } from './phone.simcard.messages';
 import { PhoneState } from './phone.state';
+import { PhoneAppTcgProvider } from './apps/phone.app.tcg.provider';
 
 @Module({
     providers: [
@@ -37,6 +38,7 @@ import { PhoneState } from './phone.state';
         PhoneAppTetrisProvider,
         PhoneAppSnakeProvider,
         PhoneAppWeatherProvider,
+		PhoneAppTcgProvider,
     ],
 })
 export class PhoneModule {}

@@ -40,6 +40,8 @@ import ZutomIcon from '../../../apps/zutom/icon';
 import { ZutomApp } from '../../../apps/zutom/ZutomApp';
 import { useSocietySimCard } from '../../sim-card/hooks/useSocietySimCard';
 import { useUnreadConversationsCount } from '../../sim-card/sim.card.atom';
+import TcgApp from '../../../apps/tcg/TcgApp';
+import TcgIcon from '../../../apps/tcg/icon';
 
 export const useApps = () => {
     const player = usePlayer();
@@ -170,6 +172,14 @@ export const useApps = () => {
             component: <WeatherApp />,
             position: 4,
         },
+		{
+			id: 'tcg',
+			nameLocale: 'TCG',
+			path: '/tcg',
+			icon: TcgIcon,
+			component: <TcgApp />,
+			position: 5,
+		},
         {
             id: 'taxes',
             nameLocale: 'APPS_TAX',

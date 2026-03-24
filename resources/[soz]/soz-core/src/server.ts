@@ -66,6 +66,7 @@ import { VoipModule } from './server/voip/voip.module';
 import { WeaponModule } from './server/weapon/weapon.module';
 import { WeatherModule } from './server/weather/weather.module';
 import { WorldModule } from './server/world/world.module';
+import { TcgModule } from './server/tcg/tcg.module';
 
 async function bootstrap() {
     setServiceInstance('Store', store);
@@ -133,6 +134,7 @@ async function bootstrap() {
         SceneModule,
         WorldModule,
         FeatureModule,
+		TcgModule,
         PhoneModule,
         GamesModule,
         CameraModule,
