@@ -71,6 +71,7 @@ export interface TcgContact {
     status: TcgContactStatus;
     isSender: boolean;
     createdAt: string;
+    message?: string;
 }
 
 export interface TcgContactRequest {
@@ -108,6 +109,7 @@ export interface TcgTradeOffer {
     status: TcgTradeStatus;
     message: string | null;
     createdAt: string;
+    isReceiver: boolean;
 }
 
 export interface TcgTradeResult {

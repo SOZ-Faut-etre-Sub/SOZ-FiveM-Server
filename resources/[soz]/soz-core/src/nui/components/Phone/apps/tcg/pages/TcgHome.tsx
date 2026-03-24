@@ -77,7 +77,7 @@ export const TcgHome: React.FC<Props> = ({ username }) => {
                         <div className="flex justify-center gap-3 flex-wrap">
                             {obtained.map((card, i) => (
                                 <div key={i} className="flex flex-col items-center gap-1">
-                                    <img src={card.image} alt={card.name} className="w-[110px] h-[165px] object-cover rounded-lg border-2 border-purple-400/50" style={{ boxShadow: '0 4px 20px rgba(185, 103, 255, 0.3)' }} />
+                                    <img src={card.image} alt={card.name} className="w-[110px] object-cover rounded-lg border-2 border-purple-400/50" style={{ aspectRatio: '936 / 2000', boxShadow: '0 4px 20px rgba(185, 103, 255, 0.3)' }} />
                                     <span className="text-[11px] text-gray-300">{card.name}</span>
                                 </div>
                             ))}

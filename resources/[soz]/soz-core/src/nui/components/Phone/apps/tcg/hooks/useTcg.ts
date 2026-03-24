@@ -169,9 +169,9 @@ export function useTcgContacts() {
         }
     }, []);
 
-    const sendRequest = useCallback(async (targetUsername: string): Promise<TcgContactRequest | null> => {
+    const sendRequest = useCallback(async (targetUsername: string, message?: string): Promise<TcgContactRequest | null> => {
         try {
-            return await fetchNui<{ targetUsername: string }, TcgContactRequest>(NuiEvent.PhoneAppTcgSendContactRequest, { targetUsername });
+            return await fetchNui<{ targetUsername: string; message?: string }, TcgContactRequest>(NuiEvent.PhoneAppTcgSendContactRequest, { targetUsername, message });
         } catch (e) {
             return null;
         }
@@ -259,7 +259,15 @@ export function useTcgTrades() {
         }
     }, []);
 
-    return { trades, loading, refresh, createTrade, respondTrade };
+    const cancelTrade = useCallback(async (tradeId: number): Promise<TcgTradeResult | null> => {
+        try {
+            return await fetchNui<{ tradeId: number }, TcgTradeResult>(NuiEvent.PhoneAppTcgCancelTrade, { tradeId });
+        } catch (e) {
+            return null;
+        }
+    }, []);
+
+    return { trades, loading, refresh, createTrade, respondTrade, cancelTrade };
 }
 
 // ---- Showcase ----

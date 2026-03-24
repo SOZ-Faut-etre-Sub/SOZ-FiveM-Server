@@ -30,7 +30,7 @@ import { PlayerHealthProvider } from '../player/player.health.provider';
 import { PlayerService } from '../player/player.service';
 import { TcgRepository } from './tcg.repository';
 
-const TCG_PHONE_NUMBER = 'TCG-SRV';
+const TCG_PHONE_NUMBER = '555-TCG';
 
 function getTodayDate(): string {
     return new Date().toISOString().slice(0, 10);
@@ -99,6 +99,23 @@ export class TcgService {
                     participant_identifier: targetPhone,
                 },
             });
+
+            // Créer le contact TCG dans le téléphone du joueur s'il n'existe pas
+            const existingContact = await this.prismaService.phone_contacts.findFirst({
+                where: {
+                    identifier: citizenid,
+                    number: TCG_PHONE_NUMBER,
+                },
+            });
+            if (!existingContact) {
+                await this.prismaService.phone_contacts.create({
+                    data: {
+                        identifier: citizenid,
+                        display: 'TCG',
+                        number: TCG_PHONE_NUMBER,
+                    },
+                });
+            }
         }
 
         // Create the message
@@ -297,11 +314,12 @@ export class TcgService {
                 status: c.status as TcgContact['status'],
                 isSender,
                 createdAt: c.created_at.toISOString(),
+                message: c.message ?? undefined,
             };
         });
     }
 
-    async sendContactRequest(citizenid: string, targetUsername: string): Promise<TcgContactRequest> {
+    async sendContactRequest(citizenid: string, targetUsername: string, message?: string): Promise<TcgContactRequest> {
         const targetProfile = await this.repository.getProfileByUsername(targetUsername);
         if (!targetProfile) {
             return { success: false, message: 'Joueur introuvable.' };
@@ -320,7 +338,7 @@ export class TcgService {
             await this.repository.deleteContact(existing.id);
         }
 
-        await this.repository.createContactRequest(citizenid, targetId);
+        await this.repository.createContactRequest(citizenid, targetId, message);
         return { success: true };
     }
 
@@ -427,6 +445,7 @@ export class TcgService {
             status: t.status as TcgTradeOffer['status'],
             message: t.message,
             createdAt: t.created_at.toISOString(),
+            isReceiver: t.receiver_id === citizenid,
         }));
     }
 
@@ -619,5 +638,15 @@ export class TcgService {
         this.showcaseRelaxCooldown[citizenid] = now;
         this.playerHealthProvider.increaseStress(source, -2);
         return { success: true };
+    }
+
+    async cancelTrade(citizenid: string, tradeId: number): Promise<TcgTradeResult> {
+        const trade = await this.repository.getTradeById(tradeId);
+        if (!trade) return { success: false, message: 'Échange introuvable.' };
+        if (trade.sender_id !== citizenid) return { success: false, message: 'Tu n\'es pas l\'expéditeur.' };
+        if (trade.status !== 'pending') return { success: false, message: 'Cet échange n\'est plus en attente.' };
+
+        await this.repository.updateTradeStatus(tradeId, 'cancelled');
+        return { success: true, message: 'Échange annulé.' };
     }
 }

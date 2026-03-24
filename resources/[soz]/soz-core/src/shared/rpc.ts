@@ -374,10 +374,14 @@ export enum RpcServerEvent {
     PHONE_APP_TCG_CREATE_TRADE = 'soz-core:server:phone:app:tcg:create-trade',
     PHONE_APP_TCG_GET_TRADES = 'soz-core:server:phone:app:tcg:get-trades',
     PHONE_APP_TCG_RESPOND_TRADE = 'soz-core:server:phone:app:tcg:respond-trade',
+    PHONE_APP_TCG_CANCEL_TRADE = 'soz-core:server:phone:app:tcg:cancel-trade',
     PHONE_APP_TCG_GET_SHOWCASE = 'soz-core:server:phone:app:tcg:get-showcase',
     PHONE_APP_TCG_ADD_SHOWCASE = 'soz-core:server:phone:app:tcg:add-showcase',
     PHONE_APP_TCG_REMOVE_SHOWCASE = 'soz-core:server:phone:app:tcg:remove-showcase',
 	PHONE_APP_TCG_SHOWCASE_RELAX = 'soz-core:server:phone:app:tcg:showcase-relax',
+
+	
+	PHONE_APP_IA_LEGAL_ASK_QUESTION = 'soz-core:server:phone:app:ia-legal:ask-question',
 
     LASER_GAME_GET_INFO_AS_STAFF = 'soz-core:server:phone:app:laser-game:get-info-as-staff',
     LASER_GAME_CREATE = 'soz-core:server:phone:app:laser-game:create',

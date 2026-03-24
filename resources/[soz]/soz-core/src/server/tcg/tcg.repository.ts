@@ -179,9 +179,9 @@ export class TcgRepository {
         });
     }
 
-    async createContactRequest(citizenid: string, targetId: string) {
+    async createContactRequest(citizenid: string, targetId: string, message?: string) {
         return this.prismaService.tcg_contact.create({
-            data: { citizenid, target_id: targetId, status: 'pending' },
+            data: { citizenid, target_id: targetId, status: 'pending', message: message ?? null },
         });
     }
 

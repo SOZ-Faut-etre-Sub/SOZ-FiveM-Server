@@ -782,10 +782,13 @@ export enum NuiEvent {
     PhoneAppTcgCreateTrade = 'soz-core:nui:phone:app-tcg-create-trade',
     PhoneAppTcgGetTrades = 'soz-core:nui:phone:app-tcg-get-trades',
     PhoneAppTcgRespondTrade = 'soz-core:nui:phone:app-tcg-respond-trade',
+    PhoneAppTcgCancelTrade = 'soz-core:nui:phone:app-tcg-cancel-trade',
     PhoneAppTcgGetShowcase = 'soz-core:nui:phone:app-tcg-get-showcase',
     PhoneAppTcgAddShowcase = 'soz-core:nui:phone:app-tcg-add-showcase',
     PhoneAppTcgRemoveShowcase = 'soz-core:nui:phone:app-tcg-remove-showcase',
 	PhoneAppTcgShowcaseRelax = 'soz-core:nui:phone:app-tcg-showcase-relax',
+		
+	PhoneAppIaLegalAskQuestion = 'soz-core:nui:phone:app-ia-legal-ask-question',
 
     GetPlayerPosition = 'soz-core:nui:get-player-position',
     GetStreetName = 'soz-core:nui:get-street-name',

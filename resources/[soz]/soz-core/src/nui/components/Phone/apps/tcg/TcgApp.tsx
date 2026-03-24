@@ -12,7 +12,7 @@ import { TcgShowcase } from './pages/TcgShowcase';
 import { TcgTrades } from './pages/TcgTrades';
 import { TcgViewer } from './pages/TcgViewer';
 
-const TCG_LOGO = 'http://localhost:8080/static/game/images/phone/apps/tcg/LogoSMS.webp';
+const TCG_LOGO = 'http://localhost:8080/static/game/images/society/tcg.webp';
 
 const TcgHeader: React.FC = () => {
     const navigate = useNavigate();

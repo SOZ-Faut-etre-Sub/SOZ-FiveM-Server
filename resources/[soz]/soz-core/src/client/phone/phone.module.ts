@@ -39,7 +39,6 @@ import { PhoneAppTcgProvider } from './apps/phone.app.tcg.provider';
         PhoneAppSnakeProvider,
         PhoneAppWeatherProvider,
 		PhoneAppTcgProvider,
-		PhoneAppIaLegalProvider,
     ],
 })
 export class PhoneModule {}

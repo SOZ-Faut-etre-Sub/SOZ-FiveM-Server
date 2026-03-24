@@ -180,7 +180,6 @@ export const useApps = () => {
 			component: <TcgApp />,
 			position: 5,
 		},
-
         {
             id: 'taxes',
             nameLocale: 'APPS_TAX',

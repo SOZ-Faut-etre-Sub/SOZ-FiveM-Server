@@ -77,8 +77,8 @@ export class PhoneAppTcgProvider {
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppTcgSendContactRequest)
-    async sendContactRequest({ targetUsername }: { targetUsername: string }): Promise<TcgContactRequest> {
-        return await emitRpc<TcgContactRequest>(RpcServerEvent.PHONE_APP_TCG_SEND_CONTACT_REQUEST, targetUsername);
+    async sendContactRequest({ targetUsername, message }: { targetUsername: string; message?: string }): Promise<TcgContactRequest> {
+        return await emitRpc<TcgContactRequest>(RpcServerEvent.PHONE_APP_TCG_SEND_CONTACT_REQUEST, targetUsername, message);
     }
 
     @OnNuiEvent(NuiEvent.PhoneAppTcgAcceptContact)
@@ -116,6 +116,11 @@ export class PhoneAppTcgProvider {
     @OnNuiEvent(NuiEvent.PhoneAppTcgRespondTrade)
     async respondTrade(input: TcgRespondTradeInput): Promise<TcgTradeResult> {
         return await emitRpc<TcgTradeResult>(RpcServerEvent.PHONE_APP_TCG_RESPOND_TRADE, input);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgCancelTrade)
+    async cancelTrade({ tradeId }: { tradeId: number }): Promise<TcgTradeResult> {
+        return await emitRpc<TcgTradeResult>(RpcServerEvent.PHONE_APP_TCG_CANCEL_TRADE, tradeId);
     }
 
     // ---- Showcase ----

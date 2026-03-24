@@ -1221,6 +1221,7 @@ model tcg_contact {
   citizenid  String   @db.VarChar(50)
   target_id  String   @db.VarChar(50)
   status     String   @default("pending") @db.VarChar(20)
+  message    String?  @db.VarChar(50)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

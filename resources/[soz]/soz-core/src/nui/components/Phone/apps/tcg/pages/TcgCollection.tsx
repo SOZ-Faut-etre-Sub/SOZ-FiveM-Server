@@ -36,7 +36,7 @@ export const TcgCollection: React.FC = () => {
                                     {card.isWallpaper && (
                                         <div className="absolute top-1 right-1 w-5 h-5 bg-purple-500 rounded-full flex items-center justify-center z-10 text-[10px]">🖼</div>
                                     )}
-                                    <img src={card.image} alt={card.name} className="w-full rounded-md border border-white/10" style={{ aspectRatio: '2 / 3', objectFit: 'cover' }} />
+                                    <img src={card.image} alt={card.name} className="w-full rounded-md border border-white/10" style={{ aspectRatio: '936 / 2000', objectFit: 'cover' }} />
                                     <span className="text-[9px] text-gray-400 text-center truncate w-full leading-tight">{card.name}</span>
                                 </div>
                             ))}

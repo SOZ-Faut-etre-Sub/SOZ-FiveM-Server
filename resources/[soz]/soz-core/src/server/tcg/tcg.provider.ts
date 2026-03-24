@@ -91,10 +91,10 @@ export class TcgProvider {
     }
 
     @Rpc(RpcServerEvent.PHONE_APP_TCG_SEND_CONTACT_REQUEST)
-    async sendContactRequest(source: number, targetUsername: string) {
+    async sendContactRequest(source: number, targetUsername: string, message?: string) {
         const cid = this.getCitizenId(source);
         if (!cid) return { success: false, message: 'Joueur introuvable.' };
-        return this.tcgService.sendContactRequest(cid, targetUsername);
+        return this.tcgService.sendContactRequest(cid, targetUsername, message);
     }
 
     @Rpc(RpcServerEvent.PHONE_APP_TCG_ACCEPT_CONTACT)
@@ -146,6 +146,13 @@ export class TcgProvider {
         const cid = this.getCitizenId(source);
         if (!cid) return { success: false, message: 'Joueur introuvable.' };
         return this.tcgService.respondTrade(cid, input);
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_CANCEL_TRADE)
+    async cancelTrade(source: number, tradeId: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, message: 'Joueur introuvable.' };
+        return this.tcgService.cancelTrade(cid, tradeId);
     }
 
     // ---- Showcase ----
