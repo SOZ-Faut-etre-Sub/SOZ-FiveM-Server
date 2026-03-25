@@ -8,8 +8,6 @@ Fork Initial : SOZ-FiveM-Server ft dAIly
 
 Nouvelle application téléphone permettant aux joueurs de collectionner, échanger et exposer des cartes uniques directement depuis leur téléphone in-game.
 
-⚠️- Actuellement +1000 cartes disponibles généré aléatoirement (à l'aide d'une database de prompt détaillé à la fin) par workflow ComfyUI utilisant un LoRA entrainé par mes soins (exemples à la suite). 
-
 ---
 
 ## 🖼️ Fonctionnalités actuelles 
@@ -114,28 +112,3 @@ Nouvelle application téléphone permettant aux joueurs de collectionner, échan
 - Dynamique de marché :
   - Plus libre, potentiellement plus volatile
   - Encourage la spéculation et le trading actif
-
- ## 🎰 Prompt 
-Le prompting est réalisé via un nœud custom crée par mes soins pour ComfyUI, qui vient se servir dans un .csv et sélectionné aléatoirement (enfaite c'est définie par une seed, donc par exemple le nombre 1000 donnera systématiquement le même prompt tant que le csv est inchangé) une valeur par colonne choisis. 
-Sur une RTX 4080 la vitesse de génération est de 3img/min. Le post traitement (redimensionnement pour coller au format du phone, ajout du cadre et logo, conversion en .webp) n'a pas été mesuré mais est négligeable.
-
-Pour ce projet TCG j'utilise ce type de variable : 
-
-- [Ethnie] par exemple : Korean, East African, Easter European ,etc ... (Aucune n'est exclue)
-- [Genre + Coupe de cheveux] : man with short dreadlocks hairstyle, woman with Long hairstyle, etc ... (Le fait que le nombre de coupe de cheveux féminine est nettement supérieur, le pourcentage d'homme sortie est nettement inférieur actuellement)
-- [Physionomie] : slim body, fit body, curvy body, etc ... (Aucun n'est exclu)
-- [Couleur d'yeux] : Ici sont utilisés de nombreuses couleurs "peu réaliste" tel que heterochromia pink and purple eyes, ainsi que les couleurs "plus conventionnelles" 
-- [Couleur de cheveux] : Similaires au yeux, de nombreuses couleurs "peu conventionnelles" sont présentes
-- [Pose] : Peu de variation de pose afin de garder l'esprit "Portrait" et limité les erreurs
-- [Expression Faciale] : Peu de variation d'expressions afin de garder l'esprit "Portrait" et limité les erreurs
-- [Archétype] : Des "archétypes" ont compilés spécialement pour le projet afin de garder une cohérence dans le portrait, tel que : wearing a hoodie and sneakers, standing in a dim urban alley, wearing a hotel staff uniform, standing in a luxurious lobby, etc....
-- [Bonus] : Ajout de 20% de chance pour un bonus au hasard : ange/démon/elf/catears/foxears/wolfears parceque UwU
-
-Actuellement les prompts sont sauvegardé sur un fichier text et sur un discord perso : il est possible de connecter la sortie du workflow a un webhook discord qui transmet toute les images généré avec les infos souhaité dans un channel.
-En cas de souhait de vouloir implanté un système de rareté/note de carte qui serait définit par des membres de la communauté, ou de les nommé/catégorisé, ca rend la tache de partage automatique.
-
-Exemples de cartes : 
-
-![963](https://github.com/user-attachments/assets/49834b6b-61a5-4424-aabc-b09dfbf81a8b)
-![1101](https://github.com/user-attachments/assets/3a01c694-31b4-447b-b261-4a3ea603c988)
-![127](https://github.com/user-attachments/assets/bdcfccdf-6064-4cda-9591-0162e6f3a031)
