@@ -11,7 +11,6 @@ import {
     TcgDailyStatus,
     TcgClaimResult,
     TcgCollectionCard,
-    TcgWallpaperResult,
     TcgContact,
     TcgContactRequest,
     TcgContactCollectionCard,
@@ -250,7 +249,6 @@ export class TcgService {
 
     async getCollection(citizenid: string): Promise<TcgCollectionCard[]> {
         const userCards = await this.repository.getCollection(citizenid);
-        const wallpaper = await this.repository.getWallpaper(citizenid);
         const showcaseItems = await this.repository.getShowcaseByPlayer(citizenid);
         const showcaseCardIds = new Set(showcaseItems.map(s => s.card_id));
 
@@ -260,35 +258,8 @@ export class TcgService {
             name: uc.tcg_card.name,
             image: uc.tcg_card.image,
             obtainedAt: uc.obtained_at.toISOString(),
-            isWallpaper: wallpaper?.card_id === uc.card_id,
             isShowcase: showcaseCardIds.has(uc.card_id),
         }));
-    }
-
-    // ---- Wallpaper ----
-
-    async getWallpaper(citizenid: string): Promise<TcgWallpaperResult> {
-        const wp = await this.repository.getWallpaper(citizenid);
-        if (!wp) return { success: false };
-        return { success: true, image: wp.tcg_card.image };
-    }
-
-    async setWallpaper(citizenid: string, cardId: number): Promise<TcgWallpaperResult> {
-        const owns = await this.repository.ownsCard(citizenid, cardId);
-        if (!owns) return { success: false, message: 'Tu ne possèdes pas cette carte.' };
-
-        const card = (await this.repository.getCollection(citizenid)).find(uc => uc.card_id === cardId);
-        await this.repository.setWallpaper(citizenid, cardId);
-        return { success: true, image: card?.tcg_card.image };
-    }
-
-    async removeWallpaper(citizenid: string): Promise<TcgWallpaperResult> {
-        await this.repository.removeWallpaper(citizenid);
-        return { success: true };
-    }
-
-    async invalidateWallpaperIfNeeded(citizenid: string, cardId: number): Promise<void> {
-        await this.repository.removeWallpaperIfCard(citizenid, cardId);
     }
 
     // ---- Contacts ----
@@ -522,9 +493,6 @@ export class TcgService {
             // Transfer card receiver → sender
             await this.repository.transferCard(trade.requested_card_id, trade.receiver_id, trade.sender_id);
 
-            // Invalidate wallpapers
-            await this.invalidateWallpaperIfNeeded(trade.receiver_id, trade.requested_card_id);
-
             // SMS sender — trade accepted
             await this.sendTcgSms(
                 trade.sender_id,
@@ -541,10 +509,6 @@ export class TcgService {
             // Swap cards
             await this.repository.transferCard(trade.requested_card_id, trade.receiver_id, trade.sender_id);
             await this.repository.transferCard(trade.offer_card_id, trade.sender_id, trade.receiver_id);
-
-            // Invalidate wallpapers
-            await this.invalidateWallpaperIfNeeded(trade.receiver_id, trade.requested_card_id);
-            await this.invalidateWallpaperIfNeeded(trade.sender_id, trade.offer_card_id);
 
             // SMS sender — trade accepted
             await this.sendTcgSms(

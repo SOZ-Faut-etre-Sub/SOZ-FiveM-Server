@@ -83,19 +83,6 @@ export class TcgMigrationProvider {
             console.log('[TCG Migration] Table tcg_daily_claim créée');
         }
 
-        // 4. tcg_wallpaper
-        if (!existing.has('tcg_wallpaper')) {
-            await this.prismaService.$executeRawUnsafe(`
-                CREATE TABLE tcg_wallpaper (
-                    citizenid VARCHAR(50) NOT NULL,
-                    card_id INT NOT NULL,
-                    PRIMARY KEY (citizenid),
-                    CONSTRAINT tcg_wallpaper_card_id_fkey FOREIGN KEY (card_id) REFERENCES tcg_card (id) ON DELETE CASCADE ON UPDATE CASCADE
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-            `);
-            console.log('[TCG Migration] Table tcg_wallpaper créée');
-        }
-
         // 5. tcg_contact
         if (!existing.has('tcg_contact')) {
             await this.prismaService.$executeRawUnsafe(`

@@ -128,35 +128,6 @@ export class TcgRepository {
         return map;
     }
 
-    // ---- Wallpaper ----
-
-    async getWallpaper(citizenid: string) {
-        return this.prismaService.tcg_wallpaper.findUnique({
-            where: { citizenid },
-            include: { tcg_card: true },
-        });
-    }
-
-    async setWallpaper(citizenid: string, cardId: number) {
-        return this.prismaService.tcg_wallpaper.upsert({
-            where: { citizenid },
-            update: { card_id: cardId },
-            create: { citizenid, card_id: cardId },
-        });
-    }
-
-    async removeWallpaper(citizenid: string) {
-        return this.prismaService.tcg_wallpaper.deleteMany({
-            where: { citizenid },
-        });
-    }
-
-    async removeWallpaperIfCard(citizenid: string, cardId: number) {
-        return this.prismaService.tcg_wallpaper.deleteMany({
-            where: { citizenid, card_id: cardId },
-        });
-    }
-
     // ---- Contacts ----
 
     async getContacts(citizenid: string) {

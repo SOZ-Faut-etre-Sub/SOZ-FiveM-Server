@@ -3,8 +3,7 @@ import { useAssetPath } from '../../../../../hook/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TCG_SHOWCASE_DESC_MAX, TcgCollectionCard } from '../../../../../../shared/tcg/tcg.types';
-import { useSettingsChange } from '../../../system/config/hooks/useSettingsChange';
-import { useTcgShowcase, useTcgWallpaper } from '../hooks/useTcg';
+import { useTcgShowcase } from '../hooks/useTcg';
 
 export const TcgViewer: React.FC = () => {
     const navigate = useNavigate();
@@ -13,9 +12,7 @@ export const TcgViewer: React.FC = () => {
     const card = state?.card ?? null;
     const fromContact = state?.fromContact ?? false;
 
-    const { setWallpaper, removeWallpaper, loading: wpLoading } = useTcgWallpaper();
     const { addShowcase, removeShowcase } = useTcgShowcase();
-    const { handleSettingChange } = useSettingsChange();
     const [message, setMessage] = useState<string | null>(null);
     const { getPath } = useAssetPath();
 
@@ -27,24 +24,6 @@ export const TcgViewer: React.FC = () => {
     if (!card) { navigate('/tcg/collection'); return null; }
 
     const handleBack = () => { fromContact ? navigate(-1) : navigate('/tcg/collection'); };
-
-    const handleSetWallpaper = async () => {
-        setMessage(null);
-        const res = await setWallpaper(card.cardId);
-        if (res?.success && res.image) {
-            handleSettingChange('wallpaper', { label: card.name, value: res.image });
-            setMessage('Fond d\'écran défini !');
-        } else { setMessage(res?.message ?? 'Erreur'); }
-    };
-
-    const handleRemoveWallpaper = async () => {
-        setMessage(null);
-        const res = await removeWallpaper();
-        if (res?.success) {
-            handleSettingChange('wallpaper', { label: 'SoZ 1', value: 'back1.webp' });
-            setMessage('Fond d\'écran retiré');
-        }
-    };
 
     const handleExpose = async () => {
         setExposeLoading(true);
@@ -69,15 +48,6 @@ export const TcgViewer: React.FC = () => {
             <div className="w-full flex items-center justify-between px-4 pt-12 pb-2 z-50" onClick={e => e.stopPropagation()}>
                 {!fromContact ? (
                     <div className="flex items-center gap-2 flex-wrap">
-                        {card.isWallpaper ? (
-                            <button className="py-1.5 px-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-[11px] font-semibold" onClick={handleRemoveWallpaper} disabled={wpLoading}>
-                                {wpLoading ? '...' : 'Retirer fond'}
-                            </button>
-                        ) : (
-                            <button className="py-1.5 px-3 rounded-lg bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[11px] font-semibold" onClick={handleSetWallpaper} disabled={wpLoading}>
-                                {wpLoading ? '...' : 'Fond d\'écran'}
-                            </button>
-                        )}
                         {card.isShowcase ? (
                             <button className="py-1.5 px-3 rounded-lg bg-red-500/20 border border-red-500/40 text-red-300 text-[11px] font-semibold" onClick={handleRemoveShowcase}>
                                 Retirer vitrine

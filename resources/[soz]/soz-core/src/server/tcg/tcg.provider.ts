@@ -58,29 +58,6 @@ export class TcgProvider {
         return this.tcgService.getCollection(cid);
     }
 
-    // ---- Wallpaper ----
-
-    @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_WALLPAPER)
-    async getWallpaper(source: number) {
-        const cid = this.getCitizenId(source);
-        if (!cid) return { success: false };
-        return this.tcgService.getWallpaper(cid);
-    }
-
-    @Rpc(RpcServerEvent.PHONE_APP_TCG_SET_WALLPAPER)
-    async setWallpaper(source: number, cardId: number) {
-        const cid = this.getCitizenId(source);
-        if (!cid) return { success: false, message: 'Joueur introuvable.' };
-        return this.tcgService.setWallpaper(cid, cardId);
-    }
-
-    @Rpc(RpcServerEvent.PHONE_APP_TCG_REMOVE_WALLPAPER)
-    async removeWallpaper(source: number) {
-        const cid = this.getCitizenId(source);
-        if (!cid) return { success: false };
-        return this.tcgService.removeWallpaper(cid);
-    }
-
     // ---- Contacts ----
 
     @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_CONTACTS)

@@ -15,7 +15,6 @@ import {
     TcgShowcaseResult,
     TcgTradeOffer,
     TcgTradeResult,
-    TcgWallpaperResult,
 } from '../../../../../../shared/tcg/tcg.types';
 import { fetchNui } from '../../../../../fetch';
 
@@ -117,38 +116,6 @@ export function useTcgCollection() {
     }, []);
 
     return { collection, loading, refresh };
-}
-
-// ---- Wallpaper ----
-
-export function useTcgWallpaper() {
-    const [loading, setLoading] = useState(false);
-
-    const setWallpaper = useCallback(async (cardId: number): Promise<TcgWallpaperResult | null> => {
-        setLoading(true);
-        try {
-            return await fetchNui<{ cardId: number }, TcgWallpaperResult>(NuiEvent.PhoneAppTcgSetWallpaper, { cardId });
-        } catch (e) {
-            console.error('[TCG] setWallpaper error', e);
-            return null;
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    const removeWallpaper = useCallback(async (): Promise<TcgWallpaperResult | null> => {
-        setLoading(true);
-        try {
-            return await fetchNui<void, TcgWallpaperResult>(NuiEvent.PhoneAppTcgRemoveWallpaper);
-        } catch (e) {
-            console.error('[TCG] removeWallpaper error', e);
-            return null;
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    return { setWallpaper, removeWallpaper, loading };
 }
 
 // ---- Contacts ----

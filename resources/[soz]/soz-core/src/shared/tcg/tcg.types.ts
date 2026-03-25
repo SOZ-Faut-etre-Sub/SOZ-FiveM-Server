@@ -34,7 +34,6 @@ export interface TcgCollectionCard {
     name: string;
     image: string;
     obtainedAt: string;
-    isWallpaper?: boolean;
     isShowcase?: boolean;
 }
 
@@ -48,14 +47,6 @@ export interface TcgProfile {
 export interface TcgProfileResult {
     success: boolean;
     username?: string;
-    message?: string;
-}
-
-// --- Wallpaper ---
-
-export interface TcgWallpaperResult {
-    success: boolean;
-    image?: string;
     message?: string;
 }
 

@@ -1185,7 +1185,6 @@ model tcg_card {
   active            Boolean             @default(true)
   created_at        DateTime            @default(now())
   tcg_user_card     tcg_user_card?
-  tcg_wallpaper     tcg_wallpaper[]
   trade_requested   tcg_trade_request[] @relation("requested_card")
   trade_offered     tcg_trade_request[] @relation("offered_card")
   tcg_showcase      tcg_showcase?
@@ -1208,12 +1207,6 @@ model tcg_daily_claim {
   claimed_count Int    @default(0)
 
   @@unique([citizenid, claim_date])
-}
-
-model tcg_wallpaper {
-  citizenid String   @id @db.VarChar(50)
-  card_id   Int
-  tcg_card  tcg_card @relation(fields: [card_id], references: [id], onDelete: Cascade)
 }
 
 model tcg_contact {

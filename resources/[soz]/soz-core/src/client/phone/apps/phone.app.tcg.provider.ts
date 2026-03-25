@@ -18,7 +18,6 @@ import {
     TcgShowcaseResult,
     TcgTradeOffer,
     TcgTradeResult,
-    TcgWallpaperResult,
 } from '../../../shared/tcg/tcg.types';
 
 @Provider()
@@ -50,23 +49,6 @@ export class PhoneAppTcgProvider {
     @OnNuiEvent(NuiEvent.PhoneAppTcgGetCollection)
     async getCollection(): Promise<TcgCollectionCard[]> {
         return await emitRpc<TcgCollectionCard[]>(RpcServerEvent.PHONE_APP_TCG_GET_COLLECTION);
-    }
-
-    // ---- Wallpaper ----
-
-    @OnNuiEvent(NuiEvent.PhoneAppTcgGetWallpaper)
-    async getWallpaper(): Promise<TcgWallpaperResult> {
-        return await emitRpc<TcgWallpaperResult>(RpcServerEvent.PHONE_APP_TCG_GET_WALLPAPER);
-    }
-
-    @OnNuiEvent(NuiEvent.PhoneAppTcgSetWallpaper)
-    async setWallpaper({ cardId }: { cardId: number }): Promise<TcgWallpaperResult> {
-        return await emitRpc<TcgWallpaperResult>(RpcServerEvent.PHONE_APP_TCG_SET_WALLPAPER, cardId);
-    }
-
-    @OnNuiEvent(NuiEvent.PhoneAppTcgRemoveWallpaper)
-    async removeWallpaper(): Promise<TcgWallpaperResult> {
-        return await emitRpc<TcgWallpaperResult>(RpcServerEvent.PHONE_APP_TCG_REMOVE_WALLPAPER);
     }
 
     // ---- Contacts ----

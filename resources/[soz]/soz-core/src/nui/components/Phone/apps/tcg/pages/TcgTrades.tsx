@@ -72,7 +72,7 @@ export const TcgTrades: React.FC = () => {
     const openViewer = (cardId: number, name: string, image: string) => {
         navigate(`/tcg/view/${cardId}`, {
             state: {
-                card: { userCardId: 0, cardId, name, image, obtainedAt: '', isWallpaper: false, isShowcase: false },
+                card: { userCardId: 0, cardId, name, image, obtainedAt: '', isShowcase: false },
                 fromContact: true,
             }
         });

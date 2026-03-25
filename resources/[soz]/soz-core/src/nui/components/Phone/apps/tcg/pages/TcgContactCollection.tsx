@@ -98,7 +98,7 @@ export const TcgContactCollection: React.FC = () => {
                             {contactCards.map(card => (
                                 <div key={card.cardId} className="flex flex-col items-center gap-1">
                                     <img src={getPath(card.image)} alt={card.name} className="w-full rounded-md border border-white/10 cursor-pointer active:scale-95 transition-transform" style={{ aspectRatio: '936 / 2000', objectFit: 'cover' }}
-                                        onClick={() => navigate(`/tcg/view/${card.cardId}`, { state: { card: { userCardId: 0, cardId: card.cardId, name: card.name, image: card.image, obtainedAt: card.obtainedAt, isWallpaper: false, isShowcase: false }, fromContact: true } })} />
+                                        onClick={() => navigate(`/tcg/view/${card.cardId}`, { state: { card: { userCardId: 0, cardId: card.cardId, name: card.name, image: card.image, obtainedAt: card.obtainedAt, isShowcase: false }, fromContact: true } })} />
                                     <span className="text-[9px] text-gray-400 text-center truncate w-full">{card.name}</span>
                                     <button className="w-full py-1.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-semibold"
                                         onClick={() => { setTradeCard(card); setOfferType('money'); setOfferAmount(''); setOfferCardIds([]); setTradeMessage(null); }}>Proposer</button>
