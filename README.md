@@ -16,7 +16,7 @@ Nouvelle application téléphone permettant aux joueurs de collectionner, échan
 
 ### 📦 Collection & Cartes quotidiennes
 - 2 cartes gratuites par jour (variable modifiable) parmis les cartes disponibles. (stress -2)
-- Collection personnelle consultable avec viewer plein écran du phone
+- Collection personnelle consultable
 
 ---
 
