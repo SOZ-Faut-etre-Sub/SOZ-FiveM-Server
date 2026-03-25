@@ -112,3 +112,5 @@ Nouvelle application téléphone permettant aux joueurs de collectionner, échan
 - Dynamique de marché :
   - Plus libre, potentiellement plus volatile
   - Encourage la spéculation et le trading actif
+
+Mes cartes sont disponibles ici https://github.com/DailyMok/SOZ-FiveM-Assets
