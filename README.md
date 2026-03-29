@@ -39,9 +39,10 @@ Nouvelle application téléphone permettant aux joueurs de collectionner, échan
 - Clic sur un pseudo → popup : ajouter contact / voir collection / demander échange
 
 ---
-============================================================
-  TCG v1.1 — Patch Notes (29/03/2026)
-============================================================
+=============================================
+
+### TCG v1.1 — Patch Notes (29/03/2026)
+
  
 🎨 PROFIL JOUEUR
 - Avatar personnalisable : choix depuis la collection de cartes OU la galerie photos du téléphone
