@@ -66,6 +66,8 @@ Nouvelle application téléphone permettant aux joueurs de collectionner, échan
 - Bouton rouge ✕ séparé pour retirer le filtre rapidement
 - Plus de ✕ dans le bouton filtre (affiche juste le nom de l'archétype)
 - Mêmes améliorations sur la collection d'un contact
+- Revente de set
+- Remise en "daily claim" des sets vendus
  
 🏆 BADGES
 - 10 badges avec barres de progression (propre profil)
