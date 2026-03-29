@@ -1,0 +1,1 @@
+echo export const modules = []; > src\private\client\modules.ts

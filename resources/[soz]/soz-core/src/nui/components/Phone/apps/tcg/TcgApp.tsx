@@ -8,6 +8,7 @@ import { TcgCollection } from './pages/TcgCollection';
 import { TcgContactCollection } from './pages/TcgContactCollection';
 import { TcgContacts } from './pages/TcgContacts';
 import { TcgHome } from './pages/TcgHome';
+import { TcgProfile } from './pages/TcgProfile';
 import { TcgSetup } from './pages/TcgSetup';
 import { TcgShowcase } from './pages/TcgShowcase';
 import { TcgTrades } from './pages/TcgTrades';
@@ -94,6 +95,7 @@ const TcgApp: React.FC = () => {
                 <Route path="view/:userCardId" element={<TcgViewer />} />
                 <Route path="contacts" element={<TcgContacts />} />
                 <Route path="contacts/:citizenid/collection" element={<TcgContactCollection />} />
+                <Route path="profile/:citizenid" element={<TcgProfile />} />
                 <Route path="trades" element={<TcgTrades />} />
                 <Route path="showcase" element={<TcgShowcase />} />
             </Routes>

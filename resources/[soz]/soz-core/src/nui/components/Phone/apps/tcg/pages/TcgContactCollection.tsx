@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useAssetPath } from '../../../../../hook/assets';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { TcgContactCollectionCard, TcgCreateTradeInput } from '../../../../../../shared/tcg/tcg.types';
+import { TCG_ARCHETYPES, TcgContactCollectionCard, TcgCreateTradeInput } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgCollection, useTcgContactCollection, useTcgTrades } from '../hooks/useTcg';
+
+type SortMode = 'date' | 'archetype';
 
 export const TcgContactCollection: React.FC = () => {
     const navigate = useNavigate();
@@ -22,6 +24,11 @@ export const TcgContactCollection: React.FC = () => {
     const [tradeMessage, setTradeMessage] = useState<string | null>(null);
     const [tradeLoading, setTradeLoading] = useState(false);
 
+    // Filter/sort
+    const [sortMode, setSortMode] = useState<SortMode>('date');
+    const [filterArchetype, setFilterArchetype] = useState<string | null>(null);
+    const [showFilterPanel, setShowFilterPanel] = useState(false);
+
     useEffect(() => {
         if (citizenid) {
             fetch(citizenid);
@@ -29,7 +36,7 @@ export const TcgContactCollection: React.FC = () => {
         }
     }, [citizenid]);
 
-    // Ouvrir automatiquement le popup si on vient de la vitrine avec une carte pré-sélectionnée
+    // Open trade popup if coming from showcase with preselected card
     useEffect(() => {
         const state = location.state as { preselectedTrade?: TcgContactCollectionCard } | null;
         if (state?.preselectedTrade) {
@@ -40,6 +47,38 @@ export const TcgContactCollection: React.FC = () => {
             setTradeMessage(null);
         }
     }, [location.state]);
+
+    // Available archetypes
+    const availableArchetypes = useMemo(() => {
+        const set = new Set<string>();
+        for (const card of contactCards) {
+            if (card.archetype) set.add(card.archetype);
+        }
+        return TCG_ARCHETYPES.filter(a => set.has(a));
+    }, [contactCards]);
+
+    const archetypeCounts = useMemo(() => {
+        const counts: Record<string, number> = {};
+        for (const card of contactCards) {
+            if (card.archetype) counts[card.archetype] = (counts[card.archetype] ?? 0) + 1;
+        }
+        return counts;
+    }, [contactCards]);
+
+    // Filter + sort
+    const displayedCards = useMemo(() => {
+        let cards = [...contactCards];
+        if (filterArchetype) cards = cards.filter(c => c.archetype === filterArchetype);
+        if (sortMode === 'archetype') {
+            cards.sort((a, b) => {
+                const aArch = a.archetype ?? 'zzz';
+                const bArch = b.archetype ?? 'zzz';
+                if (aArch !== bArch) return aArch.localeCompare(bArch);
+                return new Date(b.obtainedAt).getTime() - new Date(a.obtainedAt).getTime();
+            });
+        }
+        return cards;
+    }, [contactCards, filterArchetype, sortMode]);
 
     const toggleCardSelection = (cardId: number) => {
         setOfferCardIds(prev =>
@@ -86,20 +125,70 @@ export const TcgContactCollection: React.FC = () => {
 
     return (
         <>
-            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Collection</h2>
+            <div className="px-4 pt-1 pb-1 flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-200">Collection</h2>
+                <div className="flex gap-1.5">
+                    <button
+                        className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${sortMode === 'archetype' ? 'bg-purple-500/20 border-purple-500/40 text-purple-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
+                        onClick={() => setSortMode(prev => prev === 'date' ? 'archetype' : 'date')}
+                    >
+                        {sortMode === 'date' ? 'Tri: Date' : 'Tri: Catégorie'}
+                    </button>
+                    <button
+                        className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${filterArchetype ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
+                        onClick={() => setShowFilterPanel(!showFilterPanel)}
+                    >
+                        {filterArchetype ? filterArchetype : 'Filtrer'}
+                    </button>
+                    {filterArchetype && (
+                        <button
+                            className="px-1.5 py-1 rounded-lg text-[10px] font-bold bg-red-500/20 border border-red-500/40 text-red-400"
+                            onClick={() => { setFilterArchetype(null); setShowFilterPanel(false); }}
+                        >
+                            ✕
+                        </button>
+                    )}
+                </div>
+            </div>
+
+            {showFilterPanel && (
+                <div className="px-3 pb-2">
+                    <div className="flex flex-wrap gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                        <button
+                            className={`px-2 py-1 rounded-md text-[9px] font-semibold border ${!filterArchetype ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-300' : 'bg-white/5 border-white/10 text-gray-500'}`}
+                            onClick={() => { setFilterArchetype(null); setShowFilterPanel(false); }}
+                        >
+                            Toutes ({contactCards.length})
+                        </button>
+                        {availableArchetypes.map(arch => (
+                            <button
+                                key={arch}
+                                className={`px-2 py-1 rounded-md text-[9px] font-semibold border ${filterArchetype === arch ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-300' : 'bg-white/5 border-white/10 text-gray-500'}`}
+                                onClick={() => { setFilterArchetype(arch); setShowFilterPanel(false); }}
+                            >
+                                {arch} ({archetypeCounts[arch] ?? 0})
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-hidden relative">
                     {loading ? (
                         <p className="text-sm text-gray-400 text-center mt-10">Chargement...</p>
                     ) : contactCards.length === 0 ? (
                         <div className="text-center mt-16 text-gray-500 text-sm"><p>Ce joueur n'a aucune carte.</p></div>
+                    ) : displayedCards.length === 0 ? (
+                        <div className="text-center mt-16 text-gray-500 text-sm"><p>Aucune carte dans cette catégorie.</p></div>
                     ) : (
-                        <div className="grid grid-cols-2 gap-3 overflow-y-auto flex-1 pb-4">
-                            {contactCards.map(card => (
+                        <div className="grid grid-cols-2 gap-3 overflow-y-auto flex-1 pb-4" style={{ alignContent: 'start' }}>
+                            {displayedCards.map(card => (
                                 <div key={card.cardId} className="flex flex-col items-center gap-1">
                                     <img src={getPath(card.image)} alt={card.name} className="w-full rounded-md border border-white/10 cursor-pointer active:scale-95 transition-transform" style={{ aspectRatio: '936 / 2000', objectFit: 'cover' }}
-                                        onClick={() => navigate(`/tcg/view/${card.cardId}`, { state: { card: { userCardId: 0, cardId: card.cardId, name: card.name, image: card.image, obtainedAt: card.obtainedAt, isShowcase: false }, fromContact: true } })} />
+                                        onClick={() => navigate(`/tcg/view/${card.cardId}`, { state: { card: { userCardId: 0, cardId: card.cardId, name: card.name, image: card.image, archetype: card.archetype, obtainedAt: card.obtainedAt, isShowcase: false, isProtected: false }, fromContact: true } })} />
                                     <span className="text-[9px] text-gray-400 text-center truncate w-full">{card.name}</span>
+                                    {card.archetype && <span className="text-[8px] text-purple-400 text-center truncate w-full">{card.archetype}</span>}
                                     <button className="w-full py-1.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-semibold"
                                         onClick={() => { setTradeCard(card); setOfferType('money'); setOfferAmount(''); setOfferCardIds([]); setTradeMessage(null); }}>Proposer</button>
                                 </div>
@@ -111,7 +200,7 @@ export const TcgContactCollection: React.FC = () => {
                         <div className="absolute inset-0 bg-black/85 z-50 flex items-center justify-center p-4">
                             <div className="bg-gray-900 rounded-2xl p-4 w-full max-w-[300px] border border-white/10" onClick={e => e.stopPropagation()}>
                                 <div className="flex justify-between items-start mb-3">
-                                    <div><p className="text-xs text-gray-400">Tu veux la carte :</p><p className="text-sm text-white font-bold">{tradeCard.name}</p></div>
+                                    <div><p className="text-xs text-gray-400">Tu veux la carte :</p><p className="text-sm text-white font-bold">{tradeCard.name}</p>{tradeCard.archetype && <p className="text-[10px] text-purple-300">{tradeCard.archetype}</p>}</div>
                                     <button className="w-7 h-7 rounded-full bg-white/10 text-white text-xs flex items-center justify-center" onClick={() => setTradeCard(null)}>✕</button>
                                 </div>
                                 <div className="flex gap-2 mb-3">

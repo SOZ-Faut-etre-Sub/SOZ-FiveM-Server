@@ -784,6 +784,17 @@ export enum NuiEvent {
     PhoneAppTcgAddShowcase = 'soz-core:nui:phone:app-tcg-add-showcase',
     PhoneAppTcgRemoveShowcase = 'soz-core:nui:phone:app-tcg-remove-showcase',
 	PhoneAppTcgShowcaseRelax = 'soz-core:nui:phone:app-tcg-showcase-relax',
+	PhoneAppTcgToggleProtected = 'soz-core:nui:phone:app-tcg-toggle-protected',
+    PhoneAppTcgSellSet = 'soz-core:nui:phone:app-tcg-sell-set',
+    PhoneAppTcgGetProfilePage = 'soz-core:nui:phone:app-tcg-get-profile-page',
+	PhoneAppTcgSetBio = 'soz-core:nui:phone:app-tcg-set-bio',
+	PhoneAppTcgToggleProtected = 'soz-core:nui:phone:app-tcg-toggle-protected',
+    PhoneAppTcgSellSet = 'soz-core:nui:phone:app-tcg-sell-set',
+    PhoneAppTcgGetProfilePage = 'soz-core:nui:phone:app-tcg-get-profile-page',
+    PhoneAppTcgSetBio = 'soz-core:nui:phone:app-tcg-set-bio',
+    PhoneAppTcgSetAvatar = 'soz-core:nui:phone:app-tcg-set-avatar',
+    PhoneAppTcgRemoveAvatar = 'soz-core:nui:phone:app-tcg-remove-avatar',
+    PhoneAppTcgSetBorder = 'soz-core:nui:phone:app-tcg-set-border',
 		
 	PhoneAppIaLegalAskQuestion = 'soz-core:nui:phone:app-ia-legal-ask-question',
 

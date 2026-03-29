@@ -3,7 +3,7 @@ import { useAssetPath } from '../../../../../hook/assets';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { TCG_SHOWCASE_DESC_MAX, TcgCollectionCard } from '../../../../../../shared/tcg/tcg.types';
-import { useTcgShowcase } from '../hooks/useTcg';
+import { useTcgShowcase, useTcgToggleProtected } from '../hooks/useTcg';
 
 export const TcgViewer: React.FC = () => {
     const navigate = useNavigate();
@@ -13,7 +13,9 @@ export const TcgViewer: React.FC = () => {
     const fromContact = state?.fromContact ?? false;
 
     const { addShowcase, removeShowcase } = useTcgShowcase();
+    const { toggle: toggleProtect, loading: protectLoading } = useTcgToggleProtected();
     const [message, setMessage] = useState<string | null>(null);
+    const [isProtected, setIsProtected] = useState(card?.isProtected ?? false);
     const { getPath } = useAssetPath();
 
     // Showcase popup
@@ -42,6 +44,16 @@ export const TcgViewer: React.FC = () => {
         if (res?.success) setMessage('Retirée de la vitrine');
     };
 
+    const handleToggleProtect = async () => {
+        const res = await toggleProtect(card.cardId);
+        if (res?.success) {
+            setIsProtected(res.isProtected);
+            setMessage(res.isProtected ? 'Carte protégée' : 'Protection retirée');
+        } else {
+            setMessage(res?.message ?? 'Erreur');
+        }
+    };
+
     return (
         <div className="absolute inset-0 flex flex-col items-center bg-transparent z-50" onClick={handleBack}>
             {/* Top bar */}
@@ -57,18 +69,42 @@ export const TcgViewer: React.FC = () => {
                                 Exposer
                             </button>
                         )}
+                        {/* Protect toggle */}
+                        <button
+                            className={`py-1.5 px-3 rounded-lg text-[11px] font-semibold border ${isProtected ? 'bg-blue-500/20 border-blue-500/40 text-blue-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
+                            onClick={handleToggleProtect}
+                            disabled={protectLoading}
+                        >
+                            {isProtected ? '🔒 Protégée' : '🔓 Protéger'}
+                        </button>
                     </div>
                 ) : <div />}
                 <button className="w-8 h-8 rounded-full bg-white/10 border border-white/20 text-white text-sm flex items-center justify-center" onClick={handleBack}>✕</button>
             </div>
 
-            {/* Card image + name */}
+            {/* Card image + tag + name */}
             <div className="flex-1 flex flex-col items-center justify-center px-4" onClick={e => e.stopPropagation()}>
-                <img
-                    src={getPath(card.image)}
-                    alt={card.name}
-                    className="max-w-full max-h-[75vh]"
-                />
+                <div className="relative">
+                    <img
+                        src={getPath(card.image)}
+                        alt={card.name}
+                        className="max-w-full max-h-[75vh]"
+                    />
+                    {/* Archetype tag overlay */}
+                    {card.archetype && (
+                        <div className="absolute top-3 left-0 right-0 flex justify-center pointer-events-none">
+                            <span
+                                className="text-sm font-bold tracking-wider px-3 py-1"
+                                style={{
+                                    color: '#ffffff',
+                                    textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 6px rgba(0,0,0,0.5)',
+                                }}
+                            >
+                                {card.archetype}
+                            </span>
+                        </div>
+                    )}
+                </div>
                 <span className="mt-2 text-sm font-bold text-white text-center">{card.name}</span>
                 {message && <span className="mt-1 text-[10px] text-gray-300">{message}</span>}
             </div>

@@ -1183,11 +1183,15 @@ model tcg_card {
   image             String              @db.VarChar(512)
   prompt            String?             @db.Text
   active            Boolean             @default(true)
+  archetype         String?             @db.VarChar(50)
   created_at        DateTime            @default(now())
   tcg_user_card     tcg_user_card?
+  tcg_wallpaper     tcg_wallpaper[]
   trade_requested   tcg_trade_request[] @relation("requested_card")
   trade_offered     tcg_trade_request[] @relation("offered_card")
   tcg_showcase      tcg_showcase?
+
+  @@index([archetype])
 }
 
 model tcg_user_card {
@@ -1195,6 +1199,7 @@ model tcg_user_card {
   citizenid   String   @db.VarChar(50)
   card_id     Int      @unique
   obtained_at DateTime @default(now())
+  protected   Boolean  @default(false)
   tcg_card    tcg_card @relation(fields: [card_id], references: [id])
 
   @@index([citizenid])
@@ -1207,6 +1212,12 @@ model tcg_daily_claim {
   claimed_count Int    @default(0)
 
   @@unique([citizenid, claim_date])
+}
+
+model tcg_wallpaper {
+  citizenid String   @id @db.VarChar(50)
+  card_id   Int
+  tcg_card  tcg_card @relation(fields: [card_id], references: [id], onDelete: Cascade)
 }
 
 model tcg_contact {
@@ -1223,9 +1234,30 @@ model tcg_contact {
 }
 
 model tcg_profile {
-  citizenid  String   @id @db.VarChar(50)
-  username   String   @unique @db.VarChar(20)
-  created_at DateTime @default(now())
+  citizenid                    String      @id @db.VarChar(50)
+  username                     String      @unique @db.VarChar(20)
+  bio                          String?     @db.VarChar(50)
+  avatar                       String?     @db.Text
+  border_id                    Int?
+  total_cards_obtained         Int         @default(0)
+  total_cards_obtained_classic Int         @default(0)
+  total_cards_obtained_cute    Int         @default(0)
+  total_cards_obtained_event   Int         @default(0)
+  total_trades_completed       Int         @default(0)
+  total_sets_sold              Int         @default(0)
+  total_sets_sold_classic      Int         @default(0)
+  total_sets_sold_cute         Int         @default(0)
+  total_sets_sold_event        Int         @default(0)
+  created_at                   DateTime    @default(now())
+  tcg_border                   tcg_border? @relation(fields: [border_id], references: [id])
+}
+
+model tcg_border {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique @db.VarChar(100)
+  image        String        @db.VarChar(255)
+  created_at   DateTime      @default(now())
+  tcg_profiles tcg_profile[]
 }
 
 model tcg_trade_request {

@@ -35,6 +35,22 @@ export class TcgProvider {
         return this.tcgService.setUsername(cid, username);
     }
 
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_SET_BIO)
+    async setBio(source: number, bio: string) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, message: 'Joueur introuvable.' };
+        return this.tcgService.setBio(cid, bio);
+    }
+
+    // ---- Profile Page ----
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_PROFILE_PAGE)
+    async getProfilePage(source: number, targetCitizenid: string) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return null;
+        return this.tcgService.getProfilePage(cid, targetCitizenid);
+    }
+
     // ---- Cards ----
 
     @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_DAILY_STATUS)
@@ -56,6 +72,24 @@ export class TcgProvider {
         const cid = this.getCitizenId(source);
         if (!cid) return [];
         return this.tcgService.getCollection(cid);
+    }
+
+    // ---- Protected ----
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_TOGGLE_PROTECTED)
+    async toggleProtected(source: number, cardId: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, isProtected: false, message: 'Joueur introuvable.' };
+        return this.tcgService.toggleProtected(cid, cardId);
+    }
+
+    // ---- Sell Set ----
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_SELL_SET)
+    async sellSet(source: number, archetype: string) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, message: 'Joueur introuvable.' };
+        return this.tcgService.sellSet(cid, archetype);
     }
 
     // ---- Contacts ----
@@ -158,5 +192,26 @@ export class TcgProvider {
         const cid = this.getCitizenId(source);
         if (!cid) return { success: false };
         return this.tcgService.showcaseRelax(source, cid);
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_SET_AVATAR)
+    async setAvatar(source: number, avatar: string) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, message: 'Joueur introuvable.' };
+        return this.tcgService.setAvatar(cid, avatar);
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_REMOVE_AVATAR)
+    async removeAvatar(source: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, message: 'Joueur introuvable.' };
+        return this.tcgService.removeAvatar(cid);
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_SET_BORDER)
+    async setBorder(source: number, borderId: number | null) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, message: 'Joueur introuvable.' };
+        return this.tcgService.setBorder(cid, borderId);
     }
 }

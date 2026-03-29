@@ -12,8 +12,10 @@ import {
     TcgContactRequest,
     TcgCreateTradeInput,
     TcgDailyStatus,
+    TcgProfilePage,
     TcgProfileResult,
     TcgRespondTradeInput,
+    TcgSellSetResult,
     TcgShowcaseItem,
     TcgShowcaseResult,
     TcgTradeOffer,
@@ -34,6 +36,18 @@ export class PhoneAppTcgProvider {
         return await emitRpc<TcgProfileResult>(RpcServerEvent.PHONE_APP_TCG_SET_USERNAME, username);
     }
 
+    @OnNuiEvent(NuiEvent.PhoneAppTcgSetBio)
+    async setBio({ bio }: { bio: string }): Promise<{ success: boolean; message?: string }> {
+        return await emitRpc<{ success: boolean; message?: string }>(RpcServerEvent.PHONE_APP_TCG_SET_BIO, bio);
+    }
+
+    // ---- Profile Page ----
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgGetProfilePage)
+    async getProfilePage({ targetCitizenid }: { targetCitizenid: string }): Promise<TcgProfilePage | null> {
+        return await emitRpc<TcgProfilePage | null>(RpcServerEvent.PHONE_APP_TCG_GET_PROFILE_PAGE, targetCitizenid);
+    }
+
     // ---- Cards ----
 
     @OnNuiEvent(NuiEvent.PhoneAppTcgGetDailyStatus)
@@ -49,6 +63,20 @@ export class PhoneAppTcgProvider {
     @OnNuiEvent(NuiEvent.PhoneAppTcgGetCollection)
     async getCollection(): Promise<TcgCollectionCard[]> {
         return await emitRpc<TcgCollectionCard[]>(RpcServerEvent.PHONE_APP_TCG_GET_COLLECTION);
+    }
+
+    // ---- Protected ----
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgToggleProtected)
+    async toggleProtected({ cardId }: { cardId: number }): Promise<{ success: boolean; isProtected: boolean; message?: string }> {
+        return await emitRpc<{ success: boolean; isProtected: boolean; message?: string }>(RpcServerEvent.PHONE_APP_TCG_TOGGLE_PROTECTED, cardId);
+    }
+
+    // ---- Sell Set ----
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgSellSet)
+    async sellSet({ archetype }: { archetype: string }): Promise<TcgSellSetResult> {
+        return await emitRpc<TcgSellSetResult>(RpcServerEvent.PHONE_APP_TCG_SELL_SET, archetype);
     }
 
     // ---- Contacts ----
@@ -126,5 +154,21 @@ export class PhoneAppTcgProvider {
     async showcaseRelax(): Promise<void> {
         await emitRpc(RpcServerEvent.PHONE_APP_TCG_SHOWCASE_RELAX);
     }
-}
 
+    // ---- Avatar & Border ----
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgSetAvatar)
+    async setAvatar({ avatar }: { avatar: string }): Promise<{ success: boolean; avatar?: string; message?: string }> {
+        return await emitRpc<{ success: boolean; avatar?: string; message?: string }>(RpcServerEvent.PHONE_APP_TCG_SET_AVATAR, avatar);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgRemoveAvatar)
+    async removeAvatar(): Promise<{ success: boolean }> {
+        return await emitRpc<{ success: boolean }>(RpcServerEvent.PHONE_APP_TCG_REMOVE_AVATAR);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgSetBorder)
+    async setBorder({ borderId }: { borderId: number | null }): Promise<{ success: boolean; message?: string }> {
+        return await emitRpc<{ success: boolean; message?: string }>(RpcServerEvent.PHONE_APP_TCG_SET_BORDER, borderId);
+    }
+}

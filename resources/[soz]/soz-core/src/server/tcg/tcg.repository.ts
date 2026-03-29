@@ -97,6 +97,43 @@ export class TcgRepository {
         });
     }
 
+    // ---- Protected ----
+
+    async toggleProtected(citizenid: string, cardId: number, value: boolean) {
+        return this.prismaService.tcg_user_card.updateMany({
+            where: { citizenid, card_id: cardId },
+            data: { protected: value },
+        });
+    }
+
+    async isCardProtected(citizenid: string, cardId: number): Promise<boolean> {
+        const uc = await this.prismaService.tcg_user_card.findFirst({
+            where: { citizenid, card_id: cardId },
+        });
+        return uc?.protected === true;
+    }
+
+    // ---- Sell Set: get unprotected cards of an archetype, release them ----
+
+    async getUnprotectedCardsByArchetype(citizenid: string, archetype: string) {
+        return this.prismaService.tcg_user_card.findMany({
+            where: {
+                citizenid,
+                protected: false,
+                tcg_card: { archetype },
+            },
+            include: { tcg_card: true },
+        });
+    }
+
+    async releaseCards(cardIds: number[]): Promise<number> {
+        // Remove ownership (card becomes available again for daily claims)
+        const result = await this.prismaService.tcg_user_card.deleteMany({
+            where: { card_id: { in: cardIds } },
+        });
+        return result.count;
+    }
+
     // ---- Profile ----
 
     async getProfile(citizenid: string) {
@@ -126,6 +163,13 @@ export class TcgRepository {
             map[p.citizenid] = p.username;
         }
         return map;
+    }
+
+    async updateBio(citizenid: string, bio: string | null) {
+        return this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data: { bio },
+        });
     }
 
     // ---- Contacts ----
@@ -285,6 +329,7 @@ export class TcgRepository {
             where: { card_id: cardId },
         });
     }
+
 	async getPlayerCharinfo(citizenid: string): Promise<{ account: string; phone: string } | null> {
         const player = await this.prismaService.player.findFirst({
             where: { citizenid },
@@ -297,5 +342,170 @@ export class TcgRepository {
         } catch {
             return null;
         }
+    }
+
+    // ---- Stats (for badges / profile) ----
+
+    async getPlayerCardCount(citizenid: string): Promise<number> {
+        return this.prismaService.tcg_user_card.count({
+            where: { citizenid },
+        });
+    }
+
+    async getPlayerTradeCount(citizenid: string): Promise<number> {
+        return this.prismaService.tcg_trade_request.count({
+            where: {
+                OR: [{ sender_id: citizenid }, { receiver_id: citizenid }],
+                status: 'accepted',
+            },
+        });
+    }
+
+    async getPlayerArchetypeCounts(citizenid: string): Promise<Record<string, number>> {
+        const cards = await this.prismaService.tcg_user_card.findMany({
+            where: { citizenid },
+            include: { tcg_card: { select: { archetype: true } } },
+        });
+        const counts: Record<string, number> = {};
+        for (const c of cards) {
+            const arch = c.tcg_card.archetype;
+            if (arch) {
+                counts[arch] = (counts[arch] ?? 0) + 1;
+            }
+        }
+        return counts;
+    }
+
+    // ---- Profile Stats (persistent counters) ----
+
+    async getProfileStats(citizenid: string) {
+        const profile = await this.prismaService.tcg_profile.findUnique({
+            where: { citizenid },
+            select: {
+                total_cards_obtained: true,
+                total_cards_obtained_classic: true,
+                total_cards_obtained_cute: true,
+                total_cards_obtained_event: true,
+                total_trades_completed: true,
+                total_sets_sold: true,
+                total_sets_sold_classic: true,
+                total_sets_sold_cute: true,
+                total_sets_sold_event: true,
+            },
+        });
+        return profile ?? null;
+    }
+
+    async incrementCardsObtained(citizenid: string, count: number, category: 'classic' | 'cute' | 'event') {
+        const data: Record<string, any> = {
+            total_cards_obtained: { increment: count },
+        };
+        if (category === 'classic') data.total_cards_obtained_classic = { increment: count };
+        else if (category === 'cute') data.total_cards_obtained_cute = { increment: count };
+        else if (category === 'event') data.total_cards_obtained_event = { increment: count };
+
+        return this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data,
+        });
+    }
+
+    async incrementTradesCompleted(citizenid: string) {
+        return this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data: { total_trades_completed: { increment: 1 } },
+        });
+    }
+
+    async incrementSetsSold(citizenid: string, category: 'classic' | 'cute' | 'event') {
+        const data: Record<string, any> = {
+            total_sets_sold: { increment: 1 },
+        };
+        if (category === 'classic') data.total_sets_sold_classic = { increment: 1 };
+        else if (category === 'cute') data.total_sets_sold_cute = { increment: 1 };
+        else if (category === 'event') data.total_sets_sold_event = { increment: 1 };
+
+        return this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data,
+        });
+    }
+
+    // ---- Trade Partners (unique partners for badge) ----
+
+    async recordTradePartner(citizenidA: string, citizenidB: string): Promise<void> {
+        // Insert both directions, ignore if already exists
+        await this.prismaService.$executeRawUnsafe(`
+            INSERT IGNORE INTO tcg_trade_partner (citizenid, partner_id)
+            VALUES (?, ?), (?, ?)
+        `, citizenidA, citizenidB, citizenidB, citizenidA);
+    }
+
+    async getUniqueTradePartnerCount(citizenid: string): Promise<number> {
+        const result = await this.prismaService.$queryRaw<{ count: bigint }[]>`
+            SELECT COUNT(*) as count FROM tcg_trade_partner
+            WHERE citizenid = ${citizenid}
+        `;
+        return Number(result[0]?.count ?? 0);
+    }
+
+    // ---- Avatar & Border ----
+
+    async setAvatar(citizenid: string, avatar: string | null) {
+        return this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data: { avatar },
+        });
+    }
+
+    async getAvatar(citizenid: string): Promise<string | null> {
+        const profile = await this.prismaService.tcg_profile.findUnique({
+            where: { citizenid },
+            select: { avatar: true },
+        });
+        return profile?.avatar ?? null;
+    }
+
+    async getAvatarsByCitizenIds(citizenids: string[]): Promise<Record<string, string | null>> {
+        if (citizenids.length === 0) return {};
+        const profiles = await this.prismaService.tcg_profile.findMany({
+            where: { citizenid: { in: citizenids } },
+            select: { citizenid: true, avatar: true },
+        });
+        const map: Record<string, string | null> = {};
+        for (const p of profiles) {
+            map[p.citizenid] = p.avatar ?? null;
+        }
+        return map;
+    }
+
+    async setBorder(citizenid: string, borderId: number | null) {
+        return this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data: { border_id: borderId },
+        });
+    }
+
+    async getBorder(citizenid: string): Promise<{ id: number; name: string; image: string } | null> {
+        const profile = await this.prismaService.tcg_profile.findUnique({
+            where: { citizenid },
+            select: { tcg_border: true },
+        });
+        if (!profile?.tcg_border) return null;
+        return { id: profile.tcg_border.id, name: profile.tcg_border.name, image: profile.tcg_border.image };
+    }
+
+    async getAllBorders(): Promise<Array<{ id: number; name: string; image: string }>> {
+        const borders = await this.prismaService.tcg_border.findMany({
+            orderBy: { name: 'asc' },
+        });
+        return borders.map(b => ({ id: b.id, name: b.name, image: b.image }));
+    }
+
+    async getProfileFull(citizenid: string) {
+        return this.prismaService.tcg_profile.findUnique({
+            where: { citizenid },
+            include: { tcg_border: true },
+        });
     }
 }

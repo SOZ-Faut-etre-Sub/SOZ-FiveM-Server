@@ -376,9 +376,18 @@ export enum RpcServerEvent {
     PHONE_APP_TCG_ADD_SHOWCASE = 'soz-core:server:phone:app:tcg:add-showcase',
     PHONE_APP_TCG_REMOVE_SHOWCASE = 'soz-core:server:phone:app:tcg:remove-showcase',
 	PHONE_APP_TCG_SHOWCASE_RELAX = 'soz-core:server:phone:app:tcg:showcase-relax',
+	PHONE_APP_TCG_TOGGLE_PROTECTED = 'soz-core:server:phone:app:tcg:toggle-protected',
+    PHONE_APP_TCG_SELL_SET = 'soz-core:server:phone:app:tcg:sell-set',
+    PHONE_APP_TCG_GET_PROFILE_PAGE = 'soz-core:server:phone:app:tcg:get-profile-page',
+	PHONE_APP_TCG_SET_BIO = 'soz-core:server:phone:app:tcg:set-bio',
+	PHONE_APP_TCG_TOGGLE_PROTECTED = 'soz-core:server:phone:app:tcg:toggle-protected',
+    PHONE_APP_TCG_SELL_SET = 'soz-core:server:phone:app:tcg:sell-set',
+    PHONE_APP_TCG_GET_PROFILE_PAGE = 'soz-core:server:phone:app:tcg:get-profile-page',
+    PHONE_APP_TCG_SET_BIO = 'soz-core:server:phone:app:tcg:set-bio',
+    PHONE_APP_TCG_SET_AVATAR = 'soz-core:server:phone:app:tcg:set-avatar',
+    PHONE_APP_TCG_REMOVE_AVATAR = 'soz-core:server:phone:app:tcg:remove-avatar',
+    PHONE_APP_TCG_SET_BORDER = 'soz-core:server:phone:app:tcg:set-border',
 
-	
-	PHONE_APP_IA_LEGAL_ASK_QUESTION = 'soz-core:server:phone:app:ia-legal:ask-question',
 
     LASER_GAME_GET_INFO_AS_STAFF = 'soz-core:server:phone:app:laser-game:get-info-as-staff',
     LASER_GAME_CREATE = 'soz-core:server:phone:app:laser-game:create',

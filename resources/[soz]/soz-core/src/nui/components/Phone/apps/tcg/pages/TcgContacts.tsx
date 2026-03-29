@@ -1,53 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAssetPath } from '../../../../../hook/assets';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgContacts } from '../hooks/useTcg';
 
+// ---- Small avatar component ----
+const ContactAvatar: React.FC<{ avatar: string | null; getPath: (p: string) => string; size?: string }> = ({ avatar, getPath, size = 'w-10 h-10' }) => (
+    <div className={`${size} rounded-full overflow-hidden flex items-center justify-center bg-gray-800 border border-white/10 flex-shrink-0`}>
+        {avatar ? (
+            avatar.startsWith('data:image/') ? (
+                <img src={avatar} alt="" className="w-full h-full object-cover" />
+            ) : (
+                <img src={getPath(avatar)} alt="" className="w-full h-full object-cover" />
+            )
+        ) : (
+            <span className="text-xs">👤</span>
+        )}
+    </div>
+);
+
 export const TcgContacts: React.FC = () => {
     const navigate = useNavigate();
-    const { contacts, loading, refresh, sendRequest, acceptContact, rejectContact, removeContact } = useTcgContacts();
+    const { getPath } = useAssetPath();
+    const { contacts, loading, refresh, acceptContact, rejectContact, removeContact } = useTcgContacts();
     const [targetUsername, setTargetUsername] = useState('');
-    const [step, setStep] = useState<'search' | 'message'>('search');
-    const [contactMessage, setContactMessage] = useState('');
     const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+    const [confirmRemoveId, setConfirmRemoveId] = useState<number | null>(null);
 
     useEffect(() => { refresh(); }, []);
 
-    const handleSearch = async () => {
+    const handleSearch = () => {
         if (!targetUsername.trim()) return;
         setMessage(null);
-
-        // On tente d'envoyer sans message juste pour vérifier si l'utilisateur existe
-        // Si le backend retourne une erreur "introuvable", on affiche l'erreur
-        // Sinon on passe à l'étape message
-        // Pour éviter un double envoi, on peut faire une recherche dédiée si tu as un endpoint,
-        // sinon on passe directement à l'étape message (le vrai check se fera à l'envoi)
-        setStep('message');
-    };
-
-    const handleSendRequest = async () => {
-        if (!targetUsername.trim()) return;
-        setMessage(null);
-        const res = await sendRequest(targetUsername.trim(), contactMessage.trim() || undefined);
-        if (res?.success) {
-            setMessage({ text: 'Demande envoyée !', type: 'success' });
-            setTargetUsername('');
-            setContactMessage('');
-            setStep('search');
-            refresh();
-        } else {
-            // L'utilisateur n'existe pas ou autre erreur → retour à la recherche avec message d'erreur
-            setMessage({ text: res?.message ?? `Pseudo "${targetUsername}" introuvable.`, type: 'error' });
-            setStep('search');
-            setContactMessage('');
-        }
-    };
-
-    const handleCancelMessage = () => {
-        setStep('search');
-        setContactMessage('');
-        setMessage(null);
+        navigate(`/tcg/profile/${targetUsername.trim()}`);
     };
 
     const accepted = contacts.filter(c => c.status === 'accepted');
@@ -60,64 +46,27 @@ export const TcgContacts: React.FC = () => {
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-y-auto gap-4">
 
-                    {/* Bloc ajout contact */}
+                    {/* Search block */}
                     <div className="flex flex-col gap-2">
-                        <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Ajouter un contact</span>
-
-                        {step === 'search' && (
-                            <div className="flex gap-2">
-                                <input
-                                    type="text"
-                                    value={targetUsername}
-                                    onChange={e => { setTargetUsername(e.target.value); setMessage(null); }}
-                                    onKeyDown={e => { e.stopPropagation(); if (e.key === 'Enter') handleSearch(); }}
-                                    placeholder="Pseudo du joueur..."
-                                    className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 outline-none"
-                                    data-phone-input="true"
-                                />
-                                <button
-                                    className="px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-semibold"
-                                    onClick={handleSearch}
-                                    disabled={!targetUsername.trim()}
-                                >
-                                    Suivant
-                                </button>
-                            </div>
-                        )}
-
-                        {step === 'message' && (
-                            <div className="flex flex-col gap-2">
-                                <div className="flex items-center gap-2 px-1">
-                                    <span className="text-xs text-gray-400">Pour :</span>
-                                    <span className="text-xs text-cyan-300 font-semibold">{targetUsername}</span>
-                                    <button className="ml-auto text-[10px] text-gray-500 hover:text-gray-300" onClick={handleCancelMessage}>← Modifier</button>
-                                </div>
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        maxLength={50}
-                                        value={contactMessage}
-                                        onChange={e => setContactMessage(e.target.value)}
-                                        onKeyDown={e => { e.stopPropagation(); if (e.key === 'Enter') handleSendRequest(); }}
-                                        placeholder="Ajouter un message..."
-                                        autoFocus
-                                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 pr-10 text-xs text-white placeholder-gray-500 outline-none focus:border-cyan-500/50"
-                                        data-phone-input="true"
-                                    />
-                                    <button
-                                        className="absolute right-2 top-1/2 -translate-y-1/2 text-cyan-400 hover:text-cyan-300"
-                                        onClick={handleSendRequest}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                                            <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div className="flex justify-end">
-                                    <span className="text-[10px] text-gray-600">{contactMessage.length}/50</span>
-                                </div>
-                            </div>
-                        )}
+                        <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Rechercher un joueur</span>
+                        <div className="flex gap-2">
+                            <input
+                                type="text"
+                                value={targetUsername}
+                                onChange={e => { setTargetUsername(e.target.value); setMessage(null); }}
+                                onKeyDown={e => { e.stopPropagation(); if (e.key === 'Enter') handleSearch(); }}
+                                placeholder="Pseudo du joueur..."
+                                className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 outline-none"
+                                data-phone-input="true"
+                            />
+                            <button
+                                className="px-4 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-semibold"
+                                onClick={handleSearch}
+                                disabled={!targetUsername.trim()}
+                            >
+                                Voir profil
+                            </button>
+                        </div>
 
                         {message && (
                             <p className={`text-xs ${message.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
@@ -132,17 +81,26 @@ export const TcgContacts: React.FC = () => {
                             {pendingReceived.map(contact => (
                                 <div key={contact.id} className="flex flex-col gap-1.5 p-3 rounded-lg bg-white/5 border border-white/10">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-sm text-white font-medium">{contact.displayName}</span>
+                                        <div
+                                            className="flex items-center gap-2 cursor-pointer active:opacity-80"
+                                            onClick={() => {
+                                                const otherId = contact.isSender ? contact.targetId : contact.citizenid;
+                                                navigate(`/tcg/profile/${otherId}`);
+                                            }}
+                                        >
+                                            <ContactAvatar avatar={contact.avatar} getPath={getPath} />
+                                            <span className="text-sm text-white font-medium">{contact.displayName}</span>
+                                        </div>
                                         <div className="flex gap-2">
                                             <button
                                                 className="w-8 h-8 rounded-full bg-green-500/20 border border-green-500/40 text-green-300 flex items-center justify-center text-base"
-                                                onClick={() => { acceptContact(contact.id); refresh(); }}
+                                                onClick={async () => { await acceptContact(contact.id); refresh(); }}
                                             >
                                                 ✔️
                                             </button>
                                             <button
                                                 className="w-8 h-8 rounded-full bg-red-500/20 border border-red-500/40 text-red-300 flex items-center justify-center text-base"
-                                                onClick={() => { rejectContact(contact.id); refresh(); }}
+                                                onClick={async () => { await rejectContact(contact.id); refresh(); }}
                                             >
                                                 ✖️
                                             </button>
@@ -160,8 +118,9 @@ export const TcgContacts: React.FC = () => {
                         <div className="flex flex-col gap-2">
                             <span className="text-xs text-orange-400 font-semibold uppercase tracking-wider">Demandes envoyées ({pendingSent.length})</span>
                             {pendingSent.map(contact => (
-                                <div key={contact.id} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
-                                    <span className="text-sm text-white">{contact.displayName}</span>
+                                <div key={contact.id} className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
+                                    <ContactAvatar avatar={contact.avatar} getPath={getPath} />
+                                    <span className="text-sm text-white flex-1">{contact.displayName}</span>
                                     <span className="text-xs text-orange-300">En attente...</span>
                                 </div>
                             ))}
@@ -176,11 +135,20 @@ export const TcgContacts: React.FC = () => {
                             <p className="text-sm text-gray-500 text-center mt-4">Aucun contact pour le moment.</p>
                         ) : (
                             accepted.map(contact => (
-                                <div key={contact.id} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
-                                    <span className="text-sm text-white font-medium">{contact.displayName}</span>
-                                    <div className="flex gap-2">
+                                <div key={contact.id} className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
+                                    <div
+                                        className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer active:opacity-80"
+                                        onClick={() => {
+                                            const otherId = contact.isSender ? contact.targetId : contact.citizenid;
+                                            navigate(`/tcg/profile/${otherId}`);
+                                        }}
+                                    >
+                                        <ContactAvatar avatar={contact.avatar} getPath={getPath} />
+                                        <span className="text-sm text-white font-medium truncate">{contact.displayName}</span>
+                                    </div>
+                                    <div className="flex gap-2 flex-shrink-0">
                                         <button className="px-3 py-1 rounded-md bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-semibold" onClick={() => { const otherId = contact.isSender ? contact.targetId : contact.citizenid; navigate(`/tcg/contacts/${otherId}/collection`); }}>Collection</button>
-                                        <button className="px-3 py-1 rounded-md bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-semibold" onClick={() => { removeContact(contact.id); refresh(); }}>✕</button>
+                                        <button className="px-3 py-1 rounded-md bg-red-500/20 border border-red-500/40 text-red-300 text-xs font-semibold" onClick={() => setConfirmRemoveId(contact.id)}>✕</button>
                                     </div>
                                 </div>
                             ))
@@ -188,6 +156,41 @@ export const TcgContacts: React.FC = () => {
                     </div>
                 </div>
             </AppContent>
+
+            {/* Confirm remove popup */}
+            {confirmRemoveId !== null && (() => {
+                const contact = accepted.find(c => c.id === confirmRemoveId);
+                if (!contact) return null;
+                return (
+                    <>
+                        <div className="fixed inset-0 bg-black/80 z-40" onClick={() => setConfirmRemoveId(null)} />
+                        <div
+                            className="fixed z-50 bg-gray-900 rounded-2xl p-5 w-full max-w-[280px] border border-white/10"
+                            style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+                            onClick={e => e.stopPropagation()}
+                        >
+                            <p className="text-sm text-white font-bold text-center mb-2">Supprimer un contact</p>
+                            <p className="text-xs text-gray-400 text-center mb-4">
+                                Voulez-vous vraiment supprimer <span className="text-orange-400 font-semibold">{contact.displayName}</span> de vos contacts ?
+                            </p>
+                            <div className="flex gap-2">
+                                <button
+                                    className="flex-1 py-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 text-sm font-semibold"
+                                    onClick={() => setConfirmRemoveId(null)}
+                                >
+                                    Annuler
+                                </button>
+                                <button
+                                    className="flex-1 py-2.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-400 text-sm font-bold"
+                                    onClick={async () => { await removeContact(contact.id); setConfirmRemoveId(null); refresh(); }}
+                                >
+                                    Supprimer
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                );
+            })()}
         </>
     );
 };

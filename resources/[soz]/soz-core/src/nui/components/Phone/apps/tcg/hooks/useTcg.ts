@@ -9,8 +9,10 @@ import {
     TcgContactRequest,
     TcgCreateTradeInput,
     TcgDailyStatus,
+    TcgProfilePage,
     TcgProfileResult,
     TcgRespondTradeInput,
+    TcgSellSetResult,
     TcgShowcaseItem,
     TcgShowcaseResult,
     TcgTradeOffer,
@@ -51,6 +53,47 @@ export function useTcgProfile() {
     }, []);
 
     return { profile, loading, refresh, setUsername };
+}
+
+// ---- Profile Page ----
+
+export function useTcgProfilePage() {
+    const [profilePage, setProfilePage] = useState<TcgProfilePage | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const fetch = useCallback(async (targetCitizenid: string) => {
+        setLoading(true);
+        try {
+            const res = await fetchNui<{ targetCitizenid: string }, TcgProfilePage | null>(NuiEvent.PhoneAppTcgGetProfilePage, { targetCitizenid });
+            setProfilePage(res);
+        } catch (e) {
+            console.error('[TCG] getProfilePage error', e);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { profilePage, loading, fetch };
+}
+
+// ---- Set Bio ----
+
+export function useTcgSetBio() {
+    const [loading, setLoading] = useState(false);
+
+    const setBio = useCallback(async (bio: string): Promise<{ success: boolean; message?: string } | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<{ bio: string }, { success: boolean; message?: string }>(NuiEvent.PhoneAppTcgSetBio, { bio });
+        } catch (e) {
+            console.error('[TCG] setBio error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, setBio };
 }
 
 // ---- Daily status ----
@@ -116,6 +159,46 @@ export function useTcgCollection() {
     }, []);
 
     return { collection, loading, refresh };
+}
+
+// ---- Toggle Protected ----
+
+export function useTcgToggleProtected() {
+    const [loading, setLoading] = useState(false);
+
+    const toggle = useCallback(async (cardId: number): Promise<{ success: boolean; isProtected: boolean; message?: string } | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<{ cardId: number }, { success: boolean; isProtected: boolean; message?: string }>(NuiEvent.PhoneAppTcgToggleProtected, { cardId });
+        } catch (e) {
+            console.error('[TCG] toggleProtected error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, toggle };
+}
+
+// ---- Sell Set ----
+
+export function useTcgSellSet() {
+    const [loading, setLoading] = useState(false);
+
+    const sellSet = useCallback(async (archetype: string): Promise<TcgSellSetResult | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<{ archetype: string }, TcgSellSetResult>(NuiEvent.PhoneAppTcgSellSet, { archetype });
+        } catch (e) {
+            console.error('[TCG] sellSet error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, sellSet };
 }
 
 // ---- Contacts ----
@@ -272,4 +355,56 @@ export function useTcgShowcase() {
     }, []);
 
     return { items, loading, refresh, addShowcase, removeShowcase };
+}
+
+// ---- Avatar ----
+
+export function useTcgSetAvatar() {
+    const [loading, setLoading] = useState(false);
+
+    const setAvatar = useCallback(async (avatar: string): Promise<{ success: boolean; avatar?: string; message?: string } | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<{ avatar: string }, { success: boolean; avatar?: string; message?: string }>(NuiEvent.PhoneAppTcgSetAvatar, { avatar });
+        } catch (e) {
+            console.error('[TCG] setAvatar error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const removeAvatar = useCallback(async (): Promise<{ success: boolean } | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<void, { success: boolean }>(NuiEvent.PhoneAppTcgRemoveAvatar);
+        } catch (e) {
+            console.error('[TCG] removeAvatar error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, setAvatar, removeAvatar };
+}
+
+// ---- Border ----
+
+export function useTcgSetBorder() {
+    const [loading, setLoading] = useState(false);
+
+    const setBorder = useCallback(async (borderId: number | null): Promise<{ success: boolean; message?: string } | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<{ borderId: number | null }, { success: boolean; message?: string }>(NuiEvent.PhoneAppTcgSetBorder, { borderId });
+        } catch (e) {
+            console.error('[TCG] setBorder error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { loading, setBorder };
 }
