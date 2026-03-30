@@ -144,6 +144,50 @@ const CircleCrop: React.FC<{
     );
 };
 
+// ---- Avatar collection picker with card number search ----
+
+const AvatarCollectionPicker: React.FC<{
+    collection: Array<{ userCardId: number; cardId: number; name: string; image: string }>;
+    getPath: (p: string) => string;
+    onSelect: (imageUrl: string) => void;
+}> = ({ collection, getPath, onSelect }) => {
+    const [searchId, setSearchId] = useState('');
+
+    const filtered = React.useMemo(() => {
+        if (!searchId.trim()) return collection;
+        const num = parseInt(searchId, 10);
+        if (isNaN(num)) return collection;
+        return collection.filter(c => c.cardId === num || c.name.includes(searchId.trim()));
+    }, [collection, searchId]);
+
+    return (
+        <div className="flex flex-col gap-2">
+            <input
+                type="text"
+                value={searchId}
+                onChange={e => setSearchId(e.target.value)}
+                onKeyDown={e => e.stopPropagation()}
+                placeholder="Rechercher par n° de carte..."
+                className="w-full px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-[10px] placeholder-gray-500 outline-none"
+                data-phone-input="true"
+            />
+            <div className="grid grid-cols-4 gap-1.5 max-h-[200px] overflow-y-auto">
+                {filtered.map(card => (
+                    <button
+                        key={card.userCardId}
+                        className="rounded-lg overflow-hidden border border-white/10 hover:border-purple-500/50 transition-colors relative"
+                        onClick={() => onSelect(getPath(card.image))}
+                    >
+                        <img src={getPath(card.image)} alt={card.name} className="w-full object-cover" style={{ aspectRatio: '936 / 2000' }} />
+                        <span className="absolute bottom-0 left-0 right-0 text-[7px] text-white bg-black/60 text-center py-0.5">#{card.cardId}</span>
+                    </button>
+                ))}
+                {filtered.length === 0 && <p className="text-[9px] text-gray-500 col-span-4 text-center py-2">Aucun résultat</p>}
+            </div>
+        </div>
+    );
+};
+
 // ---- Main Profile component ----
 
 export const TcgProfile: React.FC = () => {
@@ -277,7 +321,7 @@ export const TcgProfile: React.FC = () => {
     if (loading) {
         return (
             <>
-                <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Profil</h2>
+                
                 <AppContent>
                     <div className="flex items-center justify-center h-full">
                         <span className="text-sm text-gray-400">Chargement...</span>
@@ -290,7 +334,7 @@ export const TcgProfile: React.FC = () => {
     if (!profilePage) {
         return (
             <>
-                <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Profil</h2>
+                
                 <AppContent>
                     <div className="flex flex-col items-center justify-center h-full gap-2">
                         <span className="text-sm text-gray-400">Utilisateur introuvable.</span>
@@ -312,12 +356,20 @@ export const TcgProfile: React.FC = () => {
 
     return (
         <>
-            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Profil</h2>
+            
             <AppContent>
                 <div className="flex flex-col h-full p-4 overflow-y-auto gap-4">
 
-                    {/* Avatar + Username */}
-                    <div className="flex flex-col items-center gap-2">
+                    {/* Avatar row: avatar centered, collection button to the right */}
+                    <div className="flex items-center justify-center gap-4">
+                        {/* Spacer left for centering (same width as button or empty) */}
+                        {!profilePage.isOwnProfile && contactStatus === 'accepted' ? (
+                            <div style={{ width: 80 }} />
+                        ) : profilePage.isOwnProfile ? (
+                            <div style={{ width: 80 }} />
+                        ) : null}
+
+                        <div className="flex flex-col items-center gap-2">
                         {profilePage.border ? (
                             /* With border: border image is the container, avatar sits inside slightly behind the frame */
                             <div className="relative" style={{ width: 130, height: 130 }}>
@@ -378,7 +430,30 @@ export const TcgProfile: React.FC = () => {
                                 )}
                             </div>
                         )}
+                        </div>
 
+                        {/* Collection button to the right of avatar */}
+                        {profilePage.isOwnProfile && (
+                            <button
+                                className="px-3 py-2 rounded-xl border border-cyan-500/30 text-cyan-300 text-[10px] font-semibold"
+                                style={{ width: 80 }}
+                                onClick={() => navigate('/tcg/collection')}
+                            >
+                                Ma Collection
+                            </button>
+                        )}
+                        {!profilePage.isOwnProfile && contactStatus === 'accepted' && (
+                            <button
+                                className="px-3 py-2 rounded-xl border border-cyan-500/30 text-cyan-300 text-[10px] font-semibold"
+                                style={{ width: 80 }}
+                                onClick={() => navigate(`/tcg/contacts/${profilePage.citizenid}/collection`)}
+                            >
+                                Sa Collection
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col items-center gap-1">
                         <span className="text-xl font-black tracking-wider" style={{ color: '#ffb860' }}>
                             {profilePage.username}
                         </span>
@@ -429,13 +504,13 @@ export const TcgProfile: React.FC = () => {
                     {profilePage.showcase.length > 0 && (
                         <div className="flex flex-col gap-2">
                             <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider text-center">Vitrine</span>
-                            <div className="flex justify-center gap-3">
+                            <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${Math.min(profilePage.showcase.length, 4)}, 1fr)` }}>
                                 {profilePage.showcase.map(item => (
                                     <div key={item.id} className="flex flex-col items-center gap-1">
                                         <img
                                             src={getPath(item.cardImage)}
                                             alt={item.cardName}
-                                            className="w-[85px] rounded-lg border border-white/10 cursor-pointer active:scale-95 transition-transform"
+                                            className="w-full rounded-lg border border-white/10 cursor-pointer active:scale-95 transition-transform"
                                             style={{ aspectRatio: '936 / 2000', objectFit: 'cover', boxShadow: '0 0 15px rgba(255, 140, 50, 0.15)' }}
                                             onClick={() => navigate(`/tcg/view/${item.cardId}`, {
                                                 state: {
@@ -444,7 +519,7 @@ export const TcgProfile: React.FC = () => {
                                                 }
                                             })}
                                         />
-                                        {item.description && <span className="text-[8px] text-gray-500 text-center max-w-[85px] truncate">{item.description}</span>}
+                                        {item.description && <span className="text-[7px] text-gray-500 text-center w-full truncate">{item.description}</span>}
                                     </div>
                                 ))}
                             </div>
@@ -457,14 +532,43 @@ export const TcgProfile: React.FC = () => {
                     )}
 
                     {/* Badges */}
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-3">
                         <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider text-center">Badges</span>
-                        {displayBadges.length === 0 ? (
-                            <div className="text-center py-2">
-                                <span className="text-[10px] text-gray-600 italic">Aucun badge pour le moment</span>
-                            </div>
-                        ) : profilePage.isOwnProfile ? (
-                            <div className="flex flex-col gap-3">
+
+                        {/* Big badge images: highest earned per category */}
+                        {(() => {
+                            const highestEarned: TcgBadge[] = [];
+                            for (const cat of ['collector', 'trader', 'merchant'] as const) {
+                                const catBadges = badgesByCategory[cat];
+                                if (!catBadges) continue;
+                                const earned = catBadges.filter(b => b.earned);
+                                if (earned.length > 0) highestEarned.push(earned[earned.length - 1]);
+                            }
+
+                            return highestEarned.length > 0 ? (
+                                <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${Math.min(highestEarned.length, 3)}, 1fr)` }}>
+                                    {highestEarned.map(badge => (
+                                        <div key={badge.id} className="flex flex-col items-center">
+                                            {badge.image ? (
+                                                <img src={getPath(badge.image)} alt={badge.label} className="w-full object-contain" style={{ maxHeight: 120 }} />
+                                            ) : (
+                                                <div className="w-full flex items-center justify-center" style={{ height: 120 }}>
+                                                    <span className="text-5xl">{badge.icon}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-2">
+                                    <span className="text-[10px] text-gray-600 italic">Aucun badge pour le moment</span>
+                                </div>
+                            );
+                        })()}
+
+                        {/* Detail section: own profile only */}
+                        {profilePage.isOwnProfile && displayBadges.length > 0 && (
+                            <div className="flex flex-col gap-3 mt-1">
                                 {(['collector', 'trader', 'merchant'] as const).map(cat => {
                                     const catBadges = badgesByCategory[cat];
                                     if (!catBadges || catBadges.length === 0) return null;
@@ -478,19 +582,6 @@ export const TcgProfile: React.FC = () => {
                                     );
                                 })}
                             </div>
-                        ) : (
-                            <div className="flex flex-wrap justify-center gap-2">
-                                {displayBadges.map(badge => (
-                                    <div
-                                        key={badge.id}
-                                        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border ${badge.earned ? 'bg-amber-500/10 border-amber-500/30' : 'bg-white/5 border-white/10 opacity-40'}`}
-                                        title={badge.description}
-                                    >
-                                        {badge.image ? <img src={getPath(badge.image)} alt={badge.label} className="w-4 h-4" /> : <span className="text-sm">{badge.icon}</span>}
-                                        <span className={`text-[9px] font-semibold ${badge.earned ? 'text-amber-300' : 'text-gray-500'}`}>{badge.label}</span>
-                                    </div>
-                                ))}
-                            </div>
                         )}
                     </div>
 
@@ -501,8 +592,6 @@ export const TcgProfile: React.FC = () => {
                         )}
                         {contactStatus === 'accepted' && (
                             <>
-                                <button className="w-full py-2.5 rounded-xl bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-sm font-semibold" onClick={() => navigate(`/tcg/contacts/${profilePage.citizenid}/collection`)}>👁️ Voir sa collection</button>
-                                <button className="w-full py-2.5 rounded-xl bg-orange-500/20 border border-orange-500/40 text-orange-300 text-sm font-semibold" onClick={() => navigate(`/tcg/contacts/${profilePage.citizenid}/collection`)}>🔄 Proposer un échange</button>
                                 {confirmRemove ? (
                                     <div className="flex gap-2">
                                         <button className="flex-1 py-2.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-400 text-sm font-bold" onClick={handleRemoveContact}>Confirmer</button>
@@ -588,17 +677,7 @@ export const TcgProfile: React.FC = () => {
                                     collection.length === 0 ? (
                                         <p className="text-[10px] text-gray-500 text-center py-4">Aucune carte dans ta collection.</p>
                                     ) : (
-                                        <div className="grid grid-cols-4 gap-1.5 max-h-[200px] overflow-y-auto">
-                                            {collection.map(card => (
-                                                <button
-                                                    key={card.userCardId}
-                                                    className="rounded-lg overflow-hidden border border-white/10 hover:border-purple-500/50 transition-colors"
-                                                    onClick={() => setCropImage(getPath(card.image))}
-                                                >
-                                                    <img src={getPath(card.image)} alt={card.name} className="w-full object-cover" style={{ aspectRatio: '936 / 2000' }} />
-                                                </button>
-                                            ))}
-                                        </div>
+                                        <AvatarCollectionPicker collection={collection} getPath={getPath} onSelect={(img) => setCropImage(img)} />
                                     )
                                 )}
 
@@ -696,7 +775,7 @@ const BadgeRow: React.FC<{ badge: TcgBadge; getPath: (p: string) => string }> = 
             </div>
             <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-0.5">
-                    <span className="text-[10px] text-white font-semibold">{badge.label}</span>
+                    <span className="text-[10px] font-semibold" style={{ color: 'var(--text-primary, #fff)' }}>{badge.label}</span>
                     <span className="text-[8px] text-gray-500">{progress}/{target}</span>
                 </div>
                 <p className="text-[8px] text-gray-500 mb-1 truncate">{badge.description}</p>

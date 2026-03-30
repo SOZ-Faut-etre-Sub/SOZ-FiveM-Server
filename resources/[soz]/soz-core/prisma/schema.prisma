@@ -1248,6 +1248,10 @@ model tcg_profile {
   total_sets_sold_classic      Int         @default(0)
   total_sets_sold_cute         Int         @default(0)
   total_sets_sold_event        Int         @default(0)
+  available_claims             Int         @default(1)
+  last_accumulate_date         String?     @db.VarChar(10)
+  claim_streak                 Int         @default(0)
+  last_streak_claim_date       String?     @db.VarChar(10)
   created_at                   DateTime    @default(now())
   tcg_border                   tcg_border? @relation(fields: [border_id], references: [id])
 }

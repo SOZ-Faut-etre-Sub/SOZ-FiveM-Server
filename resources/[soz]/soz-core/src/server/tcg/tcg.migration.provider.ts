@@ -31,8 +31,14 @@ export class TcgMigrationProvider {
         await this.migrateProfileStats();
         await this.migrateProfileBio();
         await this.migrateProfileAvatar();
+        await this.migrateProfileClaimSystem();
+        await this.migrateTcgBankAccount();
+        await this.migrateSetPricesTable();
+        await this.migrateWeeklyPackTable();
         await this.syncCards();
+        await this.retagNullArchetypes();
         await this.syncBorders();
+        await this.syncSetPrices();
     }
 
     // ---- Création automatique des tables TCG si absentes ----
@@ -376,6 +382,132 @@ export class TcgMigrationProvider {
         }
     }
 
+    // ---- Migration : colonnes claim system sur tcg_profile ----
+
+    private async migrateProfileClaimSystem(): Promise<void> {
+        const columns = await this.prismaService.$queryRaw<{ Field: string }[]>`
+            SHOW COLUMNS FROM tcg_profile LIKE 'available_claims'
+        `;
+
+        if (columns.length === 0) {
+            await this.prismaService.$executeRawUnsafe(`
+                ALTER TABLE tcg_profile
+                    ADD COLUMN available_claims INT NOT NULL DEFAULT 1,
+                    ADD COLUMN last_accumulate_date VARCHAR(10) NULL,
+                    ADD COLUMN claim_streak INT NOT NULL DEFAULT 0,
+                    ADD COLUMN last_streak_claim_date VARCHAR(10) NULL
+            `);
+            console.log('[TCG Migration] Colonnes claim system ajoutées à tcg_profile');
+        }
+    }
+
+    // ---- Migration : compte bancaire TCG Service ----
+
+    private async migrateTcgBankAccount(): Promise<void> {
+        const existing = await this.prismaService.$queryRaw<{ accountid: string }[]>`
+            SELECT accountid FROM bank_accounts WHERE accountid = 'tcg-service'
+        `;
+
+        if (existing.length === 0) {
+            await this.prismaService.$executeRawUnsafe(`
+                INSERT INTO bank_accounts (accountid, account_type, money, marked_money)
+                VALUES ('tcg-service', 'business', 10000000, 0)
+            `);
+            console.log('[TCG Migration] Compte bancaire tcg-service créé avec 10 000 000$');
+        }
+    }
+
+    // ---- Migration : table tcg_set_price ----
+
+    private async migrateSetPricesTable(): Promise<void> {
+        const tables = await this.prismaService.$queryRaw<{ table_name: string }[]>`
+            SELECT TABLE_NAME as table_name FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tcg_set_price'
+        `;
+
+        if (tables.length === 0) {
+            await this.prismaService.$executeRawUnsafe(`
+                CREATE TABLE tcg_set_price (
+                    id INT NOT NULL AUTO_INCREMENT,
+                    rank_order INT NOT NULL,
+                    archetype VARCHAR(50) NOT NULL,
+                    tier VARCHAR(30) NOT NULL DEFAULT 'COMMUNE',
+                    set_price INT NOT NULL DEFAULT 100000,
+                    prompt_count INT NOT NULL DEFAULT 0,
+                    PRIMARY KEY (id),
+                    UNIQUE KEY tcg_set_price_archetype_key (archetype)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            `);
+            console.log('[TCG Migration] Table tcg_set_price créée');
+        }
+    }
+
+    // ---- Migration : table tcg_weekly_pack ----
+
+    private async migrateWeeklyPackTable(): Promise<void> {
+        const tables = await this.prismaService.$queryRaw<{ table_name: string }[]>`
+            SELECT TABLE_NAME as table_name FROM information_schema.TABLES
+            WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'tcg_weekly_pack'
+        `;
+
+        if (tables.length === 0) {
+            await this.prismaService.$executeRawUnsafe(`
+                CREATE TABLE tcg_weekly_pack (
+                    id INT NOT NULL AUTO_INCREMENT,
+                    citizenid VARCHAR(50) NOT NULL,
+                    week_key VARCHAR(10) NOT NULL,
+                    packs_bought INT NOT NULL DEFAULT 0,
+                    last_buy_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+                    PRIMARY KEY (id),
+                    UNIQUE KEY tcg_weekly_pack_citizen_week_key (citizenid, week_key)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            `);
+            console.log('[TCG Migration] Table tcg_weekly_pack créée');
+        }
+    }
+
+    // ---- Sync set_prices.csv ----
+
+    private async syncSetPrices(): Promise<void> {
+        const csvPath = path.join(TCG_ROOT_DIR, 'set_prices.csv');
+        if (!fs.existsSync(csvPath)) {
+            console.log(`[TCG Migration] set_prices.csv introuvable (ignoré) : ${csvPath}`);
+            return;
+        }
+
+        const content = fs.readFileSync(csvPath, 'utf-8');
+        const lines = content.split('\n').map(l => l.trim().replace(/\r$/, ''));
+
+        // Skip header: rank;archetype;tier;set_price;prompt_count
+        const entries: { rank: number; archetype: string; tier: string; price: number; promptCount: number }[] = [];
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i];
+            if (!line) continue;
+            const parts = line.split(';');
+            if (parts.length < 5) continue;
+            entries.push({
+                rank: parseInt(parts[0], 10),
+                archetype: parts[1].trim(),
+                tier: parts[2].trim(),
+                price: parseInt(parts[3], 10),
+                promptCount: parseInt(parts[4], 10),
+            });
+        }
+
+        if (entries.length === 0) return;
+
+        // Upsert each entry
+        for (const e of entries) {
+            await this.prismaService.$executeRawUnsafe(`
+                INSERT INTO tcg_set_price (rank_order, archetype, tier, set_price, prompt_count)
+                VALUES (?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE rank_order = VALUES(rank_order), tier = VALUES(tier), set_price = VALUES(set_price), prompt_count = VALUES(prompt_count)
+            `, e.rank, e.archetype, e.tier, e.price, e.promptCount);
+        }
+
+        console.log(`[TCG Migration] ${entries.length} prix de set synchronisés depuis set_prices.csv`);
+    }
+
     // ---- Lecture du tags.csv ----
 
     private loadTagsCsv(): Map<string, string> {
@@ -490,6 +622,37 @@ export class TcgMigrationProvider {
         const withTag = newCards.filter(c => c.archetype).length;
         const withoutTag = newCards.length - withTag;
         console.log(`[TCG Migration] ${newCards.length} nouvelle(s) carte(s) insérée(s) (${withTag} taguées, ${withoutTag} sans tag)`);
+    }
+
+    // ---- Re-tag cartes sans archétype (à chaque démarrage) ----
+
+    private async retagNullArchetypes(): Promise<void> {
+        const tags = this.loadTagsCsv();
+        if (tags.size === 0) return;
+
+        const cards = await this.prismaService.tcg_card.findMany({
+            where: { archetype: null },
+            select: { id: true, image: true },
+        });
+
+        if (cards.length === 0) return;
+
+        let updated = 0;
+        for (const card of cards) {
+            const filename = card.image.split('/').pop() ?? '';
+            const archetype = tags.get(filename);
+            if (archetype) {
+                await this.prismaService.tcg_card.update({
+                    where: { id: card.id },
+                    data: { archetype },
+                });
+                updated++;
+            }
+        }
+
+        if (updated > 0) {
+            console.log(`[TCG Migration] ${updated} carte(s) re-taguées depuis tags.csv`);
+        }
     }
 
     // ---- Sync borders depuis les assets ----

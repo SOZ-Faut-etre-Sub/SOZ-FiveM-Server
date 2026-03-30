@@ -795,6 +795,10 @@ export enum NuiEvent {
     PhoneAppTcgSetAvatar = 'soz-core:nui:phone:app-tcg-set-avatar',
     PhoneAppTcgRemoveAvatar = 'soz-core:nui:phone:app-tcg-remove-avatar',
     PhoneAppTcgSetBorder = 'soz-core:nui:phone:app-tcg-set-border',
+    PhoneAppTcgGetWeeklyPackStatus = 'soz-core:nui:phone:app-tcg-get-weekly-pack-status',
+    PhoneAppTcgBuyWeeklyPack = 'soz-core:nui:phone:app-tcg-buy-weekly-pack',
+    PhoneAppTcgGetMarketPrices = 'soz-core:nui:phone:app-tcg-get-market-prices',
+    PhoneAppTcgGetShowcaseContacts = 'soz-core:nui:phone:app-tcg-get-showcase-contacts',
 		
 	PhoneAppIaLegalAskQuestion = 'soz-core:nui:phone:app-ia-legal-ask-question',
 

@@ -508,4 +508,38 @@ export class TcgRepository {
             include: { tcg_border: true },
         });
     }
+
+    // ---- Weekly Pack ----
+
+    async getWeeklyPackRecord(citizenid: string, weekKey: string): Promise<{ packs_bought: number } | null> {
+        const rows = await this.prismaService.$queryRaw<{ packs_bought: number }[]>`
+            SELECT packs_bought FROM tcg_weekly_pack
+            WHERE citizenid = ${citizenid} AND week_key = ${weekKey}
+        `;
+        return rows.length > 0 ? rows[0] : null;
+    }
+
+    async upsertWeeklyPack(citizenid: string, weekKey: string): Promise<void> {
+        await this.prismaService.$executeRawUnsafe(`
+            INSERT INTO tcg_weekly_pack (citizenid, week_key, packs_bought, last_buy_at)
+            VALUES (?, ?, 1, NOW(3))
+            ON DUPLICATE KEY UPDATE packs_bought = packs_bought + 1, last_buy_at = NOW(3)
+        `, citizenid, weekKey);
+    }
+
+    // ---- Set Prices ----
+
+    async getSetPrice(archetype: string): Promise<number | null> {
+        const rows = await this.prismaService.$queryRaw<{ set_price: number }[]>`
+            SELECT set_price FROM tcg_set_price WHERE archetype = ${archetype}
+        `;
+        return rows.length > 0 ? Number(rows[0].set_price) : null;
+    }
+
+    async getAllSetPrices(): Promise<Array<{ rank_order: number; archetype: string; tier: string; set_price: number; prompt_count: number }>> {
+        return this.prismaService.$queryRaw<Array<{ rank_order: number; archetype: string; tier: string; set_price: number; prompt_count: number }>>`
+            SELECT rank_order, archetype, tier, set_price, prompt_count
+            FROM tcg_set_price ORDER BY rank_order ASC
+        `;
+    }
 }

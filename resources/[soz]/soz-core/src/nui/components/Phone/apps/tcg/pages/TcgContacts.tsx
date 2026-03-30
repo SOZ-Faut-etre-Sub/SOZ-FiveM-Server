@@ -42,7 +42,7 @@ export const TcgContacts: React.FC = () => {
 
     return (
         <>
-            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold text-gray-200">Contacts TCG</h2>
+            <h2 className="px-4 pt-1 pb-2 text-lg font-semibold" style={{ color: 'var(--text-primary, #e5e7eb)', textShadow: '0 0 3px rgba(0,0,0,0.2)' }}>Contacts TCG</h2>
             <AppContent>
                 <div className="flex flex-col h-full p-3 overflow-y-auto gap-4">
 
@@ -119,9 +119,17 @@ export const TcgContacts: React.FC = () => {
                             <span className="text-xs text-orange-400 font-semibold uppercase tracking-wider">Demandes envoyées ({pendingSent.length})</span>
                             {pendingSent.map(contact => (
                                 <div key={contact.id} className="flex items-center gap-2 p-3 rounded-lg bg-white/5 border border-white/10">
-                                    <ContactAvatar avatar={contact.avatar} getPath={getPath} />
-                                    <span className="text-sm text-white flex-1">{contact.displayName}</span>
-                                    <span className="text-xs text-orange-300">En attente...</span>
+                                    <div
+                                        className="flex items-center gap-2 flex-1 min-w-0 cursor-pointer active:opacity-80"
+                                        onClick={() => {
+                                            const otherId = contact.isSender ? contact.targetId : contact.citizenid;
+                                            navigate(`/tcg/profile/${otherId}`);
+                                        }}
+                                    >
+                                        <ContactAvatar avatar={contact.avatar} getPath={getPath} />
+                                        <span className="text-sm text-white flex-1">{contact.displayName}</span>
+                                    </div>
+                                    <span className="text-xs text-orange-300 flex-shrink-0">En attente...</span>
                                 </div>
                             ))}
                         </div>

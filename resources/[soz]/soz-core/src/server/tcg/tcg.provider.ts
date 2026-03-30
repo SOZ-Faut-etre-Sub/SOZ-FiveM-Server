@@ -3,7 +3,7 @@ import { Provider } from '@public/core/decorators/provider';
 import { Inject } from '../../core/decorators/injectable';
 import { Rpc } from '../../core/decorators/rpc';
 import { RpcServerEvent } from '../../shared/rpc';
-import { TcgCreateTradeInput, TcgRespondTradeInput } from '../../shared/tcg/tcg.types';
+import { TcgCreateTradeInput, TcgRespondTradeInput, TcgWeeklyPackResult, TcgWeeklyPackStatus, TcgMarketPrice } from '../../shared/tcg/tcg.types';
 import { PlayerService } from '../player/player.service';
 import { TcgService } from './tcg.service';
 
@@ -213,5 +213,35 @@ export class TcgProvider {
         const cid = this.getCitizenId(source);
         if (!cid) return { success: false, message: 'Joueur introuvable.' };
         return this.tcgService.setBorder(cid, borderId);
+    }
+
+    // ---- Weekly Pack ----
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_WEEKLY_PACK_STATUS)
+    async getWeeklyPackStatus(source: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return null;
+        return this.tcgService.getWeeklyPackStatus(cid);
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_BUY_WEEKLY_PACK)
+    async buyWeeklyPack(source: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return { success: false, cards: [], message: 'Joueur introuvable.' };
+        return this.tcgService.buyWeeklyPack(cid);
+    }
+
+    // ---- Market (Cours) ----
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_MARKET_PRICES)
+    async getMarketPrices() {
+        return this.tcgService.getMarketPrices();
+    }
+
+    @Rpc(RpcServerEvent.PHONE_APP_TCG_GET_SHOWCASE_CONTACTS)
+    async getShowcaseContacts(source: number) {
+        const cid = this.getCitizenId(source);
+        if (!cid) return [];
+        return this.tcgService.getShowcaseContacts(cid);
     }
 }

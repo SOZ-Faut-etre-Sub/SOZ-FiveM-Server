@@ -17,6 +17,9 @@ import {
     TcgShowcaseResult,
     TcgTradeOffer,
     TcgTradeResult,
+    TcgWeeklyPackStatus,
+    TcgWeeklyPackResult,
+    TcgMarketPrice,
 } from '../../../../../../shared/tcg/tcg.types';
 import { fetchNui } from '../../../../../fetch';
 
@@ -407,4 +410,79 @@ export function useTcgSetBorder() {
     }, []);
 
     return { loading, setBorder };
+}
+
+// ---- Showcase (contacts only) ----
+
+export function useTcgShowcaseContacts() {
+    const [items, setItems] = useState<TcgShowcaseItem[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const refresh = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await fetchNui<void, TcgShowcaseItem[]>(NuiEvent.PhoneAppTcgGetShowcaseContacts);
+            setItems(res ?? []);
+        } catch (e) {
+            console.error('[TCG] getShowcaseContacts error', e);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { items, loading, refresh };
+}
+
+// ---- Weekly Pack ----
+
+export function useTcgWeeklyPack() {
+    const [status, setStatus] = useState<TcgWeeklyPackStatus | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const refresh = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await fetchNui<void, TcgWeeklyPackStatus>(NuiEvent.PhoneAppTcgGetWeeklyPackStatus);
+            setStatus(res);
+        } catch (e) {
+            console.error('[TCG] getWeeklyPackStatus error', e);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const buy = useCallback(async (): Promise<TcgWeeklyPackResult | null> => {
+        setLoading(true);
+        try {
+            return await fetchNui<void, TcgWeeklyPackResult>(NuiEvent.PhoneAppTcgBuyWeeklyPack);
+        } catch (e) {
+            console.error('[TCG] buyWeeklyPack error', e);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { status, loading, refresh, buy };
+}
+
+// ---- Market (Cours) ----
+
+export function useTcgMarket() {
+    const [prices, setPrices] = useState<TcgMarketPrice[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const refresh = useCallback(async () => {
+        setLoading(true);
+        try {
+            const res = await fetchNui<void, TcgMarketPrice[]>(NuiEvent.PhoneAppTcgGetMarketPrices);
+            setPrices(res ?? []);
+        } catch (e) {
+            console.error('[TCG] getMarketPrices error', e);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { prices, loading, refresh };
 }

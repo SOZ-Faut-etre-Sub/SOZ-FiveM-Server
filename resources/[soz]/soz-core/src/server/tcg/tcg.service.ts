@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@core/decorators/injectable';
 
 import {
-    TCG_DAILY_FREE_CARDS,
+    TCG_DAILY_CARD_RATE,
+    TCG_MAX_ACCUMULATED,
+    TCG_STREAK_BONUS,
+    TCG_STREAK_TARGET,
+    TCG_STREAK_TIMEOUT_HOURS,
     TCG_USERNAME_MIN,
     TCG_USERNAME_MAX,
     TCG_USERNAME_REGEX,
@@ -12,6 +16,11 @@ import {
     TCG_ARCHETYPES,
     TCG_BIO_MAX,
     TCG_BIO_REGEX,
+    TCG_SERVICE_ACCOUNT,
+    TCG_TRADE_TAX_RATE,
+    TCG_WEEKLY_PACK_SIZE,
+    TCG_WEEKLY_PACK_FIRST_PRICE,
+    TCG_WEEKLY_PACK_NEXT_PRICE,
     TcgDailyStatus,
     TcgClaimResult,
     TcgCollectionCard,
@@ -29,6 +38,10 @@ import {
     TcgShowcaseResult,
     TcgSellSetResult,
     TcgBorderData,
+    TcgWeeklyPackStatus,
+    TcgWeeklyPackResult,
+    TcgMarketPrice,
+    TcgCardData,
     getArchetypeCategory,
 } from '../../shared/tcg/tcg.types';
 import { ClientEvent } from '../../shared/event/client';
@@ -364,36 +377,146 @@ export class TcgService {
         };
     }
 
-    // ---- Daily status & claim (unique cards) ----
+    // ---- Claim system: accumulation + streak ----
 
-    async getDailyStatus(citizenid: string): Promise<TcgDailyStatus> {
-        const claim = await this.repository.getDailyClaim(citizenid, getTodayDate());
-        const claimedToday = claim?.claimed_count ?? 0;
-        const availableCards = await this.repository.getAvailableCardCount();
+    /**
+     * Accumulates cards based on days since last accumulation.
+     * Called before getDailyStatus and claimDailyCards.
+     * Returns updated profile data.
+     */
+    private async accumulateCards(citizenid: string): Promise<void> {
+        const profile = await this.repository.getProfile(citizenid);
+        if (!profile) return;
+
+        const today = getTodayDate();
+        const lastAccDate = (profile as any).last_accumulate_date ?? null;
+
+        if (lastAccDate === today) return; // already accumulated today
+
+        // Calculate days since last accumulation (or since profile creation)
+        let daysSince = 1;
+        if (lastAccDate) {
+            const last = new Date(lastAccDate + 'T00:00:00Z');
+            const now = new Date(today + 'T00:00:00Z');
+            daysSince = Math.max(1, Math.floor((now.getTime() - last.getTime()) / (24 * 60 * 60 * 1000)));
+        } else {
+            // First time — days since profile creation
+            const created = new Date((profile as any).created_at);
+            const now = new Date(today + 'T00:00:00Z');
+            daysSince = Math.max(1, Math.floor((now.getTime() - created.getTime()) / (24 * 60 * 60 * 1000)));
+        }
+
+        const currentClaims = (profile as any).available_claims ?? 0;
+        const newClaims = Math.min(TCG_MAX_ACCUMULATED, currentClaims + daysSince * TCG_DAILY_CARD_RATE);
+
+        await this.prismaService.tcg_profile.update({
+            where: { citizenid },
+            data: {
+                available_claims: newClaims,
+                last_accumulate_date: today,
+            },
+        });
+    }
+
+    /**
+     * Check and update streak. Reset if >48h since last claim.
+     */
+    private async getStreakInfo(citizenid: string): Promise<{ streak: number; isBonus: boolean }> {
+        const profile = await this.prismaService.tcg_profile.findUnique({ where: { citizenid } });
+        if (!profile) return { streak: 0, isBonus: false };
+
+        const streak = (profile as any).claim_streak ?? 0;
+        const lastStreakDate = (profile as any).last_streak_claim_date ?? null;
+
+        // Check if streak should be reset (>48h without claim)
+        if (lastStreakDate) {
+            const lastDate = new Date(lastStreakDate + 'T00:00:00Z');
+            const now = new Date();
+            const hoursSince = (now.getTime() - lastDate.getTime()) / (1000 * 60 * 60);
+
+            if (hoursSince > TCG_STREAK_TIMEOUT_HOURS) {
+                // Reset streak
+                await this.prismaService.tcg_profile.update({
+                    where: { citizenid },
+                    data: { claim_streak: 0 },
+                });
+                return { streak: 0, isBonus: false };
+            }
+        }
 
         return {
-            dailyLimit: TCG_DAILY_FREE_CARDS,
-            claimedToday,
-            remainingToday: Math.max(0, TCG_DAILY_FREE_CARDS - claimedToday),
+            streak,
+            isBonus: streak + 1 >= TCG_STREAK_TARGET, // next claim will be the 7th
+        };
+    }
+
+    async getDailyStatus(citizenid: string): Promise<TcgDailyStatus> {
+        await this.accumulateCards(citizenid);
+
+        const profile = await this.prismaService.tcg_profile.findUnique({ where: { citizenid } });
+        const availableClaims = (profile as any)?.available_claims ?? 0;
+        const availableCards = await this.repository.getAvailableCardCount();
+        const streakInfo = await this.getStreakInfo(citizenid);
+
+        // Calculate time until next card
+        let nextCardIn: string | null = null;
+        if (availableClaims < TCG_MAX_ACCUMULATED) {
+            const lastAccDate = (profile as any)?.last_accumulate_date;
+            if (lastAccDate) {
+                const lastDate = new Date(lastAccDate + 'T00:00:00Z');
+                const nextDate = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
+                const now = new Date();
+                const hoursLeft = Math.max(0, Math.ceil((nextDate.getTime() - now.getTime()) / (1000 * 60 * 60)));
+                nextCardIn = hoursLeft <= 0 ? 'bientôt' : `${hoursLeft}h`;
+            }
+        }
+
+        return {
+            availableClaims,
+            maxAccumulated: TCG_MAX_ACCUMULATED,
+            streak: streakInfo.streak,
+            streakTarget: TCG_STREAK_TARGET,
+            isStreakBonus: streakInfo.isBonus,
             availableCards,
+            nextCardIn,
         };
     }
 
     async claimDailyCards(citizenid: string): Promise<TcgClaimResult> {
-        const today = getTodayDate();
-        const claim = await this.repository.getDailyClaim(citizenid, today);
-        const claimedToday = claim?.claimed_count ?? 0;
+        await this.accumulateCards(citizenid);
 
-        if (claimedToday >= TCG_DAILY_FREE_CARDS) {
-            return { success: false, cards: [], remainingToday: 0, message: 'Tu as déjà récupéré tes cartes du jour !' };
+        const profile = await this.prismaService.tcg_profile.findUnique({ where: { citizenid } });
+        if (!profile) return { success: false, cards: [], remainingClaims: 0, wasStreakBonus: false, newStreak: 0, message: 'Profil introuvable.' };
+
+        const availableClaims = (profile as any).available_claims ?? 0;
+        if (availableClaims <= 0) {
+            return { success: false, cards: [], remainingClaims: 0, wasStreakBonus: false, newStreak: (profile as any).claim_streak ?? 0, message: 'Aucune carte gratuite disponible.' };
         }
 
-        const cardsToGive = TCG_DAILY_FREE_CARDS - claimedToday;
         const availableCards = await this.repository.getAvailableCards();
-
         if (availableCards.length === 0) {
-            return { success: false, cards: [], remainingToday: cardsToGive, message: 'Plus aucune carte disponible pour le moment.' };
+            return { success: false, cards: [], remainingClaims: availableClaims, wasStreakBonus: false, newStreak: (profile as any).claim_streak ?? 0, message: 'Plus aucune carte disponible pour le moment.' };
         }
+
+        // Determine how many cards to give (1 or 2 if streak bonus)
+        const streakInfo = await this.getStreakInfo(citizenid);
+        const today = getTodayDate();
+        const lastStreakDate = (profile as any).last_streak_claim_date ?? null;
+        const alreadyClaimedToday = lastStreakDate === today;
+
+        let cardsToGive = 1;
+        let wasStreakBonus = false;
+        let newStreak = streakInfo.streak;
+
+        if (streakInfo.isBonus && !alreadyClaimedToday) {
+            // This claim triggers the streak bonus
+            cardsToGive = TCG_STREAK_BONUS;
+            wasStreakBonus = true;
+            newStreak = 0; // reset streak after bonus
+        } else if (!alreadyClaimedToday) {
+            newStreak = streakInfo.streak + 1;
+        }
+        // If already claimed today, streak doesn't change (no multi-streak per day)
 
         const actualDraw = Math.min(cardsToGive, availableCards.length);
         const shuffled = [...availableCards].sort(() => Math.random() - 0.5);
@@ -414,14 +537,23 @@ export class TcgService {
             }
         }
 
-        const newCount = claimedToday + obtainedCards.length;
-        await this.repository.upsertDailyClaim(citizenid, today, newCount);
-
         if (obtainedCards.length > 0) {
+            // Update profile: decrement available_claims, update streak
+            const newAvailable = Math.max(0, availableClaims - 1); // always consume 1 claim even if bonus gave 2 cards
+            await this.prismaService.tcg_profile.update({
+                where: { citizenid },
+                data: {
+                    available_claims: newAvailable,
+                    claim_streak: newStreak,
+                    last_streak_claim_date: today,
+                },
+            });
+
             const player = this.playerService.getPlayerByCitizenId(citizenid);
             if (player) {
                 this.playerHealthProvider.increaseStress(player.source, -2);
             }
+
             // Increment persistent counters per category
             try {
                 const categoryCounts: Record<string, number> = {};
@@ -435,11 +567,17 @@ export class TcgService {
             } catch { /* profile may not exist yet in edge cases */ }
         }
 
+        const finalProfile = await this.prismaService.tcg_profile.findUnique({ where: { citizenid } });
+
         return {
             success: obtainedCards.length > 0,
             cards: obtainedCards,
-            remainingToday: Math.max(0, TCG_DAILY_FREE_CARDS - newCount),
-            message: obtainedCards.length === 0 ? 'Aucune carte n\'a pu être attribuée.' : undefined,
+            remainingClaims: (finalProfile as any)?.available_claims ?? 0,
+            wasStreakBonus,
+            newStreak,
+            message: obtainedCards.length === 0 ? 'Aucune carte n\'a pu être attribuée.'
+                : wasStreakBonus ? `🔥 Bonus série ${TCG_STREAK_TARGET} jours ! ${obtainedCards.length} cartes obtenues !`
+                : undefined,
         };
     }
 
@@ -493,6 +631,24 @@ export class TcgService {
             };
         }
 
+        // Get the set price from tcg_set_price table
+        const setPrice = await this.repository.getSetPrice(archetype);
+        if (setPrice === null || setPrice <= 0) {
+            return { success: false, message: `Aucun prix défini pour l'archétype ${archetype}.` };
+        }
+
+        // Check TCG service account has enough money
+        const tcgBalance = await this.bankService.getAccountMoney(TCG_SERVICE_ACCOUNT);
+        if (tcgBalance === undefined || tcgBalance < setPrice) {
+            return { success: false, message: 'Le TCG Service n\'a pas assez de fonds pour racheter ce set.' };
+        }
+
+        // Get player bank account
+        const playerAccount = await this.getBankAccount(citizenid);
+        if (!playerAccount) {
+            return { success: false, message: 'Compte bancaire introuvable.' };
+        }
+
         // Pick TCG_SET_SIZE random cards from the unprotected ones
         const shuffled = [...cards].sort(() => Math.random() - 0.5);
         const toRelease = shuffled.slice(0, TCG_SET_SIZE);
@@ -514,6 +670,21 @@ export class TcgService {
         // Release the cards (delete ownership — cards become available for daily claims again)
         const released = await this.repository.releaseCards(cardIds);
 
+        // Pay the player from TCG Service account
+        const paid = await this.bankService.transferBankMoney(
+            TCG_SERVICE_ACCOUNT,
+            playerAccount,
+            'money',
+            setPrice,
+            false,
+            `TCG Service - Vente set ${archetype}`
+        );
+
+        if (!paid) {
+            // Cards already released, but payment failed — log error, still count as sold
+            console.error(`[TCG] Paiement échoué pour set ${archetype} de ${citizenid} ($${setPrice})`);
+        }
+
         // Increment persistent counter
         try {
             const category = getArchetypeCategory(archetype);
@@ -521,16 +692,17 @@ export class TcgService {
         } catch { /* ignore */ }
 
         // SMS confirmation
-        const cardNames = toRelease.map(c => c.tcg_card.name).join(', ');
+        const priceFormatted = setPrice.toLocaleString('fr-FR');
         await this.sendTcgSms(
             citizenid,
-            `Set ${archetype} vendu ! ${released} carte(s) remises en circulation.`
+            `Set ${archetype} vendu ! ${released} carte(s) remises en circulation. $${priceFormatted} versés sur votre compte.`
         );
 
         return {
             success: true,
-            message: `Set ${archetype} vendu ! ${released} carte(s) remises en circulation.`,
+            message: `Set ${archetype} vendu ! $${priceFormatted} versés sur votre compte.`,
             releasedCount: released,
+            payout: setPrice,
         };
     }
 
@@ -739,8 +911,12 @@ export class TcgService {
                 return { success: false, message: 'Impossible de trouver les comptes bancaires.' };
             }
 
+            const grossAmount = trade.offer_amount;
+            const taxAmount = Math.floor(grossAmount * TCG_TRADE_TAX_RATE);
+            const netAmount = grossAmount - taxAmount;
+
             const balance = await this.bankService.getAccountMoney(senderAccount);
-            if (balance < trade.offer_amount) {
+            if (balance < grossAmount) {
                 await this.repository.updateTradeStatus(trade.id, 'cancelled');
                 await this.sendTcgSms(
                     trade.sender_id,
@@ -749,11 +925,12 @@ export class TcgService {
                 return { success: false, message: 'L\'échange a été annulé : le demandeur n\'a plus les fonds suffisants.' };
             }
 
+            // Transfer net amount (after tax) to receiver
             const transferred = await this.bankService.transferBankMoney(
                 senderAccount,
                 receiverAccount,
                 'money',
-                trade.offer_amount,
+                netAmount,
                 false,
                 `TCG Service - Carte ${trade.requested_card.name}`
             );
@@ -767,15 +944,34 @@ export class TcgService {
                 return { success: false, message: 'L\'échange a été annulé : le demandeur n\'a plus les fonds suffisants.' };
             }
 
+            // Transfer tax to TCG Service account
+            if (taxAmount > 0) {
+                const taxPaid = await this.bankService.transferBankMoney(
+                    senderAccount,
+                    TCG_SERVICE_ACCOUNT,
+                    'money',
+                    taxAmount,
+                    true, // allowOverflow for TCG service account
+                    `TCG Service - Taxe échange carte ${trade.requested_card.name}`
+                );
+                if (!taxPaid) {
+                    console.error(`[TCG] Taxe de $${taxAmount} non perçue pour trade #${trade.id}`);
+                }
+            }
+
             await this.repository.transferCard(trade.requested_card_id, trade.receiver_id, trade.sender_id);
+
+            const taxFormatted = taxAmount.toLocaleString('fr-FR');
+            const netFormatted = netAmount.toLocaleString('fr-FR');
+            const grossFormatted = grossAmount.toLocaleString('fr-FR');
 
             await this.sendTcgSms(
                 trade.sender_id,
-                `Votre demande d'échange pour la carte ${trade.requested_card.name} détenue par ${receiverName} a été acceptée.`
+                `Votre demande d'échange pour la carte ${trade.requested_card.name} détenue par ${receiverName} a été acceptée. $${grossFormatted} débités (dont $${taxFormatted} de taxe).`
             );
             await this.sendTcgSms(
                 trade.receiver_id,
-                `L'échange de votre carte ${trade.requested_card.name} à ${senderName} vous a rapporté $${trade.offer_amount}.`
+                `L'échange de votre carte ${trade.requested_card.name} à ${senderName} vous a rapporté $${netFormatted} (taxe 7% déduite).`
             );
 
         } else if (trade.offer_type === 'card') {
@@ -889,6 +1085,187 @@ export class TcgService {
         this.showcaseRelaxCooldown[citizenid] = now;
         this.playerHealthProvider.increaseStress(source, -2);
         return { success: true };
+    }
+
+    // ---- Weekly Pack ----
+
+    private getWeekKey(): string {
+        // Returns YYYY-Www (ISO week, resets Monday)
+        const now = new Date();
+        const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+        const dayNum = d.getUTCDay() || 7; // Mon=1, Sun=7
+        d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+        const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+        return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+    }
+
+    async getWeeklyPackStatus(citizenid: string): Promise<TcgWeeklyPackStatus> {
+        const weekKey = this.getWeekKey();
+        const record = await this.repository.getWeeklyPackRecord(citizenid, weekKey);
+        const packsBought = record?.packs_bought ?? 0;
+        const nextPrice = packsBought === 0 ? TCG_WEEKLY_PACK_FIRST_PRICE : TCG_WEEKLY_PACK_NEXT_PRICE;
+        const availableCards = await this.repository.getAvailableCardCount();
+
+        const playerAccount = await this.getBankAccount(citizenid);
+        let canAfford = false;
+        if (playerAccount) {
+            const balance = await this.bankService.getAccountMoney(playerAccount);
+            canAfford = balance !== undefined && balance >= nextPrice;
+        }
+
+        return { packsBoughtThisWeek: packsBought, nextPrice, availableCards, canAfford };
+    }
+
+    async buyWeeklyPack(citizenid: string): Promise<TcgWeeklyPackResult> {
+        const weekKey = this.getWeekKey();
+        const record = await this.repository.getWeeklyPackRecord(citizenid, weekKey);
+        const packsBought = record?.packs_bought ?? 0;
+        const price = packsBought === 0 ? TCG_WEEKLY_PACK_FIRST_PRICE : TCG_WEEKLY_PACK_NEXT_PRICE;
+
+        // Check player balance
+        const playerAccount = await this.getBankAccount(citizenid);
+        if (!playerAccount) {
+            return { success: false, cards: [], message: 'Compte bancaire introuvable.' };
+        }
+        const balance = await this.bankService.getAccountMoney(playerAccount);
+        if (balance === undefined || balance < price) {
+            return { success: false, cards: [], message: `Fonds insuffisants ($${price.toLocaleString('fr-FR')} requis).` };
+        }
+
+        // Check available cards
+        const availableCards = await this.repository.getAvailableCards();
+        if (availableCards.length < TCG_WEEKLY_PACK_SIZE) {
+            return { success: false, cards: [], message: `Pas assez de cartes disponibles (${availableCards.length}/${TCG_WEEKLY_PACK_SIZE}).` };
+        }
+
+        // Transfer money: player → tcg-service
+        const paid = await this.bankService.transferBankMoney(
+            playerAccount,
+            TCG_SERVICE_ACCOUNT,
+            'money',
+            price,
+            true, // allowOverflow for TCG service
+            `TCG Service - Pack hebdomadaire`
+        );
+
+        if (!paid) {
+            return { success: false, cards: [], message: 'Erreur lors du paiement.' };
+        }
+
+        // Draw cards
+        const shuffled = [...availableCards].sort(() => Math.random() - 0.5);
+        const drawn = shuffled.slice(0, TCG_WEEKLY_PACK_SIZE);
+
+        const obtainedCards: TcgCardData[] = [];
+        for (const card of drawn) {
+            try {
+                const uc = await this.repository.insertUserCard(citizenid, card.id);
+                obtainedCards.push({
+                    id: uc.tcg_card.id,
+                    name: uc.tcg_card.name,
+                    image: uc.tcg_card.image,
+                    archetype: uc.tcg_card.archetype ?? null,
+                });
+            } catch {
+                // Race condition — card taken by someone else
+            }
+        }
+
+        if (obtainedCards.length === 0) {
+            // Refund if no cards could be assigned
+            await this.bankService.transferBankMoney(
+                TCG_SERVICE_ACCOUNT,
+                playerAccount,
+                'money',
+                price,
+                false,
+                `TCG Service - Remboursement pack hebdomadaire`
+            );
+            return { success: false, cards: [], message: 'Aucune carte n\'a pu être attribuée, vous avez été remboursé.' };
+        }
+
+        // Record the pack purchase
+        await this.repository.upsertWeeklyPack(citizenid, weekKey);
+
+        // Increment persistent counters per category
+        try {
+            const categoryCounts: Record<string, number> = {};
+            for (const card of obtainedCards) {
+                const cat = getArchetypeCategory(card.archetype);
+                categoryCounts[cat] = (categoryCounts[cat] ?? 0) + 1;
+            }
+            for (const [cat, count] of Object.entries(categoryCounts)) {
+                await this.repository.incrementCardsObtained(citizenid, count, cat as any);
+            }
+        } catch { /* ignore */ }
+
+        // Reduce stress
+        const player = this.playerService.getPlayerByCitizenId(citizenid);
+        if (player) {
+            this.playerHealthProvider.increaseStress(player.source, -4);
+        }
+
+        const priceFormatted = price.toLocaleString('fr-FR');
+        await this.sendTcgSms(
+            citizenid,
+            `Pack hebdomadaire acheté ! ${obtainedCards.length} carte(s) obtenue(s) pour $${priceFormatted}.`
+        );
+
+        return {
+            success: true,
+            cards: obtainedCards,
+            message: `${obtainedCards.length} carte(s) obtenue(s) !`,
+            pricePaid: price,
+        };
+    }
+
+    // ---- Market (Cours) ----
+
+    async getMarketPrices(): Promise<TcgMarketPrice[]> {
+        const rows = await this.repository.getAllSetPrices();
+        return rows.map(r => ({
+            rank: r.rank_order,
+            archetype: r.archetype,
+            tier: r.tier as TcgMarketPrice['tier'],
+            setPrice: Number(r.set_price),
+            promptCount: Number(r.prompt_count),
+        }));
+    }
+
+    // ---- Showcase Contacts (filtered by accepted contacts) ----
+
+    async getShowcaseContacts(citizenid: string): Promise<TcgShowcaseItem[]> {
+        // Get accepted contact IDs
+        const contacts = await this.repository.getContacts(citizenid);
+        const contactIds = new Set<string>();
+        for (const c of contacts) {
+            if (c.status !== 'accepted') continue;
+            const otherId = c.citizenid === citizenid ? c.target_id : c.citizenid;
+            contactIds.add(otherId);
+        }
+
+        if (contactIds.size === 0) return [];
+
+        const allItems = await this.repository.getShowcaseAll();
+        const filtered = allItems.filter(item => contactIds.has(item.citizenid));
+
+        const allCitizenIds = [...new Set(filtered.map(i => i.citizenid))];
+        const usernames = await this.repository.getUsernamesByCitizenIds(allCitizenIds);
+        const avatars = await this.repository.getAvatarsByCitizenIds(allCitizenIds);
+
+        return filtered.map(item => ({
+            id: item.id,
+            citizenid: item.citizenid,
+            cardId: item.card_id,
+            cardName: item.tcg_card.name,
+            cardImage: item.tcg_card.image,
+            cardArchetype: item.tcg_card.archetype ?? null,
+            username: usernames[item.citizenid] ?? item.citizenid,
+            avatar: avatars[item.citizenid] ?? null,
+            description: item.description,
+            createdAt: item.created_at.toISOString(),
+        }));
     }
 
     async cancelTrade(citizenid: string, tradeId: number): Promise<TcgTradeResult> {

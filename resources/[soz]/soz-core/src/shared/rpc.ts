@@ -387,6 +387,10 @@ export enum RpcServerEvent {
     PHONE_APP_TCG_SET_AVATAR = 'soz-core:server:phone:app:tcg:set-avatar',
     PHONE_APP_TCG_REMOVE_AVATAR = 'soz-core:server:phone:app:tcg:remove-avatar',
     PHONE_APP_TCG_SET_BORDER = 'soz-core:server:phone:app:tcg:set-border',
+    PHONE_APP_TCG_GET_WEEKLY_PACK_STATUS = 'soz-core:server:phone:app:tcg:get-weekly-pack-status',
+    PHONE_APP_TCG_BUY_WEEKLY_PACK = 'soz-core:server:phone:app:tcg:buy-weekly-pack',
+    PHONE_APP_TCG_GET_MARKET_PRICES = 'soz-core:server:phone:app:tcg:get-market-prices',
+    PHONE_APP_TCG_GET_SHOWCASE_CONTACTS = 'soz-core:server:phone:app:tcg:get-showcase-contacts',
 
 
     LASER_GAME_GET_INFO_AS_STAFF = 'soz-core:server:phone:app:laser-game:get-info-as-staff',

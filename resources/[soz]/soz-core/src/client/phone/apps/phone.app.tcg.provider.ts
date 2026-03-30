@@ -20,6 +20,9 @@ import {
     TcgShowcaseResult,
     TcgTradeOffer,
     TcgTradeResult,
+    TcgWeeklyPackResult,
+    TcgWeeklyPackStatus,
+    TcgMarketPrice,
 } from '../../../shared/tcg/tcg.types';
 
 @Provider()
@@ -170,5 +173,29 @@ export class PhoneAppTcgProvider {
     @OnNuiEvent(NuiEvent.PhoneAppTcgSetBorder)
     async setBorder({ borderId }: { borderId: number | null }): Promise<{ success: boolean; message?: string }> {
         return await emitRpc<{ success: boolean; message?: string }>(RpcServerEvent.PHONE_APP_TCG_SET_BORDER, borderId);
+    }
+
+    // ---- Weekly Pack ----
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgGetWeeklyPackStatus)
+    async getWeeklyPackStatus(): Promise<TcgWeeklyPackStatus> {
+        return await emitRpc<TcgWeeklyPackStatus>(RpcServerEvent.PHONE_APP_TCG_GET_WEEKLY_PACK_STATUS);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgBuyWeeklyPack)
+    async buyWeeklyPack(): Promise<TcgWeeklyPackResult> {
+        return await emitRpc<TcgWeeklyPackResult>(RpcServerEvent.PHONE_APP_TCG_BUY_WEEKLY_PACK);
+    }
+
+    // ---- Market (Cours) ----
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgGetMarketPrices)
+    async getMarketPrices(): Promise<TcgMarketPrice[]> {
+        return await emitRpc<TcgMarketPrice[]>(RpcServerEvent.PHONE_APP_TCG_GET_MARKET_PRICES);
+    }
+
+    @OnNuiEvent(NuiEvent.PhoneAppTcgGetShowcaseContacts)
+    async getShowcaseContacts(): Promise<TcgShowcaseItem[]> {
+        return await emitRpc<TcgShowcaseItem[]>(RpcServerEvent.PHONE_APP_TCG_GET_SHOWCASE_CONTACTS);
     }
 }

@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { TCG_ARCHETYPES, TcgContactCollectionCard, TcgCreateTradeInput } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
-import { useTcgCollection, useTcgContactCollection, useTcgTrades } from '../hooks/useTcg';
+import { useTcgCollection, useTcgContactCollection, useTcgTrades, useTcgProfilePage } from '../hooks/useTcg';
 
 type SortMode = 'date' | 'archetype';
 
@@ -15,6 +15,7 @@ export const TcgContactCollection: React.FC = () => {
     const { collection: contactCards, loading, fetch } = useTcgContactCollection();
     const { collection: myCards, refresh: refreshMyCards } = useTcgCollection();
     const { createTrade } = useTcgTrades();
+    const { profilePage: contactProfile, fetch: fetchContactProfile } = useTcgProfilePage();
     const { getPath } = useAssetPath();
 
     const [tradeCard, setTradeCard] = useState<TcgContactCollectionCard | null>(null);
@@ -28,11 +29,14 @@ export const TcgContactCollection: React.FC = () => {
     const [sortMode, setSortMode] = useState<SortMode>('date');
     const [filterArchetype, setFilterArchetype] = useState<string | null>(null);
     const [showFilterPanel, setShowFilterPanel] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showSearch, setShowSearch] = useState(false);
 
     useEffect(() => {
         if (citizenid) {
             fetch(citizenid);
             refreshMyCards();
+            fetchContactProfile(citizenid);
         }
     }, [citizenid]);
 
@@ -68,6 +72,16 @@ export const TcgContactCollection: React.FC = () => {
     // Filter + sort
     const displayedCards = useMemo(() => {
         let cards = [...contactCards];
+
+        // Search by card number or name
+        if (searchQuery.trim()) {
+            const q = searchQuery.trim().toLowerCase();
+            const num = parseInt(q, 10);
+            cards = cards.filter(c =>
+                (!isNaN(num) && c.cardId === num) || c.name.toLowerCase().includes(q)
+            );
+        }
+
         if (filterArchetype) cards = cards.filter(c => c.archetype === filterArchetype);
         if (sortMode === 'archetype') {
             cards.sort((a, b) => {
@@ -78,7 +92,7 @@ export const TcgContactCollection: React.FC = () => {
             });
         }
         return cards;
-    }, [contactCards, filterArchetype, sortMode]);
+    }, [contactCards, filterArchetype, sortMode, searchQuery]);
 
     const toggleCardSelection = (cardId: number) => {
         setOfferCardIds(prev =>
@@ -125,9 +139,34 @@ export const TcgContactCollection: React.FC = () => {
 
     return (
         <>
-            <div className="px-4 pt-1 pb-1 flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-200">Collection</h2>
-                <div className="flex gap-1.5">
+            <div className="px-4 pt-1 pb-1 flex items-center justify-between relative">
+                <h2 className="text-sm font-semibold" style={{ color: 'var(--text-primary, #e5e7eb)' }}>Sa Collection</h2>
+                {/* Contact avatar centered — retour profil */}
+                <button
+                    className="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full overflow-hidden bg-gray-800 border border-white/10 flex-shrink-0"
+                    onClick={() => navigate(`/tcg/profile/${citizenid}`)}
+                >
+                    {contactProfile?.avatar ? (
+                        contactProfile.avatar.startsWith('data:image/') ? (
+                            <img src={contactProfile.avatar} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                            <img src={getPath(contactProfile.avatar)} alt="" className="w-full h-full object-cover" />
+                        )
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center"><span className="text-[10px]">👤</span></div>
+                    )}
+                </button>
+                <div className="flex gap-1.5 items-center">
+                    {/* Search icon */}
+                    <button
+                        className={`px-2 py-1 rounded-lg text-[10px] font-semibold border ${showSearch ? 'bg-amber-500/20 border-amber-500/40 text-amber-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
+                        onClick={() => { setShowSearch(!showSearch); if (showSearch) setSearchQuery(''); }}
+                    >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </button>
                     <button
                         className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${sortMode === 'archetype' ? 'bg-purple-500/20 border-purple-500/40 text-purple-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
                         onClick={() => setSortMode(prev => prev === 'date' ? 'archetype' : 'date')}
@@ -150,6 +189,23 @@ export const TcgContactCollection: React.FC = () => {
                     )}
                 </div>
             </div>
+
+            {/* Search bar */}
+            {showSearch && (
+                <div className="px-3 pb-2">
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        onKeyDown={e => e.stopPropagation()}
+                        placeholder="Rechercher par n° ou nom..."
+                        className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm placeholder-gray-500 outline-none"
+                        style={{ color: 'var(--text-primary, #fff)' }}
+                        data-phone-input="true"
+                        autoFocus
+                    />
+                </div>
+            )}
 
             {showFilterPanel && (
                 <div className="px-3 pb-2">
@@ -190,7 +246,7 @@ export const TcgContactCollection: React.FC = () => {
                                     <span className="text-[9px] text-gray-400 text-center truncate w-full">{card.name}</span>
                                     {card.archetype && <span className="text-[8px] text-purple-400 text-center truncate w-full">{card.archetype}</span>}
                                     <button className="w-full py-1.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-semibold"
-                                        onClick={() => { setTradeCard(card); setOfferType('money'); setOfferAmount(''); setOfferCardIds([]); setTradeMessage(null); }}>Proposer</button>
+                                        onClick={() => { setTradeCard(card); setOfferType('money'); setOfferAmount(''); setOfferCardIds([]); setTradeMessage(null); }}>Proposer un échange</button>
                                 </div>
                             ))}
                         </div>
@@ -211,6 +267,7 @@ export const TcgContactCollection: React.FC = () => {
                                     <div className="mb-3">
                                         <input type="number" value={offerAmount} onChange={e => setOfferAmount(e.target.value)} placeholder="Montant ($)..."
                                             className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder-gray-500 outline-none" min="1" data-phone-input="true" />
+                                        <p className="text-[9px] text-gray-500 mt-1 text-center">7% de taxe sera prélevée sur ce montant</p>
                                     </div>
                                 )}
                                 {offerType === 'card' && (

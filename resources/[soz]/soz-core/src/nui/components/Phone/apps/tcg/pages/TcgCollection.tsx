@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { TCG_ARCHETYPES } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
-import { useTcgCollection } from '../hooks/useTcg';
+import { useTcgCollection, useTcgProfile } from '../hooks/useTcg';
 
 type SortMode = 'date' | 'archetype';
 type FilterMode = string | null; // null = all
@@ -12,13 +12,16 @@ type FilterMode = string | null; // null = all
 export const TcgCollection: React.FC = () => {
     const navigate = useNavigate();
     const { collection, loading, refresh } = useTcgCollection();
+    const { profile, refresh: refreshProfile } = useTcgProfile();
     const { getPath } = useAssetPath();
 
     const [sortMode, setSortMode] = useState<SortMode>('date');
     const [filterArchetype, setFilterArchetype] = useState<FilterMode>(null);
     const [showFilterPanel, setShowFilterPanel] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [showSearch, setShowSearch] = useState(false);
 
-    useEffect(() => { refresh(); }, []);
+    useEffect(() => { refresh(); refreshProfile(); }, []);
 
     // Get unique archetypes present in the collection
     const availableArchetypes = useMemo(() => {
@@ -45,6 +48,15 @@ export const TcgCollection: React.FC = () => {
     const displayedCards = useMemo(() => {
         let cards = [...collection];
 
+        // Search by card number or name
+        if (searchQuery.trim()) {
+            const q = searchQuery.trim().toLowerCase();
+            const num = parseInt(q, 10);
+            cards = cards.filter(c =>
+                (!isNaN(num) && c.cardId === num) || c.name.toLowerCase().includes(q)
+            );
+        }
+
         if (filterArchetype) {
             cards = cards.filter(c => c.archetype === filterArchetype);
         }
@@ -60,13 +72,38 @@ export const TcgCollection: React.FC = () => {
         // date sort is already default from server (desc)
 
         return cards;
-    }, [collection, filterArchetype, sortMode]);
+    }, [collection, filterArchetype, sortMode, searchQuery]);
 
     return (
         <>
-            <div className="px-4 pt-1 pb-1 flex items-center justify-between">
-                <h2 className="text-lg font-semibold text-gray-200">{`Ma Collection (${collection.length})`}</h2>
-                <div className="flex gap-1.5">
+            <div className="px-4 pt-1 pb-1 flex items-center justify-between relative">
+                <h2 className="text-sm font-semibold" style={{ color: 'var(--text-primary, #e5e7eb)' }}>{`Ma Collection (${collection.length})`}</h2>
+                {/* Avatar centered — retour profil */}
+                <button
+                    className="absolute left-1/2 -translate-x-1/2 w-8 h-8 rounded-full overflow-hidden bg-gray-800 border border-white/10 flex-shrink-0"
+                    onClick={() => navigate(`/tcg/profile/${profile?.username ?? ''}`)}
+                >
+                    {profile?.avatar ? (
+                        profile.avatar.startsWith('data:image/') ? (
+                            <img src={profile.avatar} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                            <img src={getPath(profile.avatar)} alt="" className="w-full h-full object-cover" />
+                        )
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center"><span className="text-[10px]">👤</span></div>
+                    )}
+                </button>
+                <div className="flex gap-1.5 items-center">
+                    {/* Search icon */}
+                    <button
+                        className={`px-2 py-1 rounded-lg text-[10px] font-semibold border ${showSearch ? 'bg-amber-500/20 border-amber-500/40 text-amber-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
+                        onClick={() => { setShowSearch(!showSearch); if (showSearch) setSearchQuery(''); }}
+                    >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </button>
                     {/* Sort toggle */}
                     <button
                         className={`px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${sortMode === 'archetype' ? 'bg-purple-500/20 border-purple-500/40 text-purple-300' : 'bg-white/5 border-white/10 text-gray-400'}`}
@@ -92,6 +129,23 @@ export const TcgCollection: React.FC = () => {
                     )}
                 </div>
             </div>
+
+            {/* Search bar */}
+            {showSearch && (
+                <div className="px-3 pb-2">
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        onKeyDown={e => e.stopPropagation()}
+                        placeholder="Rechercher par n° ou nom de carte..."
+                        className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm placeholder-gray-500 outline-none"
+                        style={{ color: 'var(--text-primary, #fff)' }}
+                        data-phone-input="true"
+                        autoFocus
+                    />
+                </div>
+            )}
 
             {/* Filter panel */}
             {showFilterPanel && (
