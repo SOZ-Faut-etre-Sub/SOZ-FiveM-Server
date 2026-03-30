@@ -1,191 +1,186 @@
-Fork Initial : SOZ-FiveM-Server ft dAIly
+## 📝 Description
 
-# 🃏 TCG v2.0 — Économie & Refonte UX - Patch Notes (30/03/2026)
+Application téléphone complète permettant aux joueurs de collectionner, échanger, acheter et exposer des cartes uniques directement depuis leur téléphone in-game. Système économique intégré avec compte bancaire dédié, taxation des échanges, packs payants et revente de sets à prix variable.
 
-## 💰 Économie
-
-- Compte bancaire TCG Service (tcg-service) — compte business avec 10M$ initial, créé automatiquement au démarrage
-- Taxe 7% sur les échanges argent — déduite automatiquement, versée sur le compte TCG Service. Le sender paie le brut, le receiver reçoit le net. Affichée clairement dans la liste des échanges (brut / taxe / net) et dans la popup de proposition ("7% de taxe sera prélevée")
-- Pack hebdomadaire — 7 cartes aléatoires du pool libre. 50 000$ le premier de la semaine, 250 000$ les suivants. Reset chaque lundi. Paiement vers le compte TCG Service
-- Revente de set avec prix variable — prix par archétype lu depuis set_prices.csv (RARE = 313 578,COMMUNE=100000, COMMUNE = 100 000
-,COMMUNE=100000). L'argent est versé depuis le compte TCG Service vers le joueur
-
-- Page "Cours" — classement des 28 archétypes du plus rare au plus commun, avec prix de rachat et tiers de rareté (RARE / À surveiller / COMMUNE)
-
-## 🎨 Refonte UX complète
-
-- Nouveau header — Logo TCG (retour accueil) + icône carte avec double bulle de notifications (verte = cartes gratuites, rouge = échanges en attente) + icône Cours + icône Contacts
-- 3 onglets style Twitter — Vitrine Globale / Vitrine Contacts / Mon Profil. La vitrine est maintenant intégrée à la page d'accueil avec scroll et bouton refresh
-- Vitrine Contacts — affiche uniquement les cartes exposées par vos contacts acceptés
-- Page Hub — regroupe claim, pack hebdo, vente de set et liste des échanges sur une seule page (accessible via l'icône carte)
-- Vitrine passe à 4 cartes — grille 4 colonnes avec descriptions visibles sous chaque carte
-- Popup de remplacement — quand la vitrine est pleine (4/4), un popup permet de choisir quelle carte retirer avant d'en ajouter une nouvelle
-- "Mise en Vitrine" remplace "Exposer" dans le viewer pour plus de clarté
-- Protéger/Protégée déplacé en haut droite du viewer (à gauche de la croix)
-
-## 🔍 Recherche & Navigation
-
-- Recherche par n° ou nom de carte — icône loupe dans Ma Collection et Sa Collection
-- Recherche par n° de carte dans le sélecteur d'avatar du profil
-- Noms cliquables vers le profil public dans les contacts, y compris les demandes en attente (envoyées et reçues)
-- Avatar centré dans les barres titre des pages collection (clic = retour au profil)
-- Bouton "Ma Collection" / "Sa Collection" à droite de l'avatar dans les pages profil
-- "Proposer un échange" remplace "Proposer" dans la collection d'un contact
-
-## 🏅 Profil amélioré
-
-- Badges agrandis — grille 3 colonnes, taille maximale possible
-- Onglet Mon Profil complet avec avatar, bio, vitrine, badges et bouton "Éditer mon profil"
-- Plus de titre "Profil" affiché (superflu)
-- Profil d'un contact : seul le bouton rouge "Supprimer des contacts" reste en bas (l'accès collection est via le bouton à côté de l'avatar)
-
-## 🔧 Technique
-
-- 3 nouvelles tables BDD : tcg_set_price, tcg_weekly_pack, compte tcg-service dans bank_accounts
-- Re-tag automatique des archétypes NULL depuis tags.csv à chaque démarrage
-- Sync des prix depuis set_prices.csv à chaque démarrage (upsert)
-- Contraste mode clair amélioré (textShadow sur les textes principaux)
-- TcgShowcase.tsx et TcgTrades.tsx supprimés (intégrés dans TcgHome et TcgHub)
-- Nouveau fichier asset requis : set_prices.csv dans le dossier TCG assets
-
-## TCG v1.5 — Patch Notes (29/03/2026)
-
- 
-🎨 PROFIL JOUEUR
-- Avatar personnalisable : choix depuis la collection de cartes OU la galerie photos du téléphone
-- Crop interactif circulaire (drag pour repositionner, +/- pour zoomer)
-- Bordures de profil décoratives (synced automatiquement depuis les assets)
-- Bio éditable inline (50 chars, même pattern que le champ contact)
-- Bouton "Mon Profil" ajouté sur la page d'accueil
-- Avatar affiché correctement dans le cadre de bordure (118px dans conteneur 130px)
- 
-👥 CONTACTS
-- Avatar affiché (40px) à côté de chaque contact dans la liste
-- Bouton "Supprimer des contacts" (rouge) sur le profil d'un contact accepté, avec confirmation
-- Nettoyage du code (import inutile fetchNui retiré)
- 
-🏪 VITRINE
-- Avatar du joueur (40px) affiché à gauche du bloc texte
-- Description en cyan à droite du username sur la même ligne
-- Layout repensé : avatar | username + description / nom carte / archétype
- 
-📋 COLLECTION
-- Archétype affiché en violet sous le nom de chaque carte
-- Bouton rouge ✕ séparé pour retirer le filtre rapidement
-- Plus de ✕ dans le bouton filtre (affiche juste le nom de l'archétype)
-- Mêmes améliorations sur la collection d'un contact
-- Revente de set
-- Remise en "daily claim" des sets vendus
- 
-🏆 BADGES
-- 10 badges avec barres de progression (propre profil)
-- Badges groupés par catégorie : Collectionneur / Échangeur / Marchand
-- Support images .webp par badge ID, fallback emoji si absent
-- Profils des autres : seul le badge le plus élevé par catégorie affiché
- 
-💬 SMS & NOTIFICATIONS
-- SMS envoyé au demandeur lors du REFUS d'un échange (avec motif si fourni)
-- SMS envoyé au receveur lors de l'ANNULATION d'un échange
-- (Acceptation déjà notifiée aux deux parties)
- 
-🗂️ ORGANISATION ASSETS
-- Cartes déplacées vers phone/apps/tcg/cards/
-- tags.csv déplacé vers phone/apps/tcg/
-- Bordures dans phone/apps/tcg/borders/
-- Badges dans phone/apps/tcg/badges/
-- Structure unifiée sous phone/apps/tcg/
- 
-🔧 TECHNIQUE
-- schema.prisma : ajout archetype sur tcg_card, protected sur tcg_user_card, tcg_border model
-- Daily claim passé de 2 à 3 cartes/jour
-- Fix: archétypes NULL en BDD (colonne manquante dans schema.prisma)
-- Fix: bordures non créées (model tcg_border manquant dans Prisma)
-
-
-## 25.03.20206 V1.0
-
-+ Application TCG
-
-## 🖹 Description
-
-Nouvelle application téléphone permettant aux joueurs de collectionner, échanger et exposer des cartes uniques directement depuis leur téléphone in-game.
+⚠️ Assets sur mon Fork :
+- Logo Application
+- Icône carte (`cards.webp`) pour le header de l'app
+- Actuellement +3300 cartes disponibles générées aléatoirement par workflow ComfyUI utilisant un LoRA entraîné par mes soins
+- Bordures de profil et images de badges
+- `set_prices.csv` — cours des sets par archétype
+- `tags.csv` — classification des cartes par archétype
 
 ---
 
-## 🖼️ Fonctionnalités actuelles 
+## 🖼️ Fonctionnalités
 
-### 📦 Collection & Cartes quotidiennes
-- 2 cartes gratuites par jour (variable modifiable) parmis les cartes disponibles. (stress -2)
-- Collection personnelle consultable
+### 📦 Collection & Cartes gratuites
 
----
-
-### 👤 Profil & Contacts TCG
-- Pseudo unique différent du nom du personnage
-- Système de demandes de contact avec message optionnel (50 caractères max)
-- Accéder à la collection d’un contact
+- 1 carte gratuite par jour qui s'accumule automatiquement (max 7)
+- 1 carte par clic, le compteur diminue à chaque ouverture (stress -2)
+- Système de streak : 7 jours consécutifs de claim → bonus 2 cartes (tolérance 48h)
+- Recherche par numéro ou nom de carte (icône loupe)
+- Tri par date ou catégorie, filtre par archétype avec compteurs
+- Protection de carte (🔒) empêchant la vente dans un set
 
 ---
 
-### 🔁 Échanges avec contact
+### 💰 Économie
+
+- **Compte bancaire `tcg-service`** : compte business avec 10M$ initial, créé automatiquement
+- **Taxe 7%** sur les échanges argent entre joueurs, versée sur le compte TCG Service
+- **Pack hebdomadaire** : 7 cartes du pool libre, 50 000$ le 1er de la semaine, 250 000$ les suivants, reset chaque lundi
+- **Revente de set** : 7 cartes non protégées d'un même archétype, prix variable lu depuis `set_prices.csv`, versé depuis le compte TCG Service
+- **Page "Cours"** : classement des 28 archétypes avec prix de rachat et tiers de rareté (RARE / À surveiller / COMMUNE)
+
+---
+
+### 👤 Profil & Personnalisation
+
+- Pseudo unique alphanumérique (immuable)
+- Bio éditable (50 caractères max)
+- Avatar choisi depuis la collection de cartes (recherche par n°) ou galerie photos, avec crop interactif circulaire (drag + zoom)
+- Bordures décoratives de profil (synced automatiquement depuis les assets)
+- Vitrine personnelle : jusqu'à 4 cartes exposées avec descriptions
+- Badges de progression (10 badges en 3 catégories : Collectionneur, Échangeur, Marchand)
+
+---
+
+### 👥 Contacts TCG
+
+- Demande de contact avec message optionnel (50 caractères max)
+- Recherche de pseudo → accès au profil public
+- Noms cliquables vers le profil public dans toutes les sections (acceptés, en attente envoyées, en attente reçues)
+- Accès à la collection d'un contact depuis son profil ("Sa Collection")
+- Suppression de contact avec popup de confirmation
+
+---
+
+### 🔁 Échanges
+
 - Proposer un échange : carte contre carte ou argent contre carte
+- Taxe 7% affichée clairement (brut / taxe / net) dans la liste et "7% de taxe" dans la popup de proposition
 - Le receveur peut accepter ou refuser (avec message optionnel)
-- L’expéditeur peut annuler sa demande en attente
+- L'expéditeur peut annuler sa demande en attente
 - Propositions liées (même carte demandée) groupées visuellement par couleur
+- SMS de notification : acceptation, refus (avec motif), annulation
 
 ---
 
-### 🖼️ Vitrine publique
-- Exposer jusqu’à 3 cartes avec description optionnelle (30 caractères max)
-- Scroll en bas de la vitrine → effet relax (stress -2, une fois par heure max)
-- Clic sur un pseudo → popup : ajouter contact / voir collection / demander échange
+### 🖼️ Vitrine
+
+- Jusqu'à 4 cartes exposées par joueur avec description optionnelle (30 caractères max)
+- Intégrée à la page d'accueil en 2 onglets : Vitrine Globale / Vitrine Contacts
+- Bouton refresh + scroll en bas → effet relax (stress -2, une fois par heure)
+- Popup de remplacement quand la vitrine est pleine (4/4)
+- Clic sur un pseudo/avatar → profil public du joueur
 
 ---
- 
+
+### 🎨 Interface
+
+- **Header permanent** : Logo TCG (retour accueil) + icône carte avec double bulle de notifications (verte = cartes gratuites, rouge = échanges en attente) + icône Cours + icône Contacts
+- **3 onglets** style réseau social : Vitrine Globale / Vitrine Contacts / Mon Profil
+- **Page Hub** : claim + pack hebdo + vente de set + liste des échanges (accessible via l'icône carte)
+- **Viewer plein écran** : "Mise en Vitrine" + Protéger (haut droite) + archétype affiché
+- **Avatar centré** dans les barres titre des pages collection (clic = retour au profil)
+- Contraste mode clair amélioré (textShadow)
+
+---
+
+## 🧩 Fichiers modifiés
+
+| Fichier | Modification |
+|---|---|
+| `prisma/schema.prisma` | Ajout des modèles TCG (card, user_card, daily_claim, profile, contact, trade_request, showcase, trade_partner, border, set_price, weekly_pack) |
+| `src/shared/event/nui.ts` | Ajout de 27 événements NUI `PhoneAppTcg*` |
+| `src/shared/rpc.ts` | Ajout de 27 événements RPC `PHONE_APP_TCG_*` |
+| `src/shared/tcg/tcg.types.ts` | Types, constantes et helpers partagés |
+| `src/client/phone/phone.module.ts` | Import du module TCG client |
+| `src/server.ts` | Import du module TCG serveur |
+| `src/nui/components/Phone/system/apps/hooks/useApps.tsx` | Enregistrement de l'app TCG |
+| `src/nui/components/Phone/apps/society-contacts/contacts.constant.ts` | Ajout du contact "TCG Service" |
+
+---
+
+## 🆕 Fichiers créés
+
+| Fichier | Description |
+|---|---|
+| `src/shared/tcg/tcg.types.ts` | Types, constantes économie, helpers (taxe, catégories) |
+| `src/client/phone/apps/phone.app.tcg.provider.ts` | Provider NUI client (bridge NUI → RPC, 27 events) |
+| `src/server/tcg/tcg.module.ts` | Module serveur |
+| `src/server/tcg/tcg.provider.ts` | Handlers RPC serveur (27 endpoints) |
+| `src/server/tcg/tcg.service.ts` | Logique métier (~1200 lignes) |
+| `src/server/tcg/tcg.repository.ts` | Accès base de données Prisma (~550 lignes) |
+| `src/server/tcg/tcg.migration.provider.ts` | Création auto tables + sync cartes/bordures/prix au démarrage |
+| `src/nui/components/Phone/apps/tcg/TcgApp.tsx` | Root — header redesigné + routing |
+| `src/nui/components/Phone/apps/tcg/hooks/useTcg.ts` | Hooks React (15 hooks) |
+| `src/nui/components/Phone/apps/tcg/icon.tsx` | Icône de l'app |
+| `src/nui/components/Phone/apps/tcg/index.ts` | Export de l'app |
+| `src/nui/components/Phone/apps/tcg/pages/TcgHome.tsx` | 3 onglets : Vitrine Globale / Contacts / Mon Profil |
+| `src/nui/components/Phone/apps/tcg/pages/TcgHub.tsx` | Claim + Pack Hebdo + Vendre Set + Échanges |
+| `src/nui/components/Phone/apps/tcg/pages/TcgCollection.tsx` | Collection personnelle (recherche, tri, filtre) |
+| `src/nui/components/Phone/apps/tcg/pages/TcgContactCollection.tsx` | Collection d'un contact (recherche, proposition d'échange) |
+| `src/nui/components/Phone/apps/tcg/pages/TcgContacts.tsx` | Gestion des contacts TCG |
+| `src/nui/components/Phone/apps/tcg/pages/TcgProfile.tsx` | Profil complet (avatar, bordure, badges, bio, vitrine) |
+| `src/nui/components/Phone/apps/tcg/pages/TcgMarket.tsx` | Page Cours (classement archétypes + prix) |
+| `src/nui/components/Phone/apps/tcg/pages/TcgViewer.tsx` | Viewer plein écran (mise en vitrine, protection, remplacement) |
+| `src/nui/components/Phone/apps/tcg/pages/TcgSetup.tsx` | Création du pseudo |
+
+---
+
+## 🗄️ Tables BDD créées
+
+Les tables suivantes sont créées automatiquement au premier démarrage via `tcg.migration.provider.ts` (aucune migration Prisma manuelle requise) :
+
+| Table | Description |
+|---|---|
+| `tcg_card` | Catalogue des cartes (image, archétype, active) |
+| `tcg_user_card` | Cartes possédées par joueur (unicité par carte, protection) |
+| `tcg_daily_claim` | Suivi des claims quotidiens |
+| `tcg_profile` | Pseudo, bio, avatar, bordure, compteurs persistants, claim system |
+| `tcg_contact` | Relations de contact entre joueurs (+ message) |
+| `tcg_trade_request` | Propositions d'échange (carte ou argent) |
+| `tcg_showcase` | Cartes exposées en vitrine (max 4) |
+| `tcg_trade_partner` | Partenaires d'échange uniques (anti-farm badges) |
+| `tcg_border` | Bordures de profil (synced depuis assets) |
+| `tcg_set_price` | Prix de rachat par archétype (synced depuis `set_prices.csv`) |
+| `tcg_weekly_pack` | Suivi des achats de packs hebdomadaires |
+| Entrée `tcg-service` dans `bank_accounts` | Compte bancaire business (10M$ initial) |
+
+---
 
 ## ✨ Améliorations possibles
 
-
----
-
-## 🧭 Axes économiques possibles
-
-### 🏛️ Application appartenant à l'État
-
-- Vente de cartes directement via l’application
-
-- Prix fixés par l’État :
-  - Sert de référence pour le marché joueur ↔ joueur
-
-- Mise en place d’une taxe sur les transactions :
-  - Taxe appliquée lors des échanges monétaires entre joueurs
-  - Sink économique pour réguler l’inflation
-
-- Contrôle global :
-  - Permet d’éviter les dérives de prix
-  - Cadre RP cohérent avec une économie régulée
-
----
-
 ### 🏢 Application gérée par une entreprise privée
 
-- Exploitation commerciale de l’application TCG
+- Exploitation commerciale de l'application TCG par un job dédié
+- Bordures et fonds de profil exclusifs attribuables par l'entreprise à des joueurs spécifiques
+- Événements spéciaux, packs exclusifs, offres limitées
+- Prix dynamiques fixés par l'entreprise
+- Commission modulable sur les échanges
 
-- Nécessité de proposer des services complémentaires :
-  - Événements spéciaux
-  - Packs exclusifs
-  - Offres limitées
+### 🎃 Événements saisonniers
 
-- Système de prix :
-  - Fixé par l’entreprise
-  - Peut évoluer dynamiquement selon la demande
+- Archétypes event (Halloween, Noël, etc.) avec cartes limitées
+- Classification automatique via `tags.csv` et `set_prices.csv`
 
-- Taxation des échanges :
-  - Commission prélevée par l’entreprise
-  - Source de revenus directe
+---
 
-- Dynamique de marché :
-  - Plus libre, potentiellement plus volatile
-  - Encourage la spéculation et le trading actif
+## ⚙️ Notes techniques
 
-Mes cartes sont disponibles ici https://github.com/DailyMok/SOZ-FiveM-Assets
+- Création automatique de toutes les tables au démarrage (pas de migration Prisma manuelle)
+- Synchronisation des cartes, bordures et prix depuis les assets à chaque redémarrage
+- Re-tag automatique des archétypes NULL depuis `tags.csv`
+- Architecture respectant les conventions SOZ (Provider / Module / RPC / NUI)
+- Intégration complète téléphone (app + SMS + contacts + annuaire entreprise)
+
+---
+
+## ✅ Impact
+
+- Ajout d'une nouvelle application téléphone complète avec système économique
+- Développement parlant : aucun impact sur les systèmes existants
+- Gameplay parlant : impact le stress au niveau indiqué, sink économique via taxe 7% et achats de packs
+- Feature isolée et extensible à une entreprise privée
