@@ -7,6 +7,7 @@ import { fetchNui } from '../../../../../fetch';
 import { TcgShowcaseItem } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgShowcase, useTcgShowcaseContacts, useTcgProfilePage } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 interface Props {
     username: string;
@@ -24,26 +25,20 @@ const ShowcaseFeed: React.FC<{
     navigate: (path: string, opts?: any) => void;
 }> = ({ items, loading, onRefresh, emptyMessage, emptySubMessage, getPath, navigate }) => {
     const [relaxSent, setRelaxSent] = useState(false);
-    const scrollRef = useRef<HTMLDivElement>(null);
 
-    const handleScroll = useCallback(() => {
-        if (relaxSent || !scrollRef.current || items.length === 0) return;
-        const el = scrollRef.current;
-        const atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 20;
-        if (atBottom) {
-            setRelaxSent(true);
-            fetchNui(NuiEvent.PhoneAppTcgShowcaseRelax);
-        }
+    const handleScrollEnd = useCallback(() => {
+        if (relaxSent || items.length === 0) return;
+        setRelaxSent(true);
+        fetchNui(NuiEvent.PhoneAppTcgShowcaseRelax);
     }, [relaxSent, items]);
 
     const handleRefreshClick = () => {
         onRefresh();
         setRelaxSent(false);
-        if (scrollRef.current) scrollRef.current.scrollTop = 0;
     };
 
     return (
-        <div ref={scrollRef} className="flex flex-col h-full overflow-y-auto" onScroll={handleScroll}>
+        <TcgScrollContainer className="flex flex-col h-full" onScrollEnd={handleScrollEnd}>
             {/* Refresh button */}
             <div className="flex justify-center py-2">
                 <button
@@ -105,7 +100,7 @@ const ShowcaseFeed: React.FC<{
                     ))}
                 </div>
             )}
-        </div>
+        </TcgScrollContainer>
     );
 };
 
@@ -136,7 +131,7 @@ const ProfileTab: React.FC<{ username: string; getPath: (p: string) => string; n
 
 
     return (
-        <div className="flex flex-col h-full overflow-y-auto p-4 gap-4">
+        <TcgScrollContainer className="flex flex-col h-full p-4 gap-4">
             {/* Avatar row: avatar centered, Ma Collection to the right */}
             <div className="flex items-center justify-center gap-4">
                 {/* Spacer left for centering */}
@@ -238,7 +233,7 @@ const ProfileTab: React.FC<{ username: string; getPath: (p: string) => string; n
                     Éditer mon profil
                 </button>
             </div>
-        </div>
+        </TcgScrollContainer>
     );
 };
 

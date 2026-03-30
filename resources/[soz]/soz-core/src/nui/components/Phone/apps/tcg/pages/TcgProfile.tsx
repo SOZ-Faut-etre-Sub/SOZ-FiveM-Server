@@ -6,6 +6,7 @@ import { TCG_BIO_MAX, TcgBadge } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
 import { usePhotos } from '../../photos/photos.atom';
 import { useTcgCollection, useTcgContacts, useTcgProfilePage, useTcgSetAvatar, useTcgSetBio, useTcgSetBorder } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 // ---- Interactive circular crop component ----
 
@@ -358,7 +359,7 @@ export const TcgProfile: React.FC = () => {
         <>
             
             <AppContent>
-                <div className="flex flex-col h-full p-4 overflow-y-auto gap-4">
+                <TcgScrollContainer className="flex flex-col h-full p-4 gap-4">
 
                     {/* Avatar row: avatar centered, collection button to the right */}
                     <div className="flex items-center justify-center gap-4">
@@ -632,7 +633,7 @@ export const TcgProfile: React.FC = () => {
                             <p className={`text-xs text-center ${actionMessage.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>{actionMessage.text}</p>
                         )}
                     </div>
-                </div>
+                </TcgScrollContainer>
             </AppContent>
 
             {/* ---- Avatar Picker Popup ---- */}

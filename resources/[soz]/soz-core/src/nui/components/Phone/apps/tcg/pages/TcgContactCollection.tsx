@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { TCG_ARCHETYPES, TcgContactCollectionCard, TcgCreateTradeInput } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgCollection, useTcgContactCollection, useTcgTrades, useTcgProfilePage } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 type SortMode = 'date' | 'archetype';
 
@@ -238,7 +239,8 @@ export const TcgContactCollection: React.FC = () => {
                     ) : displayedCards.length === 0 ? (
                         <div className="text-center mt-16 text-gray-500 text-sm"><p>Aucune carte dans cette catégorie.</p></div>
                     ) : (
-                        <div className="grid grid-cols-2 gap-3 overflow-y-auto flex-1 pb-4" style={{ alignContent: 'start' }}>
+                        <TcgScrollContainer className="flex-1 pb-4">
+                        <div className="grid grid-cols-2 gap-3" style={{ alignContent: 'start' }}>
                             {displayedCards.map(card => (
                                 <div key={card.cardId} className="flex flex-col items-center gap-1">
                                     <img src={getPath(card.image)} alt={card.name} className="w-full rounded-md border border-white/10 cursor-pointer active:scale-95 transition-transform" style={{ aspectRatio: '936 / 2000', objectFit: 'cover' }}
@@ -250,6 +252,7 @@ export const TcgContactCollection: React.FC = () => {
                                 </div>
                             ))}
                         </div>
+                        </TcgScrollContainer>
                     )}
 
                     {tradeCard && (

@@ -11,6 +11,7 @@ import {
     useTcgClaim, useTcgCollection, useTcgDailyStatus, useTcgSellSet,
     useTcgTrades, useTcgWeeklyPack, useTcgMarket,
 } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 // ---- Group colors for linked trades ----
 const GROUP_COLORS = [
@@ -177,7 +178,7 @@ export const TcgHub: React.FC<Props> = ({ username }) => {
 
     return (
         <AppContent>
-            <div className="flex flex-col h-full overflow-y-auto">
+            <TcgScrollContainer className="flex flex-col h-full">
                 {/* ---- CLAIM SECTION ---- */}
                 <div className="flex flex-col items-center p-4 pb-2">
                     {statusLoading ? (
@@ -306,7 +307,7 @@ export const TcgHub: React.FC<Props> = ({ username }) => {
                         );
                     })}
                 </div>
-            </div>
+            </TcgScrollContainer>
 
             {/* ---- SELL SET POPUP ---- */}
             {showSellPopup && (

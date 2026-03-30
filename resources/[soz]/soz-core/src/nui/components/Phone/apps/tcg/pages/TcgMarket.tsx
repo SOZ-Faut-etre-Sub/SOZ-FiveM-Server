@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { TcgMarketTier } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgMarket } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 const tierConfig: Record<TcgMarketTier, { label: string; color: string; bg: string }> = {
     RARE: { label: 'Rare', color: '#fbbf24', bg: 'rgba(251, 191, 36, 0.15)' },
@@ -19,7 +20,7 @@ export const TcgMarket: React.FC = () => {
 
     return (
         <AppContent>
-            <div className="flex flex-col h-full p-4 overflow-y-auto">
+            <TcgScrollContainer className="flex flex-col h-full p-4">
                 {/* Header with golden chart icon */}
                 <div className="flex items-center justify-center gap-2 mb-4">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -79,7 +80,7 @@ export const TcgMarket: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </TcgScrollContainer>
         </AppContent>
     );
 };

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { TCG_ARCHETYPES } from '../../../../../../shared/tcg/tcg.types';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgCollection, useTcgProfile } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 type SortMode = 'date' | 'archetype';
 type FilterMode = string | null; // null = all
@@ -184,7 +185,8 @@ export const TcgCollection: React.FC = () => {
                             <p>Aucune carte dans cette catégorie.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-3 gap-2.5 overflow-y-auto flex-1 pb-4" style={{ alignContent: 'start' }}>
+                        <TcgScrollContainer className="flex-1 pb-4">
+                        <div className="grid grid-cols-3 gap-2.5" style={{ alignContent: 'start' }}>
                             {displayedCards.map(card => (
                                 <div
                                     key={card.userCardId}
@@ -205,6 +207,7 @@ export const TcgCollection: React.FC = () => {
                                 </div>
                             ))}
                         </div>
+                        </TcgScrollContainer>
                     )}
                 </div>
             </AppContent>

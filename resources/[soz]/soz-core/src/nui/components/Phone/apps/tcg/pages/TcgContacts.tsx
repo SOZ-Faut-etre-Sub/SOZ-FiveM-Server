@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAssetPath } from '../../../../../hook/assets';
 import { AppContent } from '../../../components/system/AppContent';
 import { useTcgContacts } from '../hooks/useTcg';
+import { TcgScrollContainer } from '../TcgScrollContainer';
 
 // ---- Small avatar component ----
 const ContactAvatar: React.FC<{ avatar: string | null; getPath: (p: string) => string; size?: string }> = ({ avatar, getPath, size = 'w-10 h-10' }) => (
@@ -44,7 +45,7 @@ export const TcgContacts: React.FC = () => {
         <>
             <h2 className="px-4 pt-1 pb-2 text-lg font-semibold" style={{ color: 'var(--text-primary, #e5e7eb)', textShadow: '0 0 3px rgba(0,0,0,0.2)' }}>Contacts TCG</h2>
             <AppContent>
-                <div className="flex flex-col h-full p-3 overflow-y-auto gap-4">
+                <TcgScrollContainer className="flex flex-col h-full p-3 gap-4">
 
                     {/* Search block */}
                     <div className="flex flex-col gap-2">
@@ -162,7 +163,7 @@ export const TcgContacts: React.FC = () => {
                             ))
                         )}
                     </div>
-                </div>
+                </TcgScrollContainer>
             </AppContent>
 
             {/* Confirm remove popup */}
