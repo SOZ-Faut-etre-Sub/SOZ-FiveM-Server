@@ -102,59 +102,6 @@ Fork Initial : SOZ-FiveM-Server ft dAIly
 - Fix: bordures non créées (model tcg_border manquant dans Prisma)
 
 
-## TCG v1.5 — Patch Notes (29/03/2026)
-
- 
-🎨 PROFIL JOUEUR
-- Avatar personnalisable : choix depuis la collection de cartes OU la galerie photos du téléphone
-- Crop interactif circulaire (drag pour repositionner, +/- pour zoomer)
-- Bordures de profil décoratives (synced automatiquement depuis les assets)
-- Bio éditable inline (50 chars, même pattern que le champ contact)
-- Bouton "Mon Profil" ajouté sur la page d'accueil
-- Avatar affiché correctement dans le cadre de bordure (118px dans conteneur 130px)
- 
-👥 CONTACTS
-- Avatar affiché (40px) à côté de chaque contact dans la liste
-- Bouton "Supprimer des contacts" (rouge) sur le profil d'un contact accepté, avec confirmation
-- Nettoyage du code (import inutile fetchNui retiré)
- 
-🏪 VITRINE
-- Avatar du joueur (40px) affiché à gauche du bloc texte
-- Description en cyan à droite du username sur la même ligne
-- Layout repensé : avatar | username + description / nom carte / archétype
- 
-📋 COLLECTION
-- Archétype affiché en violet sous le nom de chaque carte
-- Bouton rouge ✕ séparé pour retirer le filtre rapidement
-- Plus de ✕ dans le bouton filtre (affiche juste le nom de l'archétype)
-- Mêmes améliorations sur la collection d'un contact
-- Revente de set
-- Remise en "daily claim" des sets vendus
- 
-🏆 BADGES
-- 10 badges avec barres de progression (propre profil)
-- Badges groupés par catégorie : Collectionneur / Échangeur / Marchand
-- Support images .webp par badge ID, fallback emoji si absent
-- Profils des autres : seul le badge le plus élevé par catégorie affiché
- 
-💬 SMS & NOTIFICATIONS
-- SMS envoyé au demandeur lors du REFUS d'un échange (avec motif si fourni)
-- SMS envoyé au receveur lors de l'ANNULATION d'un échange
-- (Acceptation déjà notifiée aux deux parties)
- 
-🗂️ ORGANISATION ASSETS
-- Cartes déplacées vers phone/apps/tcg/cards/
-- tags.csv déplacé vers phone/apps/tcg/
-- Bordures dans phone/apps/tcg/borders/
-- Badges dans phone/apps/tcg/badges/
-- Structure unifiée sous phone/apps/tcg/
- 
-🔧 TECHNIQUE
-- schema.prisma : ajout archetype sur tcg_card, protected sur tcg_user_card, tcg_border model
-- Daily claim passé de 2 à 3 cartes/jour
-- Fix: archétypes NULL en BDD (colonne manquante dans schema.prisma)
-- Fix: bordures non créées (model tcg_border manquant dans Prisma)
-
 ## 25.03.20206 V1.0
 
 + Application TCG
@@ -195,8 +142,6 @@ Nouvelle application téléphone permettant aux joueurs de collectionner, échan
 
 ---
  
- 
-
 
 ## ✨ Améliorations possibles
 
