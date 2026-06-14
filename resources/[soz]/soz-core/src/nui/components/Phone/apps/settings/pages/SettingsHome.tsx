@@ -99,7 +99,7 @@ export const SettingsHome = () => {
     );
     const mappedSocietyNotifications = notiSoundOptions.map(
         MapAudioSettingItem(
-            config.notiSound,
+            config.societyNotification,
             (val: SettingOption) => handleSettingChange('societyNotification', val),
             'notifications'
         )
@@ -202,6 +202,7 @@ export const SettingsHome = () => {
                         </List>
                     </>
                 )}
+
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.RINGTONE')}
@@ -211,6 +212,16 @@ export const SettingsHome = () => {
                         icon={<VolumeUpIcon />}
                         color="bg-[#ee1039]"
                     />
+
+                    {config.ringtone.value === 'custom' && (
+                        <input
+                            className="w-full px-3 py-2 text-sm bg-black/20 rounded-md outline-none"
+                            placeholder="URL de sonnerie .mp3 / .ogg / .wav"
+                            value={config.customRingtoneUrl || ''}
+                            onChange={e => handleSettingChange('customRingtoneUrl', e.target.value)}
+                        />
+                    )}
+
                     <SettingItemSlider
                         label={t('SETTINGS.OPTIONS.RINGTONE_VOLUME')}
                         iconStart={<VolumeOffIcon />}
@@ -219,6 +230,7 @@ export const SettingsHome = () => {
                         onCommit={e => handleSettingChange('ringtoneVol', parseInt(e.target.value))}
                     />
                 </List>
+
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.NOTIFICATION')}
@@ -228,6 +240,16 @@ export const SettingsHome = () => {
                         icon={<BellIcon />}
                         color="bg-[#EA4E3D]"
                     />
+
+                    {config.notiSound.value === 'custom' && (
+                        <input
+                            className="w-full px-3 py-2 text-sm bg-black/20 rounded-md outline-none"
+                            placeholder="URL de notification .mp3 / .ogg / .wav"
+                            value={config.customNotificationUrl || ''}
+                            onChange={e => handleSettingChange('customNotificationUrl', e.target.value)}
+                        />
+                    )}
+
                     <SettingItemSlider
                         label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
                         iconStart={<VolumeOffIcon />}
@@ -236,6 +258,7 @@ export const SettingsHome = () => {
                         onCommit={e => handleSettingChange('notiSoundVol', parseInt(e.target.value))}
                     />
                 </List>
+
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.SOCIETY_NOTIFICATION')}
@@ -245,6 +268,16 @@ export const SettingsHome = () => {
                         icon={<BellIcon />}
                         color="bg-[#3d71ea]"
                     />
+
+                    {config.societyNotification.value === 'custom' && (
+                        <input
+                            className="w-full px-3 py-2 text-sm bg-black/20 rounded-md outline-none"
+                            placeholder="URL notification répondeur .mp3 / .ogg / .wav"
+                            value={config.customSocietyNotificationUrl || ''}
+                            onChange={e => handleSettingChange('customSocietyNotificationUrl', e.target.value)}
+                        />
+                    )}
+
                     <SettingItemSlider
                         label={t('SETTINGS.OPTIONS.NOTIFICATION_VOLUME')}
                         iconStart={<VolumeOffIcon />}
@@ -253,6 +286,11 @@ export const SettingsHome = () => {
                         onCommit={e => handleSettingChange('societyNotificationVol', parseInt(e.target.value))}
                     />
                 </List>
+
+
+
+
+
                 <List>
                     <SettingItem
                         label={t('SETTINGS.OPTIONS.THEME')}

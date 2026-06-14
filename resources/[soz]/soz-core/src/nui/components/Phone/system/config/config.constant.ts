@@ -173,6 +173,10 @@ export const notiSoundOptions = [
         label: 'UwU',
         value: 'uwu',
     },
+    {
+    label: 'Personnalisée',
+    value: 'custom',
+    },
 ];
 
 export const ringtoneOptions = [
@@ -195,6 +199,10 @@ export const ringtoneOptions = [
     {
         label: 'Thriller',
         value: 'thriller',
+    },
+    {
+    label: 'Personnalisée',
+    value: 'custom',
     },
 ];
 

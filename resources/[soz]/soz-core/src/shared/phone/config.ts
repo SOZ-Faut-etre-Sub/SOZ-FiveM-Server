@@ -10,6 +10,9 @@ export type PhoneConfig = {
     ringtone: SettingOption<string>;
     notiSound: SettingOption<string>;
     societyNotification: SettingOption<string>;
+    customRingtoneUrl: string;
+    customNotificationUrl: string;
+    customSocietyNotificationUrl: string;
     ringtoneVol: number;
     notiSoundVol: number;
     societyNotificationVol: number;

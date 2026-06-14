@@ -42,6 +42,9 @@ export const defaultConfig = {
     societyNotificationVol: 50,
     handsFree: false,
     planeMode: false,
+    customRingtoneUrl: '',
+    customNotificationUrl: '',
+    customSocietyNotificationUrl: '',
     dynamicAlert: false,
     dynamicAlertVol: 50,
     dynamicAlertDuration: {

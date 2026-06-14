@@ -74,10 +74,25 @@ export const useSoundSettings = (type: 'ringtone' | 'notiSound' | 'societyNotifi
     const settings = useConfig();
 
     const audioFolder = type === 'ringtone' ? 'ringtones' : 'notifications';
-    const audioFile = type === 'dynamicAlert' ? settings['societyNotification'].value : settings[type].value;
+    const audioFile = type === 'dynamicAlert' ? settings.societyNotification.value : settings[type].value;
+
+    const customRingtoneUrl = settings.customRingtoneUrl?.trim();
+    const customNotificationUrl = settings.customNotificationUrl?.trim();
+    const customSocietyNotificationUrl = settings.customSocietyNotificationUrl?.trim();
+
+    const sound =
+        type === 'ringtone' && settings.ringtone.value === 'custom' && customRingtoneUrl
+            ? customRingtoneUrl
+            : type === 'notiSound' && settings.notiSound.value === 'custom' && customNotificationUrl
+              ? customNotificationUrl
+              : (type === 'societyNotification' || type === 'dynamicAlert') &&
+                  settings.societyNotification.value === 'custom' &&
+                  customSocietyNotificationUrl
+                ? customSocietyNotificationUrl
+                : getPath(`audio/phone/${audioFolder}/${audioFile}.mp3`);
 
     return {
-        sound: getPath(`audio/phone/${audioFolder}/${audioFile}.mp3`),
+        sound,
         volume: settings.planeMode ? 0 : settings[`${type}Vol`] / 100,
     };
 };
