@@ -38,6 +38,8 @@ export type JobMenuData = {
     job: Job | null;
 };
 
+export type PhoneAnimationStyle = 'classic' | 'two_handed';
+
 export type PlayerPersonalMenuData = {
     isCinematicMode: boolean;
     isCinematicCameraActive: boolean;
@@ -54,4 +56,5 @@ export type PlayerPersonalMenuData = {
     arachnophobe: boolean;
     videoVolume: number;
     voipIntent: string;
+    phoneAnimation: PhoneAnimationStyle;
 };
