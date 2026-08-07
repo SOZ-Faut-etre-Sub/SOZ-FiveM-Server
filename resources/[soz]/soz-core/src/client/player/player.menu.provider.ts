@@ -9,6 +9,7 @@ import { Provider } from '../../core/decorators/provider';
 import { ClothConfig } from '../../shared/cloth';
 import { NuiEvent } from '../../shared/event';
 import { MenuType } from '../../shared/nui/menu';
+import { PhoneAnimationStyle } from '../../shared/nui/player';
 import { AnimationService } from '../animation/animation.service';
 import { HudGlassmorphismProvider } from '../hud/hud.glassmorphism.provider';
 import { HudMinimapProvider } from '../hud/hud.minimap.provider';
@@ -25,9 +26,11 @@ import { VoiceProvider } from '../voip/voice/voice.provider';
 import { PlayerAnimationProvider } from './player.animation.provider';
 import { PlayerService } from './player.service';
 import { PlayerWardrobe } from './player.wardrobe';
+import { PhoneState } from '../phone/phone.state';
 
 @Provider()
 export class PlayerMenuProvider {
+
     @Inject(NuiDispatch)
     private dispatcher: NuiDispatch;
 
@@ -36,6 +39,9 @@ export class PlayerMenuProvider {
 
     @Inject(PlayerService)
     private playerService: PlayerService;
+
+    @Inject(PhoneState)
+    private phoneState: PhoneState;    
 
     @Inject(AnimationService)
     private animationService: AnimationService;
@@ -123,6 +129,7 @@ export class PlayerMenuProvider {
             glassmorphismFpsLimit: this.hudGlassmorphismProvider.glassmorphismFpsLimit,
             voipIntent: this.voiceProvider.intent,
             videoVolume: this.streamProvider.videoVolume * 100,
+            phoneAnimation: this.phoneState.getPhoneAnimation(),        
         });
     }
 
@@ -155,6 +162,11 @@ export class PlayerMenuProvider {
 
         this.animationService.stop();
     }
+
+    @OnNuiEvent(NuiEvent.PlayerMenuSetPhoneAnimation)
+    public setPhoneAnimation({ value }: { value: PhoneAnimationStyle }) {
+        this.phoneState.setPhoneAnimation(value);
+}
 
     @OnNuiEvent(NuiEvent.PlayerMenuHudSetGlobal)
     public async hudComponentSetGlobal({ value }: { value: boolean }) {

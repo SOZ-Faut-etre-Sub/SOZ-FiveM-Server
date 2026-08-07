@@ -7,7 +7,7 @@ import { AnimationConfigItem, AnimationConfigList, WalkConfigItem } from '../../
 import { NuiEvent } from '../../../shared/event';
 import { JobPermission } from '../../../shared/job';
 import { MenuType } from '../../../shared/nui/menu';
-import { JobMenuData, PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
+import { JobMenuData, PhoneAnimationStyle, PlayerPersonalMenuData, Shortcut } from '../../../shared/nui/player';
 import { fetchNui } from '../../fetch';
 import { usePlayer } from '../../hook/data';
 import { useJobGrades } from '../../hook/job';
@@ -64,7 +64,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     {isHalloween && (
                         <MenuItemCheckbox
                             checked={data.arachnophobe}
-                            onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetArachnophobe, value)}
+                            onChange={(value) => fetchNui(NuiEvent.PlayerMenuHudSetArachnophobe, value)}
                         >
                             Mode arachnophobe
                         </MenuItemCheckbox>
@@ -87,35 +87,40 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     )}
                 </MenuContent>
             </MainMenu>
-            <MenuAnimation shortcuts={data.shortcuts} favorites={data.favorites} combatMode={data.combatMode} />
+            <MenuAnimation
+                shortcuts={data.shortcuts}
+                favorites={data.favorites}
+                combatMode={data.combatMode}
+                phoneAnimation={data.phoneAnimation}
+            />
             <SubMenu id="hud">
                 <MenuTitle title="Personnel" />
                 <MenuContent subtitle="Gestion du HUD">
                     <MenuItemCheckbox
                         checked={data.isHudVisible}
                         description="Active/Désactive le HUD"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetGlobal, { value })}
+                        onChange={(value) => fetchNui(NuiEvent.PlayerMenuHudSetGlobal, { value })}
                     >
                         HUD: Global
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={data.isCinematicMode}
                         description="Active/Désactive les barres noires"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetCinematicMode, { value })}
+                        onChange={(value) => fetchNui(NuiEvent.PlayerMenuHudSetCinematicMode, { value })}
                     >
                         HUD: Cinématique
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={data.isCinematicCameraActive}
                         description="Active/Désactive la caméra cinématique"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetCinematicCameraActive, { value })}
+                        onChange={(value) => fetchNui(NuiEvent.PlayerMenuHudSetCinematicCameraActive, { value })}
                     >
                         Caméra: Cinématique
                     </MenuItemCheckbox>
                     <MenuItemCheckbox
                         checked={data.scaledNui}
                         description="Active/Désactive le scaling NUI"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetScaledNui, { value })}
+                        onChange={(value) => fetchNui(NuiEvent.PlayerMenuHudSetScaledNui, { value })}
                     >
                         Scaling NUI
                     </MenuItemCheckbox>
@@ -123,7 +128,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                     <MenuItemCheckbox
                         checked={data.isGlassmorphismActive}
                         description="Active/Désactive le glassmorphisme du HUD (fond d'arrière-plan flou)"
-                        onChange={value => fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphism, { value })}
+                        onChange={(value) => fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphism, { value })}
                     >
                         Glassmorphisme
                     </MenuItemCheckbox>
@@ -136,7 +141,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                             await fetchNui(NuiEvent.PlayerMenuHudSetGlassmorphismFpsLimit, { value });
                         }}
                     >
-                        {[30, 60, 90, 120, 144, 165, 240, 300].map(fps => (
+                        {[30, 60, 90, 120, 144, 165, 240, 300].map((fps) => (
                             <MenuItemSelectOption key={fps} value={fps}>
                                 {fps} FPS
                             </MenuItemSelectOption>
@@ -170,7 +175,7 @@ export const MenuPlayerPersonal: FunctionComponent<MenuPlayerPersonalProps> = ({
                             await fetchNui(NuiEvent.PlayerMenuSetVideoVolume, { value });
                         }}
                     >
-                        {[0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(volume => (
+                        {[0, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((volume) => (
                             <MenuItemSelectOption value={volume}>{volume}%</MenuItemSelectOption>
                         ))}
                     </MenuItemSelect>
@@ -184,26 +189,29 @@ type MenuAnimationProps = {
     shortcuts: Record<string, Shortcut>;
     favorites: Record<string, Shortcut>;
     combatMode: boolean;
+    phoneAnimation: PhoneAnimationStyle;
 };
 
 const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
     shortcuts: intialShortcuts,
     favorites: intialFavorites,
     combatMode: initialCombatMode,
+    phoneAnimation: initialPhoneAnimation,
 }) => {
     const [shortcuts, setShortcuts] = useState(intialShortcuts);
     const [favorites, setFavorites] = useState(intialFavorites);
     const [removeCombatMode, setRemoveCombatMode] = useState(initialCombatMode);
+    const [phoneAnimation, setPhoneAnimation] = useState<PhoneAnimationStyle>(initialPhoneAnimation);
 
-    useNuiEvent('player', 'UpdateAnimationShortcuts', shortcuts => {
+    useNuiEvent('player', 'UpdateAnimationShortcuts', (shortcuts) => {
         setShortcuts(shortcuts);
     });
 
-    useNuiEvent('player', 'UpdateAnimationFavorites', shortcuts => {
+    useNuiEvent('player', 'UpdateAnimationFavorites', (shortcuts) => {
         setFavorites(shortcuts);
     });
 
-    useNuiEvent('player', 'UpdateCombatMode', combatMode => {
+    useNuiEvent('player', 'UpdateCombatMode', (combatMode) => {
         setRemoveCombatMode(combatMode);
     });
 
@@ -217,11 +225,32 @@ const MenuAnimation: FunctionComponent<MenuAnimationProps> = ({
                     <MenuItemSubMenuLink id="shortcut_list">Mes raccourcis</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="favorite_list">Mes favoris</MenuItemSubMenuLink>
 
+                    <MenuSubTitle>Téléphone</MenuSubTitle>
+
+                    <MenuItemSelect
+                        title="Animation du téléphone"
+                        value={phoneAnimation}
+                        description="Choix de l'animation d'utilisation du téléphone."
+                        onConfirm={async (_, value) => {
+                            const animation = value as PhoneAnimationStyle;
+
+                            setPhoneAnimation(animation);
+
+                            await fetchNui(NuiEvent.PlayerMenuSetPhoneAnimation, {
+                                value: animation,
+                            });
+                        }}
+                    >
+                        <MenuItemSelectOption value="classic">Classique — une main</MenuItemSelectOption>
+                        <MenuItemSelectOption value="two_handed">Deux mains</MenuItemSelectOption>
+                    </MenuItemSelect>
+
                     <MenuSubTitle>Postures</MenuSubTitle>
                     <MenuItemSubMenuLink id="walk_list">Démarches</MenuItemSubMenuLink>
                     <MenuItemSubMenuLink id="mood_list">Humeurs</MenuItemSubMenuLink>
+
                     <MenuItemCheckbox
-                        onChange={value => {
+                        onChange={(value) => {
                             fetchNui(NuiEvent.PlayerAnimationUpdateCombatMode, value);
                             setRemoveCombatMode(value);
                         }}
@@ -457,7 +486,7 @@ type ItemCategory<T> = {
 const createRecursiveSubMenu = <T extends ItemCategory<T>>(
     item: T,
     prefix: string,
-    createLeafItem: (item: T) => ReactElement
+    createLeafItem: (item: T) => ReactElement,
 ): [ReactElement, ReactElement[]] => {
     if (item.type !== 'category') {
         return [createLeafItem(item), []];
@@ -482,7 +511,7 @@ const createRecursiveSubMenu = <T extends ItemCategory<T>>(
                         return <Fragment key={index}>{element}</Fragment>;
                     })}
                 </MenuContent>
-            </SubMenu>
+            </SubMenu>,
         );
 
         return [<MenuItemSubMenuLink id={`${prefix}${item.name}`}>{item.name}</MenuItemSubMenuLink>, subMenus];
@@ -580,7 +609,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
         return null;
     }
 
-    const jobGrades = grades.filter(grade => grade.jobId === data.job.id);
+    const jobGrades = grades.filter((grade) => grade.jobId === data.job.id);
 
     return (
         <>
@@ -610,7 +639,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                 .sort((a, b) => {
                     return b.weight - a.weight;
                 })
-                .map(grade => {
+                .map((grade) => {
                     return (
                         <SubMenu id={`job_grade_${grade.id}`} key={`job_grade_${grade.id}`}>
                             <MenuTitle title="Personnel" />
@@ -662,7 +691,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
                                 >
                                     ❌ Supprimer le grade
                                 </MenuItemButton>
-                                {Object.keys(data.job.permissions).map(permission => {
+                                {Object.keys(data.job.permissions).map((permission) => {
                                     const permissionValue = data.job.permissions[permission];
                                     const checked = grade.permissions
                                         ? grade.permissions.includes(permission as JobPermission)
@@ -670,7 +699,7 @@ const MenuJob: FunctionComponent<MenuJobProps> = ({ data }) => {
 
                                     return (
                                         <MenuItemCheckbox
-                                            onChange={value => {
+                                            onChange={(value) => {
                                                 fetchNui(NuiEvent.PlayerMenuJobGradePermissionUpdate, {
                                                     gradeId: grade.id,
                                                     permission,
