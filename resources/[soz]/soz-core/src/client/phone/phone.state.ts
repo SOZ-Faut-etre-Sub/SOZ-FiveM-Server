@@ -9,11 +9,13 @@ import { PlayerService } from '@public/client/player/player.service';
 import { ResourceLoader } from '@public/client/repository/resource.loader';
 import { StateSelector } from '@public/client/store/store';
 import { PlayerUpdate } from '@public/core/decorators/player';
+import { PhoneAnimationStyle } from '@public/shared/nui/player';
 import { ActiveCall } from '@public/shared/phone/simcard';
 import { PlayerData } from '@public/shared/player';
 import { RpcServerEvent } from '@public/shared/rpc';
 
 const KVP_PHONE_PROP_MODEL = 'soz_phone_prop_model';
+const KVP_PHONE_ANIMATION = 'soz_phone_animation';
 
 @Provider()
 export class PhoneState {
@@ -33,6 +35,10 @@ export class PhoneState {
     private readonly playerService: PlayerService;
 
     private phonePropModel = GetResourceKvpString(KVP_PHONE_PROP_MODEL) ?? 'soz_phone_black';
+
+    private phoneAnimation: PhoneAnimationStyle =
+        GetResourceKvpString(KVP_PHONE_ANIMATION) === 'two_handed' ? 'two_handed' : 'classic';
+
     private phoneProp: number | null = null;
 
     private phoneOpen = false;
@@ -52,10 +58,35 @@ export class PhoneState {
     }
 
     public setPhonePropModel(
-        model: 'soz_phone_black' | 'soz_phone_gold' | 'soz_phone_natural' | 'soz_phone_white' | 'soz_phone_diamond'
+        model: 'soz_phone_black' | 'soz_phone_gold' | 'soz_phone_natural' | 'soz_phone_white' | 'soz_phone_diamond',
     ) {
         this.phonePropModel = model;
         SetResourceKvp(KVP_PHONE_PROP_MODEL, model);
+    }
+
+    public getPhoneAnimation(): PhoneAnimationStyle {
+        return this.phoneAnimation;
+    }
+
+    public setPhoneAnimation(value: PhoneAnimationStyle) {
+        if (value !== 'classic' && value !== 'two_handed') {
+            return;
+        }
+
+        if (this.phoneAnimation === value) {
+            return;
+        }
+
+        this.phoneAnimation = value;
+        SetResourceKvp(KVP_PHONE_ANIMATION, value);
+
+        const playerPed = PlayerPedId();
+
+        this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
+        this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_read_base');
+        this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_read_base_cover_low');
+        this.clearAnimation(playerPed, 'amb@world_human_stand_mobile@male@text@base', 'base');
+        this.clearAnimation(playerPed, 'amb@world_human_stand_mobile@female@text@base', 'base');
     }
 
     public isPhoneDisabled() {
@@ -148,7 +179,7 @@ export class PhoneState {
         return this.currentCall !== null && (this.currentCall.isTransmitter || this.currentCall.is_accepted);
     }
 
-    @StateSelector(state => state.global.blackout, state => state.global.blackoutLevel)
+    @StateSelector((state) => state.global.blackout, (state) => state.global.blackoutLevel)
     async onBlackout(blackout: boolean, blackoutLevel: number) {
         this.cityIsInBlackOut = blackout || blackoutLevel >= 3;
     }
@@ -165,32 +196,33 @@ export class PhoneState {
             await this.triggerAnimation(
                 playerPed,
                 isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
-                'cellphone_call_listen_base'
+                'cellphone_call_listen_base',
             );
         } else if (this.phoneOpen && this.phoneProp && this.phoneFlashlightEnabled) {
             await this.triggerAnimation(
                 playerPed,
                 isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
-                'cellphone_text_read_base_cover_low'
+                'cellphone_text_read_base_cover_low',
             );
         } else if (this.phoneOpen) {
-            await this.triggerAnimation(
-                playerPed,
-                isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
-                'cellphone_text_in'
-            );
+            const animation = this.getPhoneOpenAnimation(playerPed, isPlayerInVehicle);
+
+            await this.triggerAnimation(playerPed, animation.dictionary, animation.name);
         } else if (!this.phoneOpen && this.phoneProp !== null) {
             if (isPlayerInVehicle) {
-                ['cellphone_text_in', 'cellphone_call_to_text', 'cellphone_call_listen_base'].forEach(anim => {
+                ['cellphone_text_in', 'cellphone_call_to_text', 'cellphone_call_listen_base'].forEach((anim) => {
                     this.clearAnimation(playerPed, 'anim@cellphone@in_car@ps', anim);
                 });
             } else {
                 this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_in');
+                this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_read_base');
                 this.clearAnimation(playerPed, 'cellphone@', 'cellphone_text_read_base_cover_low');
+                this.clearAnimation(playerPed, 'amb@world_human_stand_mobile@male@text@base', 'base');
+                this.clearAnimation(playerPed, 'amb@world_human_stand_mobile@female@text@base', 'base');
 
                 this.animationService.playAnimationIfNotRunning({
                     base: {
-                        dictionary: isPlayerInVehicle ? 'anim@cellphone@in_car@ps' : 'cellphone@',
+                        dictionary: 'cellphone@',
                         name: 'cellphone_text_out',
                         duration: 200,
                         options: {
@@ -232,6 +264,31 @@ export class PhoneState {
         SetPedConfigFlag(PlayerPedId(), 104, true);
         this.attachedObjectService.detachObjectToPlayer(this.phoneProp);
         this.phoneProp = null;
+    }
+
+    private getPhoneOpenAnimation(playerPed: number, isPlayerInVehicle: boolean): { dictionary: string; name: string } {
+        if (isPlayerInVehicle) {
+            return {
+                dictionary: 'anim@cellphone@in_car@ps',
+                name: 'cellphone_text_in',
+            };
+        }
+
+        if (this.phoneAnimation === 'two_handed') {
+            const isMale = IsPedMale(playerPed);
+
+            return {
+                dictionary: isMale
+                    ? 'amb@world_human_stand_mobile@male@text@base'
+                    : 'amb@world_human_stand_mobile@female@text@base',
+                name: 'base',
+            };
+        }
+
+        return {
+            dictionary: 'cellphone@',
+            name: 'cellphone_text_in',
+        };
     }
 
     private async triggerAnimation(playerPed: number, dictionary: string, name: string) {
