@@ -10,6 +10,7 @@ import { ClientEvent, ServerEvent } from '../../shared/event';
 import { toVector3Object, Vector3 } from '../../shared/polyzone/vector';
 import { ProgressAnimation, ProgressOptions } from '../../shared/progress';
 import { PlayerVehicleState } from '../../shared/vehicle/player.vehicle';
+import { VehicleSeat } from '../../shared/vehicle/vehicle';
 import { PrismaService } from '../database/prisma.service';
 import { Monitor } from '../monitor/monitor';
 import { Notifier } from '../notifier';
@@ -377,6 +378,41 @@ export class VehicleConditionProvider {
         for (const player of players) {
             TriggerClientEvent(ClientEvent.VEHICLE_DAMAGE_BLUR, player, duration);
         }
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_FORCE_CLEAR_WAYPOINT)
+    public onVehicleForceClearWaypoint(source: number, players: number[]) {
+        for (const player of this.getWaypointTargets(source, players)) {
+            TriggerClientEvent(ClientEvent.VEHICLE_FORCE_CLEAR_WAYPOINT, player);
+        }
+    }
+
+    @OnEvent(ServerEvent.VEHICLE_WAYPOINT_STATE)
+    public onVehicleWaypointState(source: number, players: number[], active: boolean) {
+        for (const player of this.getWaypointTargets(source, players)) {
+            TriggerClientEvent(ClientEvent.VEHICLE_WAYPOINT_STATE, player, active);
+        }
+    }
+
+    private getWaypointTargets(source: number, players: number[]): number[] {
+        if (!Array.isArray(players)) {
+            return [];
+        }
+
+        const ped = GetPlayerPed(source);
+        const vehicle = GetVehiclePedIsIn(ped, false);
+
+        if (
+            !vehicle ||
+            (GetPedInVehicleSeat(vehicle, VehicleSeat.Driver) !== ped &&
+                GetPedInVehicleSeat(vehicle, VehicleSeat.Copilot) !== ped)
+        ) {
+            return [];
+        }
+
+        return players.filter(
+            player => player !== source && GetVehiclePedIsIn(GetPlayerPed(player), false) === vehicle
+        );
     }
 
     @OnEvent(ServerEvent.VEHICLE_UPDATE_MILEAGE)

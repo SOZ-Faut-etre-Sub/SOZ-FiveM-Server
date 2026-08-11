@@ -228,6 +228,8 @@ export enum ClientEvent {
     VEHICLE_LOCKPICK = 'soz-core:client:vehicle:lockpick',
     VEHICLE_SET_OPEN_LIST = 'soz-core:client:vehicle:set-open-list',
     VEHICLE_DAMAGE_BLUR = 'soz-core:client:vehicle:damage-blur',
+    VEHICLE_FORCE_CLEAR_WAYPOINT = 'soz-core:client:vehicle:force-clear-waypoint',
+    VEHICLE_WAYPOINT_STATE = 'soz-core:client:vehicle:waypoint-state',
     VEHICLE_NOS_START = 'soz-core:client:vehicle:nos-start',
     VEHICLE_NOS_END = 'soz-core:client:vehicle:nos-end',
     VEHICLE_RELEASE = 'soz-core:client:vehicle:release',
