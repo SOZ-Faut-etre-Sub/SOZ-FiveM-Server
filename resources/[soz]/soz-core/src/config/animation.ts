@@ -163,11 +163,4571 @@ export const Moods: MoodConfigList = [
     { name: 'Viser', mood: 'mood_aiming_1' },
 ];
 
-export const Animations: AnimationConfigList = [
+export const Animations: AnimationConfigList = [   
+
+    // Gestures category
+
+{
+    type: 'category',
+    name: 'Gestes',
+    items: [
+        {
+            type: 'animation',
+            name: 'Se secouer',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'move_m@_idles@shake_off',
+                    name: 'shakeoff_1',
+                },
+            },
+        },        
+        {
+            type: 'animation',
+            name: 'Moi',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'gestures@f@standing@casual',
+                    name: 'gesture_me_hard',
+                },
+            },
+        },        
+        {
+            type: 'animation',
+            name: 'Tousser',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'timetable@gardener@smoking_joint',
+                    name: 'idle_cough',
+                },
+            },
+        },        
+            {
+                type: 'animation',
+                name: "Briquet en l'air",
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'samnick@lighter@wave',
+                        name: 'waving_lighter',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 18905,
+                            model: 'samnick_prop_lighter01',
+                            position: [0.11, 0.01, 0.02],
+                            rotation: [-85, 188, 10],
+                        },
+                    ],
+                },
+            },        
+        {
+            type: 'animation',
+            name: 'Baisser la tête',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'mp_sleep',
+                    name: 'sleep_loop',
+                    options: {
+                        freezeLastFrame: true,
+                        onlyUpperBody: true,
+                        enablePlayerControl: true,
+                        repeat: true,
+                    },
+                },
+            },
+        },
+                    {
+                        type: 'animation',
+                        name: 'Impatient',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@bailbond_surf_farm',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },       
+            {
+                type: 'animation',
+                name: 'Circulation',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_car_park_attendant@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prop_parking_wand_01',
+                            position: [0.12, 0.05, 0],
+                            rotation: [80, -20, 180],
+                        },
+                    ],
+                },
+            },                   
+{
+    type: 'animation',
+    name: 'Cherche au sol',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'Rcm_epsilonism4',
+                        name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Cordon de sécurité',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'nm@hands',
+                        name: 'flail',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Damn',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'gestures@m@standing@casual',
+                        name: 'gesture_damn',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Ecouteur',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'cellphone@female',
+                        name: 'cellphone_call_listen_base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Est-ce que vous êtes là !?',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    enter: {
+                        dictionary: 'mp_player_int_uppergang_sign_a',
+                        name: 'mp_player_int_gang_sign_a_enter',
+                        duration: 500,
+                    },
+                    base: {
+                        dictionary: 'mp_player_int_uppergang_sign_a',
+                        name: 'mp_player_int_gang_sign_a',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                    exit: {
+                        dictionary: 'mp_player_int_uppergang_sign_a',
+                        name: 'mp_player_int_gang_sign_a_exit',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'FacePalm',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@mp_player_intcelebrationmale@face_palm',
+                        name: 'face_palm',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'FacePalm 2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'random@car_thief@agitated@idle_a',
+                        name: 'agitated_idle_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Faire du stop',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'random@hitch_lift',
+                        name: 'idle_f',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'category',
+                name: "Faire l'animal",
+                items: [
+                    {
+                        type: 'animation',
+                        name: "Faire l'oiseau",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'random@peyote@bird',
+                                name: 'wakeup',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Faire le Canard',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationfemale@chicken_taunt',
+                                name: 'chicken_taunt',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Faire le poulet',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'random@peyote@chicken',
+                                name: 'wakeup',
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'scenario',
+                name: 'Filmer',
+                rightLabel: null,
+                icon: null,
+                scenario: {
+                    name: 'WORLD_HUMAN_MOBILE_FILM_SHOCKING',
+                },
+            },
+            {
+                type: 'event',
+                name: 'Plaquage',
+                rightLabel: null,
+                icon: null,
+                event: ClientEvent.TAKE_DOWN,
+            },           
+            {
+                type: 'category',
+                name: 'Grossier',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Balle dans la tete',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mp_suicide',
+                                name: 'pistol',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Branleur',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mp_player_int_upperwank',
+                                name: 'mp_player_int_wank_01',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "Doigt d'honneur",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mp_player_int_upperfinger',
+                                name: 'mp_player_int_finger_01_enter',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Doigt dans le c**',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'friends@frt@ig_1',
+                                name: 'trevor_impatient_wait_3',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Doigt dans le nez',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@nose_pick',
+                                name: 'nose_pick',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Fuck you',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intincarfingerbodhi@ds@',
+                                name: 'idle_a',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "Je t'enc**e ou ?",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@dock',
+                                name: 'dock',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Par derrière',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intincarair_shaggingbodhi@ds@',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Se gratter les c**',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mp_player_int_uppergrab_crotch',
+                                name: 'mp_player_int_grab_crotch',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: 'Isoké',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@mp_player_intincarthumbs_uplow@ds@',
+                        name: 'idle_a',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Je valide',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'missheist_jewel',
+                        name: 'im_telling_you',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Laisse tomber',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'missheist_jewel',
+                        name: 'despair',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Non',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'gestures@m@standing@casual',
+                        name: 'gesture_head_no',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Oui',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'gestures@m@standing@casual',
+                        name: 'gesture_pleased',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Peut-être',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'oddjobs@bailbond_hobohang_out_street_b',
+                        name: 'idle_b',
+                    },
+                },
+            },
+            {
+                type: 'category',
+                name: 'Regarder',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Je vais être en retard',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
+                                name: 'm_impatient_a',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Regarder autour',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
+                                name: 'm_impatient_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "Regarder l'heure",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
+                                name: 'm_impatient_a',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Regarder le sol',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmrc_omega_2',
+                                name: 'omega_idle_looking_around',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Regarder sa carte',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_tourist_map@female@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            props: [
+                                {
+                                    model: 'p_tourist_map_01_s',
+                                    bone: 58867,
+                                    position: [0.15, 0.081, 0.05],
+                                    rotation: [120, 160, 30],
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: 'Rock',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@mp_player_intincarrockbodhi@ds@',
+                        name: 'idle_a',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: "T'es un homme mort",
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@mp_player_intcelebrationmale@cut_throat',
+                        name: 'cut_throat',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Taper au clavier',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_fib_grab',
+                        name: 'loop',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'WTF',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'gestures@m@standing@casual',
+                        name: 'gesture_shrug_hard',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },                          
+            {
+                type: 'animation',
+                name: 'Bras croisés #1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mini@hookers_sp',
+                        name: 'idle_reject_loop_b',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Menotté au sol',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'random@burial',
+                        name: 'b_burial',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pose de Yoga',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'rcmfanatic1maryann_stretchidle_b',
+                        name: 'idle_e',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pose de Yoga 2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_yoga@female@base',
+                        name: 'base_c',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: '« Shhht » bourré',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'giggle_a_player_a',
+                    },
+                },
+            },     
+            {
+                type: 'animation',
+                name: 'Aucune idée',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'gestures@m@sitting@generic@casual',
+                        name: 'gesture_shrug_hard',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },   
+            {
+                type: 'animation',
+                name: 'Bro',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_player_int_upperbro_love',
+                        name: 'mp_player_int_bro_love_enter',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Calmes-toi',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'rcmnigel1a',
+                        name: 'idle_c_2',
+                        options: {
+                            onlyUpperBody: true,
+                        },
+                    },
+                },
+            }, 
+    ],
+},
+    // Positions category
+
+    {
+        type: 'category',
+        name: 'Positions',
+        items: [
+{
+        type: 'category',
+        name: 'Bras et mains',
+        items: [ 
+            {
+                type: 'animation',
+                name: 'Main dans les poches (Sweat)',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'bzzz@animations@hands',
+                        name: 'bz_hands',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },         
+            },                                
+            {
+                type: 'animation',
+                name: 'Tenir son sac',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'move_p_m_zero_rucksack',
+                        name: 'idle',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Mains sur le GPB',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@male@holding_vest',
+                        name: 'holding_vest_clip',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Mains sur le GPB #2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@holding_side_vest',
+                        name: 'holding_side_vest_clip',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'UwU',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'uwu@egirl',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Bras Croisés',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@heists@heist_corona@single_team',
+                        name: 'single_team_loop_boss',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },          
+            {
+                type: 'animation',
+                name: 'Cow Boy',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_cop_idles@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },  
+                    {
+                        type: 'animation',
+                        name: 'Mains dans le dos',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@casino@valet_scenario@pose_d@',
+                                name: 'base_a_m_y_vinewood_01',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains ensembles',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missfbi4mcs_2',
+                                name: 'loop_sec_a',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains jointes (neutre)',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@carmeet@checkout_car@male_a@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains jointes (triste)',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@carmeet@checkout_engine@male_c@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },                  
+            {
+                type: 'animation',
+                name: 'Ecouteur',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'cellphone@female',
+                        name: 'cellphone_call_listen_base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Holster',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'move_m@intimidation@cop@unarmed',
+                        name: 'idle',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },                                      
+            {
+                type: 'animation',
+                name: 'Police - Stop Holster (arme ou holster droite)',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@hlstr_7360_hold',
+                        name: 'holster_stop',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },            
+        ],
+    },    
+            {
+                type: 'category',
+                name: 'Debout',
+                items: [
+            {
+                type: 'animation',
+                name: 'Patient',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'move_characters@tracey@core@',
+                        name: 'idle',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Pensif',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@amb@casino@hangout@ped_male@stand@02b@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },                     
+            {
+                type: 'animation',
+                name: 'Attendre',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'rcmjosh1',
+                        name: 'idle',
+                        options: {
+                            repeat: true,
+                        }                        
+                    },
+                },
+            },    
+                    {
+                        type: 'animation',
+                        name: 'Attendre #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_jewel_setup',
+                                name: 'idle_storeclerk',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },  
+                    {
+                        type: 'animation',
+                        name: 'Attendre #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
+                                name: 'f_impatient_a',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },  
+                    {
+                        type: 'animation',
+                        name: 'Attendre #4',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@assassinate@guard',
+                                name: 'unarmed_fold_arms',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },   
+                   {
+                        type: 'animation',
+                        name: 'Attendre #5',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
+                                name: 'f_impatient_c',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },  
+       {
+            type: 'animation',
+            name: 'Attendre #6',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@miss@low@fin@vagos@',
+                    name: 'idle_ped06',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },              
+        {
+            type: 'animation',
+            name: 'Attendre #7',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'amb@world_human_hang_out_street@female_arms_crossed@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        }, 
+        {
+            type: 'animation',
+            name: 'Attendre #8',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'misshair_shop@hair_dressers',
+                    name: 'keeper_base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        }, 
+        {
+            type: 'animation',
+            name: 'Attendre #9',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'timetable@tracy@ig_8@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                                                         
+                    {
+                        type: 'animation',
+                        name: 'Bras croisés',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_window_shop@male@idle_a',
+                                name: 'browse_a',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },  
+                    {
+                        type: 'animation',
+                        name: 'Bras croisés #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@bailbond_hobohang_out_street_c',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras croisés #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@casino@hangout@ped_female@stand@03a@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mouvement de bras #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmme_amanda1',
+                                name: 'pst_arrest_loop_owner',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mouvement de bras #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmme_amanda1',
+                                name: 'pst_arrest_loop_cop',
+                            },
+                        },
+                    },                      
+            {
+                type: 'animation',
+                name: 'Police - Garde à Vous',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'airforce@attention',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: false,
+                            enablePlayerControl: false,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },            
+            {
+                type: 'animation',
+                name: 'Police - Repos',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'airforce@parade_rest',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: false,
+                            enablePlayerControl: false,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Gardien de sécurité',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mini@strip_club@idles@bouncer@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: false,
+                            enablePlayerControl: false,
+                            freezeLastFrame: true,
+                        },
+                    },
+                },
+            },                                
+                    {
+                        type: 'animation',
+                        name: 'Stressé',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@casino@hangout@ped_female@stand@02a@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: "Est-ce que j'ai eu l'bac..",
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'oddjobs@taxi@gyn@cc@intro',
+                        name: 'f_impatient_b',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Fier',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'rcmbarry',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },                                  
+            {
+                type: 'animation',
+                name: 'Départ de course',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'random@street_race',
+                        name: 'grid_girl_race_start',
+                    },
+                },
+            },  
+        ],
+    },           
+    {
+        type: 'category',
+        name: 'S\'appuyer',
+        items: [    
+            {
+                type: 'animation',
+                name: 'Accoudé',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@prop_human_bum_shopping_cart@male@idle_a',
+                        name: 'idle_c',
+                        options: {
+                            repeat: true,
+                        }
+                    },
+                },
+            },   
+                    {
+                        type: 'animation',
+                        name: 'Adossé au bar',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@gt_idle@',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'De côté contre un mur',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmnigel1a_band_groupies',
+                                name: 'idle_a_m2',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'De côté contre un mur #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@island@special_peds@couple@hs4_couple_stage2_ig10',
+                                name: 'base_idle_male',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },                    
+                    {
+                        type: 'animation',
+                        name: 'Appuyé sur un muret',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missstrip_club_lean',
+                                name: 'player_lean_rail_loop',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+
+                    {
+                        type: 'animation',
+                        name: 'Sur la table',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_agency2aig_4',
+                                name: 'look_plan_b_worker2',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+            {
+                type: 'category',
+                name: 'Dos au mur',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Bras levé #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras levé #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras levé #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_a',
+                                name: 'idle_c',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras levé #4',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_b',
+                                name: 'idle_d',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras levé #5',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_b',
+                                name: 'idle_e',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: 'Hasard',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'WORLD_HUMAN_LEANING',
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambe levée #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambe levée #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambe levée #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_a',
+                                name: 'idle_c',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambe levée #4',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_b',
+                                name: 'idle_d',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambe levée #5',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_b',
+                                name: 'idle_e',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambes croisées #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
+                                name: 'enter_front',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambes croisées #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
+                                name: 'enter_front',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambes croisées #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
+                                name: 'enter_front',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_a',
+                                name: 'idle_c',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambes croisées #4',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
+                                name: 'enter_front',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_b',
+                                name: 'idle_d',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambes croisées #5',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
+                                name: 'enter_front',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_b',
+                                name: 'idle_e',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains tenues #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains tenues #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_a',
+                                name: 'idle_c',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains tenues #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_b',
+                                name: 'idle_d',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Mains tenues #4',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
+                                name: 'enter_back',
+                                duration: 3200,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_b',
+                                name: 'idle_e',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
+                                name: 'exit_front',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Pensif #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@exit',
+                                name: 'exit',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Pensif #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@exit',
+                                name: 'exit',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Pensif #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@idle_a',
+                                name: 'idle_c',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@exit',
+                                name: 'exit',
+                            },
+                        },
+                    },                    
+        ],
+    },
+],
+    },
+
+    // Sitting category
+
+{
+    type: 'category',
+    name: 'Assis',
+    items: [
+                {
+            type: 'animation',
+            name: 'sur le canapé',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'timetable@maid@couch@',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },         
+        {
+            type: 'animation',
+            name: 'Assis parterre',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'rcm_barry3',
+                    name: 'barry_3_sit_loop',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        }, 
+        {
+            type: 'animation',
+            name: 'Assis parterre #2',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@heists@fleeca_bank@ig_7_jetski_owner',
+                    name: 'owner_idle',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        }, 
+        {
+            type: 'animation',
+            name: 'Assis parterre #3',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@amb@business@bgen@bgen_no_work@',
+                    name: 'sit_phone_phoneputdown_idle_nowork',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                        
+        {
+            type: 'animation',
+            name: 'Assis bras sur les genoux',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'timetable@ron@ig_3_couch',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },         
+        {
+            type: 'animation',
+            name: 'Assis sur une chaise',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@heists@fleeca_bank@hostages@intro',
+                    name: 'intro_loop_ped_a',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },  
+        {
+            type: 'animation',
+            name: 'Assis sur une chaise #2',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'rcmtmom_1leadinout',
+                    name: 'tmom_1_rcm_p3_leadout_loop',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },         
+                    {
+                        type: 'animation',
+                        name: "S'asseoir",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'switch@michael@sitting',
+                                name: 'idle',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: "S'asseoir #2",
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'PROP_HUMAN_SEAT_CHAIR',
+                            fixPositionDelta: [-0.48, -0.5],
+                        },
+                    },  
+                    {
+                        type: 'scenario',
+                        name: "S'asseoir #3",
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER',
+                            fixPositionDelta: [-0.48, -0.5],
+                        },
+                    },                                      
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (femme)",
+                        rightLabel: null,
+                        icon: null,
+                          animation: {
+                            base: {
+                                dictionary: 'timetable@reunited@ig_10',
+                                name: 'base_amanda',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                    }, 
+                },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (Capot #1)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@carmeet@tun_meet_ig2_race@',
+                                name: 'look_at_player',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (Capot #2)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@carmeet@tun_meet_ig2_race@',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: "S'asseoir sur une chaise (dos droit)",
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'PROP_HUMAN_SEAT_CHAIR_UPRIGHT',
+                            fixPositionDelta: [-0.48, -0.5],
+                        },
+                    },
+
+                    {
+                        type: 'scenario',
+                        name: "S'asseoir sur une chaise longue",
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'PROP_HUMAN_SEAT_DECKCHAIR',
+                            fixPositionDelta: [-0.48, -0.6],
+                        },
+                    },
+
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (PLS)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@lazlow@lo_toilet@',
+                                name: 'lowtoilet_base_v2_laz',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: "S'asseoir (Sol)",
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'WORLD_HUMAN_PICNIC',
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (Sol homme)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_picnic@male@enter',
+                                name: 'enter',
+                                duration: 7933,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_picnic@male@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_picnic@male@exit',
+                                name: 'exit',
+                                duration: 2099,
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (Sol femme)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            enter: {
+                                dictionary: 'amb@world_human_picnic@female@enter',
+                                name: 'enter',
+                                duration: 6700,
+                            },
+                            base: {
+                                dictionary: 'amb@world_human_picnic@female@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                            exit: {
+                                dictionary: 'amb@world_human_picnic@female@exit',
+                                name: 'exit',
+                                duration: 3666,
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: "S'asseoir (Stripclub)",
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'PROP_HUMAN_SEAT_STRIP_WATCH',
+                            fixPositionDelta: [-0.48, -0.5],
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "S'asseoir (WC)",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'switch@trevor@on_toilet',
+                                name: 'trev_on_toilet_loop',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },          
+    
+    // Kneeling category    
+
+    {
+        type: 'category',
+        name: 'À genoux / accroupi',
+        items: [
+        {
+            type: 'animation',
+            name: 'Bidouiller',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
+                    name: 'machinic_loop_mechandplayer',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },             
+            {
+                type: 'event',
+                name: 'À genoux mains sur la tête',
+                rightLabel: null,
+                icon: null,
+                event: ClientEvent.ANIMATION_SURRENDER,
+            },            
+                    {
+                        type: 'animation',
+                        name: 'À genoux',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_bum_wash@male@low@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'À genoux 2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@medic@standing@tendtodead@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    }, 
+                    {
+                        type: 'animation',
+                        name: 'À genoux 3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'misschinese2_crystalmaze',
+                                name: '2int_loop_base_taotranslator',
+                               options: {
+                                    repeat: true,
+                                },                                
+                            },
+                        },
+                    },                                         
+                    {
+                        type: 'animation',
+                        name: 'Accroupi',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@medic@standing@kneel@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Accroupi 2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmextreme3',
+                                name: 'idle',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Accroupi 3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'move_crouch_proto',
+                                name: 'idle',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },                                       
+                    {
+                        type: 'animation',
+                        name: 'Peur à genoux',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@bty4@ig2_bounty_kneel@male@',
+                                name: 'on_knee_idle_b',
+                                options: {
+                                repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Peur à genoux 2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'misstrevor1',
+                                name: 'ortega_kneel_outro_ort',
+                                options: {
+                                repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Peur à genoux 3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@bty2@ig1_hiding_target@male@',
+                                name: 'hiding_kneel',
+                                options: {
+                                repeat: true,
+                                },
+                            },
+                        },
+                    },
+        ],
+    },
+
+    // Laying down category
+
+        {
+        type: 'category',
+        name: 'S\'allonger',
+        items: [ 
+        {
+            type: 'animation',
+            name: 'couché sur le côté',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'switch@trevor@scares_tramp',
+                    name: 'trev_scares_tramp_idle_tramp',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },             
+        {
+            type: 'animation',
+            name: 'Couché sur le côté',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'timetable@tracy@sleep@',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },              
+        {
+            type: 'animation',
+            name: 'Couché sur le ventre',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'amb@world_human_sunbathe@male@front@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },              
+        {
+            type: 'animation',
+            name: 'Couché sur le ventre',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@heists@ornate_bank@hostages@hit',
+                    name: 'hit_react_die_loop_ped_a',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                    
+                    {
+                        type: 'animation',
+                        name: 'Blessé sur le dos',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_jewel',
+                                name: 'gassed_npc_customer1',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Blessé sur le dos #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missfbi5ig_0',
+                                name: 'lyinginpain_loop_steve',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Allongé sur le dos',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_jewel',
+                                name: 'gassed_npc_customer2',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Allongé sur le dos #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_sunbathe@female@back@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Allongé sur le ventre',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_sunbathe@female@front@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Allongé sur le ventre #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_jewel',
+                                name: 'gassed_npc_guard',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },                    
+                    {
+                        type: 'animation',
+                        name: 'Allongé sur le côté',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_bum_slumped@male@laying_on_left_side@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+
+                    {
+                        type: 'animation',
+                        name: 'Allongé sur le côté #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_jewel',
+                                name: 'gassed_npc_customer4',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+        ],
+    },
+
+    // Emotions & states category    
+    
+    {
+        type: 'category',
+        name: 'Émotions & états',
+        items: [
+            {
+                type: 'animation',
+                name: 'Ennuie',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'oddjobs@bailbond_hobotwitchy',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'category',
+                name: 'Tristesse',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Pleurer (moquerie)',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@cry_baby',
+                                name: 'cry_baby',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Triste #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmnigel1aig_3',
+                                name: 'base_willie',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Triste #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_bum_standing@depressed@idle_a',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Triste par terre',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@lazlow@lo_alone@',
+                                name: 'lowalone_dlg_moans_laz',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+            {
+                type: 'animation',
+                name: 'Bouder',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mini@hookers_sp',
+                        name: 'idle_reject_loop_b',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },                    
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Peur',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Nerveux',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmme_tracey1',
+                                name: 'nervous_loop',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Stressé #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@bailbond_hobotwitchy',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Peur #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@code_human_cower_stand@male@idle_a',
+                                name: 'idle_b',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Peur #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@anim_yacht@yacht_ig1_hostage@',
+                                name: 'cower_idle_bar_lady_barlady',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Peur #3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@scripted@anim_yacht@yacht_ig1_hostage@',
+                                name: 'cower_idle_captain_captain',
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Joie',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Applaudir',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_cheering@male_d',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Rire #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                                name: 'taunt_d_player_b',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Rire #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmpaparazzo_3b',
+                                name: 'idle_b',
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Douleur',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Blessé au sol',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'random@dealgonewrong',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Douleur au cœur',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'rcmfanatic1out_of_breath',
+                                name: 'p_zero_tired_02',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    },
+
+    // Celebrations category
+
+    {
+        type: 'category',
+        name: 'Célébrations',
+        items: [
+                    {
+                        type: 'animation',
+                        name: 'Bang Bang',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@bang_bang',
+                                name: 'bang_bang',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'BOOM !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@mind_blown',
+                                name: 'mind_blown',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "C'est ma musique !",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@bro_love',
+                                name: 'bro_love',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "J'adore !",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@blow_kiss',
+                                name: 'blow_kiss',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jeter des billets',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@raining_cash',
+                                name: 'raining_cash',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Non mais allo ?!',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationfemale@call_me',
+                                name: 'call_me',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Pile ou Face ?',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@coin_roll_and_toss',
+                                name: 'coin_roll_and_toss',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Viser la lune',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'oddjobs@basejump@',
+                                name: 'ped_a_loop',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },            
+            {
+                type: 'animation',
+                name: 'Backflip',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'flip_a_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Jump Jump',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_cheering@female_c',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Capoeira',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'cap_a_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Glisser sur les genoux',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'slide_a_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Saut #1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'jump_b_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Saut #2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'jump_c_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Saut #3',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'jump_d_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Vague arrière',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
+                        name: 'pageant_a_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'On a gagné',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_parachute_outro@male@win',
+                        name: 'first_place',
+                    },
+                },
+            },
+
+        ],
+    },
+
+    // Jobs category
+
+    {
+        type: 'category',
+        name: 'Métiers',
+        items: [
+            {
+                type: 'category',
+                name: 'Médical',
+                items: [
+       {
+            type: 'animation',
+            name: 'Appliquer un pansement - à genoux',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'amb@medic@standing@tendtodead@idle_a',
+                    name: 'idle_a',
+                },
+            },
+        },                    
+            {
+                type: 'animation',
+                name: 'Massage Cardiaque',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mini@cpr@char_a@cpr_str',
+                        name: 'cpr_pumpchest',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+                    {
+                        type: 'animation',
+                        name: 'Appliquer un pansement - debout',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mp_fm_intro_cut',
+                                name: 'fixing_a_ped',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },  
+
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Police',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'A Droite !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'you_right',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'A Gauche !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'you_left',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Avancez !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'you_fwd',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: "C'est compris !",
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'understood',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Derrière !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'you_back',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Ralliement !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'rally_point',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Reculez !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'go_fwd',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Stop !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'freeze',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Venez !',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'swat',
+                                name: 'come',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+                },
+            {
+                type: 'category',
+                name: 'Hygiène',
+                items: [
+                        {
+                        type: 'animation',
+                        name: 'Balayer',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@drug_field_workers@rake@male_b@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                                    props: [
+                                    {
+                                        bone: 28422,
+                                        model: 'prop_tool_broom',
+                                        position: [-0.01, 0.04, -0.03],
+                                        rotation: [0, 0, 0],
+                                    },
+                                ],                
+                            },
+                        },
+                    {
+                        type: 'scenario',
+                        name: 'Laver les vitres',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'world_human_maid_clean',
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Laver un mur',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'amb@world_human_maid_clean@',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                    freezeLastFrame: true,
+                                },
+                            },
+                            props: [
+                                {
+                                    bone: 28422,
+                                    model: 'prop_sponge_01',
+                                    position: [0, 0, -0.01],
+                                    rotation: [90, 0, 0],
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Laver la table',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'timetable@floyd@clean_kitchen@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                    freezeLastFrame: true,
+                                },
+                            },
+                            props: [
+                                {
+                                    bone: 28422,
+                                    model: 'prop_sponge_01',
+                                    position: [0, 0, -0.01],
+                                    rotation: [90, 0, 0],
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Passer la Serpillère',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'move_mop',
+                                name: 'idle_scrub_small_player',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                    freezeLastFrame: true,
+                                },
+                            },
+                            props: [
+                                {
+                                    bone: 28422,
+                                    model: 'prop_cs_mop_s',
+                                    position: [0, 0, 0.12],
+                                    rotation: [0, 0, 0],
+                                },
+                            ],
+                        },
+                    },                    
+                    {
+                        type: 'animation',
+                        name: 'Prendre une douche',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mp_safehouseshower@male@',
+                                name: 'male_shower_idle_d',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Se laver les mains',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missheist_agency3aig_23',
+                                name: 'urinal_sink_loop',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Jardinage',
+                items: [
+
+                {
+            type: 'animation',
+            name: 'ratisser',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@amb@drug_field_workers@rake@male_b@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+                        props: [
+                        {
+                            bone: 28422,
+                            model: 'prop_tool_rake',
+                            position: [0, 0, -0.03],
+                            rotation: [0, 0, 0],
+                        },
+                    ],                
+                },
+            },                    
+                    {
+                        type: 'animation',
+                        name: 'Creuser',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@drug_field_workers@rake@male_a@base',
+                                name: 'base',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Creuser #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'missmic1leadinoutmic_1_mcs_2',
+                                name: '_leadin_trevor',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: 'Planter',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'world_human_gardener_plant',
+                        },
+                    },
+            {
+                type: 'animation',
+                name: 'Souffler les feuilles',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_gardener_leaf_blower@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 0,
+                            model: 'scr_armenian3/ent_anim_leaf_blower',
+                            position: [1, 0, -0.25],
+                            rotation: [0, 0, 0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Arroser les plantes',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_gardener_leaf_blower@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                            freezeLastFrame: true,
+                        },
+                    },
+                    props: [
+                        {
+                            bone: 57005,
+                            model: 'prop_wateringcan',
+                            position: [0.32, -0.15, 0],
+                            rotation: [260, 0, 0],
+                        },
+                    ],
+                },
+            },    
+        ],
+    },                  
+            {
+                type: 'category',
+                name: 'Mécanique',
+                items: [
+        {
+            type: 'animation',
+            name: 'bricoler parterre',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'amb@world_human_vehicle_mechanic@male@base',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                     
+        {
+            type: 'animation',
+            name: 'Changer une ampoule',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'amb@prop_human_movie_bulb@idle_a',
+                    name: 'idle_b',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                    
+        {
+            type: 'animation',
+            name: 'Réparer',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'mini@repair',
+                    name: 'fixing_a_player',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                    
+                    {
+                        type: 'scenario',
+                        name: 'Réparer 2',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'world_human_vehicle_mechanic',
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: 'Souder',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'world_human_welding',
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: 'Noter',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'missheistdockssetup1clipboard@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                    props: [
+                        {
+                            model: 'prop_notepad_01',
+                            bone: 18905,
+                            position: [0.09999999999999432, 0.020000000000003126, 0.04999999999999716],
+                            rotation: [10, 0, 0],
+                        },
+                        {
+                            model: 'prop_pencil_01',
+                            bone: 58866,
+                            position: [0.11000000000001364, -0.020000000000003126, 0.0009999999999998899],
+                            rotation: [-120, 0, 0],
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Paparazzi',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    enter: {
+                        dictionary: 'amb@world_human_paparazzi@male@enter',
+                        name: 'enter',
+                    },
+                    base: {
+                        dictionary: 'amb@world_human_paparazzi@male@idle_a',
+                        name: 'idle_c',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                    exit: {
+                        dictionary: 'amb@world_human_paparazzi@male@exit',
+                        name: 'exit',
+                    },
+                    props: [
+                        {
+                            model: 'prop_pap_camera_01',
+                            bone: 28422,
+                            position: [0, 0, 0],
+                            rotation: [0, 0, 0],
+                            fx: {
+                                dictionary: 'core',
+                                name: 'ent_anim_paparazzi_flash',
+                                position: [0.08, -0.08, 0.08],
+                                rotation: [0, 0, 0],
+                                scale: 1,
+                                duration: [400, 400, 5766],
+                                manualLoop: true,
+                                delay: 6200,
+                                net: true,
+                            },
+                        },
+                    ],
+                },
+            },
+            {
+                type: 'scenario',
+                name: 'SDF',
+                rightLabel: null,
+                icon: null,
+                scenario: {
+                    name: 'world_human_bum_freeway',
+                },
+            },
+            {
+                type: 'category',
+                name: 'Travaux',
+                items: [
+                    {
+                        type: 'scenario',
+                        name: 'BTP',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'world_human_const_drill',
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: 'Marteau',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'world_human_hammering',
+                        },
+                    },
+                ],
+            },
+        ],
+    },
+
+    // Sport category (outside of MSB)
+
+    {
+        type: 'category',
+        name: 'Sport',
+        items: [
+            {
+                type: 'animation',
+                name: 'A bout de souffle',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 're@construction',
+                        name: 'out_of_breath',
+                    },
+                },
+            },
+            {
+                type: 'category',
+                name: 'Boxe',
+                items: [
+                    {
+                        type: 'animation',
+                        name: '#1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationmale@shadow_boxing',
+                                name: 'shadow_boxing',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationfemale@shadow_boxing',
+                                name: 'shadow_boxing',
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Étirements',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'Jambes #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@triathlon',
+                                name: 'idle_f',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras #1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@triathlon',
+                                name: 'idle_a',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Jambes #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@triathlon',
+                                name: 'idle_d',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Bras #2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@triathlon',
+                                name: 'idle_e',
+                                options: {
+                                    repeat: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'Karate',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@mp_player_intcelebrationfemale@karate_chops',
+                                name: 'karate_chops',
+                            },
+                        },
+                    },
+                    {
+                        type: 'scenario',
+                        name: 'Montrer ses muscles',
+                        rightLabel: null,
+                        icon: null,
+                        scenario: {
+                            name: 'WORLD_HUMAN_MUSCLE_FLEX',
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: 'Craquer ses doigts',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_deathmatch_intros@unarmed',
+                        name: 'intro_male_unarmed_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Craquer sa nuque',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_deathmatch_intros@unarmed',
+                        name: 'intro_male_unarmed_b',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Prêt au combat #1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_deathmatch_intros@unarmed',
+                        name: 'intro_male_unarmed_c',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Prêt au combat #2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_deathmatch_intros@unarmed',
+                        name: 'intro_male_unarmed_d',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Bras #3',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_deathmatch_intros@unarmed',
+                        name: 'intro_male_unarmed_e',
+                    },
+                },
+            },
+        ],
+    },
+
+
+    // Duo & interacting category
+
+    {
+        type: 'category',
+        name: 'Interactions',
+        items: [
+        {
+            type: 'animation',
+            name: 'Embrasser 1',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'hs3_ext-20',
+                    name: 'cs_lestercrest_3_dual-20',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },        
+        {
+            type: 'animation',
+            name: 'Embrasser 2',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'hs3_ext-20',
+                    name: 'csb_georginacheng_dual-20',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },  
+        {
+            type: 'animation',
+            name: 'Enlacer',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'mp_ped_interaction',
+                    name: 'kisses_guy_b',
+                },
+            },
+        },            
+            {
+                type: 'animation',
+                name: 'Câliner',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_ped_interaction',
+                        name: 'kisses_guy_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Donner un objet',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_common',
+                        name: 'givetake1_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Check #1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_ped_interaction',
+                        name: 'handshake_guy_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Check #2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_ped_interaction',
+                        name: 'hugs_guy_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Check #3',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@paired@no_props@',
+                        name: 'daps_b_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Check #4',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@paired@no_props@',
+                        name: 'daps_b_player_b',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'High Five #1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_ped_interaction',
+                        name: 'highfive_guy_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'High Five #2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@paired@no_props@',
+                        name: 'high_five_b_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'High Five #3',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@paired@no_props@',
+                        name: 'high_five_b_player_b',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Insultant #1',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@paired@no_props@',
+                        name: 'laugh_b_player_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Insultant #2',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@arena@celeb@flat@paired@no_props@',
+                        name: 'laugh_b_player_b',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Team Mate',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_parachute_outro@female@win',
+                        name: 'first_place',
+                    },
+                },
+            },
+        ],
+    },
+
+    // Saluting category
+
+    {
+        type: 'category',
+        name: 'Salutations',
+        items: [
+            {
+                type: 'category',
+                name: 'Eh oh, je suis là !',
+                items: [
+                    {
+                        type: 'animation',
+                        name: '#1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@waving@male',
+                                name: 'ground_wave',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@waving@male',
+                                name: 'air_wave',
+                                options: {
+                                    freezeLastFrame: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: 'Miss Monde',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'anim@mp_player_intupperwave',
+                        name: 'idle_a',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Namaste !',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'timetable@amanda@ig_4',
+                        name: 'ig_4_base',
+                        options: {
+                            freezeLastFrame: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'category',
+                name: 'Révérences',
+                items: [
+                    {
+                        type: 'animation',
+                        name: '#1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@arena@celeb@podium@no_prop@',
+                                name: 'regal_a_1st',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@arena@celeb@podium@no_prop@',
+                                name: 'regal_c_1st',
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'category',
+                name: 'Saluer',
+                items: [
+                    {
+                        type: 'animation',
+                        name: '#1',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'gestures@m@standing@casual',
+                                name: 'gesture_hello',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'friends@frj@ig_1',
+                                name: 'wave_e',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'friends@frj@ig_1',
+                                name: 'wave_a',
+                                options: {
+                                    onlyUpperBody: true,
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                type: 'animation',
+                name: 'Salut Militaire',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_player_int_uppersalute',
+                        name: 'mp_player_int_salute',
+                        options: {
+                            repeat: true,
+                        },
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Serrer la main',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_common',
+                        name: 'givetake1_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Sifflement',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'rcmnigel1c',
+                        name: 'hailing_whistle_waive_a',
+                    },
+                },
+            },
+            {
+                type: 'animation',
+                name: 'Tapes en 5',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'mp_ped_interaction',
+                        name: 'highfive_guy_a',
+                    },
+                },
+            },
+            {
+                type: 'category',
+                name: 'XXX',
+                items: [
+                    {
+                        type: 'animation',
+                        name: 'xxx : Boobs',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@strip_club@idles@stripper',
+                                name: 'stripper_idle_05',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'xxx : Coucou Toi',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@strip_club@idles@stripper',
+                                name: 'stripper_idle_02',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'xxx : Donner faim',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@strip_club@idles@stripper',
+                                name: 'stripper_idle_04',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'xxx : Hey Toi',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@strip_club@idles@stripper',
+                                name: 'stripper_idle_06',
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: 'xxx : Regarde mon ***',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'mini@strip_club@idles@stripper',
+                                name: 'stripper_idle_03',
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    },    
+
+    // Dances category
+
     {
         type: 'category',
         name: 'Danses et instruments',
         items: [
+        {
+            type: 'animation',
+            name: 'Petite danse sexy',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'mini@strip_club@lap_dance_2g@ld_2g_p2',
+                    name: 'ld_2g_p2_s2',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },             
             {
                 type: 'animation',
                 name: "50's",
@@ -8449,517 +13009,16 @@ export const Animations: AnimationConfigList = [
             },
         ],
     },
-    {
-        type: 'category',
-        name: 'Duo',
-        items: [
-            {
-                type: 'animation',
-                name: 'Faire un bisou',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_ped_interaction',
-                        name: 'kisses_guy_a',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Serrer la main',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_common',
-                        name: 'givetake1_a',
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Victoire',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Check !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_ped_interaction',
-                                name: 'handshake_guy_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Hey !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_ped_interaction',
-                                name: 'hugs_guy_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'High Five #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_ped_interaction',
-                                name: 'highfive_guy_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'High Five #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@paired@no_props@',
-                                name: 'high_five_b_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'High Five #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@paired@no_props@',
-                                name: 'high_five_b_player_b',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Insultant #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@paired@no_props@',
-                                name: 'laugh_b_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Insultant #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@paired@no_props@',
-                                name: 'laugh_b_player_b',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'On a gagné',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_parachute_outro@male@win',
-                                name: 'first_place',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Tchek #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@paired@no_props@',
-                                name: 'daps_b_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Tchek #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@paired@no_props@',
-                                name: 'daps_b_player_b',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Team Mate',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_parachute_outro@female@win',
-                                name: 'first_place',
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'Émotions et états',
-        items: [
-            {
-                type: 'animation',
-                name: 'Bouder',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mini@hookers_sp',
-                        name: 'idle_reject_loop_b',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Douleur',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Blessé par balles',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'random@dealgonewrong',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Douleur coeur',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmfanatic1out_of_breath',
-                                name: 'p_zero_tired_02',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Ennuie',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'oddjobs@bailbond_hobotwitchy',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Faire un bisou',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_ped_interaction',
-                        name: 'kisses_guy_a',
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Joie',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Applaudir',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_cheering@male_d',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jump Jump',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_cheering@female_c',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Plié de rire',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'taunt_d_player_b',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Rire',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'Rcmpaparazzo_3b',
-                                name: 'idle_b',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: 'Peur',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Menotté au sol',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'random@burial',
-                                name: 'b_burial',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Nerveux',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmme_tracey1',
-                                name: 'nervous_loop',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Peur',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@code_human_cower_stand@male@idle_a',
-                                name: 'idle_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Peur à genou #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@scripted@anim_yacht@yacht_ig1_hostage@',
-                                name: 'cower_idle_bar_lady_barlady',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Peur à genou #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@scripted@anim_yacht@yacht_ig1_hostage@',
-                                name: 'cower_idle_captain_captain',
-                            },
-                        },
-                    },
-                    {
-                        type: 'event',
-                        name: 'Se rendre',
-                        rightLabel: null,
-                        icon: null,
-                        event: ClientEvent.ANIMATION_SURRENDER,
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Somnoler',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_sleep',
-                        name: 'sleep_loop',
-                        options: {
-                            freezeLastFrame: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Tristesse',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Désolé',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@towingpleadingbase',
-                                name: 'base',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Pleureuse',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@cry_baby',
-                                name: 'cry_baby',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Triste #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmnigel1aig_3',
-                                name: 'base_willie',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Triste #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_bum_standing@depressed@idle_a',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Triste par terre',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@lazlow@lo_alone@',
-                                name: 'lowalone_dlg_moans_laz',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Tu es foufou',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intupperyou_loco',
-                        name: 'idle_a',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-        ],
-    },
+
+    // Pride category
+
     {
         type: 'category',
         name: 'Pride Walk',
         items: [
             {
                 type: 'animation',
-                name: 'Pride Sign',
+                name: 'Panneau Pride',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -8985,7 +13044,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 1',
+                name: 'Pride - LGBTQ+',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9011,7 +13070,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 2',
+                name: 'Pride - Progress',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9037,7 +13096,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 3',
+                name: 'Pride - Bisexual',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9063,7 +13122,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 4',
+                name: 'Pride - Lesbian',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9089,7 +13148,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 5',
+                name: 'Pride - Pansexual',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9115,7 +13174,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 6',
+                name: 'Pride - Transgender',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9141,7 +13200,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 7',
+                name: 'Pride - Nonbinary',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9167,7 +13226,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 8',
+                name: 'Pride - Asexual',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9193,7 +13252,7 @@ export const Animations: AnimationConfigList = [
             },
             {
                 type: 'animation',
-                name: 'Pride Flag 9',
+                name: 'Pride - Straight Ally',
                 rightLabel: null,
                 icon: null,
                 animation: {
@@ -9219,7 +13278,17 @@ export const Animations: AnimationConfigList = [
             },
         ],
     },
+
+
     {
+        type: 'event',
+        name: 'Ramasser de la neige',
+        rightLabel: null,
+        icon: '❄️',
+        event: ClientEvent.WEAPON_PICK_SNOWBALL,
+    },
+
+  {
         type: 'category',
         name: 'Event',
         items: [
@@ -9236,6 +13305,142 @@ export const Animations: AnimationConfigList = [
                             base: {
                                 dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
                                 name: 'new_tou_sync_a_cc',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#2',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'new_tou_sync_a_mm',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#3',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_a_cc',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#4',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_a_mm',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#5',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_b_cc',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#6',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_b_mm',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#7',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_c_cc',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#8',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_c_mm',
+                                options: {
+                                    repeat: true,
+                                    onlyUpperBody: true,
+                                    enablePlayerControl: true,
+                                },
+                            },
+                        },
+                    },
+                    {
+                        type: 'animation',
+                        name: '#9',
+                        rightLabel: null,
+                        icon: null,
+                        animation: {
+                            base: {
+                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
+                                name: 'tou_dance_d_cc',
                                 options: {
                                     repeat: true,
                                     onlyUpperBody: true,
@@ -9416,23 +13621,6 @@ export const Animations: AnimationConfigList = [
                     },
                     {
                         type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'new_tou_sync_a_mm',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
                         name: '#20',
                         rightLabel: null,
                         icon: null,
@@ -9550,1311 +13738,13 @@ export const Animations: AnimationConfigList = [
                             },
                         },
                     },
-                    {
-                        type: 'animation',
-                        name: '#3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_a_cc',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_a_mm',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#5',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_b_cc',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#6',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_b_mm',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#7',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_c_cc',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#8',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_c_mm',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#9',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@djs@tale_of_us@',
-                                name: 'tou_dance_d_cc',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
                 ],
             },
         ],
     },
-    {
-        type: 'category',
-        name: 'Gestes',
-        items: [
-            {
-                type: 'animation',
-                name: '« Shhht » bourré',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                        name: 'giggle_a_player_a',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Aucune idée',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'gestures@m@sitting@generic@casual',
-                        name: 'gesture_shrug_hard',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Bro',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_player_int_upperbro_love',
-                        name: 'mp_player_int_bro_love_enter',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Calmes-toi',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'rcmnigel1a',
-                        name: 'idle_c_2',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Célébrations',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Bang Bang',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@bang_bang',
-                                name: 'bang_bang',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'BOOM !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@mind_blown',
-                                name: 'mind_blown',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "C'est ma musique !",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@bro_love',
-                                name: 'bro_love',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "J'adore !",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@blow_kiss',
-                                name: 'blow_kiss',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jeter des billets',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@raining_cash',
-                                name: 'raining_cash',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Non mais allo ?!',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationfemale@call_me',
-                                name: 'call_me',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Pile ou Face ?',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@coin_roll_and_toss',
-                                name: 'coin_roll_and_toss',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Viser la lune',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@basejump@',
-                                name: 'ped_a_loop',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Cherche au sol',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'Rcm_epsilonism4',
-                        name: 'eps_4_ig_1_jimmy_lookaround_idle_a_jb',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Cordon de sécurité',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'nm@hands',
-                        name: 'flail',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Damn',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'gestures@m@standing@casual',
-                        name: 'gesture_damn',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Ecouteur',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'cellphone@female',
-                        name: 'cellphone_call_listen_base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Est-ce que vous êtes là !?',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    enter: {
-                        dictionary: 'mp_player_int_uppergang_sign_a',
-                        name: 'mp_player_int_gang_sign_a_enter',
-                        duration: 500,
-                    },
-                    base: {
-                        dictionary: 'mp_player_int_uppergang_sign_a',
-                        name: 'mp_player_int_gang_sign_a',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                    exit: {
-                        dictionary: 'mp_player_int_uppergang_sign_a',
-                        name: 'mp_player_int_gang_sign_a_exit',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'FacePalm',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intcelebrationmale@face_palm',
-                        name: 'face_palm',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'FacePalm 2',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'random@car_thief@agitated@idle_a',
-                        name: 'agitated_idle_a',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Faire du stop',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'random@hitch_lift',
-                        name: 'idle_f',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: "Faire l'animal",
-                items: [
-                    {
-                        type: 'animation',
-                        name: "Faire l'oiseau",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'random@peyote@bird',
-                                name: 'wakeup',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Faire le Canard',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationfemale@chicken_taunt',
-                                name: 'chicken_taunt',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Faire le poulet',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'random@peyote@chicken',
-                                name: 'wakeup',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'scenario',
-                name: 'Filmer',
-                rightLabel: null,
-                icon: null,
-                scenario: {
-                    name: 'WORLD_HUMAN_MOBILE_FILM_SHOCKING',
-                },
-            },
-            {
-                type: 'category',
-                name: 'Grossier',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Balle dans la tete',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_suicide',
-                                name: 'pistol',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Branleur',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_player_int_upperwank',
-                                name: 'mp_player_int_wank_01',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "Doigt d'honneur",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_player_int_upperfinger',
-                                name: 'mp_player_int_finger_01_enter',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Doigt dans le c**',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'friends@frt@ig_1',
-                                name: 'trevor_impatient_wait_3',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Doigt dans le nez',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@nose_pick',
-                                name: 'nose_pick',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Fuck you',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intincarfingerbodhi@ds@',
-                                name: 'idle_a',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "Je t'enc**e ou ?",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@dock',
-                                name: 'dock',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Par derrière',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intincarair_shaggingbodhi@ds@',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Se gratter les c**',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_player_int_uppergrab_crotch',
-                                name: 'mp_player_int_grab_crotch',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Isoké',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intincarthumbs_uplow@ds@',
-                        name: 'idle_a',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Je valide',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'missheist_jewel',
-                        name: 'im_telling_you',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Laisse tomber',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'missheist_jewel',
-                        name: 'despair',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Non',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'gestures@m@standing@casual',
-                        name: 'gesture_head_no',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Oui',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'gestures@m@standing@casual',
-                        name: 'gesture_pleased',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Peut-être',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'oddjobs@bailbond_hobohang_out_street_b',
-                        name: 'idle_b',
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Regarder',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Je vais être en retard',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                                name: 'm_impatient_a',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Regarder autour',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                                name: 'm_impatient_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "Regarder l'heure",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                                name: 'm_impatient_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Regarder le sol',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmrc_omega_2',
-                                name: 'omega_idle_looking_around',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Regarder sa carte',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_tourist_map@female@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            props: [
-                                {
-                                    model: 'p_tourist_map_01_s',
-                                    bone: 58867,
-                                    position: [0.15, 0.081, 0.05],
-                                    rotation: [120, 160, 30],
-                                },
-                            ],
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Rock',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intincarrockbodhi@ds@',
-                        name: 'idle_a',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: "T'es un homme mort",
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intcelebrationmale@cut_throat',
-                        name: 'cut_throat',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Taper au clavier',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_fib_grab',
-                        name: 'loop',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'WTF',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'gestures@m@standing@casual',
-                        name: 'gesture_shrug_hard',
-                        options: {
-                            onlyUpperBody: true,
-                        },
-                    },
-                },
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'Métiers et tâches',
-        items: [
-            {
-                type: 'animation',
-                name: 'Holster',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'move_m@intimidation@cop@unarmed',
-                        name: 'idle',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Hygiène',
-                items: [
-                    {
-                        type: 'scenario',
-                        name: 'Balayer',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_janitor',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Laver le sol',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_bum_wash',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Laver vitres',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_maid_clean',
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Prendre une douche',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_safehouseshower@male@',
-                                name: 'male_shower_idle_d',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Se laver les mains',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_agency3aig_23',
-                                name: 'urinal_sink_loop',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: 'Jardinage',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Creuser',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@drug_field_workers@rake@male_a@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Creuser #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missmic1leadinoutmic_1_mcs_2',
-                                name: '_leadin_trevor',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Planter',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_gardener_plant',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Souffler',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_gardener_leaf_blower',
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Massage Cardiaque',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mini@cpr@char_a@cpr_str',
-                        name: 'cpr_pumpchest',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Mécanique',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Dépanneur du dimanche',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_fm_intro_cut',
-                                name: 'fixing_a_ped',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Réparer',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_vehicle_mechanic',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Souder',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_welding',
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Noter',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'missheistdockssetup1clipboard@base',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                    props: [
-                        {
-                            model: 'prop_notepad_01',
-                            bone: 18905,
-                            position: [0.09999999999999432, 0.020000000000003126, 0.04999999999999716],
-                            rotation: [10, 0, 0],
-                        },
-                        {
-                            model: 'prop_pencil_01',
-                            bone: 58866,
-                            position: [0.11000000000001364, -0.020000000000003126, 0.0009999999999998899],
-                            rotation: [-120, 0, 0],
-                        },
-                    ],
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Paparazzi',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    enter: {
-                        dictionary: 'amb@world_human_paparazzi@male@enter',
-                        name: 'enter',
-                    },
-                    base: {
-                        dictionary: 'amb@world_human_paparazzi@male@idle_a',
-                        name: 'idle_c',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                    exit: {
-                        dictionary: 'amb@world_human_paparazzi@male@exit',
-                        name: 'exit',
-                    },
-                    props: [
-                        {
-                            model: 'prop_pap_camera_01',
-                            bone: 28422,
-                            position: [0, 0, 0],
-                            rotation: [0, 0, 0],
-                            fx: {
-                                dictionary: 'core',
-                                name: 'ent_anim_paparazzi_flash',
-                                position: [0.08, -0.08, 0.08],
-                                rotation: [0, 0, 0],
-                                scale: 1,
-                                duration: [400, 400, 5766],
-                                manualLoop: true,
-                                delay: 6200,
-                                net: true,
-                            },
-                        },
-                    ],
-                },
-            },
-            {
-                type: 'scenario',
-                name: 'SDF',
-                rightLabel: null,
-                icon: null,
-                scenario: {
-                    name: 'world_human_bum_freeway',
-                },
-            },
-            {
-                type: 'category',
-                name: 'Travaux',
-                items: [
-                    {
-                        type: 'scenario',
-                        name: 'BTP',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_const_drill',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Marteau',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'world_human_hammering',
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'New Emotes',
-        items: [
-            {
-                type: 'animation',
-                name: "Briquet en l'air",
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'samnick@lighter@wave',
-                        name: 'waving_lighter',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            freezeLastFrame: true,
-                        },
-                    },
-                    props: [
-                        {
-                            bone: 18905,
-                            model: 'samnick_prop_lighter01',
-                            position: [0.11, 0.01, 0.02],
-                            rotation: [-85, 188, 10],
-                        },
-                    ],
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Main dans les poches (Sweat)',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'bzzz@animations@hands',
-                        name: 'bz_hands',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Police - Garde à Vous',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'airforce@attention',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: false,
-                            enablePlayerControl: false,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Police - Main GPB1',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@male@holding_vest',
-                        name: 'holding_vest_clip',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Police - Main GPB2',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@holding_side_vest',
-                        name: 'holding_side_vest_clip',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Police - Repos',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'airforce@parade_rest',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: false,
-                            enablePlayerControl: false,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Police - Stop Holster (arme ou holster droite)',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@hlstr_7360_hold',
-                        name: 'holster_stop',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
+    
+    // Props category
+
             {
                 type: 'category',
                 name: 'Props',
@@ -11303,84 +14193,6 @@ export const Animations: AnimationConfigList = [
                     },
                     {
                         type: 'animation',
-                        name: 'Nettoyage Mur',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_maid_clean@',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                    freezeLastFrame: true,
-                                },
-                            },
-                            props: [
-                                {
-                                    bone: 28422,
-                                    model: 'prop_sponge_01',
-                                    position: [0, 0, -0.01],
-                                    rotation: [90, 0, 0],
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Nettoyage Table',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'timetable@floyd@clean_kitchen@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                    freezeLastFrame: true,
-                                },
-                            },
-                            props: [
-                                {
-                                    bone: 28422,
-                                    model: 'prop_sponge_01',
-                                    position: [0, 0, -0.01],
-                                    rotation: [90, 0, 0],
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Passer la Serpillère',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'move_mop',
-                                name: 'idle_scrub_small_player',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                    freezeLastFrame: true,
-                                },
-                            },
-                            props: [
-                                {
-                                    bone: 28422,
-                                    model: 'prop_cs_mop_s',
-                                    position: [0, 0, 0.12],
-                                    rotation: [0, 0, 0],
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        type: 'animation',
                         name: 'Pointer au Sol (avoir arme en main)',
                         rightLabel: null,
                         icon: null,
@@ -11723,6 +14535,31 @@ export const Animations: AnimationConfigList = [
                             ],
                         },
                     },
+            {
+                type: 'animation',
+                name: 'Lampe torche',
+                rightLabel: null,
+                icon: null,
+                animation: {
+                    base: {
+                        dictionary: 'amb@world_human_security_shine_torch@male@base',
+                        name: 'base',
+                        options: {
+                            repeat: true,
+                            onlyUpperBody: true,
+                            enablePlayerControl: true,
+                        },
+                    },
+                    props: [
+                        {
+                            model: 'prop_cs_police_torch_02',
+                            bone: 18905,
+                            position: [0.160000000000025, 0.030000000000001137, 0],
+                            rotation: [110, -70, 0],
+                        },
+                    ],
+                },
+            },                    
                     {
                         type: 'animation',
                         name: 'Valise sécurisée',
@@ -11750,2221 +14587,5 @@ export const Animations: AnimationConfigList = [
                         },
                     },
                 ],
-            },
-            {
-                type: 'animation',
-                name: 'UwU',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'uwu@egirl',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                            freezeLastFrame: true,
-                        },
-                    },
-                },
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'Police',
-        items: [
-            {
-                type: 'animation',
-                name: 'Bras Croisé',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@heists@heist_corona@single_team',
-                        name: 'single_team_loop_boss',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'scenario',
-                name: 'Circulation',
-                rightLabel: null,
-                icon: null,
-                scenario: {
-                    name: 'world_human_car_park_attendant',
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Cow Boy',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'amb@world_human_cop_idles@male@base',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Ecouteur',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'cellphone@female',
-                        name: 'cellphone_call_listen_base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Holster',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'move_m@intimidation@cop@unarmed',
-                        name: 'idle',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Lampe torche',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'amb@world_human_security_shine_torch@male@base',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                    props: [
-                        {
-                            model: 'prop_cs_police_torch_02',
-                            bone: 18905,
-                            position: [0.160000000000025, 0.030000000000001137, 0],
-                            rotation: [110, -70, 0],
-                        },
-                    ],
-                },
-            },
-            {
-                type: 'event',
-                name: 'Plaquage',
-                rightLabel: null,
-                icon: null,
-                event: ClientEvent.TAKE_DOWN,
-            },
-            {
-                type: 'category',
-                name: 'SWAT',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'A Droite !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'you_right',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'A Gauche !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'you_left',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Avancez !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'you_fwd',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "C'est compris !",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'understood',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Derrière !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'you_back',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Ralliement !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'rally_point',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Reculez !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'go_fwd',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Stop !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'freeze',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Venez !',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'swat',
-                                name: 'come',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'Positions',
-        items: [
-            {
-                type: 'category',
-                name: 'Bras et mains',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Attente',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_jewel_setup',
-                                name: 'idle_storeclerk',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Attentif #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                                name: 'f_impatient_a',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Attentif #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                                name: 'f_impatient_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras croisé #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_window_shop@male@idle_a',
-                                name: 'browse_a',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras croisé #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@bailbond_hobohang_out_street_c',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras en croix',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@casino@hangout@ped_female@stand@03a@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Impatient #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@bailbond_surf_farm',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Impatient #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@assassinate@guard',
-                                name: 'unarmed_fold_arms',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains dans le dos #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                                name: 'f_impatient_c',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains dans le dos #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@casino@valet_scenario@pose_d@',
-                                name: 'base_a_m_y_vinewood_01',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains ensembles',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missfbi4mcs_2',
-                                name: 'loop_sec_a',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains jointes (neutre)',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@carmeet@checkout_car@male_a@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains jointes (triste)',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@carmeet@checkout_engine@male_c@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mouvement de bras #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmme_amanda1',
-                                name: 'pst_arrest_loop_owner',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mouvement de bras #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmme_amanda1',
-                                name: 'pst_arrest_loop_cop',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Stressé',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@casino@hangout@ped_female@stand@02a@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: "Est-ce que j'ai eu l'bac..",
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'oddjobs@taxi@gyn@cc@intro',
-                        name: 'f_impatient_b',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Fier',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'rcmbarry',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Patient',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'move_characters@tracey@core@',
-                        name: 'idle',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Pensif',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@amb@casino@hangout@ped_male@stand@02b@base',
-                        name: 'base',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: "S'allonger",
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Allongé (Aie)',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_jewel',
-                                name: 'gassed_npc_customer1',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Allongé (Blessé)',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missfbi5ig_0',
-                                name: 'lyinginpain_loop_steve',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Allongé (Dos #2)',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_jewel',
-                                name: 'gassed_npc_customer2',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Allongé (Dos)',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'WORLD_HUMAN_SUNBATHE_BACK',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Allongé (Ventre)',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'WORLD_HUMAN_SUNBATHE',
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Dormir',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'WORLD_HUMAN_BUM_SLUMPED',
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Petite sieste au soleil',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_jewel',
-                                name: 'gassed_npc_guard',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'PLS',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_jewel',
-                                name: 'gassed_npc_customer4',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Tomber dans les pommes',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'ragdoll',
-                                name: '',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: "S'appuyer",
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Adossé au bar',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@gt_idle@',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Contre un mur',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmnigel1a_band_groupies',
-                                name: 'idle_a_m2',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Main sur la voiture',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missstrip_club_lean',
-                                name: 'player_lean_rail_loop',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Main sur le mur',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@scripted@island@special_peds@couple@hs4_couple_stage2_ig10',
-                                name: 'base_idle_male',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Sur la table',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'missheist_agency2aig_4',
-                                name: 'look_plan_b_worker2',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: "S'appuyer dos au mur",
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'Bras levé #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_a',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras levé #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_a',
-                                name: 'idle_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras levé #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_a',
-                                name: 'idle_c',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras levé #4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_b',
-                                name: 'idle_d',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Bras levé #5',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@idle_b',
-                                name: 'idle_e',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@hand_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: 'Hasard',
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'WORLD_HUMAN_LEANING',
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambe levée #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_a',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambe levée #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_a',
-                                name: 'idle_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambe levée #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_a',
-                                name: 'idle_c',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambe levée #4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_b',
-                                name: 'idle_d',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambe levée #5',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@idle_b',
-                                name: 'idle_e',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@foot_up@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambes croisées #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
-                                name: 'enter_front',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_a',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambes croisées #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
-                                name: 'enter_front',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_a',
-                                name: 'idle_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambes croisées #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
-                                name: 'enter_front',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_a',
-                                name: 'idle_c',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambes croisées #4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
-                                name: 'enter_front',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_b',
-                                name: 'idle_d',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Jambes croisées #5',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@enter',
-                                name: 'enter_front',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@idle_b',
-                                name: 'idle_e',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@legs_crossed@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains tenues #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_a',
-                                name: 'idle_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains tenues #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_a',
-                                name: 'idle_c',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains tenues #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_b',
-                                name: 'idle_d',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Mains tenues #4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@enter',
-                                name: 'enter_back',
-                                duration: 3200,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@idle_b',
-                                name: 'idle_e',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@male@wall@back@hands_together@exit',
-                                name: 'exit_front',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Pensif #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@idle_a',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@exit',
-                                name: 'exit',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Pensif #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@idle_a',
-                                name: 'idle_b',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@exit',
-                                name: 'exit',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Pensif #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@idle_a',
-                                name: 'idle_c',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_leaning@female@wall@back@mobile@exit',
-                                name: 'exit',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: "S'asseoir",
-                items: [
-                    {
-                        type: 'animation',
-                        name: "S'asseoir",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'switch@michael@sitting',
-                                name: 'idle',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Armchair)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_ARMCHAIR',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Bench)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_BENCH',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Bus Stop Wait)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_BUS_STOP_WAIT',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "S'asseoir (Capot #1)",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@scripted@carmeet@tun_meet_ig2_race@',
-                                name: 'look_at_player',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "S'asseoir (Capot #2)",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@scripted@carmeet@tun_meet_ig2_race@',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Chair Upright)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_CHAIR_UPRIGHT',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Chair)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_CHAIR',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Deckchair)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_DECKCHAIR',
-                            fixPositionDelta: [-0.48, -0.6],
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (MP)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_CHAIR_MP_PLAYER',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "S'asseoir (Sol PLS)",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@nightclub@lazlow@lo_toilet@',
-                                name: 'lowtoilet_base_v2_laz',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Sol)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'WORLD_HUMAN_PICNIC',
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "S'asseoir (Sol homme)",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_picnic@male@enter',
-                                name: 'enter',
-                                duration: 7933,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_picnic@male@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_picnic@male@exit',
-                                name: 'exit',
-                                duration: 2099,
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "S'asseoir (Sol femme)",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            enter: {
-                                dictionary: 'amb@world_human_picnic@female@enter',
-                                name: 'enter',
-                                duration: 6700,
-                            },
-                            base: {
-                                dictionary: 'amb@world_human_picnic@female@base',
-                                name: 'base',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                            exit: {
-                                dictionary: 'amb@world_human_picnic@female@exit',
-                                name: 'exit',
-                                duration: 3666,
-                            },
-                        },
-                    },
-                    {
-                        type: 'scenario',
-                        name: "S'asseoir (Stripclub)",
-                        rightLabel: null,
-                        icon: null,
-                        scenario: {
-                            name: 'PROP_HUMAN_SEAT_STRIP_WATCH',
-                            fixPositionDelta: [-0.48, -0.5],
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: "S'asseoir (WC)",
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'switch@trevor@on_toilet',
-                                name: 'trev_on_toilet_loop',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: 'Se mettre à genoux',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'A genoux',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'misschinese2_crystalmaze',
-                                name: '2int_loop_base_taotranslator',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Accroupi',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'rcmextreme3',
-                                name: 'idle',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'Salutations',
-        items: [
-            {
-                type: 'category',
-                name: 'Eh oh, je suis là !',
-                items: [
-                    {
-                        type: 'animation',
-                        name: '#1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@waving@male',
-                                name: 'ground_wave',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@amb@waving@male',
-                                name: 'air_wave',
-                                options: {
-                                    freezeLastFrame: true,
-                                    onlyUpperBody: true,
-                                    enablePlayerControl: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Miss Monde',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intupperwave',
-                        name: 'idle_a',
-                        options: {
-                            repeat: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Namaste !',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'timetable@amanda@ig_4',
-                        name: 'ig_4_base',
-                        options: {
-                            freezeLastFrame: true,
-                            onlyUpperBody: true,
-                            enablePlayerControl: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Révérences',
-                items: [
-                    {
-                        type: 'animation',
-                        name: '#1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@podium@no_prop@',
-                                name: 'regal_a_1st',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@podium@no_prop@',
-                                name: 'regal_c_1st',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: 'Saluer',
-                items: [
-                    {
-                        type: 'animation',
-                        name: '#1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'gestures@m@standing@casual',
-                                name: 'gesture_hello',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'friends@frj@ig_1',
-                                name: 'wave_e',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'friends@frj@ig_1',
-                                name: 'wave_a',
-                                options: {
-                                    onlyUpperBody: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Salut Militaire',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_player_int_uppersalute',
-                        name: 'mp_player_int_salute',
-                        options: {
-                            repeat: true,
-                        },
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Serrer la main',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_common',
-                        name: 'givetake1_a',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Sifflement',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'rcmnigel1c',
-                        name: 'hailing_whistle_waive_a',
-                    },
-                },
-            },
-            {
-                type: 'animation',
-                name: 'Tapes en 5',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'mp_ped_interaction',
-                        name: 'highfive_guy_a',
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'XXX',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'xxx : Boobs',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@strip_club@idles@stripper',
-                                name: 'stripper_idle_05',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'xxx : Coucou Toi',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@strip_club@idles@stripper',
-                                name: 'stripper_idle_02',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'xxx : Donner faim',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@strip_club@idles@stripper',
-                                name: 'stripper_idle_04',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'xxx : Hey Toi',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@strip_club@idles@stripper',
-                                name: 'stripper_idle_06',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'xxx : Regarde mon ***',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@strip_club@idles@stripper',
-                                name: 'stripper_idle_03',
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        type: 'category',
-        name: 'Sports',
-        items: [
-            {
-                type: 'animation',
-                name: 'A bout de souffle',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 're@construction',
-                        name: 'out_of_breath',
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Boxe',
-                items: [
-                    {
-                        type: 'animation',
-                        name: '#1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationmale@shadow_boxing',
-                                name: 'shadow_boxing',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@mp_player_intcelebrationfemale@shadow_boxing',
-                                name: 'shadow_boxing',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'category',
-                name: 'Célébrations',
-                items: [
-                    {
-                        type: 'animation',
-                        name: 'BackFlip',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'flip_a_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Capoeira',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'cap_a_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Football',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'slide_a_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Saut #1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'jump_b_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Saut #2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'jump_c_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Saut #3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'jump_d_player_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: 'Vague arrière',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'anim@arena@celeb@flat@solo@no_props@',
-                                name: 'pageant_a_player_a',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'animation',
-                name: 'Départ de course',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'random@street_race',
-                        name: 'grid_girl_race_start',
-                    },
-                },
-            },
-            {
-                type: 'category',
-                name: 'Étirements',
-                items: [
-                    {
-                        type: 'animation',
-                        name: '#1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@triathlon',
-                                name: 'idle_f',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@triathlon',
-                                name: 'idle_a',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@triathlon',
-                                name: 'idle_d',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mini@triathlon',
-                                name: 'idle_e',
-                                options: {
-                                    repeat: true,
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'event',
-                name: 'Faire des abdos',
-                rightLabel: null,
-                icon: '💪',
-                event: ClientEvent.PLAYER_HEALTH_DO_SIT_UP,
-            },
-            {
-                type: 'event',
-                name: 'Faire des haltères',
-                rightLabel: null,
-                icon: '💪',
-                event: ClientEvent.PLAYER_HEALTH_DO_FREE_WEIGHT,
-            },
-            {
-                type: 'event',
-                name: 'Faire des pompes',
-                rightLabel: null,
-                icon: '💪',
-                event: ClientEvent.PLAYER_HEALTH_DO_PUSH_UP,
-            },
-            {
-                type: 'event',
-                name: 'Faire du yoga',
-                rightLabel: null,
-                icon: '🧘',
-                event: ClientEvent.PLAYER_HEALTH_DO_YOGA,
-            },
-            {
-                type: 'animation',
-                name: 'Karate',
-                rightLabel: null,
-                icon: null,
-                animation: {
-                    base: {
-                        dictionary: 'anim@mp_player_intcelebrationfemale@karate_chops',
-                        name: 'karate_chops',
-                    },
-                },
-            },
-            {
-                type: 'scenario',
-                name: 'Montrer ses muscles',
-                rightLabel: null,
-                icon: null,
-                scenario: {
-                    name: 'WORLD_HUMAN_MUSCLE_FLEX',
-                },
-            },
-            {
-                type: 'category',
-                name: 'Préparations',
-                items: [
-                    {
-                        type: 'animation',
-                        name: '#1',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_deathmatch_intros@unarmed',
-                                name: 'intro_male_unarmed_a',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#2',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_deathmatch_intros@unarmed',
-                                name: 'intro_male_unarmed_b',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#3',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_deathmatch_intros@unarmed',
-                                name: 'intro_male_unarmed_c',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#4',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_deathmatch_intros@unarmed',
-                                name: 'intro_male_unarmed_d',
-                            },
-                        },
-                    },
-                    {
-                        type: 'animation',
-                        name: '#5',
-                        rightLabel: null,
-                        icon: null,
-                        animation: {
-                            base: {
-                                dictionary: 'mp_deathmatch_intros@unarmed',
-                                name: 'intro_male_unarmed_e',
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                type: 'event',
-                name: 'Ramasser de la neige',
-                rightLabel: null,
-                icon: '❄️',
-                event: ClientEvent.WEAPON_PICK_SNOWBALL,
-            },
-        ],
-    },
+            },    
 ];
