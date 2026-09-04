@@ -2,8 +2,15 @@ import { Inject, Injectable } from '@core/decorators/injectable';
 import { wait, waitUntil } from '@core/utils';
 import { AnimationFactory, AnimationRunner } from '@public/client/animation/animation.factory';
 import { ServerEvent } from '@public/shared/event';
-
-import { Animation, AnimationStopReason, PlayOptions, Scenario, Walking } from '../../shared/animation';
+import {
+    Animation,
+    AnimationStopReason,
+    CopyableAnimation,
+    PLAYER_COPYABLE_ANIMATION_STATE_KEY,
+    PlayOptions,
+    Scenario,
+    Walking,
+} from '../../shared/animation';
 import { BoxZone } from '../../shared/polyzone/box.zone';
 import { Vector3, Vector4 } from '../../shared/polyzone/vector';
 import { PlayerService } from '../player/player.service';
@@ -25,6 +32,25 @@ export class AnimationService {
     private runningAnimations: Map<string, AnimationStored> = new Map();
     private runningWalking = '';
     private previousWalking = '';
+    private copyableAnimationRunnerId: number | null = null;
+
+    private publishCopyableAnimation(animation: CopyableAnimation, runner: AnimationRunner, ped: number) {
+        if (ped !== PlayerPedId()) {
+            return;
+        }
+
+        this.copyableAnimationRunnerId = runner.id;
+        Entity(ped).state.set(PLAYER_COPYABLE_ANIMATION_STATE_KEY, animation, true);
+
+        runner.finally(() => {
+            if (this.copyableAnimationRunnerId !== runner.id) {
+                return;
+            }
+
+            this.copyableAnimationRunnerId = null;
+            Entity(ped).state.set(PLAYER_COPYABLE_ANIMATION_STATE_KEY, null, true);
+        });
+    }
 
     public async walkToCoords(coords: Vector4, duration = 1000) {
         const playerPed = PlayerPedId();
@@ -51,6 +77,13 @@ export class AnimationService {
 
         if (!this.runningAnimations.has(id)) {
             const runner = this.animationFactory.createAnimation(animation, options);
+
+            this.publishCopyableAnimation(
+                { type: 'animation', animation },
+                runner,
+                options?.ped || PlayerPedId()
+            );
+
             this.runningAnimations.set(id, {
                 runner,
                 dictionary: animation.base.dictionary,
@@ -109,6 +142,14 @@ export class AnimationService {
             this.runningAnimations.get(id).runner.cancel(AnimationStopReason.Canceled);
         } else {
             const runner = this.animationFactory.createAnimation(animation, options);
+
+            this.publishCopyableAnimation(
+                { type: 'animation', animation },
+                runner,
+                options?.ped || PlayerPedId()
+            );
+
+
             this.runningAnimations.set(id, {
                 runner,
                 dictionary: animation.base.dictionary,
@@ -144,6 +185,13 @@ export class AnimationService {
             this.runningAnimations.get(id).runner.cancel(AnimationStopReason.Canceled);
         } else {
             const runner = this.animationFactory.createScenario(scenario, options);
+
+            this.publishCopyableAnimation(
+                { type: 'scenario', scenario },
+                runner,
+                options?.ped || PlayerPedId()
+            );
+
             this.runningAnimations.set(id, {
                 runner,
                 dictionary: null,
@@ -160,6 +208,13 @@ export class AnimationService {
         const id = scenario.name;
 
         const runner = this.animationFactory.createScenario(scenario, options);
+
+        this.publishCopyableAnimation(
+            { type: 'scenario', scenario },
+            runner,
+            options?.ped || PlayerPedId()
+        );
+
         this.runningAnimations.set(id, {
             runner,
             dictionary: null,
@@ -177,6 +232,13 @@ export class AnimationService {
         const id = animation.base.dictionary + animation.base.name;
 
         const runner = this.animationFactory.createAnimation(animation, options);
+
+        this.publishCopyableAnimation(
+            { type: 'animation', animation },
+            runner,
+            options?.ped || PlayerPedId()
+        );
+
         this.runningAnimations.set(id, {
             runner,
             dictionary: animation.base.dictionary,
@@ -186,6 +248,7 @@ export class AnimationService {
         runner.finally(() => {
             this.runningAnimations.delete(id);
         });
+
         return runner;
     }
 

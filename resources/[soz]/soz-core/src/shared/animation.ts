@@ -75,6 +75,19 @@ export type Animation = {
     exit?: AnimationInfo;
 };
 
+export const PLAYER_COPYABLE_ANIMATION_STATE_KEY = 'soz:copyableAnimation';
+
+export type CopyableAnimation =
+    | {
+          type: 'animation';
+          animation: Animation;
+      }
+    | {
+          type: 'scenario';
+          scenario: Scenario;
+      };
+
+
 export type Scenario = {
     name: string;
     duration?: number;

@@ -1,12 +1,20 @@
 import { DroneProvider } from '@private/client/vehicle/drone.provider';
 
 import { Command } from '../../core/decorators/command';
-import { OnEvent, OnNuiEvent } from '../../core/decorators/event';
+import { Once, OnceStep, OnEvent, OnNuiEvent } from '../../core/decorators/event';
 import { Inject } from '../../core/decorators/injectable';
 import { Provider } from '../../core/decorators/provider';
 import { Logger } from '../../core/logger';
 import { uuidv4 } from '../../core/utils';
-import { AnimationConfigItem, MoodConfigItem, WalkConfigBase, WalkConfigItem, Walking } from '../../shared/animation';
+import {
+    AnimationConfigItem,
+    CopyableAnimation,
+    MoodConfigItem,
+    PLAYER_COPYABLE_ANIMATION_STATE_KEY,
+    WalkConfigBase,
+    WalkConfigItem,
+    Walking,
+} from '../../shared/animation';
 import { ClientEvent, NuiEvent } from '../../shared/event';
 import { Shortcut } from '../../shared/nui/player';
 import { getRandomItem } from '../../shared/random';
@@ -17,6 +25,7 @@ import { Notifier } from '../notifier';
 import { InputService } from '../nui/input.service';
 import { NuiDispatch } from '../nui/nui.dispatch';
 import { ProgressService } from '../progress.service';
+import { TargetFactory } from '../target/target.factory';
 import { PlayerService } from './player.service';
 
 const ANIMATION_FAVORITE_PREFIX = 'animation:favorite:';
@@ -46,6 +55,100 @@ export class PlayerAnimationProvider {
 
     @Inject(DroneProvider)
     private droneProvider: DroneProvider;
+
+    @Inject(TargetFactory)
+private targetFactory: TargetFactory;
+
+@Once(OnceStep.PlayerLoaded)
+public registerCopyAnimationTarget() {
+    this.targetFactory.createForAllPlayer([
+        {
+            label: "Copier l'animation",
+            category: 'citizen',
+            canInteract: entity => this.isCopyableAnimationPlaying(entity),
+            action: entity => this.copyAnimation(entity),
+        },
+    ]);
+}
+
+private getCopyableAnimation(entity: number): CopyableAnimation | null {
+    const copyableAnimation = Entity(entity).state[
+        PLAYER_COPYABLE_ANIMATION_STATE_KEY
+    ] as CopyableAnimation;
+
+    if (
+        copyableAnimation?.type === 'animation' &&
+        typeof copyableAnimation.animation?.base?.dictionary === 'string' &&
+        typeof copyableAnimation.animation.base.name === 'string'
+    ) {
+        return copyableAnimation;
+    }
+
+    if (
+        copyableAnimation?.type === 'scenario' &&
+        typeof copyableAnimation.scenario?.name === 'string'
+    ) {
+        return copyableAnimation;
+    }
+
+    return null;
+}
+
+private isCopyableAnimationPlaying(entity: number): boolean {
+    const copyableAnimation = this.getCopyableAnimation(entity);
+
+    if (!copyableAnimation) {
+        return false;
+    }
+
+    if (copyableAnimation.type === 'scenario') {
+        return IsPedUsingScenario(entity, copyableAnimation.scenario.name);
+    }
+
+    const { dictionary, name } = copyableAnimation.animation.base;
+
+    return IsEntityPlayingAnim(entity, dictionary, name, 3);
+}
+
+private async copyAnimation(entity: number) {
+        if (!this.isCopyableAnimationPlaying(entity)) {
+        return;
+    }
+
+    const copyableAnimation = this.getCopyableAnimation(entity);
+
+    if (!copyableAnimation) {
+        return;
+    }
+
+    await this.animationService.stop();
+
+    if (copyableAnimation.type === 'scenario') {
+        this.animationService.playScenario({
+            ...copyableAnimation.scenario,
+            position: undefined,
+            shouldTeleport: false,
+        });
+
+        return;
+    }
+
+    const animation = copyableAnimation.animation;
+
+    this.animationService.playAnimation({
+        ...animation,
+        enter: animation.enter
+            ? { ...animation.enter, coords: undefined }
+            : undefined,
+        base: {
+            ...animation.base,
+            coords: undefined,
+        },
+        exit: animation.exit
+            ? { ...animation.exit, coords: undefined }
+            : undefined,
+    });
+}
 
     @Command('animation_stop', {
         description: "Stop l'animation en cours",
