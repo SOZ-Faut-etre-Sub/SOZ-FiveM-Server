@@ -2239,7 +2239,7 @@ export const Animations: AnimationConfigList = [
         },         
         {
             type: 'animation',
-            name: 'Assis sol',
+            name: 'Assis parterre',
             rightLabel: null,
             icon: null,
             animation: {
@@ -2251,22 +2251,7 @@ export const Animations: AnimationConfigList = [
                     },
                 },
             },
-        },        
-        {
-            type: 'animation',
-            name: 'Assis bras genoux',
-            rightLabel: null,
-            icon: null,
-            animation: {
-                base: {
-                    dictionary: 'timetable@ron@ig_3_couch',
-                    name: 'base',
-                    options: {
-                        repeat: true,
-                    },
-                },
-            },
-        },         
+        }, 
         {
             type: 'animation',
             name: 'Assis parterre #2',
@@ -2284,6 +2269,36 @@ export const Animations: AnimationConfigList = [
         }, 
         {
             type: 'animation',
+            name: 'Assis parterre #3',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'anim@amb@business@bgen@bgen_no_work@',
+                    name: 'sit_phone_phoneputdown_idle_nowork',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },                        
+        {
+            type: 'animation',
+            name: 'Assis bras sur les genoux',
+            rightLabel: null,
+            icon: null,
+            animation: {
+                base: {
+                    dictionary: 'timetable@ron@ig_3_couch',
+                    name: 'base',
+                    options: {
+                        repeat: true,
+                    },
+                },
+            },
+        },         
+        {
+            type: 'animation',
             name: 'Assis sur une chaise',
             rightLabel: null,
             icon: null,
@@ -2299,7 +2314,7 @@ export const Animations: AnimationConfigList = [
         },  
         {
             type: 'animation',
-            name: 'Assis sur une chaise 2',
+            name: 'Assis sur une chaise #2',
             rightLabel: null,
             icon: null,
             animation: {
