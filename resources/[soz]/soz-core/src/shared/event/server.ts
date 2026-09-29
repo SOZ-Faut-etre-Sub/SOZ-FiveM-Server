@@ -378,6 +378,8 @@ export enum ServerEvent {
     VEHICLE_TOW_ROPE_ADD = 'soz-core:server:vehicle:tow-rope-add',
     VEHICLE_TOW_ROPE_DELETE = 'soz-core:server:vehicle:tow-rope-delete',
     VEHICLE_DAMAGE_BLUR = 'soz-core:server:vehicle:damage-blur',
+    VEHICLE_FORCE_CLEAR_WAYPOINT = 'soz-core:server:vehicle:force-clear-waypoint',
+    VEHICLE_WAYPOINT_STATE = 'soz-core:server:vehicle:waypoint-state',
     VEHICLE_LOCKPICK = 'soz-core:server:vehicle:lockpick',
     VEHICLE_BREAK_DOOR = 'soz-core:server:vehicle:break-door',
     VEHICLE_NOS_START = 'soz-core:server:vehicle:nos-start',
